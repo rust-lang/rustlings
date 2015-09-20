@@ -7,9 +7,9 @@ This repo is very much the smallest thing that could possibly work :)
 
 ## To do these exercises
 
-Thanks to [btbytes'](https://twitter.com/btbytes) [prlinks](https://github.com/btbytes/prlink), you can now click on the links below to load the exercises in the rust playpen!
+Thanks to [btbytes'](https://twitter.com/btbytes) [prlinks](https://github.com/btbytes/prlink), you can now click on the links below to load the exercises in the rust playground!
 
-There are infinite correct answers-- the exercises are sometimes left very open-ended. Scroll down in the playpen to find comments that have hints.
+There are infinite correct answers-- the exercises are sometimes left very open-ended. Scroll down in the playground to find comments that have hints.
 
 If you need more help or would like to compare solutions, you can ask in [#rust on irc.mozilla.org](https://chat.mibbit.com/?server=irc.mozilla.org&channel=%23rust), the [user forum](https://users.rust-lang.org/), or [the subreddit](https://reddit.com/r/rust). If an exercise could be improved in any way, please [create an issue](https://github.com/carols10cents/rustlings/issues/new) or submit a pull request!
 
@@ -89,7 +89,4 @@ A few exercises based on things I've encountered or had trouble with getting use
 
 * File issues for problems or suggestions!
 * Contribute more exercises! Anything that took you time to get used to, or that you had trouble with, or that deserves practice would be a good exercise!
-* Organize the exercises (by topic? progression of difficulty?)
-* Add some exercises that are "make the test pass" instead of "make this compile"
-* Write some hints or sample answers
-* Figure out a nice way to link the code directly into playpen
+* How could the process of doing these exercises work better? This is an open-ended question :) Are the playground links good enough? Are there ways that we could make going to the next exercise easier without forking the playgound??
