@@ -89,6 +89,12 @@ The [Error Handling](https://doc.rust-lang.org/stable/book/error-handling.html) 
 
 - ["result1.rs"](http://play.rust-lang.org/?code=%2F%2F+Make+this+test+pass%21+Scroll+down+for+hints+%3A%29%0A%0A%23%5Bderive%28PartialEq%2CDebug%29%5D%0Astruct+PositiveNonzeroInteger%28u64%29%3B%0A%0A%23%5Bderive%28PartialEq%2CDebug%29%5D%0Aenum+CreationError+%7B%0A++++Negative%2C%0A++++Zero%2C%0A%7D%0A%0Aimpl+PositiveNonzeroInteger+%7B%0A++++fn+new%28value%3A+i64%29+-%3E+Result%3CPositiveNonzeroInteger%2C+CreationError%3E+%7B%0A++++++++Ok%28PositiveNonzeroInteger%28value+as+u64%29%29%0A++++%7D%0A%7D%0A%0A%23%5Btest%5D%0Afn+test_creation%28%29+%7B%0A++++assert%21%28PositiveNonzeroInteger%3A%3Anew%2810%29.is_ok%28%29%29%3B%0A++++assert_eq%21%28Err%28CreationError%3A%3ANegative%29%2C+PositiveNonzeroInteger%3A%3Anew%28-10%29%29%3B%0A++++assert_eq%21%28Err%28CreationError%3A%3AZero%29%2C+PositiveNonzeroInteger%3A%3Anew%280%29%29%3B%0A%7D%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%2F%2F+%60PositiveNonzeroInteger%3A%3Anew%60+is+always+creating+a+new+instance+and+returning+an+%60Ok%60+result.%0A%2F%2F+It+should+be+doing+some+checking%2C+returning+an+%60Err%60+result+if+those+checks+fail%2C+and+only%0A%2F%2F+returning+an+%60Ok%60+result+if+those+checks+determine+that+everything+is...+okay+%3A%29%0A)
 
+#### `Arc`
+
+The [Concurrency](https://doc.rust-lang.org/stable/book/concurrency.html) section is relevant.
+
+- "arc1.rs"
+
 ### Threads
 
 See [the Dining Philosophers example](https://doc.rust-lang.org/stable/book/dining-philosophers.html) and the [Concurrency Chapter](https://doc.rust-lang.org/stable/book/concurrency.html) from the book.
