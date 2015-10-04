@@ -10,6 +10,8 @@ fn main() {
     ("blue");
     ("red".to_string());
     (String::from("hi"));
+    ("rust is fun!".to_owned());
+    ("nice weather".into());
     (format!("Interpolation {}", "Station"));
     (&String::from("abc")[0..1]);
     ("  hello there ".trim());
