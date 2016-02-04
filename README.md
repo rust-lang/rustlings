@@ -11,7 +11,7 @@ Thanks to [btbytes'](https://twitter.com/btbytes) [prlinks](https://github.com/b
 
 There are infinite correct answers-- the exercises are sometimes left very open-ended. Scroll down in the playground to find comments that have hints.
 
-If you need more help or would like to compare solutions, you can ask in [#rust on irc.mozilla.org](https://chat.mibbit.com/?server=irc.mozilla.org&channel=%23rust), the [user forum](https://users.rust-lang.org/), or [the subreddit](https://reddit.com/r/rust). If an exercise could be improved in any way, please [create an issue](https://github.com/carols10cents/rustlings/issues/new) or submit a pull request!
+If you need more help or would like to compare solutions, you can ask in [#rust-beginners on irc.mozilla.org](https://chat.mibbit.com/?server=irc.mozilla.org&channel=%23rust-beginners ), the [user forum](https://users.rust-lang.org/), or [the subreddit](https://reddit.com/r/rust). If an exercise could be improved in any way, please [create an issue](https://github.com/carols10cents/rustlings/issues/new) or submit a pull request!
 
 ### Variable bindings
 
