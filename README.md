@@ -125,4 +125,4 @@ A few exercises based on things I've encountered or had trouble with getting use
 
 * File issues for problems or suggestions!
 * Contribute more exercises! Anything that took you time to get used to, or that you had trouble with, or that deserves practice would be a good exercise!
-* How could the process of doing these exercises work better? This is an open-ended question :) Are the playground links good enough? Are there ways that we could make going to the next exercise easier without forking the playgound??
+* How could the process of doing these exercises work better? This is an open-ended question :) Are the playground links good enough? Are there ways that we could make going to the next exercise easier without forking the playground??
