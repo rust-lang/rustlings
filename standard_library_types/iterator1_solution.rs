@@ -23,10 +23,13 @@ fn divide(a: i32, b: i32) -> Result<i32,DivisionError> {
     }
 }
 
-// these print functions exist, so you have to satisfy their input types in the main function
-fn print_list_of_results(l: Vec<Result<i32,DivisionError>>) {
-    println!("{:?}", l);
+#[allow(dead_code)]
+enum OperationMode {
+    ListOfResults,
+    ResultWithList,
 }
+
+#[allow(dead_code)]
 fn print_result_with_list(r: Result<Vec<i32>,DivisionError>) {
     // side quest: why is there no semicolon in this function?
     match r {
@@ -38,12 +41,6 @@ fn print_result_with_list(r: Result<Vec<i32>,DivisionError>) {
     };
 }
 
-#[allow(dead_code)]
-enum OperationMode {
-    ListOfResults,
-    ResultWithList,
-}
-
 fn main() {
     // These asserts check that your `divide` function works.
     // In production code these would be tests
@@ -51,6 +48,7 @@ fn main() {
     assert_eq!(divide(81,6),Err(DivisionError::NotDivisible(NotDivisibleError{divident:81,divisor:6})));
     assert_eq!(divide(81,0),Err(DivisionError::DivideByZero));
     println!("Your divide function seems to work! Good Job.");
+    // Don't change these numbers. It will break the assertions later in the code.
     let numbers = vec![27,297,38502,81];
     let numbers_iterator = numbers.into_iter();
     let division_results = numbers_iterator.map(|n| divide(n, 27));
@@ -58,11 +56,13 @@ fn main() {
     match operation_mode {
         OperationMode::ResultWithList => {
             let x : Result<Vec<_>,_> = division_results.collect();
-            print_result_with_list(x);
+            //print_result_with_list(x);
+            assert_eq!(format!("{:?}",x), "Ok([1, 11, 1426, 3])");
         },
         OperationMode::ListOfResults => {
             let x : Vec<_> = division_results.collect();
-            print_list_of_results(x);
+            println!("{:?}", x);
+            assert_eq!(format!("{:?}",x), "[Ok(1), Ok(11), Ok(1426), Ok(3)]");
         },
     }
 }
