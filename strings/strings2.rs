@@ -1,17 +1,16 @@
 // Make me compile without changing the function signature! Scroll down for hints :)
 
 fn main() {
-    let guess1 = "blue".to_string(); // Try not changing this line :)
-    let correct = guess_favorite_color(guess1);
-    if correct {
-        println!("You guessed correctly!");
+    let word = String::from("green"); // Try not changing this line :)
+    if is_a_color_word(word) {
+        println!("That is a color word I know!");
     } else {
-        println!("Nope, that's not it.");
+        println!("That is not a color word I know.");
     }
 }
 
-fn guess_favorite_color(attempt: &str) -> bool {
-    attempt == "green"
+fn is_a_color_word(attempt: &str) -> bool {
+    attempt == "green" || attempt == "blue" || attempt == "red"
 }
 
 
