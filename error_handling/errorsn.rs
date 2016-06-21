@@ -1,4 +1,5 @@
 // This is a bigger error exercise than the previous ones!
+// You can do it!
 //
 // Edit the `read_and_validate` function so that it compiles and
 // passes the tests... so many things could go wrong!
@@ -22,7 +23,8 @@ fn read_and_validate(b: &mut io::BufRead) -> Result<PositiveNonzeroInteger, ???>
     let mut line = String::new();
     b.read_line(&mut line);
     let num: i64 = line.trim().parse();
-    PositiveNonzeroInteger::new(num)
+    let answer = PositiveNonzeroInteger::new(num);
+    answer
 }
 
 // This is a test helper function that turns a &str into a BufReader.
@@ -59,6 +61,7 @@ fn test_ioerror() {
     }
     let mut b = io::BufReader::new(Broken);
     assert!(read_and_validate(&mut b).is_err());
+    assert_eq!("uh-oh!", read_and_validate(&mut b).unwrap_err().to_string());
 }
 
 #[derive(PartialEq,Debug)]
@@ -109,11 +112,26 @@ impl error::Error for CreationError {
 // `read_and_validate` returns and`test_with_str` has its signature fully
 // specified.
 
-// Next hint: anywhere in `read_and_validate` that we call a function that
-// returns a `Result`, wrap that call in a `try!` macro call. Use the compiler
-// error messages and warnings to guide you to all the places you need to do
-// this. You might need to rewrap some `try!` return values in a `Result::Ok`!
+// Next hint: There are three places in `read_and_validate` that we call a
+// function that returns a `Result` (that is, the functions might fail).
+// Wrap those calls in a `try!` macro call so that we return immediately from
+// `read_and_validate` if those function calls fail.
 
-// This works because under the hood, the `try!` macro calls `From::from`
+// Another hint: under the hood, the `try!` macro calls `From::from`
 // on the error value to convert it to a boxed trait object, a Box<error::Error>,
-// which is polymorphic.
+// which is polymorphic-- that means that lots of different kinds of errors
+// can be returned from the same function because all errors act the same
+// since they all implement the `error::Error` trait.
+// Check out this section of the book:
+// https://doc.rust-lang.org/stable/book/error-handling.html#standard-library-traits-used-for-error-handling
+
+// Another another hint: Note that because the `try!` macro returns
+// the *unwrapped* value in the `Ok` case, if we want to return a `Result` from
+// `read_and_validate` for *its* success case, we'll have to rewrap a value
+// that we got from the return value of a `try!` call in an `Ok`-- this will
+// look like `Ok(something)`.
+
+// Another another another hint: `Result`s must be "used", that is, you'll
+// get a warning if you don't handle a `Result` that you get in your
+// function. Read more about that in the `std::result` module docs:
+// https://doc.rust-lang.org/std/result/#results-must-be-used
