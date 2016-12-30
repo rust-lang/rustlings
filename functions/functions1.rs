@@ -4,7 +4,9 @@ fn main() {
     call_me();
 }
 
-
+fn call_me() {
+    println!("thank you for calling me :)");
+}
 
 
 
