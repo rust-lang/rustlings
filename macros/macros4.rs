@@ -72,5 +72,5 @@ fn main() {
 
 
 
-// The way macros are written, it wants to see something between each "macro arm", so it can
-// separate them.
+// The way macros are written, it wants to see something between each
+// "macro arm", so it can separate them.
