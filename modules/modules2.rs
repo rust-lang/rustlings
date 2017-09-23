@@ -42,6 +42,3 @@ fn main() {
 // its internal structure (the `democrats` and `republicans` modules and
 // associated constants). It's almost there except for one keyword missing for
 // each constant.
-// One more hint: I wish the compiler error, instead of saying "unresolved name
-// `us_presidential_frontrunners::democrat`", could say  "constant
-// `us_presidential_frontrunners::democrat` is private"!
