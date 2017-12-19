@@ -1,7 +1,7 @@
 # Allows you to change code and see what the rust compiler does immediately in the opposite pane
 
 # Instructions:
-# - ./rustle.sh
+# - cd bin/ && ./rustle.sh
 # - select a rustling, see the split pane view show up
 # - update until you have the solution, or you get sick of being stuck..
 # - kill the tmux session (Prefix : kill-session)
