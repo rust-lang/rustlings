@@ -1,3 +1,4 @@
+// errors1.rs
 // This function refuses to generate text to be printed on a nametag if
 // you pass it an empty string. It'd be nicer if it explained what the problem
 // was, instead of just sometimes returning `None`. The 2nd test currently

@@ -1,3 +1,4 @@
+// option1.rs
 // This example panics because the second time it calls `pop`, the `vec`
 // is empty, so `pop` returns `None`, and `unwrap` panics if it's called
 // on `None`. Handle this in a more graceful way than calling `unwrap`!

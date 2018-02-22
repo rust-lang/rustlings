@@ -1,3 +1,4 @@
+// errors3.rs
 // This is a program that is trying to use a completed version of the
 // `total_cost` function from the previous exercise. It's not working though--
 // we can't call the `try!` macro in the `main()` function! Why not?

@@ -1,3 +1,4 @@
+// ex3.rs
 // Make me compile!
 
 struct Foo {
