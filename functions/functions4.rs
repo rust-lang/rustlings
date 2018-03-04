@@ -39,6 +39,6 @@ fn is_even(num: i32) -> bool {
 
 
 
-// The error message points to line 10 and says it expects a type after the
+// The error message points to line 12 and says it expects a type after the
 // `->`. This is where the function's return type should be-- take a look at
 // the `is_even` function for an example!

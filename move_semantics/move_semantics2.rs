@@ -1,5 +1,5 @@
 // move_semantics2.rs
-// Make me compile without changing line 9! Scroll down for hints :)
+// Make me compile without changing line 10! Scroll down for hints :)
 
 pub fn main() {
     let vec0 = Vec::new();
@@ -39,8 +39,8 @@ fn fill_vec(vec: Vec<i32>) -> Vec<i32> {
 
 
 // So `vec0` is being *moved* into the function `fill_vec` when we call it on
-// line 6, which means it gets dropped at the end of `fill_vec`, which means we
-// can't use `vec0` again on line 9 (or anywhere else in `main` after the
+// line 7, which means it gets dropped at the end of `fill_vec`, which means we
+// can't use `vec0` again on line 10 (or anywhere else in `main` after the
 // `fill_vec` call for that matter). We could fix this in a few ways, try them
 // all!
 // 1. Make another, separate version of the data that's in `vec0` and pass that

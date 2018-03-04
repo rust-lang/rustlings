@@ -1,6 +1,6 @@
 // threads1.rs
 // Make this compile! Scroll down for hints :) The idea is the thread
-// spawned on line 17 is completing jobs while the main thread is
+// spawned on line 19 is completing jobs while the main thread is
 // monitoring progress until 10 jobs are completed. If you see 6 lines
 // of "waiting..." and the program ends without timing out the playground,
 // you've got it :)
