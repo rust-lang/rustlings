@@ -38,6 +38,6 @@ fn fill_vec(vec: Vec<i32>) -> Vec<i32> {
 
 
 
-// So you've got the "cannot borrow immutable local variable `vec1` as mutable" error on line 10,
-// right? The fix for this is going to be adding one keyword, and the addition is NOT on line 10
+// So you've got the "cannot borrow immutable local variable `vec1` as mutable" error on line 11,
+// right? The fix for this is going to be adding one keyword, and the addition is NOT on line 11
 // where the error is.
