@@ -1,0 +1,4 @@
+[package]
+name = "rustlings"
+version = "0.1.0"
+authors = ["Carol (Nichols || Goulding) <carol.nichols@gmail.com>"]
