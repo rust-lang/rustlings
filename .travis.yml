@@ -1,0 +1,17 @@
+language: rust
+
+branches:
+  only:
+  - master
+
+cache:
+  cargo: true
+
+script:
+  - cargo run --bin generate_readme
+  - git diff
+
+notifications:
+  email:
+    on_success: never
+

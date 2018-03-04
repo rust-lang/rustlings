@@ -1,5 +1,5 @@
 // ex1.rs
-// Make me compile!
+// Make me compile! :)
 
 fn main() {
     println();
