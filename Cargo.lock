@@ -201,7 +201,7 @@ dependencies = [
 [[package]]
 name = "prlink"
 version = "0.1.0"
-source = "git+https://github.com/integer32llc/prlink#5ff5420acb5076025527fdeb1be4a3b34dca6541"
+source = "git+https://github.com/btbytes/prlink#f0536ed3b322072d65c42da2fc2a817b77d77308"
 dependencies = [
  "clap 2.30.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "glob 0.2.11 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -253,7 +253,7 @@ name = "rustlings"
 version = "0.1.0"
 dependencies = [
  "handlebars 0.32.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "prlink 0.1.0 (git+https://github.com/integer32llc/prlink)",
+ "prlink 0.1.0 (git+https://github.com/btbytes/prlink)",
  "serde_json 1.0.10 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -427,7 +427,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 "checksum percent-encoding 1.0.1 (registry+https://github.com/rust-lang/crates.io-index)" = "31010dd2e1ac33d5b46a5b413495239882813e0369f8ed8a5e266f173602f831"
 "checksum pest 1.0.6 (registry+https://github.com/rust-lang/crates.io-index)" = "0fce5d8b5cc33983fc74f78ad552b5522ab41442c4ca91606e4236eb4b5ceefc"
 "checksum pest_derive 1.0.6 (registry+https://github.com/rust-lang/crates.io-index)" = "6453faedc5c9980a3c278f28b1df33344a79cc6d4a2fd96e2b56288374dc822a"
-"checksum prlink 0.1.0 (git+https://github.com/integer32llc/prlink)" = "<none>"
+"checksum prlink 0.1.0 (git+https://github.com/btbytes/prlink)" = "<none>"
 "checksum quick-error 1.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = "eda5fe9b71976e62bc81b781206aaa076401769b2143379d3eb2118388babac4"
 "checksum quote 0.3.15 (registry+https://github.com/rust-lang/crates.io-index)" = "7a6e920b65c65f10b2ae65c831a81a073a89edd28c7cce89475bff467ab4167a"
 "checksum redox_syscall 0.1.37 (registry+https://github.com/rust-lang/crates.io-index)" = "0d92eecebad22b767915e4d529f89f28ee96dbbf5a4810d2b844373f136417fd"
