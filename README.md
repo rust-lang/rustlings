@@ -176,7 +176,7 @@ book.
 
 A few exercises based on things I've encountered or had trouble with getting used to.
 
-- ["ex1.rs"](https://play.rust-lang.org/?code=%2F%2F+ex1.rs%0A%2F%2F+Make+me+compile%21%0A%0Afn+main%28%29+%7B%0A++++println%28%29%3B%0A%7D%0A)
+- ["ex1.rs"](https://play.rust-lang.org/?code=%2F%2F+ex1.rs%0A%2F%2F+Make+me+compile%21+%3A%29%0A%0Afn+main%28%29+%7B%0A++++println%28%29%3B%0A%7D%0A)
 - ["ex2.rs"](https://play.rust-lang.org/?code=%2F%2F+ex2.rs%0A%2F%2F+Make+me+compile%21%0A%0Afn+something%28%29+-%3E+String+%7B%0A++++%22hi%21%22%0A%7D%0A%0Afn+main%28%29+%7B%0A++++println%21%28%22%7B%7D%22%2C+something%28%29%29%3B%0A%7D%0A)
 - ["ex3.rs"](https://play.rust-lang.org/?code=%2F%2F+ex3.rs%0A%2F%2F+Make+me+compile%21%0A%0Astruct+Foo+%7B%0A++++capacity%3A+i32%2C%0A%7D%0A%0Afn+main%28%29+%7B%0A++++println%21%28%22%7B%3A%3F%7D%22%2C+Foo+%7B+capacity%3A+3+%7D%29%3B%0A%7D%0A)
 - ["ex4.rs"](https://play.rust-lang.org/?code=%2F%2F+ex4.rs%0A%2F%2F+Make+me+compile%21%0A%0Afn+something%28%29+-%3E+Result%3Ci32%2C+std%3A%3Anum%3A%3AParseIntError%3E+%7B%0A++++let+x%3Ai32+%3D+%223%22.parse%28%29%3B%0A++++Ok%28x+*+4%29%0A%7D%0A%0Afn+main%28%29+%7B%0A++++match+something%28%29+%7B%0A++++++++Ok%28..%29+%3D%3E+println%21%28%22You+win%21%22%29%2C%0A++++++++Err%28e%29+%3D%3E+println%21%28%22Oh+no+something+went+wrong%3A+%7B%7D%22%2C+e%29%2C%0A++++%7D%0A%7D%0A)
