@@ -12,8 +12,8 @@ script:
   - git config user.name "Carol (Nichols || Goulding)"
   - git config user.email "carol.nichols@gmail.com"
   - git commit -a "Regenerate README"
-  - git remote add origin "https://$GH_TOKEN@github.com/carols10cents/rustlings.git"
-  - git push -q origin HEAD:master > /dev/null 2>&1
+  - git remote add upstream "https://$GH_TOKEN@github.com/carols10cents/rustlings.git"
+  - git push -q upstream HEAD:master > /dev/null 2>&1
 
 notifications:
   email:
