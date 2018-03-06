@@ -1,6 +1,6 @@
 // errorsn.rs
 // This is a bigger error exercise than the previous ones!
-// You can do it!
+// You can do it! :)
 //
 // Edit the `read_and_validate` function so that it compiles and
 // passes the tests... so many things could go wrong!
