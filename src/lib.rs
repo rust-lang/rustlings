@@ -5,7 +5,7 @@ mod about_variables {
         let two = 7;
         let three = 3;
         let result = (one + two) / three;
-        result
+        return result;
     }
 }
 
