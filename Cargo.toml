@@ -1,0 +1,6 @@
+[package]
+name = "rustlings"
+version = "0.1.0"
+authors = ["olivia <olivia@fastmail.com>"]
+
+[dependencies]
