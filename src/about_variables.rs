@@ -1,4 +1,3 @@
-#[allow(dead_code)]
 fn guess_this () -> i32 {
     let one = 5;
     let two = 7;
@@ -7,8 +6,17 @@ fn guess_this () -> i32 {
     return result;
 }
 
+fn simple () -> &'static str {
+    let hello = "Hello World!";
+    return hello;
+}
+
 mod tests {
     use super::*;
+
+    pub fn test_simple () {
+        verify!("Hello World!", simple(), "Simple example");
+    }
 
     pub fn test_complicated () {
         verify!(1, guess_this(), "Complicated example");
@@ -16,5 +24,6 @@ mod tests {
 }
 
 pub fn exec () {
+    tests::test_simple();
     tests::test_complicated();
 }
