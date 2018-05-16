@@ -16,6 +16,6 @@ struct Cli {
 main!(|args: Cli| if let Some(e) = args.exercise {
     println!("selected {}", e);
 } else {
-    println!("Welcome to {}", Yellow.paint("rustlings"));
+    println!("Welcome to {}!\n", Yellow.paint("Rustlings"));
     about_variables::exec();
 });
