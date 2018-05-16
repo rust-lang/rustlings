@@ -1,5 +1,5 @@
 #[allow(dead_code)]
-pub fn guess_this () -> i32 {
+fn guess_this () -> i32 {
     let one = 5;
     let two = 7;
     let three = 3;
@@ -11,7 +11,7 @@ mod tests {
     use super::*;
 
     pub fn test_complicated () {
-        assert_eq!(1, guess_this());
+        verify!(1, guess_this(), "Complicated example");
     }
 }
 
