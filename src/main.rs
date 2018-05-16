@@ -2,10 +2,11 @@
 extern crate quicli;
 extern crate ansi_term;
 
-use quicli::prelude::*;
 use ansi_term::Color::Yellow;
+use quicli::prelude::*;
 
-#[macro_use] mod macros;
+#[macro_use]
+mod macros;
 mod about_variables;
 
 #[derive(Debug, StructOpt)]
