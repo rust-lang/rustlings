@@ -1,5 +1,4 @@
-use title;
-use verify;
+use helpers::*;
 
 // Variables in Rust are defined using the "let" keyword. Like this:
 
