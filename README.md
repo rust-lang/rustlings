@@ -30,10 +30,10 @@ pub fn exec() {
 Each exercise file is supposed to have one `exec` function which gets called by the `main.rs` file.
 This function, in turn, calls all individual test functions.
 
-The tests themselves can generally be structured in whatever way is desired. Two macros are provided
-for convenience. The `verify!` macro is essentially a specialized `assert_eq!`, but it doesn't panic
+The tests themselves can generally be structured in whatever way is desired, there doesn't have to be a "tests" module, for example. Two macros are provided
+for convenience. The `verify` helper function is essentially a specialized `assert_eq!`, but it doesn't panic
 if the values mismatch, instead it prints out a helpful error message and keeps going. The
-`verify_easy!` macro is designed as a drop-in replacement for the `verify!` macro for if the learner needs help solving the exercise. It prints the expected value, too.
+`verify_easy` function is designed as a drop-in replacement for the `verify` function for if the learner needs help solving the exercise. It prints the expected value, too.
 
 This is roughly what the console output for a simple exercise looks right now:
 
