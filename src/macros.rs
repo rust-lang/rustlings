@@ -1,14 +1,21 @@
 #[macro_export]
+macro_rules! title {
+    ($str:expr) => {
+        println!("{} {}", ansi_term::Color::Yellow.bold().paint("RUN"), $str);
+    }
+}
+
+#[macro_export]
 macro_rules! verify {
-    ($left:expr, $right:expr, $str:expr) => {
+    ($left:expr, $right:expr) => {
         use ansi_term::Color::{Green, Red};
 
         if $left == $right {
-            println!("{} {}", Green.bold().paint("PASS"), $str);
+            println!("{} {} == {}", Green.bold().paint("PASS"), $left, $right);
         } else {
-            println!("{} {}", Red.bold().paint("FAIL"), $str);
-            println!("\tYou submitted {}, but that's not correct!", $left);
-            println!("\tPlease correct your code to make this test pass!");
+            print!("{}", Red.bold().paint("FAIL"));
+            println!(" You submitted {}, but that's not correct!", $left);
+            println!("     Please correct your code to make this test pass!");
         }
     };
 }
