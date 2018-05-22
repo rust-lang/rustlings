@@ -35,6 +35,10 @@ for convenience. The `verify!` macro is essentially a specialized `assert_eq!`, 
 if the values mismatch, instead it prints out a helpful error message and keeps going. The
 `verify_easy!` macro is designed as a drop-in replacement for the `verify!` macro for if the learner needs help solving the exercise. It prints the expected value, too.
 
+This is roughly what the console output for a simple exercise looks right now:
+
+![](https://i.imgur.com/gGgjvLW.png)
+
 Keep in mind that this is a very early draft of how things work. Anything here might be changed
 at any time, and this documentation should be updated accordingly.
 
