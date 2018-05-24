@@ -19,6 +19,17 @@ can now click on the links below to load the exercises in the rust playground!
 There are infinite correct answers-- the exercises are sometimes left very open-ended. Scroll down
 in the playground to find comments that have hints.
 
+### To do these exercises in your local environment and execute them online afterwards:
+
+* clone the repo to your local environment: `git clone git@github.com:rustlings/rustlings.git`
+* edit the rustling that you want, per example `variables/variables1.rs`
+* run `cargo run` in the project folder
+* you will notice that you README file was modified and now it has the new content of the file that you edited
+* click in the new URL in the README and you will redirect to the rust playground and the whole file content it will be loaded
+* to execute in the rust playground, just click on `run`
+
+### Need help?
+
 If you need more help or would like to compare solutions, you can ask in [#rust-beginners on
 irc.mozilla.org](https://chat.mibbit.com/?server=irc.mozilla.org&channel=%23rust-beginners ), the
 [user forum](https://users.rust-lang.org/), or [the subreddit](https://reddit.com/r/rust). If an
