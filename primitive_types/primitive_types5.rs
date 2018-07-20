@@ -38,8 +38,8 @@ fn main() {
 
 
 
-// Take a look at the Primitive Types -> Tuples section of the book:
-// http://doc.rust-lang.org/stable/book/primitive-types.html#tuples
-// Particularly the part about "destructuring lets". You'll need to
-// make a pattern to bind `name` and `age` to the appropriate parts
+// Take a look at the Data Types -> The Tuple Type section of the book:
+// https://doc.rust-lang.org/stable/book/second-edition/ch03-02-data-types.html#the-tuple-type
+// Particularly the part about destructuring (second to last example in the section). 
+// You'll need to make a pattern to bind `name` and `age` to the appropriate parts
 // of the tuple. You can do it!!

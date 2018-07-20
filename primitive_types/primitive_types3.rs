@@ -39,8 +39,9 @@ fn main() {
 
 
 // There's a shorthand to initialize Arrays with a certain size that does not 
-// require you to type in 100 items (but you certainly can if you want!)
-// Check out the Primitive Types -> Arrays section of the book:
-// https://doc.rust-lang.org/stable/book/second-edition/ch03-02-data-types.html#arrays
+// require you to type in 100 items (but you certainly can if you want!).
+// For example, you can do:
+// let array = ["Are we there yet?"; 10];
+
 // Bonus: what are some other things you could have that would return true
 // for `a.len() >= 100`?

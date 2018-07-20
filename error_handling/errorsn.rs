@@ -124,7 +124,7 @@ impl error::Error for CreationError {
 // can be returned from the same function because all errors act the same
 // since they all implement the `error::Error` trait.
 // Check out this section of the book:
-// https://doc.rust-lang.org/stable/book/second-edition/ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-
+// https://doc.rust-lang.org/stable/book/second-edition/ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator
 
 // Another another hint: Note that because the `?` operator returns
 // the *unwrapped* value in the `Ok` case, if we want to return a `Result` from
