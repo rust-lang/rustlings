@@ -3,7 +3,7 @@
 // in `fn main`, we instead create it within `fn fill_vec` and transfer the
 // freshly created vector from fill_vec to its caller. Scroll for hints!
 
-pub fn main() {
+fn main() {
     let vec0 = Vec::new();
 
     let mut vec1 = fill_vec(vec0);

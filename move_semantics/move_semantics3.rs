@@ -3,7 +3,7 @@
 // (no lines with multiple semicolons necessary!)
 // Scroll down for hints :)
 
-pub fn main() {
+fn main() {
     let vec0 = Vec::new();
 
     let mut vec1 = fill_vec(vec0);
