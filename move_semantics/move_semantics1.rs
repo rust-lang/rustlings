@@ -1,7 +1,7 @@
 // move_semantics1.rs
 // Make me compile! Scroll down for hints :)
 
-pub fn main() {
+fn main() {
     let vec0 = Vec::new();
 
     let vec1 = fill_vec(vec0);
