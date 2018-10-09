@@ -177,7 +177,7 @@ docs](https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html).
 ### Threads
 
 See [the Dining Philosophers
-example](https://doc.rust-lang.org/1.4.0/book/first-edition/dining-philosophers.html) and the
+example](https://doc.rust-lang.org/1.4.0/book/dining-philosophers.html) and the
 [Concurrency Chapter](https://doc.rust-lang.org/book/second-edition/ch16-01-threads.html) from the
 book.
 
