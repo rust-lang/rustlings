@@ -4,5 +4,6 @@ version = "0.1.0"
 authors = ["olivia <olivia@fastmail.com>"]
 
 [dependencies]
-quicli = "0.2.0"
-ansi_term = "0.11.0"
+clap = "2.32.0"
+indicatif = "0.9.0"
+console = "0.6.2"
