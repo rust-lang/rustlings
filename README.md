@@ -24,7 +24,7 @@ in the playground to find comments that have hints.
 * clone the repo to your local environment: `git clone git@github.com:rustlings/rustlings.git`
 * edit the rustling that you want, per example `variables/variables1.rs`
 * run `cargo run` in the project folder
-* you will notice that you README file was modified and now it has the new content of the file that you edited
+* you will notice that your README file was modified and now it has the new content of the file that you edited
 * click in the new URL in the README and you will redirect to the rust playground and the whole file content it will be loaded
 * to execute in the rust playground, just click on `run`
 
