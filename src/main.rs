@@ -85,10 +85,12 @@ fn compile_only(filename: &str) {
                            .expect("fail");
   bar.finish_and_clear();
   if compilecmd.status.success() {
-    println!("{} Successfully compiled {}!", Emoji("✅", "✓"), style(filename).italic());
+    let formatstr = format!("{} Successfully compiled {}!", Emoji("✅", "✓"), filename);
+    println!("{}", style(formatstr).green());
     clean().unwrap();
   } else {
-    println!("{} Compilation of {} failed! Compiler error message:\n", Emoji("⚠️ ", "!"), style(filename).italic());
+    let formatstr = format!("{} Compilation of {} failed! Compiler error message:\n", Emoji("⚠️ ", "!"), filename);
+    println!("{}", style(formatstr).red());
     println!("{}", String::from_utf8_lossy(&compilecmd.stderr));
     clean().unwrap();
     std::process::exit(1);
@@ -105,10 +107,12 @@ fn test(filename: &str) {
                         .expect("fail");
   bar.finish_and_clear();
   if testcmd.status.success() {
-    println!("{} Successfully tested {}!", Emoji("✅", "✓"), style(filename).italic());
+    let formatstr = format!("{} Successfully tested {}!", Emoji("✅", "✓"), filename);
+    println!("{}", style(formatstr).green());
     clean().unwrap();
   } else {
-    println!("{} Testing of {} failed! Please try again.", Emoji("⚠️ ", "!"), style(filename).italic());
+    let formatstr = format!("{} Testing of {} failed! Please try again.", Emoji("⚠️ ", "!"), filename);
+    println!("{}", style(formatstr).red());
     clean().unwrap();
     std::process::exit(1);
   }
