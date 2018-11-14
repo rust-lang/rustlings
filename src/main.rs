@@ -23,6 +23,7 @@ fn main() {
   println!(r#" | |  | |_| \__ \ |_| | | | | | (_| \__ \ "#);
   println!(r#" |_|   \__,_|___/\__|_|_|_| |_|\__, |___/ "#);
   println!(r#"                               |___/      "#);
+  println!("");
   
   if let Some(_) = matches.subcommand_matches("verify") {
     compile_only("exercises/ex1.rs");
