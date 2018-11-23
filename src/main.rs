@@ -3,7 +3,7 @@ extern crate clap;
 extern crate console;
 extern crate indicatif;
 
-use clap::{App, SubCommand};
+use clap::{App, Arg, SubCommand};
 use console::{style, Emoji};
 use indicatif::ProgressBar;
 use std::fs::remove_file;
@@ -15,8 +15,11 @@ fn main() {
         .author("Olivia Hugger")
         .about("Test")
         .subcommand(SubCommand::with_name("verify").alias("v"))
-        .subcommand(SubCommand::with_name("run").alias("r"))
-        .get_matches();
+        .subcommand(
+            SubCommand::with_name("run")
+                .alias("r")
+                .arg(Arg::with_name("file").required(true).index(1)),
+        ).get_matches();
 
     println!(r#"                 _   _ _                  "#);
     println!(r#"  _ __ _   _ ___| |_| (_)_ __   __ _ ___  "#);
@@ -25,6 +28,51 @@ fn main() {
     println!(r#" |_|   \__,_|___/\__|_|_|_| |_|\__, |___/ "#);
     println!(r#"                               |___/      "#);
     println!("");
+
+    if let Some(matches) = matches.subcommand_matches("run") {
+        if let Some(filename) = matches.value_of("file") {
+            let bar = ProgressBar::new_spinner();
+            bar.set_message(format!("Compiling {}...", filename).as_str());
+            bar.enable_steady_tick(100);
+            let compilecmd = Command::new("rustc")
+                .args(&[filename, "-o", "temp"])
+                .output()
+                .expect("fail");
+            bar.set_message(format!("Running {}...", filename).as_str());
+            if compilecmd.status.success() {
+                let runcmd = Command::new("./temp").output().expect("fail");
+                bar.finish_and_clear();
+
+                if runcmd.status.success() {
+                    println!("{}", String::from_utf8_lossy(&runcmd.stdout));
+                    let formatstr =
+                        format!("{} Successfully ran {}", Emoji("✅", "✓"), filename);
+                    println!("{}", style(formatstr).green());
+                    clean().unwrap();
+                } else {
+                    println!("{}", String::from_utf8_lossy(&runcmd.stdout));
+                    println!("{}", String::from_utf8_lossy(&runcmd.stderr));
+
+                    let formatstr =
+                        format!("{} Ran {} with errors", Emoji("⚠️ ", "!"), filename);
+                    println!("{}", style(formatstr).red());
+                    clean().unwrap();
+                }
+            } else {
+                bar.finish_and_clear();
+                let formatstr = format!(
+                    "{} Compilation of {} failed! Compiler error message:\n",
+                    Emoji("⚠️ ", "!"),
+                    filename
+                );
+                println!("{}", style(formatstr).red());
+                println!("{}", String::from_utf8_lossy(&compilecmd.stderr));
+                clean().unwrap();
+            }
+        } else {
+            panic!("Please supply a filename!");
+        }
+    }
 
     if let Some(_) = matches.subcommand_matches("verify") {
         compile_only("exercises/ex1.rs");
