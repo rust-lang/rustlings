@@ -1,0 +1,1 @@
+For this exercise check out the chapter [If](https://doc.rust-lang.org/book/second-edition/ch03-05-control-flow.html) of the Rust Book.
