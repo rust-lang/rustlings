@@ -2,15 +2,21 @@
 extern crate clap;
 extern crate console;
 extern crate indicatif;
+extern crate syntect;
 
 use clap::{App, Arg, SubCommand};
 use console::{style, Emoji};
 use indicatif::ProgressBar;
+use syntect::easy::HighlightFile;
+use syntect::parsing::SyntaxSet;
+use syntect::highlighting::{ThemeSet, Style};
+use syntect::util::{as_24_bit_terminal_escaped, LinesWithEndings};
 use std::fs::remove_file;
+use std::io::BufRead;
 use std::process::Command;
 
 fn main() {
-    let matches = App::new("r2")
+    let matches = App::new("rustlings")
         .version(crate_version!())
         .author("Olivia Hugger")
         .about("Test")
@@ -21,6 +27,9 @@ fn main() {
                 .arg(Arg::with_name("file").required(true).index(1)),
         ).get_matches();
 
+    let ss = SyntaxSet::load_defaults_newlines();
+    let ts = ThemeSet::load_defaults();
+    
     println!(r#"                 _   _ _                  "#);
     println!(r#"  _ __ _   _ ___| |_| (_)_ __   __ _ ___  "#);
     println!(r#" | '__| | | / __| __| | | '_ \ / _` / __| "#);
@@ -130,6 +139,17 @@ fn main() {
         compile_only("exercises/error_handling/option1.rs");
         test("exercises/error_handling/result1.rs");
     }
+
+    if let None = matches.subcommand_name() {
+        let mut highlighter = HighlightFile::new("default_out.md", &ss, &ts.themes["Solarized (dark)"]).unwrap();
+        for maybe_line in highlighter.reader.lines() {
+            let line = maybe_line.unwrap();
+            let regions: Vec<(Style, &str)> = highlighter.highlight_lines.highlight(&line, &ss);
+            println!("{}", as_24_bit_terminal_escaped(&regions[..], true));
+        }
+    }
+
+    println!("\x1b[0m");
 }
 
 fn compile_only(filename: &str) {
