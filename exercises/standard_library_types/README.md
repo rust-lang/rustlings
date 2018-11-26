@@ -1,0 +1,1 @@
+For this exercise check out the chapter [Shared-State Concurrency](https://doc.rust-lang.org/book/second-edition/ch16-03-shared-state.html) of the Rust Book.
