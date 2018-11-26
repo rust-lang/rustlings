@@ -21,7 +21,7 @@ in the playground to find comments that have hints.
 
 ### To do these exercises in your local environment and execute them online afterwards:
 
-* clone the repo to your local environment: `git clone git@github.com:rustlings/rustlings.git`
+* clone the repo to your local environment: `git clone https://github.com/rustlings/rustlings.git`
 * edit the rustling that you want, per example `variables/variables1.rs`
 * run `cargo run` in the project folder
 * you will notice that your README file was modified and now it has the new content of the file that you edited
