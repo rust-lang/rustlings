@@ -141,7 +141,7 @@ fn main() {
     }
 
     if let None = matches.subcommand_name() {
-        let mut highlighter = HighlightFile::new("default_out.md", &ss, &ts.themes["Solarized (dark)"]).unwrap();
+        let mut highlighter = HighlightFile::new("default_out.md", &ss, &ts.themes["base16-eighties.dark"]).unwrap();
         for maybe_line in highlighter.reader.lines() {
             let line = maybe_line.unwrap();
             let regions: Vec<(Style, &str)> = highlighter.highlight_lines.highlight(&line, &ss);
