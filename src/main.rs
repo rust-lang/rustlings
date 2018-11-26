@@ -137,7 +137,7 @@ fn compile_only(filename: &str) {
     bar.set_message(format!("Compiling {}...", filename).as_str());
     bar.enable_steady_tick(100);
     let compilecmd = Command::new("rustc")
-        .args(&[filename, "-o", "temp"])
+        .args(&[filename, "-o", "temp", "--color", "always"])
         .output()
         .expect("fail");
     bar.finish_and_clear();
