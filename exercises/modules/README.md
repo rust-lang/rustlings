@@ -1,1 +1,1 @@
-For this exercise check out the [Modules](https://doc.rust-lang.org/book/second-edition/ch07-01-mod-and-the-filesystem.html) chapter of the Rust Book.
+For this exercise check out the [Modules](https://doc.rust-lang.org/book/2018-edition/ch07-01-mod-and-the-filesystem.html) chapter of the Rust Book.
