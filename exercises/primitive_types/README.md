@@ -1,0 +1,1 @@
+For this exercise check out the chapter [Data Types](https://doc.rust-lang.org/book/2018-edition/ch03-02-data-types.html) of the Rust Book.

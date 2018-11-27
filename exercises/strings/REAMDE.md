@@ -1,0 +1,1 @@
+For this exercise check out the chapter [Strings](https://doc.rust-lang.org/book/2018-edition/ch08-02-strings.html) of the Rust Book.
