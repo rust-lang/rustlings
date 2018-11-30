@@ -1,6 +1,6 @@
 # rustlings
 
-Greetings and welcome to rustlings. This project contains small exercises get you used to reading and writing code. This includes reading and responding to compiler messages!
+Greetings and welcome to rustlings. This project contains small exercises to get you used to reading and writing code. This includes reading and responding to compiler messages!
 
 ## How to get started
 
@@ -30,7 +30,7 @@ If you choose to not install rustlings, just replace `rustlings` with `cargo run
 
 ## Doing exercises
 
-The execises are sorted by topic and can be found in the subdirectory `rustlings/exercises/<topic>`.
+The exercises are sorted by topic and can be found in the subdirectory `rustlings/exercises/<topic>`. For every topic there is an additional README file with some resources to get you started on the topic. We really recommend, that you have a look at them before you start. 
 
 For every topic there is an additional README file with some resources to get you started on the topic. We really recommend, that you have a look at them before you start.
 

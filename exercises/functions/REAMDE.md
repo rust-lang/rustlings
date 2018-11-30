@@ -1,0 +1,1 @@
+For this exercise check out the chapter [Functions](https://doc.rust-lang.org/book/2018-edition/ch03-03-how-functions-work.html) of the Rust Book.
