@@ -3,22 +3,51 @@
 Greetings and welcome to rustlings. This project contains small exercises to get you used to reading and writing code. This includes reading and responding to compiler messages!
 
 ## How to get started
-To use rustlings you have to have [rust](https://www.rust-lang.org/) installed on your machine.
-If you already have it, you can clone the repo to your local environment with:
-``` bash
+
+To use rustlings you need to have a [Rust](https://www.rust-lang.org/) toolchain installed. To install it go to [rustup.rs](https://rustup.rs/).
+
+Once Rust is installed, clone the rustlings repository and enter the resulting directory:
+
+```bash
 git clone https://github.com/rustlings/rustlings.git
+cd rustlings
 ```
-To run rustlings you can either use `cargo run <subcommand>` or you can install rustlings on your machine
-by running `cargo install --path <path to the rustlings repo>` 
-(NOTE: for rustling to function you have to be in the directory of the repo).
+
+Once in the directory you can install rustlings on your machine and run exercises:
+
+```bash
+cargo install --path .
+rustlings <command>
+```
+
+Or run rustlings directly with cargo, without installing it:
+
+```bash
+cargo run <command>
+```
+
+If you choose to not install rustlings, just replace `rustlings` with `cargo run` in the rest of this text.
 
 ## Doing exercises
+
 The exercises are sorted by topic and can be found in the subdirectory `rustlings/exercises/<topic>`. For every topic there is an additional README file with some resources to get you started on the topic. We really recommend, that you have a look at them before you start. 
 
-Your task is simple every exercise contains an error you have to solve, in order to make it compile. 
+For every topic there is an additional README file with some resources to get you started on the topic. We really recommend, that you have a look at them before you start.
 
-Running rustlings with the subcommand `verify` will compile every exercise in the recommended order. It will stop at the first exercise that didn't compile and show you the error to be solved.
+Your task is simple. Every exercise contains an error you have to solve, in order to make it compile.
 
-If you want to run a single exercise, you can use the subcommand `run <path to the exercise>`.
+Running `rustlings verify` will compile every exercise in the recommended order. It will stop at the first exercise that didn't compile and show you the error to be solved.
 
-When you struggle to solve the error, there is usually a tip at the bottom of each exercise. 
+`rustlings watch` will rerun this verification every time you save an exercise.
+
+To compile and run a single exercise you can use `rustlings run <path to the exercise>`.
+
+In case you get stuck, there is usually a hint at the bottom of each exercise.
+
+### Need help?
+
+If you need more help or would like to compare solutions, you can ask in [#rust-beginners on
+irc.mozilla.org](https://chat.mibbit.com/?server=irc.mozilla.org&channel=%23rust-beginners ), the
+[user forum](https://users.rust-lang.org/), or [the subreddit](https://reddit.com/r/rust). If an
+exercise could be improved in any way, please [create an
+issue](https://github.com/carols10cents/rustlings/issues/new) or submit a pull request!
