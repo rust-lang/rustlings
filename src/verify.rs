@@ -1,7 +1,7 @@
+use crate::util::clean;
 use console::{style, Emoji};
 use indicatif::ProgressBar;
 use std::process::Command;
-use crate::util::clean;
 
 pub fn verify() -> Result<(), ()> {
     compile_only("exercises/ex1.rs")?;

@@ -1,7 +1,7 @@
+use crate::util::clean;
 use console::{style, Emoji};
 use indicatif::ProgressBar;
 use std::process::Command;
-use crate::util::clean;
 
 pub fn run(matches: clap::ArgMatches) {
     if let Some(filename) = matches.value_of("file") {
@@ -16,19 +16,17 @@ pub fn run(matches: clap::ArgMatches) {
         if compilecmd.status.success() {
             let runcmd = Command::new("./temp").output().expect("fail");
             bar.finish_and_clear();
-            
+
             if runcmd.status.success() {
                 println!("{}", String::from_utf8_lossy(&runcmd.stdout));
-                let formatstr =
-                    format!("{} Successfully ran {}", Emoji("✅", "✓"), filename);
+                let formatstr = format!("{} Successfully ran {}", Emoji("✅", "✓"), filename);
                 println!("{}", style(formatstr).green());
                 clean();
             } else {
                 println!("{}", String::from_utf8_lossy(&runcmd.stdout));
                 println!("{}", String::from_utf8_lossy(&runcmd.stderr));
-                
-                let formatstr =
-                    format!("{} Ran {} with errors", Emoji("⚠️ ", "!"), filename);
+
+                let formatstr = format!("{} Ran {} with errors", Emoji("⚠️ ", "!"), filename);
                 println!("{}", style(formatstr).red());
                 clean();
             }
