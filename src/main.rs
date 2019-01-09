@@ -25,7 +25,8 @@ fn main() {
         .subcommand(
             SubCommand::with_name("run")
                 .alias("r")
-                .arg(Arg::with_name("file").required(true).index(1)),
+                .arg(Arg::with_name("file").required(true).index(1))
+                .arg(Arg::with_name("test").short("t").long("test")),
         )
         .get_matches();
 

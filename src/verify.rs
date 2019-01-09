@@ -78,7 +78,7 @@ fn compile_only(filename: &str) -> Result<(), ()> {
     }
 }
 
-fn test(filename: &str) -> Result<(), ()> {
+pub fn test(filename: &str) -> Result<(), ()> {
     let bar = ProgressBar::new_spinner();
     bar.set_message(format!("Testing {}...", filename).as_str());
     bar.enable_steady_tick(100);

@@ -1,10 +1,18 @@
 use crate::util::clean;
+use crate::verify::test;
 use console::{style, Emoji};
 use indicatif::ProgressBar;
 use std::process::Command;
 
 pub fn run(matches: clap::ArgMatches) {
     if let Some(filename) = matches.value_of("file") {
+        if matches.is_present("test") {
+            match test(filename) {
+                Ok(_) => (),
+                Err(_) => (),
+            }
+            std::process::exit(0);
+        }
         let bar = ProgressBar::new_spinner();
         bar.set_message(format!("Compiling {}...", filename).as_str());
         bar.enable_steady_tick(100);
