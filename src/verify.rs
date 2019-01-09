@@ -4,11 +4,6 @@ use indicatif::ProgressBar;
 use std::process::Command;
 
 pub fn verify() -> Result<(), ()> {
-    compile_only("exercises/ex1.rs")?;
-    compile_only("exercises/ex2.rs")?;
-    compile_only("exercises/ex3.rs")?;
-    compile_only("exercises/ex4.rs")?;
-    compile_only("exercises/ex5.rs")?;
     compile_only("exercises/variables/variables1.rs")?;
     compile_only("exercises/variables/variables2.rs")?;
     compile_only("exercises/variables/variables3.rs")?;
