@@ -1,21 +1,13 @@
-#[macro_use]
-extern crate clap;
-extern crate console;
-extern crate indicatif;
-extern crate syntect;
-extern crate notify;
-
-use clap::{App, Arg, SubCommand};
+use clap::{App, Arg, SubCommand, crate_version};
 use console::{style, Emoji};
 use indicatif::ProgressBar;
 use syntect::easy::HighlightFile;
 use syntect::parsing::SyntaxSet;
 use syntect::highlighting::{ThemeSet, Style};
-use syntect::util::{as_24_bit_terminal_escaped, LinesWithEndings};
+use syntect::util::{as_24_bit_terminal_escaped};
 use std::fs::remove_file;
 use std::io::BufRead;
 use std::process::Command;
-use std::fs::read_to_string;
 use std::sync::mpsc::channel;
 use std::time::Duration;
 use notify::DebouncedEvent;
