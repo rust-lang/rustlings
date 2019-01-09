@@ -19,6 +19,7 @@ pub fn verify() -> Result<(), ()> {
     compile_only("exercises/primitive_types/primitive_types4.rs")?;
     compile_only("exercises/primitive_types/primitive_types5.rs")?;
     compile_only("exercises/primitive_types/primitive_types6.rs")?;
+    compile_only("exercises/test1.rs")?;
     test("exercises/tests/tests1.rs")?;
     test("exercises/tests/tests2.rs")?;
     test("exercises/tests/tests3.rs")?;
