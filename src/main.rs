@@ -32,13 +32,17 @@ fn main() {
     let ss = SyntaxSet::load_defaults_newlines();
     let ts = ThemeSet::load_defaults();
 
-    println!(r#"                 _   _ _                  "#);
-    println!(r#"  _ __ _   _ ___| |_| (_)_ __   __ _ ___  "#);
-    println!(r#" | '__| | | / __| __| | | '_ \ / _` / __| "#);
-    println!(r#" | |  | |_| \__ \ |_| | | | | | (_| \__ \ "#);
-    println!(r#" |_|   \__,_|___/\__|_|_|_| |_|\__, |___/ "#);
-    println!(r#"                               |___/      "#);
-    println!("");
+    if None == matches.subcommand_name() {
+        println!("");
+        println!(r#"       welcome to...                      "#);
+        println!(r#"                 _   _ _                  "#);
+        println!(r#"  _ __ _   _ ___| |_| (_)_ __   __ _ ___  "#);
+        println!(r#" | '__| | | / __| __| | | '_ \ / _` / __| "#);
+        println!(r#" | |  | |_| \__ \ |_| | | | | | (_| \__ \ "#);
+        println!(r#" |_|   \__,_|___/\__|_|_|_| |_|\__, |___/ "#);
+        println!(r#"                               |___/      "#);
+        println!("");
+    }
 
     if let Some(matches) = matches.subcommand_matches("run") {
         run(matches.clone());
