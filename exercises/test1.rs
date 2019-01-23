@@ -1,15 +1,20 @@
 // test1.rs
-// Make me compile! Scroll down for hints :)
+// This is a test for the following sections:
+// - Variables
+// - Functions
 
-fn something() -> [f32; 120] {
-    ???
-}
-
-fn something_else() -> String {
-    ???
-}
+// Mary is buying apples. One apple usually costs 2 dollars, but if you buy
+// more than 40 at once, each apple only costs 1! Write a function that calculates
+// the price of an order of apples given the order amount.
 
 fn main() {
-    println!("This array is {} items long, and it should be 120", something().len()); 
-    println!("This function returns a string: {}", something_else());
+    let price1 = calculateprice(55);
+    let price2 = calculateprice(40);
+
+    // Don't modify this!
+    if price1 == 55 && price2 == 80 {
+        println!("Good job!");
+    } else {
+        panic!("Uh oh! Wrong price!");
+    }
 }
