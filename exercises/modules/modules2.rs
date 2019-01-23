@@ -1,25 +1,25 @@
 // modules2.rs
 // Make me compile! Scroll down for hints :)
 
-mod us_presidential_frontrunners {
-    use self::democrats::HILLARY_CLINTON as democrat;
-    use self::republicans::DONALD_TRUMP as republican;
+mod delicious_snacks { 
+    use self::fruits::PEAR as fruit;
+    use self::veggies::CUCUMBER as veggie;
 
-    mod democrats {
-        pub const HILLARY_CLINTON: &'static str = "Hillary Clinton";
-        pub const BERNIE_SANDERS: &'static str = "Bernie Sanders";
+    mod fruits {
+        pub const PEAR: &'static str = "Pear";
+        pub const APPLE: &'static str = "Apple";
     }
 
-    mod republicans {
-        pub const DONALD_TRUMP: &'static str = "Donald Trump";
-        pub const JEB_BUSH: &'static str = "Jeb Bush";
+    mod veggies {
+        pub const CUCUMBER: &'static str = "Cucumber";
+        pub const CARROT: &'static str = "Carrot";
     }
 }
 
 fn main() {
-    println!("candidates: {} and {}",
-             us_presidential_frontrunners::democrat,
-             us_presidential_frontrunners::republican);
+    println!("favorite snacks: {} and {}",
+             delicious_snacks::fruit,
+             delicious_snacks::veggie);
 }
 
 
@@ -38,8 +38,8 @@ fn main() {
 
 
 
-// The us_presidential_frontrunners module is trying to present an external
-// interface (the `democrat` and `republican` constants) that is different than
-// its internal structure (the `democrats` and `republicans` modules and
+// The delicious_snacks module is trying to present an external
+// interface (the `fruit` and `veggie` constants) that is different than
+// its internal structure (the `fruits` and `veggies` modules and
 // associated constants). It's almost there except for one keyword missing for
 // each constant.
