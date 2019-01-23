@@ -33,18 +33,83 @@ If you choose to not install the `rustlings` command, just replace `rustlings` w
 
 The exercises are sorted by topic and can be found in the subdirectory `rustlings/exercises/<topic>`. For every topic there is an additional README file with some resources to get you started on the topic. We really recommend that you have a look at them before you start. 
 
-Your task is simple. Every exercise contains an error you have to solve in order to make it compile. Running `rustlings verify` will compile every exercise in the recommended order. It will stop at the first exercise that didn't compile and show you the error to be solved.
+The task is simple. Most exercises contain an error that keep it from compiling, and it's up to you to fix it! Some exercises are also ran as tests, but rustlings handles them all the same. To run the exercises in the recommended order, execute:
 
-`rustlings watch` will rerun this verification every time you save an exercise.
+```bash
+rustlings verify
+```
 
-To compile and run a single exercise you can use `rustlings run <path to the exercise>`.
+This will try to verify the completion of every exercise in a predetermined order (what we think is best for newcomers). If you don't want to rerun `verify` every time you change a file, you can run:
+
+```bash
+rustlings watch
+```
+
+This will do the same as verify, but won't quit after running and instead automatically rerun as soon as you change a file in the `exercises/` directory.
+
+In case you want to go by your own order, or want to only verify a single exercise, you can run:
+
+```bash
+rustlings run exercises/path/to/exercise.rs
+```
+
+Or if it's a `#[test]`:
+
+```bash
+rustlings run --test exercises/path/to/exercise_with_test.rs
+```
 
 In case you get stuck, there is usually a hint at the bottom of each exercise.
 
-### Need help?
+## Testing yourself
 
-If you need more help or would like to compare solutions, you can ask in [#rust-beginners on
-irc.mozilla.org](https://chat.mibbit.com/?server=irc.mozilla.org&channel=%23rust-beginners ), the
-[user forum](https://users.rust-lang.org/), or [the subreddit](https://reddit.com/r/rust). If an
-exercise could be improved in any way, please [create an
-issue](https://github.com/carols10cents/rustlings/issues/new) or submit a pull request!
+After every couple of sections, there will be a test that'll test your knowledge on a bunch of sections at once. These tests are found in `exercises/testN.rs`.
+
+## Completion
+
+Rustlings isn't done; there are a couple of sections that are very experimental and don't have proper documentation. These include:
+
+- Errors (`exercises/errors/`)
+- Option (`exercises/option/`)
+- Result (`exercises/result/`)
+- Move Semantics (could still be improved, `exercises/move_semantics/`)
+
+Additionally, we could use exercises on a couple of topics:
+
+- Structs
+- Better ownership stuff
+- `impl`
+- ??? probably more
+
+If you are interested in improving or adding new ones, please feel free to contribute! Read on for more information :)
+
+## Contributing
+
+### Adding an exercise
+
+First step is to add the exercise! Call it `exercises/yourTopic/yourTopicN.rs`, make sure to
+put in some helpful links, and link to sections of the book in `exercises/yourTopic/README.md`.
+
+Then, you'll want to make sure it gets verified when you run `rustlings verify`. Open `src/verify.rs` and
+put your exercise somewhere in there:
+
+```diff
+  ...
+  compile_only("exercises/functions5.rs")?;
++ compile_only("exercises/yourTopic/yourTopicN.rs")?;
+  compile_only("exercises/test1.rs")?;
+  ...
+```
+
+That's all!
+
+### Working on the source code
+
+`rustlings` is basically a glorified `rustc` wrapper. Therefore the source code
+isn't really that complicated since the bulk of the work is done by `rustc`.
+`src/main.rs` contains a simple `clap` CLI that loads from `src/verify.rs` and `src/run.rs`.
+
+## Credits
+
+`rustlings` was originally written by [Carol](https://github.com/carols10cents)!
+
