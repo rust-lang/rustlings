@@ -18,15 +18,16 @@ mod verify;
 fn main() {
     let matches = App::new("rustlings")
         .version(crate_version!())
-        .author("Olivia Hugger")
-        .about("Test")
-        .subcommand(SubCommand::with_name("verify").alias("v"))
-        .subcommand(SubCommand::with_name("watch").alias("w"))
+        .author("Olivia Hugger, Carol Nichols")
+        .about("Rustlings is a collection of small exercises to get you used to writing and reading Rust code")
+        .subcommand(SubCommand::with_name("verify").alias("v").about("Verifies all exercises according to the recommended order"))
+        .subcommand(SubCommand::with_name("watch").alias("w").about("Reruns `verify` when files were edited"))
         .subcommand(
             SubCommand::with_name("run")
                 .alias("r")
+                .about("Runs/Tests a single exercise")
                 .arg(Arg::with_name("file").required(true).index(1))
-                .arg(Arg::with_name("test").short("t").long("test")),
+                .arg(Arg::with_name("test").short("t").long("test").help("Run the file as a test")),
         )
         .get_matches();
 
