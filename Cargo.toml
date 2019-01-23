@@ -1,9 +1,12 @@
 [package]
 name = "rustlings"
 version = "0.1.0"
-authors = ["Carol (Nichols || Goulding) <carol.nichols@gmail.com>"]
+authors = ["olivia <819880950@qq.com>", "Carol (Nichols || Goulding) <carol.nichols@gmail.com"]
+edition = "2018"
 
 [dependencies]
-handlebars = "0.32.0"
-serde_json = "1.0.10"
-prlink = { git = "https://github.com/btbytes/prlink" }
+clap = "2.32.0"
+indicatif = "0.9.0"
+console = "0.6.2"
+syntect = "3.0.2"
+notify = "4.0.0"

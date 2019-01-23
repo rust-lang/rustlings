@@ -1,0 +1,1 @@
+For this exercise check out the [Dining Philosophers example](https://doc.rust-lang.org/1.4.0/book/dining-philosophers.html) and the chapter [Concurrency](https://doc.rust-lang.org/book/2018-edition/ch16-01-threads.html) of the Rust Book.
