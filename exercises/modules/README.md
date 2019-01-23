@@ -1,1 +1,7 @@
-For this exercise check out the [Modules](https://doc.rust-lang.org/book/2018-edition/ch07-01-mod-and-the-filesystem.html) chapter of the Rust Book.
+### Modules
+
+In this section we'll give you an introduction to Rust's module system.
+
+#### Book Sections
+
+- [The Module System](https://doc.rust-lang.org/stable/book/ch07-02-modules-and-use-to-control-scope-and-privacy.html)

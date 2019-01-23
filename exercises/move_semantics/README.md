@@ -1,7 +1,10 @@
-These exercises are adapted from [pnkfelix](https://github.com/rustlings/rustlings/blob/master)'s [Rust Tutorial](https://pnkfelix.github.io/rust-examples-icfp2014/) -- Thank you Felix!!!
+### Move Semantics
 
-For this exercise check out the chapters:
-- [Ownership](https://doc.rust-lang.org/book/2018-edition/ch04-01-what-is-ownership.html)
-- [Reference and borrowing](https://doc.rust-lang.org/book/2018-edition/ch04-02-references-and-borrowing.html)
+These exercises are adapted from [pnkfelix](https://github.com/pnkfelix)'s [Rust Tutorial](https://pnkfelix.github.io/rust-examples-icfp2014/) -- Thank you Felix!!!
 
-of the Rust Book.
+#### Book Sections
+
+For this section, the book links are especially important.
+
+- [Ownership](https://doc.rust-lang.org/stable/book/ch04-01-what-is-ownership.html)
+- [Reference and borrowing](https://doc.rust-lang.org/stable/book/ch04-02-references-and-borrowing.html)

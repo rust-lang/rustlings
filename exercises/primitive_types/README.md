@@ -1,1 +1,8 @@
-For this exercise check out the chapter [Data Types](https://doc.rust-lang.org/book/2018-edition/ch03-02-data-types.html) of the Rust Book.
+### Primitive Types
+
+Rust has a couple of basic types that are directly implemented into the
+compiler. In this section, we'll go through the most important ones.
+
+#### Book Sections
+
+- [Data Types](https://doc.rust-lang.org/stable/book/ch03-02-data-types.html)

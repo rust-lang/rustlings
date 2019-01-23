@@ -1,1 +1,7 @@
-For this exercise checkout the section [Variables and Mutability](https://doc.rust-lang.org/book/2018-edition/ch03-01-variables-and-mutability.html) of the Rust Book.
+### Variables
+
+Here you'll learn about simple variables.
+
+#### Book Sections
+
+- [Variables and Mutability](https://doc.rust-lang.org/stable/book/ch03-01-variables-and-mutability.html)

@@ -1,2 +1,10 @@
-For this exercise check out the section [Macros](https://doc.rust-lang.org/book/2018-edition/macros.html) and the chapter
-[Macros Appendix](https://doc.rust-lang.org/book/2018-edition/appendix-04-macros.html) of the Rust Book and [The Little Book of Rust Macros](https://danielkeep.github.io/tlborm/book/index.html). 
+### Macros
+
+Rust's macro system is very powerful, but also kind of difficult to wrap your
+head around. We're not going to teach you how to write your own fully-featured
+modules, instead we'll show you how to use and create them.
+
+#### Book Sections
+
+- [Macros](https://doc.rust-lang.org/stable/book/ch19-06-macros.html)
+- [The Little Book of Rust Macros](https://danielkeep.github.io/tlborm/book/index.html)

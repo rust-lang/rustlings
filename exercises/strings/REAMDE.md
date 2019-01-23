@@ -1,1 +1,9 @@
-For this exercise check out the chapter [Strings](https://doc.rust-lang.org/book/2018-edition/ch08-02-strings.html) of the Rust Book.
+### Strings
+
+Rust has two string types, a string slice (`&str`) and an owned string (`String`).
+We're not going to dictate when you should use which one, but we'll show you how
+to identify and create them, as well as use them.
+
+#### Book Sections
+
+- [Strings](https://doc.rust-lang.org/stable/book/ch08-02-strings.html)
