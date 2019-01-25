@@ -17,7 +17,7 @@ pub fn run(matches: clap::ArgMatches) {
         bar.set_message(format!("Compiling {}...", filename).as_str());
         bar.enable_steady_tick(100);
         let compilecmd = Command::new("rustc")
-            .args(&[filename, "-o", "temp"])
+            .args(&[filename, "-o", "temp", "--color", "always"])
             .output()
             .expect("fail");
         bar.set_message(format!("Running {}...", filename).as_str());
