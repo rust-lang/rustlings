@@ -84,7 +84,7 @@ pub fn test(filename: &str) -> Result<(), ()> {
     bar.set_message(format!("Testing {}...", filename).as_str());
     bar.enable_steady_tick(100);
     let testcmd = Command::new("rustc")
-        .args(&["--test", filename, "-o", "temp"])
+        .args(&["--test", filename, "-o", "temp", "--color", "always"])
         .output()
         .expect("fail");
     bar.finish_and_clear();
