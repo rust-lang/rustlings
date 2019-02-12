@@ -4,7 +4,7 @@
 
 Greetings and welcome to `rustlings`. This project contains small exercises to get you used to reading and writing Rust code. This includes reading and responding to compiler messages!
 
-_...looking for the old, web-based version of Rustlings? Try [here](https://github.com/rustlings/rustlings/tree/rustlings-1)_
+_...looking for the old, web-based version of Rustlings? Try [here](https://github.com/rust-lang/rustlings/tree/rustlings-1)_
 
 Alternatively, for a first-time Rust learner, there's several other resources:
 
@@ -18,7 +18,7 @@ To use `rustlings` you need to have [Rust](https://www.rust-lang.org/) installed
 Once Rust is installed, clone the `rustlings` repository and enter the resulting directory:
 
 ```bash
-git clone https://github.com/rustlings/rustlings.git
+git clone https://github.com/rust-lang/rustlings.git
 cd rustlings
 ```
 

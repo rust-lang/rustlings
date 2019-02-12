@@ -5,7 +5,7 @@ Thanks for installing `rustlings`!
 Let's make sure you're up to speed:
 - You have Rust installed, preferably via `rustup`
 - You have `~/.cargo/bin` added to your PATH variable
-- You have cloned this repository (https://github.com/rustlings/rustlings)
+- You have cloned this repository (https://github.com/rust-lang/rustlings)
 - You have installed Rust language support for your editor
 - You have locally installed the `rustlings` command by running:
 
