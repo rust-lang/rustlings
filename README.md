@@ -22,6 +22,8 @@ git clone https://github.com/rust-lang/rustlings.git
 cd rustlings
 ```
 
+_Note: If you're on MacOS, make sure you've installed Xcode and its developer tools by typing `xcode-select --install`._
+
 Once in the directory you can install `rustlings` on your machine and run the introduction:
 
 ```bash
