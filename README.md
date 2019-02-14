@@ -24,6 +24,8 @@ cd rustlings
 
 _Note: If you're on MacOS, make sure you've installed Xcode and its developer tools by typing `xcode-select --install`._
 
+_Note: If you have Xcode 10+ installed, you also need to install the package file found at `/Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg`._
+
 Once in the directory you can install `rustlings` on your machine and run the introduction:
 
 ```bash
