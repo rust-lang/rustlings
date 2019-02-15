@@ -14,7 +14,7 @@ pub fn verify() -> Result<(), ()> {
     compile_only("exercises/functions/functions3.rs")?;
     compile_only("exercises/functions/functions4.rs")?;
     compile_only("exercises/functions/functions5.rs")?;
-    compile_only("exercises/test1.rs")?;
+    test("exercises/test1.rs")?;
     compile_only("exercises/primitive_types/primitive_types1.rs")?;
     compile_only("exercises/primitive_types/primitive_types2.rs")?;
     compile_only("exercises/primitive_types/primitive_types3.rs")?;
@@ -87,19 +87,36 @@ pub fn test(filename: &str) -> Result<(), ()> {
         .args(&["--test", filename, "-o", "temp", "--color", "always"])
         .output()
         .expect("fail");
-    bar.finish_and_clear();
     if testcmd.status.success() {
-        let formatstr = format!("{} Successfully tested {}!", Emoji("✅", "✓"), filename);
-        println!("{}", style(formatstr).green());
-        clean();
-        Ok(())
+        bar.set_message(format!("Running {}...", filename).as_str());
+        let runcmd = Command::new("./temp").output().expect("fail");
+        bar.finish_and_clear();
+
+        if runcmd.status.success() {
+            let formatstr = format!("{} Successfully tested {}!", Emoji("✅", "✓"), filename);
+            println!("{}", style(formatstr).green());
+            clean();
+            Ok(())
+        } else {
+            let formatstr = format!(
+                "{} Testing of {} failed! Please try again. Here's the output:",
+                Emoji("⚠️ ", "!"),
+                filename
+            );
+            println!("{}", style(formatstr).red());
+            println!("{}", String::from_utf8_lossy(&runcmd.stdout));
+            clean();
+            Err(())
+        }
     } else {
+        bar.finish_and_clear();
         let formatstr = format!(
-            "{} Testing of {} failed! Please try again.",
+            "{} Compiling of {} failed! Please try again. Here's the output:",
             Emoji("⚠️ ", "!"),
             filename
         );
         println!("{}", style(formatstr).red());
+        println!("{}", String::from_utf8_lossy(&testcmd.stderr));
         clean();
         Err(())
     }
