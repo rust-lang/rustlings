@@ -45,6 +45,7 @@ pub fn verify() -> Result<(), ()> {
     test("exercises/error_handling/errorsn.rs")?;
     compile_only("exercises/error_handling/option1.rs")?;
     test("exercises/error_handling/result1.rs")?;
+    compile_only("exercises/threads/threads1.rs")?;
     Ok(())
 }
 
