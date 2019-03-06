@@ -68,12 +68,6 @@ In case you want to go by your own order, or want to only verify a single exerci
 rustlings run exercises/path/to/exercise.rs
 ```
 
-Or if it's a `#[test]`:
-
-```bash
-rustlings run --test exercises/path/to/exercise_with_test.rs
-```
-
 In case you get stuck, there is usually a hint at the bottom of each exercise.
 
 ## Testing yourself
