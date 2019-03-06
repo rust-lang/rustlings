@@ -3,6 +3,7 @@ use crate::verify::verify;
 use clap::{crate_version, App, Arg, SubCommand};
 use notify::DebouncedEvent;
 use notify::{RecommendedWatcher, RecursiveMode, Watcher};
+use std::ffi::OsStr;
 use std::io::BufRead;
 use std::sync::mpsc::channel;
 use std::time::Duration;
@@ -85,8 +86,10 @@ fn watch() -> notify::Result<()> {
     loop {
         match rx.recv() {
             Ok(event) => match event {
-                DebouncedEvent::Chmod(_) | DebouncedEvent::Write(_) => {
-                    let _ignored = verify();
+                DebouncedEvent::Create(b) | DebouncedEvent::Chmod(b) | DebouncedEvent::Write(b) => {
+                    if b.extension() == Some(OsStr::new("rs")) {
+                        let _ignored = verify();
+                    }
                 }
                 _ => {}
             },
