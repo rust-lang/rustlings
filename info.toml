@@ -1,0 +1,199 @@
+# VARIABLES
+
+[[exercises]]
+path = "exercises/variables/variables1.rs"
+mode = "compile"
+
+[[exercises]]
+path = "exercises/variables/variables2.rs"
+mode = "compile"
+
+[[exercises]]
+path = "exercises/variables/variables3.rs"
+mode = "compile"
+
+[[exercises]]
+path = "exercises/variables/variables4.rs"
+mode = "compile"
+
+# IF
+
+[[exercises]]
+path = "exercises/if/if1.rs"
+mode = "test"
+
+# FUNCTIONS
+
+[[exercises]]
+path = "exercises/functions/functions1.rs"
+mode = "compile"
+
+[[exercises]]
+path = "exercises/functions/functions2.rs"
+mode = "compile"
+
+[[exercises]]
+path = "exercises/functions/functions3.rs"
+mode = "compile"
+
+[[exercises]]
+path = "exercises/functions/functions4.rs"
+mode = "compile"
+
+[[exercises]]
+path = "exercises/functions/functions5.rs"
+mode = "compile"
+
+# TEST 1
+
+[[exercises]]
+path = "exercises/test1.rs"
+mode = "test"
+
+# PRIMITIVE TYPES
+
+[[exercises]]
+path = "exercises/primitive_types/primitive_types1.rs"
+mode = "compile"
+
+[[exercises]]
+path = "exercises/primitive_types/primitive_types2.rs"
+mode = "compile"
+
+[[exercises]]
+path = "exercises/primitive_types/primitive_types3.rs"
+mode = "compile"
+
+[[exercises]]
+path = "exercises/primitive_types/primitive_types4.rs"
+mode = "compile"
+
+[[exercises]]
+path = "exercises/primitive_types/primitive_types5.rs"
+mode = "compile"
+
+[[exercises]]
+path = "exercises/primitive_types/primitive_types6.rs"
+mode = "compile"
+
+# TESTS
+
+[[exercises]]
+path = "exercises/tests/tests1.rs"
+mode = "test"
+
+[[exercises]]
+path = "exercises/tests/tests2.rs"
+mode = "test"
+
+[[exercises]]
+path = "exercises/tests/tests3.rs"
+mode = "test"
+
+# TEST 2
+
+[[exercises]]
+path = "exercises/test2.rs"
+mode = "test"
+
+# STRINGS
+
+[[exercises]]
+path = "exercises/strings/strings1.rs"
+mode = "compile"
+
+[[exercises]]
+path = "exercises/strings/strings2.rs"
+mode = "compile"
+
+# TEST 3
+
+[[exercises]]
+path = "exercises/test3.rs"
+mode = "compile"
+
+# MODULES
+
+[[exercises]]
+path = "exercises/modules/modules1.rs"
+mode = "compile"
+
+[[exercises]]
+path = "exercises/modules/modules2.rs"
+mode = "compile"
+
+# MACROS
+
+[[exercises]]
+path = "exercises/macros/macros1.rs"
+mode = "compile"
+
+[[exercises]]
+path = "exercises/macros/macros2.rs"
+mode = "compile"
+
+[[exercises]]
+path = "exercises/macros/macros3.rs"
+mode = "compile"
+
+[[exercises]]
+path = "exercises/macros/macros4.rs"
+mode = "compile"
+
+# TEST 4
+
+[[exercises]]
+path = "exercises/test4.rs"
+mode = "compile"
+
+# MOVE SEMANTICS
+
+[[exercises]]
+path = "exercises/move_semantics/move_semantics1.rs"
+mode = "compile"
+
+[[exercises]]
+path = "exercises/move_semantics/move_semantics2.rs"
+mode = "compile"
+
+[[exercises]]
+path = "exercises/move_semantics/move_semantics3.rs"
+mode = "compile"
+
+[[exercises]]
+path = "exercises/move_semantics/move_semantics4.rs"
+mode = "compile"
+
+# ERROR HANDLING
+
+[[exercises]]
+path = "exercises/error_handling/errors1.rs"
+mode = "test"
+
+[[exercises]]
+path = "exercises/error_handling/errors2.rs"
+mode = "test"
+
+[[exercises]]
+path = "exercises/error_handling/errors3.rs"
+mode = "test"
+
+[[exercises]]
+path = "exercises/error_handling/errorsn.rs"
+mode = "test"
+
+# OPTIONS / RESULTS
+
+[[exercises]]
+path = "exercises/error_handling/option1.rs"
+mode = "compile"
+
+[[exercises]]
+path = "exercises/error_handling/result1.rs"
+mode = "test"
+
+# THREADS
+
+[[exercises]]
+path = "exercises/threads/threads1.rs"
+mode = "compile"

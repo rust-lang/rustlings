@@ -48,7 +48,7 @@ fn main() {
     }
 
     if let Some(matches) = matches.subcommand_matches("run") {
-        run(matches.clone());
+        run(matches.clone()).unwrap();
     }
 
     if let Some(_) = matches.subcommand_matches("verify") {
