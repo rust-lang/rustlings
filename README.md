@@ -13,27 +13,36 @@ Alternatively, for a first-time Rust learner, there's several other resources:
 
 ## Getting Started
 
-To use `rustlings` you need to have [Rust](https://www.rust-lang.org/) installed on your computer. To install Rust, go to [rustup.rs](https://rustup.rs/).
-
-Once Rust is installed, clone the `rustlings` repository and enter the resulting directory:
-
-```bash
-git clone https://github.com/rust-lang/rustlings.git
-cd rustlings
-```
-
 _Note: If you're on MacOS, make sure you've installed Xcode and its developer tools by typing `xcode-select --install`._
 
 _Note: If you have Xcode 10+ installed, you also need to install the package file found at `/Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg`._
 
-Once in the directory you can install `rustlings` on your machine and run the introduction:
+You will need to have Rust installed. You can get it by visiting https://rustup.rs. This'll also install Cargo, Rust's package/project manager.
+
+## MacOS/Linux
+
+Just run:
 
 ```bash
-cargo install --path .
-rustlings
+curl -L https://git.io/rustlings | bash
+# Or if you want it to be installed to a different path:
+curl -L https://git.io/rustlings | bash -s mypath/
 ```
 
-If you choose to not install the `rustlings` command, just replace `rustlings` with `cargo run` in the rest of this text.
+This will install Rustlings and give you access to the `rustlings` command. Run it to get started!
+
+## Windows/Manually
+
+Basically: Clone the repository, checkout to the latest tag, run `cargo install`.
+
+```bash
+git clone https://github.com/rust-lang/rustlings
+cd rustlings
+git checkout tags/1.0.0 # or whatever the latest version is (find out at https://github.com/rust-lang/rustlings/releases/latest)
+cargo install --force --path .
+```
+
+Same as above, run `rustlings` to get started.
 
 ## Doing exercises
 
