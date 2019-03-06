@@ -105,18 +105,20 @@ If you are interested in improving or adding new ones, please feel free to contr
 First step is to add the exercise! Call it `exercises/yourTopic/yourTopicN.rs`, make sure to
 put in some helpful links, and link to sections of the book in `exercises/yourTopic/README.md`.
 
-Then, you'll want to make sure it gets verified when you run `rustlings verify`. Open `src/verify.rs` and
-put your exercise somewhere in there:
+Next you want to make sure it runs when using `rustlings`. All exercises are stored in `info.toml`, under the `exercises` array. They're ordered by the order they're ran when using `rustlings verify`.
 
+You want to make sure where in the file you add your exercise. If you're not sure, add it at the bottom and ask in your pull request. To add an exercise, edit the file like this:
 ```diff
   ...
-  compile_only("exercises/functions5.rs")?;
-+ compile_only("exercises/yourTopic/yourTopicN.rs")?;
-  compile_only("exercises/test1.rs")?;
++ [[exercises]]
++ path = "exercises/yourTopic/yourTopicN.rs"
++ mode = "compile"
   ...
 ```
 
-That's all!
+The `mode` attribute decides whether Rustlings will only compile your exercise, or compile and test it. If you have tests to verify in your exercise, choose `test`, otherwise `compile`.
+
+That's all! Feel free to put up a pull request.
 
 ### Working on the source code
 
