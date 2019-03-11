@@ -19,14 +19,14 @@ pub fn verify() -> Result<(), ()> {
 }
 
 fn compile_only(filename: &str) -> Result<(), ()> {
-    let bar = ProgressBar::new_spinner();
-    bar.set_message(format!("Compiling {}...", filename).as_str());
-    bar.enable_steady_tick(100);
+    let progress_bar = ProgressBar::new_spinner();
+    progress_bar.set_message(format!("Compiling {}...", filename).as_str());
+    progress_bar.enable_steady_tick(100);
     let compilecmd = Command::new("rustc")
         .args(&[filename, "-o", "temp", "--color", "always"])
         .output()
         .expect("fail");
-    bar.finish_and_clear();
+    progress_bar.finish_and_clear();
     if compilecmd.status.success() {
         let formatstr = format!(
             "{} Successfully compiled {}!",
@@ -50,17 +50,17 @@ fn compile_only(filename: &str) -> Result<(), ()> {
 }
 
 pub fn test(filename: &str) -> Result<(), ()> {
-    let bar = ProgressBar::new_spinner();
-    bar.set_message(format!("Testing {}...", filename).as_str());
-    bar.enable_steady_tick(100);
+    let progress_bar = ProgressBar::new_spinner();
+    progress_bar.set_message(format!("Testing {}...", filename).as_str());
+    progress_bar.enable_steady_tick(100);
     let testcmd = Command::new("rustc")
         .args(&["--test", filename, "-o", "temp", "--color", "always"])
         .output()
         .expect("fail");
     if testcmd.status.success() {
-        bar.set_message(format!("Running {}...", filename).as_str());
+        progress_bar.set_message(format!("Running {}...", filename).as_str());
         let runcmd = Command::new("./temp").output().expect("fail");
-        bar.finish_and_clear();
+        progress_bar.finish_and_clear();
 
         if runcmd.status.success() {
             let formatstr = format!("{} Successfully tested {}!", Emoji("✅", "✓"), filename);
@@ -79,7 +79,7 @@ pub fn test(filename: &str) -> Result<(), ()> {
             Err(())
         }
     } else {
-        bar.finish_and_clear();
+        progress_bar.finish_and_clear();
         let formatstr = format!(
             "{} Compiling of {} failed! Please try again. Here's the output:",
             Emoji("⚠️ ", "!"),

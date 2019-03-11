@@ -30,17 +30,17 @@ pub fn run(matches: clap::ArgMatches) -> Result<(), ()> {
 }
 
 pub fn compile_and_run(filename: &str) -> Result<(), ()> {
-    let bar = ProgressBar::new_spinner();
-    bar.set_message(format!("Compiling {}...", filename).as_str());
-    bar.enable_steady_tick(100);
+    let progress_bar = ProgressBar::new_spinner();
+    progress_bar.set_message(format!("Compiling {}...", filename).as_str());
+    progress_bar.enable_steady_tick(100);
     let compilecmd = Command::new("rustc")
         .args(&[filename, "-o", "temp", "--color", "always"])
         .output()
         .expect("fail");
-    bar.set_message(format!("Running {}...", filename).as_str());
+    progress_bar.set_message(format!("Running {}...", filename).as_str());
     if compilecmd.status.success() {
         let runcmd = Command::new("./temp").output().expect("fail");
-        bar.finish_and_clear();
+        progress_bar.finish_and_clear();
 
         if runcmd.status.success() {
             println!("{}", String::from_utf8_lossy(&runcmd.stdout));
@@ -58,7 +58,7 @@ pub fn compile_and_run(filename: &str) -> Result<(), ()> {
             Err(())
         }
     } else {
-        bar.finish_and_clear();
+        progress_bar.finish_and_clear();
         let formatstr = format!(
             "{} Compilation of {} failed! Compiler error message:\n",
             Emoji("⚠️ ", "!"),

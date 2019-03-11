@@ -36,7 +36,7 @@ fn main() {
     let ts = ThemeSet::load_defaults();
 
     if None == matches.subcommand_name() {
-        println!("");
+        println!();
         println!(r#"       welcome to...                      "#);
         println!(r#"                 _   _ _                  "#);
         println!(r#"  _ __ _   _ ___| |_| (_)_ __   __ _ ___  "#);
@@ -44,25 +44,25 @@ fn main() {
         println!(r#" | |  | |_| \__ \ |_| | | | | | (_| \__ \ "#);
         println!(r#" |_|   \__,_|___/\__|_|_|_| |_|\__, |___/ "#);
         println!(r#"                               |___/      "#);
-        println!("");
+        println!();
     }
 
     if let Some(matches) = matches.subcommand_matches("run") {
         run(matches.clone()).unwrap();
     }
 
-    if let Some(_) = matches.subcommand_matches("verify") {
+    if matches.subcommand_matches("verify").is_some() {
         match verify() {
             Ok(_) => {}
             Err(_) => std::process::exit(1),
         }
     }
 
-    if let Some(_) = matches.subcommand_matches("watch") {
+    if matches.subcommand_matches("watch").is_some() {
         watch().unwrap();
     }
 
-    if let None = matches.subcommand_name() {
+    if matches.subcommand_name().is_none() {
         let mut highlighter =
             HighlightFile::new("default_out.md", &ss, &ts.themes["base16-eighties.dark"]).unwrap();
         for maybe_line in highlighter.reader.lines() {
