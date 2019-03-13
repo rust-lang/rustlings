@@ -22,8 +22,8 @@ pub fn verify(start_at: Option<&str>) -> Result<(), ()> {
         }
 
         match i.get("mode").unwrap().as_str().unwrap() {
-            "test" => test(i.get("path").unwrap().as_str().unwrap())?,
-            "compile" => compile_only(i.get("path").unwrap().as_str().unwrap())?,
+            "test" => test(path)?,
+            "compile" => compile_only(path)?,
             _ => (),
         }
     }
