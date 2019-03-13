@@ -84,10 +84,12 @@ fn watch() -> notify::Result<()> {
     let _ignored = verify(None);
 
     loop {
-        match rx.recv() {
+        match rx.recv() {     
             Ok(event) => match event {
                 DebouncedEvent::Create(b) | DebouncedEvent::Chmod(b) | DebouncedEvent::Write(b) => {
                     if b.extension() == Some(OsStr::new("rs")) {
+                        println!("----------**********----------");
+                        println!();
                         let _ignored = verify(Some(b.as_path().to_str().unwrap()));
                     }
                 }
