@@ -5,10 +5,22 @@ use std::fs;
 use std::process::Command;
 use toml::Value;
 
-pub fn verify() -> Result<(), ()> {
+pub fn verify(start_at: Option<&str>) -> Result<(), ()> {
     let toml: Value = fs::read_to_string("info.toml").unwrap().parse().unwrap();
     let tomlvec: &Vec<Value> = toml.get("exercises").unwrap().as_array().unwrap();
+    let mut hit_start_at = false;
+
     for i in tomlvec {
+        let path = i.get("path").unwrap().as_str().unwrap();
+
+        if let Some(start_at) = start_at {
+            if start_at.ends_with(path) {
+                hit_start_at = true;
+            } else if !hit_start_at {
+                continue;
+            }
+        }
+
         match i.get("mode").unwrap().as_str().unwrap() {
             "test" => test(i.get("path").unwrap().as_str().unwrap())?,
             "compile" => compile_only(i.get("path").unwrap().as_str().unwrap())?,
