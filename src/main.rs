@@ -88,8 +88,7 @@ fn watch() -> notify::Result<()> {
             Ok(event) => match event {
                 DebouncedEvent::Create(b) | DebouncedEvent::Chmod(b) | DebouncedEvent::Write(b) => {
                     if b.extension() == Some(OsStr::new("rs")) {
-                        println!("----------**********----------");
-                        println!();
+                        println!("----------**********----------\n");
                         let _ignored = verify(Some(b.as_path().to_str().unwrap()));
                     }
                 }
