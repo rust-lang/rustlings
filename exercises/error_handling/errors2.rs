@@ -68,5 +68,5 @@ mod tests {
 // `Err(something)`. This pattern is very common in Rust, though, so there's
 // a `?` operator that does pretty much what you would make that match statement
 // do for you! Take a look at this section of the Error Handling chapter:
-// https://doc.rust-lang.org/stable/book/second-edition/ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator
+// https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator
 // and give it a try!
