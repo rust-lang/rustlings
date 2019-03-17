@@ -197,3 +197,17 @@ mode = "test"
 [[exercises]]
 path = "exercises/threads/threads1.rs"
 mode = "compile"
+
+# STANDARD LIBRARY TYPES
+
+[[exercises]]
+path = "exercises/standard_library_types/arc1.rs"
+mode = "compile"
+
+[[exercises]]
+path = "exercises/standard_library_types/iterator3.rs"
+mode = "test"
+
+[[exercises]]
+path = "exercises/standard_library_types/iterators4.rs"
+mode = "test"
