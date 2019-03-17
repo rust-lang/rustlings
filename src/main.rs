@@ -5,6 +5,7 @@ use notify::DebouncedEvent;
 use notify::{RecommendedWatcher, RecursiveMode, Watcher};
 use std::ffi::OsStr;
 use std::io::BufRead;
+use std::path::Path;
 use std::sync::mpsc::channel;
 use std::time::Duration;
 use syntect::easy::HighlightFile;
@@ -45,6 +46,14 @@ fn main() {
         println!(r#" |_|   \__,_|___/\__|_|_|_| |_|\__, |___/ "#);
         println!(r#"                               |___/      "#);
         println!();
+    }
+
+    if !Path::new("info.toml").exists() {
+        println!(
+            "{} must be run from the rustlings directory",
+            std::env::current_exe().unwrap().to_str().unwrap()
+        );
+        std::process::exit(1);
     }
 
     if let Some(matches) = matches.subcommand_matches("run") {
