@@ -1,0 +1,11 @@
+language: rust
+rust:
+  - stable
+  - beta
+  - nightly
+script: cargo test --verbose -- --test-threads=1
+matrix:
+  allow_failures:
+    - rust: nightly
+  fast_finish: true
+cache: cargo
