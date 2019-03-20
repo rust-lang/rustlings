@@ -1,7 +1,7 @@
 [package]
 name = "rustlings"
 version = "1.0.1"
-authors = ["Lynn <819880950@qq.com>", "Carol (Nichols || Goulding) <carol.nichols@gmail.com"]
+authors = ["Olivia <819880950@qq.com>", "Carol (Nichols || Goulding) <carol.nichols@gmail.com"]
 edition = "2018"
 
 [dependencies]
