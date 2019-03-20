@@ -11,3 +11,10 @@ console = "0.6.2"
 syntect = "3.0.2"
 notify = "4.0.0"
 toml = "0.4.10"
+
+[[bin]]
+name = "rustlings"
+path = "src/main.rs"
+
+[dev-dependencies]
+assert_cmd = "0.11.0"
