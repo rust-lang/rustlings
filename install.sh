@@ -53,11 +53,11 @@ function vercomp() {
         then
             v1[$i]=0
         fi
+        # And in v2
         if [ -z "${v2[$i]}" ]
         then
             v2[$i]=0
         fi
-        # And in v2
         if [ ${v1[$i]} -gt ${v2[$i]} ]
         then
             return 1
