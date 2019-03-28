@@ -5,29 +5,29 @@ echo "Let's get you set up with Rustlings!"
 echo "Checking requirements..."
 if [ -x "$(command -v git)" ]
 then
+    echo "SUCCESS: Git is installed"
+else
     echo "WARNING: Git does not seem to be installed."
     echo "Please download Git using your package manager or over https://git-scm.com/!"
     exit 1
-else
-    echo "SUCCESS: Git is installed"
 fi
 
 if [ -x "$(command -v rustc)" ]
 then
+    echo "SUCCESS: Rust is installed"
+else
     echo "WARNING: Rust does not seem to be installed."
     echo "Please download Rust using https://rustup.rs!"
     exit 1
-else
-    echo "SUCCESS: Rust is installed"
 fi
 
 if [ -x "$(command -v cargo)" ]
 then
+    echo "SUCCESS: Cargo is installed"
+else
     echo "WARNING: Cargo does not seem to be installed."
     echo "Please download Rust and Cargo using https://rustup.rs!"
     exit 1
-else
-    echo "SUCCESS: Cargo is installed"
 fi
 
 # Function that compares two versions strings v1 and v2 given in arguments (e.g 1.31 and 1.33.0).
