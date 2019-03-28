@@ -3,7 +3,7 @@
 echo "Let's get you set up with Rustlings!"
 
 echo "Checking requirements..."
-if [ -x "$(git)" ]
+if [ -x "$(command -v git)" ]
 then
     echo "WARNING: Git does not seem to be installed."
     echo "Please download Git using your package manager or over https://git-scm.com/!"
@@ -12,7 +12,7 @@ else
     echo "SUCCESS: Git is installed"
 fi
 
-if [ -x "$(rustc)" ]
+if [ -x "$(command -v rustc)" ]
 then
     echo "WARNING: Rust does not seem to be installed."
     echo "Please download Rust using https://rustup.rs!"
@@ -21,7 +21,7 @@ else
     echo "SUCCESS: Rust is installed"
 fi
 
-if [ -x "$(cargo)" ]
+if [ -x "$(command -v cargo)" ]
 then
     echo "WARNING: Cargo does not seem to be installed."
     echo "Please download Rust and Cargo using https://rustup.rs!"
