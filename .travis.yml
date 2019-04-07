@@ -3,7 +3,7 @@ rust:
   - stable
   - beta
   - nightly
-script: cargo test --verbose -- --test-threads=1
+script: cargo test --verbose
 matrix:
   allow_failures:
     - rust: nightly

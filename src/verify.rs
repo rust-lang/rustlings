@@ -1,8 +1,7 @@
-use crate::util::clean;
+use crate::util;
 use console::{style, Emoji};
 use indicatif::ProgressBar;
 use std::fs;
-use std::process::Command;
 use toml::Value;
 
 pub fn verify(start_at: Option<&str>) -> Result<(), ()> {
@@ -34,10 +33,7 @@ fn compile_only(filename: &str) -> Result<(), ()> {
     let progress_bar = ProgressBar::new_spinner();
     progress_bar.set_message(format!("Compiling {}...", filename).as_str());
     progress_bar.enable_steady_tick(100);
-    let compilecmd = Command::new("rustc")
-        .args(&[filename, "-o", "temp", "--color", "always"])
-        .output()
-        .expect("fail");
+    let compilecmd = util::compile_cmd(filename);
     progress_bar.finish_and_clear();
     if compilecmd.status.success() {
         let formatstr = format!(
@@ -46,7 +42,7 @@ fn compile_only(filename: &str) -> Result<(), ()> {
             filename
         );
         println!("{}", style(formatstr).green());
-        clean();
+        util::clean();
         Ok(())
     } else {
         let formatstr = format!(
@@ -56,7 +52,7 @@ fn compile_only(filename: &str) -> Result<(), ()> {
         );
         println!("{}", style(formatstr).red());
         println!("{}", String::from_utf8_lossy(&compilecmd.stderr));
-        clean();
+        util::clean();
         Err(())
     }
 }
@@ -65,19 +61,16 @@ pub fn test(filename: &str) -> Result<(), ()> {
     let progress_bar = ProgressBar::new_spinner();
     progress_bar.set_message(format!("Testing {}...", filename).as_str());
     progress_bar.enable_steady_tick(100);
-    let testcmd = Command::new("rustc")
-        .args(&["--test", filename, "-o", "temp", "--color", "always"])
-        .output()
-        .expect("fail");
+    let testcmd = util::compile_test_cmd(filename);
     if testcmd.status.success() {
         progress_bar.set_message(format!("Running {}...", filename).as_str());
-        let runcmd = Command::new("./temp").output().expect("fail");
+        let runcmd = util::run_cmd();
         progress_bar.finish_and_clear();
 
         if runcmd.status.success() {
             let formatstr = format!("{} Successfully tested {}!", Emoji("✅", "✓"), filename);
             println!("{}", style(formatstr).green());
-            clean();
+            util::clean();
             Ok(())
         } else {
             let formatstr = format!(
@@ -87,7 +80,7 @@ pub fn test(filename: &str) -> Result<(), ()> {
             );
             println!("{}", style(formatstr).red());
             println!("{}", String::from_utf8_lossy(&runcmd.stdout));
-            clean();
+            util::clean();
             Err(())
         }
     } else {
@@ -99,7 +92,7 @@ pub fn test(filename: &str) -> Result<(), ()> {
         );
         println!("{}", style(formatstr).red());
         println!("{}", String::from_utf8_lossy(&testcmd.stderr));
-        clean();
+        util::clean();
         Err(())
     }
 }

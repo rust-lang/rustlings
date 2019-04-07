@@ -1,9 +1,8 @@
-use crate::util::clean;
+use crate::util;
 use crate::verify::test;
 use console::{style, Emoji};
 use indicatif::ProgressBar;
 use std::fs;
-use std::process::Command;
 use toml::Value;
 
 pub fn run(matches: clap::ArgMatches) -> Result<(), ()> {
@@ -33,20 +32,18 @@ pub fn compile_and_run(filename: &str) -> Result<(), ()> {
     let progress_bar = ProgressBar::new_spinner();
     progress_bar.set_message(format!("Compiling {}...", filename).as_str());
     progress_bar.enable_steady_tick(100);
-    let compilecmd = Command::new("rustc")
-        .args(&[filename, "-o", "temp", "--color", "always"])
-        .output()
-        .expect("fail");
+
+    let compilecmd = util::compile_cmd(filename);
     progress_bar.set_message(format!("Running {}...", filename).as_str());
     if compilecmd.status.success() {
-        let runcmd = Command::new("./temp").output().expect("fail");
+        let runcmd = util::run_cmd();
         progress_bar.finish_and_clear();
 
         if runcmd.status.success() {
             println!("{}", String::from_utf8_lossy(&runcmd.stdout));
             let formatstr = format!("{} Successfully ran {}", Emoji("✅", "✓"), filename);
             println!("{}", style(formatstr).green());
-            clean();
+            util::clean();
             Ok(())
         } else {
             println!("{}", String::from_utf8_lossy(&runcmd.stdout));
@@ -54,7 +51,7 @@ pub fn compile_and_run(filename: &str) -> Result<(), ()> {
 
             let formatstr = format!("{} Ran {} with errors", Emoji("⚠️ ", "!"), filename);
             println!("{}", style(formatstr).red());
-            clean();
+            util::clean();
             Err(())
         }
     } else {
@@ -66,7 +63,7 @@ pub fn compile_and_run(filename: &str) -> Result<(), ()> {
         );
         println!("{}", style(formatstr).red());
         println!("{}", String::from_utf8_lossy(&compilecmd.stderr));
-        clean();
+        util::clean();
         Err(())
     }
 }
