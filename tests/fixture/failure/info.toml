@@ -1,0 +1,7 @@
+[[exercises]]
+path = "compFailure.rs"
+mode = "compile"
+
+[[exercises]]
+path = "testFailure.rs"
+mode = "test"

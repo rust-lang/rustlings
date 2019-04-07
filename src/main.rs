@@ -57,14 +57,11 @@ fn main() {
     }
 
     if let Some(matches) = matches.subcommand_matches("run") {
-        run(matches.clone()).unwrap();
+        run(matches.clone()).unwrap_or_else(|_| std::process::exit(1));
     }
 
     if matches.subcommand_matches("verify").is_some() {
-        match verify(None) {
-            Ok(_) => {}
-            Err(_) => std::process::exit(1),
-        }
+        verify(None).unwrap_or_else(|_| std::process::exit(1));
     }
 
     if matches.subcommand_matches("watch").is_some() {
