@@ -67,14 +67,17 @@ fn main() {
             std::process::exit(1);
         });
 
-        let filepath = Path::new(filename).canonicalize().unwrap();
-        let exercise = exercises
-            .iter()
-            .find(|e| filepath.ends_with(&e.path))
-            .unwrap_or_else(|| {
-                println!("No exercise found for your file name!");
-                std::process::exit(1)
-            });
+        let matching_exercise = |e: &&Exercise| {
+            Path::new(filename)
+                .canonicalize()
+                .map(|p| p.ends_with(&e.path))
+                .unwrap_or(false)
+        };
+
+        let exercise = exercises.iter().find(matching_exercise).unwrap_or_else(|| {
+            println!("No exercise found for your file name!");
+            std::process::exit(1)
+        });
 
         run(&exercise).unwrap_or_else(|_| std::process::exit(1));
     }
