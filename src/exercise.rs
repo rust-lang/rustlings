@@ -1,8 +1,8 @@
+use serde::Deserialize;
 use std::fmt::{self, Display, Formatter};
 use std::fs::{remove_file};
 use std::path::{PathBuf};
 use std::process::{self, Command, Output};
-use serde::Deserialize;
 
 const RUSTC_COLOR_ARGS: &[&str] = &["--color", "always"];
 
@@ -60,13 +60,20 @@ impl Display for Exercise {
     }
 }
 
-#[test]
-fn test_clean() {
-    std::fs::File::create(&temp_file()).unwrap();
-    let exercise = Exercise {
-        path: PathBuf::from("example.rs"),
-        mode: Mode::Test,
-    };
-    exercise.clean();
-    assert!(!std::path::Path::new(&temp_file()).exists());
+#[cfg(test)]
+mod test {
+    use super::*;
+    use std::path::Path;
+    use std::fs::File;
+
+    #[test]
+    fn test_clean() {
+        File::create(&temp_file()).unwrap();
+        let exercise = Exercise {
+            path: PathBuf::from("example.rs"),
+            mode: Mode::Test,
+        };
+        exercise.clean();
+        assert!(!Path::new(&temp_file()).exists());
+    }
 }
