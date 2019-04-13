@@ -1,57 +1,40 @@
-use crate::util;
+use crate::exercise::{Mode, Exercise};
 use crate::verify::test;
 use console::{style, Emoji};
 use indicatif::ProgressBar;
-use std::fs;
-use toml::Value;
 
-pub fn run(matches: clap::ArgMatches) -> Result<(), ()> {
-    if let Some(filename) = matches.value_of("file") {
-        let toml: Value = fs::read_to_string("info.toml").unwrap().parse().unwrap();
-        let tomlvec: &Vec<Value> = toml.get("exercises").unwrap().as_array().unwrap();
-        let mut exercises = tomlvec.clone();
-        exercises.retain(|i| i.get("path").unwrap().as_str().unwrap() == filename);
-        if exercises.is_empty() {
-            println!("No exercise found for your filename!");
-            std::process::exit(1);
-        }
-
-        let exercise: &Value = &exercises[0];
-        match exercise.get("mode").unwrap().as_str().unwrap() {
-            "test" => test(exercise.get("path").unwrap().as_str().unwrap())?,
-            "compile" => compile_and_run(exercise.get("path").unwrap().as_str().unwrap())?,
-            _ => (),
-        }
-        Ok(())
-    } else {
-        panic!("Please supply a filename!");
+pub fn run(exercise: &Exercise) -> Result<(), ()> {
+    match exercise.mode {
+        Mode::Test => test(exercise)?,
+        Mode::Compile => compile_and_run(exercise)?,
     }
+    Ok(())
 }
 
-pub fn compile_and_run(filename: &str) -> Result<(), ()> {
+pub fn compile_and_run(exercise: &Exercise) -> Result<(), ()> {
     let progress_bar = ProgressBar::new_spinner();
-    progress_bar.set_message(format!("Compiling {}...", filename).as_str());
+    progress_bar.set_message(format!("Compiling {}...", exercise).as_str());
     progress_bar.enable_steady_tick(100);
 
-    let compilecmd = util::compile_cmd(filename);
-    progress_bar.set_message(format!("Running {}...", filename).as_str());
+    let compilecmd = exercise.compile();
+    progress_bar.set_message(format!("Running {}...", exercise).as_str());
     if compilecmd.status.success() {
-        let runcmd = util::run_cmd();
+        let runcmd = exercise.run();
         progress_bar.finish_and_clear();
 
         if runcmd.status.success() {
             println!("{}", String::from_utf8_lossy(&runcmd.stdout));
-            let formatstr = format!("{} Successfully ran {}", Emoji("✅", "✓"), filename);
+            let formatstr = format!("{} Successfully ran {}", Emoji("✅", "✓"), exercise);
             println!("{}", style(formatstr).green());
-            util::clean();
+            exercise.clean();
             Ok(())
         } else {
             println!("{}", String::from_utf8_lossy(&runcmd.stdout));
             println!("{}", String::from_utf8_lossy(&runcmd.stderr));
 
-            let formatstr = format!("{} Ran {} with errors", Emoji("⚠️ ", "!"), filename);
+            let formatstr = format!("{} Ran {} with errors", Emoji("⚠️ ", "!"), exercise);
             println!("{}", style(formatstr).red());
-            util::clean();
+            exercise.clean();
             Err(())
         }
     } else {
@@ -59,11 +42,11 @@ pub fn compile_and_run(filename: &str) -> Result<(), ()> {
         let formatstr = format!(
             "{} Compilation of {} failed! Compiler error message:\n",
             Emoji("⚠️ ", "!"),
-            filename
+            exercise
         );
         println!("{}", style(formatstr).red());
         println!("{}", String::from_utf8_lossy(&compilecmd.stderr));
-        util::clean();
+        exercise.clean();
         Err(())
     }
 }
