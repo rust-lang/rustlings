@@ -38,7 +38,7 @@ impl Exercise {
             Mode::Test => Command::new("rustc")
                 .args(&["--test", self.path.to_str().unwrap(), "-o", &temp_file()])
                 .args(RUSTC_COLOR_ARGS)
-                .args(&["--" "--nocapture"])
+                .args(&["--", "--nocapture"])
                 .output(),
         }
         .expect("Failed to run 'compile' command.")
