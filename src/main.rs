@@ -55,6 +55,7 @@ fn main() {
             "{} must be run from the rustlings directory",
             std::env::current_exe().unwrap().to_str().unwrap()
         );
+        println!("Try `cd rustlings/`!");
         std::process::exit(1);
     }
 
