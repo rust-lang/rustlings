@@ -45,7 +45,6 @@ impl Exercise {
 
     pub fn run(&self) -> Output {
         Command::new(&temp_file())
-            .args(&["--", "--nocapture"])
             .output()
             .expect("Failed to run 'run' command")
     }
