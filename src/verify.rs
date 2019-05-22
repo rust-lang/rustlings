@@ -2,7 +2,7 @@ use crate::exercise::{Exercise, Mode};
 use console::{style, Emoji};
 use indicatif::ProgressBar;
 
-pub fn verify<'a>(start_at: impl IntoIterator<Item=&'a Exercise>) -> Result<(), ()> {
+pub fn verify<'a>(start_at: impl IntoIterator<Item = &'a Exercise>) -> Result<(), ()> {
     for exercise in start_at {
         match exercise.mode {
             Mode::Test => test(&exercise)?,

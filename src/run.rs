@@ -1,4 +1,4 @@
-use crate::exercise::{Mode, Exercise};
+use crate::exercise::{Exercise, Mode};
 use crate::verify::test;
 use console::{style, Emoji};
 use indicatif::ProgressBar;
