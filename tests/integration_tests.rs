@@ -77,6 +77,16 @@ fn run_single_test_failure() {
 }
 
 #[test]
+fn run_single_test_not_passed() {
+    Command::cargo_bin("rustlings")
+        .unwrap()
+        .args(&["r", "testNotPassed.rs"])
+        .current_dir("tests/fixture/failure/")
+        .assert()
+        .code(1);
+}
+
+#[test]
 fn run_single_test_no_filename() {
     Command::cargo_bin("rustlings")
         .unwrap()
