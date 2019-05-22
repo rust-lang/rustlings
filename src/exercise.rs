@@ -1,7 +1,7 @@
 use serde::Deserialize;
 use std::fmt::{self, Display, Formatter};
-use std::fs::{remove_file};
-use std::path::{PathBuf};
+use std::fs::remove_file;
+use std::path::PathBuf;
 use std::process::{self, Command, Output};
 
 const RUSTC_COLOR_ARGS: &[&str] = &["--color", "always"];
@@ -63,8 +63,8 @@ impl Display for Exercise {
 #[cfg(test)]
 mod test {
     use super::*;
-    use std::path::Path;
     use std::fs::File;
+    use std::path::Path;
 
     #[test]
     fn test_clean() {

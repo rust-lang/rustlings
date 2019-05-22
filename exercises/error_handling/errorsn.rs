@@ -65,7 +65,7 @@ fn test_ioerror() {
     assert_eq!("uh-oh!", read_and_validate(&mut b).unwrap_err().to_string());
 }
 
-#[derive(PartialEq,Debug)]
+#[derive(PartialEq, Debug)]
 struct PositiveNonzeroInteger(u64);
 
 impl PositiveNonzeroInteger {
@@ -83,11 +83,14 @@ impl PositiveNonzeroInteger {
 #[test]
 fn test_positive_nonzero_integer_creation() {
     assert!(PositiveNonzeroInteger::new(10).is_ok());
-    assert_eq!(Err(CreationError::Negative), PositiveNonzeroInteger::new(-10));
+    assert_eq!(
+        Err(CreationError::Negative),
+        PositiveNonzeroInteger::new(-10)
+    );
     assert_eq!(Err(CreationError::Zero), PositiveNonzeroInteger::new(0));
 }
 
-#[derive(PartialEq,Debug)]
+#[derive(PartialEq, Debug)]
 enum CreationError {
     Negative,
     Zero,
@@ -107,6 +110,36 @@ impl error::Error for CreationError {
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // First hint: To figure out what type should go where the ??? is, take a look
 // at the test helper function `test_with_str`, since it returns whatever

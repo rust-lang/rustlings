@@ -32,10 +32,7 @@ mod tests {
 
     #[test]
     fn item_quantity_is_a_valid_number() {
-        assert_eq!(
-            total_cost("34"),
-            Ok(171)
-        );
+        assert_eq!(total_cost("34"), Ok(171));
     }
 
     #[test]
