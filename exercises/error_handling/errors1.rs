@@ -63,7 +63,7 @@ mod tests {
 // `Option`.
 
 // To make this change, you'll need to:
-// - update the return type in the function signature to be a Result that
+// - update the return type in the function signature to be a Result<String, String> that
 //   could be the variants `Ok(String)` and `Err(String)`
 // - change the body of the function to return `Ok(stuff)` where it currently
 //   returns `Some(stuff)`
