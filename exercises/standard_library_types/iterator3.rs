@@ -114,7 +114,7 @@ mod tests {
 
 
 
-// Minor hint: In each of the two cases in the match in main, you can create x with either 
+// Minor hint: In each of the two cases in the match in main, you can create x with either
 // a 'turbofish' or by hinting the type of x to the compiler. You may try both.
 
 
@@ -143,5 +143,5 @@ mod tests {
 
 
 
-// Major hint: Have a look at the Iter trait and at the explanation of its collect function. 
+// Major hint: Have a look at the Iter trait and at the explanation of its collect function.
 // Especially the part about Result is interesting.
