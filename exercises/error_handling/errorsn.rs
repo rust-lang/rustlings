@@ -146,10 +146,48 @@ impl error::Error for CreationError {
 // `read_and_validate` returns and`test_with_str` has its signature fully
 // specified.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Next hint: There are three places in `read_and_validate` that we call a
 // function that returns a `Result` (that is, the functions might fail).
 // Apply the `?` operator on those calls so that we return immediately from
 // `read_and_validate` if those function calls fail.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Another hint: under the hood, the `?` operator calls `From::from`
 // on the error value to convert it to a boxed trait object, a Box<error::Error>,
@@ -159,11 +197,49 @@ impl error::Error for CreationError {
 // Check out this section of the book:
 // https://doc.rust-lang.org/stable/book/second-edition/ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Another another hint: Note that because the `?` operator returns
 // the *unwrapped* value in the `Ok` case, if we want to return a `Result` from
 // `read_and_validate` for *its* success case, we'll have to rewrap a value
 // that we got from the return value of a `?`ed call in an `Ok`-- this will
 // look like `Ok(something)`.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Another another another hint: `Result`s must be "used", that is, you'll
 // get a warning if you don't handle a `Result` that you get in your
