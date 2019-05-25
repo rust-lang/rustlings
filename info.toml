@@ -76,6 +76,12 @@ mode = "compile"
 path = "exercises/primitive_types/primitive_types6.rs"
 mode = "compile"
 
+# STRUCTS
+
+[[exercises]]
+path = "exercises/structs/structs1.rs"
+mode = "test"
+
 # TESTS
 
 [[exercises]]
