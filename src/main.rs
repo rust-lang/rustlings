@@ -6,14 +6,9 @@ use notify::DebouncedEvent;
 use notify::{RecommendedWatcher, RecursiveMode, Watcher};
 use std::ffi::OsStr;
 use std::fs;
-use std::io::BufRead;
 use std::path::Path;
 use std::sync::mpsc::channel;
 use std::time::Duration;
-use syntect::easy::HighlightFile;
-use syntect::highlighting::{Style, ThemeSet};
-use syntect::parsing::SyntaxSet;
-use syntect::util::as_24_bit_terminal_escaped;
 
 mod exercise;
 mod run;
@@ -34,9 +29,6 @@ fn main() {
                 .arg(Arg::with_name("test").short("t").long("test").help("Run the file as a test")),
         )
         .get_matches();
-
-    let ss = SyntaxSet::load_defaults_newlines();
-    let ts = ThemeSet::load_defaults();
 
     if None == matches.subcommand_name() {
         println!();
@@ -92,13 +84,8 @@ fn main() {
     }
 
     if matches.subcommand_name().is_none() {
-        let mut highlighter =
-            HighlightFile::new("default_out.md", &ss, &ts.themes["base16-eighties.dark"]).unwrap();
-        for maybe_line in highlighter.reader.lines() {
-            let line = maybe_line.unwrap();
-            let regions: Vec<(Style, &str)> = highlighter.highlight_lines.highlight(&line, &ss);
-            println!("{}", as_24_bit_terminal_escaped(&regions[..], true));
-        }
+        let text = fs::read_to_string("default_out.txt").unwrap();
+        println!("{}", text);
     }
 
     println!("\x1b[0m");
