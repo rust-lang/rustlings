@@ -1,6 +1,6 @@
-Thanks for installing `rustlings`!
+Thanks for installing Rustlings!
 
-## Is this your first time?
+Is this your first time?
 
 Let's make sure you're up to speed:
 - You have Rust installed, preferably via `rustup`
@@ -9,9 +9,7 @@ Let's make sure you're up to speed:
 - You have installed Rust language support for your editor
 - You have locally installed the `rustlings` command by running:
 
-```sh
 cargo install --path .
-```
 
 If you've done all of this (or even most of it), congrats! You're ready
 to start working with Rust.
