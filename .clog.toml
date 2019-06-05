@@ -1,0 +1,4 @@
+[clog]
+
+repository = "https://github.com/rust-lang/rustlings"
+changelog = "CHANGELOG.md"
