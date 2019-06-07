@@ -94,10 +94,9 @@ git checkout -q tags/$Version
 echo "Installing the 'rustlings' executable..."
 cargo install --force --path .
 
-if [ -x "$(rustlings)" ]
+if ! [ -x "$(command -v rustlings)" ]
 then
     echo "WARNING: Please check that you have '~/.cargo/bin' in your PATH environment variable!"
 fi
 
 echo "All done! Run 'rustlings' to get started."
-
