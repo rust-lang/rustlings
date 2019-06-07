@@ -4,4 +4,4 @@ Going out of order from the book to cover tests -- many of the following exercis
 
 #### Book Sections
 
-- [Writing Tests](https://doc.rust-lang.org/stable/book/ch11-01-writing-tests.html)
+- [Writing Tests](https://doc.rust-lang.org/book/ch11-01-writing-tests.html)

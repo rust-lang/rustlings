@@ -6,4 +6,4 @@ to identify and create them, as well as use them.
 
 #### Book Sections
 
-- [Strings](https://doc.rust-lang.org/stable/book/ch08-02-strings.html)
+- [Strings](https://doc.rust-lang.org/book/ch08-02-strings.html)
