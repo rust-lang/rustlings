@@ -1,7 +1,7 @@
 // modules2.rs
 // Make me compile! Scroll down for hints :)
 
-mod delicious_snacks { 
+mod delicious_snacks {
     use self::fruits::PEAR as fruit;
     use self::veggies::CUCUMBER as veggie;
 
@@ -17,9 +17,11 @@ mod delicious_snacks {
 }
 
 fn main() {
-    println!("favorite snacks: {} and {}",
-             delicious_snacks::fruit,
-             delicious_snacks::veggie);
+    println!(
+        "favorite snacks: {} and {}",
+        delicious_snacks::fruit,
+        delicious_snacks::veggie
+    );
 }
 
 

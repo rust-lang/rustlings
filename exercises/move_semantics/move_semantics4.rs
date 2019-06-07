@@ -13,7 +13,6 @@ fn main() {
     vec1.push(88);
 
     println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1);
-
 }
 
 // `fill_vec()` no longer take `vec: Vec<i32>` as argument

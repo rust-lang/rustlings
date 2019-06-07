@@ -13,8 +13,7 @@ fn main() {
     let mut joinhandles = Vec::new();
 
     for offset in 0..8 {
-        joinhandles.push(
-        thread::spawn(move || {
+        joinhandles.push(thread::spawn(move || {
             let mut i = offset;
             let mut sum = 0;
             while i < child_numbers.len() {
