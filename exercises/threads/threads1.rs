@@ -45,7 +45,7 @@ fn main() {
 // to **immutable** data. But we want to *change* the number of `jobs_completed`
 // so we'll need to also use another type that will only allow one thread to
 // mutate the data at a time. Take a look at this section of the book:
-// https://doc.rust-lang.org/stable/book/second-edition/ch16-03-shared-state.html#atomic-reference-counting-with-arct
+// https://doc.rust-lang.org/stable/book/ch16-03-shared-state.html#atomic-reference-counting-with-arct
 // and keep scrolling if you'd like more hints :)
 
 
