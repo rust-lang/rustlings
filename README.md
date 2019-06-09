@@ -94,31 +94,7 @@ If you are interested in improving or adding new ones, please feel free to contr
 
 ## Contributing
 
-### Adding an exercise
-
-First step is to add the exercise! Call it `exercises/yourTopic/yourTopicN.rs`, make sure to
-put in some helpful links, and link to sections of the book in `exercises/yourTopic/README.md`.
-
-Next you want to make sure it runs when using `rustlings`. All exercises are stored in `info.toml`, under the `exercises` array. They're ordered by the order they're ran when using `rustlings verify`.
-
-You want to make sure where in the file you add your exercise. If you're not sure, add it at the bottom and ask in your pull request. To add an exercise, edit the file like this:
-```diff
-  ...
-+ [[exercises]]
-+ path = "exercises/yourTopic/yourTopicN.rs"
-+ mode = "compile"
-  ...
-```
-
-The `mode` attribute decides whether Rustlings will only compile your exercise, or compile and test it. If you have tests to verify in your exercise, choose `test`, otherwise `compile`.
-
-That's all! Feel free to put up a pull request.
-
-### Working on the source code
-
-`rustlings` is basically a glorified `rustc` wrapper. Therefore the source code
-isn't really that complicated since the bulk of the work is done by `rustc`.
-`src/main.rs` contains a simple `clap` CLI that loads from `src/verify.rs` and `src/run.rs`.
+See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## Credits
 
