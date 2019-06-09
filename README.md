@@ -31,7 +31,7 @@ curl -L https://git.io/rustlings | bash -s mypath/
 
 This will install Rustlings and give you access to the `rustlings` command. Run it to get started!
 
-## Windows/Manually
+## Manually
 
 Basically: Clone the repository, checkout to the latest tag, run `cargo install`.
 
@@ -51,16 +51,16 @@ The exercises are sorted by topic and can be found in the subdirectory `rustling
 The task is simple. Most exercises contain an error that keep it from compiling, and it's up to you to fix it! Some exercises are also ran as tests, but rustlings handles them all the same. To run the exercises in the recommended order, execute:
 
 ```bash
-rustlings verify
-```
-
-This will try to verify the completion of every exercise in a predetermined order (what we think is best for newcomers). If you don't want to rerun `verify` every time you change a file, you can run:
-
-```bash
 rustlings watch
 ```
 
-This will do the same as verify, but won't quit after running and instead automatically rerun as soon as you change a file in the `exercises/` directory.
+This will try to verify the completion of every exercise in a predetermined order (what we think is best for newcomers). It will also rerun automatically every time you change a file in the `exercises/` directory. If you want to only run it once, you can use:
+
+```bash
+rustlings verify
+```
+
+This will do the same as watch, but it'll quit after running.
 
 In case you want to go by your own order, or want to only verify a single exercise, you can run:
 

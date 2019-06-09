@@ -14,5 +14,5 @@ cargo install --path .
 If you've done all of this (or even most of it), congrats! You're ready
 to start working with Rust.
 
-To get started, run `rustlings verify` in order to get the first exercise.
+To get started, run `rustlings watch` in order to get the first exercise.
 Make sure to have your editor open!
