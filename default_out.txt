@@ -9,7 +9,7 @@ Let's make sure you're up to speed:
 - You have installed Rust language support for your editor
 - You have locally installed the `rustlings` command by running:
 
-cargo install --path .
+cargo install --force --path .
 
 If you've done all of this (or even most of it), congrats! You're ready
 to start working with Rust.
