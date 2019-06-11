@@ -87,8 +87,6 @@ fn main() {
         let text = fs::read_to_string("default_out.txt").unwrap();
         println!("{}", text);
     }
-
-    println!("\x1b[0m");
 }
 
 fn watch(exercises: &[Exercise]) -> notify::Result<()> {
