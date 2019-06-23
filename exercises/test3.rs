@@ -7,8 +7,12 @@
 // you think each value is. That is, add either `string_slice` or `string`
 // before the parentheses on each line. If you're right, it will compile!
 
-fn string_slice(arg: &str) { println!("{}", arg); }
-fn string(arg: String) { println!("{}", arg); }
+fn string_slice(arg: &str) {
+    println!("{}", arg);
+}
+fn string(arg: String) {
+    println!("{}", arg);
+}
 
 fn main() {
     ("blue");
