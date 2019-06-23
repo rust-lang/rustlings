@@ -6,5 +6,5 @@ modules, instead we'll show you how to use and create them.
 
 #### Book Sections
 
-- [Macros](https://doc.rust-lang.org/stable/book/ch19-06-macros.html)
+- [Macros](https://doc.rust-lang.org/book/ch19-06-macros.html)
 - [The Little Book of Rust Macros](https://danielkeep.github.io/tlborm/book/index.html)
