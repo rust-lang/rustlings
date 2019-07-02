@@ -211,6 +211,10 @@ path = "exercises/standard_library_types/arc1.rs"
 mode = "compile"
 
 [[exercises]]
+path = "exercises/standard_library_types/iterators2.rs"
+mode = "test"
+
+[[exercises]]
 path = "exercises/standard_library_types/iterators3.rs"
 mode = "test"
 
