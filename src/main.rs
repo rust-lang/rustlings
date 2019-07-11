@@ -101,7 +101,7 @@ fn watch(exercises: &[Exercise]) -> notify::Result<()> {
         match rx.recv() {
             Ok(event) => match event {
                 DebouncedEvent::Create(b) | DebouncedEvent::Chmod(b) | DebouncedEvent::Write(b) => {
-                    if b.extension() == Some(OsStr::new("rs")) {
+                    if b.extension() == Some(OsStr::new("rs")) && b.exists() {
                         println!("----------**********----------\n");
                         let filepath = b.as_path().canonicalize().unwrap();
                         let exercise = exercises
