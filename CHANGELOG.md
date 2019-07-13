@@ -1,3 +1,20 @@
+<a name="1.4.0"></a>
+## 1.4.0 (2019-07-13)
+
+#### Bug Fixes
+
+* **installation:**  Fix rustlings installation check ([7a252c47](https://github.com/rust-lang/rustlings/commit/7a252c475551486efb52f949b8af55803b700bc6))
+* **iterators:**  Rename iterator3.rs ([433d2115](https://github.com/rust-lang/rustlings/commit/433d2115bc1c04b6d34a335a18c9a8f3e2672bc6))
+* **readme:**  http to https ([70946b85](https://github.com/rust-lang/rustlings/commit/70946b85e536e80e70ed9505cb650ca0a3a1fbb5))
+* **test1:**  renamed function name to snake case ([89d5186c](https://github.com/rust-lang/rustlings/commit/89d5186c0dae8135ecabf90ee8bb35949bc2d29b))
+* **cli:** Check if changed exercise file exists before calling verify ([ba85ca3](https://github.com/rust-lang/rustlings/commit/ba85ca32c4cfc61de46851ab89f9c58a28f33c88))
+* **structs1:** Fix the irrefutable let pattern warning ([cc6a141](https://github.com/rust-lang/rustlings/commit/cc6a14104d7c034eadc98297eaaa972d09c50b1f))
+
+#### Features
+
+* **changelog:**  Use clog for changelogs ([34e31232](https://github.com/rust-lang/rustlings/commit/34e31232dfddde284a341c9609b33cd27d9d5724))
+* **iterators2:**  adds iterators2 exercise including config ([9288fccf](https://github.com/rust-lang/rustlings/commit/9288fccf07a2c5043b76d0fd6491e4cf72d76031))
+
 <a name="1.3.0"></a>
 ### 1.3.0 (2019-06-05)
 
