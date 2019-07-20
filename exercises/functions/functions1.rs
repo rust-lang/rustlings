@@ -1,6 +1,10 @@
 // functions1.rs
 // Make me compile! Scroll down for hints :)
 
+fn call_me() -> () {
+    println!("I have been called!");
+}
+
 fn main() {
     call_me();
 }
