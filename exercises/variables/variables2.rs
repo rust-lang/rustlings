@@ -2,7 +2,7 @@
 // Make me compile! Scroll down for hints :)
 
 fn main() {
-    let x;
+    let x: u32 = 9;
     if x == 10 {
         println!("Ten!");
     } else {
