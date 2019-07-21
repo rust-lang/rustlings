@@ -17,11 +17,11 @@ mod tests {
 
     #[test]
     fn returns_twice_of_positive_numbers() {
-        assert_eq!(times_two(4), ???);
+        assert_eq!(times_two(4), 8);
     }
 
     #[test]
     fn returns_twice_of_negative_numbers() {
-        // TODO write an assert for `times_two(-4)`
+        assert_eq!(times_two(-4), -8);
     }
 }
