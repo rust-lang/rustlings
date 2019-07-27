@@ -1,4 +1,4 @@
-### Strings
+### Structs
 
 Rust has three struct types: a classic c struct, a tuple struct, and a unit struct.
 
