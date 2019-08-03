@@ -1,4 +1,4 @@
-![crab pet](https://i.imgur.com/LbZJgmm.gif) 
+![crab pet](https://i.imgur.com/LbZJgmm.gif)
 
 # rustlings 🦀❤️
 
@@ -42,11 +42,16 @@ git checkout tags/1.0.0 # or whatever the latest version is (find out at https:/
 cargo install --force --path .
 ```
 
-Same as above, run `rustlings` to get started.
+If there are installation errors, ensure that your toolchain is up to date. For the latest, run:
+```bash
+rustup update
+```
+
+Then, same as above, run `rustlings` to get started.
 
 ## Doing exercises
 
-The exercises are sorted by topic and can be found in the subdirectory `rustlings/exercises/<topic>`. For every topic there is an additional README file with some resources to get you started on the topic. We really recommend that you have a look at them before you start. 
+The exercises are sorted by topic and can be found in the subdirectory `rustlings/exercises/<topic>`. For every topic there is an additional README file with some resources to get you started on the topic. We really recommend that you have a look at them before you start.
 
 The task is simple. Most exercises contain an error that keep it from compiling, and it's up to you to fix it! Some exercises are also ran as tests, but rustlings handles them all the same. To run the exercises in the recommended order, execute:
 
