@@ -1,7 +1,7 @@
 // iterators2.rs
 // In this module, you'll learn some of unique advantages that iterators can offer
 // Step 1. Complete the `capitalize_first` function to pass the first two cases
-// Step 2. Apply the `capitalize_first` function to a vector of strings, ensuring that it
+// Step 2. Apply the `capitalize_first` function to a vector of strings, ensuring that it returns a vector of strings as well
 // Step 3. Apply the `capitalize_first` function again to a list, but try and ensure it returns a single string
 // As always, there are hints below!
 
