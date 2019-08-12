@@ -78,7 +78,7 @@ mod tests {
 
 // Step 1
 // You need to call something on `first` before it can be collected
-// Currently it's type is `char`. Have a look at the methods that are available on that type:
+// Currently its type is `char`. Have a look at the methods that are available on that type:
 // https://doc.rust-lang.org/std/primitive.char.html
 
 
