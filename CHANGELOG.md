@@ -1,3 +1,15 @@
+<a name="1.4.1"></a>
+### 1.4.1 (2019-08-13)
+
+
+#### Bug Fixes
+
+* **iterators2:**  Remove syntax resulting in misleading error message ([4cde8664](https://github.com/rust-lang/rustlings/commit/4cde86643e12db162a66e62f23b78962986046ac))
+* **option1:**  Add test for prematurely passing exercise ([a750e4a1](https://github.com/rust-lang/rustlings/commit/a750e4a1a3006227292bb17d57d78ce84da6bfc6))
+* **test1:**  Swap assertion parameter order ([4086d463](https://github.com/rust-lang/rustlings/commit/4086d463a981e81d97781851d17db2ced290f446))
+
+
+
 <a name="1.4.0"></a>
 ## 1.4.0 (2019-07-13)
 

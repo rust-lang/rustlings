@@ -1,6 +1,6 @@
 [package]
 name = "rustlings"
-version = "1.4.0"
+version = "1.4.1"
 authors = ["Marisa <marisa@mokou.zone>", "Carol (Nichols || Goulding) <carol.nichols@gmail.com"]
 edition = "2018"
 
