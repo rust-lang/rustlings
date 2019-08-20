@@ -20,7 +20,7 @@ use std::fmt;
 use std::io;
 
 // PositiveNonzeroInteger is a struct defined below the tests.
-fn read_and_validate(b: &mut io::BufRead) -> Result<PositiveNonzeroInteger, ???> {
+fn read_and_validate(b: &mut dyn io::BufRead) -> Result<PositiveNonzeroInteger, ???> {
     let mut line = String::new();
     b.read_line(&mut line);
     let num: i64 = line.trim().parse();
@@ -29,7 +29,7 @@ fn read_and_validate(b: &mut io::BufRead) -> Result<PositiveNonzeroInteger, ???>
 }
 
 // This is a test helper function that turns a &str into a BufReader.
-fn test_with_str(s: &str) -> Result<PositiveNonzeroInteger, Box<error::Error>> {
+fn test_with_str(s: &str) -> Result<PositiveNonzeroInteger, Box<dyn error::Error>> {
     let mut b = io::BufReader::new(s.as_bytes());
     read_and_validate(&mut b)
 }
@@ -98,7 +98,7 @@ enum CreationError {
 
 impl fmt::Display for CreationError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str((self as &error::Error).description())
+        f.write_str((self as &dyn error::Error).description())
     }
 }
 
@@ -190,7 +190,7 @@ impl error::Error for CreationError {
 
 
 // Another hint: under the hood, the `?` operator calls `From::from`
-// on the error value to convert it to a boxed trait object, a Box<error::Error>,
+// on the error value to convert it to a boxed trait object, a Box<dyn error::Error>,
 // which is polymorphic-- that means that lots of different kinds of errors
 // can be returned from the same function because all errors act the same
 // since they all implement the `error::Error` trait.
