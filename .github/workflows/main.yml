@@ -1,0 +1,22 @@
+on: [push, pull_request]
+
+jobs:
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+        with:
+          fetch-depth: 50
+      - name: Install Rust Stable
+        run: |
+          rustc -vV
+          rustup update stable
+          rustup default stable
+          rustc -vV
+      - name: Run rustfmt
+        run: cargo fmt -- --check
+      - name: Run clippy
+        run: cargo clippy -- -Dwarnings
+      - name: Run tests
+        run: cargo test --verbose
