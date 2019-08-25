@@ -118,6 +118,20 @@ mode = "compile"
 path = "exercises/test3.rs"
 mode = "compile"
 
+# ENUMS
+
+[[exercises]]
+path = "exercises/enums/enums1.rs"
+mode = "compile"
+
+[[exercises]]
+path = "exercises/enums/enums2.rs"
+mode = "compile"
+
+[[exercises]]
+path = "exercises/enums/enums3.rs"
+mode = "compile"
+
 # MODULES
 
 [[exercises]]
