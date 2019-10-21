@@ -19,11 +19,7 @@ fn compile_only(exercise: &Exercise) -> Result<(), ()> {
     let compile_output = exercise.compile();
     progress_bar.finish_and_clear();
     if compile_output.status.success() {
-        let formatstr = format!(
-            "{} Successfully compiled {}!",
-            Emoji("✅", "✓"),
-            exercise
-        );
+        let formatstr = format!("{} Successfully compiled {}!", Emoji("✅", "✓"), exercise);
         println!("{}", style(formatstr).green());
         exercise.clean();
         Ok(())
