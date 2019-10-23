@@ -3,13 +3,6 @@
 #Requires -Version 5
 param($path = "$pwd/rustlings")
 
-if((Get-ExecutionPolicy) -gt 'RemoteSigned' -or (Get-ExecutionPolicy) -eq 'ByPass') {
-    Write-Output "PowerShell requires an execution policy of 'RemoteSigned' to run this script."
-    Write-Output "To make this change please run:"
-    Write-Output "'Set-ExecutionPolicy RemoteSigned -scope CurrentUser'"
-    exit 1 
-}
-
 Write-Host "Let's get you set up with Rustlings!"
 
 Write-Host "Checking requirements..."
