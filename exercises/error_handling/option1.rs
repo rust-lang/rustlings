@@ -24,7 +24,7 @@ mod tests {
 
     #[test]
     fn should_not_panic() {
-        assert!(pop_too_much(), true);
+        assert!(pop_too_much());
     }
 }
 
