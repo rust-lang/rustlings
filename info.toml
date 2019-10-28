@@ -82,6 +82,10 @@ mode = "compile"
 path = "exercises/structs/structs1.rs"
 mode = "test"
 
+[[exercises]]
+path = "exercises/structs/structs2.rs"
+mode = "test"
+
 # TESTS
 
 [[exercises]]
