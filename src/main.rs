@@ -80,9 +80,6 @@ fn main() {
     }
 
     if matches.subcommand_matches("watch").is_some() {
-        /* Clears the terminal with an ANSI escape code.
-           Works in UNIX and newer Windows terminals. */
-        println!("\x1Bc");
         watch(&exercises).unwrap();
     }
 
@@ -93,11 +90,18 @@ fn main() {
 }
 
 fn watch(exercises: &[Exercise]) -> notify::Result<()> {
+    /* Clears the terminal with an ANSI escape code.
+    Works in UNIX and newer Windows terminals. */
+    fn clear_screen() {
+        println!("\x1Bc");
+    }
+
     let (tx, rx) = channel();
 
     let mut watcher: RecommendedWatcher = Watcher::new(tx, Duration::from_secs(2))?;
     watcher.watch(Path::new("./exercises"), RecursiveMode::Recursive)?;
 
+    clear_screen();
     let _ignored = verify(exercises.iter());
 
     loop {
@@ -105,11 +109,11 @@ fn watch(exercises: &[Exercise]) -> notify::Result<()> {
             Ok(event) => match event {
                 DebouncedEvent::Create(b) | DebouncedEvent::Chmod(b) | DebouncedEvent::Write(b) => {
                     if b.extension() == Some(OsStr::new("rs")) && b.exists() {
-                        println!("----------**********----------\n");
                         let filepath = b.as_path().canonicalize().unwrap();
                         let exercise = exercises
                             .iter()
                             .skip_while(|e| !filepath.ends_with(&e.path));
+                        clear_screen();
                         let _ignored = verify(exercise);
                     }
                 }
