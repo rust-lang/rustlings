@@ -86,6 +86,20 @@ mode = "test"
 path = "exercises/structs/structs2.rs"
 mode = "test"
 
+# ENUMS
+
+[[exercises]]
+path = "exercises/enums/enums1.rs"
+mode = "compile"
+
+[[exercises]]
+path = "exercises/enums/enums2.rs"
+mode = "compile"
+
+[[exercises]]
+path = "exercises/enums/enums3.rs"
+mode = "test"
+
 # TESTS
 
 [[exercises]]
