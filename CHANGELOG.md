@@ -1,3 +1,28 @@
+<a name="1.5.0"></a>
+## 1.5.0 (2019-11-09)
+
+#### Bug Fixes
+
+* **test1:** Rewrite logic ([79a56942](https://github.com/rust-lang/rustlings/commit/79a569422c8309cfc9e4aed25bf4ab3b3859996b))
+* **installation:**  Fix rustlings installation check ([7a252c47](https://github.com/rust-lang/rustlings/commit/7a252c475551486efb52f949b8af55803b700bc6))
+* **iterators:**  Rename iterator3.rs ([433d2115](https://github.com/rust-lang/rustlings/commit/433d2115bc1c04b6d34a335a18c9a8f3e2672bc6))
+* **iterators2:**  Remove syntax resulting in misleading error message ([4cde8664](https://github.com/rust-lang/rustlings/commit/4cde86643e12db162a66e62f23b78962986046ac))
+* **option1:**
+  *  Fix arguments passed to assert! macro (#222) ([4c2cf6da](https://github.com/rust-lang/rustlings/commit/4c2cf6da755efe02725e05ecc3a303304c10a6da))
+  *  Fix arguments passed to assert! macro ([ead4f7af](https://github.com/rust-lang/rustlings/commit/ead4f7af9e10e53418efdde5c359159347282afd))
+  *  Add test for prematurely passing exercise ([a750e4a1](https://github.com/rust-lang/rustlings/commit/a750e4a1a3006227292bb17d57d78ce84da6bfc6))
+* **primitive_types4:**  Fail on a slice covering the wrong area ([5b1e673c](https://github.com/rust-lang/rustlings/commit/5b1e673cec1658afc4ebbbc800213847804facf5))
+* **readme:**  http to https ([70946b85](https://github.com/rust-lang/rustlings/commit/70946b85e536e80e70ed9505cb650ca0a3a1fbb5))
+* **test1:**
+  *  Swap assertion parameter order ([4086d463](https://github.com/rust-lang/rustlings/commit/4086d463a981e81d97781851d17db2ced290f446))
+  *  renamed function name to snake case closes #180 ([89d5186c](https://github.com/rust-lang/rustlings/commit/89d5186c0dae8135ecabf90ee8bb35949bc2d29b))
+
+#### Features
+
+*   Add enums exercises ([dc150321](https://github.com/rust-lang/rustlings/commit/dc15032112fc485226a573a18139e5ce928b1755))
+*   Added exercise for struct update syntax ([1c4c8764](https://github.com/rust-lang/rustlings/commit/1c4c8764ed118740cd4cee73272ddc6cceb9d959))
+* **iterators2:**  adds iterators2 exercise including config ([9288fccf](https://github.com/rust-lang/rustlings/commit/9288fccf07a2c5043b76d0fd6491e4cf72d76031))
+
 <a name="1.4.1"></a>
 ### 1.4.1 (2019-08-13)
 
