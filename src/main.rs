@@ -80,6 +80,9 @@ fn main() {
     }
 
     if matches.subcommand_matches("watch").is_some() {
+        /* Clears the terminal with an ANSI escape code.
+           Works in UNIX and newer Windows terminals. */
+        println!("\x1Bc");
         watch(&exercises).unwrap();
     }
 
