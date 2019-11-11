@@ -27,6 +27,12 @@ fn main() {
                 .about("Runs/Tests a single exercise")
                 .arg(Arg::with_name("name").required(true).index(1)),
         )
+        .subcommand(
+            SubCommand::with_name("hint")
+                .alias("h")
+                .about("Returns a hint for the current exercise")
+                .arg(Arg::with_name("name").required(true).index(1)),
+        )
         .get_matches();
 
     if None == matches.subcommand_name() {
@@ -69,6 +75,20 @@ fn main() {
         });
 
         run(&exercise).unwrap_or_else(|_| std::process::exit(1));
+    }
+
+    if let Some(ref matches) = matches.subcommand_matches("hint") {
+        let name = matches.value_of("name").unwrap_or_else(|| {
+            println!("Please supply an exercise name!");
+            std::process::exit(1);
+        });
+
+        let exercise = exercises.iter().find(|e| name == e.name).unwrap_or_else(|| {
+            println!("No exercise found for your given name!");
+            std::process::exit(1)
+        });
+
+        println!("{}", exercise.hint);
     }
 
     if matches.subcommand_matches("verify").is_some() {

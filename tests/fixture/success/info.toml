@@ -2,8 +2,10 @@
 name = "compSuccess"
 path = "compSuccess.rs"
 mode = "compile"
+hint = """"""
 
 [[exercises]]
 name = "testSuccess"
 path = "testSuccess.rs"
 mode = "test"
+hint = """"""

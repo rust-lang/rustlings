@@ -1,5 +1,5 @@
 // enums2.rs
-// Make me compile! Scroll down for hints
+// Make me compile! Execute `rustlings hint enums2` for hints!
 
 #[derive(Debug)]
 enum Message {
@@ -24,38 +24,3 @@ fn main() {
         message.call();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Hint: you can create enumerations that have different variants with different types
-// such as no data, anonymous structs, a single string, tuples, ...etc

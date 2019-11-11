@@ -27,6 +27,7 @@ pub struct Exercise {
     pub name: String,
     pub path: PathBuf,
     pub mode: Mode,
+    pub hint: String,
 }
 
 impl Exercise {
@@ -74,6 +75,7 @@ mod test {
             name: String::from("example"),
             path: PathBuf::from("example.rs"),
             mode: Mode::Test,
+            hint: String::from(""),
         };
         exercise.clean();
         assert!(!Path::new(&temp_file()).exists());
