@@ -216,12 +216,6 @@ mode = "test"
 path = "exercises/error_handling/result1.rs"
 mode = "test"
 
-# THREADS
-
-[[exercises]]
-path = "exercises/threads/threads1.rs"
-mode = "compile"
-
 # STANDARD LIBRARY TYPES
 
 [[exercises]]
@@ -239,3 +233,9 @@ mode = "test"
 [[exercises]]
 path = "exercises/standard_library_types/iterators4.rs"
 mode = "test"
+
+# THREADS
+
+[[exercises]]
+path = "exercises/threads/threads1.rs"
+mode = "compile"
