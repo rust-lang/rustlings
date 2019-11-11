@@ -7,6 +7,7 @@ use notify::{RecommendedWatcher, RecursiveMode, Watcher};
 use std::ffi::OsStr;
 use std::fs;
 use std::path::Path;
+use std::process::{Command, Stdio};
 use std::sync::mpsc::channel;
 use std::time::Duration;
 
@@ -53,6 +54,13 @@ fn main() {
             std::env::current_exe().unwrap().to_str().unwrap()
         );
         println!("Try `cd rustlings/`!");
+        std::process::exit(1);
+    }
+
+    if !rustc_exists() {
+        println!("We cannot find `rustc`.");
+        println!("Try running `rustc --version` to diagnose your problem.");
+        println!("For instructions on how to install Rust, check the README.");
         std::process::exit(1);
     }
 
@@ -133,4 +141,14 @@ fn watch(exercises: &[Exercise]) -> notify::Result<()> {
             Err(e) => println!("watch error: {:?}", e),
         }
     }
+}
+
+fn rustc_exists() -> bool {
+    Command::new("rustc")
+        .args(&["--version"])
+        .stdout(Stdio::null())
+        .spawn()
+        .and_then(|mut child| child.wait())
+        .map(|status| status.success())
+        .unwrap_or(false)
 }
