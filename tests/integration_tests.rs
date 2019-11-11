@@ -1,4 +1,7 @@
 use assert_cmd::prelude::*;
+use glob::glob;
+use std::fs::File;
+use std::io::Read;
 use std::process::Command;
 
 #[test]
@@ -104,4 +107,21 @@ fn run_single_test_no_exercise() {
         .current_dir("tests/fixture/failure")
         .assert()
         .code(1);
+}
+
+#[test]
+fn all_exercises_require_confirmation() {
+    for exercise in glob("exercises/**/*.rs").unwrap() {
+        let path = exercise.unwrap();
+        let source = {
+            let mut file = File::open(&path).unwrap();
+            let mut s = String::new();
+            file.read_to_string(&mut s).unwrap();
+            s
+        };
+        source.matches("// I AM NOT DONE").next().expect(&format!(
+            "There should be an `I AM NOT DONE` annotation in {:?}",
+            path
+        ));
+    }
 }

@@ -1,6 +1,8 @@
 // variables4.rs
 // Make me compile! Scroll down for hints :)
 
+// I AM NOT DONE
+
 fn main() {
     let x: i32;
     println!("Number {}", x);

@@ -3,6 +3,8 @@
 // in `fn main`, we instead create it within `fn fill_vec` and transfer the
 // freshly created vector from fill_vec to its caller. Scroll for hints!
 
+// I AM NOT DONE
+
 fn main() {
     let vec0 = Vec::new();
 

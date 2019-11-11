@@ -1,6 +1,8 @@
 // macros3.rs
 // Make me compile, without taking the macro out of the module! Scroll down for hints :)
 
+// I AM NOT DONE
+
 mod macros {
     macro_rules! my_macro {
         () => {

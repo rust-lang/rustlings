@@ -8,6 +8,8 @@
 // a major hint.
 // Have fun :-)
 
+// I AM NOT DONE
+
 #[derive(Debug, PartialEq, Eq)]
 pub enum DivisionError {
     NotDivisible(NotDivisibleError),
