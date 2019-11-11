@@ -5,7 +5,9 @@ fn main() {
     call_me();
 }
 
-
+pub fn  call_me () {
+    
+}
 
 
 

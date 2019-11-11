@@ -9,7 +9,9 @@
 
 // Put your function here!
 // fn ..... {
-
+fn calculate_apple_price(orderAmount:i32)->i32{
+    if orderAmount > 40 { orderAmount } else { orderAmount * 2}
+}
 // Don't modify this function!
 #[test]
 fn verify_test() {

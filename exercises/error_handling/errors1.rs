@@ -6,12 +6,12 @@
 // this function to have.
 // Scroll down for hints!!!
 
-pub fn generate_nametag_text(name: String) -> Option<String> {
+pub fn generate_nametag_text(name: String) -> Result<String> {
     if name.len() > 0 {
         Some(format!("Hi! My name is {}", name))
     } else {
         // Empty names aren't allowed.
-        None
+        Err(format!("`name` was empty; it must be nonempty."))
     }
 }
 
@@ -38,25 +38,6 @@ mod tests {
         );
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // `Err` is one of the variants of `Result`, so what the 2nd test is saying
 // is that `generate_nametag_text` should return a `Result` instead of an

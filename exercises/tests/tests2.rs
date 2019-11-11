@@ -6,37 +6,9 @@
 mod tests {
     #[test]
     fn you_can_assert_eq() {
-        assert_eq!();
+        assert_eq!(1, 1);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // Like the previous exercise, you don't need to write any code to get this test to compile and
 // run. `assert_eq!` is a macro that takes two arguments and compares them. Try giving it two

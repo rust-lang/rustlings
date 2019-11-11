@@ -3,7 +3,12 @@
 // Scroll down for hints!
 
 fn main() {
-    let a = ???
+    // let array = ["Are we there yet?"; 10]; Obviously from the hint
+    // let my_array: [u64; 100] = rand::random(); Copied from stackoverflow
+    // let a = vec![0; 100000];
+    let a = ["Are we there yet?"; 100];
+
+
 
     if a.len() >= 100 {
         println!("Wow, that's a big array!");

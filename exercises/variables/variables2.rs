@@ -1,8 +1,9 @@
 // variables2.rs
 // Make me compile! Scroll down for hints :)
+// type Num = i32;
 
 fn main() {
-    let x;
+    let mut x: i32 = 5;
     if x == 10 {
         println!("Ten!");
     } else {

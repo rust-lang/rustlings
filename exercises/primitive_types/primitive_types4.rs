@@ -6,11 +6,11 @@
 fn main() {
     let a = [1, 2, 3, 4, 5];
 
-    let nice_slice = ???
+    // let nice_slice = &a[1..=3]; OR
+    let nice_slice = &a[1..4];
 
     assert_eq!([2, 3, 4], nice_slice)
 }
-
 
 
 

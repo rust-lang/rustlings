@@ -13,30 +13,9 @@ mod tests {
 
     #[test]
     fn is_true_when_even() {
-        assert!();
+        assert!(is_even(2), true);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // You can call a function right where you're passing arguments to `assert!` -- so you could do
 // something like `assert!(having_fun())`. If you want to check that you indeed get false, you

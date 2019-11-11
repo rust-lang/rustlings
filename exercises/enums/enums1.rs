@@ -4,6 +4,10 @@
 #[derive(Debug)]
 enum Message {
     // TODO: define a few types of messages as used below
+    Quit,
+    Echo,
+    Move,
+    ChangeColor,
 }
 
 fn main() {
@@ -12,31 +16,5 @@ fn main() {
     println!("{:?}", Message::Move);
     println!("{:?}", Message::ChangeColor);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // Hint: The declaration of the enumeration type has not been defined yet.

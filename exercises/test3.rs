@@ -15,14 +15,20 @@ fn string(arg: String) {
 }
 
 fn main() {
-    ("blue");
-    ("red".to_string());
-    (String::from("hi"));
-    ("rust is fun!".to_owned());
-    ("nice weather".into());
-    (format!("Interpolation {}", "Station"));
-    (&String::from("abc")[0..1]);
-    ("  hello there ".trim());
-    ("Happy Monday!".to_string().replace("Mon", "Tues"));
-    ("mY sHiFt KeY iS sTiCkY".to_lowercase());
+    // String slice references part of another data, and does not own the data
+    // Starts as reference to static string in code
+    string_slice("blue");
+    // Create String object from a static string
+    string("red".to_string());
+    string(String::from("hi"));
+    string("rust is fun!".to_owned());
+    string("nice weather".into());
+    // Interpolation used to combine multiple strings
+    string(format!("Interpolation {}", "Station"));
+    // Use of & or other functions to slice parts of a String
+    string_slice(&String::from("abc")[0..1]);
+    string_slice("  hello there ".trim());
+    // Mutation of a String object / data
+    string("Happy Monday!".to_string().replace("Mon", "Tues"));
+    string("mY sHiFt KeY iS sTiCkY".to_lowercase());
 }
