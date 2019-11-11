@@ -1,5 +1,5 @@
 // enums1.rs
-// Make me compile! Scroll down for hints!
+// Make me compile! Execute `rustlings hint enums1` for hints!
 
 // I AM NOT DONE
 
@@ -14,31 +14,3 @@ fn main() {
     println!("{:?}", Message::Move);
     println!("{:?}", Message::ChangeColor);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Hint: The declaration of the enumeration type has not been defined yet.

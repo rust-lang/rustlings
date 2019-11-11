@@ -1,5 +1,5 @@
 // variables1.rs
-// Make me compile! Scroll down for hints :)
+// Make me compile! Execute the command `rustlings hint variables1` if you want a hint :)
 
 // About this `I AM NOT DONE` thing:
 // We sometimes encourage you to keep trying things on a given exercise,
@@ -12,38 +12,3 @@ fn main() {
     x = 5;
     println!("x has the value {}", x);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Hint: The declaration on line 5 is missing a keyword that is needed in Rust
-// to create a new variable binding.

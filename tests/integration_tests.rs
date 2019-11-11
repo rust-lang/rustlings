@@ -43,7 +43,7 @@ fn verify_all_failure() {
 fn run_single_compile_success() {
     Command::cargo_bin("rustlings")
         .unwrap()
-        .args(&["r", "compSuccess.rs"])
+        .args(&["r", "compSuccess"])
         .current_dir("tests/fixture/success/")
         .assert()
         .success();
@@ -53,7 +53,7 @@ fn run_single_compile_success() {
 fn run_single_compile_failure() {
     Command::cargo_bin("rustlings")
         .unwrap()
-        .args(&["r", "compFailure.rs"])
+        .args(&["r", "compFailure"])
         .current_dir("tests/fixture/failure/")
         .assert()
         .code(1);
@@ -63,7 +63,7 @@ fn run_single_compile_failure() {
 fn run_single_test_success() {
     Command::cargo_bin("rustlings")
         .unwrap()
-        .args(&["r", "testSuccess.rs"])
+        .args(&["r", "testSuccess"])
         .current_dir("tests/fixture/success/")
         .assert()
         .success();
@@ -73,7 +73,7 @@ fn run_single_test_success() {
 fn run_single_test_failure() {
     Command::cargo_bin("rustlings")
         .unwrap()
-        .args(&["r", "testFailure.rs"])
+        .args(&["r", "testFailure"])
         .current_dir("tests/fixture/failure/")
         .assert()
         .code(1);
@@ -107,6 +107,17 @@ fn run_single_test_no_exercise() {
         .current_dir("tests/fixture/failure")
         .assert()
         .code(1);
+}
+
+#[test]
+fn get_hint_for_single_test() {
+    Command::cargo_bin("rustlings")
+        .unwrap()
+        .args(&["h", "testFailure"])
+        .current_dir("tests/fixture/failure")
+        .assert()
+        .code(0)
+        .stdout("Hello!\n");
 }
 
 #[test]

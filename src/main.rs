@@ -25,8 +25,13 @@ fn main() {
             SubCommand::with_name("run")
                 .alias("r")
                 .about("Runs/Tests a single exercise")
-                .arg(Arg::with_name("file").required(true).index(1))
-                .arg(Arg::with_name("test").short("t").long("test").help("Run the file as a test")),
+                .arg(Arg::with_name("name").required(true).index(1)),
+        )
+        .subcommand(
+            SubCommand::with_name("hint")
+                .alias("h")
+                .about("Returns a hint for the current exercise")
+                .arg(Arg::with_name("name").required(true).index(1)),
         )
         .get_matches();
 
@@ -55,24 +60,30 @@ fn main() {
     let exercises = toml::from_str::<ExerciseList>(toml_str).unwrap().exercises;
 
     if let Some(ref matches) = matches.subcommand_matches("run") {
-        let filename = matches.value_of("file").unwrap_or_else(|| {
-            println!("Please supply a file name!");
-            std::process::exit(1);
-        });
+        let name = matches.value_of("name").unwrap();
 
-        let matching_exercise = |e: &&Exercise| {
-            Path::new(filename)
-                .canonicalize()
-                .map(|p| p.ends_with(&e.path))
-                .unwrap_or(false)
-        };
+        let matching_exercise = |e: &&Exercise| name == e.name;
 
         let exercise = exercises.iter().find(matching_exercise).unwrap_or_else(|| {
-            println!("No exercise found for your file name!");
+            println!("No exercise found for your given name!");
             std::process::exit(1)
         });
 
         run(&exercise).unwrap_or_else(|_| std::process::exit(1));
+    }
+
+    if let Some(ref matches) = matches.subcommand_matches("hint") {
+        let name = matches.value_of("name").unwrap();
+
+        let exercise = exercises
+            .iter()
+            .find(|e| name == e.name)
+            .unwrap_or_else(|| {
+                println!("No exercise found for your given name!");
+                std::process::exit(1)
+            });
+
+        println!("{}", exercise.hint);
     }
 
     if matches.subcommand_matches("verify").is_some() {

@@ -1,5 +1,5 @@
 // functions3.rs
-// Make me compile! Scroll down for hints :)
+// Make me compile! Execute `rustlings hint functions3` for hints :)
 
 // I AM NOT DONE
 
@@ -12,33 +12,3 @@ fn call_me(num: i32) {
         println!("Ring! Call number {}", i + 1);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// This time, the function *declaration* is okay, but there's something wrong
-// with the place where we're calling the function.

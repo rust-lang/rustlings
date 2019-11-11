@@ -28,8 +28,10 @@ pub struct ExerciseList {
 
 #[derive(Deserialize)]
 pub struct Exercise {
+    pub name: String,
     pub path: PathBuf,
     pub mode: Mode,
+    pub hint: String,
 }
 
 #[derive(PartialEq, Debug)]
@@ -128,8 +130,10 @@ mod test {
     fn test_clean() {
         File::create(&temp_file()).unwrap();
         let exercise = Exercise {
+            name: String::from("example"),
             path: PathBuf::from("example.rs"),
             mode: Mode::Test,
+            hint: String::from(""),
         };
         exercise.clean();
         assert!(!Path::new(&temp_file()).exists());
@@ -138,8 +142,10 @@ mod test {
     #[test]
     fn test_pending_state() {
         let exercise = Exercise {
+            name: "pending_exercise".into(),
             path: PathBuf::from("tests/fixture/state/pending_exercise.rs"),
             mode: Mode::Compile,
+            hint: String::new(),
         };
 
         let state = exercise.state();
@@ -177,8 +183,10 @@ mod test {
     #[test]
     fn test_finished_exercise() {
         let exercise = Exercise {
+            name: "finished_exercise".into(),
             path: PathBuf::from("tests/fixture/state/finished_exercise.rs"),
             mode: Mode::Compile,
+            hint: String::new(),
         };
 
         assert_eq!(exercise.state(), State::Done);

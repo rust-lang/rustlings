@@ -1,5 +1,5 @@
 // move_semantics1.rs
-// Make me compile! Scroll down for hints :)
+// Make me compile! Execute `rustlings hint move_semantics1` for hints :)
 
 // I AM NOT DONE
 
@@ -24,21 +24,3 @@ fn fill_vec(vec: Vec<i32>) -> Vec<i32> {
 
     vec
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// So you've got the "cannot borrow immutable local variable `vec1` as mutable" error on line 11,
-// right? The fix for this is going to be adding one keyword, and the addition is NOT on line 11
-// where the error is.

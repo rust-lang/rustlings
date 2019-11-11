@@ -11,7 +11,7 @@ pub fn factorial(num: u64) -> u64 {
     // - additional variables
     // For the most fun don't use:
     // - recursion
-    // Scroll down for hints.
+    // Execute `rustlings hint iterators4` for hints.
 }
 
 #[cfg(test)]
@@ -32,32 +32,3 @@ mod tests {
         assert_eq!(24, factorial(4));
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// In an imperative language you might write a for loop to iterate through
-// multiply the values into a mutable variable. Or you might write code more
-// functionally with recursion and a match clause. But you can also use ranges
-// and iterators to solve this in rust.

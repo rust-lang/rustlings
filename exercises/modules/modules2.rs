@@ -1,5 +1,5 @@
 // modules2.rs
-// Make me compile! Scroll down for hints :)
+// Make me compile! Execute `rustlings hint modules2` for hints :)
 
 // I AM NOT DONE
 
@@ -25,25 +25,3 @@ fn main() {
         delicious_snacks::veggie
     );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// The delicious_snacks module is trying to present an external
-// interface (the `fruit` and `veggie` constants) that is different than
-// its internal structure (the `fruits` and `veggies` modules and
-// associated constants). It's almost there except for one keyword missing for
-// each constant.
