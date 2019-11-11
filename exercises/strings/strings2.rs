@@ -1,6 +1,8 @@
 // strings2.rs
 // Make me compile without changing the function signature! Scroll down for hints :)
 
+// I AM NOT DONE
+
 fn main() {
     let word = String::from("green"); // Try not changing this line :)
     if is_a_color_word(word) {

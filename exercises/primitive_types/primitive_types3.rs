@@ -2,6 +2,8 @@
 // Create an array with at least 100 elements in it where the ??? is. 
 // Scroll down for hints!
 
+// I AM NOT DONE
+
 fn main() {
     let a = ???
 

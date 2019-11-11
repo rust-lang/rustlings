@@ -1,6 +1,8 @@
 // enums2.rs
 // Make me compile! Scroll down for hints
 
+// I AM NOT DONE
+
 #[derive(Debug)]
 enum Message {
     // TODO: define the different variants used below

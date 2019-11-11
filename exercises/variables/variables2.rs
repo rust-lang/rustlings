@@ -1,6 +1,8 @@
 // variables2.rs
 // Make me compile! Scroll down for hints :)
 
+// I AM NOT DONE
+
 fn main() {
     let x;
     if x == 10 {

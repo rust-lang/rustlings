@@ -1,6 +1,8 @@
 // move_semantics1.rs
 // Make me compile! Scroll down for hints :)
 
+// I AM NOT DONE
+
 fn main() {
     let vec0 = Vec::new();
 

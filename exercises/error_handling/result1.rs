@@ -1,6 +1,8 @@
 // result1.rs
 // Make this test pass! Scroll down for hints :)
 
+// I AM NOT DONE
+
 #[derive(PartialEq, Debug)]
 struct PositiveNonzeroInteger(u64);
 

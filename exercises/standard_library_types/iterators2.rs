@@ -5,6 +5,8 @@
 // Step 3. Apply the `capitalize_first` function again to a list, but try and ensure it returns a single string
 // As always, there are hints below!
 
+// I AM NOT DONE
+
 pub fn capitalize_first(input: &str) -> String {
     let mut c = input.chars();
     match c.next() {
