@@ -1,6 +1,8 @@
 // result1.rs
 // Make this test pass! Execute `rustlings hint option2` for hints :)
 
+// I AM NOT DONE
+
 #[derive(PartialEq, Debug)]
 struct PositiveNonzeroInteger(u64);
 

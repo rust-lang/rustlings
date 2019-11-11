@@ -127,11 +127,11 @@ fn watch(exercises: &[Exercise]) -> notify::Result<()> {
                 DebouncedEvent::Create(b) | DebouncedEvent::Chmod(b) | DebouncedEvent::Write(b) => {
                     if b.extension() == Some(OsStr::new("rs")) && b.exists() {
                         let filepath = b.as_path().canonicalize().unwrap();
-                        let exercise = exercises
+                        let pending_exercises = exercises
                             .iter()
                             .skip_while(|e| !filepath.ends_with(&e.path));
                         clear_screen();
-                        let _ignored = verify(exercise);
+                        let _ignored = verify(pending_exercises);
                     }
                 }
                 _ => {}

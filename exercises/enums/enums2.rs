@@ -1,6 +1,8 @@
 // enums2.rs
 // Make me compile! Execute `rustlings hint enums2` for hints!
 
+// I AM NOT DONE
+
 #[derive(Debug)]
 enum Message {
     // TODO: define the different variants used below

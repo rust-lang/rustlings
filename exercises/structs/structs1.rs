@@ -1,6 +1,8 @@
 // structs1.rs
 // Address all the TODOs to make the tests pass!
 
+// I AM NOT DONE
+
 struct ColorClassicStruct {
     // TODO: Something goes here
 }

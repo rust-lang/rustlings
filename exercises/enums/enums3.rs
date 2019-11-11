@@ -1,6 +1,8 @@
 // enums3.rs
 // Address all the TODOs to make the tests pass!
 
+// I AM NOT DONE
+
 enum Message {
     // TODO: implement the message variant types based on their usage below
 }

@@ -4,6 +4,8 @@
 // somewhere. Try not to create any copies of the `numbers` Vec!
 // Execute `rustlings help arc1` for hints :)
 
+// I AM NOT DONE
+
 use std::sync::Arc;
 use std::thread;
 
