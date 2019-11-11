@@ -1,3 +1,15 @@
+<a name="1.5.1"></a>
+### 1.5.1 (2019-11-11)
+
+#### Bug Fixes
+
+* **errors3:**  Update hint ([dcfb427b](https://github.com/rust-lang/rustlings/commit/dcfb427b09585f0193f0a294443fdf99f11c64cb), closes [#185](https://github.com/rust-lang/rustlings/issues/185))
+* **if1:**  Remove `return` reference ([ad03d180](https://github.com/rust-lang/rustlings/commit/ad03d180c9311c0093e56a3531eec1a9a70cdb45))
+* **strings:**  Move Strings before Structs ([6dcecb38](https://github.com/rust-lang/rustlings/commit/6dcecb38a4435593beb87c8e12d6314143631482), closes [#204](https://github.com/rust-lang/rustlings/issues/204))
+* **structs1:**  Remove misleading comment ([f72e5a8f](https://github.com/rust-lang/rustlings/commit/f72e5a8f05568dde04eaeac10b9a69872f21cb37))
+* **threads:**  Move Threads behind SLT ([fbe91a67](https://github.com/rust-lang/rustlings/commit/fbe91a67a482bfe64cbcdd58d06ba830a0f39da3), closes [#205](https://github.com/rust-lang/rustlings/issues/205))
+* **watch:** clear screen before each `verify()`  ([3aff590](https://github.com/rust-lang/rustlings/commit/3aff59085586c24196a547c2693adbdcf4432648))
+
 <a name="1.5.0"></a>
 ## 1.5.0 (2019-11-09)
 
