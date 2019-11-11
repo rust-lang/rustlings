@@ -1,28 +1,27 @@
-// strings3.rs
+// test3.rs
 // This is a test for the following sections:
-// - Strings
+// - Tests
 
-// Ok, here are a bunch of values-- some are `Strings`, some are `&strs`. Your
-// task is to call one of these two functions on each value depending on what
-// you think each value is. That is, add either `string_slice` or `string`
-// before the parentheses on each line. If you're right, it will compile!
+// This test isn't testing our function -- make it do that in such a way that
+// the test passes. Then write a second test that tests that we get the result
+// we expect to get when we call `times_two` with a negative number.
+// No hints, you can do this :)
 
-fn string_slice(arg: &str) {
-    println!("{}", arg);
-}
-fn string(arg: String) {
-    println!("{}", arg);
+pub fn times_two(num: i32) -> i32 {
+    num * 2
 }
 
-fn main() {
-    ("blue");
-    ("red".to_string());
-    (String::from("hi"));
-    ("rust is fun!".to_owned());
-    ("nice weather".into());
-    (format!("Interpolation {}", "Station"));
-    (&String::from("abc")[0..1]);
-    ("  hello there ".trim());
-    ("Happy Monday!".to_string().replace("Mon", "Tues"));
-    ("mY sHiFt KeY iS sTiCkY".to_lowercase());
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn returns_twice_of_positive_numbers() {
+        assert_eq!(times_two(4), ???);
+    }
+
+    #[test]
+    fn returns_twice_of_negative_numbers() {
+        // TODO write an assert for `times_two(-4)`
+    }
 }

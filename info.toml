@@ -86,6 +86,22 @@ mode = "test"
 path = "exercises/structs/structs2.rs"
 mode = "test"
 
+# STRINGS
+
+[[exercises]]
+path = "exercises/strings/strings1.rs"
+mode = "compile"
+
+[[exercises]]
+path = "exercises/strings/strings2.rs"
+mode = "compile"
+
+# TEST 2
+
+[[exercises]]
+path = "exercises/test2.rs"
+mode = "compile"
+
 # ENUMS
 
 [[exercises]]
@@ -114,27 +130,11 @@ mode = "test"
 path = "exercises/tests/tests3.rs"
 mode = "test"
 
-# TEST 2
-
-[[exercises]]
-path = "exercises/test2.rs"
-mode = "test"
-
-# STRINGS
-
-[[exercises]]
-path = "exercises/strings/strings1.rs"
-mode = "compile"
-
-[[exercises]]
-path = "exercises/strings/strings2.rs"
-mode = "compile"
-
 # TEST 3
 
 [[exercises]]
 path = "exercises/test3.rs"
-mode = "compile"
+mode = "test"
 
 # MODULES
 
