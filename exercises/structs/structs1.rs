@@ -26,7 +26,6 @@ mod tests {
     #[test]
     fn tuple_structs() {
         // TODO: Instantiate a tuple struct!
-        // For more fun, use the field initialization shorthand.
         // let green =
 
         assert_eq!(green.0, "green");
