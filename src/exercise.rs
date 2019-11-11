@@ -24,6 +24,7 @@ pub struct ExerciseList {
 
 #[derive(Deserialize)]
 pub struct Exercise {
+    pub name: String,
     pub path: PathBuf,
     pub mode: Mode,
 }
@@ -70,6 +71,7 @@ mod test {
     fn test_clean() {
         File::create(&temp_file()).unwrap();
         let exercise = Exercise {
+            name: String::from("example"),
             path: PathBuf::from("example.rs"),
             mode: Mode::Test,
         };

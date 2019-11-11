@@ -1,7 +1,9 @@
 [[exercises]]
+name = "compSuccess"
 path = "compSuccess.rs"
 mode = "compile"
 
 [[exercises]]
+name = "testSuccess"
 path = "testSuccess.rs"
 mode = "test"

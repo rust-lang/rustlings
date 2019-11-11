@@ -1,241 +1,292 @@
 # VARIABLES
 
 [[exercises]]
+name = "variables1"
 path = "exercises/variables/variables1.rs"
 mode = "compile"
 
 [[exercises]]
+name = "variables2"
 path = "exercises/variables/variables2.rs"
 mode = "compile"
 
 [[exercises]]
+name = "variables3"
 path = "exercises/variables/variables3.rs"
 mode = "compile"
 
 [[exercises]]
+name = "variables4"
 path = "exercises/variables/variables4.rs"
 mode = "compile"
 
 # IF
 
 [[exercises]]
+name = "if1"
 path = "exercises/if/if1.rs"
 mode = "test"
 
 # FUNCTIONS
 
 [[exercises]]
+name = "functions1"
 path = "exercises/functions/functions1.rs"
 mode = "compile"
 
 [[exercises]]
+name = "functions2"
 path = "exercises/functions/functions2.rs"
 mode = "compile"
 
 [[exercises]]
+name = "functions3"
 path = "exercises/functions/functions3.rs"
 mode = "compile"
 
 [[exercises]]
+name = "functions4"
 path = "exercises/functions/functions4.rs"
 mode = "compile"
 
 [[exercises]]
+name = "functions5"
 path = "exercises/functions/functions5.rs"
 mode = "compile"
 
 # TEST 1
 
 [[exercises]]
+name = "test1"
 path = "exercises/test1.rs"
 mode = "test"
 
 # PRIMITIVE TYPES
 
 [[exercises]]
+name = "primitive_types1"
 path = "exercises/primitive_types/primitive_types1.rs"
 mode = "compile"
 
 [[exercises]]
+name = "primitive_types2"
 path = "exercises/primitive_types/primitive_types2.rs"
 mode = "compile"
 
 [[exercises]]
+name = "primitive_types3"
 path = "exercises/primitive_types/primitive_types3.rs"
 mode = "compile"
 
 [[exercises]]
+name = "primitive_types4"
 path = "exercises/primitive_types/primitive_types4.rs"
 mode = "test"
 
 [[exercises]]
+name = "primitive_types5"
 path = "exercises/primitive_types/primitive_types5.rs"
 mode = "compile"
 
 [[exercises]]
+name = "primitive_types6"
 path = "exercises/primitive_types/primitive_types6.rs"
 mode = "compile"
 
 # STRUCTS
 
 [[exercises]]
+name = "structs1"
 path = "exercises/structs/structs1.rs"
 mode = "test"
 
 [[exercises]]
+name = "structs2"
 path = "exercises/structs/structs2.rs"
 mode = "test"
 
 # STRINGS
 
 [[exercises]]
+name = "strings1"
 path = "exercises/strings/strings1.rs"
 mode = "compile"
 
 [[exercises]]
+name = "strings2"
 path = "exercises/strings/strings2.rs"
 mode = "compile"
 
 # TEST 2
 
 [[exercises]]
+name = "test2"
 path = "exercises/test2.rs"
 mode = "compile"
 
 # ENUMS
 
 [[exercises]]
+name = "enums1"
 path = "exercises/enums/enums1.rs"
 mode = "compile"
 
 [[exercises]]
+name = "enums2"
 path = "exercises/enums/enums2.rs"
 mode = "compile"
 
 [[exercises]]
+name = "enums3"
 path = "exercises/enums/enums3.rs"
 mode = "test"
 
 # TESTS
 
 [[exercises]]
+name = "tests1"
 path = "exercises/tests/tests1.rs"
 mode = "test"
 
 [[exercises]]
+name = "tests2"
 path = "exercises/tests/tests2.rs"
 mode = "test"
 
 [[exercises]]
+name = "tests3"
 path = "exercises/tests/tests3.rs"
 mode = "test"
 
 # TEST 3
 
 [[exercises]]
+name = "test3"
 path = "exercises/test3.rs"
 mode = "test"
 
 # MODULES
 
 [[exercises]]
+name = "modules1"
 path = "exercises/modules/modules1.rs"
 mode = "compile"
 
 [[exercises]]
+name = "modules2"
 path = "exercises/modules/modules2.rs"
 mode = "compile"
 
 # MACROS
 
 [[exercises]]
+name = "macros1"
 path = "exercises/macros/macros1.rs"
 mode = "compile"
 
 [[exercises]]
+name = "macros2"
 path = "exercises/macros/macros2.rs"
 mode = "compile"
 
 [[exercises]]
+name = "macros3"
 path = "exercises/macros/macros3.rs"
 mode = "compile"
 
 [[exercises]]
+name = "macros4"
 path = "exercises/macros/macros4.rs"
 mode = "compile"
 
 # TEST 4
 
 [[exercises]]
+name = "test4"
 path = "exercises/test4.rs"
 mode = "compile"
 
 # MOVE SEMANTICS
 
 [[exercises]]
+name = "move_semantics1"
 path = "exercises/move_semantics/move_semantics1.rs"
 mode = "compile"
 
 [[exercises]]
+name = "move_semantics2"
 path = "exercises/move_semantics/move_semantics2.rs"
 mode = "compile"
 
 [[exercises]]
+name = "move_semantics3"
 path = "exercises/move_semantics/move_semantics3.rs"
 mode = "compile"
 
 [[exercises]]
+name = "move_semantics4"
 path = "exercises/move_semantics/move_semantics4.rs"
 mode = "compile"
 
 # ERROR HANDLING
 
 [[exercises]]
+name = "errors1"
 path = "exercises/error_handling/errors1.rs"
 mode = "test"
 
 [[exercises]]
+name = "errors2"
 path = "exercises/error_handling/errors2.rs"
 mode = "test"
 
 [[exercises]]
+name = "errors3"
 path = "exercises/error_handling/errors3.rs"
 mode = "test"
 
 [[exercises]]
+name = "errors4"
 path = "exercises/error_handling/errorsn.rs"
 mode = "test"
 
 # OPTIONS / RESULTS
 
 [[exercises]]
+name = "option1"
 path = "exercises/error_handling/option1.rs"
 mode = "test"
 
 [[exercises]]
+name = "option2"
 path = "exercises/error_handling/result1.rs"
 mode = "test"
 
 # STANDARD LIBRARY TYPES
 
 [[exercises]]
+name = "arc1"
 path = "exercises/standard_library_types/arc1.rs"
 mode = "compile"
 
 [[exercises]]
+name = "iterators2"
 path = "exercises/standard_library_types/iterators2.rs"
 mode = "test"
 
 [[exercises]]
+name = "iterators3"
 path = "exercises/standard_library_types/iterators3.rs"
 mode = "test"
 
 [[exercises]]
+name = "iterators4"
 path = "exercises/standard_library_types/iterators4.rs"
 mode = "test"
 
 # THREADS
 
 [[exercises]]
+name = "threads1"
 path = "exercises/threads/threads1.rs"
 mode = "compile"
