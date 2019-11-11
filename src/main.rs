@@ -65,9 +65,7 @@ fn main() {
             std::process::exit(1);
         });
 
-        let matching_exercise = |e: &&Exercise| {
-            name == e.name
-        };
+        let matching_exercise = |e: &&Exercise| name == e.name;
 
         let exercise = exercises.iter().find(matching_exercise).unwrap_or_else(|| {
             println!("No exercise found for your given name!");
@@ -83,10 +81,13 @@ fn main() {
             std::process::exit(1);
         });
 
-        let exercise = exercises.iter().find(|e| name == e.name).unwrap_or_else(|| {
-            println!("No exercise found for your given name!");
-            std::process::exit(1)
-        });
+        let exercise = exercises
+            .iter()
+            .find(|e| name == e.name)
+            .unwrap_or_else(|| {
+                println!("No exercise found for your given name!");
+                std::process::exit(1)
+            });
 
         println!("{}", exercise.hint);
     }

@@ -105,3 +105,14 @@ fn run_single_test_no_exercise() {
         .assert()
         .code(1);
 }
+
+#[test]
+fn get_hint_for_single_test() {
+    Command::cargo_bin("rustlings")
+        .unwrap()
+        .args(&["h", "testFailure"])
+        .current_dir("tests/fixture/failure")
+        .assert()
+        .code(0)
+        .stdout("Hello!\n");
+}
