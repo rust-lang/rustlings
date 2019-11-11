@@ -60,10 +60,7 @@ fn main() {
     let exercises = toml::from_str::<ExerciseList>(toml_str).unwrap().exercises;
 
     if let Some(ref matches) = matches.subcommand_matches("run") {
-        let name = matches.value_of("name").unwrap_or_else(|| {
-            println!("Please supply an exercise name!");
-            std::process::exit(1);
-        });
+        let name = matches.value_of("name").unwrap();
 
         let matching_exercise = |e: &&Exercise| name == e.name;
 
@@ -76,10 +73,7 @@ fn main() {
     }
 
     if let Some(ref matches) = matches.subcommand_matches("hint") {
-        let name = matches.value_of("name").unwrap_or_else(|| {
-            println!("Please supply an exercise name!");
-            std::process::exit(1);
-        });
+        let name = matches.value_of("name").unwrap();
 
         let exercise = exercises
             .iter()

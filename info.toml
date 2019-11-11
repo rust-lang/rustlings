@@ -456,7 +456,7 @@ hint = """
 If other functions can return a `Result`, why shouldn't `main`?"""
 
 [[exercises]]
-name = "errors4"
+name = "errorsn"
 path = "exercises/error_handling/errorsn.rs"
 mode = "test"
 hint = """
@@ -507,7 +507,7 @@ Or use an `if let` statement on the result of `pop()` to both destructure
 a `Some` value and only print out something if we have a value!"""
 
 [[exercises]]
-name = "option2"
+name = "result1"
 path = "exercises/error_handling/result1.rs"
 mode = "test"
 hint = """

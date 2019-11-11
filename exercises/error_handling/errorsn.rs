@@ -13,7 +13,7 @@
 // type goes where the question marks are, and how do we return
 // that type from the body of read_and_validate?
 //
-// Execute `rustlings hint errors4` for hints :)
+// Execute `rustlings hint errorsn` for hints :)
 
 // I AM NOT DONE
 
