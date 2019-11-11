@@ -118,6 +118,7 @@ fn get_hint_for_single_test() {
         .assert()
         .code(0)
         .stdout("Hello!\n");
+}
 
 #[test]
 fn all_exercises_require_confirmation() {

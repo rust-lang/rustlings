@@ -142,8 +142,10 @@ mod test {
     #[test]
     fn test_pending_state() {
         let exercise = Exercise {
+            name: "pending_exercise".into(),
             path: PathBuf::from("tests/fixture/state/pending_exercise.rs"),
             mode: Mode::Compile,
+            hint: String::new(),
         };
 
         let state = exercise.state();
@@ -181,8 +183,10 @@ mod test {
     #[test]
     fn test_finished_exercise() {
         let exercise = Exercise {
+            name: "finished_exercise".into(),
             path: PathBuf::from("tests/fixture/state/finished_exercise.rs"),
             mode: Mode::Compile,
+            hint: String::new(),
         };
 
         assert_eq!(exercise.state(), State::Done);
