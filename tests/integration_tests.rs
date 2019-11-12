@@ -1,5 +1,6 @@
 use assert_cmd::prelude::*;
 use glob::glob;
+use predicates::boolean::PredicateBooleanExt;
 use std::fs::File;
 use std::io::Read;
 use std::process::Command;
@@ -135,4 +136,26 @@ fn all_exercises_require_confirmation() {
             path
         ));
     }
+}
+
+#[test]
+fn run_compile_exercise_does_not_prompt() {
+    Command::cargo_bin("rustlings")
+        .unwrap()
+        .args(&["r", "pending_exercise"])
+        .current_dir("tests/fixture/state")
+        .assert()
+        .code(0)
+        .stdout(predicates::str::contains("I AM NOT DONE").not());
+}
+
+#[test]
+fn run_test_exercise_does_not_prompt() {
+    Command::cargo_bin("rustlings")
+        .unwrap()
+        .args(&["r", "pending_test_exercise"])
+        .current_dir("tests/fixture/state")
+        .assert()
+        .code(0)
+        .stdout(predicates::str::contains("I AM NOT DONE").not());
 }
