@@ -1,17 +1,22 @@
-use crate::exercise::{ContextLine, Exercise, Mode, State};
+use crate::exercise::{Exercise, Mode, State};
 use console::{style, Emoji};
 use indicatif::ProgressBar;
 
 pub fn verify<'a>(start_at: impl IntoIterator<Item = &'a Exercise>) -> Result<(), ()> {
     for exercise in start_at {
         let is_done = match exercise.mode {
-            Mode::Test => test(&exercise)?,
+            Mode::Test => compile_and_test_interactively(&exercise)?,
             Mode::Compile => compile_only(&exercise)?,
         };
         if !is_done {
             return Err(());
         }
     }
+    Ok(())
+}
+
+pub fn test(exercise: &Exercise) -> Result<(), ()> {
+    compile_and_test(exercise, true)?;
     Ok(())
 }
 
@@ -25,12 +30,7 @@ fn compile_only(exercise: &Exercise) -> Result<bool, ()> {
         let formatstr = format!("{} Successfully compiled {}!", Emoji("✅", "✓"), exercise);
         println!("{}", style(formatstr).green());
         exercise.clean();
-        if let State::Pending(context) = exercise.state() {
-            print_everything_looks_good(exercise.mode, context);
-            Ok(false)
-        } else {
-            Ok(true)
-        }
+        Ok(prompt_for_completion(&exercise))
     } else {
         let formatstr = format!(
             "{} Compilation of {} failed! Compiler error message:\n",
@@ -44,7 +44,11 @@ fn compile_only(exercise: &Exercise) -> Result<bool, ()> {
     }
 }
 
-pub fn test(exercise: &Exercise) -> Result<bool, ()> {
+fn compile_and_test_interactively(exercise: &Exercise) -> Result<bool, ()> {
+    compile_and_test(exercise, false)
+}
+
+fn compile_and_test(exercise: &Exercise, skip_prompt: bool) -> Result<bool, ()> {
     let progress_bar = ProgressBar::new_spinner();
     progress_bar.set_message(format!("Testing {}...", exercise).as_str());
     progress_bar.enable_steady_tick(100);
@@ -60,12 +64,7 @@ pub fn test(exercise: &Exercise) -> Result<bool, ()> {
             let formatstr = format!("{} Successfully tested {}!", Emoji("✅", "✓"), exercise);
             println!("{}", style(formatstr).green());
             exercise.clean();
-            if let State::Pending(context) = exercise.state() {
-                print_everything_looks_good(exercise.mode, context);
-                Ok(false)
-            } else {
-                Ok(true)
-            }
+            Ok(skip_prompt || prompt_for_completion(exercise))
         } else {
             let formatstr = format!(
                 "{} Testing of {} failed! Please try again. Here's the output:",
@@ -91,8 +90,13 @@ pub fn test(exercise: &Exercise) -> Result<bool, ()> {
     }
 }
 
-fn print_everything_looks_good(mode: Mode, context: Vec<ContextLine>) {
-    let success_msg = match mode {
+fn prompt_for_completion(exercise: &Exercise) -> bool {
+    let context = match exercise.state() {
+        State::Done => return true,
+        State::Pending(context) => context,
+    };
+
+    let success_msg = match exercise.mode {
         Mode::Compile => "The code is compiling!",
         Mode::Test => "The code is compiling, and the tests pass!",
     };
@@ -120,4 +124,6 @@ fn print_everything_looks_good(mode: Mode, context: Vec<ContextLine>) {
             formatted_line
         );
     }
+
+    false
 }

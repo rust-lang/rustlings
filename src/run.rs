@@ -5,9 +5,7 @@ use indicatif::ProgressBar;
 
 pub fn run(exercise: &Exercise) -> Result<(), ()> {
     match exercise.mode {
-        Mode::Test => {
-            test(exercise)?;
-        }
+        Mode::Test => test(exercise)?,
         Mode::Compile => compile_and_run(exercise)?,
     }
     Ok(())
