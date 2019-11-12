@@ -1,3 +1,24 @@
+<a name="2.0.0"></a>
+## 2.0.0 (2019-11-12)
+
+#### Bug Fixes
+
+* **default:**  Clarify the installation procedure ([c371b853](https://github.com/rust-lang/rustlings/commit/c371b853afa08947ddeebec0edd074b171eeaae0))
+* **info:**  Fix trailing newlines for hints ([795b6e34](https://github.com/rust-lang/rustlings/commit/795b6e348094a898e9227a14f6232f7bb94c8d31))
+* **run:**  make `run` never prompt ([4b265465](https://github.com/rust-lang/rustlings/commit/4b26546589f7d2b50455429482cf1f386ceae8b3))
+
+#### Breaking Changes
+
+*   Refactor hint system ([9bdb0a12](https://github.com/rust-lang/rustlings/commit/9bdb0a12e45a8e9f9f6a4bd4a9c172c5376c7f60))
+*   improve `watch` execution mode ([2cdd6129](https://github.com/rust-lang/rustlings/commit/2cdd61294f0d9a53775ee24ad76435bec8a21e60))
+*   Index exercises by name ([627cdc07](https://github.com/rust-lang/rustlings/commit/627cdc07d07dfe6a740e885e0ddf6900e7ec336b))
+* **run:**  makes `run` never prompt ([4b265465](https://github.com/rust-lang/rustlings/commit/4b26546589f7d2b50455429482cf1f386ceae8b3))
+
+#### Features
+
+* **cli:**  check for rustc before doing anything ([36a033b8](https://github.com/rust-lang/rustlings/commit/36a033b87a6549c1e5639c908bf7381c84f4f425))
+* **hint:**  Add test for hint ([ce9fa6eb](https://github.com/rust-lang/rustlings/commit/ce9fa6ebbfdc3e7585d488d9409797285708316f))
+
 <a name="1.5.1"></a>
 ### 1.5.1 (2019-11-11)
 
