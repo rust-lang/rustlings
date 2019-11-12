@@ -1,11 +1,11 @@
 // primitive_types4.rs
-// Get a slice out of Array a where the ??? is so that the `if` statement
-// returns true. Execute `rustlings hint primitive_types4` for hints!!
+// Get a slice out of Array a where the ??? is so that the test passes.
+// Execute `rustlings hint primitive_types4` for hints!!
 
 // I AM NOT DONE
 
 #[test]
-fn main() {
+fn slice_out_of_array() {
     let a = [1, 2, 3, 4, 5];
 
     let nice_slice = ???
