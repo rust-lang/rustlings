@@ -80,10 +80,15 @@ This will do the same as watch, but it'll quit after running.
 In case you want to go by your own order, or want to only verify a single exercise, you can run:
 
 ```bash
-rustlings run exercises/path/to/exercise.rs
+rustlings run myExercise1
 ```
 
-In case you get stuck, there is usually a hint at the bottom of each exercise.
+In case you get stuck, you can run the following command to get a hint for your
+exercise:
+
+``` bash
+rustlings hint myExercise1
+```
 
 ## Testing yourself
 

@@ -35,8 +35,11 @@ You want to make sure where in the file you add your exercise. If you're not sur
 ```diff
   ...
 + [[exercises]]
++ name = "yourTopicN"
 + path = "exercises/yourTopic/yourTopicN.rs"
 + mode = "compile"
++ hint = """
++ Some kind of useful hint for your exercise."""
   ...
 ```
 
