@@ -1,5 +1,5 @@
 // move_semantics2.rs
-// Make me compile without changing line 10!
+// Make me compile without changing line 13!
 // Execute `rustlings hint move_semantics2` for hints :)
 
 // I AM NOT DONE
