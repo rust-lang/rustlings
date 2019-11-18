@@ -6,9 +6,12 @@ use notify::DebouncedEvent;
 use notify::{RecommendedWatcher, RecursiveMode, Watcher};
 use std::ffi::OsStr;
 use std::fs;
+use std::io;
 use std::path::Path;
 use std::process::{Command, Stdio};
 use std::sync::mpsc::channel;
+use std::sync::{Arc, Mutex};
+use std::thread;
 use std::time::Duration;
 
 mod exercise;
@@ -108,6 +111,26 @@ fn main() {
     }
 }
 
+fn spawn_watch_shell(failed_exercise_hint: &Arc<Mutex<Option<String>>>) {
+    let failed_exercise_hint = Arc::clone(failed_exercise_hint);
+    println!("Type 'hint' to get help");
+    thread::spawn(move || loop {
+        let mut input = String::new();
+        match io::stdin().read_line(&mut input) {
+            Ok(_) => {
+                if input.trim().eq("hint") {
+                    if let Some(hint) = &*failed_exercise_hint.lock().unwrap() {
+                        println!("{}", hint);
+                    }
+                } else {
+                    println!("unknown command: {}", input);
+                }
+            }
+            Err(error) => println!("error reading command: {}", error),
+        }
+    });
+}
+
 fn watch(exercises: &[Exercise]) -> notify::Result<()> {
     /* Clears the terminal with an ANSI escape code.
     Works in UNIX and newer Windows terminals. */
@@ -121,8 +144,11 @@ fn watch(exercises: &[Exercise]) -> notify::Result<()> {
     watcher.watch(Path::new("./exercises"), RecursiveMode::Recursive)?;
 
     clear_screen();
-    let _ignored = verify(exercises.iter());
+    let verify_result = verify(exercises.iter());
 
+    let to_owned_hint = |t: &Exercise| t.hint.to_owned();
+    let failed_exercise_hint = Arc::new(Mutex::new(verify_result.map_err(to_owned_hint).err()));
+    spawn_watch_shell(&failed_exercise_hint);
     loop {
         match rx.recv() {
             Ok(event) => match event {
@@ -133,7 +159,9 @@ fn watch(exercises: &[Exercise]) -> notify::Result<()> {
                             .iter()
                             .skip_while(|e| !filepath.ends_with(&e.path));
                         clear_screen();
-                        let _ignored = verify(pending_exercises);
+                        let verify_result = verify(pending_exercises);
+                        let mut failed_exercise_hint = failed_exercise_hint.lock().unwrap();
+                        *failed_exercise_hint = verify_result.map_err(to_owned_hint).err();
                     }
                 }
                 _ => {}

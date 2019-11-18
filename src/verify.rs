@@ -2,14 +2,14 @@ use crate::exercise::{Exercise, Mode, State};
 use console::{style, Emoji};
 use indicatif::ProgressBar;
 
-pub fn verify<'a>(start_at: impl IntoIterator<Item = &'a Exercise>) -> Result<(), ()> {
+pub fn verify<'a>(start_at: impl IntoIterator<Item = &'a Exercise>) -> Result<(), &'a Exercise> {
     for exercise in start_at {
-        let is_done = match exercise.mode {
-            Mode::Test => compile_and_test_interactively(&exercise)?,
-            Mode::Compile => compile_only(&exercise)?,
+        let compile_result = match exercise.mode {
+            Mode::Test => compile_and_test_interactively(&exercise),
+            Mode::Compile => compile_only(&exercise),
         };
-        if !is_done {
-            return Err(());
+        if !compile_result.unwrap_or(false) {
+            return Err(exercise);
         }
     }
     Ok(())
