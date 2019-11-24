@@ -5,3 +5,4 @@ Rust allows you to define a type called `enums` which allow you to enumerate pos
 #### Book Sections
 
 - [Enums](https://doc.rust-lang.org/book/ch06-00-enums.html)
+- [Pattern syntax](https://doc.rust-lang.org/book/ch18-03-pattern-syntax.html)
