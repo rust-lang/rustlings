@@ -610,3 +610,43 @@ answers and don't understand why they work and yours doesn't.
 If you've learned from the sample solutions, I encourage you to come
 back to this exercise and try it again in a few days to reinforce
 what you've learned :)"""
+
+# TYPE CONVERSIONS
+
+[[exercises]]
+name = "using_as"
+path = "exercises/conversions/using_as.rs"
+mode = "compile"
+hint = """
+Use the `as` operator to cast one of the operands in the last line of the
+`average` function into the expected return type."""
+
+[[exercises]]
+name = "from_into"
+path = "exercises/conversions/from_into.rs"
+mode = "test"
+hint = """
+Follow the steps provided right before the `From` implementation"""
+
+[[exercises]]
+name = "try_from_into"
+path = "exercises/conversions/try_from_into.rs"
+mode = "test"
+hint = """
+Follow the steps provided right before the `From` implementation.
+You can also use the example at https://doc.rust-lang.org/std/convert/trait.TryFrom.html"""
+
+[[exercises]]
+name = "as_ref_mut"
+path = "exercises/conversions/as_ref_mut.rs"
+mode = "test"
+hint = """
+Add AsRef<str> as a trait bound to the functions."""
+
+[[exercises]]
+name = "from_str"
+path = "exercises/conversions/from_str.rs"
+mode = "test"
+hint = """
+If you've already solved try_from_into.rs, then this is almost a copy-paste.
+Otherwise, go ahead and solve try_from_into.rs first."""
