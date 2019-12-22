@@ -33,7 +33,13 @@ This will install Rustlings and give you access to the `rustlings` command. Run 
 
 ## Windows
 
-You can run:
+First, set `ExecutionPolicy` to `RemoteSigned`:
+
+```ps
+Set-ExecutionPolicy RemoteSigned
+```
+
+Then, you can run:
 
 ```ps
 Invoke-WebRequest https://git.io/rustlings-win | Select-Object -ExpandProperty Content | Out-File $env:TMP/install_rustlings.ps1; Unblock-File $env:TMP/install_rustlings.ps1; Invoke-Expression $env:TMP/install_rustlings.ps1
