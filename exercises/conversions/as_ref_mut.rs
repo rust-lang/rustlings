@@ -13,7 +13,7 @@ fn byte_counter<T>(arg: T) -> usize {
 // Obtain the number of characters (not bytes) in the given argument
 // Add the AsRef trait appropriately as a trait bound
 fn char_counter<T>(arg: T) -> usize {
-    arg.as_ref().chars().collect::<Vec<_>>().len()
+    arg.as_ref().chars().count()
 }
 
 fn main() {
@@ -31,6 +31,8 @@ mod tests {
         let s = "Café au lait";
         assert_ne!(char_counter(s), byte_counter(s));
     }
+
+    #[test]
     fn same_counts() {
         let s = "Cafe au lait";
         assert_eq!(char_counter(s), byte_counter(s));
