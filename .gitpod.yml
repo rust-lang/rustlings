@@ -3,3 +3,7 @@ tasks:
     command: cargo watch -x run
 image:
   file: .gitpod.Dockerfile
+
+vscode:
+  extensions:
+    - eamodio.gitlens@10.2.0:GNDO73Cmp0fYDiLNxVkbsQ==
