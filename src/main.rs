@@ -2,6 +2,7 @@ use crate::exercise::{Exercise, ExerciseList};
 use crate::run::run;
 use crate::verify::verify;
 use clap::{crate_version, App, Arg, SubCommand};
+use console::Emoji;
 use notify::DebouncedEvent;
 use notify::{RecommendedWatcher, RecursiveMode, Watcher};
 use std::ffi::OsStr;
@@ -102,7 +103,21 @@ fn main() {
     }
 
     if matches.subcommand_matches("watch").is_some() {
-        watch(&exercises).unwrap();
+        if watch(&exercises).is_ok() {
+            println!(
+                "{emoji} All exercises completed! {emoji}",
+                emoji = Emoji("🎉", "★")
+            );
+            println!("");
+            println!("We hope you enjoyed learning about the various aspects of Rust!");
+            println!(
+                "If you noticed any issues, please don't hesitate to report them to our repo."
+            );
+            println!("You can also contribute your own exercises to help the greater community!");
+            println!("");
+            println!("Before reporting an issue or contributing, please read our guidelines:");
+            println!("https://github.com/rust-lang/rustlings/blob/master/CONTRIBUTING.md");
+        }
     }
 
     if matches.subcommand_name().is_none() {
@@ -144,10 +159,12 @@ fn watch(exercises: &[Exercise]) -> notify::Result<()> {
     watcher.watch(Path::new("./exercises"), RecursiveMode::Recursive)?;
 
     clear_screen();
-    let verify_result = verify(exercises.iter());
 
     let to_owned_hint = |t: &Exercise| t.hint.to_owned();
-    let failed_exercise_hint = Arc::new(Mutex::new(verify_result.map_err(to_owned_hint).err()));
+    let failed_exercise_hint = match verify(exercises.iter()) {
+        Ok(_) => return Ok(()),
+        Err(exercise) => Arc::new(Mutex::new(Some(to_owned_hint(exercise)))),
+    };
     spawn_watch_shell(&failed_exercise_hint);
     loop {
         match rx.recv() {
@@ -159,9 +176,13 @@ fn watch(exercises: &[Exercise]) -> notify::Result<()> {
                             .iter()
                             .skip_while(|e| !filepath.ends_with(&e.path));
                         clear_screen();
-                        let verify_result = verify(pending_exercises);
-                        let mut failed_exercise_hint = failed_exercise_hint.lock().unwrap();
-                        *failed_exercise_hint = verify_result.map_err(to_owned_hint).err();
+                        match verify(pending_exercises) {
+                            Ok(_) => return Ok(()),
+                            Err(exercise) => {
+                                let mut failed_exercise_hint = failed_exercise_hint.lock().unwrap();
+                                *failed_exercise_hint = Some(to_owned_hint(exercise));
+                            }
+                        }
                     }
                 }
                 _ => {}
