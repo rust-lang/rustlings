@@ -6,9 +6,9 @@ edition = "2018"
 
 [dependencies]
 clap = "2.32.0"
-indicatif = "0.9.0"
-console = "0.6.2"
-notify = "4.0.0"
+indicatif = "0.10.3"
+console = "0.7.7"
+notify = "4.0.15"
 toml = "0.4.10"
 regex = "1.1.6"
 serde = {version = "1.0.10", features = ["derive"]}
