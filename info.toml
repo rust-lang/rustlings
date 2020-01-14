@@ -41,6 +41,20 @@ value. We can't print out something that isn't there; try giving x a value!
 This is an error that can cause bugs that's very easy to make in any
 programming language -- thankfully the Rust compiler has caught this for us!"""
 
+[[exercises]]
+name = "variables5"
+path = "exercises/variables/variables5.rs"
+mode = "compile"
+hint = """
+In variables3 we already learned how to make an immutable variable mutable
+using a special keyword. Unfortunately this doesn't help us much in this exercise
+because we want to assign a different typed value to an existing variable. Sometimes
+you may also like to reuse existing variable names because you are just converting
+values to different types like in this exercise.
+Fortunately Rust has a powerful solution to this problem: 'Shadowing'!
+You can read more about 'Shadowing' in the book's section 'Variables and Mutability'.
+Try to solve this exercise afterwards using this technique."""
+
 # IF
 
 [[exercises]]
