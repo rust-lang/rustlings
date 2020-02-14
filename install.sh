@@ -82,21 +82,24 @@ else
     echo "SUCCESS: Rust is up to date"
 fi
 
-Path=${1:-rustlings/}
-echo "Cloning Rustlings at $Path..."
-git clone -q https://github.com/rust-lang/rustlings $Path
-
 Version=$(curl -s https://api.github.com/repos/rust-lang/rustlings/releases/latest | python -c "import json,sys;obj=json.load(sys.stdin);print(obj['tag_name']);")
-echo "Checking out version $Version..."
-cd $Path
-git checkout -q tags/$Version
+CargoBin="${CARGO_HOME:-$HOME/.cargo}/bin"
 
 echo "Installing the 'rustlings' executable..."
-cargo install --force --path .
+cargo install --force --git https://github.com/rust-lang/rustlings --tag $Version
 
 if ! [ -x "$(command -v rustlings)" ]
 then
-    echo "WARNING: Please check that you have '~/.cargo/bin' in your PATH environment variable!"
+    echo "WARNING: Please check that you have '$CargoBin' in your PATH environment variable!"
+fi
+
+# Checking whether Clippy is installed.
+# Due to a bug in Cargo, this must be done with Rustup: https://github.com/rust-lang/rustup/issues/1514
+Clippy=$(rustup component list | grep "clippy" | grep "installed")
+if [ -z "$Clippy" ]
+then
+    echo "Installing the 'cargo-clippy' executable..."
+    rustup component add clippy
 fi
 
 echo "All done! Run 'rustlings' to get started."

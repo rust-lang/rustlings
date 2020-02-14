@@ -7,6 +7,7 @@ pub fn verify<'a>(start_at: impl IntoIterator<Item = &'a Exercise>) -> Result<()
         let compile_result = match exercise.mode {
             Mode::Test => compile_and_test(&exercise, RunMode::Interactive),
             Mode::Compile => compile_only(&exercise),
+            Mode::Clippy => compile_only(&exercise),
         };
         if !compile_result.unwrap_or(false) {
             return Err(exercise);
@@ -99,6 +100,7 @@ fn prompt_for_completion(exercise: &Exercise) -> bool {
     let success_msg = match exercise.mode {
         Mode::Compile => "The code is compiling!",
         Mode::Test => "The code is compiling, and the tests pass!",
+        Mode::Clippy => "The code is compiling, and 📎 Clippy 📎 is happy!",
     };
 
     println!("");
