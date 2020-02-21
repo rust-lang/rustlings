@@ -7,7 +7,7 @@ if [ -x "$(command -v git)" ]
 then
     echo "SUCCESS: Git is installed"
 else
-    echo "WARNING: Git does not seem to be installed."
+    echo "ERROR: Git does not seem to be installed."
     echo "Please download Git using your package manager or over https://git-scm.com/!"
     exit 1
 fi
@@ -16,7 +16,7 @@ if [ -x "$(command -v rustc)" ]
 then
     echo "SUCCESS: Rust is installed"
 else
-    echo "WARNING: Rust does not seem to be installed."
+    echo "ERROR: Rust does not seem to be installed."
     echo "Please download Rust using https://rustup.rs!"
     exit 1
 fi
@@ -25,7 +25,7 @@ if [ -x "$(command -v cargo)" ]
 then
     echo "SUCCESS: Cargo is installed"
 else
-    echo "WARNING: Cargo does not seem to be installed."
+    echo "ERROR: Cargo does not seem to be installed."
     echo "Please download Rust and Cargo using https://rustup.rs!"
     exit 1
 fi
@@ -75,7 +75,7 @@ MinRustVersion=1.31
 vercomp $RustVersion $MinRustVersion
 if [ $? -eq 2 ]
 then
-    echo "WARNING: Rust version is too old: $RustVersion - needs at least $MinRustVersion"
+    echo "ERROR: Rust version is too old: $RustVersion - needs at least $MinRustVersion"
     echo "Please update Rust with 'rustup update'"
     exit 1
 else
