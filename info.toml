@@ -369,7 +369,7 @@ The way macros are written, it wants to see something between each
 [[exercises]]
 name = "test4"
 path = "exercises/test4.rs"
-mode = "compile"
+mode = "test"
 hint = "No hints this time ;)"
 
 # MOVE SEMANTICS
