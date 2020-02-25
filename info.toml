@@ -586,6 +586,28 @@ multiply the values into a mutable variable. Or you might write code more
 functionally with recursion and a match clause. But you can also use ranges
 and iterators to solve this in rust."""
 
+# TRAITS
+
+[[exercises]]
+name = "traits1"
+path = "exercises/traits/traits1.rs"
+mode = "test"
+hint = """
+A discussion about Traits in Rust can be found at:
+https://doc.rust-lang.org/1.30.0/book/second-edition/ch10-02-traits.html
+"""
+
+[[exercises]]
+name = "traits2"
+path = "exercises/traits/traits2.rs"
+mode = "test"
+hint = """
+Notice how the trait takes ownership of 'self',and returns `Self'. 
+Try mutating the incoming string vector.
+
+Vectors provide suitable methods for adding an element at the end. See 
+the documentation at: https://doc.rust-lang.org/std/vec/struct.Vec.html"""
+
 # THREADS
 
 [[exercises]]
