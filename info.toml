@@ -529,6 +529,22 @@ hint = """
 It should be doing some checking, returning an `Err` result if those checks fail, and only
 returning an `Ok` result if those checks determine that everything is... okay :)"""
 
+#  CLIPPY
+
+[[exercises]]
+name = "clippy1"
+path = "exercises/clippy/clippy1.rs"
+mode = "clippy"
+hint = """
+Floating point calculations are usually imprecise, so asking if two values are exactly equal is asking for trouble"""
+
+[[exercises]]
+name = "clippy2"
+path = "exercises/clippy/clippy2.rs"
+mode = "clippy"
+hint = """
+`for` loops over Option values are more clearly expressed as an `if let`"""
+
 # STANDARD LIBRARY TYPES
 
 [[exercises]]

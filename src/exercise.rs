@@ -1,7 +1,7 @@
 use regex::Regex;
 use serde::Deserialize;
 use std::fmt::{self, Display, Formatter};
-use std::fs::{remove_file, File};
+use std::fs::{self, remove_file, File};
 use std::io::Read;
 use std::path::PathBuf;
 use std::process::{self, Command};
@@ -9,6 +9,7 @@ use std::process::{self, Command};
 const RUSTC_COLOR_ARGS: &[&str] = &["--color", "always"];
 const I_AM_DONE_REGEX: &str = r"(?m)^\s*///?\s*I\s+AM\s+NOT\s+DONE";
 const CONTEXT: usize = 2;
+const CLIPPY_CARGO_TOML_PATH: &str = "./exercises/clippy/Cargo.toml";
 
 fn temp_file() -> String {
     format!("./temp_{}", process::id())
@@ -19,6 +20,7 @@ fn temp_file() -> String {
 pub enum Mode {
     Compile,
     Test,
+    Clippy,
 }
 
 #[derive(Deserialize)]
@@ -83,6 +85,34 @@ impl Exercise {
                 .args(&["--test", self.path.to_str().unwrap(), "-o", &temp_file()])
                 .args(RUSTC_COLOR_ARGS)
                 .output(),
+            Mode::Clippy => {
+                let cargo_toml = format!(
+                    r#"[package]
+name = "{}"
+version = "0.0.1"
+edition = "2018"
+[[bin]]
+name = "{}"
+path = "{}.rs""#,
+                    self.name, self.name, self.name
+                );
+                fs::write(CLIPPY_CARGO_TOML_PATH, cargo_toml)
+                    .expect("Failed to write 📎 Clippy 📎 Cargo.toml file.");
+                // Due to an issue with Clippy, a cargo clean is required to catch all lints.
+                // See https://github.com/rust-lang/rust-clippy/issues/2604
+                // This is already fixed on master branch. See this issue to track merging into Cargo:
+                // https://github.com/rust-lang/rust-clippy/issues/3837
+                Command::new("cargo")
+                    .args(&["clean", "--manifest-path", CLIPPY_CARGO_TOML_PATH])
+                    .args(RUSTC_COLOR_ARGS)
+                    .output()
+                    .expect("Failed to run 'cargo clean'");
+                Command::new("cargo")
+                    .args(&["clippy", "--manifest-path", CLIPPY_CARGO_TOML_PATH])
+                    .args(RUSTC_COLOR_ARGS)
+                    .args(&["--", "-D", "warnings"])
+                    .output()
+            }
         }
         .expect("Failed to run 'compile' command.");
 
