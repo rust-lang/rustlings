@@ -8,7 +8,7 @@
 // to a vector of strings.
 // 
 // No boiler plate code this time,
-// you can do this! Hints at the bottom.
+// you can do this!
 
 // I AM NOT DONE
 
