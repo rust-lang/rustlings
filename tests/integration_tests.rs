@@ -31,7 +31,7 @@ fn verify_all_success() {
 }
 
 #[test]
-fn verify_all_failure() {
+fn verify_fails_if_some_fails() {
     Command::cargo_bin("rustlings")
         .unwrap()
         .arg("v")
