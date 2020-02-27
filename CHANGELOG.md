@@ -1,3 +1,14 @@
+<a name="2.2.1"></a>
+### 2.2.1 (2020-02-27)
+
+#### Bug Fixes
+
+*   Re-add cloning the repo to install scripts ([3d9b03c5](https://github.com/rust-lang/rustlings/commit/3d9b03c52b8dc51b140757f6fd25ad87b5782ef5))
+
+#### Features
+
+*   Add clippy lints (#269) ([1e2fd9c9](https://github.com/rust-lang/rustlings/commit/1e2fd9c92f8cd6e389525ca1a999fca4c90b5921))
+
 <a name="2.2.0"></a>
 ## 2.2.0 (2020-02-25)
 
