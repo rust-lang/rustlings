@@ -73,8 +73,12 @@ if (!($LASTEXITCODE -eq 0)) {
 $version = Invoke-WebRequest -UseBasicParsing https://api.github.com/repos/rust-lang/rustlings/releases/latest `
     | ConvertFrom-Json | Select-Object -ExpandProperty tag_name
 
+Write-Host "Checking out version $version..."
+Set-Location $path
+git checkout -q tags/$version
+
 Write-Host "Installing the 'rustlings' executable..."
-cargo install --force --git https://github.com/rust-lang/rustlings --tag $version
+cargo install --force --path .
 if (!(Get-Command rustlings -ErrorAction SilentlyContinue)) {
     Write-Host "WARNING: Please check that you have '~/.cargo/bin' in your PATH environment variable!"
 }

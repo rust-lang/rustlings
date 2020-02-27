@@ -82,11 +82,19 @@ else
     echo "SUCCESS: Rust is up to date"
 fi
 
+Path=${1:-rustlings/}
+echo "Cloning Rustlings at $Path..."
+git clone -q https://github.com/rust-lang/rustlings $Path
+
 Version=$(curl -s https://api.github.com/repos/rust-lang/rustlings/releases/latest | python -c "import json,sys;obj=json.load(sys.stdin);print(obj['tag_name']);")
 CargoBin="${CARGO_HOME:-$HOME/.cargo}/bin"
 
+echo "Checking out version $Version..."
+cd $Path
+git checkout -q tags/$Version
+
 echo "Installing the 'rustlings' executable..."
-cargo install --force --git https://github.com/rust-lang/rustlings --tag $Version
+cargo install --force --path .
 
 if ! [ -x "$(command -v rustlings)" ]
 then
