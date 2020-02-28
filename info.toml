@@ -645,7 +645,7 @@ type 'u32'. Maybe we need to update the explicit references to this data type so
 
 [[exercises]]
 name = "generics3"
-path = "exercises/generics/generics3_solution.rs"
+path = "exercises/generics/generics3.rs"
 mode = "test"
 hint = """
 To find the best solution to this challenge you're going to need to think back to your 
