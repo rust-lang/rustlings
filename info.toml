@@ -608,6 +608,38 @@ Try mutating the incoming string vector.
 Vectors provide suitable methods for adding an element at the end. See 
 the documentation at: https://doc.rust-lang.org/std/vec/struct.Vec.html"""
 
+# Generics
+
+[[exercises]]
+name = "generics1"
+path = "exercises/generics/generics1.rs"
+mode = "compile"
+hint = """
+Vectors in rust make use of generics to create dynamically sized arrays of any type.
+You need to tell the compiler what type we are pushing onto this vector."""
+
+[[exercises]]
+name = "generics2"
+path = "exercises/generics/generics2.rs"
+mode = "test"
+hint = """
+Think carefully about what we need to do here. Currently we are wrapping only values of
+type 'u32'. Maybe we need to update the explicit references to this data type somehow?
+"""
+
+[[exercises]]
+name = "generics3"
+path = "exercises/generics/generics3_solution.rs"
+mode = "test"
+hint = """
+To find the best solution to this challenge you're going to need to think back to your 
+knowledge of traits, specifically Trait Bound Syntax -  you may also need this: "use std::fmt::Display;"
+
+This is definitely harder than the last two exercises! You need to think about not only making the
+ReportCard struct generic, but also the correct property - you will need to change the implementation
+of the struct slightly too...you can do it!
+"""
+
 # THREADS
 
 [[exercises]]
