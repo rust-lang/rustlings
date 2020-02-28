@@ -1,3 +1,44 @@
+<a name="2.2.1"></a>
+### 2.2.1 (2020-02-27)
+
+#### Bug Fixes
+
+*   Re-add cloning the repo to install scripts ([3d9b03c5](https://github.com/rust-lang/rustlings/commit/3d9b03c52b8dc51b140757f6fd25ad87b5782ef5))
+
+#### Features
+
+*   Add clippy lints (#269) ([1e2fd9c9](https://github.com/rust-lang/rustlings/commit/1e2fd9c92f8cd6e389525ca1a999fca4c90b5921))
+
+<a name="2.2.0"></a>
+## 2.2.0 (2020-02-25)
+
+
+#### Bug Fixes
+
+*   Update deps to version compatable with aarch64-pc-windows (#263) ([19a93428](https://github.com/rust-lang/rustlings/commit/19a93428b3c73d994292671f829bdc8e5b7b3401))
+* **docs:**
+  * Added a necessary step to Windows installation process (#242) ([3906efcd](https://github.com/rust-lang/rustlings/commit/3906efcd52a004047b460ed548037093de3f523f))
+  * Fixed mangled sentence from book; edited for clarity (#266) ([ade52ff](https://github.com/rust-lang/rustlings/commit/ade52ffb739987287ddd5705944c8777705faed9)) 
+  * Updated iterators readme to account for iterators4 exercise (#273) ([bec8e3a](https://github.com/rust-lang/rustlings/commit/bec8e3a644cbd88db1c73ea5f1d8a364f4a34016))
+* **installation:**  make fatal errors more obvious (#272) ([17d0951e](https://github.com/rust-lang/rustlings/commit/17d0951e66fda8e11b204d5c4c41a0d5e22e78f7))
+* **iterators2:**
+  *  Remove reference to missing iterators2.rs (#245) ([419f7797](https://github.com/rust-lang/rustlings/commit/419f7797f294e4ce6a2b883199731b5bde77d262))
+* **as_ref_mut:** Enable a test and improve per clippy's suggestion (#256) ([dfdf809](https://github.com/rust-lang/rustlings/commit/dfdf8093ebbd4145864995627b812780de52f902))
+* **tests1:**
+  * Change test command ([fe10e06c](https://github.com/rust-lang/rustlings/commit/fe10e06c3733ddb4a21e90d09bf79bfe618e97ce) 
+  * Correct test command in tests1.rs comment (#263) ([39fa7ae](https://github.com/rust-lang/rustlings/commit/39fa7ae8b70ad468da49b06f11b2383135a63bcf))
+
+#### Features
+
+*   Add variables5.rs exercise (#264) ([0c73609e](https://github.com/rust-lang/rustlings/commit/0c73609e6f2311295e95d6f96f8c747cfc4cba03))
+*   Show a completion message when watching (#253) ([d25ee55a](https://github.com/rust-lang/rustlings/commit/d25ee55a3205882d35782e370af855051b39c58c))
+*   Add type conversion and parsing exercises (#249) ([0c85dc11](https://github.com/rust-lang/rustlings/commit/0c85dc1193978b5165491b99cc4922caf8d14a65))
+*   Created consistent money unit (#258) ([fd57f8f](https://github.com/rust-lang/rustlings/commit/fd57f8f2c1da2af8ddbebbccec214e6f40f4dbab))
+*   Enable test for exercise test4 (#276) ([8b971ff](https://github.com/rust-lang/rustlings/commit/8b971ffab6079a706ac925f5917f987932b55c07))
+*   Added traits exercises (#274 but specifically #216, which originally added
+    this :heart:) ([b559cdd](https://github.com/rust-lang/rustlings/commit/b559cdd73f32c0d0cfc1feda39f82b3e3583df17))
+
+
 <a name="2.1.0"></a>
 ## 2.1.0 (2019-11-27)
 

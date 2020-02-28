@@ -2,3 +2,6 @@
 target/
 **/*.rs.bk
 .DS_Store
+*.pdb
+exercises/clippy/Cargo.toml
+exercises/clippy/Cargo.lock

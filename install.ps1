@@ -72,6 +72,7 @@ if (!($LASTEXITCODE -eq 0)) {
 # but anyone running pwsh 5 will have to pass the argument.
 $version = Invoke-WebRequest -UseBasicParsing https://api.github.com/repos/rust-lang/rustlings/releases/latest `
     | ConvertFrom-Json | Select-Object -ExpandProperty tag_name
+
 Write-Host "Checking out version $version..."
 Set-Location $path
 git checkout -q tags/$version
@@ -80,6 +81,14 @@ Write-Host "Installing the 'rustlings' executable..."
 cargo install --force --path .
 if (!(Get-Command rustlings -ErrorAction SilentlyContinue)) {
     Write-Host "WARNING: Please check that you have '~/.cargo/bin' in your PATH environment variable!"
+}
+
+# Checking whether Clippy is installed.
+# Due to a bug in Cargo, this must be done with Rustup: https://github.com/rust-lang/rustup/issues/1514
+$clippy = (rustup component list | Select-String "clippy" | Select-String "installed") | Out-String
+if (!$clippy) {
+    Write-Host "Installing the 'cargo-clippy' executable..."
+    rustup component add clippy
 }
 
 Write-Host "All done! Run 'rustlings' to get started."

@@ -1,12 +1,13 @@
 use crate::exercise::{Exercise, Mode, State};
-use console::{style, Emoji};
+use console::style;
 use indicatif::ProgressBar;
 
 pub fn verify<'a>(start_at: impl IntoIterator<Item = &'a Exercise>) -> Result<(), &'a Exercise> {
     for exercise in start_at {
         let compile_result = match exercise.mode {
-            Mode::Test => compile_and_test_interactively(&exercise),
+            Mode::Test => compile_and_test(&exercise, RunMode::Interactive),
             Mode::Compile => compile_only(&exercise),
+            Mode::Clippy => compile_only(&exercise),
         };
         if !compile_result.unwrap_or(false) {
             return Err(exercise);
@@ -15,8 +16,13 @@ pub fn verify<'a>(start_at: impl IntoIterator<Item = &'a Exercise>) -> Result<()
     Ok(())
 }
 
+enum RunMode {
+    Interactive,
+    NonInteractive,
+}
+
 pub fn test(exercise: &Exercise) -> Result<(), ()> {
-    compile_and_test(exercise, true)?;
+    compile_and_test(exercise, RunMode::NonInteractive)?;
     Ok(())
 }
 
@@ -24,69 +30,64 @@ fn compile_only(exercise: &Exercise) -> Result<bool, ()> {
     let progress_bar = ProgressBar::new_spinner();
     progress_bar.set_message(format!("Compiling {}...", exercise).as_str());
     progress_bar.enable_steady_tick(100);
-    let compile_output = exercise.compile();
+    let compilation_result = exercise.compile();
     progress_bar.finish_and_clear();
-    if compile_output.status.success() {
-        let formatstr = format!("{} Successfully compiled {}!", Emoji("✅", "✓"), exercise);
-        println!("{}", style(formatstr).green());
-        exercise.clean();
-        Ok(prompt_for_completion(&exercise))
-    } else {
-        let formatstr = format!(
-            "{} Compilation of {} failed! Compiler error message:\n",
-            Emoji("⚠️ ", "!"),
-            exercise
-        );
-        println!("{}", style(formatstr).red());
-        println!("{}", String::from_utf8_lossy(&compile_output.stderr));
-        exercise.clean();
-        Err(())
+
+    match compilation_result {
+        Ok(_) => {
+            success!("Successfully compiled {}!", exercise);
+            Ok(prompt_for_completion(&exercise))
+        }
+        Err(output) => {
+            warn!(
+                "Compilation of {} failed! Compiler error message:\n",
+                exercise
+            );
+            println!("{}", output.stderr);
+            Err(())
+        }
     }
 }
 
-fn compile_and_test_interactively(exercise: &Exercise) -> Result<bool, ()> {
-    compile_and_test(exercise, false)
-}
-
-fn compile_and_test(exercise: &Exercise, skip_prompt: bool) -> Result<bool, ()> {
+fn compile_and_test(exercise: &Exercise, run_mode: RunMode) -> Result<bool, ()> {
     let progress_bar = ProgressBar::new_spinner();
     progress_bar.set_message(format!("Testing {}...", exercise).as_str());
     progress_bar.enable_steady_tick(100);
 
-    let compile_output = exercise.compile();
-    if compile_output.status.success() {
-        progress_bar.set_message(format!("Running {}...", exercise).as_str());
+    let compilation_result = exercise.compile();
 
-        let runcmd = exercise.run();
-        progress_bar.finish_and_clear();
-
-        if runcmd.status.success() {
-            let formatstr = format!("{} Successfully tested {}!", Emoji("✅", "✓"), exercise);
-            println!("{}", style(formatstr).green());
-            exercise.clean();
-            Ok(skip_prompt || prompt_for_completion(exercise))
-        } else {
-            let formatstr = format!(
-                "{} Testing of {} failed! Please try again. Here's the output:",
-                Emoji("⚠️ ", "!"),
+    let compilation = match compilation_result {
+        Ok(compilation) => compilation,
+        Err(output) => {
+            progress_bar.finish_and_clear();
+            warn!(
+                "Compiling of {} failed! Please try again. Here's the output:",
                 exercise
             );
-            println!("{}", style(formatstr).red());
-            println!("{}", String::from_utf8_lossy(&runcmd.stdout));
-            exercise.clean();
+            println!("{}", output.stderr);
+            return Err(());
+        }
+    };
+
+    let result = compilation.run();
+    progress_bar.finish_and_clear();
+
+    match result {
+        Ok(_) => {
+            if let RunMode::Interactive = run_mode {
+                Ok(prompt_for_completion(&exercise))
+            } else {
+                Ok(true)
+            }
+        }
+        Err(output) => {
+            warn!(
+                "Testing of {} failed! Please try again. Here's the output:",
+                exercise
+            );
+            println!("{}", output.stdout);
             Err(())
         }
-    } else {
-        progress_bar.finish_and_clear();
-        let formatstr = format!(
-            "{} Compiling of {} failed! Please try again. Here's the output:",
-            Emoji("⚠️ ", "!"),
-            exercise
-        );
-        println!("{}", style(formatstr).red());
-        println!("{}", String::from_utf8_lossy(&compile_output.stderr));
-        exercise.clean();
-        Err(())
     }
 }
 
@@ -99,6 +100,7 @@ fn prompt_for_completion(exercise: &Exercise) -> bool {
     let success_msg = match exercise.mode {
         Mode::Compile => "The code is compiling!",
         Mode::Test => "The code is compiling, and the tests pass!",
+        Mode::Clippy => "The code is compiling, and 📎 Clippy 📎 is happy!",
     };
 
     println!("");
