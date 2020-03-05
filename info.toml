@@ -702,3 +702,17 @@ mode = "test"
 hint = """
 If you've already solved try_from_into.rs, then this is almost a copy-paste.
 Otherwise, go ahead and solve try_from_into.rs first."""
+
+[[exercises]]
+name = "option1"
+path = "exercises/option/option1.rs"
+mode = "compile"
+hint = """
+Check out some functions of Option:
+is_some
+is_none
+unwrap
+
+and:
+pattern matching
+"""
