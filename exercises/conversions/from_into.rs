@@ -70,4 +70,11 @@ mod tests {
         assert_eq!(p.name, "Mark");
         assert_eq!(p.age, 20);
     }
+    #[test]
+    fn test_bad_age() {
+        // Test that "Mark.twenty" will return the default person due to an error in parsing age
+        let p = Person::from("Mark,twenty");
+        assert_eq!(p.name, "John");
+        assert_eq!(p.age, 30);
+    }
 }
