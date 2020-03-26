@@ -610,7 +610,7 @@ path = "exercises/traits/traits1.rs"
 mode = "test"
 hint = """
 A discussion about Traits in Rust can be found at:
-https://doc.rust-lang.org/1.30.0/book/second-edition/ch10-02-traits.html
+https://doc.rust-lang.org/book/ch10-02-traits.html
 """
 
 [[exercises]]
