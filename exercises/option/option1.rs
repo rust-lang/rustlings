@@ -1,9 +1,9 @@
-//option1.rs
-//Make me compile! Execute `rustlings hint option1` for hints
+// option1.rs
+// Make me compile! Execute `rustlings hint option1` for hints
 
-//I AM NOT DONE
+// I AM NOT DONE
 
-//you can modify anything EXCEPT for this function's sig
+// you can modify anything EXCEPT for this function's sig
 fn print_number(maybe_number: Option<u16>) {
     println!("printing: {}", *maybe_number);
 }
