@@ -535,6 +535,16 @@ pattern matching
 """
 
 [[exercises]]
+name = "option2"
+path = "exercises/option/option2.rs"
+mode = "compile"
+hint = """
+check out:
+https://doc.rust-lang.org/rust-by-example/flow_control/if_let.html
+https://doc.rust-lang.org/rust-by-example/flow_control/while_let.html
+"""
+
+[[exercises]]
 name = "result1"
 path = "exercises/error_handling/result1.rs"
 mode = "test"
