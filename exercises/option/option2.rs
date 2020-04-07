@@ -5,7 +5,7 @@
 
 fn main() {
     let optional_value = Some(String::from("rustlings"));
-    //make this an if let statement - value is "Some" type
+    // Make this an if let statement whose value is "Some" type
     value = optional_value {
         println!("the value of optional value is: {}", value);
     } else {
