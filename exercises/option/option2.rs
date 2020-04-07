@@ -9,7 +9,7 @@ fn main() {
     value = optional_value {
         println!("the value of optional value is: {}", value);
     } else {
-        println!("optional value does not have a value!");
+        println!("The optional value doesn't contain anything!");
     }
 
     let mut optional_values_vec: Vec<Option<i8>> = Vec::new();
