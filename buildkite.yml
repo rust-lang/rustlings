@@ -1,0 +1,5 @@
+steps:
+  - label: "Test with stable"
+    command: rustup run stable cargo test
+  - label: "Test with beta"
+    command: rustup run beta cargo test
