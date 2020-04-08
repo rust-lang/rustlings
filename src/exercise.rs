@@ -98,6 +98,15 @@ path = "{}.rs""#,
                 );
                 fs::write(CLIPPY_CARGO_TOML_PATH, cargo_toml)
                     .expect("Failed to write 📎 Clippy 📎 Cargo.toml file.");
+                // To support the ability to run the clipy exercises, build
+                // an executable, in addition to running clippy. With a
+                // compilation failure, this would silently fail. But we expect
+                // clippy to reflect the same failure while compiling later.
+                Command::new("rustc")
+                    .args(&[self.path.to_str().unwrap(), "-o", &temp_file()])
+                    .args(RUSTC_COLOR_ARGS)
+                    .output()
+                    .expect("Failed to compile!");
                 // Due to an issue with Clippy, a cargo clean is required to catch all lints.
                 // See https://github.com/rust-lang/rust-clippy/issues/2604
                 // This is already fixed on master branch. See this issue to track merging into Cargo:
