@@ -9,7 +9,6 @@ fn byte_counter<T>(arg: T) -> usize {
     arg.as_ref().as_bytes().len()
 }
 
-// I AM NOT DONE
 // Obtain the number of characters (not bytes) in the given argument
 // Add the AsRef trait appropriately as a trait bound
 fn char_counter<T>(arg: T) -> usize {
