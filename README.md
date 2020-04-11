@@ -1,6 +1,6 @@
 ![crab pet](https://i.imgur.com/LbZJgmm.gif)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-33-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-34-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️ [![Build status](https://badge.buildkite.com/7af93d81dc522c67a1ec8e33ff5705861b1cb36360b774807f.svg)](https://buildkite.com/mokou/rustlings)
@@ -147,37 +147,40 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/lukabavdaz"><img src="https://avatars0.githubusercontent.com/u/9624558?v=4" width="100px;" alt=""/><br /><sub><b>lukabavdaz</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=lukabavdaz" title="Code">💻</a> <a href="#content-lukabavdaz" title="Content">🖋</a></td>
     <td align="center"><a href="http://vestera.as"><img src="https://avatars2.githubusercontent.com/u/4187449?v=4" width="100px;" alt=""/><br /><sub><b>Erik Vesteraas</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=evestera" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/Delet0r"><img src="https://avatars1.githubusercontent.com/u/23195618?v=4" width="100px;" alt=""/><br /><sub><b>delet0r</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=Delet0r" title="Code">💻</a></td>
-    <td align="center"><a href="http://phinary.ca"><img src="https://avatars1.githubusercontent.com/u/10522375?v=4" width="100px;" alt=""/><br /><sub><b>Shaun Bennett</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=shaunbennett" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/abagshaw"><img src="https://avatars2.githubusercontent.com/u/8594541?v=4" width="100px;" alt=""/><br /><sub><b>Andrew Bagshaw</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=abagshaw" title="Code">💻</a></td>
   </tr>
   <tr>
+    <td align="center"><a href="http://phinary.ca"><img src="https://avatars1.githubusercontent.com/u/10522375?v=4" width="100px;" alt=""/><br /><sub><b>Shaun Bennett</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=shaunbennett" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/abagshaw"><img src="https://avatars2.githubusercontent.com/u/8594541?v=4" width="100px;" alt=""/><br /><sub><b>Andrew Bagshaw</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=abagshaw" title="Code">💻</a></td>
     <td align="center"><a href="https://ai6ua.net/"><img src="https://avatars2.githubusercontent.com/u/175578?v=4" width="100px;" alt=""/><br /><sub><b>Kyle Isom</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=kisom" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/ColinPitrat"><img src="https://avatars3.githubusercontent.com/u/1541863?v=4" width="100px;" alt=""/><br /><sub><b>Colin Pitrat</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=ColinPitrat" title="Code">💻</a></td>
     <td align="center"><a href="https://zacanger.com"><img src="https://avatars3.githubusercontent.com/u/12520493?v=4" width="100px;" alt=""/><br /><sub><b>Zac Anger</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=zacanger" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/mgeier"><img src="https://avatars1.githubusercontent.com/u/705404?v=4" width="100px;" alt=""/><br /><sub><b>Matthias Geier</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=mgeier" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/cjpearce"><img src="https://avatars1.githubusercontent.com/u/3453268?v=4" width="100px;" alt=""/><br /><sub><b>Chris Pearce</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=cjpearce" title="Code">💻</a></td>
     <td align="center"><a href="https://yvan-sraka.github.io"><img src="https://avatars2.githubusercontent.com/u/705213?v=4" width="100px;" alt=""/><br /><sub><b>Yvan Sraka</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=yvan-sraka" title="Code">💻</a></td>
+  </tr>
+  <tr>
     <td align="center"><a href="https://github.com/dendi239"><img src="https://avatars3.githubusercontent.com/u/16478650?v=4" width="100px;" alt=""/><br /><sub><b>Denys Smirnov</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=dendi239" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/eddyp"><img src="https://avatars2.githubusercontent.com/u/123772?v=4" width="100px;" alt=""/><br /><sub><b>eddyp</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=eddyp" title="Code">💻</a></td>
     <td align="center"><a href="http://about.me/BrianKung"><img src="https://avatars1.githubusercontent.com/u/2836167?v=4" width="100px;" alt=""/><br /><sub><b>Brian Kung</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=briankung" title="Code">💻</a> <a href="#content-briankung" title="Content">🖋</a></td>
     <td align="center"><a href="https://rcousineau.gitlab.io"><img src="https://avatars3.githubusercontent.com/u/281039?v=4" width="100px;" alt=""/><br /><sub><b>Russell</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=miller-time" title="Code">💻</a></td>
-  </tr>
-  <tr>
     <td align="center"><a href="http://danwilhelm.com"><img src="https://avatars3.githubusercontent.com/u/6137185?v=4" width="100px;" alt=""/><br /><sub><b>Dan Wilhelm</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=danwilhelm" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/Jesse-Cameron"><img src="https://avatars3.githubusercontent.com/u/3723654?v=4" width="100px;" alt=""/><br /><sub><b>Jesse</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=Jesse-Cameron" title="Code">💻</a> <a href="#content-Jesse-Cameron" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/MrFroop"><img src="https://avatars3.githubusercontent.com/u/196700?v=4" width="100px;" alt=""/><br /><sub><b>Fredrik Jambrén</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=MrFroop" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/petemcfarlane"><img src="https://avatars3.githubusercontent.com/u/3472717?v=4" width="100px;" alt=""/><br /><sub><b>Pete McFarlane</b></sub></a><br /><a href="#content-petemcfarlane" title="Content">🖋</a></td>
+  </tr>
+  <tr>
     <td align="center"><a href="https://github.com/nkanderson"><img src="https://avatars0.githubusercontent.com/u/4128825?v=4" width="100px;" alt=""/><br /><sub><b>nkanderson</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=nkanderson" title="Code">💻</a> <a href="#content-nkanderson" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/ajaxm"><img src="https://avatars0.githubusercontent.com/u/13360138?v=4" width="100px;" alt=""/><br /><sub><b>Ajax M</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=ajaxm" title="Documentation">📖</a></td>
     <td align="center"><a href="https://dylnuge.com"><img src="https://avatars2.githubusercontent.com/u/118624?v=4" width="100px;" alt=""/><br /><sub><b>Dylan Nugent</b></sub></a><br /><a href="#content-Dylnuge" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/vyaslav"><img src="https://avatars0.githubusercontent.com/u/1385427?v=4" width="100px;" alt=""/><br /><sub><b>vyaslav</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=vyaslav" title="Code">💻</a> <a href="#content-vyaslav" title="Content">🖋</a></td>
     <td align="center"><a href="https://join.sfxd.org"><img src="https://avatars1.githubusercontent.com/u/17297466?v=4" width="100px;" alt=""/><br /><sub><b>George</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=gdoenlen" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/nyxtom"><img src="https://avatars2.githubusercontent.com/u/222763?v=4" width="100px;" alt=""/><br /><sub><b>Thomas Holloway</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=nyxtom" title="Code">💻</a> <a href="#content-nyxtom" title="Content">🖋</a></td>
-  </tr>
-  <tr>
     <td align="center"><a href="https://github.com/workingjubilee"><img src="https://avatars1.githubusercontent.com/u/46493976?v=4" width="100px;" alt=""/><br /><sub><b>Jubilee</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=workingjubilee" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/WofWca"><img src="https://avatars1.githubusercontent.com/u/39462442?v=4" width="100px;" alt=""/><br /><sub><b>WofWca</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=WofWca" title="Code">💻</a></td>
+  </tr>
+  <tr>
     <td align="center"><a href="https://github.com/jrvidal"><img src="https://avatars0.githubusercontent.com/u/1636604?v=4" width="100px;" alt=""/><br /><sub><b>Roberto Vidal</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=jrvidal" title="Code">💻</a> <a href="https://github.com/fmoko/rustlings/commits?author=jrvidal" title="Documentation">📖</a> <a href="#ideas-jrvidal" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-jrvidal" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://github.com/jensim"><img src="https://avatars0.githubusercontent.com/u/3663856?v=4" width="100px;" alt=""/><br /><sub><b>Jens</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=jensim" title="Documentation">📖</a></td>
   </tr>
 </table>
 
