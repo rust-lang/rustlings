@@ -1,6 +1,6 @@
 ![crab pet](https://i.imgur.com/LbZJgmm.gif)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️ [![Build status](https://badge.buildkite.com/7af93d81dc522c67a1ec8e33ff5705861b1cb36360b774807f.svg)](https://buildkite.com/mokou/rustlings)
@@ -141,6 +141,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="http://carol-nichols.com"><img src="https://avatars2.githubusercontent.com/u/193874?v=4" width="100px;" alt=""/><br /><sub><b>Carol (Nichols &#124;&#124; Goulding)</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=carols10cents" title="Code">💻</a> <a href="#content-carols10cents" title="Content">🖋</a></td>
     <td align="center"><a href="https://twitter.com/QuietMisdreavus"><img src="https://avatars2.githubusercontent.com/u/5217170?v=4" width="100px;" alt=""/><br /><sub><b>QuietMisdreavus</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=QuietMisdreavus" title="Code">💻</a> <a href="#content-QuietMisdreavus" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/robertlugg"><img src="https://avatars0.githubusercontent.com/u/6054540?v=4" width="100px;" alt=""/><br /><sub><b>Robert M Lugg</b></sub></a><br /><a href="#content-robertlugg" title="Content">🖋</a></td>
   </tr>
 </table>
 
