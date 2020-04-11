@@ -207,6 +207,15 @@
         "code",
         "content"
       ]
+    },
+    {
+      "login": "MrFroop",
+      "name": "Fredrik Jambrén",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/196700?v=4",
+      "profile": "https://github.com/MrFroop",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 10,
