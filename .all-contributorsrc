@@ -216,6 +216,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "petemcfarlane",
+      "name": "Pete McFarlane",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/3472717?v=4",
+      "profile": "https://github.com/petemcfarlane",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 10,
