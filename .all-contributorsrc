@@ -396,6 +396,16 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "sjmann",
+      "name": "Steven Mann",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/6589896?v=4",
+      "profile": "https://github.com/sjmann",
+      "contributions": [
+        "code",
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
