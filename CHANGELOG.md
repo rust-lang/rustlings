@@ -1,3 +1,26 @@
+<a name="3.0.0"></a>
+## 3.0.0 (2020-04-11)
+
+#### Breaking Changes
+
+* make "compile" exercises print output (#278) ([3b6d5c](https://github.com/fmoko/rustlings/commit/3b6d5c3aaa27a242a832799eb66e96897d26fde3))
+
+#### Bug Fixes
+
+* **primitive_types:** revert primitive_types4 (#296) ([b3a3351e](https://github.com/rust-lang/rustlings/commit/b3a3351e8e6a0bdee07077d7b0382953821649ae))
+* **run:**  compile clippy exercise files (#295) ([3ab084a4](https://github.com/rust-lang/rustlings/commit/3ab084a421c0f140ae83bf1fc3f47b39342e7373))
+* **conversions:**
+  * add additional test to meet exercise rules (#284) ([bc22ec3](https://github.com/fmoko/rustlings/commit/bc22ec382f843347333ef1301fc1bad773657f38))
+  * remove duplicate not done comment (#292) ([dab90f](https://github.com/fmoko/rustlings/commit/dab90f7b91a6000fe874e3d664f244048e5fa342))
+* don't hardcode documentation version for traits (#288) ([30e6af](https://github.com/fmoko/rustlings/commit/30e6af60690c326fb5d3a9b7335f35c69c09137d))
+
+#### Features
+
+*   add Option2 exercise (#290) ([86b5c08b](https://github.com/rust-lang/rustlings/commit/86b5c08b9bea1576127a7c5f599f5752072c087d))
+*   add excercise for option (#282) ([135e5d47](https://github.com/rust-lang/rustlings/commit/135e5d47a7c395aece6f6022117fb20c82f2d3d4))
+*   add new exercises for generics (#280) ([76be5e4e](https://github.com/rust-lang/rustlings/commit/76be5e4e991160f5fd9093f03ee2ba260e8f7229))
+* **ci:**  add buildkite config ([b049fa2c](https://github.com/rust-lang/rustlings/commit/b049fa2c84dba0f0c8906ac44e28fd45fba51a71))
+
 <a name="2.2.1"></a>
 ### 2.2.1 (2020-02-27)
 
