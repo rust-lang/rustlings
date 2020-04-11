@@ -169,6 +169,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "briankung",
+      "name": "Brian Kung",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/2836167?v=4",
+      "profile": "http://about.me/BrianKung",
+      "contributions": [
+        "code",
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 10,
