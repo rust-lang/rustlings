@@ -160,6 +160,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "eddyp",
+      "name": "eddyp",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/123772?v=4",
+      "profile": "https://github.com/eddyp",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 10,
