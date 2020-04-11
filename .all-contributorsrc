@@ -416,6 +416,15 @@
         "code",
         "content"
       ]
+    },
+    {
+      "login": "sl4m",
+      "name": "skim",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/47347?v=4",
+      "profile": "https://keybase.io/skim",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
