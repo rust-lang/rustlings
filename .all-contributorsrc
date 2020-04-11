@@ -341,6 +341,15 @@
         "content",
         "review"
       ]
+    },
+    {
+      "login": "codehearts",
+      "name": "Katie",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/2885412?v=4",
+      "profile": "https://codehearts.com",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
