@@ -133,6 +133,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "cjpearce",
+      "name": "Chris Pearce",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/3453268?v=4",
+      "profile": "https://github.com/cjpearce",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 10,
