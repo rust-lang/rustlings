@@ -115,6 +115,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "zacanger",
+      "name": "Zac Anger",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/12520493?v=4",
+      "profile": "https://zacanger.com",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 10,
