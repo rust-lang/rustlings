@@ -1,6 +1,6 @@
 ![crab pet](https://i.imgur.com/LbZJgmm.gif)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-41-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-42-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️ [![Build status](https://badge.buildkite.com/7af93d81dc522c67a1ec8e33ff5705861b1cb36360b774807f.svg)](https://buildkite.com/mokou/rustlings)
@@ -190,6 +190,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/TorbenJ"><img src="https://avatars2.githubusercontent.com/u/9077102?v=4" width="100px;" alt=""/><br /><sub><b>Torben Jonas</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=TorbenJ" title="Code">💻</a> <a href="#content-TorbenJ" title="Content">🖋</a></td>
+    <td align="center"><a href="http://paulbissex.com/"><img src="https://avatars0.githubusercontent.com/u/641?v=4" width="100px;" alt=""/><br /><sub><b>Paul Bissex</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=pbx" title="Documentation">📖</a></td>
   </tr>
 </table>
 
