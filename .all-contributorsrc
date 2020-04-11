@@ -377,6 +377,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "TorbenJ",
+      "name": "Torben Jonas",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/9077102?v=4",
+      "profile": "https://github.com/TorbenJ",
+      "contributions": [
+        "code",
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
