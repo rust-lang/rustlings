@@ -263,6 +263,15 @@
         "code",
         "content"
       ]
+    },
+    {
+      "login": "gdoenlen",
+      "name": "George",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/17297466?v=4",
+      "profile": "https://join.sfxd.org",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 10,
