@@ -1,6 +1,6 @@
 ![crab pet](https://i.imgur.com/LbZJgmm.gif)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-28-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-29-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️ [![Build status](https://badge.buildkite.com/7af93d81dc522c67a1ec8e33ff5705861b1cb36360b774807f.svg)](https://buildkite.com/mokou/rustlings)
@@ -171,6 +171,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/ajaxm"><img src="https://avatars0.githubusercontent.com/u/13360138?v=4" width="100px;" alt=""/><br /><sub><b>Ajax M</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=ajaxm" title="Documentation">📖</a></td>
     <td align="center"><a href="https://dylnuge.com"><img src="https://avatars2.githubusercontent.com/u/118624?v=4" width="100px;" alt=""/><br /><sub><b>Dylan Nugent</b></sub></a><br /><a href="#content-Dylnuge" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/vyaslav"><img src="https://avatars0.githubusercontent.com/u/1385427?v=4" width="100px;" alt=""/><br /><sub><b>vyaslav</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=vyaslav" title="Code">💻</a> <a href="#content-vyaslav" title="Content">🖋</a></td>
+    <td align="center"><a href="https://join.sfxd.org"><img src="https://avatars1.githubusercontent.com/u/17297466?v=4" width="100px;" alt=""/><br /><sub><b>George</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=gdoenlen" title="Code">💻</a></td>
   </tr>
 </table>
 
