@@ -106,6 +106,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "ColinPitrat",
+      "name": "Colin Pitrat",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/1541863?v=4",
+      "profile": "https://github.com/ColinPitrat",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
