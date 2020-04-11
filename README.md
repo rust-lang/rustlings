@@ -1,6 +1,6 @@
 ![crab pet](https://i.imgur.com/LbZJgmm.gif)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-23-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-24-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️ [![Build status](https://badge.buildkite.com/7af93d81dc522c67a1ec8e33ff5705861b1cb36360b774807f.svg)](https://buildkite.com/mokou/rustlings)
@@ -166,6 +166,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="http://danwilhelm.com"><img src="https://avatars3.githubusercontent.com/u/6137185?v=4" width="100px;" alt=""/><br /><sub><b>Dan Wilhelm</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=danwilhelm" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/Jesse-Cameron"><img src="https://avatars3.githubusercontent.com/u/3723654?v=4" width="100px;" alt=""/><br /><sub><b>Jesse</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=Jesse-Cameron" title="Code">💻</a> <a href="#content-Jesse-Cameron" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/MrFroop"><img src="https://avatars3.githubusercontent.com/u/196700?v=4" width="100px;" alt=""/><br /><sub><b>Fredrik Jambrén</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=MrFroop" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/petemcfarlane"><img src="https://avatars3.githubusercontent.com/u/3472717?v=4" width="100px;" alt=""/><br /><sub><b>Pete McFarlane</b></sub></a><br /><a href="#content-petemcfarlane" title="Content">🖋</a></td>
   </tr>
 </table>
 
