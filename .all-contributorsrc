@@ -330,6 +330,17 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "AbdouSeck",
+      "name": "Abdou Seck",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/6490055?v=4",
+      "profile": "https://github.com/AbdouSeck",
+      "contributions": [
+        "code",
+        "content",
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 8,
