@@ -235,6 +235,15 @@
         "code",
         "content"
       ]
+    },
+    {
+      "login": "ajaxm",
+      "name": "Ajax M",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/13360138?v=4",
+      "profile": "https://github.com/ajaxm",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 10,
