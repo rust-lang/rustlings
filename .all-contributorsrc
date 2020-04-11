@@ -51,6 +51,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "lukabavdaz",
+      "name": "lukabavdaz",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/9624558?v=4",
+      "profile": "https://github.com/lukabavdaz",
+      "contributions": [
+        "code",
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 7,
