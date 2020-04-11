@@ -61,6 +61,15 @@
         "code",
         "content"
       ]
+    },
+    {
+      "login": "evestera",
+      "name": "Erik Vesteraas",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/4187449?v=4",
+      "profile": "http://vestera.as",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
