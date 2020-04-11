@@ -282,6 +282,15 @@
         "code",
         "content"
       ]
+    },
+    {
+      "login": "workingjubilee",
+      "name": "Jubilee",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/46493976?v=4",
+      "profile": "https://github.com/workingjubilee",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 10,
