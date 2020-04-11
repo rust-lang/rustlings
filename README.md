@@ -125,11 +125,6 @@ If you are interested in improving or adding new ones, please feel free to contr
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
-## Credits
-
-`rustlings` was originally written by [Carol](https://github.com/carols10cents)!
-
-
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
