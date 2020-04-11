@@ -406,6 +406,16 @@
         "code",
         "content"
       ]
+    },
+    {
+      "login": "Tarnadas",
+      "name": "Mario Reder",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/5855071?v=4",
+      "profile": "https://smmdb.net/",
+      "contributions": [
+        "code",
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
