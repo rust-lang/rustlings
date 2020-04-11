@@ -1,6 +1,6 @@
 ![crab pet](https://i.imgur.com/LbZJgmm.gif)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-36-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-37-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️ [![Build status](https://badge.buildkite.com/7af93d81dc522c67a1ec8e33ff5705861b1cb36360b774807f.svg)](https://buildkite.com/mokou/rustlings)
@@ -183,6 +183,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/jensim"><img src="https://avatars0.githubusercontent.com/u/3663856?v=4" width="100px;" alt=""/><br /><sub><b>Jens</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=jensim" title="Documentation">📖</a></td>
     <td align="center"><a href="http://rahatah.me/d"><img src="https://avatars3.githubusercontent.com/u/3174006?v=4" width="100px;" alt=""/><br /><sub><b>Rahat Ahmed</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=rahatarmanahmed" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/AbdouSeck"><img src="https://avatars2.githubusercontent.com/u/6490055?v=4" width="100px;" alt=""/><br /><sub><b>Abdou Seck</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=AbdouSeck" title="Code">💻</a> <a href="#content-AbdouSeck" title="Content">🖋</a> <a href="https://github.com/fmoko/rustlings/pulls?q=is%3Apr+reviewed-by%3AAbdouSeck" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://github.com/Socratides"><img src="https://avatars3.githubusercontent.com/u/27732983?v=4" width="100px;" alt=""/><br /><sub><b>Socrates</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=Socratides" title="Documentation">📖</a></td>
   </tr>
 </table>
 
