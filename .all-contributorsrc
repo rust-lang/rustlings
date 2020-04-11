@@ -33,6 +33,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "hynek",
+      "name": "Hynek Schlawack",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/41240?v=4",
+      "profile": "https://hynek.me/about/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
