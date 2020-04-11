@@ -341,6 +341,15 @@
         "content",
         "review"
       ]
+    },
+    {
+      "login": "Socratides",
+      "name": "Socrates",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/27732983?v=4",
+      "profile": "https://github.com/Socratides",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 8,
