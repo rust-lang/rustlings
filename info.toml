@@ -507,6 +507,12 @@ get a warning if you don't handle a `Result` that you get in your
 function. Read more about that in the `std::result` module docs:
 https://doc.rust-lang.org/std/result/#results-must-be-used"""
 
+[[exercises]]
+name = "result1"
+path = "exercises/error_handling/result1.rs"
+mode = "test"
+hint = "No hints this time ;)"
+
 # OPTIONS / RESULTS
 
 [[exercises]]
