@@ -179,6 +179,15 @@
         "code",
         "content"
       ]
+    },
+    {
+      "login": "miller-time",
+      "name": "Russell",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/281039?v=4",
+      "profile": "https://rcousineau.gitlab.io",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 10,
