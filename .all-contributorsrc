@@ -188,6 +188,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "danwilhelm",
+      "name": "Dan Wilhelm",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/6137185?v=4",
+      "profile": "http://danwilhelm.com",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 10,
