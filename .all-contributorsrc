@@ -244,6 +244,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "Dylnuge",
+      "name": "Dylan Nugent",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/118624?v=4",
+      "profile": "https://dylnuge.com",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 10,
