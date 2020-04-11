@@ -425,6 +425,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "sanjaykdragon",
+      "name": "Sanjay K",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/10261698?v=4",
+      "profile": "https://github.com/sanjaykdragon",
+      "contributions": [
+        "code",
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
