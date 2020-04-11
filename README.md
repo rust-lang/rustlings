@@ -1,6 +1,6 @@
 ![crab pet](https://i.imgur.com/LbZJgmm.gif)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-32-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-33-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️ [![Build status](https://badge.buildkite.com/7af93d81dc522c67a1ec8e33ff5705861b1cb36360b774807f.svg)](https://buildkite.com/mokou/rustlings)
@@ -177,6 +177,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/workingjubilee"><img src="https://avatars1.githubusercontent.com/u/46493976?v=4" width="100px;" alt=""/><br /><sub><b>Jubilee</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=workingjubilee" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/WofWca"><img src="https://avatars1.githubusercontent.com/u/39462442?v=4" width="100px;" alt=""/><br /><sub><b>WofWca</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=WofWca" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/jrvidal"><img src="https://avatars0.githubusercontent.com/u/1636604?v=4" width="100px;" alt=""/><br /><sub><b>Roberto Vidal</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=jrvidal" title="Code">💻</a> <a href="https://github.com/fmoko/rustlings/commits?author=jrvidal" title="Documentation">📖</a> <a href="#ideas-jrvidal" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-jrvidal" title="Maintenance">🚧</a></td>
   </tr>
 </table>
 

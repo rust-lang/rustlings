@@ -300,6 +300,18 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "jrvidal",
+      "name": "Roberto Vidal",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1636604?v=4",
+      "profile": "https://github.com/jrvidal",
+      "contributions": [
+        "code",
+        "doc",
+        "ideas",
+        "maintenance"
+      ]
     }
   ],
   "contributorsPerLine": 10,
