@@ -142,6 +142,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "yvan-sraka",
+      "name": "Yvan Sraka",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/705213?v=4",
+      "profile": "https://yvan-sraka.github.io",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 10,
