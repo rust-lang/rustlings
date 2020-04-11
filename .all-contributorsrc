@@ -1,0 +1,25 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "carols10cents",
+      "name": "Carol (Nichols || Goulding)",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/193874?v=4",
+      "profile": "http://carol-nichols.com",
+      "contributions": [
+        "code",
+        "content"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "rustlings",
+  "projectOwner": "fmoko",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
