@@ -1,6 +1,6 @@
 ![crab pet](https://i.imgur.com/LbZJgmm.gif)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-30-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-31-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️ [![Build status](https://badge.buildkite.com/7af93d81dc522c67a1ec8e33ff5705861b1cb36360b774807f.svg)](https://buildkite.com/mokou/rustlings)
@@ -173,6 +173,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/vyaslav"><img src="https://avatars0.githubusercontent.com/u/1385427?v=4" width="100px;" alt=""/><br /><sub><b>vyaslav</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=vyaslav" title="Code">💻</a> <a href="#content-vyaslav" title="Content">🖋</a></td>
     <td align="center"><a href="https://join.sfxd.org"><img src="https://avatars1.githubusercontent.com/u/17297466?v=4" width="100px;" alt=""/><br /><sub><b>George</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=gdoenlen" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/nyxtom"><img src="https://avatars2.githubusercontent.com/u/222763?v=4" width="100px;" alt=""/><br /><sub><b>Thomas Holloway</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=nyxtom" title="Code">💻</a> <a href="#content-nyxtom" title="Content">🖋</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/workingjubilee"><img src="https://avatars1.githubusercontent.com/u/46493976?v=4" width="100px;" alt=""/><br /><sub><b>Jubilee</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=workingjubilee" title="Code">💻</a></td>
   </tr>
 </table>
 
