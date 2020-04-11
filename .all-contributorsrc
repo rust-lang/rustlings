@@ -368,6 +368,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "harrisonmetz",
+      "name": "Harrison Metzger",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/7883408?v=4",
+      "profile": "https://github.com/harrisonmetz",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
