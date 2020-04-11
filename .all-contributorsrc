@@ -14,6 +14,16 @@
         "code",
         "content"
       ]
+    },
+    {
+      "login": "QuietMisdreavus",
+      "name": "QuietMisdreavus",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/5217170?v=4",
+      "profile": "https://twitter.com/QuietMisdreavus",
+      "contributions": [
+        "code",
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 7,
