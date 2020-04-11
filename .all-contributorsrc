@@ -197,6 +197,16 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "Jesse-Cameron",
+      "name": "Jesse",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/3723654?v=4",
+      "profile": "https://github.com/Jesse-Cameron",
+      "contributions": [
+        "code",
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 10,
