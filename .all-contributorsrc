@@ -124,6 +124,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "mgeier",
+      "name": "Matthias Geier",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/705404?v=4",
+      "profile": "https://github.com/mgeier",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 10,
