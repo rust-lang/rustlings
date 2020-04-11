@@ -435,6 +435,15 @@
         "code",
         "content"
       ]
+    },
+    {
+      "login": "crodjer",
+      "name": "Rohan Jain",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/343499?v=4",
+      "profile": "http://www.rohanjain.in",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
