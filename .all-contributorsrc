@@ -272,6 +272,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "nyxtom",
+      "name": "Thomas Holloway",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/222763?v=4",
+      "profile": "https://github.com/nyxtom",
+      "contributions": [
+        "code",
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 10,
