@@ -1,4 +1,7 @@
 ![crab pet](https://i.imgur.com/LbZJgmm.gif)
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️ [![Build status](https://badge.buildkite.com/7af93d81dc522c67a1ec8e33ff5705861b1cb36360b774807f.svg)](https://buildkite.com/mokou/rustlings)
 
@@ -126,3 +129,22 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 `rustlings` was originally written by [Carol](https://github.com/carols10cents)!
 
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="http://carol-nichols.com"><img src="https://avatars2.githubusercontent.com/u/193874?v=4" width="100px;" alt=""/><br /><sub><b>Carol (Nichols &#124;&#124; Goulding)</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=carols10cents" title="Code">💻</a> <a href="#content-carols10cents" title="Content">🖋</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
