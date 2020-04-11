@@ -359,6 +359,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "gnodarse",
+      "name": "gnodarse",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/46761795?v=4",
+      "profile": "https://github.com/gnodarse",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
