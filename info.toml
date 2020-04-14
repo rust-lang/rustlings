@@ -56,6 +56,21 @@ You can read more about 'Shadowing' in the book's section 'Variables and Mutabil
 https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html#shadowing
 Try to solve this exercise afterwards using this technique."""
 
+[[exercises]]
+name = "variables6"
+path = "exercises/variables/variables6.rs"
+mode = "compile"
+hint = """
+We know about variables and mutability, but there is another important type of 
+variable available; constants. 
+Constants are always immutable and they are declared with keyword 'const' rather 
+then keyword 'let'.
+Constants types must also always be annotated.
+
+Read more about constants under 'Differences Between Variables and Constants' in the book's section 'Variables and Mutability': 
+https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html
+"""
+
 # IF
 
 [[exercises]]
