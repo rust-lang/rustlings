@@ -444,6 +444,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "saidaspen",
+      "name": "Said Aspen",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/7727687?v=4",
+      "profile": "https://www.saidaspen.se",
+      "contributions": [
+        "code",
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,

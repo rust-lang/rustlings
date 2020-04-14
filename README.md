@@ -1,6 +1,6 @@
 ![crab pet](https://i.imgur.com/LbZJgmm.gif)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-47-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-48-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️ [![Build status](https://badge.buildkite.com/7af93d81dc522c67a1ec8e33ff5705861b1cb36360b774807f.svg)](https://buildkite.com/mokou/rustlings)
@@ -191,6 +191,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://keybase.io/skim"><img src="https://avatars0.githubusercontent.com/u/47347?v=4" width="100px;" alt=""/><br /><sub><b>skim</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=sl4m" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/sanjaykdragon"><img src="https://avatars1.githubusercontent.com/u/10261698?v=4" width="100px;" alt=""/><br /><sub><b>Sanjay K</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=sanjaykdragon" title="Code">💻</a> <a href="#content-sanjaykdragon" title="Content">🖋</a></td>
     <td align="center"><a href="http://www.rohanjain.in"><img src="https://avatars1.githubusercontent.com/u/343499?v=4" width="100px;" alt=""/><br /><sub><b>Rohan Jain</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=crodjer" title="Code">💻</a></td>
+    <td align="center"><a href="https://www.saidaspen.se"><img src="https://avatars1.githubusercontent.com/u/7727687?v=4" width="100px;" alt=""/><br /><sub><b>Said Aspen</b></sub></a><br /><a href="https://github.com/fmoko/rustlings/commits?author=saidaspen" title="Code">💻</a> <a href="#content-saidaspen" title="Content">🖋</a></td>
   </tr>
 </table>
 
