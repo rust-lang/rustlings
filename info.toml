@@ -215,13 +215,22 @@ Now you have another tool in your toolbox!"""
 name = "structs1"
 path = "exercises/structs/structs1.rs"
 mode = "test"
-hint = "No hints this time ;)"
+hint = """
+Rust has more than one type of struct. Both variants are used to package related data together.
+On the one hand, there are normal, or classic, structs. These are named collections of related data stored in fields.
+The other variant is tuple structs. Basically just named tuples.
+In this exercise you need to implement one of each kind.
+
+Read more about structs in The Book: https://doc.rust-lang.org/stable/book/ch05-00-structs.html"""
 
 [[exercises]]
 name = "structs2"
 path = "exercises/structs/structs2.rs"
 mode = "test"
-hint = "No hints this time ;)"
+hint = """
+Creating instances of structs is easy, all you need to do is assign some values to its fields. 
+There is however some shortcuts that can be taken when instantiating structs. 
+Have a look in The Book, to find out more: https://doc.rust-lang.org/stable/book/ch05-01-defining-structs.html#creating-instances-from-other-instances-with-struct-update-syntax"""
 
 # STRINGS
 
