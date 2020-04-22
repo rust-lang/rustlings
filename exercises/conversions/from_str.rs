@@ -39,7 +39,11 @@ mod tests {
     }
     #[test]
     fn good_input() {
-        assert!("John,32".parse::<Person>().is_ok());
+        let p = "John,32".parse::<Person>();
+        assert!(p.is_ok());
+        let p = p.unwrap();
+        assert_eq!(p.name, "John");
+        assert_eq!(p.age, 32);
     }
     #[test]
     #[should_panic]
