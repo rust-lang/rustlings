@@ -6,9 +6,10 @@
 // even after you already figured it out. If you got everything working and
 // feel ready for the next exercise, remove the `I AM NOT DONE` comment below.
 
-// I AM NOT DONE
+
+use std::u16;
 
 fn main() {
-    x = 5;
+    let x:u16 = 5;
     println!("x has the value {}", x);
 }
