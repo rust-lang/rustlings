@@ -232,6 +232,19 @@ Creating instances of structs is easy, all you need to do is assign some values 
 There is however some shortcuts that can be taken when instantiating structs. 
 Have a look in The Book, to find out more: https://doc.rust-lang.org/stable/book/ch05-01-defining-structs.html#creating-instances-from-other-instances-with-struct-update-syntax"""
 
+[[exercises]]
+name = "structs3"
+path = "exercises/structs/structs3.rs"
+mode = "test"
+hint = """
+The new method needs to panic if the weight is physically impossible :), how do we do that in Rust?
+
+For is_international: What makes a package international? Seems related to the places it goes through right?
+
+For calculate_transport_fees: Bigger is more expensive usually, we don't have size, but something may fit the bill here :)
+
+Have a look in The Book, to find out more about method implementations: https://doc.rust-lang.org/book/ch05-03-method-syntax.html"""
+
 # STRINGS
 
 [[exercises]]
