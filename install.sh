@@ -30,6 +30,22 @@ else
     exit 1
 fi
 
+# Look up python installations, starting with 3 with a fallback of 2
+if [ -x "$(command -v python3)" ]
+then
+    PY="$(command -v python3)"
+elif [ -x "$(command -v python)" ]
+then
+    PY="$(command -v python)"
+elif [ -x "$(command -v python2)" ]
+then
+    PY="$(command -v python2)"
+else
+    echo "ERROR: No working python installation was found"
+    echo "Please install python and add it to the PATH variable"
+    exit 1
+fi
+
 # Function that compares two versions strings v1 and v2 given in arguments (e.g 1.31 and 1.33.0).
 # Returns 1 if v1 > v2, 0 if v1 == v2, 2 if v1 < v2.
 function vercomp() {
@@ -86,7 +102,7 @@ Path=${1:-rustlings/}
 echo "Cloning Rustlings at $Path..."
 git clone -q https://github.com/rust-lang/rustlings $Path
 
-Version=$(curl -s https://api.github.com/repos/rust-lang/rustlings/releases/latest | python -c "import json,sys;obj=json.load(sys.stdin);print(obj['tag_name']);")
+Version=$(curl -s https://api.github.com/repos/rust-lang/rustlings/releases/latest | ${PY} -c "import json,sys;obj=json.load(sys.stdin);print(obj['tag_name']);")
 CargoBin="${CARGO_HOME:-$HOME/.cargo}/bin"
 
 echo "Checking out version $Version..."
