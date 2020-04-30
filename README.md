@@ -18,8 +18,6 @@ Alternatively, for a first-time Rust learner, there's several other resources:
 
 _Note: If you're on MacOS, make sure you've installed Xcode and its developer tools by typing `xcode-select --install`._
 
-_Note: If you have Xcode 10+ installed, you also need to install the package file found at `/Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg`._
-
 You will need to have Rust installed. You can get it by visiting https://rustup.rs. This'll also install Cargo, Rust's package/project manager.
 
 ## MacOS/Linux
