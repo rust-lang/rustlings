@@ -100,15 +100,12 @@ enum CreationError {
 
 impl fmt::Display for CreationError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str((self as &dyn error::Error).description())
+        let description = match *self {
+            CreationError::Negative => "Number is negative",
+            CreationError::Zero => "Number is zero",
+        };
+        f.write_str(description)
     }
 }
 
-impl error::Error for CreationError {
-    fn description(&self) -> &str {
-        match *self {
-            CreationError::Negative => "Negative",
-            CreationError::Zero => "Zero",
-        }
-    }
-}
+impl error::Error for CreationError {}
