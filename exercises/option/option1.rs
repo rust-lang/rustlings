@@ -18,6 +18,6 @@ fn main() {
             ((iter * 5) + 2) / (4 * 16)
         };
 
-        numbers[iter] = number_to_add;
+        numbers[iter as usize] = number_to_add;
     }
 }
