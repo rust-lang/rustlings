@@ -22,7 +22,8 @@ struct Person {
 // 1. If the length of the provided string is 0, then return an error
 // 2. Split the given string on the commas present in it
 // 3. Extract the first element from the split operation and use it as the name
-// 4. Extract the other element from the split operation and parse it into a `usize` as the age
+// 4. If the name is empty, then return an error.
+// 5. Extract the other element from the split operation and parse it into a `usize` as the age
 // If while parsing the age, something goes wrong, then return an error
 // Otherwise, then return a Result of a Person object
 impl TryFrom<&str> for Person {
@@ -67,5 +68,35 @@ mod tests {
     #[should_panic]
     fn test_panic_bad_age() {
         let p = Person::try_from("Mark,twenty").unwrap();
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_missing_comma_and_age() {
+        let _: Person = "Mark".try_into().unwrap();
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_missing_age() {
+        let _: Person = "Mark,".try_into().unwrap();
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_missing_name() {
+        let _ : Person = ",1".try_into().unwrap();
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_missing_name_and_age() {
+        let _: Person = ",".try_into().unwrap();
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_missing_name_and_invalid_age() {
+        let _: Person = ",one".try_into().unwrap();
     }
 }
