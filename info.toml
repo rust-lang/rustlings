@@ -52,8 +52,24 @@ because we want to assign a different typed value to an existing variable. Somet
 you may also like to reuse existing variable names because you are just converting
 values to different types like in this exercise.
 Fortunately Rust has a powerful solution to this problem: 'Shadowing'!
-You can read more about 'Shadowing' in the book's section 'Variables and Mutability'.
+You can read more about 'Shadowing' in the book's section 'Variables and Mutability': 
+https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html#shadowing
 Try to solve this exercise afterwards using this technique."""
+
+[[exercises]]
+name = "variables6"
+path = "exercises/variables/variables6.rs"
+mode = "compile"
+hint = """
+We know about variables and mutability, but there is another important type of 
+variable available; constants. 
+Constants are always immutable and they are declared with keyword 'const' rather 
+then keyword 'let'.
+Constants types must also always be annotated.
+
+Read more about constants under 'Differences Between Variables and Constants' in the book's section 'Variables and Mutability': 
+https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html
+"""
 
 # IF
 
@@ -70,6 +86,15 @@ Remember in Rust that:
 - the `if` condition does not need to be surrounded by parentheses
 - `if`/`else` conditionals are expressions
 - Each condition is followed by a `{}` block."""
+
+[[exercises]]
+name = "if2"
+path = "exercises/if/if2.rs"
+mode = "test"
+hint = """
+For that first compiler error, it's important in Rust that each conditional
+block return the same type! To get the tests passing, you will need a couple
+conditions checking different input values."""
 
 # FUNCTIONS
 
@@ -199,13 +224,35 @@ Now you have another tool in your toolbox!"""
 name = "structs1"
 path = "exercises/structs/structs1.rs"
 mode = "test"
-hint = "No hints this time ;)"
+hint = """
+Rust has more than one type of struct. Both variants are used to package related data together.
+On the one hand, there are normal, or classic, structs. These are named collections of related data stored in fields.
+The other variant is tuple structs. Basically just named tuples.
+In this exercise you need to implement one of each kind.
+
+Read more about structs in The Book: https://doc.rust-lang.org/stable/book/ch05-00-structs.html"""
 
 [[exercises]]
 name = "structs2"
 path = "exercises/structs/structs2.rs"
 mode = "test"
-hint = "No hints this time ;)"
+hint = """
+Creating instances of structs is easy, all you need to do is assign some values to its fields. 
+There is however some shortcuts that can be taken when instantiating structs. 
+Have a look in The Book, to find out more: https://doc.rust-lang.org/stable/book/ch05-01-defining-structs.html#creating-instances-from-other-instances-with-struct-update-syntax"""
+
+[[exercises]]
+name = "structs3"
+path = "exercises/structs/structs3.rs"
+mode = "test"
+hint = """
+The new method needs to panic if the weight is physically impossible :), how do we do that in Rust?
+
+For is_international: What makes a package international? Seems related to the places it goes through right?
+
+For calculate_transport_fees: Bigger is more expensive usually, we don't have size, but something may fit the bill here :)
+
+Have a look in The Book, to find out more about method implementations: https://doc.rust-lang.org/book/ch05-03-method-syntax.html"""
 
 # STRINGS
 
@@ -476,7 +523,7 @@ mode = "test"
 hint = """
 First hint: To figure out what type should go where the ??? is, take a look
 at the test helper function `test_with_str`, since it returns whatever
-`read_and_validate` returns and`test_with_str` has its signature fully
+`read_and_validate` returns and `test_with_str` has its signature fully
 specified.
 
 
@@ -615,10 +662,10 @@ name = "iterators4"
 path = "exercises/standard_library_types/iterators4.rs"
 mode = "test"
 hint = """
-In an imperative language you might write a for loop to iterate through
-multiply the values into a mutable variable. Or you might write code more
-functionally with recursion and a match clause. But you can also use ranges
-and iterators to solve this in rust."""
+In an imperative language, you might write a for loop that updates 
+a mutable variable. Or, you might write code utilizing recursion 
+and a match clause. In Rust you can take another functional
+approach, computing the factorial elegantly with ranges and iterators."""
 
 # TRAITS
 
