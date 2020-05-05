@@ -4,8 +4,11 @@
 // - Macros
 
 // Write a macro that passes the test! No hints this time, you can do it!
-
-// I AM NOT DONE
+macro_rules! my_macro {
+    ($s:expr) => {
+        format!("Hello {}", $s)
+    };
+}
 
 #[cfg(test)]
 mod tests {
