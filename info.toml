@@ -561,13 +561,15 @@ name = "option1"
 path = "exercises/option/option1.rs"
 mode = "compile"
 hint = """
-Check out some functions of Option:
+Hint 1: Check out some functions of Option:
 is_some
 is_none
 unwrap
 
 and:
 pattern matching
+
+Hint 2: There are no sensible defaults for the value of an Array; the values need to be filled before use.
 """
 
 [[exercises]]
