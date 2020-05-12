@@ -13,18 +13,30 @@ struct Color {
 
 // I AM NOT DONE
 
+// Your task is to complete this implementation
+// and return an Ok result of inner type Color.
+// You need create implementation for a tuple of three integer,
+// an array of three integer and slice of integer.
+//
+// Note, that implementation for tuple and array will be checked at compile-time,
+// but slice implementation need check slice length!
+// Also note, that chunk of correct rgb color must be integer in range 0..=255.
+
+// Tuple implementation
 impl TryFrom<(i16, i16, i16)> for Color {
     type Error = String;
     fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {
     }
 }
 
+// Array implementation
 impl TryFrom<[i16; 3]> for Color {
     type Error = String;
     fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {
     }
 }
 
+// Slice implementation
 impl TryFrom<&[i16]> for Color {
     type Error = String;
     fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {
@@ -44,7 +56,7 @@ fn main() {
     // With slice we should use `from` function
     let c3 = Color::try_from(&v[..]);
     println!("{:?}", c3);
-    // or take slice within round brackets
+    // or take slice within round brackets and use Into
     let c4: Result<Color, _> = (&v[..]).try_into();
     println!("{:?}", c4);
 }
