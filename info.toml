@@ -799,5 +799,6 @@ name = "from_str"
 path = "exercises/conversions/from_str.rs"
 mode = "test"
 hint = """
-If you've already solved try_from_into.rs, then this is almost a copy-paste.
-Otherwise, go ahead and solve try_from_into.rs first."""
+The implementation of FromStr should return an Ok with a Person object,
+or an Err with a string if the string is not valid.
+This is a some like an `try_from_into` exercise."""

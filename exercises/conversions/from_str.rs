@@ -17,6 +17,7 @@ struct Person {
 // 3. Extract the first element from the split operation and use it as the name
 // 4. If the name is empty, then return an error
 // 5. Extract the other element from the split operation and parse it into a `usize` as the age
+//    with something like `"4".parse::<usize>()`.
 // If while parsing the age, something goes wrong, then return an error
 // Otherwise, then return a Result of a Person object
 impl FromStr for Person {
