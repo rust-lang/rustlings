@@ -67,11 +67,16 @@ mod tests {
 
     #[test]
     #[should_panic]
-    fn test_bad_tuple() {
-        let _: Color = Color::try_from((-1, 0, 0)).unwrap();
+    fn test_tuple_out_of_range_positive() {
+        let _ = Color::try_from((256, 1000, 10000)).unwrap();
     }
     #[test]
-    fn test_good_tuple() {
+    #[should_panic]
+    fn test_tuple_out_of_range_negative() {
+        let _ = Color::try_from((-1, -10, -256)).unwrap();
+    }
+    #[test]
+    fn test_tuple_correct() {
         let c: Color = (183, 65, 14).try_into().unwrap();
         assert_eq!(c.red, 183);
         assert_eq!(c.green, 65);
@@ -80,13 +85,17 @@ mod tests {
 
     #[test]
     #[should_panic]
-    fn test_bad_array() {
-        let _: Color = [0, -1, 0].try_into().unwrap();
+    fn test_array_out_of_range_positive() {
+        let _: Color = [1000, 10000, 256].try_into().unwrap();
     }
     #[test]
-    fn test_good_array() {
+    #[should_panic]
+    fn test_array_out_of_range_negative() {
+        let _: Color = [-10, -256, -1].try_into().unwrap();
+    }
+    #[test]
+    fn test_array_correct() {
         let c: Color = [183, 65, 14].try_into().unwrap();
-
         assert_eq!(c.red, 183);
         assert_eq!(c.green, 65);
         assert_eq!(c.blue, 14);
@@ -94,22 +103,27 @@ mod tests {
 
     #[test]
     #[should_panic]
-    fn test_bad_slice() {
-        let arr = [0, 0, -1];
+    fn test_slice_out_of_range_positive() {
+        let arr = [10000, 256, 1000];
         let _ = Color::try_from(&arr[..]).unwrap();
     }
     #[test]
-    fn test_good_slice() {
+    #[should_panic]
+    fn test_slice_out_of_range_negative() {
+        let arr = [-256, -1, -10];
+        let _ = Color::try_from(&arr[..]).unwrap();
+    }
+    #[test]
+    fn test_slice_correct() {
         let v = vec![183, 65, 14];
         let c = Color::try_from(&v[..]).unwrap();
-
         assert_eq!(c.red, 183);
         assert_eq!(c.green, 65);
         assert_eq!(c.blue, 14);
     }
     #[test]
     #[should_panic]
-    fn test_bad_slice_length() {
+    fn test_slice_excess_length() {
         let v = vec![0, 0, 0, 0];
         let _ = Color::try_from(&v[..]).unwrap();
     }
