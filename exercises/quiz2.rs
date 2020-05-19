@@ -1,5 +1,5 @@
-// test2.rs
-// This is a test for the following sections:
+// quiz2.rs
+// This is a quiz for the following sections:
 // - Strings
 
 // Ok, here are a bunch of values-- some are `String`s, some are `&str`s. Your

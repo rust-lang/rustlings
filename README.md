@@ -99,7 +99,7 @@ rustlings hint myExercise1
 
 ## Testing yourself
 
-After every couple of sections, there will be a test that'll test your knowledge on a bunch of sections at once. These tests are found in `exercises/testN.rs`.
+After every couple of sections, there will be a quiz that'll test your knowledge on a bunch of sections at once. These quizzes are found in `exercises/quizN.rs`.
 
 ## Completion
 

@@ -149,8 +149,8 @@ They are not the same. There are two solutions:
 # TEST 1
 
 [[exercises]]
-name = "test1"
-path = "exercises/test1.rs"
+name = "quiz1"
+path = "exercises/quiz1.rs"
 mode = "test"
 hint = "No hints this time ;)"
 
@@ -280,8 +280,8 @@ string slice instead of a `String`, wouldn't it?? There is a way to add one char
 # TEST 2
 
 [[exercises]]
-name = "test2"
-path = "exercises/test2.rs"
+name = "quiz2"
+path = "exercises/quiz2.rs"
 mode = "compile"
 hint = "No hints this time ;)"
 
@@ -311,7 +311,7 @@ hint = "No hints this time ;)"
 # TESTS
 
 [[exercises]]
-name = "tests1"
+name = "quiz1"
 path = "exercises/tests/tests1.rs"
 mode = "test"
 hint = """
@@ -343,8 +343,8 @@ can negate the result of what you're doing using `!`, like `assert!(!having_fun(
 # TEST 3
 
 [[exercises]]
-name = "test3"
-path = "exercises/test3.rs"
+name = "quiz3"
+path = "exercises/quiz3.rs"
 mode = "test"
 hint = "No hints this time ;)"
 
@@ -414,8 +414,8 @@ The way macros are written, it wants to see something between each
 # TEST 4
 
 [[exercises]]
-name = "test4"
-path = "exercises/test4.rs"
+name = "quiz4"
+path = "exercises/quiz4.rs"
 mode = "test"
 hint = "No hints this time ;)"
 

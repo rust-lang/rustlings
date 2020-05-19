@@ -1,5 +1,5 @@
-// test1.rs
-// This is a test for the following sections:
+// quiz1.rs
+// This is a quiz for the following sections:
 // - Variables
 // - Functions
 
