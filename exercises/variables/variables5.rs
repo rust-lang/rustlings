@@ -4,7 +4,7 @@
 // I AM NOT DONE
 
 fn main() {
-    let number = "3";
+    let number = "3"; // don't change this line
     println!("Number {}", number);
     number = 3;
     println!("Number {}", number);
