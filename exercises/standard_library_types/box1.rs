@@ -12,24 +12,42 @@
 // Step 1: use a `Box` in the enum definition to make the code compile
 // Step 2: create both empty and non-empty cons lists of by replacing `unimplemented!()`
 //
+// Note: the tests should not be changed
+//
 // Execute `rustlings hint box1` for hints :)
 
 // I AM NOT DONE
 
 #[derive(PartialEq, Debug)]
-enum List {
+pub enum List {
     Cons(i32, List),
     Nil,
 }
 
 fn main() {
-    let empty_list = unimplemented!();
-    println!("This is an empty cons list: {:?}", empty_list);
+    println!("This is an empty cons list: {:?}", create_empty_list());
+    println!("This is a non-empty cons list: {:?}", create_non_empty_list());
+}
 
-    let non_empty_list = unimplemented!();
-    println!("This is a non-empty cons list: {:?}", non_empty_list);
+pub fn create_empty_list() -> List {
+    unimplemented!()
+}
 
-    // Do not change these
-    assert_eq!(List::Nil, empty_list);
-    assert_ne!(empty_list, non_empty_list);
+pub fn create_non_empty_list() -> List {
+    unimplemented!()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_create_empty_list() {
+        assert_eq!(List::Nil, create_empty_list())
+    }
+
+    #[test]
+    fn test_create_non_empty_list() {
+        assert_ne!(create_empty_list(), create_non_empty_list())
+    }
 }
