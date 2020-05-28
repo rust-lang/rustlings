@@ -1,10 +1,11 @@
-// An imaginary magical school has a new report card generation system written in rust!
+// An imaginary magical school has a new report card generation system written in Rust!
 // Currently the system only supports creating report cards where the student's grade 
-// is represented numerically (e.g. 1.0 -> 5.5). However, the school also issues alphabetical grades
-// (A+ -> F-) and needs to be able to print both types of report card!
+// is represented numerically (e.g. 1.0 -> 5.5). 
+// However, the school also issues alphabetical grades (A+ -> F-) and needs 
+// to be able to print both types of report card!
 
-// Make the necessary code changes to support alphabetical report cards, thereby making the second
-// test pass.
+// Make the necessary code changes to support alphabetical report cards, thereby making 
+// the second test pass.
 
 // I AM NOT DONE
 pub struct ReportCard {
@@ -15,7 +16,8 @@ pub struct ReportCard {
 
 impl ReportCard {
     pub fn print(&self) -> String {
-        format!("{} ({}) - achieved a grade of {}", &self.student_name, &self.student_age, &self.grade)
+        format!("{} ({}) - achieved a grade of {}", 
+            &self.student_name, &self.student_age, &self.grade)
     }
 }
 
