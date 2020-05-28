@@ -34,7 +34,7 @@ This will install Rustlings and give you access to the `rustlings` command. Run 
 
 ## Windows
 
-In Powershell, set `ExecutionPolicy` to `RemoteSigned`:
+In PowerShell, set `ExecutionPolicy` to `RemoteSigned`:
 
 ```ps
 Set-ExecutionPolicy RemoteSigned
