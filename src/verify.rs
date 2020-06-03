@@ -124,16 +124,16 @@ fn prompt_for_completion(exercise: &Exercise, prompt_output: Option<String>) -> 
         Mode::Clippy => "The code is compiling, and 📎 Clippy 📎 is happy!",
     };
 
-    println!("");
+    println!();
     println!("🎉 🎉  {} 🎉 🎉", success_msg);
-    println!("");
+    println!();
 
     if let Some(output) = prompt_output {
         println!("Output:");
         println!("{}", separator());
         println!("{}", output);
         println!("{}", separator());
-        println!("");
+        println!();
     }
 
     println!("You can keep working on this exercise,");
@@ -141,12 +141,12 @@ fn prompt_for_completion(exercise: &Exercise, prompt_output: Option<String>) -> 
         "or jump into the next one by removing the {} comment:",
         style("`I AM NOT DONE`").bold()
     );
-    println!("");
+    println!();
     for context_line in context {
         let formatted_line = if context_line.important {
             format!("{}", style(context_line.line).bold())
         } else {
-            format!("{}", context_line.line)
+            context_line.line.to_string()
         };
 
         println!(
