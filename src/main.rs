@@ -27,8 +27,22 @@ fn main() {
         .version(crate_version!())
         .author("Olivia Hugger, Carol Nichols")
         .about("Rustlings is a collection of small exercises to get you used to writing and reading Rust code")
-        .subcommand(SubCommand::with_name("verify").alias("v").about("Verifies all exercises according to the recommended order"))
-        .subcommand(SubCommand::with_name("watch").alias("w").about("Reruns `verify` when files were edited"))
+        .arg(
+            Arg::with_name("verbose")
+                .short("V")
+                .long("verbose")
+                .help("Show tests' standard output")
+        )
+        .subcommand(
+            SubCommand::with_name("verify")
+                .alias("v")
+                .about("Verifies all exercises according to the recommended order")
+        )
+        .subcommand(
+            SubCommand::with_name("watch")
+                .alias("w")
+                .about("Reruns `verify` when files were edited")
+        )
         .subcommand(
             SubCommand::with_name("run")
                 .alias("r")
@@ -43,7 +57,7 @@ fn main() {
         )
         .get_matches();
 
-    if None == matches.subcommand_name() {
+    if matches.subcommand_name().is_none() {
         println!();
         println!(r#"       welcome to...                      "#);
         println!(r#"                 _   _ _                  "#);
@@ -105,22 +119,20 @@ fn main() {
         verify(&exercises).unwrap_or_else(|_| std::process::exit(1));
     }
 
-    if matches.subcommand_matches("watch").is_some() {
-        if watch(&exercises).is_ok() {
-            println!(
-                "{emoji} All exercises completed! {emoji}",
-                emoji = Emoji("🎉", "★")
-            );
-            println!("");
-            println!("We hope you enjoyed learning about the various aspects of Rust!");
-            println!(
-                "If you noticed any issues, please don't hesitate to report them to our repo."
-            );
-            println!("You can also contribute your own exercises to help the greater community!");
-            println!("");
-            println!("Before reporting an issue or contributing, please read our guidelines:");
-            println!("https://github.com/rust-lang/rustlings/blob/master/CONTRIBUTING.md");
-        }
+    if matches.subcommand_matches("watch").is_some() && watch(&exercises).is_ok() {
+        println!(
+            "{emoji} All exercises completed! {emoji}",
+            emoji = Emoji("🎉", "★")
+        );
+        println!();
+        println!("We hope you enjoyed learning about the various aspects of Rust!");
+        println!(
+            "If you noticed any issues, please don't hesitate to report them to our repo."
+        );
+        println!("You can also contribute your own exercises to help the greater community!");
+        println!();
+        println!("Before reporting an issue or contributing, please read our guidelines:");
+        println!("https://github.com/rust-lang/rustlings/blob/master/CONTRIBUTING.md");
     }
 
     if matches.subcommand_name().is_none() {
