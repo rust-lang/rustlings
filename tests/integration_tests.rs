@@ -159,3 +159,25 @@ fn run_test_exercise_does_not_prompt() {
         .code(0)
         .stdout(predicates::str::contains("I AM NOT DONE").not());
 }
+
+#[test]
+fn run_single_test_success_with_output() {
+    Command::cargo_bin("rustlings")
+        .unwrap()
+        .args(&["--nocapture", "r", "testSuccess"])
+        .current_dir("tests/fixture/success/")
+        .assert()
+        .code(0)
+        .stdout(predicates::str::contains("THIS TEST TOO SHALL PAS"));
+}
+
+#[test]
+fn run_single_test_success_without_output() {
+    Command::cargo_bin("rustlings")
+        .unwrap()
+        .args(&["r", "testSuccess"])
+        .current_dir("tests/fixture/success/")
+        .assert()
+        .code(0)
+        .stdout(predicates::str::contains("THIS TEST TOO SHALL PAS").not());
+}

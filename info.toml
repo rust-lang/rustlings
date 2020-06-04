@@ -802,7 +802,7 @@ name = "try_from_into"
 path = "exercises/conversions/try_from_into.rs"
 mode = "test"
 hint = """
-Follow the steps provided right before the `From` implementation.
+Follow the steps provided right before the `TryFrom` implementation.
 You can also use the example at https://doc.rust-lang.org/std/convert/trait.TryFrom.html"""
 
 [[exercises]]
@@ -819,4 +819,4 @@ mode = "test"
 hint = """
 The implementation of FromStr should return an Ok with a Person object,
 or an Err with a string if the string is not valid.
-This is a some like an `try_from_into` exercise."""
+This is almost like the `try_from_into` exercise."""

@@ -28,10 +28,9 @@ fn main() {
         .author("Olivia Hugger, Carol Nichols")
         .about("Rustlings is a collection of small exercises to get you used to writing and reading Rust code")
         .arg(
-            Arg::with_name("verbose")
-                .short("V")
-                .long("verbose")
-                .help("Show tests' standard output")
+            Arg::with_name("nocapture")
+                .long("nocapture")
+                .help("Show outputs from the test exercises")
         )
         .subcommand(
             SubCommand::with_name("verify")
@@ -87,6 +86,7 @@ fn main() {
 
     let toml_str = &fs::read_to_string("info.toml").unwrap();
     let exercises = toml::from_str::<ExerciseList>(toml_str).unwrap().exercises;
+    let verbose = matches.is_present("nocapture");
 
     if let Some(ref matches) = matches.subcommand_matches("run") {
         let name = matches.value_of("name").unwrap();
@@ -98,7 +98,7 @@ fn main() {
             std::process::exit(1)
         });
 
-        run(&exercise).unwrap_or_else(|_| std::process::exit(1));
+        run(&exercise, verbose).unwrap_or_else(|_| std::process::exit(1));
     }
 
     if let Some(ref matches) = matches.subcommand_matches("hint") {
@@ -116,10 +116,10 @@ fn main() {
     }
 
     if matches.subcommand_matches("verify").is_some() {
-        verify(&exercises).unwrap_or_else(|_| std::process::exit(1));
+        verify(&exercises, verbose).unwrap_or_else(|_| std::process::exit(1));
     }
 
-    if matches.subcommand_matches("watch").is_some() && watch(&exercises).is_ok() {
+    if matches.subcommand_matches("watch").is_some() && watch(&exercises, verbose).is_ok() {
         println!(
             "{emoji} All exercises completed! {emoji}",
             emoji = Emoji("🎉", "★")
@@ -161,7 +161,7 @@ fn spawn_watch_shell(failed_exercise_hint: &Arc<Mutex<Option<String>>>) {
     });
 }
 
-fn watch(exercises: &[Exercise]) -> notify::Result<()> {
+fn watch(exercises: &[Exercise], verbose: bool) -> notify::Result<()> {
     /* Clears the terminal with an ANSI escape code.
     Works in UNIX and newer Windows terminals. */
     fn clear_screen() {
@@ -176,7 +176,7 @@ fn watch(exercises: &[Exercise]) -> notify::Result<()> {
     clear_screen();
 
     let to_owned_hint = |t: &Exercise| t.hint.to_owned();
-    let failed_exercise_hint = match verify(exercises.iter()) {
+    let failed_exercise_hint = match verify(exercises.iter(), verbose) {
         Ok(_) => return Ok(()),
         Err(exercise) => Arc::new(Mutex::new(Some(to_owned_hint(exercise)))),
     };
@@ -191,7 +191,7 @@ fn watch(exercises: &[Exercise]) -> notify::Result<()> {
                             .iter()
                             .skip_while(|e| !filepath.ends_with(&e.path));
                         clear_screen();
-                        match verify(pending_exercises) {
+                        match verify(pending_exercises, verbose) {
                             Ok(_) => return Ok(()),
                             Err(exercise) => {
                                 let mut failed_exercise_hint = failed_exercise_hint.lock().unwrap();

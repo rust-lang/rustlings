@@ -2,15 +2,22 @@ use crate::exercise::{Exercise, Mode};
 use crate::verify::test;
 use indicatif::ProgressBar;
 
-pub fn run(exercise: &Exercise) -> Result<(), ()> {
+// Invoke the rust compiler on the path of the given exercise,
+// and run the ensuing binary.
+// The verbose argument helps determine whether or not to show
+// the output from the test harnesses (if the mode of the exercise is test)
+pub fn run(exercise: &Exercise, verbose: bool) -> Result<(), ()> {
     match exercise.mode {
-        Mode::Test => test(exercise)?,
+        Mode::Test => test(exercise, verbose)?,
         Mode::Compile => compile_and_run(exercise)?,
         Mode::Clippy => compile_and_run(exercise)?,
     }
     Ok(())
 }
 
+// Invoke the rust compiler on the path of the given exercise
+// and run the ensuing binary.
+// This is strictly for non-test binaries, so output is displayed
 fn compile_and_run(exercise: &Exercise) -> Result<(), ()> {
     let progress_bar = ProgressBar::new_spinner();
     progress_bar.set_message(format!("Compiling {}...", exercise).as_str());

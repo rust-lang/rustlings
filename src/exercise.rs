@@ -11,15 +11,21 @@ const I_AM_DONE_REGEX: &str = r"(?m)^\s*///?\s*I\s+AM\s+NOT\s+DONE";
 const CONTEXT: usize = 2;
 const CLIPPY_CARGO_TOML_PATH: &str = "./exercises/clippy/Cargo.toml";
 
+// Get a temporary file name that is hopefully unique to this process
+#[inline]
 fn temp_file() -> String {
     format!("./temp_{}", process::id())
 }
 
+// The mode of the exercise.
 #[derive(Deserialize, Copy, Clone)]
 #[serde(rename_all = "lowercase")]
 pub enum Mode {
+    // Indicates that the exercise should be compiled as a binary
     Compile,
+    // Indicates that the exercise should be compiled as a test harness
     Test,
+    // Indicates that the exercise should be linted with clippy
     Clippy,
 }
 
@@ -28,41 +34,60 @@ pub struct ExerciseList {
     pub exercises: Vec<Exercise>,
 }
 
+// A representation of a rustlings exercise.
+// This is deserialized from the accompanying info.toml file
 #[derive(Deserialize)]
 pub struct Exercise {
+    // Name of the exercise
     pub name: String,
+    // The path to the file containing the exercise's source code
     pub path: PathBuf,
+    // The mode of the exercise (Test, Compile, or Clippy)
     pub mode: Mode,
+    // The hint text associated with the exercise
     pub hint: String,
 }
 
+// An enum to track of the state of an Exercise.
+// An Exercise can be either Done or Pending
 #[derive(PartialEq, Debug)]
 pub enum State {
+    // The state of the exercise once it's been completed
     Done,
+    // The state of the exercise while it's not completed yet
     Pending(Vec<ContextLine>),
 }
 
+// The context information of a pending exercise
 #[derive(PartialEq, Debug)]
 pub struct ContextLine {
+    // The source code that is still pending completion
     pub line: String,
+    // The line number of the source code still pending completion
     pub number: usize,
+    // Whether or not this is important
     pub important: bool,
 }
 
+// The result of compiling an exercise
 pub struct CompiledExercise<'a> {
     exercise: &'a Exercise,
     _handle: FileHandle,
 }
 
 impl<'a> CompiledExercise<'a> {
+    // Run the compiled exercise
     pub fn run(&self) -> Result<ExerciseOutput, ExerciseOutput> {
         self.exercise.run()
     }
 }
 
+// A representation of an already executed binary
 #[derive(Debug)]
 pub struct ExerciseOutput {
+    // The textual contents of the standard output of the binary
     pub stdout: String,
+    // The textual contents of the standard error of the binary
     pub stderr: String,
 }
 
@@ -140,7 +165,11 @@ path = "{}.rs""#,
     }
 
     fn run(&self) -> Result<ExerciseOutput, ExerciseOutput> {
-        let cmd = Command::new(&temp_file())
+        let arg = match self.mode {
+            Mode::Test => "--show-output",
+            _ => ""
+        };
+        let cmd = Command::new(&temp_file()).arg(arg)
             .output()
             .expect("Failed to run 'run' command");
 
@@ -205,6 +234,7 @@ impl Display for Exercise {
     }
 }
 
+#[inline]
 fn clean() {
     let _ignored = remove_file(&temp_file());
 }
@@ -279,5 +309,17 @@ mod test {
         };
 
         assert_eq!(exercise.state(), State::Done);
+    }
+
+    #[test]
+    fn test_exercise_with_output() {
+        let exercise = Exercise {
+            name: "finished_exercise".into(),
+            path: PathBuf::from("tests/fixture/success/testSuccess.rs"),
+            mode: Mode::Test,
+            hint: String::new(),
+        };
+        let out = exercise.compile().unwrap().run().unwrap();
+        assert!(out.stdout.contains("THIS TEST TOO SHALL PASS"));
     }
 }
