@@ -724,8 +724,10 @@ name = "generics2"
 path = "exercises/generics/generics2.rs"
 mode = "test"
 hint = """
-Think carefully about what we need to do here. Currently we are wrapping only values of
-type 'u32'. Maybe we need to update the explicit references to this data type somehow?
+Currently we are wrapping only values of type 'u32'. 
+Maybe we could update the explicit references to this data type somehow?
+
+If you are still stuck https://doc.rust-lang.org/stable/book/ch10-01-syntax.html#in-method-definitions
 """
 
 [[exercises]]
