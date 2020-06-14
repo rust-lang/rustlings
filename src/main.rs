@@ -132,7 +132,7 @@ fn main() {
         println!("You can also contribute your own exercises to help the greater community!");
         println!();
         println!("Before reporting an issue or contributing, please read our guidelines:");
-        println!("https://github.com/rust-lang/rustlings/blob/master/CONTRIBUTING.md");
+        println!("https://github.com/rust-lang/rustlings/blob/main/CONTRIBUTING.md");
     }
 
     if matches.subcommand_name().is_none() {

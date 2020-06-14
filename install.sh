@@ -115,8 +115,8 @@ then
     if [[ -z ${Version}  ]]
     then
         echo "No valid tag version found"
-        echo "Rustlings will be installed using the master branch"
-        Version="master"
+        echo "Rustlings will be installed using the main branch"
+        Version="main"
     else
         Version="tags/${Version}"
     fi

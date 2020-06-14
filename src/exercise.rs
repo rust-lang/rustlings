@@ -134,7 +134,7 @@ path = "{}.rs""#,
                     .expect("Failed to compile!");
                 // Due to an issue with Clippy, a cargo clean is required to catch all lints.
                 // See https://github.com/rust-lang/rust-clippy/issues/2604
-                // This is already fixed on master branch. See this issue to track merging into Cargo:
+                // This is already fixed on Clippy's master branch. See this issue to track merging into Cargo:
                 // https://github.com/rust-lang/rust-clippy/issues/3837
                 Command::new("cargo")
                     .args(&["clean", "--manifest-path", CLIPPY_CARGO_TOML_PATH])
