@@ -9,8 +9,10 @@
 pub fn fizz_if_foo(fizzish: &str) -> &str {
     if fizzish == "fizz" {
         "foo"
+    } else if fizzish == "fuzz" {
+        "bar"
     } else {
-        1
+        "baz"
     }
 }
 
@@ -32,5 +34,9 @@ mod tests {
     #[test]
     fn default_to_baz() {
         assert_eq!(fizz_if_foo("literally anything"), "baz")
+    }
+    #[test]
+    fn default_to_baz2() {
+        assert_eq!(fizz_if_foo("other thing"), "baz")
     }
 }
