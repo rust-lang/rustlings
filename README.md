@@ -103,6 +103,17 @@ exercise:
 rustlings hint myExercise1
 ```
 
+### Using an IDE
+**TL,DR**: open the `exercises/` folder in your editor.
+
+There are several editors and plugins that are able to analyze Rust code for a full blown IDE (or IDE-like) experience. The official language plugin of the Rust project is [rust-analyzer](rust-analyzer), but there are others, like [IntelliJ Rust](intellij) or [rls](rls).
+
+These tools usually rely on the default structure of a Cargo project to perform their analyses. Conversely, Rustlings is conceived as a collection of isolated exercises. Nevertheless, we auto-generate a "fake" project manifest in `exercises/Cargo.toml` that should bypass this mismatch. If you open the `exercises/` folder with your Rust-enabled editor, you should be able to enjoy its capabilities.
+
+[rust-analyzer]: https://rust-analyzer.github.io/
+[rls]: https://github.com/rust-lang/rls
+[intellij]: https://intellij-rust.github.io/
+
 ## Testing yourself
 
 After every couple of sections, there will be a quiz that'll test your knowledge on a bunch of sections at once. These quizzes are found in `exercises/quizN.rs`.

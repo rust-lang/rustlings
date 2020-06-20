@@ -23,7 +23,7 @@ mod run;
 mod verify;
 
 fn main() {
-    let matches = App::new("rustlings")
+    let app = App::new("rustlings")
         .version(crate_version!())
         .author("Olivia Hugger, Carol Nichols")
         .about("Rustlings is a collection of small exercises to get you used to writing and reading Rust code")
@@ -53,8 +53,18 @@ fn main() {
                 .alias("h")
                 .about("Returns a hint for the current exercise")
                 .arg(Arg::with_name("name").required(true).index(1)),
-        )
-        .get_matches();
+        );
+
+    let matches;
+    #[cfg(feature = "maintainer")]
+    {
+        let app = app.subcommand(SubCommand::with_name("maintainer"));
+        matches = app.get_matches();
+    }
+    #[cfg(not(feature = "maintainer"))]
+    {
+        matches = app.get_matches();
+    }
 
     if matches.subcommand_name().is_none() {
         println!();
@@ -87,6 +97,13 @@ fn main() {
     let toml_str = &fs::read_to_string("info.toml").unwrap();
     let exercises = toml::from_str::<ExerciseList>(toml_str).unwrap().exercises;
     let verbose = matches.is_present("nocapture");
+
+    #[cfg(feature = "maintainer")]
+    {
+        if matches.subcommand_matches("maintainer").is_some() {
+            maintainer();
+        }
+    }
 
     if let Some(ref matches) = matches.subcommand_matches("run") {
         let name = matches.value_of("name").unwrap();
@@ -216,4 +233,10 @@ fn rustc_exists() -> bool {
         .and_then(|mut child| child.wait())
         .map(|status| status.success())
         .unwrap_or(false)
+}
+
+#[cfg(feature = "maintainer")]
+fn maintainer() {
+    let manifest = tooling::generate(&Path::new("exercises"));
+    fs::write("exercises/Cargo.toml", manifest).unwrap();
 }

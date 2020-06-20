@@ -1,0 +1,2 @@
+[alias]
+generate-manifest = "run --features maintainer -- maintainer"
