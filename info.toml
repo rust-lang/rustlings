@@ -64,7 +64,7 @@ hint = """
 We know about variables and mutability, but there is another important type of 
 variable available; constants. 
 Constants are always immutable and they are declared with keyword 'const' rather 
-then keyword 'let'.
+than keyword 'let'.
 Constants types must also always be annotated.
 
 Read more about constants under 'Differences Between Variables and Constants' in the book's section 'Variables and Mutability': 
