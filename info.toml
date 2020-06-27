@@ -822,3 +822,13 @@ hint = """
 The implementation of FromStr should return an Ok with a Person object,
 or an Err with a string if the string is not valid.
 This is almost like the `try_from_into` exercise."""
+
+# POINTERS
+name = "pointers1"
+path = "exercises/pointers/pointers1.rs"
+mode = "test"
+hint = """
+When the function change the variables `a` and `b`,
+is trying to change the value, not its address.
+Try to reference their addresses `*your_variable`
+"""
