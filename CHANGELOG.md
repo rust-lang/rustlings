@@ -3,8 +3,8 @@
 
 #### Breaking Changes
 
-*   Add a --nocapture option to display test harnesses' outputs ([8ad5f9bf](https://github.com/rust-lang/rustlings/commit/8ad5f9bf531a4848b1104b7b389a20171624c82f)
-*   Rename test to quiz, fixes #244 ([010a0456](https://github.com/rust-lang/rustlings/commit/010a04569282149cea7f7a76fc4d7f4c9f0f08dd)
+*   Add a --nocapture option to display test harnesses' outputs ([8ad5f9bf](https://github.com/rust-lang/rustlings/commit/8ad5f9bf531a4848b1104b7b389a20171624c82f))
+*   Rename test to quiz, fixes #244 ([010a0456](https://github.com/rust-lang/rustlings/commit/010a04569282149cea7f7a76fc4d7f4c9f0f08dd))
 
 #### Features
 
