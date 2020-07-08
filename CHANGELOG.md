@@ -1,3 +1,45 @@
+<a name="4.0.0"></a>
+## 4.0.0 (2020-07-08)
+
+#### Breaking Changes
+
+*   Add a --nocapture option to display test harnesses' outputs ([8ad5f9bf](https://github.com/rust-lang/rustlings/commit/8ad5f9bf531a4848b1104b7b389a20171624c82f)
+*   Rename test to quiz, fixes #244 ([010a0456](https://github.com/rust-lang/rustlings/commit/010a04569282149cea7f7a76fc4d7f4c9f0f08dd)
+
+#### Features
+
+*   Add traits README ([173bb141](https://github.com/rust-lang/rustlings/commit/173bb14140c5530cbdb59e53ace3991a99d804af))
+*   Add box1.rs exercise ([7479a473](https://github.com/rust-lang/rustlings/commit/7479a4737bdcac347322ad0883ca528c8675e720))
+*   Rewrite try_from_into (#393) ([763aa6e3](https://github.com/rust-lang/rustlings/commit/763aa6e378a586caae2d8d63755a85eeba227933))
+*   Add if2 exercise ([1da84b5f](https://github.com/rust-lang/rustlings/commit/1da84b5f7c489f65bd683c244f13c7d1ee812df0))
+*   Added exercise structs3.rs ([b66e2e09](https://github.com/rust-lang/rustlings/commit/b66e2e09622243e086a0f1258dd27e1a2d61c891))
+*   Add exercise variables6 covering const (#352) ([5999acd2](https://github.com/rust-lang/rustlings/commit/5999acd24a4f203292be36e0fd18d385887ec481))
+
+#### Bug Fixes
+
+*   Change then to than ([ddd98ad7](https://github.com/rust-lang/rustlings/commit/ddd98ad75d3668fbb10eff74374148aa5ed2344d))
+*   rename quiz1 to tests1 in info (#420) ([0dd1c6ca](https://github.com/rust-lang/rustlings/commit/0dd1c6ca6b389789e0972aa955fe17aa15c95f29))
+*   fix quiz naming inconsistency (#421) ([5563adbb](https://github.com/rust-lang/rustlings/commit/5563adbb890587fc48fbbc9c4028642687f1e85b))
+*   confine the user further in variable exercises ([06ef4cc6](https://github.com/rust-lang/rustlings/commit/06ef4cc654e75d22a526812919ee49b8956280bf))
+*   update iterator and macro text for typos and clarity ([95900828](https://github.com/rust-lang/rustlings/commit/959008284834bece0196a01e17ac69a7e3590116))
+*   update generics2       closes #362 ([964c974a](https://github.com/rust-lang/rustlings/commit/964c974a0274199d755073b917c2bc5da0c9b4f1))
+*   confusing comment in conversions/try_from_into.rs ([c9e4f2cf](https://github.com/rust-lang/rustlings/commit/c9e4f2cfb4c48d0b7451263cfb43b9426438122d))
+* **arc1:**  Passively introduce attributes (#429) ([113cdae2](https://github.com/rust-lang/rustlings/commit/113cdae2d4e4c55905e8056ad326ede7fd7de356))
+* **box1:**  fix comment typo (#426) ([bb2ca251](https://github.com/rust-lang/rustlings/commit/bb2ca251106b27a7272d9a30872904dd1376654c))
+* **errorsn:**  Try harder to confine the user. (#388) ([2b20c8a0](https://github.com/rust-lang/rustlings/commit/2b20c8a0f5774d07c58d110d75879f33fc6273b5))
+* **from_into.rs:**  typo ([a901499e](https://github.com/rust-lang/rustlings/commit/a901499ededd3ce1995164700514fe4e9a0373ea))
+* **generics2:**  Guide students to the answer (#430) ([e6bd8021](https://github.com/rust-lang/rustlings/commit/e6bd8021d9a7dd06feebc30c9d5f953901d7b419))
+* **installation:**
+  *  Provide a backup git reference when tag can't be curl ([9e4fb100](https://github.com/rust-lang/rustlings/commit/9e4fb1009f1c9e3433915c03e22c2af422e5c5fe))
+  *  Check if python is available while checking for git,rustc and cargo ([9cfb617d](https://github.com/rust-lang/rustlings/commit/9cfb617d5b0451b4b51644a1298965390cda9884))
+* **option1:**
+  *  Don't add only zeros to the numbers array ([cce6a442](https://github.com/rust-lang/rustlings/commit/cce6a4427718724a9096800754cd3abeca6a1580))
+  *  Add cast to usize, as it is confusing in the context of an exercise about Option ([f6cffc7e](https://github.com/rust-lang/rustlings/commit/f6cffc7e487b42f15a6f958e49704c93a8d4465b))
+* **option2:**  Add TODO to comments (#400) ([10967bce](https://github.com/rust-lang/rustlings/commit/10967bce57682812dc0891a9f9757da1a9d87404))
+* **options1:**  Add hint about Array Initialization (#389) ([9f75554f](https://github.com/rust-lang/rustlings/commit/9f75554f2a30295996f03f0160b98c0458305502))
+* **test2:**  name of type String and &str (#394) ([d6c0a688](https://github.com/rust-lang/rustlings/commit/d6c0a688e6a96f93ad60d540d4b326f342fc0d45))
+* **variables6:**  minor typo (#419) ([524e17df](https://github.com/rust-lang/rustlings/commit/524e17df10db95f7b90a0f75cc8997182a8a4094))
+
 <a name="3.0.0"></a>
 ## 3.0.0 (2020-04-11)
 
