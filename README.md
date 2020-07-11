@@ -107,8 +107,10 @@ Once you've completed Rustlings, put your new knowledge to good use! Continue pr
 
 If you'd like to uninstall Rustlings, you can do so by invoking cargo and removing the rustlings directory:
 
-    cargo uninstall rustlings
-	rm -r rustlings/ # or on Windows: rmdir /s rustlings
+```bash
+cargo uninstall rustlings
+rm -r rustlings/ # or on Windows: rmdir /s rustlings
+```
 
 ## Completion
 
