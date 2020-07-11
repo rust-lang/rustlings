@@ -18,7 +18,6 @@ impl Default for Person {
     }
 }
 
-// I AM NOT DONE
 // Your task is to complete this implementation
 // in order for the line `let p = Person::from("Mark,20")` to compile
 // Please note that you'll need to parse the age component into a `usize`
@@ -33,6 +32,9 @@ impl Default for Person {
 // 5. Extract the other element from the split operation and parse it into a `usize` as the age
 // If while parsing the age, something goes wrong, then return the default of Person
 // Otherwise, then return an instantiated Person object with the results
+
+// I AM NOT DONE
+
 impl From<&str> for Person {
     fn from(s: &str) -> Person {
     }
