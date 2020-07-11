@@ -1,12 +1,12 @@
 // traits2.rs
-// 
+//
 // Your task is to implement the trait
 // `AppendBar' for a vector of strings.
-// 
+//
 // To implement this trait, consider for
 // a moment what it means to 'append "Bar"'
 // to a vector of strings.
-// 
+//
 // No boiler plate code this time,
 // you can do this!
 
@@ -18,9 +18,6 @@ trait AppendBar {
 
 //TODO: Add your code here
 
-
-
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -31,5 +28,4 @@ mod tests {
         assert_eq!(foo.pop().unwrap(), String::from("Bar"));
         assert_eq!(foo.pop().unwrap(), String::from("Foo"));
     }
-
 }
