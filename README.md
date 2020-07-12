@@ -101,6 +101,17 @@ rustlings hint myExercise1
 
 After every couple of sections, there will be a quiz that'll test your knowledge on a bunch of sections at once. These quizzes are found in `exercises/quizN.rs`.
 
+## Continuing On
+
+Once you've completed Rustlings, put your new knowledge to good use! Continue practicing your Rust skills by building your own projects, contributing to Rustlings, or finding other open-source projects to contribute to.
+
+If you'd like to uninstall Rustlings, you can do so by invoking cargo and removing the rustlings directory:
+
+```bash
+cargo uninstall rustlings
+rm -r rustlings/ # or on Windows: rmdir /s rustlings
+```
+
 ## Completion
 
 Rustlings isn't done; there are a couple of sections that are very experimental and don't have proper documentation. These include:
