@@ -127,4 +127,10 @@ mod tests {
         let v = vec![0, 0, 0, 0];
         let _ = Color::try_from(&v[..]).unwrap();
     }
+    #[test]
+    #[should_panic]
+    fn test_slice_insufficient_length() {
+        let v = vec![0, 0];
+        let _ = Color::try_from(&v[..]).unwrap();
+    }
 }
