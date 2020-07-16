@@ -1,6 +1,6 @@
 tasks:
     - before: gp env -e PATH="/usr/local/cargo/bin:$PATH"
-    - init: ./install.sh
+    - init: eval $(gp env -e) && ./install.sh
     - command: ~/.cargo/bin/rustlings watch
 image:
     file: .gitpod.Dockerfile
