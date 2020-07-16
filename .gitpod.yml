@@ -1,4 +1,5 @@
 tasks:
+    - before: export PATH="/usr/local/cargo/bin:$PATH"
     - init: ./install.sh
     - command: ~/.cargo/bin/rustlings watch
 image:
