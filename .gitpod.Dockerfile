@@ -1,3 +1,3 @@
 FROM gitpod/workspace-full
 
-RUN ls /workspace
+RUN find / -name "install.sh"
