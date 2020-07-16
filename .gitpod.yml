@@ -1,6 +1,5 @@
 tasks:
-    - before: export PATH="/usr/local/cargo/bin:$PATH"
-    - init: ./install.sh
+    - init: export PATH="/usr/local/cargo/bin:$PATH" && ./install.sh
     - command: ~/.cargo/bin/rustlings watch
 image:
     file: .gitpod.Dockerfile
