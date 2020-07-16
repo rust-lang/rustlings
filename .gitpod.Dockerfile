@@ -1,3 +1,4 @@
 FROM rust
 
-ENV PATH="/usr/local/cargo/bin:$PATH"
+RUN gp env -e PATH="/usr/local/cargo/bin:$PATH"
+# ENV PATH="/usr/local/cargo/bin:$PATH"
