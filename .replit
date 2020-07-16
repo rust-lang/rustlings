@@ -1,0 +1,2 @@
+language = "rust"
+run = "./install.sh && ~/.cargo/bin/rustlings watch"
