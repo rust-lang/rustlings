@@ -1,2 +1,2 @@
 language = "rust"
-run = "./install.sh && ~/.cargo/bin/rustlings watch"
+run = "[ -x ~/.cargo/bin/rustlings ] && ~/.cargo/bin/rustlings watch || ./install.sh"
