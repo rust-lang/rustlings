@@ -1,3 +1,3 @@
 FROM rust
 
-RUN /workspace/init/install.sh
+RUN find /workspace -name "install.sh"
