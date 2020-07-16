@@ -1,5 +1,6 @@
 tasks:
-    - init: echo 'export PATH="/usr/local/cargo/bin:$PATH"' >> /etc/profile && export PATH="/usr/local/cargo/bin:$PATH" && ./install.sh
+    - before: gp env -e PATH="/usr/local/cargo/bin:$PATH"
+    - init: ./install.sh
     - command: ~/.cargo/bin/rustlings watch
 image:
     file: .gitpod.Dockerfile
