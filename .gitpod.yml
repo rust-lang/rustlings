@@ -1,0 +1,8 @@
+tasks:
+    - init: rustlings watch
+image:
+    file: .gitpod.Dockerfile
+
+vscode:
+  extensions:
+    - rust-lang.rust@0.7.8:CvNqMTgDdt3UXt+6BCDTVg==
