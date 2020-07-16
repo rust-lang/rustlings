@@ -1,3 +1,3 @@
 FROM rust
 
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -y
+RUN curl -O --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs && sh rustup-init.sh -y
