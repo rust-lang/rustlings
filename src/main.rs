@@ -143,15 +143,18 @@ fn main() {
 
 fn spawn_watch_shell(failed_exercise_hint: &Arc<Mutex<Option<String>>>) {
     let failed_exercise_hint = Arc::clone(failed_exercise_hint);
-    println!("Type 'hint' to get help");
+    println!("Type 'hint' to get help or 'clear' to clear the screen");
     thread::spawn(move || loop {
         let mut input = String::new();
         match io::stdin().read_line(&mut input) {
             Ok(_) => {
-                if input.trim().eq("hint") {
+                let input = input.trim();
+                if input.eq("hint") {
                     if let Some(hint) = &*failed_exercise_hint.lock().unwrap() {
                         println!("{}", hint);
                     }
+                } else if input.eq("clear") {
+                    println!("\x1B[2J\x1B[1;1H");
                 } else {
                     println!("unknown command: {}", input);
                 }
