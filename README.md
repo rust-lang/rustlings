@@ -48,6 +48,12 @@ Start-BitsTransfer -Source https://git.io/rustlings-win -Destination $env:TMP/in
 
 To install Rustlings. Same as on MacOS/Linux, you will have access to the `rustlings` command after it.
 
+## Browser:
+
+[Run on Repl.it](https://repl.it/github/rust-lang/rustlings)
+
+[Open in Gitpod](https://gitpod.io/#https://github.com/rust-lang/rustlings)
+
 ## Manually
 
 Basically: Clone the repository, checkout to the latest tag, run `cargo install`.
