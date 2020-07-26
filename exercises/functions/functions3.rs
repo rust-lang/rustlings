@@ -1,10 +1,10 @@
 // functions3.rs
 // Make me compile! Execute `rustlings hint functions3` for hints :)
 
-// I AM NOT DONE
 
 fn main() {
-    call_me();
+    let test:i8 = 100;
+    call_me(test.into());
 }
 
 fn call_me(num: i32) {
