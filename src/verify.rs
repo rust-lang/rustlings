@@ -65,6 +65,7 @@ fn compile_and_run_interactively(exercise: &Exercise) -> Result<bool, ()> {
         Err(output) => {
             warn!("Ran {} with errors", exercise);
             println!("{}", output.stdout);
+            println!("{}", output.stderr);
             return Err(());
         }
     };
