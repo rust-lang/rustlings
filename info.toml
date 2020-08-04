@@ -645,6 +645,27 @@ inside the loop but still in the main thread.
 thread-local copy of the numbers."""
 
 [[exercises]]
+name = "iterators1"
+path = "exercises/standard_library_types/iterators1.rs"
+mode = "compile"
+hint = """
+Step 1:
+We need to apply something to the collection `my_fav_fruits` before we start to go through
+it. What could that be? Take a look at the struct definition for a vector for inspiration:
+https://doc.rust-lang.org/std/vec/struct.Vec.html.
+
+
+Step 2 & step 2.1:
+Very similar to the lines above an below. You've got this!
+
+
+Step 3:
+An iterator goes through all elements in a collection, but what if we've run out of
+elements? What should we expect here? If you're stuck, take a look at 
+https://doc.rust-lang.org/std/iter/trait.Iterator.html for some ideas.
+"""
+
+[[exercises]]
 name = "iterators2"
 path = "exercises/standard_library_types/iterators2.rs"
 mode = "test"
