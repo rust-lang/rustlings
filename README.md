@@ -21,7 +21,7 @@ _Note: If you're on MacOS, make sure you've installed Xcode and its developer to
 You will need to have Rust installed. You can get it by visiting https://rustup.rs. This'll also install Cargo, Rust's package/project manager.
 
 ## MacOS/Linux
-
+Use linux/////
 Just run:
 
 ```bash
