@@ -18,9 +18,6 @@ trait AppendBar {
 
 //TODO: Add your code here
 
-
-
-
 #[cfg(test)]
 mod tests {
     use super::*;
