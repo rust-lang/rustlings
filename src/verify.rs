@@ -9,7 +9,7 @@ use indicatif::ProgressBar;
 // determines whether or not the test harness outputs are displayed.
 pub fn verify<'a>(
     start_at: impl IntoIterator<Item = &'a Exercise>,
-    verbose: bool
+    verbose: bool,
 ) -> Result<(), &'a Exercise> {
     for exercise in start_at {
         let compile_result = match exercise.mode {
@@ -77,9 +77,7 @@ fn compile_and_run_interactively(exercise: &Exercise) -> Result<bool, ()> {
 
 // Compile the given Exercise as a test harness and display
 // the output if verbose is set to true
-fn compile_and_test(
-    exercise: &Exercise, run_mode: RunMode, verbose: bool
-) -> Result<bool, ()> {
+fn compile_and_test(exercise: &Exercise, run_mode: RunMode, verbose: bool) -> Result<bool, ()> {
     let progress_bar = ProgressBar::new_spinner();
     progress_bar.set_message(format!("Testing {}...", exercise).as_str());
     progress_bar.enable_steady_tick(100);

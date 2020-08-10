@@ -126,9 +126,7 @@ fn main() {
         );
         println!();
         println!("We hope you enjoyed learning about the various aspects of Rust!");
-        println!(
-            "If you noticed any issues, please don't hesitate to report them to our repo."
-        );
+        println!("If you noticed any issues, please don't hesitate to report them to our repo.");
         println!("You can also contribute your own exercises to help the greater community!");
         println!();
         println!("Before reporting an issue or contributing, please read our guidelines:");
