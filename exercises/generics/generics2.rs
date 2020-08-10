@@ -4,7 +4,7 @@
 // I AM NOT DONE
 
 struct Wrapper {
-    value: u32
+    value: u32,
 }
 
 impl Wrapper {

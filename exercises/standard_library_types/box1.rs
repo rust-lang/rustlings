@@ -26,7 +26,10 @@ pub enum List {
 
 fn main() {
     println!("This is an empty cons list: {:?}", create_empty_list());
-    println!("This is a non-empty cons list: {:?}", create_non_empty_list());
+    println!(
+        "This is a non-empty cons list: {:?}",
+        create_non_empty_list()
+    );
 }
 
 pub fn create_empty_list() -> List {
