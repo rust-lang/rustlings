@@ -167,9 +167,10 @@ path = "{}.rs""#,
     fn run(&self) -> Result<ExerciseOutput, ExerciseOutput> {
         let arg = match self.mode {
             Mode::Test => "--show-output",
-            _ => ""
+            _ => "",
         };
-        let cmd = Command::new(&temp_file()).arg(arg)
+        let cmd = Command::new(&temp_file())
+            .arg(arg)
             .output()
             .expect("Failed to run 'run' command");
 
