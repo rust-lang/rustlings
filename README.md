@@ -48,6 +48,12 @@ Start-BitsTransfer -Source https://git.io/rustlings-win -Destination $env:TMP/in
 
 To install Rustlings. Same as on MacOS/Linux, you will have access to the `rustlings` command after it.
 
+## Browser:
+
+[Run on Repl.it](https://repl.it/github/rust-lang/rustlings)
+
+[Open in Gitpod](https://gitpod.io/#https://github.com/rust-lang/rustlings)
+
 ## Manually
 
 Basically: Clone the repository, checkout to the latest tag, run `cargo install`.
@@ -55,7 +61,7 @@ Basically: Clone the repository, checkout to the latest tag, run `cargo install`
 ```bash
 git clone https://github.com/rust-lang/rustlings
 cd rustlings
-git checkout tags/3.0.0 # or whatever the latest version is (find out at https://github.com/rust-lang/rustlings/releases/latest)
+git checkout tags/4.0.0 # or whatever the latest version is (find out at https://github.com/rust-lang/rustlings/releases/latest)
 cargo install --force --path .
 ```
 
@@ -70,7 +76,7 @@ Then, same as above, run `rustlings` to get started.
 
 The exercises are sorted by topic and can be found in the subdirectory `rustlings/exercises/<topic>`. For every topic there is an additional README file with some resources to get you started on the topic. We really recommend that you have a look at them before you start.
 
-The task is simple. Most exercises contain an error that keep it from compiling, and it's up to you to fix it! Some exercises are also run as tests, but rustlings handles them all the same. To run the exercises in the recommended order, execute:
+The task is simple. Most exercises contain an error that keep them from compiling, and it's up to you to fix it! Some exercises are also run as tests, but rustlings handles them all the same. To run the exercises in the recommended order, execute:
 
 ```bash
 rustlings watch
@@ -100,6 +106,17 @@ rustlings hint myExercise1
 ## Testing yourself
 
 After every couple of sections, there will be a quiz that'll test your knowledge on a bunch of sections at once. These quizzes are found in `exercises/quizN.rs`.
+
+## Continuing On
+
+Once you've completed Rustlings, put your new knowledge to good use! Continue practicing your Rust skills by building your own projects, contributing to Rustlings, or finding other open-source projects to contribute to.
+
+If you'd like to uninstall Rustlings, you can do so by invoking cargo and removing the rustlings directory:
+
+```bash
+cargo uninstall rustlings
+rm -r rustlings/ # or on Windows: rmdir /s rustlings
+```
 
 ## Completion
 
