@@ -21,7 +21,7 @@ fn main() {
             let mut sum = 0;
             while i < child_numbers.len() {
                 sum += child_numbers[i];
-                i += 5;
+                i += 8;
             }
             println!("Sum of offset {} is {}", offset, sum);
         }));
