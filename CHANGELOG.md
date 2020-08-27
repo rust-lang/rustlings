@@ -83,14 +83,14 @@
 *   Update deps to version compatable with aarch64-pc-windows (#263) ([19a93428](https://github.com/rust-lang/rustlings/commit/19a93428b3c73d994292671f829bdc8e5b7b3401))
 * **docs:**
   * Added a necessary step to Windows installation process (#242) ([3906efcd](https://github.com/rust-lang/rustlings/commit/3906efcd52a004047b460ed548037093de3f523f))
-  * Fixed mangled sentence from book; edited for clarity (#266) ([ade52ff](https://github.com/rust-lang/rustlings/commit/ade52ffb739987287ddd5705944c8777705faed9)) 
+  * Fixed mangled sentence from book; edited for clarity (#266) ([ade52ff](https://github.com/rust-lang/rustlings/commit/ade52ffb739987287ddd5705944c8777705faed9))
   * Updated iterators readme to account for iterators4 exercise (#273) ([bec8e3a](https://github.com/rust-lang/rustlings/commit/bec8e3a644cbd88db1c73ea5f1d8a364f4a34016))
 * **installation:**  make fatal errors more obvious (#272) ([17d0951e](https://github.com/rust-lang/rustlings/commit/17d0951e66fda8e11b204d5c4c41a0d5e22e78f7))
 * **iterators2:**
   *  Remove reference to missing iterators2.rs (#245) ([419f7797](https://github.com/rust-lang/rustlings/commit/419f7797f294e4ce6a2b883199731b5bde77d262))
 * **as_ref_mut:** Enable a test and improve per clippy's suggestion (#256) ([dfdf809](https://github.com/rust-lang/rustlings/commit/dfdf8093ebbd4145864995627b812780de52f902))
 * **tests1:**
-  * Change test command ([fe10e06c](https://github.com/rust-lang/rustlings/commit/fe10e06c3733ddb4a21e90d09bf79bfe618e97ce) 
+  * Change test command ([fe10e06c](https://github.com/rust-lang/rustlings/commit/fe10e06c3733ddb4a21e90d09bf79bfe618e97ce)
   * Correct test command in tests1.rs comment (#263) ([39fa7ae](https://github.com/rust-lang/rustlings/commit/39fa7ae8b70ad468da49b06f11b2383135a63bcf))
 
 #### Features

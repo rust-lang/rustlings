@@ -35,7 +35,7 @@ if (Get-Command cargo -ErrorAction SilentlyContinue) {
 function vercomp($v1, $v2) {
     if ($v1 -eq $v2) {
        return 0
-    } 
+    }
 
     $v1 = $v1.Replace(".", "0")
     $v2 = $v2.Replace(".", "0")
