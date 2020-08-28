@@ -7,6 +7,6 @@
 // feel ready for the next exercise, remove the `I AM NOT DONE` comment below.
 
 fn main() {
-    let x: i32 = 5;
+    let x = 5;
     println!("x has the value {}", x);
 }
