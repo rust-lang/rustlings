@@ -787,7 +787,7 @@ what you've learned :)"""
 [[exercises]]
 name = "using_as"
 path = "exercises/conversions/using_as.rs"
-mode = "compile"
+mode = "test"
 hint = """
 Use the `as` operator to cast one of the operands in the last line of the
 `average` function into the expected return type."""
