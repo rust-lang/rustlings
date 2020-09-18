@@ -30,7 +30,7 @@ impl Package {
     }
 
     fn get_fees(&self, cents_per_gram: i32) -> ??? {
-        // Something goes here... (beware of grams to kg conversion)
+        // Something goes here... 
     }
 }
 
