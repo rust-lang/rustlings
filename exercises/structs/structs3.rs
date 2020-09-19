@@ -29,8 +29,8 @@ impl Package {
         // Something goes here...
     }
 
-    fn get_fees(&self, cents_per_kg: i32) -> ??? {
-        // Something goes here... (beware of grams to kg conversion)
+    fn get_fees(&self, cents_per_gram: i32) -> ??? {
+        // Something goes here... 
     }
 }
 
@@ -62,10 +62,10 @@ mod tests {
         let sender_country = String::from("Spain");
         let recipient_country = String::from("Spain");
 
-        let cents_per_kg = ???;
+        let cents_per_gram = ???;
 
         let package = Package::new(sender_country, recipient_country, 1500);
 
-        assert_eq!(package.get_fees(cents_per_kg), 4500);
+        assert_eq!(package.get_fees(cents_per_gram), 4500);
     }
 }
