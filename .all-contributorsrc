@@ -472,6 +472,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "avrong",
+      "name": "Aleksei Trifonov",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/6342851?v=4",
+      "profile": "https://github.com/avrong",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
