@@ -528,6 +528,15 @@
         "code",
         "content"
       ]
+    },
+    {
+      "login": "wrobstory",
+      "name": "Rob Story",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/2601457?v=4",
+      "profile": "https://github.com/wrobstory",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
