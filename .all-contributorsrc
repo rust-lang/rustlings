@@ -518,6 +518,16 @@
         "code",
         "test"
       ]
+    },
+    {
+      "login": "DiD92",
+      "name": "Dídac Sementé Fernández",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/6002416?v=4",
+      "profile": "https://github.com/DiD92",
+      "contributions": [
+        "code",
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
