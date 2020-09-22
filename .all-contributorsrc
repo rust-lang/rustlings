@@ -508,6 +508,16 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "apatniv",
+      "name": "Vivek Bharath Akupatni",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/22565917?v=4",
+      "profile": "https://github.com/apatniv",
+      "contributions": [
+        "code",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 8,
