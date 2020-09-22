@@ -573,6 +573,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "dev-cyprium",
+      "name": "Stefan Kupresak",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/6002628?v=4",
+      "profile": "https://github.com/dev-cyprium",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
