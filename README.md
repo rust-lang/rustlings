@@ -1,6 +1,6 @@
 ![crab pet](https://i.imgur.com/LbZJgmm.gif)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-56-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-57-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️ [![Build status](https://badge.buildkite.com/7af93d81dc522c67a1ec8e33ff5705861b1cb36360b774807f.svg)](https://buildkite.com/mokou/rustlings)
@@ -217,6 +217,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/bertonha"><img src="https://avatars3.githubusercontent.com/u/1225902?v=4" width="100px;" alt=""/><br /><sub><b>Christofer Bertonha</b></sub></a><br /><a href="#content-bertonha" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/apatniv"><img src="https://avatars2.githubusercontent.com/u/22565917?v=4" width="100px;" alt=""/><br /><sub><b>Vivek Bharath Akupatni</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=apatniv" title="Code">💻</a> <a href="https://github.com/rust-lang/rustlings/commits?author=apatniv" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://github.com/DiD92"><img src="https://avatars3.githubusercontent.com/u/6002416?v=4" width="100px;" alt=""/><br /><sub><b>Dídac Sementé Fernández</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=DiD92" title="Code">💻</a> <a href="#content-DiD92" title="Content">🖋</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/wrobstory"><img src="https://avatars3.githubusercontent.com/u/2601457?v=4" width="100px;" alt=""/><br /><sub><b>Rob Story</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=wrobstory" title="Code">💻</a></td>
   </tr>
 </table>
 
