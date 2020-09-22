@@ -546,6 +546,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "EvanCarroll",
+      "name": "Evan Carroll",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/19922?v=4",
+      "profile": "https://www.linkedin.com/in/evancarroll/",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
