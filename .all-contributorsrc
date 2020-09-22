@@ -481,6 +481,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "Darrenmeehan",
+      "name": "Darren Meehan",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/411136?v=4",
+      "profile": "https://drn.ie",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
