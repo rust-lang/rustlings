@@ -1,6 +1,6 @@
 ![crab pet](https://i.imgur.com/LbZJgmm.gif)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-49-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-50-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️ [![Build status](https://badge.buildkite.com/7af93d81dc522c67a1ec8e33ff5705861b1cb36360b774807f.svg)](https://buildkite.com/mokou/rustlings)
@@ -210,6 +210,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/uce"><img src="https://avatars3.githubusercontent.com/u/1756620?v=4" width="100px;" alt=""/><br /><sub><b>Ufuk Celebi</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=uce" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/lebedevsergey"><img src="https://avatars2.githubusercontent.com/u/7325764?v=4" width="100px;" alt=""/><br /><sub><b>lebedevsergey</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=lebedevsergey" title="Documentation">📖</a></td>
   </tr>
 </table>
 
