@@ -1,6 +1,6 @@
 ![crab pet](https://i.imgur.com/LbZJgmm.gif)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-54-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-55-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️ [![Build status](https://badge.buildkite.com/7af93d81dc522c67a1ec8e33ff5705861b1cb36360b774807f.svg)](https://buildkite.com/mokou/rustlings)
@@ -215,6 +215,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://drn.ie"><img src="https://avatars2.githubusercontent.com/u/411136?v=4" width="100px;" alt=""/><br /><sub><b>Darren Meehan</b></sub></a><br /><a href="#content-Darrenmeehan" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/jihchi"><img src="https://avatars1.githubusercontent.com/u/87983?v=4" width="100px;" alt=""/><br /><sub><b>Jihchi Lee</b></sub></a><br /><a href="#content-jihchi" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/bertonha"><img src="https://avatars3.githubusercontent.com/u/1225902?v=4" width="100px;" alt=""/><br /><sub><b>Christofer Bertonha</b></sub></a><br /><a href="#content-bertonha" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/apatniv"><img src="https://avatars2.githubusercontent.com/u/22565917?v=4" width="100px;" alt=""/><br /><sub><b>Vivek Bharath Akupatni</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=apatniv" title="Code">💻</a> <a href="https://github.com/rust-lang/rustlings/commits?author=apatniv" title="Tests">⚠️</a></td>
   </tr>
 </table>
 
