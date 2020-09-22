@@ -454,11 +454,20 @@
         "code",
         "content"
       ]
+    },
+    {
+      "login": "uce",
+      "name": "Ufuk Celebi",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/1756620?v=4",
+      "profile": "https://github.com/uce",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
   "projectName": "rustlings",
-  "projectOwner": "fmoko",
+  "projectOwner": "rust-lang",
   "repoType": "github",
   "repoHost": "https://github.com",
   "skipCi": true
