@@ -1,6 +1,6 @@
 ![crab pet](https://i.imgur.com/LbZJgmm.gif)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-57-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-58-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️ [![Build status](https://badge.buildkite.com/7af93d81dc522c67a1ec8e33ff5705861b1cb36360b774807f.svg)](https://buildkite.com/mokou/rustlings)
@@ -220,6 +220,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/wrobstory"><img src="https://avatars3.githubusercontent.com/u/2601457?v=4" width="100px;" alt=""/><br /><sub><b>Rob Story</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=wrobstory" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/siobhanjacobson"><img src="https://avatars2.githubusercontent.com/u/28983835?v=4" width="100px;" alt=""/><br /><sub><b>Siobhan Jacobson</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=siobhanjacobson" title="Code">💻</a></td>
   </tr>
 </table>
 
