@@ -582,6 +582,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "greg-el",
+      "name": "Greg Leonard",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/45019882?v=4",
+      "profile": "https://github.com/greg-el",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
