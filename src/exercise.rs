@@ -315,7 +315,7 @@ mod test {
     #[test]
     fn test_exercise_with_output() {
         let exercise = Exercise {
-            name: "finished_exercise".into(),
+            name: "exercise_with_output".into(),
             path: PathBuf::from("tests/fixture/success/testSuccess.rs"),
             mode: Mode::Test,
             hint: String::new(),
