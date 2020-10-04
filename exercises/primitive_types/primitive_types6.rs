@@ -1,11 +1,16 @@
 // primitive_types6.rs
 // Use a tuple index to access the second element of `numbers`.
-// You can put this right into the `println!` where the ??? is.
+// You can write it were ??? is so that the test passes.
 // Execute `rustlings hint primitive_types6` for hints!
 
 // I AM NOT DONE
 
-fn main() {
+#[test]
+fn indexing_tuple() {
     let numbers = (1, 2, 3);
-    println!("The second number is {}", ???);
+    /// Replace below ??? by tuple indexing syntax.
+    let second = ???;
+
+    assert_eq!(2, second
+        "This is not the 2nd number of the tuple numbers")
 }
