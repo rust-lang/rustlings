@@ -1,3 +1,26 @@
+<a name="4.1.0"></a>
+## 4.1.0 (2020-10-05)
+
+#### Bug Fixes
+
+*   Update rustlings version in Cargo.lock ([1cc40bc9](https://github.com/rust-lang/rustlings/commit/1cc40bc9ce95c23d56f6d91fa1c4deb646231fef))
+* **arc1:**  index mod should equal thread count ([b4062ef6](https://github.com/rust-lang/rustlings/commit/b4062ef6993e80dac107c4093ea85166ad3ee0fa))
+* **enums3:**  Update Message::ChangeColor to take a tuple. (#457) ([4b6540c7](https://github.com/rust-lang/rustlings/commit/4b6540c71adabad647de8a09e57295e7c7c7d794))
+* **exercises:**  adding question mark to quiz2 ([101072ab](https://github.com/rust-lang/rustlings/commit/101072ab9f8c80b40b8b88cb06cbe38aca2481c5))
+* **generics3:**  clarify grade change ([47f7672c](https://github.com/rust-lang/rustlings/commit/47f7672c0307732056e7426e81d351f0dd7e22e5))
+* **structs3:**  Small adjustment of variable name ([114b54cb](https://github.com/rust-lang/rustlings/commit/114b54cbdb977234b39e5f180d937c14c78bb8b2))
+* **using_as:**  Add test so that proper type is returned. (#512) ([3286c5ec](https://github.com/rust-lang/rustlings/commit/3286c5ec19ea5fb7ded81d047da5f8594108a490))
+
+#### Features
+
+*   Added iterators1.rs exercise ([9642f5a3](https://github.com/rust-lang/rustlings/commit/9642f5a3f686270a4f8f6ba969919ddbbc4f7fdd))
+*   Add ability to run rustlings on repl.it (#471) ([8f7b5bd0](https://github.com/rust-lang/rustlings/commit/8f7b5bd00eb83542b959830ef55192d2d76db90a))
+*   Add gitpod support (#473) ([4821a8be](https://github.com/rust-lang/rustlings/commit/4821a8be94af4f669042a06ab917934cfacd032f))
+*   Remind the user of the hint option (#425) ([816b1f5e](https://github.com/rust-lang/rustlings/commit/816b1f5e85d6cc6e72673813a85d0ada2a8f84af))
+*   Remind the user of the hint option (#425) ([9f61db5d](https://github.com/rust-lang/rustlings/commit/9f61db5dbe38538cf06571fcdd5f806e7901e83a))
+* **cli:**  Added 'cls' command to 'watch' mode (#474) ([4f2468e1](https://github.com/rust-lang/rustlings/commit/4f2468e14f574a93a2e9b688367b5752ed96ae7b))
+* **try_from_into:**  Add insufficient length test (#469) ([523d18b8](https://github.com/rust-lang/rustlings/commit/523d18b873a319f7c09262f44bd40e2fab1830e5))
+
 <a name="4.0.0"></a>
 ## 4.0.0 (2020-07-08)
 
