@@ -226,6 +226,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/GaurangTandon"><img src="https://avatars1.githubusercontent.com/u/6308683?v=4" width="100px;" alt=""/><br /><sub><b>Gaurang Tandon</b></sub></a><br /><a href="#content-GaurangTandon" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/dev-cyprium"><img src="https://avatars1.githubusercontent.com/u/6002628?v=4" width="100px;" alt=""/><br /><sub><b>Stefan Kupresak</b></sub></a><br /><a href="#content-dev-cyprium" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/greg-el"><img src="https://avatars3.githubusercontent.com/u/45019882?v=4" width="100px;" alt=""/><br /><sub><b>Greg Leonard</b></sub></a><br /><a href="#content-greg-el" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/ryanpcmcquen"><img src="https://avatars1.githubusercontent.com/u/772937?v=4" width="100px;" alt=""/><br /><sub><b>Ryan McQuen</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=ryanpcmcquen" title="Code">💻</a></td>
   </tr>
 </table>
 
