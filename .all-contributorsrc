@@ -591,6 +591,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "ryanpcmcquen",
+      "name": "Ryan McQuen",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/772937?v=4",
+      "profile": "https://ryanpcmcquen.org",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
