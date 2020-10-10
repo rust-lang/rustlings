@@ -230,6 +230,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/AnnikaCodes"><img src="https://avatars3.githubusercontent.com/u/56906084?v=4" width="100px;" alt=""/><br /><sub><b>Annika</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/pulls?q=is%3Apr+reviewed-by%3AAnnikaCodes" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://darnuria.eu"><img src="https://avatars1.githubusercontent.com/u/2827553?v=4" width="100px;" alt=""/><br /><sub><b>Axel Viala</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=darnuria" title="Code">💻</a></td>
   </tr>
 </table>
 
