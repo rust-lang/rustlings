@@ -1,6 +1,6 @@
 ![crab pet](https://i.imgur.com/LbZJgmm.gif)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-64-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-65-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️ [![Build status](https://badge.buildkite.com/7af93d81dc522c67a1ec8e33ff5705861b1cb36360b774807f.svg)](https://buildkite.com/mokou/rustlings)
@@ -227,6 +227,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/dev-cyprium"><img src="https://avatars1.githubusercontent.com/u/6002628?v=4" width="100px;" alt=""/><br /><sub><b>Stefan Kupresak</b></sub></a><br /><a href="#content-dev-cyprium" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/greg-el"><img src="https://avatars3.githubusercontent.com/u/45019882?v=4" width="100px;" alt=""/><br /><sub><b>Greg Leonard</b></sub></a><br /><a href="#content-greg-el" title="Content">🖋</a></td>
     <td align="center"><a href="https://ryanpcmcquen.org"><img src="https://avatars3.githubusercontent.com/u/772937?v=4" width="100px;" alt=""/><br /><sub><b>Ryan McQuen</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=ryanpcmcquen" title="Code">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://darnuria.eu"><img src="https://avatars1.githubusercontent.com/u/2827553?v=4" width="100px;" alt=""/><br /><sub><b>Axel Viala</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=darnuria" title="Code">💻</a></td>
   </tr>
 </table>
 
