@@ -210,7 +210,7 @@ of the tuple. You can do it!!"""
 [[exercises]]
 name = "primitive_types6"
 path = "exercises/primitive_types/primitive_types6.rs"
-mode = "compile"
+mode = "test"
 hint = """
 While you could use a destructuring `let` for the tuple here, try
 indexing into it instead, as explained in the last example of the
