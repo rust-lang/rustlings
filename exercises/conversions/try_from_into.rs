@@ -20,7 +20,7 @@ struct Color {
 //
 // Note, that implementation for tuple and array will be checked at compile-time,
 // but slice implementation need check slice length!
-// Also note, that chunk of correct rgb color must be integer in range 0..=255.
+// Also note, that chunk of correct rgb color must be integer in range 0..255.
 
 // Tuple implementation
 impl TryFrom<(i16, i16, i16)> for Color {
