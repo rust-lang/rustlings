@@ -591,6 +591,33 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "ryanpcmcquen",
+      "name": "Ryan McQuen",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/772937?v=4",
+      "profile": "https://ryanpcmcquen.org",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "AnnikaCodes",
+      "name": "Annika",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/56906084?v=4",
+      "profile": "https://github.com/AnnikaCodes",
+      "contributions": [
+        "review"
+      ]
+    },
+    {
+      "login": "darnuria",
+      "name": "Axel Viala",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/2827553?v=4",
+      "profile": "https://darnuria.eu",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
