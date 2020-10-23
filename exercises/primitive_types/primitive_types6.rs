@@ -3,9 +3,8 @@
 // You can put this right into the `println!` where the ??? is.
 // Execute `rustlings hint primitive_types6` for hints!
 
-// I AM NOT DONE
 
 fn main() {
     let numbers = (1, 2, 3);
-    println!("The second number is {}", ???);
+    println!("The second number is {}", numbers.1);
 }
