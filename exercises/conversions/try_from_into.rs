@@ -25,22 +25,19 @@ struct Color {
 // Tuple implementation
 impl TryFrom<(i16, i16, i16)> for Color {
     type Error = String;
-    fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {
-    }
+    fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {}
 }
 
 // Array implementation
 impl TryFrom<[i16; 3]> for Color {
     type Error = String;
-    fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {
-    }
+    fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {}
 }
 
 // Slice implementation
 impl TryFrom<&[i16]> for Color {
     type Error = String;
-    fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {
-    }
+    fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {}
 }
 
 fn main() {
@@ -76,6 +73,11 @@ mod tests {
         let _ = Color::try_from((-1, -10, -256)).unwrap();
     }
     #[test]
+    #[should_panic]
+    fn test_tuple_sum() {
+        let _ = Color::try_from((-1, 255, 255)).unwrap();
+    }
+    #[test]
     fn test_tuple_correct() {
         let c: Color = (183, 65, 14).try_into().unwrap();
         assert_eq!(c.red, 183);
@@ -92,6 +94,11 @@ mod tests {
     #[should_panic]
     fn test_array_out_of_range_negative() {
         let _: Color = [-10, -256, -1].try_into().unwrap();
+    }
+    #[test]
+    #[should_panic]
+    fn test_array_sum() {
+        let _: Color = [-1, 255, 255].try_into().unwrap();
     }
     #[test]
     fn test_array_correct() {
@@ -111,6 +118,12 @@ mod tests {
     #[should_panic]
     fn test_slice_out_of_range_negative() {
         let arr = [-256, -1, -10];
+        let _ = Color::try_from(&arr[..]).unwrap();
+    }
+    #[test]
+    #[should_panic]
+    fn test_slice_sum() {
+        let arr = [-1, 255, 255];
         let _ = Color::try_from(&arr[..]).unwrap();
     }
     #[test]
