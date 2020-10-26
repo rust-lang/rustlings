@@ -400,6 +400,28 @@ Hint 1: `i` is each element from the Vec as they are being iterated.
 Hint 2: Check the suggestion from the compiler error ;)
 """
 
+[[exercises]]
+name = "collections3"
+path = "exercises/collections/hashmap1.rs"
+mode = "test"
+hint = """
+Hint 1: Take a look at the return type of the function to figure out
+  the type for the `basket`.
+
+Hint 2: Number of fruits should be at least 5. And you have to put
+  at least three different types of fruits.
+"""
+
+[[exercises]]
+name = "collections4"
+path = "exercises/collections/hashmap2.rs"
+mode = "test"
+hint = """
+Use the `entry()` and `or_insert()` methods of `HashMap` to achieve this.
+
+Learn more at https://doc.rust-lang.org/stable/book/ch08-03-hash-maps.html#only-inserting-a-value-if-the-key-has-no-value
+"""
+
 # MACROS
 
 [[exercises]]
