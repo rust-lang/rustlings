@@ -370,6 +370,36 @@ its internal structure (the `fruits` and `veggies` modules and
 associated constants). It's almost there except for one keyword missing for
 each constant."""
 
+# COLLECTIONS
+
+[[exercises]]
+name = "collections1"
+path = "exercises/collections/vec1.rs"
+mode = "test"
+hint = """
+In Rust, there are two ways to define a Vector.
+
+1. One way is to use the `Vec::new()` function to create a new vector
+  and fill it with the `push()` method.
+
+2. The second way, which is simpler is to use the `vec![]` macro and
+  define your elements inside the square brackets.
+
+Check this chapter: https://doc.rust-lang.org/stable/book/ch08-01-vectors.html
+of the Rust book to learn more.
+"""
+
+[[exercises]]
+name = "collections2"
+path = "exercises/collections/vec2.rs"
+mode = "test"
+hint = """
+Hint 1: `i` is each element from the Vec as they are being iterated.
+  Can you try multiplying this?
+
+Hint 2: Check the suggestion from the compiler error ;)
+"""
+
 # MACROS
 
 [[exercises]]
