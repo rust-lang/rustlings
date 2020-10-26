@@ -8,3 +8,4 @@ exercises/clippy/Cargo.lock
 .idea
 .vscode
 exercises/Cargo.lock
+exercises/Cargo.toml

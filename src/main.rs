@@ -1,4 +1,4 @@
-use crate::exercise::{Exercise, ExerciseList};
+use crate::exercise::{Exercise, ExerciseInfo};
 use crate::run::run;
 use crate::verify::verify;
 use clap::{crate_version, App, Arg, SubCommand};
@@ -19,11 +19,12 @@ use std::time::Duration;
 mod ui;
 
 mod exercise;
+mod manifest;
 mod run;
 mod verify;
 
 fn main() {
-    let app = App::new("rustlings")
+    let matches = App::new("rustlings")
         .version(crate_version!())
         .author("Olivia Hugger, Carol Nichols")
         .about("Rustlings is a collection of small exercises to get you used to writing and reading Rust code")
@@ -53,18 +54,8 @@ fn main() {
                 .alias("h")
                 .about("Returns a hint for the current exercise")
                 .arg(Arg::with_name("name").required(true).index(1)),
-        );
-
-    let matches;
-    #[cfg(feature = "maintainer")]
-    {
-        let app = app.subcommand(SubCommand::with_name("maintainer"));
-        matches = app.get_matches();
-    }
-    #[cfg(not(feature = "maintainer"))]
-    {
-        matches = app.get_matches();
-    }
+        )
+        .get_matches();
 
     if matches.subcommand_name().is_none() {
         println!();
@@ -95,15 +86,8 @@ fn main() {
     }
 
     let toml_str = &fs::read_to_string("info.toml").unwrap();
-    let exercises = toml::from_str::<ExerciseList>(toml_str).unwrap().exercises;
+    let ExerciseInfo { exercises, root } = toml::from_str::<ExerciseInfo>(toml_str).unwrap();
     let verbose = matches.is_present("nocapture");
-
-    #[cfg(feature = "maintainer")]
-    {
-        if matches.subcommand_matches("maintainer").is_some() {
-            maintainer();
-        }
-    }
 
     if let Some(ref matches) = matches.subcommand_matches("run") {
         let name = matches.value_of("name").unwrap();
@@ -133,10 +117,12 @@ fn main() {
     }
 
     if matches.subcommand_matches("verify").is_some() {
-        verify(&exercises, verbose).unwrap_or_else(|_| std::process::exit(1));
+        verify(&exercises, root.as_deref(), verbose).unwrap_or_else(|_| std::process::exit(1));
     }
 
-    if matches.subcommand_matches("watch").is_some() && watch(&exercises, verbose).is_ok() {
+    if matches.subcommand_matches("watch").is_some()
+        && watch(&exercises, root.as_deref(), verbose).is_ok()
+    {
         println!(
             "{emoji} All exercises completed! {emoji}",
             emoji = Emoji("🎉", "★")
@@ -179,7 +165,7 @@ fn spawn_watch_shell(failed_exercise_hint: &Arc<Mutex<Option<String>>>) {
     });
 }
 
-fn watch(exercises: &[Exercise], verbose: bool) -> notify::Result<()> {
+fn watch(exercises: &[Exercise], root: Option<&str>, verbose: bool) -> notify::Result<()> {
     /* Clears the terminal with an ANSI escape code.
     Works in UNIX and newer Windows terminals. */
     fn clear_screen() {
@@ -194,7 +180,7 @@ fn watch(exercises: &[Exercise], verbose: bool) -> notify::Result<()> {
     clear_screen();
 
     let to_owned_hint = |t: &Exercise| t.hint.to_owned();
-    let failed_exercise_hint = match verify(exercises.iter(), verbose) {
+    let failed_exercise_hint = match verify(exercises.iter(), root, verbose) {
         Ok(_) => return Ok(()),
         Err(exercise) => Arc::new(Mutex::new(Some(to_owned_hint(exercise)))),
     };
@@ -209,7 +195,7 @@ fn watch(exercises: &[Exercise], verbose: bool) -> notify::Result<()> {
                             .iter()
                             .skip_while(|e| !filepath.ends_with(&e.path));
                         clear_screen();
-                        match verify(pending_exercises, verbose) {
+                        match verify(pending_exercises, root, verbose) {
                             Ok(_) => return Ok(()),
                             Err(exercise) => {
                                 let mut failed_exercise_hint = failed_exercise_hint.lock().unwrap();
@@ -233,10 +219,4 @@ fn rustc_exists() -> bool {
         .and_then(|mut child| child.wait())
         .map(|status| status.success())
         .unwrap_or(false)
-}
-
-#[cfg(feature = "maintainer")]
-fn maintainer() {
-    let manifest = tooling::generate(&Path::new("exercises"));
-    fs::write("exercises/Cargo.toml", manifest).unwrap();
 }
