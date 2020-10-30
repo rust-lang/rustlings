@@ -1,6 +1,6 @@
 ![crab pet](https://i.imgur.com/LbZJgmm.gif)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-65-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-67-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️ [![Build status](https://badge.buildkite.com/7af93d81dc522c67a1ec8e33ff5705861b1cb36360b774807f.svg)](https://buildkite.com/mokou/rustlings)
@@ -231,6 +231,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/AnnikaCodes"><img src="https://avatars3.githubusercontent.com/u/56906084?v=4" width="100px;" alt=""/><br /><sub><b>Annika</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/pulls?q=is%3Apr+reviewed-by%3AAnnikaCodes" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="https://darnuria.eu"><img src="https://avatars1.githubusercontent.com/u/2827553?v=4" width="100px;" alt=""/><br /><sub><b>Axel Viala</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=darnuria" title="Code">💻</a></td>
+    <td align="center"><a href="https://sazid.github.io"><img src="https://avatars1.githubusercontent.com/u/2370167?v=4" width="100px;" alt=""/><br /><sub><b>Mohammed Sazid Al Rashid</b></sub></a><br /><a href="#content-sazid" title="Content">🖋</a> <a href="https://github.com/rust-lang/rustlings/commits?author=sazid" title="Code">💻</a></td>
   </tr>
 </table>
 
