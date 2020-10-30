@@ -618,6 +618,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "sazid",
+      "name": "Mohammed Sazid Al Rashid",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/2370167?v=4",
+      "profile": "https://sazid.github.io",
+      "contributions": [
+        "content",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
