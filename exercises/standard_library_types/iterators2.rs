@@ -1,5 +1,5 @@
 // iterators2.rs
-// In this module, you'll learn some of unique advantages that iterators can offer.
+// In this module, you'll learn some of the unique advantages that iterators can offer.
 // Step 1. Complete the `capitalize_first` function to pass the first two cases.
 // Step 2. Apply the `capitalize_first` function to a vector of strings.
 //         Ensure that it returns a vector of strings as well.
