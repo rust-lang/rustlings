@@ -54,6 +54,11 @@ fn main() {
                 .about("Returns a hint for the current exercise")
                 .arg(Arg::with_name("name").required(true).index(1)),
         )
+        .subcommand(
+            SubCommand::with_name("list")
+                .alias("l")
+                .about("Lists the exercises available in rustlings")
+        )
         .get_matches();
 
     if matches.subcommand_name().is_none() {
@@ -88,6 +93,9 @@ fn main() {
     let exercises = toml::from_str::<ExerciseList>(toml_str).unwrap().exercises;
     let verbose = matches.is_present("nocapture");
 
+    if matches.subcommand_matches("list").is_some() {
+        exercises.iter().for_each(|e| println!("{}", e.name));
+    }
     if let Some(ref matches) = matches.subcommand_matches("run") {
         let name = matches.value_of("name").unwrap();
 
