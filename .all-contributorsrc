@@ -628,6 +628,15 @@
         "content",
         "code"
       ]
+    },
+    {
+      "login": "seeplusplus",
+      "name": "Caleb Webber",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/17479099?v=4",
+      "profile": "https://codingthemsoftly.com",
+      "contributions": [
+        "maintenance"
+      ]
     }
   ],
   "contributorsPerLine": 8,
