@@ -119,7 +119,12 @@ fn main() {
         verify(&exercises, verbose).unwrap_or_else(|_| std::process::exit(1));
     }
 
-    if matches.subcommand_matches("watch").is_some() && watch(&exercises, verbose).is_ok() {
+    if matches.subcommand_matches("watch").is_some() {
+        if let Err(e) = watch(&exercises, verbose) {
+            println!("Error: Could not watch your progess. Error message was {:?}.", e);
+            println!("Most likely you've run out of disk space or your 'inotify limit' has been reached.");
+            std::process::exit(1);
+        }
         println!(
             "{emoji} All exercises completed! {emoji}",
             emoji = Emoji("🎉", "★")
