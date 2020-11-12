@@ -88,17 +88,17 @@ mod tests {
     }
     #[test]
     fn test_array_out_of_range_positive() {
-        let c: Color = [1000, 10000, 256].try_into();
+        let c: Result<Color, String> = [1000, 10000, 256].try_into();
         assert!(c.is_err());
     }
     #[test]
     fn test_array_out_of_range_negative() {
-        let c: Color = [-10, -256, -1].try_into();
+        let c: Result<Color, String> = [-10, -256, -1].try_into();
         assert!(c.is_err());
     }
     #[test]
     fn test_array_sum() {
-        let c: Color = [-1, 255, 255].try_into();
+        let c: Result<Color, String> = [-1, 255, 255].try_into();
         assert!(c.is_err());
     }
     #[test]
