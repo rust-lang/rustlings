@@ -193,8 +193,8 @@ that you want to end up in the slice.
 
 If you're curious why the first argument of `assert_eq!` does not
 have an ampersand for a reference since the second argument is a
-reference, take a look at the Deref coercions section of the book:
-https://doc.rust-lang.org/book/ch15-02-deref.html"""
+reference, take a look at the Unsize docs:
+https://doc.rust-lang.org/std/marker/trait.Unsize.html"""
 
 [[exercises]]
 name = "primitive_types5"
