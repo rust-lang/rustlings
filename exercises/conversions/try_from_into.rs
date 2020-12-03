@@ -102,7 +102,6 @@ mod tests {
         assert!(c.is_err());
     }
     #[test]
-    #[test]
     fn test_array_correct() {
         let c: Result<Color, String> = [183, 65, 14].try_into();
         assert_eq!(
