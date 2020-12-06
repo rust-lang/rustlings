@@ -1,7 +1,5 @@
 // iterators4.rs
 
-// I AM NOT DONE
-
 pub fn factorial(num: u64) -> u64 {
     // Complete this function to return the factorial of num
     // Do not use:
@@ -11,7 +9,11 @@ pub fn factorial(num: u64) -> u64 {
     // - additional variables
     // For an extra challenge, don't use:
     // - recursion
-    // Execute `rustlings hint iterators4` for hints.
+    // Execute `rustlings hint iterators4` for hints
+    //  Check https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.fold
+    // 4! = 4x3x2x1 = 24
+    // 5! = 5x4x3x2x1 = 120
+    (1..=num).fold(1, |acc, x| acc * x)
 }
 
 #[cfg(test)]
