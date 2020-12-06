@@ -20,6 +20,6 @@ mod tests {
     #[test]
     fn test_array_and_vec_similarity() {
         let (a, v) = array_and_vec();
-        assert!(a.iter().zip(v.iter()).all(|(x, y)| x == y));
+        assert_eq!(a, v[..]);
     }
 }
