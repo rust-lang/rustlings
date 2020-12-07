@@ -71,31 +71,6 @@ Read more about constants under 'Differences Between Variables and Constants' in
 https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html#differences-between-variables-and-constants
 """
 
-# IF
-
-[[exercises]]
-name = "if1"
-path = "exercises/if/if1.rs"
-mode = "test"
-hint = """
-It's possible to do this in one line if you would like!
-Some similar examples from other languages:
-- In C(++) this would be: `a > b ? a : b`
-- In Python this would be:  `a if a > b else b`
-Remember in Rust that:
-- the `if` condition does not need to be surrounded by parentheses
-- `if`/`else` conditionals are expressions
-- Each condition is followed by a `{}` block."""
-
-[[exercises]]
-name = "if2"
-path = "exercises/if/if2.rs"
-mode = "test"
-hint = """
-For that first compiler error, it's important in Rust that each conditional
-block return the same type! To get the tests passing, you will need a couple
-conditions checking different input values."""
-
 # FUNCTIONS
 
 [[exercises]]
@@ -146,6 +121,31 @@ They are not the same. There are two solutions:
 1. Add a `return` ahead of `num * num;`
 2. remove `;`, make it to be `num * num`"""
 
+# IF
+
+[[exercises]]
+name = "if1"
+path = "exercises/if/if1.rs"
+mode = "test"
+hint = """
+It's possible to do this in one line if you would like!
+Some similar examples from other languages:
+- In C(++) this would be: `a > b ? a : b`
+- In Python this would be:  `a if a > b else b`
+Remember in Rust that:
+- the `if` condition does not need to be surrounded by parentheses
+- `if`/`else` conditionals are expressions
+- Each condition is followed by a `{}` block."""
+
+[[exercises]]
+name = "if2"
+path = "exercises/if/if2.rs"
+mode = "test"
+hint = """
+For that first compiler error, it's important in Rust that each conditional
+block return the same type! To get the tests passing, you will need a couple
+conditions checking different input values."""
+
 # TEST 1
 
 [[exercises]]
@@ -153,6 +153,62 @@ name = "quiz1"
 path = "exercises/quiz1.rs"
 mode = "test"
 hint = "No hints this time ;)"
+
+# MOVE SEMANTICS
+
+[[exercises]]
+name = "move_semantics1"
+path = "exercises/move_semantics/move_semantics1.rs"
+mode = "compile"
+hint = """
+So you've got the "cannot borrow immutable local variable `vec1` as mutable" error on line 13,
+right? The fix for this is going to be adding one keyword, and the addition is NOT on line 13
+where the error is."""
+
+[[exercises]]
+name = "move_semantics2"
+path = "exercises/move_semantics/move_semantics2.rs"
+mode = "compile"
+hint = """
+So `vec0` is being *moved* into the function `fill_vec` when we call it on
+line 10, which means it gets dropped at the end of `fill_vec`, which means we
+can't use `vec0` again on line 13 (or anywhere else in `main` after the
+`fill_vec` call for that matter). We could fix this in a few ways, try them
+all!
+1. Make another, separate version of the data that's in `vec0` and pass that
+   to `fill_vec` instead.
+2. Make `fill_vec` borrow its argument instead of taking ownership of it,
+   and then copy the data within the function in order to return an owned
+   `Vec<i32>`
+3. Make `fill_vec` *mutably* borrow its argument (which will need to be
+   mutable), modify it directly, then not return anything. Then you can get rid
+   of `vec1` entirely -- note that this will change what gets printed by the
+   first `println!`"""
+
+[[exercises]]
+name = "move_semantics3"
+path = "exercises/move_semantics/move_semantics3.rs"
+mode = "compile"
+hint = """
+The difference between this one and the previous ones is that the first line
+of `fn fill_vec` that had `let mut vec = vec;` is no longer there. You can,
+instead of adding that line back, add `mut` in one place that will change
+an existing binding to be a mutable binding instead of an immutable one :)"""
+
+[[exercises]]
+name = "move_semantics4"
+path = "exercises/move_semantics/move_semantics4.rs"
+mode = "compile"
+hint = """
+Stop reading whenever you feel like you have enough direction :) Or try
+doing one step and then fixing the compiler errors that result!
+So the end goal is to:
+   - get rid of the first line in main that creates the new vector
+   - so then `vec0` doesn't exist, so we can't pass it to `fill_vec`
+   - we don't want to pass anything to `fill_vec`, so its signature should
+     reflect that it does not take any arguments
+   - since we're not creating a new vec in `main` anymore, we need to create
+     a new vec in `fill_vec`, similarly to the way we did in `main`"""
 
 # PRIMITIVE TYPES
 
@@ -255,6 +311,51 @@ For calculate_transport_fees: Bigger is more expensive usually, we don't have si
 
 Have a look in The Book, to find out more about method implementations: https://doc.rust-lang.org/book/ch05-03-method-syntax.html"""
 
+# ENUMS
+
+[[exercises]]
+name = "enums1"
+path = "exercises/enums/enums1.rs"
+mode = "compile"
+hint = """
+Hint: The declaration of the enumeration type has not been defined yet."""
+
+[[exercises]]
+name = "enums2"
+path = "exercises/enums/enums2.rs"
+mode = "compile"
+hint = """
+Hint: you can create enumerations that have different variants with different types
+such as no data, anonymous structs, a single string, tuples, ...etc"""
+
+[[exercises]]
+name = "enums3"
+path = "exercises/enums/enums3.rs"
+mode = "test"
+hint = "No hints this time ;)"
+
+# MODULES
+
+[[exercises]]
+name = "modules1"
+path = "exercises/modules/modules1.rs"
+mode = "compile"
+hint = """
+Everything is private in Rust by default-- but there's a keyword we can use
+to make something public! The compiler error should point to the thing that
+needs to be public."""
+
+[[exercises]]
+name = "modules2"
+path = "exercises/modules/modules2.rs"
+mode = "compile"
+hint = """
+The delicious_snacks module is trying to present an external
+interface (the `fruit` and `veggie` constants) that is different than
+its internal structure (the `fruits` and `veggies` modules and
+associated constants). It's almost there except for one keyword missing for
+each constant."""
+
 # STRINGS
 
 [[exercises]]
@@ -285,248 +386,6 @@ name = "quiz2"
 path = "exercises/quiz2.rs"
 mode = "compile"
 hint = "No hints this time ;)"
-
-# ENUMS
-
-[[exercises]]
-name = "enums1"
-path = "exercises/enums/enums1.rs"
-mode = "compile"
-hint = """
-Hint: The declaration of the enumeration type has not been defined yet."""
-
-[[exercises]]
-name = "enums2"
-path = "exercises/enums/enums2.rs"
-mode = "compile"
-hint = """
-Hint: you can create enumerations that have different variants with different types
-such as no data, anonymous structs, a single string, tuples, ...etc"""
-
-[[exercises]]
-name = "enums3"
-path = "exercises/enums/enums3.rs"
-mode = "test"
-hint = "No hints this time ;)"
-
-# TESTS
-
-[[exercises]]
-name = "tests1"
-path = "exercises/tests/tests1.rs"
-mode = "test"
-hint = """
-You don't even need to write any code to test -- you can just test values and run that, even
-though you wouldn't do that in real life :) `assert!` is a macro that needs an argument.
-Depending on the value of the argument, `assert!` will do nothing (in which case the test will
-pass) or `assert!` will panic (in which case the test will fail). So try giving different values
-to `assert!` and see which ones compile, which ones pass, and which ones fail :)"""
-
-[[exercises]]
-name = "tests2"
-path = "exercises/tests/tests2.rs"
-mode = "test"
-hint = """
-Like the previous exercise, you don't need to write any code to get this test to compile and
-run. `assert_eq!` is a macro that takes two arguments and compares them. Try giving it two
-values that are equal! Try giving it two arguments that are different! Try giving it two values
-that are of different types! Try switching which argument comes first and which comes second!"""
-
-[[exercises]]
-name = "tests3"
-path = "exercises/tests/tests3.rs"
-mode = "test"
-hint = """
-You can call a function right where you're passing arguments to `assert!` -- so you could do
-something like `assert!(having_fun())`. If you want to check that you indeed get false, you
-can negate the result of what you're doing using `!`, like `assert!(!having_fun())`."""
-
-# TEST 3
-
-[[exercises]]
-name = "quiz3"
-path = "exercises/quiz3.rs"
-mode = "test"
-hint = "No hints this time ;)"
-
-# MODULES
-
-[[exercises]]
-name = "modules1"
-path = "exercises/modules/modules1.rs"
-mode = "compile"
-hint = """
-Everything is private in Rust by default-- but there's a keyword we can use
-to make something public! The compiler error should point to the thing that
-needs to be public."""
-
-[[exercises]]
-name = "modules2"
-path = "exercises/modules/modules2.rs"
-mode = "compile"
-hint = """
-The delicious_snacks module is trying to present an external
-interface (the `fruit` and `veggie` constants) that is different than
-its internal structure (the `fruits` and `veggies` modules and
-associated constants). It's almost there except for one keyword missing for
-each constant."""
-
-# COLLECTIONS
-
-[[exercises]]
-name = "collections1"
-path = "exercises/collections/vec1.rs"
-mode = "test"
-hint = """
-In Rust, there are two ways to define a Vector.
-
-1. One way is to use the `Vec::new()` function to create a new vector
-  and fill it with the `push()` method.
-
-2. The second way, which is simpler is to use the `vec![]` macro and
-  define your elements inside the square brackets.
-
-Check this chapter: https://doc.rust-lang.org/stable/book/ch08-01-vectors.html
-of the Rust book to learn more.
-"""
-
-[[exercises]]
-name = "collections2"
-path = "exercises/collections/vec2.rs"
-mode = "test"
-hint = """
-Hint 1: `i` is each element from the Vec as they are being iterated.
-  Can you try multiplying this?
-
-Hint 2: Check the suggestion from the compiler error ;)
-"""
-
-[[exercises]]
-name = "collections3"
-path = "exercises/collections/hashmap1.rs"
-mode = "test"
-hint = """
-Hint 1: Take a look at the return type of the function to figure out
-  the type for the `basket`.
-
-Hint 2: Number of fruits should be at least 5. And you have to put
-  at least three different types of fruits.
-"""
-
-[[exercises]]
-name = "collections4"
-path = "exercises/collections/hashmap2.rs"
-mode = "test"
-hint = """
-Use the `entry()` and `or_insert()` methods of `HashMap` to achieve this.
-
-Learn more at https://doc.rust-lang.org/stable/book/ch08-03-hash-maps.html#only-inserting-a-value-if-the-key-has-no-value
-"""
-
-# MACROS
-
-[[exercises]]
-name = "macros1"
-path = "exercises/macros/macros1.rs"
-mode = "compile"
-hint = """
-When you call a macro, you need to add something special compared to a
-regular function call. If you're stuck, take a look at what's inside
-`my_macro`."""
-
-[[exercises]]
-name = "macros2"
-path = "exercises/macros/macros2.rs"
-mode = "compile"
-hint = """
-Macros don't quite play by the same rules as the rest of Rust, in terms of
-what's available where.
-
-Unlike other things in Rust, the order of "where you define a macro" versus
-"where you use it" actually matters."""
-
-[[exercises]]
-name = "macros3"
-path = "exercises/macros/macros3.rs"
-mode = "compile"
-hint = """
-In order to use a macro outside of its module, you need to do something
-special to the module to lift the macro out into its parent.
-
-The same trick also works on "extern crate" statements for crates that have
-exported macros, if you've seen any of those around."""
-
-[[exercises]]
-name = "macros4"
-path = "exercises/macros/macros4.rs"
-mode = "compile"
-hint = """
-You only need to add a single character to make this compile.
-The way macros are written, it wants to see something between each
-"macro arm", so it can separate them."""
-# TEST 4
-
-[[exercises]]
-name = "quiz4"
-path = "exercises/quiz4.rs"
-mode = "test"
-hint = "No hints this time ;)"
-
-# MOVE SEMANTICS
-
-[[exercises]]
-name = "move_semantics1"
-path = "exercises/move_semantics/move_semantics1.rs"
-mode = "compile"
-hint = """
-So you've got the "cannot borrow immutable local variable `vec1` as mutable" error on line 13,
-right? The fix for this is going to be adding one keyword, and the addition is NOT on line 13
-where the error is."""
-
-[[exercises]]
-name = "move_semantics2"
-path = "exercises/move_semantics/move_semantics2.rs"
-mode = "compile"
-hint = """
-So `vec0` is being *moved* into the function `fill_vec` when we call it on
-line 10, which means it gets dropped at the end of `fill_vec`, which means we
-can't use `vec0` again on line 13 (or anywhere else in `main` after the
-`fill_vec` call for that matter). We could fix this in a few ways, try them
-all!
-1. Make another, separate version of the data that's in `vec0` and pass that
-   to `fill_vec` instead.
-2. Make `fill_vec` borrow its argument instead of taking ownership of it,
-   and then copy the data within the function in order to return an owned
-   `Vec<i32>`
-3. Make `fill_vec` *mutably* borrow its argument (which will need to be
-   mutable), modify it directly, then not return anything. Then you can get rid
-   of `vec1` entirely -- note that this will change what gets printed by the
-   first `println!`"""
-
-[[exercises]]
-name = "move_semantics3"
-path = "exercises/move_semantics/move_semantics3.rs"
-mode = "compile"
-hint = """
-The difference between this one and the previous ones is that the first line
-of `fn fill_vec` that had `let mut vec = vec;` is no longer there. You can,
-instead of adding that line back, add `mut` in one place that will change
-an existing binding to be a mutable binding instead of an immutable one :)"""
-
-[[exercises]]
-name = "move_semantics4"
-path = "exercises/move_semantics/move_semantics4.rs"
-mode = "compile"
-hint = """
-Stop reading whenever you feel like you have enough direction :) Or try
-doing one step and then fixing the compiler errors that result!
-So the end goal is to:
-   - get rid of the first line in main that creates the new vector
-   - so then `vec0` doesn't exist, so we can't pass it to `fill_vec`
-   - we don't want to pass anything to `fill_vec`, so its signature should
-     reflect that it does not take any arguments
-   - since we're not creating a new vec in `main` anymore, we need to create
-     a new vec in `fill_vec`, similarly to the way we did in `main`"""
 
 # ERROR HANDLING
 
@@ -607,6 +466,40 @@ get a warning if you don't handle a `Result` that you get in your
 function. Read more about that in the `std::result` module docs:
 https://doc.rust-lang.org/std/result/#results-must-be-used"""
 
+# Generics
+
+[[exercises]]
+name = "generics1"
+path = "exercises/generics/generics1.rs"
+mode = "compile"
+hint = """
+Vectors in rust make use of generics to create dynamically sized arrays of any type.
+You need to tell the compiler what type we are pushing onto this vector."""
+
+[[exercises]]
+name = "generics2"
+path = "exercises/generics/generics2.rs"
+mode = "test"
+hint = """
+Currently we are wrapping only values of type 'u32'.
+Maybe we could update the explicit references to this data type somehow?
+
+If you are still stuck https://doc.rust-lang.org/stable/book/ch10-01-syntax.html#in-method-definitions
+"""
+
+[[exercises]]
+name = "generics3"
+path = "exercises/generics/generics3.rs"
+mode = "test"
+hint = """
+To find the best solution to this challenge you're going to need to think back to your
+knowledge of traits, specifically Trait Bound Syntax -  you may also need this: "use std::fmt::Display;"
+
+This is definitely harder than the last two exercises! You need to think about not only making the
+ReportCard struct generic, but also the correct property - you will need to change the implementation
+of the struct slightly too...you can do it!
+"""
+
 # OPTIONS / RESULTS
 
 [[exercises]]
@@ -649,21 +542,67 @@ hint = """
 It should be doing some checking, returning an `Err` result if those checks fail, and only
 returning an `Ok` result if those checks determine that everything is... okay :)"""
 
-#  CLIPPY
+# TRAITS
 
 [[exercises]]
-name = "clippy1"
-path = "exercises/clippy/clippy1.rs"
-mode = "clippy"
+name = "traits1"
+path = "exercises/traits/traits1.rs"
+mode = "test"
 hint = """
-Floating point calculations are usually imprecise, so asking if two values are exactly equal is asking for trouble"""
+A discussion about Traits in Rust can be found at:
+https://doc.rust-lang.org/book/ch10-02-traits.html
+"""
 
 [[exercises]]
-name = "clippy2"
-path = "exercises/clippy/clippy2.rs"
-mode = "clippy"
+name = "traits2"
+path = "exercises/traits/traits2.rs"
+mode = "test"
 hint = """
-`for` loops over Option values are more clearly expressed as an `if let`"""
+Notice how the trait takes ownership of 'self',and returns `Self'.
+Try mutating the incoming string vector.
+
+Vectors provide suitable methods for adding an element at the end. See
+the documentation at: https://doc.rust-lang.org/std/vec/struct.Vec.html"""
+
+# TESTS
+
+[[exercises]]
+name = "tests1"
+path = "exercises/tests/tests1.rs"
+mode = "test"
+hint = """
+You don't even need to write any code to test -- you can just test values and run that, even
+though you wouldn't do that in real life :) `assert!` is a macro that needs an argument.
+Depending on the value of the argument, `assert!` will do nothing (in which case the test will
+pass) or `assert!` will panic (in which case the test will fail). So try giving different values
+to `assert!` and see which ones compile, which ones pass, and which ones fail :)"""
+
+[[exercises]]
+name = "tests2"
+path = "exercises/tests/tests2.rs"
+mode = "test"
+hint = """
+Like the previous exercise, you don't need to write any code to get this test to compile and
+run. `assert_eq!` is a macro that takes two arguments and compares them. Try giving it two
+values that are equal! Try giving it two arguments that are different! Try giving it two values
+that are of different types! Try switching which argument comes first and which comes second!"""
+
+[[exercises]]
+name = "tests3"
+path = "exercises/tests/tests3.rs"
+mode = "test"
+hint = """
+You can call a function right where you're passing arguments to `assert!` -- so you could do
+something like `assert!(having_fun())`. If you want to check that you indeed get false, you
+can negate the result of what you're doing using `!`, like `assert!(!having_fun())`."""
+
+# TEST 3
+
+[[exercises]]
+name = "quiz3"
+path = "exercises/quiz3.rs"
+mode = "test"
+hint = "No hints this time ;)"
 
 # STANDARD LIBRARY TYPES
 
@@ -696,27 +635,6 @@ inside the loop but still in the main thread.
 
 `child_numbers` should be a clone of the Arc of the numbers instead of a
 thread-local copy of the numbers."""
-
-[[exercises]]
-name = "iterators1"
-path = "exercises/standard_library_types/iterators1.rs"
-mode = "compile"
-hint = """
-Step 1:
-We need to apply something to the collection `my_fav_fruits` before we start to go through
-it. What could that be? Take a look at the struct definition for a vector for inspiration:
-https://doc.rust-lang.org/std/vec/struct.Vec.html.
-
-
-Step 2 & step 2.1:
-Very similar to the lines above and below. You've got this!
-
-
-Step 3:
-An iterator goes through all elements in a collection, but what if we've run out of
-elements? What should we expect here? If you're stuck, take a look at 
-https://doc.rust-lang.org/std/iter/trait.Iterator.html for some ideas.
-"""
 
 [[exercises]]
 name = "iterators2"
@@ -761,62 +679,6 @@ a mutable variable. Or, you might write code utilizing recursion
 and a match clause. In Rust you can take another functional
 approach, computing the factorial elegantly with ranges and iterators."""
 
-# TRAITS
-
-[[exercises]]
-name = "traits1"
-path = "exercises/traits/traits1.rs"
-mode = "test"
-hint = """
-A discussion about Traits in Rust can be found at:
-https://doc.rust-lang.org/book/ch10-02-traits.html
-"""
-
-[[exercises]]
-name = "traits2"
-path = "exercises/traits/traits2.rs"
-mode = "test"
-hint = """
-Notice how the trait takes ownership of 'self',and returns `Self'.
-Try mutating the incoming string vector.
-
-Vectors provide suitable methods for adding an element at the end. See
-the documentation at: https://doc.rust-lang.org/std/vec/struct.Vec.html"""
-
-# Generics
-
-[[exercises]]
-name = "generics1"
-path = "exercises/generics/generics1.rs"
-mode = "compile"
-hint = """
-Vectors in rust make use of generics to create dynamically sized arrays of any type.
-You need to tell the compiler what type we are pushing onto this vector."""
-
-[[exercises]]
-name = "generics2"
-path = "exercises/generics/generics2.rs"
-mode = "test"
-hint = """
-Currently we are wrapping only values of type 'u32'.
-Maybe we could update the explicit references to this data type somehow?
-
-If you are still stuck https://doc.rust-lang.org/stable/book/ch10-01-syntax.html#in-method-definitions
-"""
-
-[[exercises]]
-name = "generics3"
-path = "exercises/generics/generics3.rs"
-mode = "test"
-hint = """
-To find the best solution to this challenge you're going to need to think back to your
-knowledge of traits, specifically Trait Bound Syntax -  you may also need this: "use std::fmt::Display;"
-
-This is definitely harder than the last two exercises! You need to think about not only making the
-ReportCard struct generic, but also the correct property - you will need to change the implementation
-of the struct slightly too...you can do it!
-"""
-
 # THREADS
 
 [[exercises]]
@@ -855,6 +717,72 @@ answers and don't understand why they work and yours doesn't.
 If you've learned from the sample solutions, I encourage you to come
 back to this exercise and try it again in a few days to reinforce
 what you've learned :)"""
+
+# MACROS
+
+[[exercises]]
+name = "macros1"
+path = "exercises/macros/macros1.rs"
+mode = "compile"
+hint = """
+When you call a macro, you need to add something special compared to a
+regular function call. If you're stuck, take a look at what's inside
+`my_macro`."""
+
+[[exercises]]
+name = "macros2"
+path = "exercises/macros/macros2.rs"
+mode = "compile"
+hint = """
+Macros don't quite play by the same rules as the rest of Rust, in terms of
+what's available where.
+
+Unlike other things in Rust, the order of "where you define a macro" versus
+"where you use it" actually matters."""
+
+[[exercises]]
+name = "macros3"
+path = "exercises/macros/macros3.rs"
+mode = "compile"
+hint = """
+In order to use a macro outside of its module, you need to do something
+special to the module to lift the macro out into its parent.
+
+The same trick also works on "extern crate" statements for crates that have
+exported macros, if you've seen any of those around."""
+
+[[exercises]]
+name = "macros4"
+path = "exercises/macros/macros4.rs"
+mode = "compile"
+hint = """
+You only need to add a single character to make this compile.
+The way macros are written, it wants to see something between each
+"macro arm", so it can separate them."""
+
+# TEST 4
+
+[[exercises]]
+name = "quiz4"
+path = "exercises/quiz4.rs"
+mode = "test"
+hint = "No hints this time ;)"
+
+#  CLIPPY
+
+[[exercises]]
+name = "clippy1"
+path = "exercises/clippy/clippy1.rs"
+mode = "clippy"
+hint = """
+Floating point calculations are usually imprecise, so asking if two values are exactly equal is asking for trouble"""
+
+[[exercises]]
+name = "clippy2"
+path = "exercises/clippy/clippy2.rs"
+mode = "clippy"
+hint = """
+`for` loops over Option values are more clearly expressed as an `if let`"""
 
 # TYPE CONVERSIONS
 
