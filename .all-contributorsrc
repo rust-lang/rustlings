@@ -637,6 +637,15 @@
       "contributions": [
         "maintenance"
       ]
+    },
+    {
+      "login": "pcn",
+      "name": "Peter N",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/1056756?v=4",
+      "profile": "https://github.com/pcn",
+      "contributions": [
+        "maintenance"
+      ]
     }
   ],
   "contributorsPerLine": 8,
