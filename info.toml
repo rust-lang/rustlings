@@ -356,6 +356,52 @@ its internal structure (the `fruits` and `veggies` modules and
 associated constants). It's almost there except for one keyword missing for
 each constant."""
 
+# COLLECTIONS
+
+[[exercises]]
+name = "collections1"
+path = "exercises/collections/vec1.rs"
+mode = "test"
+hint = """
+In Rust, there are two ways to define a Vector.
+1. One way is to use the `Vec::new()` function to create a new vector
+  and fill it with the `push()` method.
+2. The second way, which is simpler is to use the `vec![]` macro and
+  define your elements inside the square brackets.
+Check this chapter: https://doc.rust-lang.org/stable/book/ch08-01-vectors.html
+of the Rust book to learn more.
+"""
+
+[[exercises]]
+name = "collections2"
+path = "exercises/collections/vec2.rs"
+mode = "test"
+hint = """
+Hint 1: `i` is each element from the Vec as they are being iterated.
+  Can you try multiplying this?
+Hint 2: Check the suggestion from the compiler error ;)
+"""
+
+[[exercises]]
+name = "collections3"
+path = "exercises/collections/hashmap1.rs"
+mode = "test"
+hint = """
+Hint 1: Take a look at the return type of the function to figure out
+  the type for the `basket`.
+Hint 2: Number of fruits should be at least 5. And you have to put
+  at least three different types of fruits.
+"""
+
+[[exercises]]
+name = "collections4"
+path = "exercises/collections/hashmap2.rs"
+mode = "test"
+hint = """
+Use the `entry()` and `or_insert()` methods of `HashMap` to achieve this.
+Learn more at https://doc.rust-lang.org/stable/book/ch08-03-hash-maps.html#only-inserting-a-value-if-the-key-has-no-value
+"""
+
 # STRINGS
 
 [[exercises]]
@@ -635,6 +681,23 @@ inside the loop but still in the main thread.
 
 `child_numbers` should be a clone of the Arc of the numbers instead of a
 thread-local copy of the numbers."""
+
+[[exercises]]
+name = "iterators1"
+path = "exercises/standard_library_types/iterators1.rs"
+mode = "compile"
+hint = """
+Step 1:
+We need to apply something to the collection `my_fav_fruits` before we start to go through
+it. What could that be? Take a look at the struct definition for a vector for inspiration:
+https://doc.rust-lang.org/std/vec/struct.Vec.html.
+Step 2 & step 2.1:
+Very similar to the lines above and below. You've got this!
+Step 3:
+An iterator goes through all elements in a collection, but what if we've run out of
+elements? What should we expect here? If you're stuck, take a look at 
+https://doc.rust-lang.org/std/iter/trait.Iterator.html for some ideas.
+"""
 
 [[exercises]]
 name = "iterators2"
