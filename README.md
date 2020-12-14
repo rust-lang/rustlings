@@ -56,12 +56,12 @@ To install Rustlings. Same as on MacOS/Linux, you will have access to the `rustl
 
 ## Manually
 
-Basically: Clone the repository, checkout to the latest tag, run `cargo install`.
+Basically: Clone the repository, checkout to [the latest tag](https://github.com/rust-lang/rustlings/releases/latest), run `cargo install`.
 
 ```bash
 git clone https://github.com/rust-lang/rustlings
 cd rustlings
-git checkout tags/4.2.0 # or whatever the latest version is (find out at https://github.com/rust-lang/rustlings/releases/latest)
+git checkout tags/$(git tag | tail -1)
 cargo install --force --path .
 ```
 
