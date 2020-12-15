@@ -646,6 +646,15 @@
       "contributions": [
         "maintenance"
       ]
+    },
+    {
+      "login": "seancad",
+      "name": "seancad",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/47405611?v=4",
+      "profile": "https://github.com/seancad",
+      "contributions": [
+        "maintenance"
+      ]
     }
   ],
   "contributorsPerLine": 8,
