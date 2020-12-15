@@ -1,6 +1,6 @@
 ![crab pet](https://i.imgur.com/LbZJgmm.gif)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-69-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-70-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️
@@ -234,6 +234,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://sazid.github.io"><img src="https://avatars1.githubusercontent.com/u/2370167?v=4" width="100px;" alt=""/><br /><sub><b>Mohammed Sazid Al Rashid</b></sub></a><br /><a href="#content-sazid" title="Content">🖋</a> <a href="https://github.com/rust-lang/rustlings/commits?author=sazid" title="Code">💻</a></td>
     <td align="center"><a href="https://codingthemsoftly.com"><img src="https://avatars1.githubusercontent.com/u/17479099?v=4" width="100px;" alt=""/><br /><sub><b>Caleb Webber</b></sub></a><br /><a href="#maintenance-seeplusplus" title="Maintenance">🚧</a></td>
     <td align="center"><a href="https://github.com/pcn"><img src="https://avatars2.githubusercontent.com/u/1056756?v=4" width="100px;" alt=""/><br /><sub><b>Peter N</b></sub></a><br /><a href="#maintenance-pcn" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://github.com/seancad"><img src="https://avatars1.githubusercontent.com/u/47405611?v=4" width="100px;" alt=""/><br /><sub><b>seancad</b></sub></a><br /><a href="#maintenance-seancad" title="Maintenance">🚧</a></td>
   </tr>
 </table>
 
