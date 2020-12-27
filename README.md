@@ -46,9 +46,9 @@ Then, you can run:
 Start-BitsTransfer -Source https://git.io/rustlings-win -Destination $env:TMP/install_rustlings.ps1; Unblock-File $env:TMP/install_rustlings.ps1; Invoke-Expression $env:TMP/install_rustlings.ps1
 ```
 
-When you get a permission denied message then you have to exclude the directory where you placed the rustlings in your virus-scanner.
-
 To install Rustlings. Same as on MacOS/Linux, you will have access to the `rustlings` command after it.
+
+When you get a permission denied message then you have to exclude the directory where you placed the rustlings in your virus-scanner.
 
 ## Browser:
 
