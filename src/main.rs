@@ -25,7 +25,7 @@ mod verify;
 fn main() {
     let matches = App::new("rustlings")
         .version(crate_version!())
-        .author("Olivia Hugger, Carol Nichols")
+        .author("Marisa, Carol Nichols")
         .about("Rustlings is a collection of small exercises to get you used to writing and reading Rust code")
         .arg(
             Arg::with_name("nocapture")
