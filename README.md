@@ -118,6 +118,24 @@ cargo uninstall rustlings
 rm -r rustlings/ # or on Windows: rmdir /s rustlings
 ```
 
+## Uninstalling Rustlings
+
+If you want to remove Rustlings from your system, there's two steps. First, you'll need to remove the exercises folder that the install script created
+for you:
+
+``` bash
+rm -rf rustlings # or your custom folder name, if you chose and or renamed it
+```
+
+Second, since Rustlings got installed via `cargo install`, it's only reasonable to assume that you can also remove it using Cargo, and
+exactly that is the case. Run `cargo uninstall` to remove the `rustlings` binary:
+
+``` bash
+cargo uninstall rustlings
+```
+
+Now you should be done!
+
 ## Completion
 
 Rustlings isn't done; there are a couple of sections that are very experimental and don't have proper documentation. These include:
