@@ -6,7 +6,7 @@ started, here's a couple of notes about how Rustlings operates:
 
 1. The central concept behind Rustlings is that you solve exercises. These
    exercises usually have some sort of syntax error in them, which will cause
-   them to fail compliation or testing. Sometimes there's a logic error instead
+   them to fail compilation or testing. Sometimes there's a logic error instead
    of a syntax error. No matter what error, it's your job to find it and fix it!
    You'll know when you fixed it because then, the exercise will compile and
    Rustlings will be able to move on to the next exercise.
