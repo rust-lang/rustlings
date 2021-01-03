@@ -48,6 +48,8 @@ Start-BitsTransfer -Source https://git.io/rustlings-win -Destination $env:TMP/in
 
 To install Rustlings. Same as on MacOS/Linux, you will have access to the `rustlings` command after it.
 
+When you get a permission denied message then you have to exclude the directory where you placed the rustlings in your virus-scanner
+
 ## Browser:
 
 [Run on Repl.it](https://repl.it/github/rust-lang/rustlings)
@@ -61,7 +63,7 @@ Basically: Clone the repository, checkout to the latest tag, run `cargo install`
 ```bash
 git clone https://github.com/rust-lang/rustlings
 cd rustlings
-git checkout tags/4.2.0 # or whatever the latest version is (find out at https://github.com/rust-lang/rustlings/releases/latest)
+git checkout tags/4.3.0 # or whatever the latest version is (find out at https://github.com/rust-lang/rustlings/releases/latest)
 cargo install --force --path .
 ```
 
@@ -117,6 +119,24 @@ If you'd like to uninstall Rustlings, you can do so by invoking cargo and removi
 cargo uninstall rustlings
 rm -r rustlings/ # or on Windows: rmdir /s rustlings
 ```
+
+## Uninstalling Rustlings
+
+If you want to remove Rustlings from your system, there's two steps. First, you'll need to remove the exercises folder that the install script created
+for you:
+
+``` bash
+rm -rf rustlings # or your custom folder name, if you chose and or renamed it
+```
+
+Second, since Rustlings got installed via `cargo install`, it's only reasonable to assume that you can also remove it using Cargo, and
+exactly that is the case. Run `cargo uninstall` to remove the `rustlings` binary:
+
+``` bash
+cargo uninstall rustlings
+```
+
+Now you should be done!
 
 ## Completion
 
