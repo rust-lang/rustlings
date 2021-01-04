@@ -575,8 +575,7 @@ https://doc.rust-lang.org/rust-by-example/flow_control/while_let.html
 
 Remember that Options can be stacked in if let and while let.
 For example: Some(Some(variable)) = variable2
-
-
+Also see Option::flatten
 """
 
 [[exercises]]
