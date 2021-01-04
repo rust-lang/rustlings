@@ -655,6 +655,15 @@
       "contributions": [
         "maintenance"
       ]
+    },
+    {
+      "login": "wsh",
+      "name": "Will Hayworth",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/181174?v=4",
+      "profile": "http://willhayworth.com",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
