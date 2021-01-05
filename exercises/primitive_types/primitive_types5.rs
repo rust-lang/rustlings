@@ -2,8 +2,6 @@
 // Destructure the `cat` tuple so that the println will work.
 // Execute `rustlings hint primitive_types5` for hints!
 
-// I AM NOT DONE
-
 fn main() {
     let cat = ("Furry McFurson", 3.5);
     let (name, age) = cat;
