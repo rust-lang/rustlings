@@ -664,6 +664,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "chrizel",
+      "name": "Christian Zeller",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/20802?v=4",
+      "profile": "https://github.com/chrizel",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
