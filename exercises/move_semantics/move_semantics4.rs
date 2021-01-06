@@ -18,7 +18,7 @@ fn main() {
     println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1);
 }
 
-// `fill_vec()` no longer take `vec: Vec<i32>` as argument
+// `fill_vec()` no longer takes `vec: Vec<i32>` as argument
 fn fill_vec() -> Vec<i32> {
     let mut vec = vec;
 
