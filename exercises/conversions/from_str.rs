@@ -82,4 +82,16 @@ mod tests {
     fn missing_name_and_invalid_age() {
         ",one".parse::<Person>().unwrap();
     }
+
+    #[test]
+    #[should_panic]
+    fn trailing_comma() {
+        "John,32,".parse::<Person>().unwrap();
+    }
+
+    #[test]
+    #[should_panic]
+    fn trailing_comma_and_some_string() {
+        "John,32,man".parse::<Person>().unwrap();
+    }
 }
