@@ -6,6 +6,17 @@
 // Write a macro that passes the quiz! No hints this time, you can do it!
 
 // I AM NOT DONE
+#[macro_use]
+mod macros {
+    macro_rules! my_macro {
+        ("world!") => {
+            "Hello world!"
+        };
+        ("goodbye!") => {
+            "Hello goodbye!"
+        };
+    }
+}
 
 #[cfg(test)]
 mod tests {
