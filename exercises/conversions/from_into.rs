@@ -37,6 +37,18 @@ impl Default for Person {
 
 impl From<&str> for Person {
     fn from(s: &str) -> Person {
+        let person: Vec<&str> = s.split(",").collect();
+
+        match person.len() {
+            2 => match person[0].to_owned().len() {
+                0 => Err(String::from("Error")),
+                _ => Ok(Person {
+                    name: person[0].to_owned(),
+                    age: person[1].parse::<usize>().unwrap(),
+                }),
+            },
+            _ => Err(String::from("Error")),
+        }
     }
 }
 
