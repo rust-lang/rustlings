@@ -28,7 +28,6 @@ mod tests {
 
     #[test]
     fn tuple_structs() {
-        // TODO: Instantiate a tuple struct!
         let green = ColorTupleStruct(String::from("green"), String::from("#00FF00"));
 
         assert_eq!(green.0, "green");
@@ -37,7 +36,6 @@ mod tests {
 
     #[test]
     fn unit_structs() {
-        // TODO: Instantiate a unit struct!
         let unit_struct = UnitStruct;
         let message = format!("{:?}s are fun!", unit_struct);
 
