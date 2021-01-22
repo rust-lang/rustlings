@@ -673,6 +673,16 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "jfchevrette",
+      "name": "Jean-Francois Chevrette",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3001?v=4",
+      "profile": "https://github.com/jfchevrette",
+      "contributions": [
+        "content",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
