@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-72-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-73-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️
@@ -249,6 +249,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/seancad"><img src="https://avatars1.githubusercontent.com/u/47405611?v=4?s=100" width="100px;" alt=""/><br /><sub><b>seancad</b></sub></a><br /><a href="#maintenance-seancad" title="Maintenance">🚧</a></td>
     <td align="center"><a href="http://willhayworth.com"><img src="https://avatars3.githubusercontent.com/u/181174?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Will Hayworth</b></sub></a><br /><a href="#content-wsh" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/chrizel"><img src="https://avatars3.githubusercontent.com/u/20802?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Christian Zeller</b></sub></a><br /><a href="#content-chrizel" title="Content">🖋</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/jfchevrette"><img src="https://avatars.githubusercontent.com/u/3001?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jean-Francois Chevrette</b></sub></a><br /><a href="#content-jfchevrette" title="Content">🖋</a> <a href="https://github.com/rust-lang/rustlings/commits?author=jfchevrette" title="Code">💻</a></td>
   </tr>
 </table>
 
