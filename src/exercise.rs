@@ -232,6 +232,16 @@ path = "{}.rs""#,
 
         State::Pending(context)
     }
+
+    // Check that the exercise looks to be solved using self.state()
+    // This is not the best way to check since
+    // the user can just remove the "I AM NOT DONE" string fromm the file
+    // without actually having solved anything.
+    // The only other way to truly check this would to compile and run
+    // the exercise; which would be both costly and counterintuitive
+    pub fn looks_done(&self) -> bool {
+        self.state() == State::Done
+    }
 }
 
 impl Display for Exercise {

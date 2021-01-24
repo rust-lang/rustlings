@@ -7,7 +7,7 @@ use notify::DebouncedEvent;
 use notify::{RecommendedWatcher, RecursiveMode, Watcher};
 use std::ffi::OsStr;
 use std::fs;
-use std::io;
+use std::io::{self, prelude::*};
 use std::path::Path;
 use std::process::{Command, Stdio};
 use std::sync::mpsc::channel;
@@ -58,6 +58,45 @@ fn main() {
             SubCommand::with_name("list")
                 .alias("l")
                 .about("Lists the exercises available in rustlings")
+                .arg(
+                    Arg::with_name("paths")
+                        .long("paths")
+                        .short("p")
+                        .conflicts_with("names")
+                        .help("Show only the paths of the exercises")
+                )
+                .arg(
+                    Arg::with_name("names")
+                        .long("names")
+                        .short("n")
+                        .conflicts_with("paths")
+                        .help("Show only the names of the exercises")
+                )
+                .arg(
+                    Arg::with_name("filter")
+                        .long("filter")
+                        .short("f")
+                        .takes_value(true)
+                        .empty_values(false)
+                        .help(
+                            "Provide a string to match the exercise names.\
+                            \nComma separated patterns are acceptable."
+                        )
+                )
+                .arg(
+                    Arg::with_name("unsolved")
+                        .long("unsolved")
+                        .short("u")
+                        .conflicts_with("solved")
+                        .help("Display only exercises not yet solved")
+                )
+                .arg(
+                    Arg::with_name("solved")
+                        .long("solved")
+                        .short("s")
+                        .conflicts_with("unsolved")
+                        .help("Display only exercises that have been solved")
+                )
         )
         .get_matches();
 
@@ -93,9 +132,51 @@ fn main() {
     let exercises = toml::from_str::<ExerciseList>(toml_str).unwrap().exercises;
     let verbose = matches.is_present("nocapture");
 
-    if matches.subcommand_matches("list").is_some() {
-        exercises.iter().for_each(|e| println!("{}", e.name));
+    // Handle the list command
+    if let Some(list_m) = matches.subcommand_matches("list") {
+        if ["paths", "names"].iter().all(|k| !list_m.is_present(k)) {
+            println!("{:<17}\t{:<46}\t{:<7}", "Name", "Path", "Status");
+        }
+        let filters = list_m.value_of("filter").unwrap_or_default().to_lowercase();
+        exercises.iter().for_each(|e| {
+            let fname = format!("{}", e.path.display());
+            let filter_cond = filters
+                .split(',')
+                .filter(|f| f.trim().len() > 0)
+                .any(|f| e.name.contains(&f) || fname.contains(&f));
+            let status = if e.looks_done() { "Done" } else { "Pending" };
+            let solve_cond = {
+                (e.looks_done() && list_m.is_present("solved"))
+                    || (!e.looks_done() && list_m.is_present("unsolved"))
+                    || (!list_m.is_present("solved") && !list_m.is_present("unsolved"))
+            };
+            if solve_cond && (filter_cond || !list_m.is_present("filter")) {
+                let line = if list_m.is_present("paths") {
+                    format!("{}\n", fname)
+                } else if list_m.is_present("names") {
+                    format!("{}\n", e.name)
+                } else {
+                    format!("{:<17}\t{:<46}\t{:<7}\n", e.name, fname, status)
+                };
+                // Somehow using println! leads to the binary panicking
+                // when its output is piped.
+                // So, we're handling a Broken Pipe error and exiting with 0 anyway
+                let stdout = std::io::stdout();
+                {
+                    let mut handle = stdout.lock();
+                    handle.write_all(line.as_bytes()).unwrap_or_else(|e| {
+                        match e.kind() {
+                            std::io::ErrorKind::BrokenPipe => std::process::exit(0),
+                            _ => std::process::exit(1),
+                        };
+                    });
+                }
+            }
+        });
+        std::process::exit(0);
     }
+
+    // Handle the run command
     if let Some(ref matches) = matches.subcommand_matches("run") {
         let name = matches.value_of("name").unwrap();
 
@@ -123,13 +204,18 @@ fn main() {
         println!("{}", exercise.hint);
     }
 
+    // Handle the verify command
     if matches.subcommand_matches("verify").is_some() {
         verify(&exercises, verbose).unwrap_or_else(|_| std::process::exit(1));
     }
 
+    // Handle the watch command
     if matches.subcommand_matches("watch").is_some() {
         if let Err(e) = watch(&exercises, verbose) {
-            println!("Error: Could not watch your progess. Error message was {:?}.", e);
+            println!(
+                "Error: Could not watch your progess. Error message was {:?}.",
+                e
+            );
             println!("Most likely you've run out of disk space or your 'inotify limit' has been reached.");
             std::process::exit(1);
         }
@@ -138,24 +224,24 @@ fn main() {
             emoji = Emoji("🎉", "★")
         );
         println!();
-        println!("+----------------------------------------------------+");     
-        println!("|          You made it to the Fe-nish line!          |");       
-        println!("+--------------------------  ------------------------+");       
+        println!("+----------------------------------------------------+");
+        println!("|          You made it to the Fe-nish line!          |");
+        println!("+--------------------------  ------------------------+");
         println!("                          \\/                         ");
-        println!("     ▒▒          ▒▒▒▒▒▒▒▒      ▒▒▒▒▒▒▒▒          ▒▒   ");        
-        println!("   ▒▒▒▒  ▒▒    ▒▒        ▒▒  ▒▒        ▒▒    ▒▒  ▒▒▒▒ ");        
-        println!("   ▒▒▒▒  ▒▒  ▒▒            ▒▒            ▒▒  ▒▒  ▒▒▒▒ ");        
-        println!(" ░░▒▒▒▒░░▒▒  ▒▒            ▒▒            ▒▒  ▒▒░░▒▒▒▒ ");        
-        println!("   ▓▓▓▓▓▓▓▓  ▓▓      ▓▓██  ▓▓  ▓▓██      ▓▓  ▓▓▓▓▓▓▓▓ ");        
-        println!("     ▒▒▒▒    ▒▒      ████  ▒▒  ████      ▒▒░░  ▒▒▒▒   ");      
-        println!("       ▒▒  ▒▒▒▒▒▒        ▒▒▒▒▒▒        ▒▒▒▒▒▒  ▒▒     ");    
-        println!("         ▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▒▒▒▒▒▒▒▒▓▓▒▒▓▓▒▒▒▒▒▒▒▒       ");  
+        println!("     ▒▒          ▒▒▒▒▒▒▒▒      ▒▒▒▒▒▒▒▒          ▒▒   ");
+        println!("   ▒▒▒▒  ▒▒    ▒▒        ▒▒  ▒▒        ▒▒    ▒▒  ▒▒▒▒ ");
+        println!("   ▒▒▒▒  ▒▒  ▒▒            ▒▒            ▒▒  ▒▒  ▒▒▒▒ ");
+        println!(" ░░▒▒▒▒░░▒▒  ▒▒            ▒▒            ▒▒  ▒▒░░▒▒▒▒ ");
+        println!("   ▓▓▓▓▓▓▓▓  ▓▓      ▓▓██  ▓▓  ▓▓██      ▓▓  ▓▓▓▓▓▓▓▓ ");
+        println!("     ▒▒▒▒    ▒▒      ████  ▒▒  ████      ▒▒░░  ▒▒▒▒   ");
+        println!("       ▒▒  ▒▒▒▒▒▒        ▒▒▒▒▒▒        ▒▒▒▒▒▒  ▒▒     ");
+        println!("         ▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▒▒▒▒▒▒▒▒▓▓▒▒▓▓▒▒▒▒▒▒▒▒       ");
         println!("           ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒         ");
         println!("             ▒▒▒▒▒▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒▒▒▒▒▒           ");
-        println!("           ▒▒  ▒▒▒▒▒▒▒▒▒▒██████▒▒▒▒▒▒▒▒▒▒  ▒▒         ");  
-        println!("         ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒       ");    
-        println!("       ▒▒    ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒    ▒▒     ");    
-        println!("       ▒▒  ▒▒    ▒▒                  ▒▒    ▒▒  ▒▒     ");    
+        println!("           ▒▒  ▒▒▒▒▒▒▒▒▒▒██████▒▒▒▒▒▒▒▒▒▒  ▒▒         ");
+        println!("         ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒       ");
+        println!("       ▒▒    ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒    ▒▒     ");
+        println!("       ▒▒  ▒▒    ▒▒                  ▒▒    ▒▒  ▒▒     ");
         println!("           ▒▒  ▒▒                      ▒▒  ▒▒         ");
         println!();
         println!("We hope you enjoyed learning about the various aspects of Rust!");
@@ -223,7 +309,13 @@ fn watch(exercises: &[Exercise], verbose: bool) -> notify::Result<()> {
                         let filepath = b.as_path().canonicalize().unwrap();
                         let pending_exercises = exercises
                             .iter()
-                            .skip_while(|e| !filepath.ends_with(&e.path));
+                            .skip_while(|e| !filepath.ends_with(&e.path))
+                            // .filter(|e| filepath.ends_with(&e.path))
+                            .chain(
+                                exercises
+                                    .iter()
+                                    .filter(|e| !e.looks_done() && !filepath.ends_with(&e.path))
+                            );
                         clear_screen();
                         match verify(pending_exercises, verbose) {
                             Ok(_) => return Ok(()),
