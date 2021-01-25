@@ -11,8 +11,6 @@ struct Color {
     blue: u8,
 }
 
-// I AM NOT DONE
-
 // Your task is to complete this implementation
 // and return an Ok result of inner type Color.
 // You need to create an implementation for a tuple of three integers,
@@ -25,19 +23,49 @@ struct Color {
 // Tuple implementation
 impl TryFrom<(i16, i16, i16)> for Color {
     type Error = String;
-    fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {}
+    fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {
+        if let (Ok(red), Ok(green), Ok(blue)) =
+            (tuple.0.try_into(), tuple.1.try_into(), tuple.2.try_into())
+        {
+            Ok(Color { red, green, blue })
+        } else {
+            Err(String::from("one or more numbers are out of range (0-255)"))
+        }
+    }
 }
 
 // Array implementation
 impl TryFrom<[i16; 3]> for Color {
     type Error = String;
-    fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {}
+    fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {
+        if let (Ok(red), Ok(green), Ok(blue)) =
+            (arr[0].try_into(), arr[1].try_into(), arr[2].try_into())
+        {
+            Ok(Color { red, green, blue })
+        } else {
+            Err(String::from("one or more numbers are out of range (0-255)"))
+        }
+    }
 }
 
 // Slice implementation
 impl TryFrom<&[i16]> for Color {
     type Error = String;
-    fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {}
+    fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {
+        if slice.len() != 3 {
+            Err(String::from("incorrect slice length (expected 3 values)"))
+        } else {
+            if let (Ok(red), Ok(green), Ok(blue)) = (
+                slice[0].try_into(),
+                slice[1].try_into(),
+                slice[2].try_into(),
+            ) {
+                Ok(Color { red, green, blue })
+            } else {
+                Err(String::from("one or more numbers are out of range (0-255)"))
+            }
+        }
+    }
 }
 
 fn main() {
