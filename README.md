@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-73-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-74-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️
@@ -252,6 +252,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/jfchevrette"><img src="https://avatars.githubusercontent.com/u/3001?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jean-Francois Chevrette</b></sub></a><br /><a href="#content-jfchevrette" title="Content">🖋</a> <a href="https://github.com/rust-lang/rustlings/commits?author=jfchevrette" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/jbaber"><img src="https://avatars.githubusercontent.com/u/1908117?v=4?s=100" width="100px;" alt=""/><br /><sub><b>John Baber-Lucero</b></sub></a><br /><a href="#content-jbaber" title="Content">🖋</a></td>
   </tr>
 </table>
 
