@@ -692,6 +692,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "tal-zvon",
+      "name": "Tal",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3195851?v=4",
+      "profile": "https://github.com/tal-zvon",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
