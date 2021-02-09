@@ -142,7 +142,7 @@ fn main() {
             let fname = format!("{}", e.path.display());
             let filter_cond = filters
                 .split(',')
-                .filter(|f| f.trim().len() > 0)
+                .filter(|f| !f.trim().is_empty())
                 .any(|f| e.name.contains(&f) || fname.contains(&f));
             let status = if e.looks_done() { "Done" } else { "Pending" };
             let solve_cond = {
