@@ -470,7 +470,7 @@ and give it a try!"""
 [[exercises]]
 name = "errors3"
 path = "exercises/error_handling/errors3.rs"
-mode = "test"
+mode = "compile"
 hint = """
 If other functions can return a `Result`, why shouldn't `main`?"""
 
@@ -694,7 +694,7 @@ Step 2 & step 2.1:
 Very similar to the lines above and below. You've got this!
 Step 3:
 An iterator goes through all elements in a collection, but what if we've run out of
-elements? What should we expect here? If you're stuck, take a look at 
+elements? What should we expect here? If you're stuck, take a look at
 https://doc.rust-lang.org/std/iter/trait.Iterator.html for some ideas.
 """
 
