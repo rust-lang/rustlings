@@ -30,7 +30,7 @@ fn fruit_basket(basket: &mut HashMap<Fruit, u32>) {
         Fruit::Apple,
         Fruit::Banana,
         Fruit::Mango,
-        Fruit::Lichi,
+        Fruit::Litchi,
         Fruit::Pineapple,
     ];
 
@@ -49,7 +49,7 @@ mod tests {
         let mut basket = HashMap::<Fruit, u32>::new();
         basket.insert(Fruit::Apple, 4);
         basket.insert(Fruit::Mango, 2);
-        basket.insert(Fruit::Lichi, 5);
+        basket.insert(Fruit::Litchi, 5);
 
         basket
     }
@@ -60,7 +60,7 @@ mod tests {
         fruit_basket(&mut basket);
         assert_eq!(*basket.get(&Fruit::Apple).unwrap(), 4);
         assert_eq!(*basket.get(&Fruit::Mango).unwrap(), 2);
-        assert_eq!(*basket.get(&Fruit::Lichi).unwrap(), 5);
+        assert_eq!(*basket.get(&Fruit::Litchi).unwrap(), 5);
     }
 
     #[test]
