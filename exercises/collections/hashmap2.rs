@@ -21,7 +21,7 @@ enum Fruit {
     Apple,
     Banana,
     Mango,
-    Lichi,
+    Litchi,
     Pineapple,
 }
 
