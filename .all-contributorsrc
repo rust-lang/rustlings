@@ -711,6 +711,15 @@
         "content",
         "code"
       ]
+    },
+    {
+      "login": "Crell",
+      "name": "Larry Garfield",
+      "avatar_url": "https://avatars.githubusercontent.com/u/254863?v=4",
+      "profile": "http://www.garfieldtech.com/",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
