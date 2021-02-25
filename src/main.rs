@@ -213,7 +213,7 @@ fn main() {
     if matches.subcommand_matches("watch").is_some() {
         if let Err(e) = watch(&exercises, verbose) {
             println!(
-                "Error: Could not watch your progess. Error message was {:?}.",
+                "Error: Could not watch your progress. Error message was {:?}.",
                 e
             );
             println!("Most likely you've run out of disk space or your 'inotify limit' has been reached.");
