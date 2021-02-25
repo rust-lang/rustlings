@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-76-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-77-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️
@@ -255,6 +255,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/jbaber"><img src="https://avatars.githubusercontent.com/u/1908117?v=4?s=100" width="100px;" alt=""/><br /><sub><b>John Baber-Lucero</b></sub></a><br /><a href="#content-jbaber" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/tal-zvon"><img src="https://avatars.githubusercontent.com/u/3195851?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Tal</b></sub></a><br /><a href="#content-tal-zvon" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/apogeeoak"><img src="https://avatars.githubusercontent.com/u/59737221?v=4?s=100" width="100px;" alt=""/><br /><sub><b>apogeeoak</b></sub></a><br /><a href="#content-apogeeoak" title="Content">🖋</a> <a href="https://github.com/rust-lang/rustlings/commits?author=apogeeoak" title="Code">💻</a></td>
+    <td align="center"><a href="http://www.garfieldtech.com/"><img src="https://avatars.githubusercontent.com/u/254863?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Larry Garfield</b></sub></a><br /><a href="#content-Crell" title="Content">🖋</a></td>
   </tr>
 </table>
 
