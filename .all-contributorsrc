@@ -738,6 +738,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "cadolphs",
+      "name": "cadolphs",
+      "avatar_url": "https://avatars.githubusercontent.com/u/13894820?v=4",
+      "profile": "https://github.com/cadolphs",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
