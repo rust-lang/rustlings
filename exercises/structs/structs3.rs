@@ -66,6 +66,7 @@ mod tests {
 
         assert!(!package.is_international());
     }
+
     #[test]
     fn calculate_transport_fees() {
         let sender_country = String::from("Spain");
