@@ -729,6 +729,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "cjwyett",
+      "name": "Cyrus Wyett",
+      "avatar_url": "https://avatars.githubusercontent.com/u/34195737?v=4",
+      "profile": "https://github.com/cjwyett",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
