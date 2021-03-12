@@ -58,6 +58,16 @@ mod tests {
     }
 
     #[test]
+    fn create_local_package() {
+        let sender_country = String::from("Canada");
+        let recipient_country = sender_country.clone();
+
+        let package = Package::new(sender_country, recipient_country, 1200);
+
+        assert!(!package.is_international());
+    }
+
+    #[test]
     fn calculate_transport_fees() {
         let sender_country = String::from("Spain");
         let recipient_country = String::from("Spain");
