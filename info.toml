@@ -359,7 +359,7 @@ each constant."""
 # COLLECTIONS
 
 [[exercises]]
-name = "collections1"
+name = "vec1"
 path = "exercises/collections/vec1.rs"
 mode = "test"
 hint = """
@@ -373,7 +373,7 @@ of the Rust book to learn more.
 """
 
 [[exercises]]
-name = "collections2"
+name = "vec2"
 path = "exercises/collections/vec2.rs"
 mode = "test"
 hint = """
@@ -383,7 +383,7 @@ Hint 2: Check the suggestion from the compiler error ;)
 """
 
 [[exercises]]
-name = "collections3"
+name = "hashmap1"
 path = "exercises/collections/hashmap1.rs"
 mode = "test"
 hint = """
@@ -394,7 +394,7 @@ Hint 2: Number of fruits should be at least 5. And you have to put
 """
 
 [[exercises]]
-name = "collections4"
+name = "hashmap2"
 path = "exercises/collections/hashmap2.rs"
 mode = "test"
 hint = """
