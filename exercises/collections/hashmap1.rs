@@ -8,7 +8,7 @@
 //
 // Make me compile and pass the tests!
 //
-// Execute the command `rustlings hint collections3` if you need
+// Execute the command `rustlings hint hashmap1` if you need
 // hints.
 
 // I AM NOT DONE
@@ -39,8 +39,6 @@ mod tests {
     #[test]
     fn at_least_five_fruits() {
         let basket = fruit_basket();
-        assert!(basket
-            .values()
-            .sum::<u32>() >= 5);
+        assert!(basket.values().sum::<u32>() >= 5);
     }
 }

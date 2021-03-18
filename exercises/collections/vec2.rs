@@ -4,7 +4,7 @@
 //
 // Make me pass the test!
 //
-// Execute the command `rustlings hint collections2` if you need
+// Execute the command `rustlings hint vec2` if you need
 // hints.
 
 // I AM NOT DONE

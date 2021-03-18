@@ -9,7 +9,7 @@
 //
 // Make me pass the tests!
 //
-// Execute the command `rustlings hint collections4` if you need
+// Execute the command `rustlings hint hashmap2` if you need
 // hints.
 
 // I AM NOT DONE
@@ -75,9 +75,7 @@ mod tests {
     fn greater_than_eleven_fruits() {
         let mut basket = get_fruit_basket();
         fruit_basket(&mut basket);
-        let count = basket
-            .values()
-            .sum::<u32>();
+        let count = basket.values().sum::<u32>();
         assert!(count > 11);
     }
 }
