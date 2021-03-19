@@ -1,3 +1,4 @@
+use std::env;
 use crate::exercise::{CompiledExercise, Exercise, Mode, State};
 use console::style;
 use indicatif::ProgressBar;
@@ -137,14 +138,24 @@ fn prompt_for_completion(exercise: &Exercise, prompt_output: Option<String>) -> 
         State::Pending(context) => context,
     };
 
+    let no_emoji = env::var("NO_EMOJI").is_ok();
+
+    let clippy_success_msg = match no_emoji {
+        true => "The code is compiling, and Clippy is happy!",
+        false => "The code is compiling, and 📎 Clippy 📎 is happy!"
+    };
+
     let success_msg = match exercise.mode {
         Mode::Compile => "The code is compiling!",
         Mode::Test => "The code is compiling, and the tests pass!",
-        Mode::Clippy => "The code is compiling, and 📎 Clippy 📎 is happy!",
+        Mode::Clippy => clippy_success_msg,
     };
 
     println!();
-    println!("🎉 🎉  {} 🎉 🎉", success_msg);
+    match no_emoji {
+        true => println!("~*~ {} ~*~", success_msg),
+        false => println!("🎉 🎉  {} 🎉 🎉", success_msg)
+    };
     println!();
 
     if let Some(output) = prompt_output {
