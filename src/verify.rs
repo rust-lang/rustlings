@@ -140,9 +140,10 @@ fn prompt_for_completion(exercise: &Exercise, prompt_output: Option<String>) -> 
 
     let no_emoji = env::var("NO_EMOJI").is_ok();
 
-    let clippy_success_msg = match no_emoji {
-        true => "The code is compiling, and Clippy is happy!",
-        false => "The code is compiling, and 📎 Clippy 📎 is happy!"
+    let clippy_success_msg = if no_emoji {
+        "The code is compiling, and Clippy is happy!"
+    } else {
+        "The code is compiling, and 📎 Clippy 📎 is happy!"
     };
 
     let success_msg = match exercise.mode {
@@ -152,10 +153,11 @@ fn prompt_for_completion(exercise: &Exercise, prompt_output: Option<String>) -> 
     };
 
     println!();
-    match no_emoji {
-        true => println!("~*~ {} ~*~", success_msg),
-        false => println!("🎉 🎉  {} 🎉 🎉", success_msg)
-    };
+    if no_emoji {
+        println!("~*~ {} ~*~", success_msg)
+    } else {
+        println!("🎉 🎉  {} 🎉 🎉", success_msg)
+    }
     println!();
 
     if let Some(output) = prompt_output {
