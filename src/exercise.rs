@@ -127,9 +127,10 @@ name = "{}"
 path = "{}.rs""#,
                     self.name, self.name, self.name
                 );
-                let cargo_toml_error_msg = match env::var("NO_EMOJI").is_ok() {
-                    true => "Failed to write Clippy Cargo.toml file.",
-                    false => "Failed to write 📎 Clippy 📎 Cargo.toml file."
+                let cargo_toml_error_msg = if env::var("NO_EMOJI").is_ok() {
+                    "Failed to write Clippy Cargo.toml file."
+                } else {
+                    "Failed to write 📎 Clippy 📎 Cargo.toml file."
                 };
                 fs::write(CLIPPY_CARGO_TOML_PATH, cargo_toml)
                     .expect(cargo_toml_error_msg);
