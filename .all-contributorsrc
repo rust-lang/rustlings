@@ -765,6 +765,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "blerchy",
+      "name": "Matt Lebl",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2555355?v=4",
+      "profile": "https://github.com/blerchy",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
