@@ -774,6 +774,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "flakolefluk",
+      "name": "Ignacio Le Fluk",
+      "avatar_url": "https://avatars.githubusercontent.com/u/11986564?v=4",
+      "profile": "http://flakolefluk.dev",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
