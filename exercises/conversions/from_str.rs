@@ -2,6 +2,7 @@
 // Additionally, upon implementing FromStr, you can use the `parse` method
 // on strings to generate an object of the implementor type.
 // You can read more about it at https://doc.rust-lang.org/std/str/trait.FromStr.html
+use std::error;
 use std::str::FromStr;
 
 #[derive(Debug)]
@@ -23,7 +24,7 @@ struct Person {
 // If everything goes well, then return a Result of a Person object
 
 impl FromStr for Person {
-    type Err = String;
+    type Err = Box<dyn error::Error>;
     fn from_str(s: &str) -> Result<Person, Self::Err> {
     }
 }
