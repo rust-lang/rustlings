@@ -783,6 +783,16 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "tlyu",
+      "name": "Taylor Yu",
+      "avatar_url": "https://avatars.githubusercontent.com/u/431873?v=4",
+      "profile": "https://github.com/tlyu",
+      "contributions": [
+        "code",
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
