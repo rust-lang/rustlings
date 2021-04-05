@@ -884,5 +884,5 @@ path = "exercises/conversions/from_str.rs"
 mode = "test"
 hint = """
 The implementation of FromStr should return an Ok with a Person object,
-or an Err with a string if the string is not valid.
+or an Err with an error if the string is not valid.
 This is almost like the `try_from_into` exercise."""
