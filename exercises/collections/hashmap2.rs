@@ -4,7 +4,7 @@
 // represents the name of the fruit and the value represents how many
 // of that particular fruit is in the basket. You have to put *MORE
 // THAN 11* fruits in the basket. Three types of fruits - Apple (4),
-// Mango (2) and Lichi (5) are already given in the basket. You are
+// Mango (2) and Lychee (5) are already given in the basket. You are
 // not allowed to insert any more of these fruits!
 //
 // Make me pass the tests!
@@ -21,7 +21,7 @@ enum Fruit {
     Apple,
     Banana,
     Mango,
-    Lichi,
+    Lychee,
     Pineapple,
 }
 
@@ -30,7 +30,7 @@ fn fruit_basket(basket: &mut HashMap<Fruit, u32>) {
         Fruit::Apple,
         Fruit::Banana,
         Fruit::Mango,
-        Fruit::Lichi,
+        Fruit::Lychee,
         Fruit::Pineapple,
     ];
 
@@ -49,7 +49,7 @@ mod tests {
         let mut basket = HashMap::<Fruit, u32>::new();
         basket.insert(Fruit::Apple, 4);
         basket.insert(Fruit::Mango, 2);
-        basket.insert(Fruit::Lichi, 5);
+        basket.insert(Fruit::Lychee, 5);
 
         basket
     }
@@ -60,7 +60,7 @@ mod tests {
         fruit_basket(&mut basket);
         assert_eq!(*basket.get(&Fruit::Apple).unwrap(), 4);
         assert_eq!(*basket.get(&Fruit::Mango).unwrap(), 2);
-        assert_eq!(*basket.get(&Fruit::Lichi).unwrap(), 5);
+        assert_eq!(*basket.get(&Fruit::Lychee).unwrap(), 5);
     }
 
     #[test]
