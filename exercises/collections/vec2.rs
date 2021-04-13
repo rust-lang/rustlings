@@ -4,7 +4,7 @@
 //
 // Make me pass the test!
 //
-// Execute the command `rustlings hint collections2` if you need
+// Execute the command `rustlings hint vec2` if you need
 // hints.
 
 // I AM NOT DONE
@@ -28,11 +28,6 @@ mod tests {
         let v: Vec<i32> = (1..).filter(|x| x % 2 == 0).take(5).collect();
         let ans = vec_loop(v.clone());
 
-        assert_eq!(
-            ans,
-            v.iter()
-                .map(|x| x * 2)
-                .collect::<Vec<i32>>()
-        );
+        assert_eq!(ans, v.iter().map(|x| x * 2).collect::<Vec<i32>>());
     }
 }
