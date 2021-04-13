@@ -1,0 +1,4 @@
+language: rust
+cache: cargo
+script: # the purpose of this is to grade students
+  - cargo run verify
