@@ -1,6 +1,6 @@
-use std::env;
 use regex::Regex;
 use serde::Deserialize;
+use std::env;
 use std::fmt::{self, Display, Formatter};
 use std::fs::{self, remove_file, File};
 use std::io::Read;
@@ -132,8 +132,7 @@ path = "{}.rs""#,
                 } else {
                     "Failed to write 📎 Clippy 📎 Cargo.toml file."
                 };
-                fs::write(CLIPPY_CARGO_TOML_PATH, cargo_toml)
-                    .expect(cargo_toml_error_msg);
+                fs::write(CLIPPY_CARGO_TOML_PATH, cargo_toml).expect(cargo_toml_error_msg);
                 // To support the ability to run the clipy exercises, build
                 // an executable, in addition to running clippy. With a
                 // compilation failure, this would silently fail. But we expect

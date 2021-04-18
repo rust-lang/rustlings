@@ -1,7 +1,7 @@
-use std::env;
 use crate::exercise::{CompiledExercise, Exercise, Mode, State};
 use console::style;
 use indicatif::ProgressBar;
+use std::env;
 
 // Verify that the provided container of Exercise objects
 // can be compiled and run without any failures.
