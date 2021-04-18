@@ -138,13 +138,19 @@ fn main() {
             println!("{:<17}\t{:<46}\t{:<7}", "Name", "Path", "Status");
         }
         let filters = list_m.value_of("filter").unwrap_or_default().to_lowercase();
+        let mut exercises_done: u16 = 0;
         exercises.iter().for_each(|e| {
             let fname = format!("{}", e.path.display());
             let filter_cond = filters
                 .split(',')
                 .filter(|f| !f.trim().is_empty())
                 .any(|f| e.name.contains(&f) || fname.contains(&f));
-            let status = if e.looks_done() { "Done" } else { "Pending" };
+            let status = if e.looks_done() {
+                exercises_done = exercises_done + 1;
+                "Done"
+            } else {
+                "Pending"
+            };
             let solve_cond = {
                 (e.looks_done() && list_m.is_present("solved"))
                     || (!e.looks_done() && list_m.is_present("unsolved"))
@@ -173,6 +179,13 @@ fn main() {
                 }
             }
         });
+        let percentage_progress = exercises_done as f32 / exercises.len() as f32;
+        println!(
+            "Progress: You completed {} / {} exercises ({:.2} %).",
+            exercises_done,
+            exercises.len(),
+            percentage_progress
+        );
         std::process::exit(0);
     }
 
@@ -314,7 +327,7 @@ fn watch(exercises: &[Exercise], verbose: bool) -> notify::Result<()> {
                             .chain(
                                 exercises
                                     .iter()
-                                    .filter(|e| !e.looks_done() && !filepath.ends_with(&e.path))
+                                    .filter(|e| !e.looks_done() && !filepath.ends_with(&e.path)),
                             );
                         clear_screen();
                         match verify(pending_exercises, verbose) {
