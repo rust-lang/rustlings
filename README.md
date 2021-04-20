@@ -104,6 +104,11 @@ exercise:
 rustlings hint myExercise1
 ```
 
+To check your progress, you can run the following command:
+```bash
+rustlings list
+```
+
 ## Testing yourself
 
 After every couple of sections, there will be a quiz that'll test your knowledge on a bunch of sections at once. These quizzes are found in `exercises/quizN.rs`.
