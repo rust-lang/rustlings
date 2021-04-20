@@ -1,11 +1,14 @@
 // iterators5.rs
 
-// Rustling progress is modelled using a hash map. The name of the exercise is
-// the key and the progress is the value. Two counting functions were created
-// to count the number of exercises with a given progress. These counting
-// functions use imperative style for loops. Recreate this counting
-// functionality using iterators.
-// Execute `rustlings hint iterators5` for hints.
+// Let's define a simple model to track Rustlings exercise progress. Progress
+// will be modelled using a hash map. The name of the exercise is the key and
+// the progress is the value. Two counting functions were created to count the
+// number of exercises with a given progress. These counting functions use
+// imperative style for loops. Recreate this counting functionality using
+// iterators. Only the two iterator methods (count_iterator and
+// count_collection_iterator) need to be modified.
+// Execute `rustlings hint
+// iterators5` for hints.
 //
 // Make the code compile and the tests pass.
 
@@ -30,12 +33,14 @@ fn count_for(map: &HashMap<String, Progress>, value: Progress) -> usize {
     count
 }
 
-fn count(map: &HashMap<String, Progress>, value: Progress) -> usize {
+fn count_iterator(map: &HashMap<String, Progress>, value: Progress) -> usize {
+    // map is a hashmap with String keys and Progress values.
+    // map = { "variables1": Complete, "from_str": None, ... }
 }
 
-fn count_stack_for(stack: &[HashMap<String, Progress>], value: Progress) -> usize {
+fn count_collection_for(collection: &[HashMap<String, Progress>], value: Progress) -> usize {
     let mut count = 0;
-    for map in stack {
+    for map in collection {
         for val in map.values() {
             if val == &value {
                 count += 1;
@@ -45,7 +50,10 @@ fn count_stack_for(stack: &[HashMap<String, Progress>], value: Progress) -> usiz
     count
 }
 
-fn count_stack(stack: &[HashMap<String, Progress>], value: Progress) -> usize {
+fn count_collection_iterator(collection: &[HashMap<String, Progress>], value: Progress) -> usize {
+    // collection is a slice of hashmaps.
+    // collection = [{ "variables1": Complete, "from_str": None, ... },
+    //     { "variables2": Complete, ... }, ... ]
 }
 
 #[cfg(test)]
@@ -55,7 +63,7 @@ mod tests {
     #[test]
     fn count_complete() {
         let map = get_map();
-        assert_eq!(3, count(&map, Progress::Complete));
+        assert_eq!(3, count_iterator(&map, Progress::Complete));
     }
 
     #[test]
@@ -63,22 +71,25 @@ mod tests {
         let map = get_map();
         assert_eq!(
             count_for(&map, Progress::Complete),
-            count(&map, Progress::Complete)
+            count_iterator(&map, Progress::Complete)
         );
     }
 
     #[test]
-    fn count_stack_complete() {
-        let stack = get_map_stack();
-        assert_eq!(6, count_stack(&stack, Progress::Complete));
+    fn count_collection_complete() {
+        let collection = get_vec_map();
+        assert_eq!(
+            6,
+            count_collection_iterator(&collection, Progress::Complete)
+        );
     }
 
     #[test]
-    fn count_stack_equals_for() {
-        let stack = get_map_stack();
+    fn count_collection_equals_for() {
+        let collection = get_vec_map();
         assert_eq!(
-            count_stack_for(&stack, Progress::Complete),
-            count_stack(&stack, Progress::Complete)
+            count_collection_for(&collection, Progress::Complete),
+            count_collection_iterator(&collection, Progress::Complete)
         );
     }
 
@@ -96,7 +107,7 @@ mod tests {
         map
     }
 
-    fn get_map_stack() -> Vec<HashMap<String, Progress>> {
+    fn get_vec_map() -> Vec<HashMap<String, Progress>> {
         use Progress::*;
 
         let map = get_map();
