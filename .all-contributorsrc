@@ -811,6 +811,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "k12ish",
+      "name": "k12ish",
+      "avatar_url": "https://avatars.githubusercontent.com/u/45272873?v=4",
+      "profile": "https://github.com/k12ish",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
