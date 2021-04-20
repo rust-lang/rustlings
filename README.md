@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-85-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-86-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️
@@ -266,6 +266,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/blerchy"><img src="https://avatars.githubusercontent.com/u/2555355?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Matt Lebl</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=blerchy" title="Code">💻</a></td>
     <td align="center"><a href="http://flakolefluk.dev"><img src="https://avatars.githubusercontent.com/u/11986564?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ignacio Le Fluk</b></sub></a><br /><a href="#content-flakolefluk" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/tlyu"><img src="https://avatars.githubusercontent.com/u/431873?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Taylor Yu</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=tlyu" title="Code">💻</a> <a href="#content-tlyu" title="Content">🖋</a></td>
+    <td align="center"><a href="https://zerotask.github.io"><img src="https://avatars.githubusercontent.com/u/20150243?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Patrick Hintermayer</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=Zerotask" title="Code">💻</a></td>
   </tr>
 </table>
 
