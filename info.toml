@@ -725,11 +725,15 @@ name = "iterators3"
 path = "exercises/standard_library_types/iterators3.rs"
 mode = "test"
 hint = """
-Minor hint: In each of the two cases in the match in main, you can create x with either
-a 'turbofish' or by hinting the type of x to the compiler. You may try both.
+The divide function needs to return the correct error when even division is not
+possible.
 
-Major hint: Have a look at the Iter trait and at the explanation of its collect function.
-Especially the part about Result is interesting."""
+The division_results variable needs to be collected into a collection type.
+
+The result_with_list function needs to return a single Result where the success
+case is a vector of integers and the failure case is a DivisionError.
+
+The list_of_results function needs to return a vector of results."""
 
 [[exercises]]
 name = "iterators4"
