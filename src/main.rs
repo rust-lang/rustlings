@@ -1,7 +1,7 @@
 use crate::exercise::{Exercise, ExerciseList};
 use crate::run::run;
 use crate::verify::verify;
-use clap::{crate_version, App, Arg, SubCommand};
+use argh::FromArgs;
 use console::Emoji;
 use notify::DebouncedEvent;
 use notify::{RecommendedWatcher, RecursiveMode, Watcher};
@@ -22,85 +22,91 @@ mod exercise;
 mod run;
 mod verify;
 
-fn main() {
-    let matches = App::new("rustlings")
-        .version(crate_version!())
-        .author("Marisa, Carol Nichols")
-        .about("Rustlings is a collection of small exercises to get you used to writing and reading Rust code")
-        .arg(
-            Arg::with_name("nocapture")
-                .long("nocapture")
-                .help("Show outputs from the test exercises")
-        )
-        .subcommand(
-            SubCommand::with_name("verify")
-                .alias("v")
-                .about("Verifies all exercises according to the recommended order")
-        )
-        .subcommand(
-            SubCommand::with_name("watch")
-                .alias("w")
-                .about("Reruns `verify` when files were edited")
-        )
-        .subcommand(
-            SubCommand::with_name("run")
-                .alias("r")
-                .about("Runs/Tests a single exercise")
-                .arg(Arg::with_name("name").required(true).index(1)),
-        )
-        .subcommand(
-            SubCommand::with_name("hint")
-                .alias("h")
-                .about("Returns a hint for the current exercise")
-                .arg(Arg::with_name("name").required(true).index(1)),
-        )
-        .subcommand(
-            SubCommand::with_name("list")
-                .alias("l")
-                .about("Lists the exercises available in rustlings")
-                .arg(
-                    Arg::with_name("paths")
-                        .long("paths")
-                        .short("p")
-                        .conflicts_with("names")
-                        .help("Show only the paths of the exercises")
-                )
-                .arg(
-                    Arg::with_name("names")
-                        .long("names")
-                        .short("n")
-                        .conflicts_with("paths")
-                        .help("Show only the names of the exercises")
-                )
-                .arg(
-                    Arg::with_name("filter")
-                        .long("filter")
-                        .short("f")
-                        .takes_value(true)
-                        .empty_values(false)
-                        .help(
-                            "Provide a string to match the exercise names.\
-                            \nComma separated patterns are acceptable."
-                        )
-                )
-                .arg(
-                    Arg::with_name("unsolved")
-                        .long("unsolved")
-                        .short("u")
-                        .conflicts_with("solved")
-                        .help("Display only exercises not yet solved")
-                )
-                .arg(
-                    Arg::with_name("solved")
-                        .long("solved")
-                        .short("s")
-                        .conflicts_with("unsolved")
-                        .help("Display only exercises that have been solved")
-                )
-        )
-        .get_matches();
+// In sync with crate version
+const VERSION: &str = "4.3.0";
 
-    if matches.subcommand_name().is_none() {
+#[derive(FromArgs, PartialEq, Debug)]
+/// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
+struct Args {
+    /// show outputs from the test exercises
+    #[argh(switch)]
+    nocapture: bool,
+    /// show the executable version
+    #[argh(switch, short = 'v')]
+    version: bool,
+    #[argh(subcommand)]
+    nested: Option<Subcommands>,
+}
+
+#[derive(FromArgs, PartialEq, Debug)]
+#[argh(subcommand)]
+enum Subcommands {
+    Verify(VerifyArgs),
+    Watch(WatchArgs),
+    Run(RunArgs),
+    Hint(HintArgs),
+    List(ListArgs),
+}
+
+#[derive(FromArgs, PartialEq, Debug)]
+#[argh(subcommand, name = "verify")]
+/// Verifies all exercises according to the recommended order
+struct VerifyArgs {}
+
+#[derive(FromArgs, PartialEq, Debug)]
+#[argh(subcommand, name = "watch")]
+/// Reruns `verify` when files were edited
+struct WatchArgs {}
+
+#[derive(FromArgs, PartialEq, Debug)]
+#[argh(subcommand, name = "run")]
+/// Runs/Tests a single exercise
+struct RunArgs {
+    #[argh(positional)]
+    /// the name of the exercise
+    name: String,
+}
+
+#[derive(FromArgs, PartialEq, Debug)]
+#[argh(subcommand, name = "hint")]
+/// Returns a hint for the given exercise
+struct HintArgs {
+    #[argh(positional)]
+    /// the name of the exercise
+    name: String,
+}
+
+#[derive(FromArgs, PartialEq, Debug)]
+#[argh(subcommand, name = "list")]
+/// Lists the exercises available in Rustlings
+struct ListArgs {
+    #[argh(switch, short = 'p')]
+    /// show only the paths of the exercises
+    paths: bool,
+    #[argh(switch, short = 'n')]
+    /// show only the names of the exercises
+    names: bool,
+    #[argh(option, short = 'f')]
+    /// provide a string to match exercise names
+    /// comma separated patterns are acceptable
+    filter: Option<String>,
+    #[argh(switch, short = 'u')]
+    /// display only exercises not yet solved
+    unsolved: bool,
+    #[argh(switch, short = 's')]
+    /// display only exercises that have been solved
+    solved: bool,
+}
+
+fn main() {
+    let args: Args = argh::from_env();
+
+    if args.version {
+        println!("v{}", VERSION);
+        std::process::exit(0);
+    }
+
+    if args.nested.is_none() {
         println!();
         println!(r#"       welcome to...                      "#);
         println!(r#"                 _   _ _                  "#);
@@ -130,144 +136,129 @@ fn main() {
 
     let toml_str = &fs::read_to_string("info.toml").unwrap();
     let exercises = toml::from_str::<ExerciseList>(toml_str).unwrap().exercises;
-    let verbose = matches.is_present("nocapture");
+    let verbose = args.nocapture;
 
-    // Handle the list command
-    if let Some(list_m) = matches.subcommand_matches("list") {
-        if ["paths", "names"].iter().all(|k| !list_m.is_present(k)) {
-            println!("{:<17}\t{:<46}\t{:<7}", "Name", "Path", "Status");
-        }
-        let filters = list_m.value_of("filter").unwrap_or_default().to_lowercase();
-        let mut exercises_done: u16 = 0;
-        exercises.iter().for_each(|e| {
-            let fname = format!("{}", e.path.display());
-            let filter_cond = filters
-                .split(',')
-                .filter(|f| !f.trim().is_empty())
-                .any(|f| e.name.contains(&f) || fname.contains(&f));
-            let status = if e.looks_done() {
-                exercises_done = exercises_done + 1;
-                "Done"
-            } else {
-                "Pending"
-            };
-            let solve_cond = {
-                (e.looks_done() && list_m.is_present("solved"))
-                    || (!e.looks_done() && list_m.is_present("unsolved"))
-                    || (!list_m.is_present("solved") && !list_m.is_present("unsolved"))
-            };
-            if solve_cond && (filter_cond || !list_m.is_present("filter")) {
-                let line = if list_m.is_present("paths") {
-                    format!("{}\n", fname)
-                } else if list_m.is_present("names") {
-                    format!("{}\n", e.name)
-                } else {
-                    format!("{:<17}\t{:<46}\t{:<7}\n", e.name, fname, status)
-                };
-                // Somehow using println! leads to the binary panicking
-                // when its output is piped.
-                // So, we're handling a Broken Pipe error and exiting with 0 anyway
-                let stdout = std::io::stdout();
-                {
-                    let mut handle = stdout.lock();
-                    handle.write_all(line.as_bytes()).unwrap_or_else(|e| {
-                        match e.kind() {
-                            std::io::ErrorKind::BrokenPipe => std::process::exit(0),
-                            _ => std::process::exit(1),
-                        };
-                    });
-                }
-            }
-        });
-        let percentage_progress = exercises_done as f32 / exercises.len() as f32 * 100.0;
-        println!(
-            "Progress: You completed {} / {} exercises ({:.2} %).",
-            exercises_done,
-            exercises.len(),
-            percentage_progress
-        );
-        std::process::exit(0);
-    }
-
-    // Handle the run command
-    if let Some(ref matches) = matches.subcommand_matches("run") {
-        let name = matches.value_of("name").unwrap();
-
-        let matching_exercise = |e: &&Exercise| name == e.name;
-
-        let exercise = exercises.iter().find(matching_exercise).unwrap_or_else(|| {
-            println!("No exercise found for your given name!");
-            std::process::exit(1)
-        });
-
-        run(&exercise, verbose).unwrap_or_else(|_| std::process::exit(1));
-    }
-
-    if let Some(ref matches) = matches.subcommand_matches("hint") {
-        let name = matches.value_of("name").unwrap();
-
-        let exercise = exercises
-            .iter()
-            .find(|e| name == e.name)
-            .unwrap_or_else(|| {
-                println!("No exercise found for your given name!");
-                std::process::exit(1)
-            });
-
-        println!("{}", exercise.hint);
-    }
-
-    // Handle the verify command
-    if matches.subcommand_matches("verify").is_some() {
-        verify(&exercises, verbose).unwrap_or_else(|_| std::process::exit(1));
-    }
-
-    // Handle the watch command
-    if matches.subcommand_matches("watch").is_some() {
-        if let Err(e) = watch(&exercises, verbose) {
-            println!(
-                "Error: Could not watch your progress. Error message was {:?}.",
-                e
-            );
-            println!("Most likely you've run out of disk space or your 'inotify limit' has been reached.");
-            std::process::exit(1);
-        }
-        println!(
-            "{emoji} All exercises completed! {emoji}",
-            emoji = Emoji("🎉", "★")
-        );
-        println!();
-        println!("+----------------------------------------------------+");
-        println!("|          You made it to the Fe-nish line!          |");
-        println!("+--------------------------  ------------------------+");
-        println!("                          \\/                         ");
-        println!("     ▒▒          ▒▒▒▒▒▒▒▒      ▒▒▒▒▒▒▒▒          ▒▒   ");
-        println!("   ▒▒▒▒  ▒▒    ▒▒        ▒▒  ▒▒        ▒▒    ▒▒  ▒▒▒▒ ");
-        println!("   ▒▒▒▒  ▒▒  ▒▒            ▒▒            ▒▒  ▒▒  ▒▒▒▒ ");
-        println!(" ░░▒▒▒▒░░▒▒  ▒▒            ▒▒            ▒▒  ▒▒░░▒▒▒▒ ");
-        println!("   ▓▓▓▓▓▓▓▓  ▓▓      ▓▓██  ▓▓  ▓▓██      ▓▓  ▓▓▓▓▓▓▓▓ ");
-        println!("     ▒▒▒▒    ▒▒      ████  ▒▒  ████      ▒▒░░  ▒▒▒▒   ");
-        println!("       ▒▒  ▒▒▒▒▒▒        ▒▒▒▒▒▒        ▒▒▒▒▒▒  ▒▒     ");
-        println!("         ▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▒▒▒▒▒▒▒▒▓▓▒▒▓▓▒▒▒▒▒▒▒▒       ");
-        println!("           ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒         ");
-        println!("             ▒▒▒▒▒▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒▒▒▒▒▒           ");
-        println!("           ▒▒  ▒▒▒▒▒▒▒▒▒▒██████▒▒▒▒▒▒▒▒▒▒  ▒▒         ");
-        println!("         ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒       ");
-        println!("       ▒▒    ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒    ▒▒     ");
-        println!("       ▒▒  ▒▒    ▒▒                  ▒▒    ▒▒  ▒▒     ");
-        println!("           ▒▒  ▒▒                      ▒▒  ▒▒         ");
-        println!();
-        println!("We hope you enjoyed learning about the various aspects of Rust!");
-        println!("If you noticed any issues, please don't hesitate to report them to our repo.");
-        println!("You can also contribute your own exercises to help the greater community!");
-        println!();
-        println!("Before reporting an issue or contributing, please read our guidelines:");
-        println!("https://github.com/rust-lang/rustlings/blob/main/CONTRIBUTING.md");
-    }
-
-    if matches.subcommand_name().is_none() {
+    let command = args.nested.unwrap_or_else(|| {
         let text = fs::read_to_string("default_out.txt").unwrap();
         println!("{}", text);
+        std::process::exit(0);
+    });
+    match command {
+        Subcommands::List(subargs) => {
+            if !subargs.paths && !subargs.names {
+                println!("{:<17}\t{:<46}\t{:<7}", "Name", "Path", "Status");
+            }
+            let mut exercises_done: u16 = 0;
+            let filters = subargs.filter.clone().unwrap_or_default().to_lowercase();
+            exercises.iter().for_each(|e| {
+                let fname = format!("{}", e.path.display());
+                let filter_cond = filters
+                    .split(',')
+                    .filter(|f| !f.trim().is_empty())
+                    .any(|f| e.name.contains(&f) || fname.contains(&f));
+                let status = if e.looks_done() {
+                    exercises_done += 1;
+                    "Done"
+                } else {
+                    "Pending"
+                };
+                let solve_cond = {
+                    (e.looks_done() && subargs.solved)
+                        || (!e.looks_done() && subargs.unsolved)
+                        || (!subargs.solved && !subargs.unsolved)
+                };
+                if solve_cond && (filter_cond || subargs.filter.is_none()) {
+                    let line = if subargs.paths {
+                        format!("{}\n", fname)
+                    } else if subargs.names {
+                        format!("{}\n", e.name)
+                    } else {
+                        format!("{:<17}\t{:<46}\t{:<7}\n", e.name, fname, status)
+                    };
+                    // Somehow using println! leads to the binary panicking
+                    // when its output is piped.
+                    // So, we're handling a Broken Pipe error and exiting with 0 anyway
+                    let stdout = std::io::stdout();
+                    {
+                        let mut handle = stdout.lock();
+                        handle.write_all(line.as_bytes()).unwrap_or_else(|e| {
+                            match e.kind() {
+                                std::io::ErrorKind::BrokenPipe => std::process::exit(0),
+                                _ => std::process::exit(1),
+                            };
+                        });
+                    }
+                }
+            });
+            let percentage_progress = exercises_done as f32 / exercises.len() as f32 * 100.0;
+            println!(
+                "Progress: You completed {} / {} exercises ({:.2} %).",
+                exercises_done,
+                exercises.len(),
+                percentage_progress
+            );
+            std::process::exit(0);
+        }
+
+        Subcommands::Run(subargs) => {
+            let exercise = find_exercise(subargs.name, exercises);
+
+            run(&exercise, verbose).unwrap_or_else(|_| std::process::exit(1));
+        }
+
+        Subcommands::Hint(subargs) => {
+            let exercise = find_exercise(subargs.name, exercises);
+
+            println!("{}", exercise.hint);
+        }
+
+        Subcommands::Verify(_subargs) => {
+            verify(&exercises, verbose).unwrap_or_else(|_| std::process::exit(1));
+        }
+
+        Subcommands::Watch(_subargs) => {
+            if let Err(e) = watch(&exercises, verbose) {
+                println!(
+                    "Error: Could not watch your progress. Error message was {:?}.",
+                    e
+                );
+                println!("Most likely you've run out of disk space or your 'inotify limit' has been reached.");
+                std::process::exit(1);
+            }
+            println!(
+                "{emoji} All exercises completed! {emoji}",
+                emoji = Emoji("🎉", "★")
+            );
+            println!();
+            println!("+----------------------------------------------------+");
+            println!("|          You made it to the Fe-nish line!          |");
+            println!("+--------------------------  ------------------------+");
+            println!("                          \\/                         ");
+            println!("     ▒▒          ▒▒▒▒▒▒▒▒      ▒▒▒▒▒▒▒▒          ▒▒   ");
+            println!("   ▒▒▒▒  ▒▒    ▒▒        ▒▒  ▒▒        ▒▒    ▒▒  ▒▒▒▒ ");
+            println!("   ▒▒▒▒  ▒▒  ▒▒            ▒▒            ▒▒  ▒▒  ▒▒▒▒ ");
+            println!(" ░░▒▒▒▒░░▒▒  ▒▒            ▒▒            ▒▒  ▒▒░░▒▒▒▒ ");
+            println!("   ▓▓▓▓▓▓▓▓  ▓▓      ▓▓██  ▓▓  ▓▓██      ▓▓  ▓▓▓▓▓▓▓▓ ");
+            println!("     ▒▒▒▒    ▒▒      ████  ▒▒  ████      ▒▒░░  ▒▒▒▒   ");
+            println!("       ▒▒  ▒▒▒▒▒▒        ▒▒▒▒▒▒        ▒▒▒▒▒▒  ▒▒     ");
+            println!("         ▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▒▒▒▒▒▒▒▒▓▓▒▒▓▓▒▒▒▒▒▒▒▒       ");
+            println!("           ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒         ");
+            println!("             ▒▒▒▒▒▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒▒▒▒▒▒           ");
+            println!("           ▒▒  ▒▒▒▒▒▒▒▒▒▒██████▒▒▒▒▒▒▒▒▒▒  ▒▒         ");
+            println!("         ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒       ");
+            println!("       ▒▒    ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒    ▒▒     ");
+            println!("       ▒▒  ▒▒    ▒▒                  ▒▒    ▒▒  ▒▒     ");
+            println!("           ▒▒  ▒▒                      ▒▒  ▒▒         ");
+            println!();
+            println!("We hope you enjoyed learning about the various aspects of Rust!");
+            println!(
+                "If you noticed any issues, please don't hesitate to report them to our repo."
+            );
+            println!("You can also contribute your own exercises to help the greater community!");
+            println!();
+            println!("Before reporting an issue or contributing, please read our guidelines:");
+            println!("https://github.com/rust-lang/rustlings/blob/main/CONTRIBUTING.md");
+        }
     }
 }
 
@@ -292,6 +283,18 @@ fn spawn_watch_shell(failed_exercise_hint: &Arc<Mutex<Option<String>>>) {
             Err(error) => println!("error reading command: {}", error),
         }
     });
+}
+
+fn find_exercise(name: String, exercises: Vec<Exercise>) -> Exercise {
+    let matching_exercise = |e: &Exercise| name == e.name;
+
+    exercises
+        .into_iter()
+        .find(matching_exercise)
+        .unwrap_or_else(|| {
+            println!("No exercise found for your given name!");
+            std::process::exit(1)
+        })
 }
 
 fn watch(exercises: &[Exercise], verbose: bool) -> notify::Result<()> {
