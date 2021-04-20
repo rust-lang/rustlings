@@ -793,6 +793,15 @@
         "code",
         "content"
       ]
+    },
+    {
+      "login": "Zerotask",
+      "name": "Patrick Hintermayer",
+      "avatar_url": "https://avatars.githubusercontent.com/u/20150243?v=4",
+      "profile": "https://zerotask.github.io",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
