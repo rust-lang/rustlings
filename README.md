@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-88-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-89-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️
@@ -274,6 +274,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://zerotask.github.io"><img src="https://avatars.githubusercontent.com/u/20150243?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Patrick Hintermayer</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=Zerotask" title="Code">💻</a></td>
     <td align="center"><a href="https://petkopavlovski.com/"><img src="https://avatars.githubusercontent.com/u/32264020?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Pete Pavlovski</b></sub></a><br /><a href="#content-arthas168" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/k12ish"><img src="https://avatars.githubusercontent.com/u/45272873?v=4?s=100" width="100px;" alt=""/><br /><sub><b>k12ish</b></sub></a><br /><a href="#content-k12ish" title="Content">🖋</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/hongshaoyang"><img src="https://avatars.githubusercontent.com/u/19281800?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Shao Yang Hong</b></sub></a><br /><a href="#content-hongshaoyang" title="Content">🖋</a></td>
   </tr>
 </table>
 
