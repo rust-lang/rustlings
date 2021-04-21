@@ -24,7 +24,7 @@ fn temp_file() -> String {
 }
 
 // The mode of the exercise.
-#[derive(Deserialize, Copy, Clone)]
+#[derive(Deserialize, Copy, Clone, Debug)]
 #[serde(rename_all = "lowercase")]
 pub enum Mode {
     // Indicates that the exercise should be compiled as a binary
@@ -42,7 +42,7 @@ pub struct ExerciseList {
 
 // A representation of a rustlings exercise.
 // This is deserialized from the accompanying info.toml file
-#[derive(Deserialize)]
+#[derive(Deserialize, Debug)]
 pub struct Exercise {
     // Name of the exercise
     pub name: String,

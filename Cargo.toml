@@ -5,7 +5,7 @@ authors = ["Marisa <mokou@posteo.de>", "Carol (Nichols || Goulding) <carol.nicho
 edition = "2018"
 
 [dependencies]
-clap = "2.32.0"
+argh = "0.1.4"
 indicatif = "0.10.3"
 console = "0.7.7"
 notify = "4.0.15"
