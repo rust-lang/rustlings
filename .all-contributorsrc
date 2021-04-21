@@ -829,6 +829,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "bmacer",
+      "name": "Brandon Macer",
+      "avatar_url": "https://avatars.githubusercontent.com/u/13931806?v=4",
+      "profile": "https://github.com/bmacer",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
