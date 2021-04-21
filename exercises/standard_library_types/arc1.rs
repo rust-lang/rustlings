@@ -1,5 +1,5 @@
 // arc1.rs
-// In this exercise, we are given Vec of u32 called "numbers" with values ranging
+// In this exercise, we are given a Vec of u32 called "numbers" with values ranging
 // from 0 to 99 -- [ 0, 1, 2, ..., 98, 99 ]
 // We would like to use this set of numbers within 8 different threads simultaneously.
 // Each thread is going to get the sum of every eighth value, with an offset.
