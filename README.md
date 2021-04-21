@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-89-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-90-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️
@@ -277,6 +277,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/hongshaoyang"><img src="https://avatars.githubusercontent.com/u/19281800?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Shao Yang Hong</b></sub></a><br /><a href="#content-hongshaoyang" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/bmacer"><img src="https://avatars.githubusercontent.com/u/13931806?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Brandon Macer</b></sub></a><br /><a href="#content-bmacer" title="Content">🖋</a></td>
   </tr>
 </table>
 
