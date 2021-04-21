@@ -201,13 +201,13 @@ fn main() {
         }
 
         Subcommands::Run(subargs) => {
-            let exercise = find_exercise(subargs.name, exercises);
+            let exercise = find_exercise(&subargs.name, &exercises);
 
             run(&exercise, verbose).unwrap_or_else(|_| std::process::exit(1));
         }
 
         Subcommands::Hint(subargs) => {
-            let exercise = find_exercise(subargs.name, exercises);
+            let exercise = find_exercise(&subargs.name, &exercises);
 
             println!("{}", exercise.hint);
         }
@@ -285,14 +285,12 @@ fn spawn_watch_shell(failed_exercise_hint: &Arc<Mutex<Option<String>>>) {
     });
 }
 
-fn find_exercise(name: String, exercises: Vec<Exercise>) -> Exercise {
-    let matching_exercise = |e: &Exercise| name == e.name;
-
+fn find_exercise<'a>(name: &str, exercises: &'a [Exercise]) -> &'a Exercise {
     exercises
-        .into_iter()
-        .find(matching_exercise)
+        .iter()
+        .find(|e| e.name == name)
         .unwrap_or_else(|| {
-            println!("No exercise found for your given name!");
+            println!("No exercise found for '{}'!", name);
             std::process::exit(1)
         })
 }
