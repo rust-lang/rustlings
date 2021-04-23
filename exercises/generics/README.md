@@ -5,3 +5,4 @@ In this section you'll learn about saving yourself many lines of code with gener
 ### Book Sections
 
 - [Generic Data Types](https://doc.rust-lang.org/stable/book/ch10-01-syntax.html)
+- [Bounds](https://doc.rust-lang.org/rust-by-example/generics/bounds.html)
