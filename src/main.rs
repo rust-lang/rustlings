@@ -57,9 +57,9 @@ struct VerifyArgs {}
 #[argh(subcommand, name = "watch")]
 /// Reruns `verify` when files were edited
 struct WatchArgs {
-    #[argh(positional)]
+    #[argh(option)]
     /// the name of the exercise at which start to watch
-    name: String
+    name: Option<String>
 }
 
 #[derive(FromArgs, PartialEq, Debug)]
@@ -221,7 +221,21 @@ fn main() {
         }
 
         Subcommands::Watch(_subargs) => {
-            if let Err(e) = watch(&exercises, verbose) {
+            let mut watch_exercises: Vec<Exercise> = exercises;
+            match _subargs.name {
+                Some(ref name) =>  {
+                    watch_exercises = watch_exercises 
+                        .into_iter()
+                        .skip_while(|e| e.name != *name).collect::<Vec<_>>();
+                    if watch_exercises.len() == 0 {
+                        // can't find matched exercise
+                        println!("Error : Could not found the exrecise");
+                        std::process::exit(1);
+                    }
+                },
+                None => ()
+            }
+            if let Err(e) = watch(&watch_exercises, verbose) {
                 println!(
                     "Error: Could not watch your progress. Error message was {:?}.",
                     e
