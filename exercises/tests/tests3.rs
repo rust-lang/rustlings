@@ -1,6 +1,6 @@
 // tests3.rs
-// This test isn't testing our function -- make it do that in such a way that
-// the test passes, but just replace the ???
+// The tests aren't testing our function -- make it do that in such a way that
+// the tests pass, but just replace the ???
 // Execute `rustlings hint tests3` for hints :)
 
 // I AM NOT DONE
