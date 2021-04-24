@@ -264,7 +264,7 @@ fn main() {
 
 fn spawn_watch_shell(failed_exercise_hint: &Arc<Mutex<Option<String>>>) {
     let failed_exercise_hint = Arc::clone(failed_exercise_hint);
-    println!("Type 'hint' to get help or 'clear' to clear the screen");
+    println!("Type 'hint' or open the corresponding README.md file to get help or type 'clear' to clear the screen.");
     thread::spawn(move || loop {
         let mut input = String::new();
         match io::stdin().read_line(&mut input) {
