@@ -56,7 +56,11 @@ struct VerifyArgs {}
 #[derive(FromArgs, PartialEq, Debug)]
 #[argh(subcommand, name = "watch")]
 /// Reruns `verify` when files were edited
-struct WatchArgs {}
+struct WatchArgs {
+    #[argh(positional)]
+    /// the name of the exercise at which start to watch
+    name: String
+}
 
 #[derive(FromArgs, PartialEq, Debug)]
 #[argh(subcommand, name = "run")]
