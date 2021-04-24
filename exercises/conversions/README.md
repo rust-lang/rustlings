@@ -1,5 +1,4 @@
-### Type conversions
-
+# Type conversions
 
 Rust offers a multitude of ways to convert a value of a given type into another type.
 
@@ -15,6 +14,8 @@ Furthermore, the `std::str` module offers a trait called [`FromStr`](https://doc
 
 These should be the main ways ***within the standard library*** to convert data into your desired types.
 
-#### Book Sections
+## Further information
 
-These are not directly covered in the book, but the standard library has great documentation for [conversions here](https://doc.rust-lang.org/std/convert/index.html). The `FromStr` trait is also covered [here](https://doc.rust-lang.org/std/str/trait.FromStr.html).
+These are not directly covered in the book, but the standard library has a great documentation for it.
+- [conversions](https://doc.rust-lang.org/std/convert/index.html)
+- [`FromStr` trait](https://doc.rust-lang.org/std/str/trait.FromStr.html)
