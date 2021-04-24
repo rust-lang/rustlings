@@ -838,6 +838,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "stoiandan",
+      "name": "Stoian Dan",
+      "avatar_url": "https://avatars.githubusercontent.com/u/10388612?v=4",
+      "profile": "https://github.com/stoiandan",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
