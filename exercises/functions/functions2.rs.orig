@@ -1,0 +1,17 @@
+// functions2.rs
+// Make me compile! Execute `rustlings hint functions2` for hints :)
+
+
+fn main() {
+    call_me(3);
+}
+
+<<<<<<< HEAD
+fn call_me(num: i8) {
+=======
+fn call_me(num:) {
+>>>>>>> upstream/main
+    for i in 0..num {
+        println!("Ring! Call number {}", i + 1);
+    }
+}

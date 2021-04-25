@@ -4,22 +4,22 @@
 // I AM NOT DONE
 
 fn main() {
-    let optional_value = Some(String::from("rustlings"));
+    let optional_word = Some(String::from("rustlings"));
     // TODO: Make this an if let statement whose value is "Some" type
-    value = optional_value {
-        println!("the value of optional value is: {}", value);
+    word = optional_word {
+        println!("The word is: {}", word);
     } else {
-        println!("The optional value doesn't contain anything!");
+        println!("The optional word doesn't contain anything");
     }
 
-    let mut optional_values_vec: Vec<Option<i8>> = Vec::new();
+    let mut optional_integers_vec: Vec<Option<i8>> = Vec::new();
     for x in 1..10 {
-        optional_values_vec.push(Some(x));
+        optional_integers_vec.push(Some(x));
     }
 
     // TODO: make this a while let statement - remember that vector.pop also adds another layer of Option<T>
     // You can stack `Option<T>`'s into while let and if let
-    value = optional_values_vec.pop() {
-        println!("current value: {}", value);
+    integer = optional_integers_vec.pop() {
+        println!("current value: {}", integer);
     }
 }

@@ -9,3 +9,10 @@ name = "pending_test_exercise"
 path = "pending_test_exercise.rs"
 mode = "test"
 hint = """"""
+
+[[exercises]]
+name = "finished_exercise"
+path = "finished_exercise.rs"
+mode = "compile"
+hint = """"""
+

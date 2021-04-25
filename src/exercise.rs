@@ -1,5 +1,6 @@
 use regex::Regex;
 use serde::Deserialize;
+use std::env;
 use std::fmt::{self, Display, Formatter};
 use std::fs::{self, remove_file, File};
 use std::io::Read;
@@ -11,14 +12,19 @@ const I_AM_DONE_REGEX: &str = r"(?m)^\s*///?\s*I\s+AM\s+NOT\s+DONE";
 const CONTEXT: usize = 2;
 const CLIPPY_CARGO_TOML_PATH: &str = "./exercises/clippy/Cargo.toml";
 
-// Get a temporary file name that is hopefully unique to this process
+// Get a temporary file name that is hopefully unique
 #[inline]
 fn temp_file() -> String {
-    format!("./temp_{}", process::id())
+    let thread_id: String = format!("{:?}", std::thread::current().id())
+        .chars()
+        .filter(|c| c.is_alphanumeric())
+        .collect();
+
+    format!("./temp_{}_{}", process::id(), thread_id)
 }
 
 // The mode of the exercise.
-#[derive(Deserialize, Copy, Clone)]
+#[derive(Deserialize, Copy, Clone, Debug)]
 #[serde(rename_all = "lowercase")]
 pub enum Mode {
     // Indicates that the exercise should be compiled as a binary
@@ -36,7 +42,7 @@ pub struct ExerciseList {
 
 // A representation of a rustlings exercise.
 // This is deserialized from the accompanying info.toml file
-#[derive(Deserialize)]
+#[derive(Deserialize, Debug)]
 pub struct Exercise {
     // Name of the exercise
     pub name: String,
@@ -121,8 +127,12 @@ name = "{}"
 path = "{}.rs""#,
                     self.name, self.name, self.name
                 );
-                fs::write(CLIPPY_CARGO_TOML_PATH, cargo_toml)
-                    .expect("Failed to write 📎 Clippy 📎 Cargo.toml file.");
+                let cargo_toml_error_msg = if env::var("NO_EMOJI").is_ok() {
+                    "Failed to write Clippy Cargo.toml file."
+                } else {
+                    "Failed to write 📎 Clippy 📎 Cargo.toml file."
+                };
+                fs::write(CLIPPY_CARGO_TOML_PATH, cargo_toml).expect(cargo_toml_error_msg);
                 // To support the ability to run the clipy exercises, build
                 // an executable, in addition to running clippy. With a
                 // compilation failure, this would silently fail. But we expect
@@ -226,6 +236,16 @@ path = "{}.rs""#,
             .collect();
 
         State::Pending(context)
+    }
+
+    // Check that the exercise looks to be solved using self.state()
+    // This is not the best way to check since
+    // the user can just remove the "I AM NOT DONE" string from the file
+    // without actually having solved anything.
+    // The only other way to truly check this would to compile and run
+    // the exercise; which would be both costly and counterintuitive
+    pub fn looks_done(&self) -> bool {
+        self.state() == State::Done
     }
 }
 

@@ -1,6 +1,7 @@
 use crate::exercise::{CompiledExercise, Exercise, Mode, State};
 use console::style;
 use indicatif::ProgressBar;
+use std::env;
 
 // Verify that the provided container of Exercise objects
 // can be compiled and run without any failures.
@@ -137,14 +138,26 @@ fn prompt_for_completion(exercise: &Exercise, prompt_output: Option<String>) -> 
         State::Pending(context) => context,
     };
 
+    let no_emoji = env::var("NO_EMOJI").is_ok();
+
+    let clippy_success_msg = if no_emoji {
+        "The code is compiling, and Clippy is happy!"
+    } else {
+        "The code is compiling, and 📎 Clippy 📎 is happy!"
+    };
+
     let success_msg = match exercise.mode {
         Mode::Compile => "The code is compiling!",
         Mode::Test => "The code is compiling, and the tests pass!",
-        Mode::Clippy => "The code is compiling, and 📎 Clippy 📎 is happy!",
+        Mode::Clippy => clippy_success_msg,
     };
 
     println!();
-    println!("🎉 🎉  {} 🎉 🎉", success_msg);
+    if no_emoji {
+        println!("~*~ {} ~*~", success_msg)
+    } else {
+        println!("🎉 🎉  {} 🎉 🎉", success_msg)
+    }
     println!();
 
     if let Some(output) = prompt_output {

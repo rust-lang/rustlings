@@ -2,6 +2,7 @@
 // Additionally, upon implementing FromStr, you can use the `parse` method
 // on strings to generate an object of the implementor type.
 // You can read more about it at https://doc.rust-lang.org/std/str/trait.FromStr.html
+use std::error;
 use std::str::FromStr;
 
 #[derive(Debug)]
@@ -11,17 +12,19 @@ struct Person {
 }
 
 // I AM NOT DONE
+
 // Steps:
-// 1. If the length of the provided string is 0, then return an error
+// 1. If the length of the provided string is 0, an error should be returned
 // 2. Split the given string on the commas present in it
-// 3. Extract the first element from the split operation and use it as the name
-// 4. If the name is empty, then return an error
+// 3. Only 2 elements should be returned from the split, otherwise return an error
+// 4. Extract the first element from the split operation and use it as the name
 // 5. Extract the other element from the split operation and parse it into a `usize` as the age
-//    with something like `"4".parse::<usize>()`.
-// If while parsing the age, something goes wrong, then return an error
-// Otherwise, then return a Result of a Person object
+//    with something like `"4".parse::<usize>()`
+// 5. If while extracting the name and the age something goes wrong, an error should be returned
+// If everything goes well, then return a Result of a Person object
+
 impl FromStr for Person {
-    type Err = String;
+    type Err = Box<dyn error::Error>;
     fn from_str(s: &str) -> Result<Person, Self::Err> {
     }
 }
@@ -48,38 +51,42 @@ mod tests {
         assert_eq!(p.age, 32);
     }
     #[test]
-    #[should_panic]
     fn missing_age() {
-        "John,".parse::<Person>().unwrap();
+        assert!("John,".parse::<Person>().is_err());
     }
 
     #[test]
-    #[should_panic]
     fn invalid_age() {
-        "John,twenty".parse::<Person>().unwrap();
+        assert!("John,twenty".parse::<Person>().is_err());
     }
 
     #[test]
-    #[should_panic]
     fn missing_comma_and_age() {
-        "John".parse::<Person>().unwrap();
+        assert!("John".parse::<Person>().is_err());
     }
 
     #[test]
-    #[should_panic]
     fn missing_name() {
-        ",1".parse::<Person>().unwrap();
+        assert!(",1".parse::<Person>().is_err());
     }
 
     #[test]
-    #[should_panic]
     fn missing_name_and_age() {
-        ",".parse::<Person>().unwrap();
+        assert!(",".parse::<Person>().is_err());
     }
 
     #[test]
-    #[should_panic]
     fn missing_name_and_invalid_age() {
-        ",one".parse::<Person>().unwrap();
+        assert!(",one".parse::<Person>().is_err());
+    }
+
+    #[test]
+    fn trailing_comma() {
+        assert!("John,32,".parse::<Person>().is_err());
+    }
+
+    #[test]
+    fn trailing_comma_and_some_string() {
+        assert!("John,32,man".parse::<Person>().is_err());
     }
 }
