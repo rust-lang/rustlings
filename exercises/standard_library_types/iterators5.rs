@@ -7,8 +7,7 @@
 // imperative style for loops. Recreate this counting functionality using
 // iterators. Only the two iterator methods (count_iterator and
 // count_collection_iterator) need to be modified.
-// Execute `rustlings hint
-// iterators5` for hints.
+// Execute `rustlings hint iterators5` for hints.
 //
 // Make the code compile and the tests pass.
 
