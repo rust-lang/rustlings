@@ -838,6 +838,24 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "stoiandan",
+      "name": "Stoian Dan",
+      "avatar_url": "https://avatars.githubusercontent.com/u/10388612?v=4",
+      "profile": "https://github.com/stoiandan",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "PiDelport",
+      "name": "Pi Delport",
+      "avatar_url": "https://avatars.githubusercontent.com/u/630271?v=4",
+      "profile": "https://about.me/pjdelport",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
