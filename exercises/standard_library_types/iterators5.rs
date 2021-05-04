@@ -15,7 +15,7 @@
 
 use std::collections::HashMap;
 
-#[derive(PartialEq, Eq)]
+#[derive(PartialEq, Eq, Clone, Copy)]
 enum Progress {
     None,
     Some,
