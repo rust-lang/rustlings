@@ -15,7 +15,7 @@ struct JobStatus {
 
 fn main() {
     let status = Arc::new(JobStatus { jobs_completed: 0 });
-    for i in 0..10 {
+    for i in 1..=10 {
         let status_ref = Arc::clone(&status);
         thread::spawn(move || {
             thread::sleep(Duration::from_millis(250 * i));
