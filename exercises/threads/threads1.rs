@@ -1,6 +1,6 @@
 // threads1.rs
 // Make this compile! Execute `rustlings hint threads1` for hints :)
-// The idea is the threads spawned on line 22 are completing jobs while the main thread is
+// The idea is the threads spawned on line 20 are completing jobs while the main thread is
 // monitoring progress until 10 jobs are completed.
 
 // I AM NOT DONE
