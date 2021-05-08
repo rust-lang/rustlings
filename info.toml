@@ -221,7 +221,6 @@ mutable reference is taken helps? Read more about 'Mutable Referenes'
 in the book's section References and Borrowing':
 https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html#mutable-references."""
 
-
 # PRIMITIVE TYPES
 
 [[exercises]]
