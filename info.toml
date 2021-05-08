@@ -586,6 +586,16 @@ Also see Option::flatten
 """
 
 [[exercises]]
+name = "option3"
+path = "exercises/option/option3.rs"
+mode = "compile"
+hint = """
+The compiler says a partial move happened in the `match`
+statement. How can this be avoided ? The compiler shows the correction
+needed. After making the correction as suggested by the compiler, do
+read: https://doc.rust-lang.org/std/keyword.ref.html"""
+
+[[exercises]]
 name = "result1"
 path = "exercises/error_handling/result1.rs"
 mode = "test"
