@@ -1,4 +1,4 @@
-// option2.rs
+// option3.rs
 // Make me compile! Execute `rustlings hint option3` for hints
 
 // I AM NOT DONE
