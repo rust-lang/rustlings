@@ -31,7 +31,7 @@ impl Package {
     }
 
     fn get_fees(&self, cents_per_gram: i32) -> ??? {
-        // Something goes here... 
+        // Something goes here...
     }
 }
 
