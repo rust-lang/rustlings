@@ -1,11 +1,11 @@
 // iterators1.rs
-// 
+//
 //  Make me compile by filling in the `???`s
 //
 // When performing operations on elements within a collection, iterators are essential.
-// This module helps you get familiar with the structure of using an iterator and 
+// This module helps you get familiar with the structure of using an iterator and
 // how to go through elements within an iterable collection.
-// 
+//
 // Execute `rustlings hint iterators1` for hints :D
 
 // I AM NOT DONE
