@@ -12,9 +12,8 @@ fn main() {
     let y: Option<Point> = Some(Point { x: 100, y: 200 });
 
     match y {
-        Some(p) => println!("Co-ordinates are{},{} ", p.x, p.y),
+        Some(p) => println!("Co-ordinates are {},{} ", p.x, p.y),
         _ => println!("no match"),
     }
-    // Fix without deleting this line.
-    y;
+    y; // Fix without deleting this line.
 }
