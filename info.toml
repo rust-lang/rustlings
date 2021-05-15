@@ -893,7 +893,19 @@ path = "exercises/conversions/try_from_into.rs"
 mode = "test"
 hint = """
 Follow the steps provided right before the `TryFrom` implementation.
-You can also use the example at https://doc.rust-lang.org/std/convert/trait.TryFrom.html"""
+You can also use the example at https://doc.rust-lang.org/std/convert/trait.TryFrom.html
+
+You might want to look back at the exercise errorsn (or its hints) to remind
+yourself about how `Box<dyn Error>` works.
+
+If you're trying to return a string as an error, note that neither `str`
+nor `String` implements `error::Error`. However, there is an implementation
+of `From<&str>` for `Box<dyn Error>`. This means you can use `.into()` or
+the `?` operator to convert your string into the correct error type.
+
+If you're having trouble with using the `?` operator to convert an error string,
+recall that `?` works to convert `Err(something)` into the appropriate error
+type for returning from the function."""
 
 [[exercises]]
 name = "as_ref_mut"
@@ -909,4 +921,7 @@ mode = "test"
 hint = """
 The implementation of FromStr should return an Ok with a Person object,
 or an Err with an error if the string is not valid.
-This is almost like the `try_from_into` exercise."""
+This is almost like the `try_from_into` exercise.
+
+If you're having trouble with returning the correct error type, see the
+hints for try_from_into."""
