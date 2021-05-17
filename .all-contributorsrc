@@ -856,6 +856,16 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "sateeshkumarb",
+      "name": "Sateesh ",
+      "avatar_url": "https://avatars.githubusercontent.com/u/429263?v=4",
+      "profile": "https://github.com/sateeshkumarb",
+      "contributions": [
+        "code",
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
