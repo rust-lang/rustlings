@@ -210,6 +210,17 @@ So the end goal is to:
    - since we're not creating a new vec in `main` anymore, we need to create
      a new vec in `fill_vec`, similarly to the way we did in `main`"""
 
+[[exercises]]
+name = "move_semantics5"
+path = "exercises/move_semantics/move_semantics5.rs"
+mode = "compile"
+hint = """
+Carefully reason about the range in which each mutable reference is in
+vogue. Does updating the value of referrent (x) immediately after the
+mutable reference is taken helps? Read more about 'Mutable Referenes'
+in the book's section References and Borrowing':
+https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html#mutable-references."""
+
 # PRIMITIVE TYPES
 
 [[exercises]]
@@ -577,6 +588,16 @@ Remember that Options can be stacked in if let and while let.
 For example: Some(Some(variable)) = variable2
 Also see Option::flatten
 """
+
+[[exercises]]
+name = "option3"
+path = "exercises/option/option3.rs"
+mode = "compile"
+hint = """
+The compiler says a partial move happened in the `match`
+statement. How can this be avoided? The compiler shows the correction
+needed. After making the correction as suggested by the compiler, do
+read: https://doc.rust-lang.org/std/keyword.ref.html"""
 
 [[exercises]]
 name = "result1"
