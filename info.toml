@@ -216,8 +216,8 @@ path = "exercises/move_semantics/move_semantics5.rs"
 mode = "compile"
 hint = """
 Carefully reason about the range in which each mutable reference is in
-vogue. Does updating the value of referrent (x) immediately after the
-mutable reference is taken helps? Read more about 'Mutable Referenes'
+vogue. Does updating the value of referent (x) immediately after the
+mutable reference is taken helps? Read more about 'Mutable References'
 in the book's section References and Borrowing':
 https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html#mutable-references."""
 
