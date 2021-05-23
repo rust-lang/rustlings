@@ -1,5 +1,6 @@
 // move_semantics5.rs
-// Make me compile without adding any newlines or removing any of the lines.
+// Make me compile without adding, removing, or changing any of the
+// lines in `main()`.
 // Execute `rustlings hint move_semantics5` for hints :)
 
 // I AM NOT DONE
