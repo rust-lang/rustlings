@@ -1,11 +1,13 @@
 // enums2.rs
 // Make me compile! Execute `rustlings hint enums2` for hints!
 
-// I AM NOT DONE
-
 #[derive(Debug)]
 enum Message {
     // TODO: define the different variants used below
+    Move { x: i8, y: i8 },
+    Echo(String),
+    ChangeColor(i64, i64, i64),
+    Quit,
 }
 
 impl Message {
