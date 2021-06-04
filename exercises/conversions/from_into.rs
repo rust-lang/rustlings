@@ -37,6 +37,7 @@ impl Default for Person {
 
 impl From<&str> for Person {
     fn from(s: &str) -> Person {
+        if s.len() == 0 { super::default()}
     }
 }
 
