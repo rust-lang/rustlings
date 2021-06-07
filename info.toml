@@ -490,6 +490,15 @@ hint = """
 If other functions can return a `Result`, why shouldn't `main`?"""
 
 [[exercises]]
+name = "errors4"
+path = "exercises/error_handling/errors4.rs"
+mode = "test"
+hint = """
+`PositiveNonzeroInteger::new` is always creating a new instance and returning an `Ok` result.
+It should be doing some checking, returning an `Err` result if those checks fail, and only
+returning an `Ok` result if those checks determine that everything is... okay :)"""
+
+[[exercises]]
 name = "errorsn"
 path = "exercises/error_handling/errorsn.rs"
 mode = "test"
@@ -561,7 +570,7 @@ ReportCard struct generic, but also the correct property - you will need to chan
 of the struct slightly too...you can do it!
 """
 
-# OPTIONS / RESULTS
+# OPTIONS
 
 [[exercises]]
 name = "option1"
@@ -602,15 +611,6 @@ The compiler says a partial move happened in the `match`
 statement. How can this be avoided? The compiler shows the correction
 needed. After making the correction as suggested by the compiler, do
 read: https://doc.rust-lang.org/std/keyword.ref.html"""
-
-[[exercises]]
-name = "result1"
-path = "exercises/error_handling/result1.rs"
-mode = "test"
-hint = """
-`PositiveNonzeroInteger::new` is always creating a new instance and returning an `Ok` result.
-It should be doing some checking, returning an `Err` result if those checks fail, and only
-returning an `Ok` result if those checks determine that everything is... okay :)"""
 
 # TRAITS
 
