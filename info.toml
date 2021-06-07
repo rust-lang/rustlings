@@ -499,42 +499,49 @@ It should be doing some checking, returning an `Err` result if those checks fail
 returning an `Ok` result if those checks determine that everything is... okay :)"""
 
 [[exercises]]
-name = "errorsn"
-path = "exercises/error_handling/errorsn.rs"
-mode = "test"
+name = "errors5"
+path = "exercises/error_handling/errors5.rs"
+mode = "compile"
 hint = """
-First hint: To figure out what type should go where the ??? is, take a look
-at the test helper function `test_with_str`, since it returns whatever
-`read_and_validate` returns and `test_with_str` has its signature fully
-specified.
-
-
-Next hint: There are three places in `read_and_validate` that we call a
-function that returns a `Result` (that is, the functions might fail).
-Apply the `?` operator on those calls so that we return immediately from
-`read_and_validate` if those function calls fail.
-
+Hint: There are two different possible `Result` types produced within
+`main()`, which are propagated using `?` operators. How do we declare a
+return type from `main()` that allows both?
 
 Another hint: under the hood, the `?` operator calls `From::from`
-on the error value to convert it to a boxed trait object, a Box<dyn error::Error>,
-which is polymorphic-- that means that lots of different kinds of errors
-can be returned from the same function because all errors act the same
-since they all implement the `error::Error` trait.
+on the error value to convert it to a boxed trait object, a
+`Box<dyn error::Error>`, which is polymorphic-- that means that lots of
+different kinds of errors can be returned from the same function because
+all errors act the same since they all implement the `error::Error` trait.
 Check out this section of the book:
 https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator
 
+This exercise uses some concepts that we won't get to until later in the
+course, like `Box` and the `From` trait. It's not important to understand
+them in detail right now, but you can read ahead if you like.
 
-Another another hint: Note that because the `?` operator returns
-the *unwrapped* value in the `Ok` case, if we want to return a `Result` from
-`read_and_validate` for *its* success case, we'll have to rewrap a value
-that we got from the return value of a `?`ed call in an `Ok`-- this will
-look like `Ok(something)`.
+Read more about boxing errors:
+https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/boxing_errors.html
 
+Read more about using the `?` operator with boxed errors:
+https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/reenter_question_mark.html
+"""
 
-Another another another hint: `Result`s must be "used", that is, you'll
-get a warning if you don't handle a `Result` that you get in your
-function. Read more about that in the `std::result` module docs:
-https://doc.rust-lang.org/std/result/#results-must-be-used"""
+[[exercises]]
+name = "errors6"
+path = "exercises/error_handling/errors6.rs"
+mode = "test"
+hint = """
+This exercise uses a completed version of `PositiveNonzeroInteger` from
+the errors4.
+
+Below the TODO line, there is an example of using the `.or()` method
+on a `Result` to transform one type of error into another. Try using
+something similar on the `Result` from `parse()`. You might use the `?`
+operator to return early from the function, or you might use a `match`
+expression, or maybe there's another way!
+
+Read more about `.or()` in the `std::result` documentation:
+https://doc.rust-lang.org/std/result/enum.Result.html#method.or"""
 
 # Generics
 
