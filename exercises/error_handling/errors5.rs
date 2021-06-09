@@ -43,8 +43,8 @@ impl PositiveNonzeroInteger {
 impl fmt::Display for CreationError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let description = match *self {
-            CreationError::Negative => "Number is negative",
-            CreationError::Zero => "Number is zero",
+            CreationError::Negative => "number is negative",
+            CreationError::Zero => "number is zero",
         };
         f.write_str(description)
     }

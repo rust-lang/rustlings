@@ -10,11 +10,20 @@
 
 // I AM NOT DONE
 
+use std::num::ParseIntError;
+
 // This is a custom error type that we will be using in `parse_pos_nonzero()`.
 #[derive(PartialEq, Debug)]
 enum ParsePosNonzeroError {
-    CreationError,
-    ParseIntError
+    Creation(CreationError),
+    ParseInt(ParseIntError)
+}
+
+impl ParsePosNonzeroError {
+    fn from_creation(err: CreationError) -> ParsePosNonzeroError {
+        ParsePosNonzeroError::Creation(err)
+    }
+    // TODO: add another error conversion function here.
 }
 
 fn parse_pos_nonzero(s: &str)
@@ -24,7 +33,7 @@ fn parse_pos_nonzero(s: &str)
     // when `parse()` returns an error.
     let x: i64 = s.parse().unwrap();
     PositiveNonzeroInteger::new(x)
-        .or(Err(ParsePosNonzeroError::CreationError))
+        .map_err(ParsePosNonzeroError::from_creation)
 }
 
 // Don't change anything below this line.
@@ -54,17 +63,18 @@ mod test {
 
     #[test]
     fn test_parse_error() {
-        assert_eq!(
+        // We can't construct a ParseIntError, so we have to pattern match.
+        assert!(matches!(
             parse_pos_nonzero("not a number"),
-            Err(ParsePosNonzeroError::ParseIntError)
-        );
+            Err(ParsePosNonzeroError::ParseInt(_))
+        ));
     }
 
     #[test]
     fn test_negative() {
         assert_eq!(
             parse_pos_nonzero("-555"),
-            Err(ParsePosNonzeroError::CreationError)
+            Err(ParsePosNonzeroError::Creation(CreationError::Negative))
         );
     }
 
@@ -72,15 +82,14 @@ mod test {
     fn test_zero() {
         assert_eq!(
             parse_pos_nonzero("0"),
-            Err(ParsePosNonzeroError::CreationError)
+            Err(ParsePosNonzeroError::Creation(CreationError::Zero))
         );
     }
 
     #[test]
     fn test_positive() {
-        assert_eq!(
-            parse_pos_nonzero("42"),
-            Ok(PositiveNonzeroInteger(42))
-        );
+        let x = PositiveNonzeroInteger::new(42);
+        assert!(x.is_ok());
+        assert_eq!(parse_pos_nonzero("42"), Ok(x.unwrap()));
     }
 }
