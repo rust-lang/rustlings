@@ -9,6 +9,6 @@
 // I AM NOT DONE
 
 fn main() {
-    x = 5;
-    println!("x has the value {}", x);
+    const X: u8 = 5;
+    println!("x has the value {}", X);
 }
