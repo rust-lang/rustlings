@@ -3,8 +3,6 @@
 // lines in `main()`.
 // Execute `rustlings hint move_semantics5` for hints :)
 
-// I AM NOT DONE
-
 fn main() {
     let mut x = 100;
     let y = &mut x;
