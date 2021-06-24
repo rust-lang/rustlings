@@ -875,6 +875,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "hyperparabolic",
+      "name": "hyperparabolic",
+      "avatar_url": "https://avatars.githubusercontent.com/u/12348474?v=4",
+      "profile": "https://github.com/hyperparabolic",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
