@@ -866,6 +866,15 @@
         "code",
         "content"
       ]
+    },
+    {
+      "login": "kayuapi",
+      "name": "ZC",
+      "avatar_url": "https://avatars.githubusercontent.com/u/10304328?v=4",
+      "profile": "https://github.com/kayuapi",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
