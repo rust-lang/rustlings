@@ -1,5 +1,5 @@
-// result1.rs
-// Make this test pass! Execute `rustlings hint result1` for hints :)
+// errors4.rs
+// Make this test pass! Execute `rustlings hint errors4` for hints :)
 
 // I AM NOT DONE
 
