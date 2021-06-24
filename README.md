@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-93-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-94-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️
@@ -281,6 +281,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/stoiandan"><img src="https://avatars.githubusercontent.com/u/10388612?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Stoian Dan</b></sub></a><br /><a href="#content-stoiandan" title="Content">🖋</a></td>
     <td align="center"><a href="https://about.me/pjdelport"><img src="https://avatars.githubusercontent.com/u/630271?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Pi Delport</b></sub></a><br /><a href="#content-PiDelport" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/sateeshkumarb"><img src="https://avatars.githubusercontent.com/u/429263?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Sateesh </b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=sateeshkumarb" title="Code">💻</a> <a href="#content-sateeshkumarb" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/kayuapi"><img src="https://avatars.githubusercontent.com/u/10304328?v=4?s=100" width="100px;" alt=""/><br /><sub><b>ZC</b></sub></a><br /><a href="#content-kayuapi" title="Content">🖋</a></td>
   </tr>
 </table>
 
