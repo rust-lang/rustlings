@@ -798,7 +798,10 @@ test count_iterator.
 The collection variable in count_collection_iterator is a slice of HashMaps. It
 needs to be converted into an iterator in order to use the iterator methods.
 
-The fold method can be useful in the count_collection_iterator function."""
+The fold method can be useful in the count_collection_iterator function.
+
+For a further challenge, consult the documentation for Iterator to find
+a different method that could make your code more compact than using fold."""
 
 # THREADS
 
