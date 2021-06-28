@@ -97,6 +97,12 @@ In case you want to go by your own order, or want to only verify a single exerci
 rustlings run myExercise1
 ```
 
+Or simply use the following command to run the very next unsolved exerice in the tutorial:
+
+```bash
+rustlings run next
+```
+
 In case you get stuck, you can run the following command to get a hint for your
 exercise:
 
