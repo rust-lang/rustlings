@@ -292,7 +292,7 @@ fn find_exercise<'a>(name: &str, exercises: &'a [Exercise]) -> &'a Exercise {
             .find(|e| !e.looks_done())
             .unwrap_or_else(|| {
                 println!("🎉 Congratulations! You have done all the exercises!");
-                println!("🔚 There is no more exercises to do next!");
+                println!("🔚 There are no more exercises to do next!");
                 std::process::exit(1)
             })
     } else {
