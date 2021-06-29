@@ -884,6 +884,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "kolbma",
+      "name": "arlecchino",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5228369?v=4",
+      "profile": "https://www.net4visions.at",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 8,
