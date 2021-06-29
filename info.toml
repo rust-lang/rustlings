@@ -902,7 +902,15 @@ name = "clippy1"
 path = "exercises/clippy/clippy1.rs"
 mode = "clippy"
 hint = """
-Floating point calculations are usually imprecise, so asking if two values are exactly equal is asking for trouble"""
+Not every floating point value can be represented exactly in binary values in
+memory. Take a look at the description of 
+https://doc.rust-lang.org/stable/std/primitive.f32.html
+When using the binary compare operators with floating points you won't compare
+the floating point values but the binary representation in memory. This is 
+usually not what you would like to do. 
+See the suggestions of the clippy warning in compile output and use the
+machine epsilon value...
+https://doc.rust-lang.org/stable/std/primitive.f32.html#associatedconstant.EPSILON"""
 
 [[exercises]]
 name = "clippy2"
