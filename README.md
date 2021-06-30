@@ -110,6 +110,12 @@ exercise:
 rustlings hint myExercise1
 ```
 
+You can also get the hint for the next unsolved exercise with the following command:
+
+``` bash
+rustlings hint next
+```
+
 To check your progress, you can run the following command:
 ```bash
 rustlings list
