@@ -97,11 +97,23 @@ In case you want to go by your own order, or want to only verify a single exerci
 rustlings run myExercise1
 ```
 
+Or simply use the following command to run the next unsolved exercise in the course:
+
+```bash
+rustlings run next
+```
+
 In case you get stuck, you can run the following command to get a hint for your
 exercise:
 
 ``` bash
 rustlings hint myExercise1
+```
+
+You can also get the hint for the next unsolved exercise with the following command:
+
+``` bash
+rustlings hint next
 ```
 
 To check your progress, you can run the following command:
