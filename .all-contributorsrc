@@ -893,6 +893,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "jazzplato",
+      "name": "Richthofen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/7576730?v=4",
+      "profile": "https://richthofen.io/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
