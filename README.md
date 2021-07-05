@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-97-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-98-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️
@@ -299,6 +299,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://richthofen.io/"><img src="https://avatars.githubusercontent.com/u/7576730?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Richthofen</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=jazzplato" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/cseltol"><img src="https://avatars.githubusercontent.com/u/64264529?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ivan Nerazumov</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=cseltol" title="Documentation">📖</a></td>
   </tr>
 </table>
 
