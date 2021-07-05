@@ -902,6 +902,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "cseltol",
+      "name": "Ivan Nerazumov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/64264529?v=4",
+      "profile": "https://github.com/cseltol",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 8,
