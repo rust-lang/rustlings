@@ -10,7 +10,7 @@
 | structs                | §5.1          |
 | enums                  | §6            |
 | modules                | §7.2          |
-| collections            | §8.1          |
+| collections            | §8.1, §8.3    |
 | strings                | §8.2          |
 | error_handling         | §9            |
 | generics               | §10           |
