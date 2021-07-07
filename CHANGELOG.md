@@ -1,3 +1,27 @@
+<a name="4.5.0"></a>
+## 4.5.0 (2021-07-07)
+
+
+#### Features
+
+*   Add move_semantics5 exercise. (#746) ([399ab328](https://github.com/rust-lang/rustlings/commit/399ab328d8d407265c09563aa4ef4534b2503ff2))
+* **cli:**  Add "next" to run the next unsolved exercise. (#785) ([d20e413a](https://github.com/rust-lang/rustlings/commit/d20e413a68772cd493561f2651cf244e822b7ca5))
+
+#### Bug Fixes
+
+*   rename result1 to errors4 ([50ab289d](https://github.com/rust-lang/rustlings/commit/50ab289da6b9eb19a7486c341b00048c516b88c0))
+*   move_semantics5 hints ([1b858285](https://github.com/rust-lang/rustlings/commit/1b85828548f46f58b622b5e0c00f8c989f928807))
+*   remove trailing whitespaces from iterators1 ([4d4fa774](https://github.com/rust-lang/rustlings/commit/4d4fa77459392acd3581c6068aa8be9a02de12fc))
+*   add hints to generics1 and generics2 exercises ([31457940](https://github.com/rust-lang/rustlings/commit/31457940846b3844d78d4a4d2b074bc8d6aaf1eb))
+*   remove trailing whitespace ([d9b69bd1](https://github.com/rust-lang/rustlings/commit/d9b69bd1a0a7a99f2c0d80933ad2eea44c8c71b2))
+* **installation:**  first PowerShell command ([aa9a943d](https://github.com/rust-lang/rustlings/commit/aa9a943ddf3ae260782e73c26bcc9db60e5894b6))
+* **iterators5:**  derive Clone, Copy ([91fc9e31](https://github.com/rust-lang/rustlings/commit/91fc9e3118f4af603c9911698cc2a234725cb032))
+* **quiz1:**  Updated question description (#794) ([d8766496](https://github.com/rust-lang/rustlings/commit/d876649616cc8a8dd5f539f8bc1a5434b960b1e9))
+* **try_from_into, from_str:**  hints for dyn Error ([11d2cf0d](https://github.com/rust-lang/rustlings/commit/11d2cf0d604dee3f5023c17802d69438e69fa50e))
+* **variables5:**  confine the answer further ([48ffcbd2](https://github.com/rust-lang/rustlings/commit/48ffcbd2c4cc4d936c2c7480019190f179813cc5))
+
+
+
 <a name="4.4.0"></a>
 ## 4.4.0 (2021-04-24)
 
