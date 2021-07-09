@@ -10,6 +10,7 @@ use std::error;
 use std::fmt;
 use std::num::ParseIntError;
 
+type Result<T, E> = std::result::Result<T, Box<dyn E>>;
 // TODO: update the return type of `main()` to make this compile.
 fn main() -> Result<(), ParseIntError> {
     let pretend_user_input = "42";
@@ -18,6 +19,17 @@ fn main() -> Result<(), ParseIntError> {
     Ok(())
 }
 
+// impl From<CreationError> for ParseIntError{
+//     fn from(e: CreationError) -> ParseIntError{
+//         return ParseIntError::CreationError(e);
+//     }
+// }
+
+// impl From<ParseIntError> for CreationError{
+// 	fn from(e: ParseIntError) -> CreationError{
+// 		return CreationError::ParseIntError(e);
+// 	}
+// }
 // Don't change anything below this line.
 
 #[derive(PartialEq, Debug)]
@@ -34,7 +46,7 @@ impl PositiveNonzeroInteger {
         match value {
             x if x < 0 => Err(CreationError::Negative),
             x if x == 0 => Err(CreationError::Zero),
-            x => Ok(PositiveNonzeroInteger(x as u64))
+            x => Ok(PositiveNonzeroInteger(x as u64)),
         }
     }
 }
