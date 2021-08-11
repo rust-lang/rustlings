@@ -1,6 +1,6 @@
 // move_semantics5.rs
-// Make me compile without adding, removing, or changing any of the
-// lines in `main()`.
+// Make me compile only be reordering the lines in `main()`, but without
+// adding, changing or removing any of them.
 // Execute `rustlings hint move_semantics5` for hints :)
 
 // I AM NOT DONE

@@ -220,10 +220,7 @@ vogue. Does it help to update the value of referent (x) immediately after
 the mutable reference is taken? Read more about 'Mutable References'
 in the book's section References and Borrowing':
 https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html#mutable-references.
-
-Additional hint:
-If you can't add, change, or remove any statements in `main()`, can you
-reorder them in a way that lets the program compile?"""
+"""
 
 # PRIMITIVE TYPES
 
