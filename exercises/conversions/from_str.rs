@@ -11,7 +11,15 @@ struct Person {
     age: usize,
 }
 
-// I AM NOT DONE
+#[derive(Debug)]
+struct NameAndAgeNeeded;
+
+impl std::fmt::Display for NameAndAgeNeeded {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "Name and Age are Needed")
+    }
+}
+impl error::Error for NameAndAgeNeeded {}
 
 // Steps:
 // 1. If the length of the provided string is 0, an error should be returned
@@ -26,6 +34,35 @@ struct Person {
 impl FromStr for Person {
     type Err = Box<dyn error::Error>;
     fn from_str(s: &str) -> Result<Person, Self::Err> {
+        if !s.contains(",") || s.len() == 0 {
+            return Err(NameAndAgeNeeded.into());
+        } else {
+            let mut parts = s.split(",");
+            let try_name = match &parts.next() {
+                Some(name) => {
+                    if name.len() > 0 {
+                        name.to_string()
+                    } else {
+                        return Err(NameAndAgeNeeded.into());
+                    }
+                }
+                None => return Err(NameAndAgeNeeded.into()),
+            };
+            let try_age = match &parts.next() {
+                Some(age) => match age.parse::<usize>() {
+                    Ok(age) => age,
+                    Err(_) => return Err(NameAndAgeNeeded.into()),
+                },
+                None => return Err(NameAndAgeNeeded.into()),
+            };
+            if parts.next().is_some() {
+                return Err(NameAndAgeNeeded.into());
+            }
+            Ok(Person {
+                name: try_name,
+                age: try_age,
+            })
+        }
     }
 }
 
