@@ -4,7 +4,13 @@
 // I AM NOT DONE
 
 mod sausage_factory {
-    fn make_sausage() {
+    // Don't let anybody outside of this module to see that!
+    fn get_secret_recipe() -> String {
+        String::from("Ginger")
+    }
+
+    pub fn make_sausage() {
+        get_secret_recipe();
         println!("sausage!");
     }
 }
