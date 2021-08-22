@@ -171,7 +171,7 @@ path = "exercises/move_semantics/move_semantics2.rs"
 mode = "compile"
 hint = """
 So `vec0` is being *moved* into the function `fill_vec` when we call it on
-line 10, which means it gets dropped at the end of `fill_vec`, which means we
+line 7, which means it gets dropped at the end of `fill_vec`, which means we
 can't use `vec0` again on line 13 (or anywhere else in `main` after the
 `fill_vec` call for that matter). We could fix this in a few ways, try them
 all!
@@ -771,7 +771,7 @@ case is a vector of integers and the failure case is a DivisionError.
 
 The list_of_results function needs to return a vector of results.
 
-See https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.collect for how 
+See https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.collect for how
 the `FromIterator` trait is used in `collect()`."""
 
 [[exercises]]
@@ -900,11 +900,11 @@ path = "exercises/clippy/clippy1.rs"
 mode = "clippy"
 hint = """
 Not every floating point value can be represented exactly in binary values in
-memory. Take a look at the description of 
+memory. Take a look at the description of
 https://doc.rust-lang.org/stable/std/primitive.f32.html
 When using the binary compare operators with floating points you won't compare
-the floating point values but the binary representation in memory. This is 
-usually not what you would like to do. 
+the floating point values but the binary representation in memory. This is
+usually not what you would like to do.
 See the suggestions of the clippy warning in compile output and use the
 machine epsilon value...
 https://doc.rust-lang.org/stable/std/primitive.f32.html#associatedconstant.EPSILON"""
