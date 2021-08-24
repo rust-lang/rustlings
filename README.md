@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-100-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-101-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️
@@ -302,6 +302,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/cseltol"><img src="https://avatars.githubusercontent.com/u/64264529?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ivan Nerazumov</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=cseltol" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/lauralindzey"><img src="https://avatars.githubusercontent.com/u/65185744?v=4?s=100" width="100px;" alt=""/><br /><sub><b>lauralindzey</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=lauralindzey" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/sinharaksh1t"><img src="https://avatars.githubusercontent.com/u/28585848?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Rakshit Sinha</b></sub></a><br /><a href="#content-sinharaksh1t" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/dbednar230"><img src="https://avatars.githubusercontent.com/u/54457902?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Damian</b></sub></a><br /><a href="#content-dbednar230" title="Content">🖋</a></td>
   </tr>
 </table>
 
