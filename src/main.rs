@@ -203,7 +203,7 @@ fn main() {
         Subcommands::Run(subargs) => {
             let exercise = find_exercise(&subargs.name, &exercises);
 
-            run(&exercise, verbose).unwrap_or_else(|_| std::process::exit(1));
+            run(exercise, verbose).unwrap_or_else(|_| std::process::exit(1));
         }
 
         Subcommands::Hint(subargs) => {
