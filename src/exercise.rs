@@ -162,7 +162,7 @@ path = "{}.rs""#,
 
         if cmd.status.success() {
             Ok(CompiledExercise {
-                exercise: &self,
+                exercise: self,
                 _handle: FileHandle,
             })
         } else {
