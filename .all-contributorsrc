@@ -938,6 +938,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "benarmstead",
+      "name": "Ben Armstead",
+      "avatar_url": "https://avatars.githubusercontent.com/u/70973680?v=4",
+      "profile": "https://benarmstead.co.uk",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
