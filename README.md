@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-102-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-103-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️
@@ -304,6 +304,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/sinharaksh1t"><img src="https://avatars.githubusercontent.com/u/28585848?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Rakshit Sinha</b></sub></a><br /><a href="#content-sinharaksh1t" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/dbednar230"><img src="https://avatars.githubusercontent.com/u/54457902?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Damian</b></sub></a><br /><a href="#content-dbednar230" title="Content">🖋</a></td>
     <td align="center"><a href="https://benarmstead.co.uk"><img src="https://avatars.githubusercontent.com/u/70973680?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ben Armstead</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=benarmstead" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/anuk909"><img src="https://avatars.githubusercontent.com/u/34924662?v=4?s=100" width="100px;" alt=""/><br /><sub><b>anuk909</b></sub></a><br /><a href="#content-anuk909" title="Content">🖋</a> <a href="https://github.com/rust-lang/rustlings/commits?author=anuk909" title="Code">💻</a></td>
   </tr>
 </table>
 
