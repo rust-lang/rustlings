@@ -957,6 +957,15 @@
         "content",
         "code"
       ]
+    },
+    {
+      "login": "granddaifuku",
+      "name": "granddaifuku",
+      "avatar_url": "https://avatars.githubusercontent.com/u/49578068?v=4",
+      "profile": "https://granddaifuku.com/",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
