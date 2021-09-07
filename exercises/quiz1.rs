@@ -10,7 +10,7 @@
 // I AM NOT DONE
 
 // Put your function here!
-// fn ..... {
+// fn calculate_apple_price {
 
 // Don't modify this function!
 #[test]
