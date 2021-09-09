@@ -2,7 +2,7 @@
 
 [[exercises]]
 name = "variables1"
-path = "exercises/variables/variables1.rs"
+path = "exercises/1_variables/variables1.rs"
 mode = "compile"
 hint = """
 Hint: The declaration on line 12 is missing a keyword that is needed in Rust
@@ -10,7 +10,7 @@ to create a new variable binding."""
 
 [[exercises]]
 name = "variables2"
-path = "exercises/variables/variables2.rs"
+path = "exercises/1_variables/variables2.rs"
 mode = "compile"
 hint = """
 The compiler message is saying that Rust cannot infer the type that the
@@ -23,7 +23,7 @@ What if x is the same type as 10? What if it's a different type?"""
 
 [[exercises]]
 name = "variables3"
-path = "exercises/variables/variables3.rs"
+path = "exercises/1_variables/variables3.rs"
 mode = "compile"
 hint = """
 In Rust, variable bindings are immutable by default. But here we're trying
@@ -32,7 +32,7 @@ a variable binding mutable instead."""
 
 [[exercises]]
 name = "variables4"
-path = "exercises/variables/variables4.rs"
+path = "exercises/1_variables/variables4.rs"
 mode = "compile"
 hint = """
 Oops! In this exercise, we have a variable binding that we've created on
@@ -43,7 +43,7 @@ programming language -- thankfully the Rust compiler has caught this for us!"""
 
 [[exercises]]
 name = "variables5"
-path = "exercises/variables/variables5.rs"
+path = "exercises/1_variables/variables5.rs"
 mode = "compile"
 hint = """
 In variables3 we already learned how to make an immutable variable mutable
@@ -58,7 +58,7 @@ Try to solve this exercise afterwards using this technique."""
 
 [[exercises]]
 name = "variables6"
-path = "exercises/variables/variables6.rs"
+path = "exercises/1_variables/variables6.rs"
 mode = "compile"
 hint = """
 We know about variables and mutability, but there is another important type of
@@ -75,7 +75,7 @@ https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html#differences
 
 [[exercises]]
 name = "functions1"
-path = "exercises/functions/functions1.rs"
+path = "exercises/2_functions/functions1.rs"
 mode = "compile"
 hint = """
 This main function is calling a function that it expects to exist, but the
@@ -85,7 +85,7 @@ Sounds a lot like `main`, doesn't it?"""
 
 [[exercises]]
 name = "functions2"
-path = "exercises/functions/functions2.rs"
+path = "exercises/2_functions/functions2.rs"
 mode = "compile"
 hint = """
 Rust requires that all parts of a function's signature have type annotations,
@@ -93,7 +93,7 @@ but `call_me` is missing the type annotation of `num`."""
 
 [[exercises]]
 name = "functions3"
-path = "exercises/functions/functions3.rs"
+path = "exercises/2_functions/functions3.rs"
 mode = "compile"
 hint = """
 This time, the function *declaration* is okay, but there's something wrong
@@ -101,7 +101,7 @@ with the place where we're calling the function."""
 
 [[exercises]]
 name = "functions4"
-path = "exercises/functions/functions4.rs"
+path = "exercises/2_functions/functions4.rs"
 mode = "compile"
 hint = """
 The error message points to line 14 and says it expects a type after the
@@ -110,7 +110,7 @@ the `is_even` function for an example!"""
 
 [[exercises]]
 name = "functions5"
-path = "exercises/functions/functions5.rs"
+path = "exercises/2_functions/functions5.rs"
 mode = "compile"
 hint = """
 This is a really common error that can be fixed by removing one character.
@@ -125,7 +125,7 @@ They are not the same. There are two solutions:
 
 [[exercises]]
 name = "if1"
-path = "exercises/if/if1.rs"
+path = "exercises/3_if/if1.rs"
 mode = "test"
 hint = """
 It's possible to do this in one line if you would like!
@@ -139,7 +139,7 @@ Remember in Rust that:
 
 [[exercises]]
 name = "if2"
-path = "exercises/if/if2.rs"
+path = "exercises/3_if/if2.rs"
 mode = "test"
 hint = """
 For that first compiler error, it's important in Rust that each conditional
@@ -158,7 +158,7 @@ hint = "No hints this time ;)"
 
 [[exercises]]
 name = "move_semantics1"
-path = "exercises/move_semantics/move_semantics1.rs"
+path = "exercises/4_move_semantics/move_semantics1.rs"
 mode = "compile"
 hint = """
 So you've got the "cannot borrow immutable local variable `vec1` as mutable" error on line 13,
@@ -167,7 +167,7 @@ where the error is."""
 
 [[exercises]]
 name = "move_semantics2"
-path = "exercises/move_semantics/move_semantics2.rs"
+path = "exercises/4_move_semantics/move_semantics2.rs"
 mode = "compile"
 hint = """
 So `vec0` is being *moved* into the function `fill_vec` when we call it on
@@ -187,7 +187,7 @@ all!
 
 [[exercises]]
 name = "move_semantics3"
-path = "exercises/move_semantics/move_semantics3.rs"
+path = "exercises/4_move_semantics/move_semantics3.rs"
 mode = "compile"
 hint = """
 The difference between this one and the previous ones is that the first line
@@ -197,7 +197,7 @@ an existing binding to be a mutable binding instead of an immutable one :)"""
 
 [[exercises]]
 name = "move_semantics4"
-path = "exercises/move_semantics/move_semantics4.rs"
+path = "exercises/4_move_semantics/move_semantics4.rs"
 mode = "compile"
 hint = """
 Stop reading whenever you feel like you have enough direction :) Or try
@@ -212,7 +212,7 @@ So the end goal is to:
 
 [[exercises]]
 name = "move_semantics5"
-path = "exercises/move_semantics/move_semantics5.rs"
+path = "exercises/4_move_semantics/move_semantics5.rs"
 mode = "compile"
 hint = """
 Carefully reason about the range in which each mutable reference is in
@@ -226,19 +226,19 @@ https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html#mutable-ref
 
 [[exercises]]
 name = "primitive_types1"
-path = "exercises/primitive_types/primitive_types1.rs"
+path = "exercises/5_primitive_types/primitive_types1.rs"
 mode = "compile"
 hint = "No hints this time ;)"
 
 [[exercises]]
 name = "primitive_types2"
-path = "exercises/primitive_types/primitive_types2.rs"
+path = "exercises/5_primitive_types/primitive_types2.rs"
 mode = "compile"
 hint = "No hints this time ;)"
 
 [[exercises]]
 name = "primitive_types3"
-path = "exercises/primitive_types/primitive_types3.rs"
+path = "exercises/5_primitive_types/primitive_types3.rs"
 mode = "compile"
 hint = """
 There's a shorthand to initialize Arrays with a certain size that does not
@@ -251,7 +251,7 @@ for `a.len() >= 100`?"""
 
 [[exercises]]
 name = "primitive_types4"
-path = "exercises/primitive_types/primitive_types4.rs"
+path = "exercises/5_primitive_types/primitive_types4.rs"
 mode = "test"
 hint = """
 Take a look at the Understanding Ownership -> Slices -> Other Slices section of the book:
@@ -266,7 +266,7 @@ https://doc.rust-lang.org/book/ch15-02-deref.html"""
 
 [[exercises]]
 name = "primitive_types5"
-path = "exercises/primitive_types/primitive_types5.rs"
+path = "exercises/5_primitive_types/primitive_types5.rs"
 mode = "compile"
 hint = """
 Take a look at the Data Types -> The Tuple Type section of the book:
@@ -277,7 +277,7 @@ of the tuple. You can do it!!"""
 
 [[exercises]]
 name = "primitive_types6"
-path = "exercises/primitive_types/primitive_types6.rs"
+path = "exercises/5_primitive_types/primitive_types6.rs"
 mode = "test"
 hint = """
 While you could use a destructuring `let` for the tuple here, try
@@ -290,7 +290,7 @@ Now you have another tool in your toolbox!"""
 
 [[exercises]]
 name = "structs1"
-path = "exercises/structs/structs1.rs"
+path = "exercises/6_structs/structs1.rs"
 mode = "test"
 hint = """
 Rust has more than one type of struct. Three actually, all variants are used to package related data together.
@@ -303,7 +303,7 @@ Read more about structs in The Book: https://doc.rust-lang.org/book/ch05-01-defi
 
 [[exercises]]
 name = "structs2"
-path = "exercises/structs/structs2.rs"
+path = "exercises/6_structs/structs2.rs"
 mode = "test"
 hint = """
 Creating instances of structs is easy, all you need to do is assign some values to its fields.
@@ -312,7 +312,7 @@ Have a look in The Book, to find out more: https://doc.rust-lang.org/stable/book
 
 [[exercises]]
 name = "structs3"
-path = "exercises/structs/structs3.rs"
+path = "exercises/6_structs/structs3.rs"
 mode = "test"
 hint = """
 The new method needs to panic if the weight is physically impossible :), how do we do that in Rust?
@@ -327,14 +327,14 @@ Have a look in The Book, to find out more about method implementations: https://
 
 [[exercises]]
 name = "enums1"
-path = "exercises/enums/enums1.rs"
+path = "exercises/7_enums/enums1.rs"
 mode = "compile"
 hint = """
 Hint: The declaration of the enumeration type has not been defined yet."""
 
 [[exercises]]
 name = "enums2"
-path = "exercises/enums/enums2.rs"
+path = "exercises/7_enums/enums2.rs"
 mode = "compile"
 hint = """
 Hint: you can create enumerations that have different variants with different types
@@ -342,7 +342,7 @@ such as no data, anonymous structs, a single string, tuples, ...etc"""
 
 [[exercises]]
 name = "enums3"
-path = "exercises/enums/enums3.rs"
+path = "exercises/7_enums/enums3.rs"
 mode = "test"
 hint = "No hints this time ;)"
 
@@ -350,7 +350,7 @@ hint = "No hints this time ;)"
 
 [[exercises]]
 name = "modules1"
-path = "exercises/modules/modules1.rs"
+path = "exercises/8_modules/modules1.rs"
 mode = "compile"
 hint = """
 Everything is private in Rust by default-- but there's a keyword we can use
@@ -359,7 +359,7 @@ needs to be public."""
 
 [[exercises]]
 name = "modules2"
-path = "exercises/modules/modules2.rs"
+path = "exercises/8_modules/modules2.rs"
 mode = "compile"
 hint = """
 The delicious_snacks module is trying to present an external interface that is 
@@ -369,7 +369,7 @@ find the one keyword missing for both constants."""
 
 [[exercises]]
 name = "modules3"
-path = "exercises/modules/modules3.rs"
+path = "exercises/8_modules/modules3.rs"
 mode = "compile"
 hint = """
 UNIX_EPOCH and SystemTime are declared in the std::time module. Add a use statement
@@ -380,7 +380,7 @@ operator to bring these two in using only one line."""
 
 [[exercises]]
 name = "vec1"
-path = "exercises/collections/vec1.rs"
+path = "exercises/9_collections/vec1.rs"
 mode = "test"
 hint = """
 In Rust, there are two ways to define a Vector.
@@ -394,7 +394,7 @@ of the Rust book to learn more.
 
 [[exercises]]
 name = "vec2"
-path = "exercises/collections/vec2.rs"
+path = "exercises/9_collections/vec2.rs"
 mode = "test"
 hint = """
 Hint 1: `i` is each element from the Vec as they are being iterated.
@@ -404,7 +404,7 @@ Hint 2: Check the suggestion from the compiler error ;)
 
 [[exercises]]
 name = "hashmap1"
-path = "exercises/collections/hashmap1.rs"
+path = "exercises/9_collections/hashmap1.rs"
 mode = "test"
 hint = """
 Hint 1: Take a look at the return type of the function to figure out
@@ -415,7 +415,7 @@ Hint 2: Number of fruits should be at least 5. And you have to put
 
 [[exercises]]
 name = "hashmap2"
-path = "exercises/collections/hashmap2.rs"
+path = "exercises/9_collections/hashmap2.rs"
 mode = "test"
 hint = """
 Use the `entry()` and `or_insert()` methods of `HashMap` to achieve this.
@@ -426,7 +426,7 @@ Learn more at https://doc.rust-lang.org/stable/book/ch08-03-hash-maps.html#only-
 
 [[exercises]]
 name = "strings1"
-path = "exercises/strings/strings1.rs"
+path = "exercises/10_strings/strings1.rs"
 mode = "compile"
 hint = """
 The `current_favorite_color` function is currently returning a string slice with the `'static`
@@ -438,7 +438,7 @@ trait."""
 
 [[exercises]]
 name = "strings2"
-path = "exercises/strings/strings2.rs"
+path = "exercises/10_strings/strings2.rs"
 mode = "compile"
 hint = """
 Yes, it would be really easy to fix this by just changing the value bound to `word` to be a
@@ -457,7 +457,7 @@ hint = "No hints this time ;)"
 
 [[exercises]]
 name = "errors1"
-path = "exercises/error_handling/errors1.rs"
+path = "exercises/11_error_handling/errors1.rs"
 mode = "test"
 hint = """
 `Err` is one of the variants of `Result`, so what the 2nd test is saying
@@ -476,7 +476,7 @@ To make this change, you'll need to:
 
 [[exercises]]
 name = "errors2"
-path = "exercises/error_handling/errors2.rs"
+path = "exercises/11_error_handling/errors2.rs"
 mode = "test"
 hint = """
 One way to handle this is using a `match` statement on
@@ -489,14 +489,14 @@ and give it a try!"""
 
 [[exercises]]
 name = "errors3"
-path = "exercises/error_handling/errors3.rs"
+path = "exercises/11_error_handling/errors3.rs"
 mode = "compile"
 hint = """
 If other functions can return a `Result`, why shouldn't `main`?"""
 
 [[exercises]]
 name = "errors4"
-path = "exercises/error_handling/errors4.rs"
+path = "exercises/11_error_handling/errors4.rs"
 mode = "test"
 hint = """
 `PositiveNonzeroInteger::new` is always creating a new instance and returning an `Ok` result.
@@ -505,7 +505,7 @@ returning an `Ok` result if those checks determine that everything is... okay :)
 
 [[exercises]]
 name = "errors5"
-path = "exercises/error_handling/errors5.rs"
+path = "exercises/11_error_handling/errors5.rs"
 mode = "compile"
 hint = """
 Hint: There are two different possible `Result` types produced within
@@ -533,7 +533,7 @@ https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/reen
 
 [[exercises]]
 name = "errors6"
-path = "exercises/error_handling/errors6.rs"
+path = "exercises/11_error_handling/errors6.rs"
 mode = "test"
 hint = """
 This exercise uses a completed version of `PositiveNonzeroInteger` from
@@ -555,7 +555,7 @@ https://doc.rust-lang.org/std/result/enum.Result.html#method.map_err"""
 
 [[exercises]]
 name = "generics1"
-path = "exercises/generics/generics1.rs"
+path = "exercises/12_generics/generics1.rs"
 mode = "compile"
 hint = """
 Vectors in rust make use of generics to create dynamically sized arrays of any type.
@@ -563,7 +563,7 @@ You need to tell the compiler what type we are pushing onto this vector."""
 
 [[exercises]]
 name = "generics2"
-path = "exercises/generics/generics2.rs"
+path = "exercises/12_generics/generics2.rs"
 mode = "test"
 hint = """
 Currently we are wrapping only values of type 'u32'.
@@ -574,7 +574,7 @@ If you are still stuck https://doc.rust-lang.org/stable/book/ch10-01-syntax.html
 
 [[exercises]]
 name = "generics3"
-path = "exercises/generics/generics3.rs"
+path = "exercises/12_generics/generics3.rs"
 mode = "test"
 hint = """
 To find the best solution to this challenge you're going to need to think back to your
@@ -589,7 +589,7 @@ of the struct slightly too...you can do it!
 
 [[exercises]]
 name = "option1"
-path = "exercises/option/option1.rs"
+path = "exercises/13_option/option1.rs"
 mode = "compile"
 hint = """
 Hint 1: Check out some functions of Option:
@@ -605,7 +605,7 @@ Hint 2: There are no sensible defaults for the value of an Array; the values nee
 
 [[exercises]]
 name = "option2"
-path = "exercises/option/option2.rs"
+path = "exercises/13_option/option2.rs"
 mode = "compile"
 hint = """
 check out:
@@ -619,7 +619,7 @@ Also see Option::flatten
 
 [[exercises]]
 name = "option3"
-path = "exercises/option/option3.rs"
+path = "exercises/13_option/option3.rs"
 mode = "compile"
 hint = """
 The compiler says a partial move happened in the `match`
@@ -631,7 +631,7 @@ read: https://doc.rust-lang.org/std/keyword.ref.html"""
 
 [[exercises]]
 name = "traits1"
-path = "exercises/traits/traits1.rs"
+path = "exercises/14_traits/traits1.rs"
 mode = "test"
 hint = """
 A discussion about Traits in Rust can be found at:
@@ -640,7 +640,7 @@ https://doc.rust-lang.org/book/ch10-02-traits.html
 
 [[exercises]]
 name = "traits2"
-path = "exercises/traits/traits2.rs"
+path = "exercises/14_traits/traits2.rs"
 mode = "test"
 hint = """
 Notice how the trait takes ownership of 'self',and returns `Self'.
@@ -653,7 +653,7 @@ the documentation at: https://doc.rust-lang.org/std/vec/struct.Vec.html"""
 
 [[exercises]]
 name = "tests1"
-path = "exercises/tests/tests1.rs"
+path = "exercises/15_tests/tests1.rs"
 mode = "test"
 hint = """
 You don't even need to write any code to test -- you can just test values and run that, even
@@ -664,7 +664,7 @@ to `assert!` and see which ones compile, which ones pass, and which ones fail :)
 
 [[exercises]]
 name = "tests2"
-path = "exercises/tests/tests2.rs"
+path = "exercises/15_tests/tests2.rs"
 mode = "test"
 hint = """
 Like the previous exercise, you don't need to write any code to get this test to compile and
@@ -674,7 +674,7 @@ that are of different types! Try switching which argument comes first and which 
 
 [[exercises]]
 name = "tests3"
-path = "exercises/tests/tests3.rs"
+path = "exercises/15_tests/tests3.rs"
 mode = "test"
 hint = """
 You can call a function right where you're passing arguments to `assert!` -- so you could do
@@ -693,7 +693,7 @@ hint = "No hints this time ;)"
 
 [[exercises]]
 name = "box1"
-path = "exercises/standard_library_types/box1.rs"
+path = "exercises/16_standard_library_types/box1.rs"
 mode = "test"
 hint = """
 Step 1
@@ -711,7 +711,7 @@ and try other types!
 
 [[exercises]]
 name = "arc1"
-path = "exercises/standard_library_types/arc1.rs"
+path = "exercises/16_standard_library_types/arc1.rs"
 mode = "compile"
 hint = """
 Make `shared_numbers` be an `Arc` from the numbers vector. Then, in order
@@ -728,7 +728,7 @@ https://doc.rust-lang.org/stable/book/ch16-00-concurrency.html
 
 [[exercises]]
 name = "iterators1"
-path = "exercises/standard_library_types/iterators1.rs"
+path = "exercises/16_standard_library_types/iterators1.rs"
 mode = "compile"
 hint = """
 Step 1:
@@ -745,7 +745,7 @@ https://doc.rust-lang.org/std/iter/trait.Iterator.html for some ideas.
 
 [[exercises]]
 name = "iterators2"
-path = "exercises/standard_library_types/iterators2.rs"
+path = "exercises/16_standard_library_types/iterators2.rs"
 mode = "test"
 hint = """
 Step 1
@@ -766,7 +766,7 @@ and very general. Rust just needs to know the desired type."""
 
 [[exercises]]
 name = "iterators3"
-path = "exercises/standard_library_types/iterators3.rs"
+path = "exercises/16_standard_library_types/iterators3.rs"
 mode = "test"
 hint = """
 The divide function needs to return the correct error when even division is not
@@ -784,7 +784,7 @@ the `FromIterator` trait is used in `collect()`."""
 
 [[exercises]]
 name = "iterators4"
-path = "exercises/standard_library_types/iterators4.rs"
+path = "exercises/16_standard_library_types/iterators4.rs"
 mode = "test"
 hint = """
 In an imperative language, you might write a for loop that updates
@@ -794,7 +794,7 @@ approach, computing the factorial elegantly with ranges and iterators."""
 
 [[exercises]]
 name = "iterators5"
-path = "exercises/standard_library_types/iterators5.rs"
+path = "exercises/16_standard_library_types/iterators5.rs"
 mode = "test"
 hint = """
 The documentation for the std::iter::Iterator trait contains numerous methods
@@ -815,7 +815,7 @@ a different method that could make your code more compact than using fold."""
 
 [[exercises]]
 name = "threads1"
-path = "exercises/threads/threads1.rs"
+path = "exercises/17_threads/threads1.rs"
 mode = "compile"
 hint = """
 `Arc` is an Atomic Reference Counted pointer that allows safe, shared access
@@ -854,7 +854,7 @@ what you've learned :)"""
 
 [[exercises]]
 name = "macros1"
-path = "exercises/macros/macros1.rs"
+path = "exercises/18_macros/macros1.rs"
 mode = "compile"
 hint = """
 When you call a macro, you need to add something special compared to a
@@ -863,7 +863,7 @@ regular function call. If you're stuck, take a look at what's inside
 
 [[exercises]]
 name = "macros2"
-path = "exercises/macros/macros2.rs"
+path = "exercises/18_macros/macros2.rs"
 mode = "compile"
 hint = """
 Macros don't quite play by the same rules as the rest of Rust, in terms of
@@ -874,7 +874,7 @@ Unlike other things in Rust, the order of "where you define a macro" versus
 
 [[exercises]]
 name = "macros3"
-path = "exercises/macros/macros3.rs"
+path = "exercises/18_macros/macros3.rs"
 mode = "compile"
 hint = """
 In order to use a macro outside of its module, you need to do something
@@ -885,7 +885,7 @@ exported macros, if you've seen any of those around."""
 
 [[exercises]]
 name = "macros4"
-path = "exercises/macros/macros4.rs"
+path = "exercises/18_macros/macros4.rs"
 mode = "compile"
 hint = """
 You only need to add a single character to make this compile.
@@ -904,7 +904,7 @@ hint = "No hints this time ;)"
 
 [[exercises]]
 name = "clippy1"
-path = "exercises/clippy/clippy1.rs"
+path = "exercises/19_clippy/clippy1.rs"
 mode = "clippy"
 hint = """
 Not every floating point value can be represented exactly in binary values in
@@ -919,7 +919,7 @@ https://doc.rust-lang.org/stable/std/primitive.f32.html#associatedconstant.EPSIL
 
 [[exercises]]
 name = "clippy2"
-path = "exercises/clippy/clippy2.rs"
+path = "exercises/19_clippy/clippy2.rs"
 mode = "clippy"
 hint = """
 `for` loops over Option values are more clearly expressed as an `if let`"""
@@ -928,7 +928,7 @@ hint = """
 
 [[exercises]]
 name = "using_as"
-path = "exercises/conversions/using_as.rs"
+path = "exercises/20_conversions/using_as.rs"
 mode = "test"
 hint = """
 Use the `as` operator to cast one of the operands in the last line of the
@@ -936,14 +936,14 @@ Use the `as` operator to cast one of the operands in the last line of the
 
 [[exercises]]
 name = "from_into"
-path = "exercises/conversions/from_into.rs"
+path = "exercises/20_conversions/from_into.rs"
 mode = "test"
 hint = """
 Follow the steps provided right before the `From` implementation"""
 
 [[exercises]]
 name = "try_from_into"
-path = "exercises/conversions/try_from_into.rs"
+path = "exercises/20_conversions/try_from_into.rs"
 mode = "test"
 hint = """
 Follow the steps provided right before the `TryFrom` implementation.
@@ -963,14 +963,14 @@ type for returning from the function."""
 
 [[exercises]]
 name = "as_ref_mut"
-path = "exercises/conversions/as_ref_mut.rs"
+path = "exercises/20_conversions/as_ref_mut.rs"
 mode = "test"
 hint = """
 Add AsRef<str> as a trait bound to the functions."""
 
 [[exercises]]
 name = "from_str"
-path = "exercises/conversions/from_str.rs"
+path = "exercises/20_conversions/from_str.rs"
 mode = "test"
 hint = """
 The implementation of FromStr should return an Ok with a Person object,
