@@ -23,7 +23,7 @@ mod run;
 mod verify;
 
 // In sync with crate version
-const VERSION: &str = "4.4.0";
+const VERSION: &str = "4.5.0";
 
 #[derive(FromArgs, PartialEq, Debug)]
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
@@ -203,7 +203,7 @@ fn main() {
         Subcommands::Run(subargs) => {
             let exercise = find_exercise(&subargs.name, &exercises);
 
-            run(&exercise, verbose).unwrap_or_else(|_| std::process::exit(1));
+            run(exercise, verbose).unwrap_or_else(|_| std::process::exit(1));
         }
 
         Subcommands::Hint(subargs) => {
@@ -286,13 +286,24 @@ fn spawn_watch_shell(failed_exercise_hint: &Arc<Mutex<Option<String>>>) {
 }
 
 fn find_exercise<'a>(name: &str, exercises: &'a [Exercise]) -> &'a Exercise {
-    exercises
-        .iter()
-        .find(|e| e.name == name)
-        .unwrap_or_else(|| {
-            println!("No exercise found for '{}'!", name);
-            std::process::exit(1)
-        })
+    if name.eq("next") {
+        exercises
+            .iter()
+            .find(|e| !e.looks_done())
+            .unwrap_or_else(|| {
+                println!("🎉 Congratulations! You have done all the exercises!");
+                println!("🔚 There are no more exercises to do next!");
+                std::process::exit(1)
+            })
+    } else {
+        exercises
+            .iter()
+            .find(|e| e.name == name)
+            .unwrap_or_else(|| {
+                println!("No exercise found for '{}'!", name);
+                std::process::exit(1)
+            })
+    }
 }
 
 fn watch(exercises: &[Exercise], verbose: bool) -> notify::Result<()> {

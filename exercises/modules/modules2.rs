@@ -1,4 +1,6 @@
 // modules2.rs
+// You can bring module paths into scopes and provide new names for them with the
+// 'use' and 'as' keywords. Fix these 'use' statements to make the code compile.
 // Make me compile! Execute `rustlings hint modules2` for hints :)
 
 

@@ -210,6 +210,18 @@ So the end goal is to:
    - since we're not creating a new vec in `main` anymore, we need to create
      a new vec in `fill_vec`, similarly to the way we did in `main`"""
 
+[[exercises]]
+name = "move_semantics5"
+path = "exercises/move_semantics/move_semantics5.rs"
+mode = "compile"
+hint = """
+Carefully reason about the range in which each mutable reference is in
+vogue. Does it help to update the value of referent (x) immediately after
+the mutable reference is taken? Read more about 'Mutable References'
+in the book's section References and Borrowing':
+https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html#mutable-references.
+"""
+
 # PRIMITIVE TYPES
 
 [[exercises]]
@@ -350,11 +362,19 @@ name = "modules2"
 path = "exercises/modules/modules2.rs"
 mode = "compile"
 hint = """
-The delicious_snacks module is trying to present an external
-interface (the `fruit` and `veggie` constants) that is different than
-its internal structure (the `fruits` and `veggies` modules and
-associated constants). It's almost there except for one keyword missing for
-each constant."""
+The delicious_snacks module is trying to present an external interface that is 
+different than its internal structure (the `fruits` and `veggies` modules and
+associated constants). Complete the `use` statemants to fit the uses in main and
+find the one keyword missing for both constants."""
+
+[[exercises]]
+name = "modules3"
+path = "exercises/modules/modules3.rs"
+mode = "compile"
+hint = """
+UNIX_EPOCH and SystemTime are declared in the std::time module. Add a use statement
+for these two to bring them into scope. You can use nested paths or the glob
+operator to bring these two in using only one line."""
 
 # COLLECTIONS
 
@@ -475,42 +495,61 @@ hint = """
 If other functions can return a `Result`, why shouldn't `main`?"""
 
 [[exercises]]
-name = "errorsn"
-path = "exercises/error_handling/errorsn.rs"
+name = "errors4"
+path = "exercises/error_handling/errors4.rs"
 mode = "test"
 hint = """
-First hint: To figure out what type should go where the ??? is, take a look
-at the test helper function `test_with_str`, since it returns whatever
-`read_and_validate` returns and `test_with_str` has its signature fully
-specified.
+`PositiveNonzeroInteger::new` is always creating a new instance and returning an `Ok` result.
+It should be doing some checking, returning an `Err` result if those checks fail, and only
+returning an `Ok` result if those checks determine that everything is... okay :)"""
 
-
-Next hint: There are three places in `read_and_validate` that we call a
-function that returns a `Result` (that is, the functions might fail).
-Apply the `?` operator on those calls so that we return immediately from
-`read_and_validate` if those function calls fail.
-
+[[exercises]]
+name = "errors5"
+path = "exercises/error_handling/errors5.rs"
+mode = "compile"
+hint = """
+Hint: There are two different possible `Result` types produced within
+`main()`, which are propagated using `?` operators. How do we declare a
+return type from `main()` that allows both?
 
 Another hint: under the hood, the `?` operator calls `From::from`
-on the error value to convert it to a boxed trait object, a Box<dyn error::Error>,
-which is polymorphic-- that means that lots of different kinds of errors
-can be returned from the same function because all errors act the same
-since they all implement the `error::Error` trait.
+on the error value to convert it to a boxed trait object, a
+`Box<dyn error::Error>`, which is polymorphic-- that means that lots of
+different kinds of errors can be returned from the same function because
+all errors act the same since they all implement the `error::Error` trait.
 Check out this section of the book:
 https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator
 
+This exercise uses some concepts that we won't get to until later in the
+course, like `Box` and the `From` trait. It's not important to understand
+them in detail right now, but you can read ahead if you like.
 
-Another another hint: Note that because the `?` operator returns
-the *unwrapped* value in the `Ok` case, if we want to return a `Result` from
-`read_and_validate` for *its* success case, we'll have to rewrap a value
-that we got from the return value of a `?`ed call in an `Ok`-- this will
-look like `Ok(something)`.
+Read more about boxing errors:
+https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/boxing_errors.html
 
+Read more about using the `?` operator with boxed errors:
+https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/reenter_question_mark.html
+"""
 
-Another another another hint: `Result`s must be "used", that is, you'll
-get a warning if you don't handle a `Result` that you get in your
-function. Read more about that in the `std::result` module docs:
-https://doc.rust-lang.org/std/result/#results-must-be-used"""
+[[exercises]]
+name = "errors6"
+path = "exercises/error_handling/errors6.rs"
+mode = "test"
+hint = """
+This exercise uses a completed version of `PositiveNonzeroInteger` from
+errors4.
+
+Below the line that TODO asks you to change, there is an example of using
+the `map_err()` method on a `Result` to transform one type of error into
+another. Try using something similar on the `Result` from `parse()`. You
+might use the `?` operator to return early from the function, or you might
+use a `match` expression, or maybe there's another way!
+
+You can create another function inside `impl ParsePosNonzeroError` to use
+with `map_err()`.
+
+Read more about `map_err()` in the `std::result` documentation:
+https://doc.rust-lang.org/std/result/enum.Result.html#method.map_err"""
 
 # Generics
 
@@ -546,7 +585,7 @@ ReportCard struct generic, but also the correct property - you will need to chan
 of the struct slightly too...you can do it!
 """
 
-# OPTIONS / RESULTS
+# OPTIONS
 
 [[exercises]]
 name = "option1"
@@ -579,13 +618,14 @@ Also see Option::flatten
 """
 
 [[exercises]]
-name = "result1"
-path = "exercises/error_handling/result1.rs"
-mode = "test"
+name = "option3"
+path = "exercises/option/option3.rs"
+mode = "compile"
 hint = """
-`PositiveNonzeroInteger::new` is always creating a new instance and returning an `Ok` result.
-It should be doing some checking, returning an `Err` result if those checks fail, and only
-returning an `Ok` result if those checks determine that everything is... okay :)"""
+The compiler says a partial move happened in the `match`
+statement. How can this be avoided? The compiler shows the correction
+needed. After making the correction as suggested by the compiler, do
+read: https://doc.rust-lang.org/std/keyword.ref.html"""
 
 # TRAITS
 
@@ -737,7 +777,10 @@ The division_results variable needs to be collected into a collection type.
 The result_with_list function needs to return a single Result where the success
 case is a vector of integers and the failure case is a DivisionError.
 
-The list_of_results function needs to return a vector of results."""
+The list_of_results function needs to return a vector of results.
+
+See https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.collect for how 
+the `FromIterator` trait is used in `collect()`."""
 
 [[exercises]]
 name = "iterators4"
@@ -763,7 +806,10 @@ test count_iterator.
 The collection variable in count_collection_iterator is a slice of HashMaps. It
 needs to be converted into an iterator in order to use the iterator methods.
 
-The fold method can be useful in the count_collection_iterator function."""
+The fold method can be useful in the count_collection_iterator function.
+
+For a further challenge, consult the documentation for Iterator to find
+a different method that could make your code more compact than using fold."""
 
 # THREADS
 
@@ -861,7 +907,15 @@ name = "clippy1"
 path = "exercises/clippy/clippy1.rs"
 mode = "clippy"
 hint = """
-Floating point calculations are usually imprecise, so asking if two values are exactly equal is asking for trouble"""
+Not every floating point value can be represented exactly in binary values in
+memory. Take a look at the description of 
+https://doc.rust-lang.org/stable/std/primitive.f32.html
+When using the binary compare operators with floating points you won't compare
+the floating point values but the binary representation in memory. This is 
+usually not what you would like to do. 
+See the suggestions of the clippy warning in compile output and use the
+machine epsilon value...
+https://doc.rust-lang.org/stable/std/primitive.f32.html#associatedconstant.EPSILON"""
 
 [[exercises]]
 name = "clippy2"
@@ -893,7 +947,19 @@ path = "exercises/conversions/try_from_into.rs"
 mode = "test"
 hint = """
 Follow the steps provided right before the `TryFrom` implementation.
-You can also use the example at https://doc.rust-lang.org/std/convert/trait.TryFrom.html"""
+You can also use the example at https://doc.rust-lang.org/std/convert/trait.TryFrom.html
+
+You might want to look back at the exercise errors5 (or its hints) to remind
+yourself about how `Box<dyn Error>` works.
+
+If you're trying to return a string as an error, note that neither `str`
+nor `String` implements `error::Error`. However, there is an implementation
+of `From<&str>` for `Box<dyn Error>`. This means you can use `.into()` or
+the `?` operator to convert your string into the correct error type.
+
+If you're having trouble with using the `?` operator to convert an error string,
+recall that `?` works to convert `Err(something)` into the appropriate error
+type for returning from the function."""
 
 [[exercises]]
 name = "as_ref_mut"
@@ -909,4 +975,7 @@ mode = "test"
 hint = """
 The implementation of FromStr should return an Ok with a Person object,
 or an Err with an error if the string is not valid.
-This is almost like the `try_from_into` exercise."""
+This is almost like the `try_from_into` exercise.
+
+If you're having trouble with returning the correct error type, see the
+hints for try_from_into."""

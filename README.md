@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-91-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-104-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️
@@ -36,7 +36,7 @@ This will install Rustlings and give you access to the `rustlings` command. Run 
 In PowerShell (Run as Administrator), set `ExecutionPolicy` to `RemoteSigned`:
 
 ```ps
-Set-ExecutionPolicy RemoteSigned
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
 Then, you can run:
@@ -57,12 +57,12 @@ When you get a permission denied message then you have to exclude the directory 
 
 ## Manually
 
-Basically: Clone the repository, checkout to the latest tag, run `cargo install`.
+Basically: Clone the repository at the latest tag, run `cargo install`.
 
 ```bash
-git clone https://github.com/rust-lang/rustlings
+# find out the latest version at https://github.com/rust-lang/rustlings/releases/latest (on edit 4.5.0)
+git clone -b 4.5.0 --depth 1 https://github.com/rust-lang/rustlings
 cd rustlings
-git checkout tags/4.4.0 # or whatever the latest version is (find out at https://github.com/rust-lang/rustlings/releases/latest)
 cargo install --force --path .
 ```
 
@@ -97,11 +97,23 @@ In case you want to go by your own order, or want to only verify a single exerci
 rustlings run myExercise1
 ```
 
+Or simply use the following command to run the next unsolved exercise in the course:
+
+```bash
+rustlings run next
+```
+
 In case you get stuck, you can run the following command to get a hint for your
 exercise:
 
 ``` bash
 rustlings hint myExercise1
+```
+
+You can also get the hint for the next unsolved exercise with the following command:
+
+``` bash
+rustlings hint next
 ```
 
 To check your progress, you can run the following command:
@@ -279,6 +291,21 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/hongshaoyang"><img src="https://avatars.githubusercontent.com/u/19281800?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Shao Yang Hong</b></sub></a><br /><a href="#content-hongshaoyang" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/bmacer"><img src="https://avatars.githubusercontent.com/u/13931806?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Brandon Macer</b></sub></a><br /><a href="#content-bmacer" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/stoiandan"><img src="https://avatars.githubusercontent.com/u/10388612?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Stoian Dan</b></sub></a><br /><a href="#content-stoiandan" title="Content">🖋</a></td>
+    <td align="center"><a href="https://about.me/pjdelport"><img src="https://avatars.githubusercontent.com/u/630271?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Pi Delport</b></sub></a><br /><a href="#content-PiDelport" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/sateeshkumarb"><img src="https://avatars.githubusercontent.com/u/429263?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Sateesh </b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=sateeshkumarb" title="Code">💻</a> <a href="#content-sateeshkumarb" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/kayuapi"><img src="https://avatars.githubusercontent.com/u/10304328?v=4?s=100" width="100px;" alt=""/><br /><sub><b>ZC</b></sub></a><br /><a href="#content-kayuapi" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/hyperparabolic"><img src="https://avatars.githubusercontent.com/u/12348474?v=4?s=100" width="100px;" alt=""/><br /><sub><b>hyperparabolic</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=hyperparabolic" title="Code">💻</a></td>
+    <td align="center"><a href="https://www.net4visions.at"><img src="https://avatars.githubusercontent.com/u/5228369?v=4?s=100" width="100px;" alt=""/><br /><sub><b>arlecchino</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=kolbma" title="Documentation">📖</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://richthofen.io/"><img src="https://avatars.githubusercontent.com/u/7576730?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Richthofen</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=jazzplato" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/cseltol"><img src="https://avatars.githubusercontent.com/u/64264529?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ivan Nerazumov</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=cseltol" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/lauralindzey"><img src="https://avatars.githubusercontent.com/u/65185744?v=4?s=100" width="100px;" alt=""/><br /><sub><b>lauralindzey</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=lauralindzey" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/sinharaksh1t"><img src="https://avatars.githubusercontent.com/u/28585848?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Rakshit Sinha</b></sub></a><br /><a href="#content-sinharaksh1t" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/dbednar230"><img src="https://avatars.githubusercontent.com/u/54457902?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Damian</b></sub></a><br /><a href="#content-dbednar230" title="Content">🖋</a></td>
+    <td align="center"><a href="https://benarmstead.co.uk"><img src="https://avatars.githubusercontent.com/u/70973680?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ben Armstead</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=benarmstead" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/anuk909"><img src="https://avatars.githubusercontent.com/u/34924662?v=4?s=100" width="100px;" alt=""/><br /><sub><b>anuk909</b></sub></a><br /><a href="#content-anuk909" title="Content">🖋</a> <a href="https://github.com/rust-lang/rustlings/commits?author=anuk909" title="Code">💻</a></td>
+    <td align="center"><a href="https://granddaifuku.com/"><img src="https://avatars.githubusercontent.com/u/49578068?v=4?s=100" width="100px;" alt=""/><br /><sub><b>granddaifuku</b></sub></a><br /><a href="#content-granddaifuku" title="Content">🖋</a></td>
   </tr>
 </table>
 
