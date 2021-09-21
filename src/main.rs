@@ -264,7 +264,7 @@ fn main() {
 
 fn spawn_watch_shell(failed_exercise_hint: &Arc<Mutex<Option<String>>>) {
     let failed_exercise_hint = Arc::clone(failed_exercise_hint);
-    println!("Type 'hint' or open the corresponding README.md file to get help or type 'clear' to clear the screen.");
+    println!("Welcome to watch mode! You can type 'help' to get an overview of the commands you can use here.");
     thread::spawn(move || loop {
         let mut input = String::new();
         match io::stdin().read_line(&mut input) {
@@ -276,6 +276,18 @@ fn spawn_watch_shell(failed_exercise_hint: &Arc<Mutex<Option<String>>>) {
                     }
                 } else if input.eq("clear") {
                     println!("\x1B[2J\x1B[1;1H");
+                } else if input.eq("quit") {
+                    println!("Bye!");
+                    std::process::exit(0);
+                } else if input.eq("help") {
+                    println!("Commands available to you in watch mode:");
+                    println!("  hint  - prints the current exercise's hint");
+                    println!("  clear - clears the screen");
+                    println!("  quit  - quits watch mode");
+                    println!("  help  - displays this help message");
+                    println!("");
+                    println!("Watch mode automatically re-evaluates the current exercise");
+                    println!("when you edit a file's contents.")
                 } else {
                     println!("unknown command: {}", input);
                 }
