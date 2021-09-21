@@ -966,6 +966,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "Weilet",
+      "name": "Weilet",
+      "avatar_url": "https://avatars.githubusercontent.com/u/32561597?v=4",
+      "profile": "https://weilet.me",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
