@@ -285,7 +285,7 @@ fn spawn_watch_shell(failed_exercise_hint: &Arc<Mutex<Option<String>>>) {
                     println!("  clear - clears the screen");
                     println!("  quit  - quits watch mode");
                     println!("  help  - displays this help message");
-                    println!("");
+                    println!();
                     println!("Watch mode automatically re-evaluates the current exercise");
                     println!("when you edit a file's contents.")
                 } else {
