@@ -1,3 +1,29 @@
+<a name="4.6.0"></a>
+## 4.6.0 (2021-09-25)
+
+
+#### Features
+
+*   add advanced_errs2 ([abd6b70c](https://github.com/rust-lang/rustlings/commit/abd6b70c72dc6426752ff41f09160b839e5c449e))
+*   add advanced_errs1 ([882d535b](https://github.com/rust-lang/rustlings/commit/882d535ba8628d5e0b37e8664b3e2f26260b2671))
+*   Add a farewell message when quitting `watch` ([1caef0b4](https://github.com/rust-lang/rustlings/commit/1caef0b43494c8b8cdd6c9260147e70d510f1aca))
+*   add more watch commands ([a7dc080b](https://github.com/rust-lang/rustlings/commit/a7dc080b95e49146fbaafe6922a6de2f8cb1582a), closes [#842](https://github.com/rust-lang/rustlings/issues/842))
+* **modules:**  update exercises, add modules3 (#822) ([dfd2fab4](https://github.com/rust-lang/rustlings/commit/dfd2fab4f33d1bf59e2e5ee03123c0c9a67a9481))
+* **quiz1:**  add default function name in comment (#838) ([0a11bad7](https://github.com/rust-lang/rustlings/commit/0a11bad71402b5403143d642f439f57931278c07))
+
+#### Bug Fixes
+
+*   Correct small typo in exercises/conversions/from_str.rs ([86cc8529](https://github.com/rust-lang/rustlings/commit/86cc85295ae36948963ae52882e285d7e3e29323))
+* **cli:**  typo in exercise.rs (#848) ([06d5c097](https://github.com/rust-lang/rustlings/commit/06d5c0973a3dffa3c6c6f70acb775d4c6630323c))
+* **from_str, try_from_into:**  custom error types ([2dc93cad](https://github.com/rust-lang/rustlings/commit/2dc93caddad43821743e4903d89b355df58d7a49))
+* **modules2:**  fix typo (#835) ([1c3beb0a](https://github.com/rust-lang/rustlings/commit/1c3beb0a59178c950dc05fe8ee2346b017429ae0))
+* **move_semantics5:**
+  *  change &mut *y to &mut x (#814) ([d75759e8](https://github.com/rust-lang/rustlings/commit/d75759e829fdcd64ef071cf4b6eae2a011a7718b))
+  *  Clarify instructions ([df25684c](https://github.com/rust-lang/rustlings/commit/df25684cb79f8413915e00b5efef29369849cef1))
+* **quiz1:**  Fix inconsistent wording (#826) ([03131a3d](https://github.com/rust-lang/rustlings/commit/03131a3d35d9842598150f9da817f7cc26e2669a))
+
+
+
 <a name="4.5.0"></a>
 ## 4.5.0 (2021-07-07)
 

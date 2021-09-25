@@ -11,7 +11,7 @@ use std::io::{self, prelude::*};
 use std::path::Path;
 use std::process::{Command, Stdio};
 use std::sync::atomic::{AtomicBool, Ordering};
-use std::sync::mpsc::{RecvTimeoutError, channel};
+use std::sync::mpsc::{channel, RecvTimeoutError};
 use std::sync::{Arc, Mutex};
 use std::thread;
 use std::time::Duration;
@@ -24,7 +24,7 @@ mod run;
 mod verify;
 
 // In sync with crate version
-const VERSION: &str = "4.5.0";
+const VERSION: &str = "4.6.0";
 
 #[derive(FromArgs, PartialEq, Debug)]
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
@@ -217,61 +217,64 @@ fn main() {
             verify(&exercises, verbose).unwrap_or_else(|_| std::process::exit(1));
         }
 
-        Subcommands::Watch(_subargs) => {
-            match watch(&exercises, verbose) {
-                Err(e) => {
-                    println!(
-                        "Error: Could not watch your progress. Error message was {:?}.",
-                        e
-                    );
-                    println!("Most likely you've run out of disk space or your 'inotify limit' has been reached.");
-                    std::process::exit(1);
-                }
-                Ok(WatchStatus::Finished) => {
-                    println!(
-                        "{emoji} All exercises completed! {emoji}",
-                        emoji = Emoji("🎉", "★")
-                    );
-                    println!();
-                    println!("+----------------------------------------------------+");
-                    println!("|          You made it to the Fe-nish line!          |");
-                    println!("+--------------------------  ------------------------+");
-                    println!("                          \\/                         ");
-                    println!("     ▒▒          ▒▒▒▒▒▒▒▒      ▒▒▒▒▒▒▒▒          ▒▒   ");
-                    println!("   ▒▒▒▒  ▒▒    ▒▒        ▒▒  ▒▒        ▒▒    ▒▒  ▒▒▒▒ ");
-                    println!("   ▒▒▒▒  ▒▒  ▒▒            ▒▒            ▒▒  ▒▒  ▒▒▒▒ ");
-                    println!(" ░░▒▒▒▒░░▒▒  ▒▒            ▒▒            ▒▒  ▒▒░░▒▒▒▒ ");
-                    println!("   ▓▓▓▓▓▓▓▓  ▓▓      ▓▓██  ▓▓  ▓▓██      ▓▓  ▓▓▓▓▓▓▓▓ ");
-                    println!("     ▒▒▒▒    ▒▒      ████  ▒▒  ████      ▒▒░░  ▒▒▒▒   ");
-                    println!("       ▒▒  ▒▒▒▒▒▒        ▒▒▒▒▒▒        ▒▒▒▒▒▒  ▒▒     ");
-                    println!("         ▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▒▒▒▒▒▒▒▒▓▓▒▒▓▓▒▒▒▒▒▒▒▒       ");
-                    println!("           ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒         ");
-                    println!("             ▒▒▒▒▒▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒▒▒▒▒▒           ");
-                    println!("           ▒▒  ▒▒▒▒▒▒▒▒▒▒██████▒▒▒▒▒▒▒▒▒▒  ▒▒         ");
-                    println!("         ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒       ");
-                    println!("       ▒▒    ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒    ▒▒     ");
-                    println!("       ▒▒  ▒▒    ▒▒                  ▒▒    ▒▒  ▒▒     ");
-                    println!("           ▒▒  ▒▒                      ▒▒  ▒▒         ");
-                    println!();
-                    println!("We hope you enjoyed learning about the various aspects of Rust!");
-                    println!(
-                        "If you noticed any issues, please don't hesitate to report them to our repo."
-                    );
-                    println!("You can also contribute your own exercises to help the greater community!");
-                    println!();
-                    println!("Before reporting an issue or contributing, please read our guidelines:");
-                    println!("https://github.com/rust-lang/rustlings/blob/main/CONTRIBUTING.md");
-                }
-                Ok(WatchStatus::Unfinished) => {
-                    println!("We hope you're enjoying learning about Rust!");
-                    println!("If you want to continue working on the exercises at a later point, you can simply run `rustlings watch` again");
-                }
+        Subcommands::Watch(_subargs) => match watch(&exercises, verbose) {
+            Err(e) => {
+                println!(
+                    "Error: Could not watch your progress. Error message was {:?}.",
+                    e
+                );
+                println!("Most likely you've run out of disk space or your 'inotify limit' has been reached.");
+                std::process::exit(1);
             }
-        }
+            Ok(WatchStatus::Finished) => {
+                println!(
+                    "{emoji} All exercises completed! {emoji}",
+                    emoji = Emoji("🎉", "★")
+                );
+                println!();
+                println!("+----------------------------------------------------+");
+                println!("|          You made it to the Fe-nish line!          |");
+                println!("+--------------------------  ------------------------+");
+                println!("                          \\/                         ");
+                println!("     ▒▒          ▒▒▒▒▒▒▒▒      ▒▒▒▒▒▒▒▒          ▒▒   ");
+                println!("   ▒▒▒▒  ▒▒    ▒▒        ▒▒  ▒▒        ▒▒    ▒▒  ▒▒▒▒ ");
+                println!("   ▒▒▒▒  ▒▒  ▒▒            ▒▒            ▒▒  ▒▒  ▒▒▒▒ ");
+                println!(" ░░▒▒▒▒░░▒▒  ▒▒            ▒▒            ▒▒  ▒▒░░▒▒▒▒ ");
+                println!("   ▓▓▓▓▓▓▓▓  ▓▓      ▓▓██  ▓▓  ▓▓██      ▓▓  ▓▓▓▓▓▓▓▓ ");
+                println!("     ▒▒▒▒    ▒▒      ████  ▒▒  ████      ▒▒░░  ▒▒▒▒   ");
+                println!("       ▒▒  ▒▒▒▒▒▒        ▒▒▒▒▒▒        ▒▒▒▒▒▒  ▒▒     ");
+                println!("         ▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▒▒▒▒▒▒▒▒▓▓▒▒▓▓▒▒▒▒▒▒▒▒       ");
+                println!("           ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒         ");
+                println!("             ▒▒▒▒▒▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒▒▒▒▒▒           ");
+                println!("           ▒▒  ▒▒▒▒▒▒▒▒▒▒██████▒▒▒▒▒▒▒▒▒▒  ▒▒         ");
+                println!("         ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒       ");
+                println!("       ▒▒    ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒    ▒▒     ");
+                println!("       ▒▒  ▒▒    ▒▒                  ▒▒    ▒▒  ▒▒     ");
+                println!("           ▒▒  ▒▒                      ▒▒  ▒▒         ");
+                println!();
+                println!("We hope you enjoyed learning about the various aspects of Rust!");
+                println!(
+                    "If you noticed any issues, please don't hesitate to report them to our repo."
+                );
+                println!(
+                    "You can also contribute your own exercises to help the greater community!"
+                );
+                println!();
+                println!("Before reporting an issue or contributing, please read our guidelines:");
+                println!("https://github.com/rust-lang/rustlings/blob/main/CONTRIBUTING.md");
+            }
+            Ok(WatchStatus::Unfinished) => {
+                println!("We hope you're enjoying learning about Rust!");
+                println!("If you want to continue working on the exercises at a later point, you can simply run `rustlings watch` again");
+            }
+        },
     }
 }
 
-fn spawn_watch_shell(failed_exercise_hint: &Arc<Mutex<Option<String>>>, should_quit: Arc<AtomicBool>) {
+fn spawn_watch_shell(
+    failed_exercise_hint: &Arc<Mutex<Option<String>>>,
+    should_quit: Arc<AtomicBool>,
+) {
     let failed_exercise_hint = Arc::clone(failed_exercise_hint);
     println!("Welcome to watch mode! You can type 'help' to get an overview of the commands you can use here.");
     thread::spawn(move || loop {
