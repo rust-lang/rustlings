@@ -957,6 +957,51 @@
         "content",
         "code"
       ]
+    },
+    {
+      "login": "granddaifuku",
+      "name": "granddaifuku",
+      "avatar_url": "https://avatars.githubusercontent.com/u/49578068?v=4",
+      "profile": "https://granddaifuku.com/",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "Weilet",
+      "name": "Weilet",
+      "avatar_url": "https://avatars.githubusercontent.com/u/32561597?v=4",
+      "profile": "https://weilet.me",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "Millione",
+      "name": "LIU JIE",
+      "avatar_url": "https://avatars.githubusercontent.com/u/38575932?v=4",
+      "profile": "https://github.com/Millione",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "abusch",
+      "name": "Antoine Büsch",
+      "avatar_url": "https://avatars.githubusercontent.com/u/506344?v=4",
+      "profile": "https://github.com/abusch",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "frogtd",
+      "name": "frogtd",
+      "avatar_url": "https://avatars.githubusercontent.com/u/31412003?v=4",
+      "profile": "https://frogtd.com/",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
