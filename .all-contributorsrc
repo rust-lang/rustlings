@@ -993,6 +993,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "frogtd",
+      "name": "frogtd",
+      "avatar_url": "https://avatars.githubusercontent.com/u/31412003?v=4",
+      "profile": "https://frogtd.com/",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
