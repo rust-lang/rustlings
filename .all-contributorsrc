@@ -984,6 +984,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "abusch",
+      "name": "Antoine Büsch",
+      "avatar_url": "https://avatars.githubusercontent.com/u/506344?v=4",
+      "profile": "https://github.com/abusch",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
