@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-108-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-109-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️
@@ -312,6 +312,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/Millione"><img src="https://avatars.githubusercontent.com/u/38575932?v=4?s=100" width="100px;" alt=""/><br /><sub><b>LIU JIE</b></sub></a><br /><a href="#content-Millione" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/abusch"><img src="https://avatars.githubusercontent.com/u/506344?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Antoine Büsch</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=abusch" title="Code">💻</a></td>
     <td align="center"><a href="https://frogtd.com/"><img src="https://avatars.githubusercontent.com/u/31412003?v=4?s=100" width="100px;" alt=""/><br /><sub><b>frogtd</b></sub></a><br /><a href="#content-frogtd" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/EmisonLu"><img src="https://avatars.githubusercontent.com/u/54395432?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Zhenghao Lu</b></sub></a><br /><a href="#content-EmisonLu" title="Content">🖋</a></td>
   </tr>
 </table>
 
