@@ -1,5 +1,5 @@
 *.swp
-*.txt
+exercises/!*.rs
 target/
 **/*.rs.bk
 .DS_Store
