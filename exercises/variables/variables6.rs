@@ -4,8 +4,9 @@
 /*
 I AM NOT DONE
 */
-const NUMBER=1;
+const NUMBER:i32 =1;
 
 fn main() {
     println!("Number {}", NUMBER);
+    
 }
