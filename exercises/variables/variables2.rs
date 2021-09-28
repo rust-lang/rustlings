@@ -5,6 +5,7 @@
 
 fn main() {
     let x;
+    x=9;
     if x == 10 {
         println!("Ten!");
     } else {
