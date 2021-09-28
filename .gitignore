@@ -1,4 +1,5 @@
 *.swp
+exercises/
 exercises/**/!*.rs
 target/
 **/*.rs.bk
