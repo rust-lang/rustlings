@@ -12,12 +12,6 @@
 // I AM NOT DONE
 
 pub fn fizzbuzz(num: i32) -> String {
-	match (num % 3, num % 5) {
-		(0, 0) => "fizzbuzz".to_string(),
-		(0, _) => "fizz".to_string(),
-		(_, 0) => "buzz".to_string(),
-		(_, _) => num.to_string(),
-	}
 }
 
 // Don't change this part(the tests)
