@@ -1042,3 +1042,14 @@ Challenge: There is one test that is marked `#[ignore]`. Can you supply the
 missing code that will make it pass? You may want to consult the standard
 library documentation for a certain trait for more hints.
 """
+
+[[exercises]]
+name = "fizzbuzz"
+path = "exercises/fizzbuzz.rs"
+mode = "test"
+hint = """
+Hint: Try using the `match` keyword for `num` variable.
+
+Hint2: Use modulo.
+"""
+
