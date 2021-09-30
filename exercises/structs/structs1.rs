@@ -13,7 +13,9 @@ struct ColorClassicStruct {
 struct ColorTupleStruct();
 
 #[derive(Debug)]
-struct UnitStruct;
+struct UnitStruct{
+    
+}
 
 #[cfg(test)]
 mod tests {
@@ -41,9 +43,7 @@ mod tests {
     #[test]
     fn unit_structs() {
         // TODO: Instantiate a unit struct!
-        let unit_structs ={
-            let str=String::from("test");
-        };
+        let unit_structs:UnitStruct=UnitStruct{};
         let message = format!("{:?}s are fun!", unit_structs);
 
         assert_eq!(message, "UnitStructs are fun!");
@@ -51,8 +51,3 @@ mod tests {
 }
 
 
-fn  main() {
-    let unit_structs =String::from("UnitStruct");
-    let message = format!("{:?}s are fun!", unit_structs);
-    println!("{}",message);
-}
