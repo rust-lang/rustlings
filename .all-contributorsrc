@@ -1011,6 +1011,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "fredr",
+      "name": "Fredrik Enestad",
+      "avatar_url": "https://avatars.githubusercontent.com/u/762956?v=4",
+      "profile": "https://soundtrackyourbrand.com",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
