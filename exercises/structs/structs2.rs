@@ -1,7 +1,6 @@
 // structs2.rs
 // Address all the TODOs to make the tests pass!
 
-// I AM NOT DONE
 
 #[derive(Debug)]
 struct Order {
@@ -37,6 +36,7 @@ mod tests {
         // TODO: Create your own order using the update syntax and template above!
         let mut your_order=Order{
             name:String::from("Hacker in Rust"),
+            count: 1,
             ..order_template
         };
 
