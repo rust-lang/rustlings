@@ -33,7 +33,7 @@ mod tests {
     #[test]
     fn tuple_structs() {
         // TODO: Instantiate a tuple struct!
-        let green =(String::from("green"),String::from("#00FF00"));
+        let green =(String::from("en"),String::from("#00FF00"));
 
         assert_eq!(green.0, "green");
         assert_eq!(green.1, "#00FF00");
