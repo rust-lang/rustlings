@@ -364,7 +364,7 @@ mode = "compile"
 hint = """
 The delicious_snacks module is trying to present an external interface that is 
 different than its internal structure (the `fruits` and `veggies` modules and
-associated constants). Complete the `use` statemants to fit the uses in main and
+associated constants). Complete the `use` statements to fit the uses in main and
 find the one keyword missing for both constants."""
 
 [[exercises]]
