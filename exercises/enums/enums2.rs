@@ -6,11 +6,21 @@
 #[derive(Debug)]
 enum Message {
     // TODO: define the different variants used below
+    Move{x:i32,y:i32},
+    Echo(String),
+    ChangeColor(i32,i32,i32),
+    Quit
+    
 }
+
+
 
 impl Message {
     fn call(&self) {
-        println!("{:?}", &self);
+        println!("{:?}", &self.Quit);
+    }
+    fn test(&self) {
+        println!("{:?}",self.Echo );
     }
 }
 
@@ -21,7 +31,8 @@ fn main() {
         Message::ChangeColor(200, 255, 255),
         Message::Quit,
     ];
-
+    let t=Message::Echo(String::from("test"));
+    t.test();
     for message in &messages {
         message.call();
     }
