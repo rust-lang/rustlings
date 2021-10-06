@@ -17,11 +17,9 @@ enum Message {
 
 impl Message {
     fn call(&self) {
-        println!("{:?}", &self.Quit);
+        println!("{:?}", &self);
     }
-    fn test(&self) {
-        println!("{:?}",self.Echo );
-    }
+    
 }
 
 fn main() {
@@ -31,8 +29,7 @@ fn main() {
         Message::ChangeColor(200, 255, 255),
         Message::Quit,
     ];
-    let t=Message::Echo(String::from("test"));
-    t.test();
+  
     for message in &messages {
         message.call();
     }
