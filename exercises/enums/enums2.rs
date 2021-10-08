@@ -1,7 +1,6 @@
 // enums2.rs
 // Make me compile! Execute `rustlings hint enums2` for hints!
 
-// I AM NOT DONE
 
 #[derive(Debug)]
 enum Message {
@@ -12,8 +11,6 @@ enum Message {
     Quit
     
 }
-
-
 
 impl Message {
     fn call(&self) {

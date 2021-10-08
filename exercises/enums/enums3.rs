@@ -2,16 +2,23 @@
 // Address all the TODOs to make the tests pass!
 
 // I AM NOT DONE
-
+#[derive(Debug)]
 enum Message {
     // TODO: implement the message variant types based on their usage below
-}
+    ChangeColor((u8,u8,u8)),
+    Echo(String),
+    Move(Point),
+    Quit,
 
+
+}
+#[derive(Debug)]
 struct Point {
     x: u8,
     y: u8,
 }
 
+#[derive(Debug)]
 struct State {
     color: (u8, u8, u8),
     position: Point,
@@ -37,6 +44,14 @@ impl State {
 
     fn process(&mut self, message: Message) {
         // TODO: create a match expression to process the different message variants
+        println!("{:?}",message);
+        match message {
+            Message::ChangeColor((a,b,c))=>{
+                self.color=(a,b,c);
+                                },
+            Message::Move(Point)=>(),
+            _=>(),
+        }
     }
 }
 
