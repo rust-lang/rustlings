@@ -26,6 +26,7 @@ fn verify_test() {
 
 fn calculate_apple_price(price:i32) -> i32 {
     if price>40{
+        
         price
     }
     else {price*2}
