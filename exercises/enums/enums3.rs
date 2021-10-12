@@ -1,7 +1,6 @@
 // enums3.rs
 // Address all the TODOs to make the tests pass!
 
-// I AM NOT DONE
 #[derive(Debug)]
 enum Message {
     // TODO: implement the message variant types based on their usage below
@@ -49,7 +48,9 @@ impl State {
             Message::ChangeColor((a,b,c))=>{
                 self.color=(a,b,c);
                                 },
-            Message::Move(Point)=>(),
+            Message::Move(Point)=>{self.position=Point;},
+            Message::Echo(str)=>{println!("{}",str);},
+            Message::Quit=>{self.quit=true;},
             _=>(),
         }
     }
