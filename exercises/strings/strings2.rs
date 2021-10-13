@@ -6,11 +6,16 @@
 
 fn main() {
     let word = String::from("green"); // Try not changing this line :)
-    if is_a_color_word(word) {
+    if is_a_color_word(&word) {
         println!("That is a color word I know!");
     } else {
         println!("That is not a color word I know.");
     }
+    let t="tic";
+    let to="tac";
+    let too="too";
+    let sum=format!("{}-{}-hi  {}",t,to,too);
+    println!("{}",sum);
 }
 
 fn is_a_color_word(attempt: &str) -> bool {
