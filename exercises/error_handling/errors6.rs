@@ -8,7 +8,7 @@
 
 // Make these tests pass! Execute `rustlings hint errors6` for hints :)
 
-// I AM NOT DONE
+// 일단 넘김 패스
 
 use std::num::ParseIntError;
 
