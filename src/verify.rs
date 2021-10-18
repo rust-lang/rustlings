@@ -14,9 +14,9 @@ pub fn verify<'a>(
 ) -> Result<(), &'a Exercise> {
     for exercise in start_at {
         let compile_result = match exercise.mode {
-            Mode::Test => compile_and_test(&exercise, RunMode::Interactive, verbose),
-            Mode::Compile => compile_and_run_interactively(&exercise),
-            Mode::Clippy => compile_only(&exercise),
+            Mode::Test => compile_and_test(exercise, RunMode::Interactive, verbose),
+            Mode::Compile => compile_and_run_interactively(exercise),
+            Mode::Clippy => compile_only(exercise),
         };
         if !compile_result.unwrap_or(false) {
             return Err(exercise);
@@ -42,11 +42,11 @@ fn compile_only(exercise: &Exercise) -> Result<bool, ()> {
     progress_bar.set_message(format!("Compiling {}...", exercise).as_str());
     progress_bar.enable_steady_tick(100);
 
-    let _ = compile(&exercise, &progress_bar)?;
+    let _ = compile(exercise, &progress_bar)?;
     progress_bar.finish_and_clear();
 
     success!("Successfully compiled {}!", exercise);
-    Ok(prompt_for_completion(&exercise, None))
+    Ok(prompt_for_completion(exercise, None))
 }
 
 // Compile the given Exercise and run the resulting binary in an interactive mode
@@ -55,7 +55,7 @@ fn compile_and_run_interactively(exercise: &Exercise) -> Result<bool, ()> {
     progress_bar.set_message(format!("Compiling {}...", exercise).as_str());
     progress_bar.enable_steady_tick(100);
 
-    let compilation = compile(&exercise, &progress_bar)?;
+    let compilation = compile(exercise, &progress_bar)?;
 
     progress_bar.set_message(format!("Running {}...", exercise).as_str());
     let result = compilation.run();
@@ -73,7 +73,7 @@ fn compile_and_run_interactively(exercise: &Exercise) -> Result<bool, ()> {
 
     success!("Successfully ran {}!", exercise);
 
-    Ok(prompt_for_completion(&exercise, Some(output.stdout)))
+    Ok(prompt_for_completion(exercise, Some(output.stdout)))
 }
 
 // Compile the given Exercise as a test harness and display
@@ -94,7 +94,7 @@ fn compile_and_test(exercise: &Exercise, run_mode: RunMode, verbose: bool) -> Re
             }
             success!("Successfully tested {}", &exercise);
             if let RunMode::Interactive = run_mode {
-                Ok(prompt_for_completion(&exercise, None))
+                Ok(prompt_for_completion(exercise, None))
             } else {
                 Ok(true)
             }

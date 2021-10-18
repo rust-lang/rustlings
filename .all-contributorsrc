@@ -929,6 +929,97 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "dbednar230",
+      "name": "Damian",
+      "avatar_url": "https://avatars.githubusercontent.com/u/54457902?v=4",
+      "profile": "https://github.com/dbednar230",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "benarmstead",
+      "name": "Ben Armstead",
+      "avatar_url": "https://avatars.githubusercontent.com/u/70973680?v=4",
+      "profile": "https://benarmstead.co.uk",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "anuk909",
+      "name": "anuk909",
+      "avatar_url": "https://avatars.githubusercontent.com/u/34924662?v=4",
+      "profile": "https://github.com/anuk909",
+      "contributions": [
+        "content",
+        "code"
+      ]
+    },
+    {
+      "login": "granddaifuku",
+      "name": "granddaifuku",
+      "avatar_url": "https://avatars.githubusercontent.com/u/49578068?v=4",
+      "profile": "https://granddaifuku.com/",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "Weilet",
+      "name": "Weilet",
+      "avatar_url": "https://avatars.githubusercontent.com/u/32561597?v=4",
+      "profile": "https://weilet.me",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "Millione",
+      "name": "LIU JIE",
+      "avatar_url": "https://avatars.githubusercontent.com/u/38575932?v=4",
+      "profile": "https://github.com/Millione",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "abusch",
+      "name": "Antoine Büsch",
+      "avatar_url": "https://avatars.githubusercontent.com/u/506344?v=4",
+      "profile": "https://github.com/abusch",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "frogtd",
+      "name": "frogtd",
+      "avatar_url": "https://avatars.githubusercontent.com/u/31412003?v=4",
+      "profile": "https://frogtd.com/",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "EmisonLu",
+      "name": "Zhenghao Lu",
+      "avatar_url": "https://avatars.githubusercontent.com/u/54395432?v=4",
+      "profile": "https://github.com/EmisonLu",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "fredr",
+      "name": "Fredrik Enestad",
+      "avatar_url": "https://avatars.githubusercontent.com/u/762956?v=4",
+      "profile": "https://soundtrackyourbrand.com",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,

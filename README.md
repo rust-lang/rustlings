@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-100-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-110-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️
@@ -60,8 +60,8 @@ When you get a permission denied message then you have to exclude the directory 
 Basically: Clone the repository at the latest tag, run `cargo install`.
 
 ```bash
-# find out the latest version at https://github.com/rust-lang/rustlings/releases/latest (on edit 4.5.0)
-git clone -b 4.5.0 --depth 1 https://github.com/rust-lang/rustlings
+# find out the latest version at https://github.com/rust-lang/rustlings/releases/latest (on edit 4.6.0)
+git clone -b 4.6.0 --depth 1 https://github.com/rust-lang/rustlings
 cd rustlings
 cargo install --force --path .
 ```
@@ -302,6 +302,18 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/cseltol"><img src="https://avatars.githubusercontent.com/u/64264529?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ivan Nerazumov</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=cseltol" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/lauralindzey"><img src="https://avatars.githubusercontent.com/u/65185744?v=4?s=100" width="100px;" alt=""/><br /><sub><b>lauralindzey</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=lauralindzey" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/sinharaksh1t"><img src="https://avatars.githubusercontent.com/u/28585848?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Rakshit Sinha</b></sub></a><br /><a href="#content-sinharaksh1t" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/dbednar230"><img src="https://avatars.githubusercontent.com/u/54457902?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Damian</b></sub></a><br /><a href="#content-dbednar230" title="Content">🖋</a></td>
+    <td align="center"><a href="https://benarmstead.co.uk"><img src="https://avatars.githubusercontent.com/u/70973680?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ben Armstead</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=benarmstead" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/anuk909"><img src="https://avatars.githubusercontent.com/u/34924662?v=4?s=100" width="100px;" alt=""/><br /><sub><b>anuk909</b></sub></a><br /><a href="#content-anuk909" title="Content">🖋</a> <a href="https://github.com/rust-lang/rustlings/commits?author=anuk909" title="Code">💻</a></td>
+    <td align="center"><a href="https://granddaifuku.com/"><img src="https://avatars.githubusercontent.com/u/49578068?v=4?s=100" width="100px;" alt=""/><br /><sub><b>granddaifuku</b></sub></a><br /><a href="#content-granddaifuku" title="Content">🖋</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://weilet.me"><img src="https://avatars.githubusercontent.com/u/32561597?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Weilet</b></sub></a><br /><a href="#content-Weilet" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/Millione"><img src="https://avatars.githubusercontent.com/u/38575932?v=4?s=100" width="100px;" alt=""/><br /><sub><b>LIU JIE</b></sub></a><br /><a href="#content-Millione" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/abusch"><img src="https://avatars.githubusercontent.com/u/506344?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Antoine Büsch</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=abusch" title="Code">💻</a></td>
+    <td align="center"><a href="https://frogtd.com/"><img src="https://avatars.githubusercontent.com/u/31412003?v=4?s=100" width="100px;" alt=""/><br /><sub><b>frogtd</b></sub></a><br /><a href="#content-frogtd" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/EmisonLu"><img src="https://avatars.githubusercontent.com/u/54395432?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Zhenghao Lu</b></sub></a><br /><a href="#content-EmisonLu" title="Content">🖋</a></td>
+    <td align="center"><a href="https://soundtrackyourbrand.com"><img src="https://avatars.githubusercontent.com/u/762956?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Fredrik Enestad</b></sub></a><br /><a href="#content-fredr" title="Content">🖋</a></td>
   </tr>
 </table>
 
