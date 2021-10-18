@@ -26,12 +26,12 @@ isn't really that complicated since the bulk of the work is done by `rustc`.
 <a name="addex"></a>
 ### Adding an exercise
 
-First step is to add the exercise! Call it `exercises/yourTopic/yourTopicN.rs`, make sure to
+The first step is to add the exercise! Name the file `exercises/yourTopic/yourTopicN.rs`, make sure to
 put in some helpful links, and link to sections of the book in `exercises/yourTopic/README.md`.
 
-Next you want to make sure it runs when using `rustlings`. All exercises are stored in `info.toml`, under the `exercises` array. They're ordered by the order they're ran when using `rustlings verify`.
+Next make sure it runs with `rustlings`. The exercise metadata is stored in `info.toml`, under the `exercises` array. The order of the `exercises` array determines the order the exercises are run by `rustlings verify`.
 
-You want to make sure where in the file you add your exercise. If you're not sure, add it at the bottom and ask in your pull request. To add an exercise, edit the file like this:
+Add the metadata for your exercise in the correct order in the `exercises` array. If you are unsure of the correct ordering, add it at the bottom and ask in your pull request. The exercise metadata should contain the following:
 ```diff
   ...
 + [[exercises]]

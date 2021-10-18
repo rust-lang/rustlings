@@ -1,3 +1,207 @@
+<a name="4.6.0"></a>
+## 4.6.0 (2021-09-25)
+
+
+#### Features
+
+*   add advanced_errs2 ([abd6b70c](https://github.com/rust-lang/rustlings/commit/abd6b70c72dc6426752ff41f09160b839e5c449e))
+*   add advanced_errs1 ([882d535b](https://github.com/rust-lang/rustlings/commit/882d535ba8628d5e0b37e8664b3e2f26260b2671))
+*   Add a farewell message when quitting `watch` ([1caef0b4](https://github.com/rust-lang/rustlings/commit/1caef0b43494c8b8cdd6c9260147e70d510f1aca))
+*   add more watch commands ([a7dc080b](https://github.com/rust-lang/rustlings/commit/a7dc080b95e49146fbaafe6922a6de2f8cb1582a), closes [#842](https://github.com/rust-lang/rustlings/issues/842))
+* **modules:**  update exercises, add modules3 (#822) ([dfd2fab4](https://github.com/rust-lang/rustlings/commit/dfd2fab4f33d1bf59e2e5ee03123c0c9a67a9481))
+* **quiz1:**  add default function name in comment (#838) ([0a11bad7](https://github.com/rust-lang/rustlings/commit/0a11bad71402b5403143d642f439f57931278c07))
+
+#### Bug Fixes
+
+*   Correct small typo in exercises/conversions/from_str.rs ([86cc8529](https://github.com/rust-lang/rustlings/commit/86cc85295ae36948963ae52882e285d7e3e29323))
+* **cli:**  typo in exercise.rs (#848) ([06d5c097](https://github.com/rust-lang/rustlings/commit/06d5c0973a3dffa3c6c6f70acb775d4c6630323c))
+* **from_str, try_from_into:**  custom error types ([2dc93cad](https://github.com/rust-lang/rustlings/commit/2dc93caddad43821743e4903d89b355df58d7a49))
+* **modules2:**  fix typo (#835) ([1c3beb0a](https://github.com/rust-lang/rustlings/commit/1c3beb0a59178c950dc05fe8ee2346b017429ae0))
+* **move_semantics5:**
+  *  change &mut *y to &mut x (#814) ([d75759e8](https://github.com/rust-lang/rustlings/commit/d75759e829fdcd64ef071cf4b6eae2a011a7718b))
+  *  Clarify instructions ([df25684c](https://github.com/rust-lang/rustlings/commit/df25684cb79f8413915e00b5efef29369849cef1))
+* **quiz1:**  Fix inconsistent wording (#826) ([03131a3d](https://github.com/rust-lang/rustlings/commit/03131a3d35d9842598150f9da817f7cc26e2669a))
+
+
+
+<a name="4.5.0"></a>
+## 4.5.0 (2021-07-07)
+
+
+#### Features
+
+*   Add move_semantics5 exercise. (#746) ([399ab328](https://github.com/rust-lang/rustlings/commit/399ab328d8d407265c09563aa4ef4534b2503ff2))
+* **cli:**  Add "next" to run the next unsolved exercise. (#785) ([d20e413a](https://github.com/rust-lang/rustlings/commit/d20e413a68772cd493561f2651cf244e822b7ca5))
+
+#### Bug Fixes
+
+*   rename result1 to errors4 ([50ab289d](https://github.com/rust-lang/rustlings/commit/50ab289da6b9eb19a7486c341b00048c516b88c0))
+*   move_semantics5 hints ([1b858285](https://github.com/rust-lang/rustlings/commit/1b85828548f46f58b622b5e0c00f8c989f928807))
+*   remove trailing whitespaces from iterators1 ([4d4fa774](https://github.com/rust-lang/rustlings/commit/4d4fa77459392acd3581c6068aa8be9a02de12fc))
+*   add hints to generics1 and generics2 exercises ([31457940](https://github.com/rust-lang/rustlings/commit/31457940846b3844d78d4a4d2b074bc8d6aaf1eb))
+*   remove trailing whitespace ([d9b69bd1](https://github.com/rust-lang/rustlings/commit/d9b69bd1a0a7a99f2c0d80933ad2eea44c8c71b2))
+* **installation:**  first PowerShell command ([aa9a943d](https://github.com/rust-lang/rustlings/commit/aa9a943ddf3ae260782e73c26bcc9db60e5894b6))
+* **iterators5:**  derive Clone, Copy ([91fc9e31](https://github.com/rust-lang/rustlings/commit/91fc9e3118f4af603c9911698cc2a234725cb032))
+* **quiz1:**  Updated question description (#794) ([d8766496](https://github.com/rust-lang/rustlings/commit/d876649616cc8a8dd5f539f8bc1a5434b960b1e9))
+* **try_from_into, from_str:**  hints for dyn Error ([11d2cf0d](https://github.com/rust-lang/rustlings/commit/11d2cf0d604dee3f5023c17802d69438e69fa50e))
+* **variables5:**  confine the answer further ([48ffcbd2](https://github.com/rust-lang/rustlings/commit/48ffcbd2c4cc4d936c2c7480019190f179813cc5))
+
+
+
+<a name="4.4.0"></a>
+## 4.4.0 (2021-04-24)
+
+
+#### Bug Fixes
+
+*   Fix spelling error in main.rs ([91ee27f2](https://github.com/rust-lang/rustlings/commit/91ee27f22bd3797a9db57e5fd430801c170c5db8))
+*   typo in default out text ([644c49f1](https://github.com/rust-lang/rustlings/commit/644c49f1e04cbb24e95872b3a52b07d692ae3bc8))
+* **collections:**  Naming exercises for vectors and hashmap ([bef39b12](https://github.com/rust-lang/rustlings/commit/bef39b125961310b34b34871e480a82e82af4678))
+* **from_str:**
+  *  Correct typos ([5f7c89f8](https://github.com/rust-lang/rustlings/commit/5f7c89f85db1f33da01911eaa479c3a2d4721678))
+  *  test for error instead of unwrap/should_panic ([15e71535](https://github.com/rust-lang/rustlings/commit/15e71535f37cfaed36e22eb778728d186e2104ab))
+  *   use trait objects for from_str ([c3e7b831](https://github.com/rust-lang/rustlings/commit/c3e7b831786c9172ed8bd5d150f3c432f242fba9))
+* **functions3:**  improve function argument type (#687) ([a6509cc4](https://github.com/rust-lang/rustlings/commit/a6509cc4d545d8825f01ddf7ee37823b372154dd))
+* **hashmap2:**  Update incorrect assertion (#660) ([72aaa15e](https://github.com/rust-lang/rustlings/commit/72aaa15e6ab4b72b3422f1c6356396e20a2a2bb8))
+* **info:**  Fix typo (#635) ([cddc1e86](https://github.com/rust-lang/rustlings/commit/cddc1e86e7ec744ee644cc774a4887b1a0ded3e8))
+* **iterators2:**  Moved errors out of tests. ([baf4ba17](https://github.com/rust-lang/rustlings/commit/baf4ba175ba6eb92989e3dd54ecbec4bedc9a863), closes [#359](https://github.com/rust-lang/rustlings/issues/359))
+* **iterators3:**  Enabled iterators3.rs to run without commented out tests. ([c6712dfc](https://github.com/rust-lang/rustlings/commit/c6712dfccd1a093e590ad22bbc4f49edc417dac0))
+* **main:**  Let find_exercise work with borrows ([347f30bd](https://github.com/rust-lang/rustlings/commit/347f30bd867343c5ace1097e085a1f7e356553f7))
+* **move_semantics4:**
+  *  Remove redundant "instead" (#640) ([cc266d7d](https://github.com/rust-lang/rustlings/commit/cc266d7d80b91e79df3f61984f231b7f1587218e))
+  *  Small readbility improvement (#617) ([10965920](https://github.com/rust-lang/rustlings/commit/10965920fbdf8a1efc85bed869e55a1787006404))
+* **option2:**  Rename uninformative variables (#675) ([b4de6594](https://github.com/rust-lang/rustlings/commit/b4de6594380636817d13c2677ec6f472a964cf43))
+* **quiz3:**  Force an answer to Q2 (#672) ([0d894e6f](https://github.com/rust-lang/rustlings/commit/0d894e6ff739943901e1ae8c904582e5c2f843bd))
+* **structs:**  Add 5.3 to structs/README (#652) ([6bd791f2](https://github.com/rust-lang/rustlings/commit/6bd791f2f44aa7f0ad926df767f6b1fa8f12a9a9))
+* **structs2:**  correct grammar in hint (#663) ([ebdb66c7](https://github.com/rust-lang/rustlings/commit/ebdb66c7bfb6d687a14cc511a559a222e6fc5de4))
+* **structs3:**
+  * reword heading comment (#664) ([9f3e8c2d](https://github.com/rust-lang/rustlings/commit/9f3e8c2dde645e5264c2d2200e68842b5f47bfa3))
+  *   add check to prevent naive implementation of is_international ([05a753fe](https://github.com/rust-lang/rustlings/commit/05a753fe6333d36dbee5f68c21dec04eacdc75df))
+* **threads1:**  line number correction ([7857b0a6](https://github.com/rust-lang/rustlings/commit/7857b0a689b0847f48d8c14cbd1865e3b812d5ca))
+* **try_from_into:**  use trait objects ([2e93a588](https://github.com/rust-lang/rustlings/commit/2e93a588e0abe8badb7eafafb9e7d073c2be5df8))
+
+#### Features
+
+*   Replace clap with argh ([7928122f](https://github.com/rust-lang/rustlings/commit/7928122fcef9ca7834d988b1ec8ca0687478beeb))
+*   Replace emojis when NO_EMOJI env variable present ([8d62a996](https://github.com/rust-lang/rustlings/commit/8d62a9963708dbecd9312e8bcc4b47049c72d155))
+*   Added iterators5.rs exercise. ([b29ea17e](https://github.com/rust-lang/rustlings/commit/b29ea17ea94d1862114af2cf5ced0e09c197dc35))
+* **arc1:**  Add more details to description and hint (#710) ([81be4044](https://github.com/rust-lang/rustlings/commit/81be40448777fa338ebced3b0bfc1b32d6370313))
+* **cli:**  Improve the list command with options, and then some ([8bbe4ff1](https://github.com/rust-lang/rustlings/commit/8bbe4ff1385c5c169c90cd3ff9253f9a91daaf8e))
+* **list:**
+  *  updated progress percentage ([1c6f7e4b](https://github.com/rust-lang/rustlings/commit/1c6f7e4b7b9b3bd36f4da2bb2b69c549cc8bd913))
+  *  added progress info ([c0e3daac](https://github.com/rust-lang/rustlings/commit/c0e3daacaf6850811df5bc57fa43e0f249d5cfa4))
+
+
+
+<a name="4.3.0"></a>
+## 4.3.0 (2020-12-29)
+
+#### Features
+
+*   Rewrite default out text ([44d39112](https://github.com/rust-lang/rustlings/commit/44d39112ff122b29c9793fe52e605df1612c6490))
+*   match exercise order to book chapters (#541) ([033bf119](https://github.com/rust-lang/rustlings/commit/033bf1198fc8bfce1b570e49da7cde010aa552e3))
+*   Crab? (#586) ([fa9f522b](https://github.com/rust-lang/rustlings/commit/fa9f522b7f043d7ef73a39f003a9272dfe72c4f4))
+*   add "rustlings list" command ([838f9f30](https://github.com/rust-lang/rustlings/commit/838f9f30083d0b23fd67503dcf0fbeca498e6647))
+* **try_from_into:**  remove duplicate annotation ([04f1d079](https://github.com/rust-lang/rustlings/commit/04f1d079aa42a2f49af694bc92c67d731d31a53f))
+
+#### Bug Fixes
+
+*   update structs README ([bcf14cf6](https://github.com/rust-lang/rustlings/commit/bcf14cf677adb3a38a3ac3ca53f3c69f61153025))
+*   added missing exercises to info.toml ([90cfb6ff](https://github.com/rust-lang/rustlings/commit/90cfb6ff28377531bfc34acb70547bdb13374f6b))
+*   gives a bit more context to magic number ([30644c9a](https://github.com/rust-lang/rustlings/commit/30644c9a062b825c0ea89435dc59f0cad86b110e))
+* **functions2:**  Change signature to trigger precise error message: (#605) ([0ef95947](https://github.com/rust-lang/rustlings/commit/0ef95947cc30482e63a7045be6cc2fb6f6dcb4cc))
+* **structs1:**  Adjust wording (#573) ([9334783d](https://github.com/rust-lang/rustlings/commit/9334783da31d821cc59174fbe8320df95828926c))
+* **try_from_into:**
+  *  type error ([4f4cfcf3](https://github.com/rust-lang/rustlings/commit/4f4cfcf3c36c8718c7c170c9c3a6935e6ef0618c))
+  *  Update description (#584) ([96347df9](https://github.com/rust-lang/rustlings/commit/96347df9df294f01153b29d9ad4ba361f665c755))
+* **vec1:**  Have test compare every element in a and v ([9b6c6293](https://github.com/rust-lang/rustlings/commit/9b6c629397b24b944f484f5b2bbd8144266b5695))
+
+<a name="4.2.0"></a>
+## 4.2.0 (2020-11-07)
+
+#### Features
+
+*   Add HashMap exercises ([633c00cf](https://github.com/rust-lang/rustlings/commit/633c00cf8071e1e82959a3010452a32f34f29fc9))
+*   Add Vec exercises ([0c12fa31](https://github.com/rust-lang/rustlings/commit/0c12fa31c57c03c6287458a0a8aca7afd057baf6))
+* **primitive_types6:**  Add a test (#548) ([2b1fb2b7](https://github.com/rust-lang/rustlings/commit/2b1fb2b739bf9ad8d6b7b12af25fee173011bfc4))
+* **try_from_into:**  Add tests (#571) ([95ccd926](https://github.com/rust-lang/rustlings/commit/95ccd92616ae79ba287cce221101e0bbe4f68cdc))
+
+#### Bug Fixes
+
+*   log error output when inotify limit is exceeded ([d61b4e5a](https://github.com/rust-lang/rustlings/commit/d61b4e5a13b44d72d004082f523fa1b6b24c1aca))
+*   more unique temp_file ([5643ef05](https://github.com/rust-lang/rustlings/commit/5643ef05bc81e4a840e9456f4406a769abbe1392))
+* **installation:**  Update the MinRustVersion ([21bfb2d4](https://github.com/rust-lang/rustlings/commit/21bfb2d4777429c87d8d3b5fbf0ce66006dcd034))
+* **iterators2:**  Update description (#578) ([197d3a3d](https://github.com/rust-lang/rustlings/commit/197d3a3d8961b2465579218a6749b2b2cefa8ddd))
+* **primitive_types6:**
+  *  remove 'unused doc comment' warning ([472d8592](https://github.com/rust-lang/rustlings/commit/472d8592d65c8275332a20dfc269e7ac0d41bc88))
+  *  missing comma in test ([4fb230da](https://github.com/rust-lang/rustlings/commit/4fb230daf1251444fcf29e085cee222a91f8a37e))
+* **quiz3:**  Second test is for odd numbers, not even. (#553) ([18e0bfef](https://github.com/rust-lang/rustlings/commit/18e0bfef1de53071e353ba1ec5837002ff7290e6))
+
+<a name="4.1.0"></a>
+## 4.1.0 (2020-10-05)
+
+#### Bug Fixes
+
+*   Update rustlings version in Cargo.lock ([1cc40bc9](https://github.com/rust-lang/rustlings/commit/1cc40bc9ce95c23d56f6d91fa1c4deb646231fef))
+* **arc1:**  index mod should equal thread count ([b4062ef6](https://github.com/rust-lang/rustlings/commit/b4062ef6993e80dac107c4093ea85166ad3ee0fa))
+* **enums3:**  Update Message::ChangeColor to take a tuple. (#457) ([4b6540c7](https://github.com/rust-lang/rustlings/commit/4b6540c71adabad647de8a09e57295e7c7c7d794))
+* **exercises:**  adding question mark to quiz2 ([101072ab](https://github.com/rust-lang/rustlings/commit/101072ab9f8c80b40b8b88cb06cbe38aca2481c5))
+* **generics3:**  clarify grade change ([47f7672c](https://github.com/rust-lang/rustlings/commit/47f7672c0307732056e7426e81d351f0dd7e22e5))
+* **structs3:**  Small adjustment of variable name ([114b54cb](https://github.com/rust-lang/rustlings/commit/114b54cbdb977234b39e5f180d937c14c78bb8b2))
+* **using_as:**  Add test so that proper type is returned. (#512) ([3286c5ec](https://github.com/rust-lang/rustlings/commit/3286c5ec19ea5fb7ded81d047da5f8594108a490))
+
+#### Features
+
+*   Added iterators1.rs exercise ([9642f5a3](https://github.com/rust-lang/rustlings/commit/9642f5a3f686270a4f8f6ba969919ddbbc4f7fdd))
+*   Add ability to run rustlings on repl.it (#471) ([8f7b5bd0](https://github.com/rust-lang/rustlings/commit/8f7b5bd00eb83542b959830ef55192d2d76db90a))
+*   Add gitpod support (#473) ([4821a8be](https://github.com/rust-lang/rustlings/commit/4821a8be94af4f669042a06ab917934cfacd032f))
+*   Remind the user of the hint option (#425) ([816b1f5e](https://github.com/rust-lang/rustlings/commit/816b1f5e85d6cc6e72673813a85d0ada2a8f84af))
+*   Remind the user of the hint option (#425) ([9f61db5d](https://github.com/rust-lang/rustlings/commit/9f61db5dbe38538cf06571fcdd5f806e7901e83a))
+* **cli:**  Added 'cls' command to 'watch' mode (#474) ([4f2468e1](https://github.com/rust-lang/rustlings/commit/4f2468e14f574a93a2e9b688367b5752ed96ae7b))
+* **try_from_into:**  Add insufficient length test (#469) ([523d18b8](https://github.com/rust-lang/rustlings/commit/523d18b873a319f7c09262f44bd40e2fab1830e5))
+
+<a name="4.0.0"></a>
+## 4.0.0 (2020-07-08)
+
+#### Breaking Changes
+
+*   Add a --nocapture option to display test harnesses' outputs ([8ad5f9bf](https://github.com/rust-lang/rustlings/commit/8ad5f9bf531a4848b1104b7b389a20171624c82f))
+*   Rename test to quiz, fixes #244 ([010a0456](https://github.com/rust-lang/rustlings/commit/010a04569282149cea7f7a76fc4d7f4c9f0f08dd))
+
+#### Features
+
+*   Add traits README ([173bb141](https://github.com/rust-lang/rustlings/commit/173bb14140c5530cbdb59e53ace3991a99d804af))
+*   Add box1.rs exercise ([7479a473](https://github.com/rust-lang/rustlings/commit/7479a4737bdcac347322ad0883ca528c8675e720))
+*   Rewrite try_from_into (#393) ([763aa6e3](https://github.com/rust-lang/rustlings/commit/763aa6e378a586caae2d8d63755a85eeba227933))
+*   Add if2 exercise ([1da84b5f](https://github.com/rust-lang/rustlings/commit/1da84b5f7c489f65bd683c244f13c7d1ee812df0))
+*   Added exercise structs3.rs ([b66e2e09](https://github.com/rust-lang/rustlings/commit/b66e2e09622243e086a0f1258dd27e1a2d61c891))
+*   Add exercise variables6 covering const (#352) ([5999acd2](https://github.com/rust-lang/rustlings/commit/5999acd24a4f203292be36e0fd18d385887ec481))
+
+#### Bug Fixes
+
+*   Change then to than ([ddd98ad7](https://github.com/rust-lang/rustlings/commit/ddd98ad75d3668fbb10eff74374148aa5ed2344d))
+*   rename quiz1 to tests1 in info (#420) ([0dd1c6ca](https://github.com/rust-lang/rustlings/commit/0dd1c6ca6b389789e0972aa955fe17aa15c95f29))
+*   fix quiz naming inconsistency (#421) ([5563adbb](https://github.com/rust-lang/rustlings/commit/5563adbb890587fc48fbbc9c4028642687f1e85b))
+*   confine the user further in variable exercises ([06ef4cc6](https://github.com/rust-lang/rustlings/commit/06ef4cc654e75d22a526812919ee49b8956280bf))
+*   update iterator and macro text for typos and clarity ([95900828](https://github.com/rust-lang/rustlings/commit/959008284834bece0196a01e17ac69a7e3590116))
+*   update generics2       closes #362 ([964c974a](https://github.com/rust-lang/rustlings/commit/964c974a0274199d755073b917c2bc5da0c9b4f1))
+*   confusing comment in conversions/try_from_into.rs ([c9e4f2cf](https://github.com/rust-lang/rustlings/commit/c9e4f2cfb4c48d0b7451263cfb43b9426438122d))
+* **arc1:**  Passively introduce attributes (#429) ([113cdae2](https://github.com/rust-lang/rustlings/commit/113cdae2d4e4c55905e8056ad326ede7fd7de356))
+* **box1:**  fix comment typo (#426) ([bb2ca251](https://github.com/rust-lang/rustlings/commit/bb2ca251106b27a7272d9a30872904dd1376654c))
+* **errorsn:**  Try harder to confine the user. (#388) ([2b20c8a0](https://github.com/rust-lang/rustlings/commit/2b20c8a0f5774d07c58d110d75879f33fc6273b5))
+* **from_into.rs:**  typo ([a901499e](https://github.com/rust-lang/rustlings/commit/a901499ededd3ce1995164700514fe4e9a0373ea))
+* **generics2:**  Guide students to the answer (#430) ([e6bd8021](https://github.com/rust-lang/rustlings/commit/e6bd8021d9a7dd06feebc30c9d5f953901d7b419))
+* **installation:**
+  *  Provide a backup git reference when tag can't be curl ([9e4fb100](https://github.com/rust-lang/rustlings/commit/9e4fb1009f1c9e3433915c03e22c2af422e5c5fe))
+  *  Check if python is available while checking for git,rustc and cargo ([9cfb617d](https://github.com/rust-lang/rustlings/commit/9cfb617d5b0451b4b51644a1298965390cda9884))
+* **option1:**
+  *  Don't add only zeros to the numbers array ([cce6a442](https://github.com/rust-lang/rustlings/commit/cce6a4427718724a9096800754cd3abeca6a1580))
+  *  Add cast to usize, as it is confusing in the context of an exercise about Option ([f6cffc7e](https://github.com/rust-lang/rustlings/commit/f6cffc7e487b42f15a6f958e49704c93a8d4465b))
+* **option2:**  Add TODO to comments (#400) ([10967bce](https://github.com/rust-lang/rustlings/commit/10967bce57682812dc0891a9f9757da1a9d87404))
+* **options1:**  Add hint about Array Initialization (#389) ([9f75554f](https://github.com/rust-lang/rustlings/commit/9f75554f2a30295996f03f0160b98c0458305502))
+* **test2:**  name of type String and &str (#394) ([d6c0a688](https://github.com/rust-lang/rustlings/commit/d6c0a688e6a96f93ad60d540d4b326f342fc0d45))
+* **variables6:**  minor typo (#419) ([524e17df](https://github.com/rust-lang/rustlings/commit/524e17df10db95f7b90a0f75cc8997182a8a4094))
+
 <a name="3.0.0"></a>
 ## 3.0.0 (2020-04-11)
 
@@ -41,14 +245,14 @@
 *   Update deps to version compatable with aarch64-pc-windows (#263) ([19a93428](https://github.com/rust-lang/rustlings/commit/19a93428b3c73d994292671f829bdc8e5b7b3401))
 * **docs:**
   * Added a necessary step to Windows installation process (#242) ([3906efcd](https://github.com/rust-lang/rustlings/commit/3906efcd52a004047b460ed548037093de3f523f))
-  * Fixed mangled sentence from book; edited for clarity (#266) ([ade52ff](https://github.com/rust-lang/rustlings/commit/ade52ffb739987287ddd5705944c8777705faed9)) 
+  * Fixed mangled sentence from book; edited for clarity (#266) ([ade52ff](https://github.com/rust-lang/rustlings/commit/ade52ffb739987287ddd5705944c8777705faed9))
   * Updated iterators readme to account for iterators4 exercise (#273) ([bec8e3a](https://github.com/rust-lang/rustlings/commit/bec8e3a644cbd88db1c73ea5f1d8a364f4a34016))
 * **installation:**  make fatal errors more obvious (#272) ([17d0951e](https://github.com/rust-lang/rustlings/commit/17d0951e66fda8e11b204d5c4c41a0d5e22e78f7))
 * **iterators2:**
   *  Remove reference to missing iterators2.rs (#245) ([419f7797](https://github.com/rust-lang/rustlings/commit/419f7797f294e4ce6a2b883199731b5bde77d262))
 * **as_ref_mut:** Enable a test and improve per clippy's suggestion (#256) ([dfdf809](https://github.com/rust-lang/rustlings/commit/dfdf8093ebbd4145864995627b812780de52f902))
 * **tests1:**
-  * Change test command ([fe10e06c](https://github.com/rust-lang/rustlings/commit/fe10e06c3733ddb4a21e90d09bf79bfe618e97ce) 
+  * Change test command ([fe10e06c](https://github.com/rust-lang/rustlings/commit/fe10e06c3733ddb4a21e90d09bf79bfe618e97ce)
   * Correct test command in tests1.rs comment (#263) ([39fa7ae](https://github.com/rust-lang/rustlings/commit/39fa7ae8b70ad468da49b06f11b2383135a63bcf))
 
 #### Features

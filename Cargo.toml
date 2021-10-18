@@ -1,11 +1,11 @@
 [package]
 name = "rustlings"
-version = "3.0.0"
-authors = ["Marisa <mokou@posteo.de>", "Carol (Nichols || Goulding) <carol.nichols@gmail.com>"]
+version = "4.6.0"
+authors = ["anastasie <ana@ana.st>", "Carol (Nichols || Goulding) <carol.nichols@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-clap = "2.32.0"
+argh = "0.1.4"
 indicatif = "0.10.3"
 console = "0.7.7"
 notify = "4.0.15"

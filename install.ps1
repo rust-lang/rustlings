@@ -35,7 +35,7 @@ if (Get-Command cargo -ErrorAction SilentlyContinue) {
 function vercomp($v1, $v2) {
     if ($v1 -eq $v2) {
        return 0
-    } 
+    }
 
     $v1 = $v1.Replace(".", "0")
     $v2 = $v2.Replace(".", "0")
@@ -53,7 +53,7 @@ function vercomp($v1, $v2) {
 }
 
 $rustVersion = $(rustc --version).Split(" ")[1]
-$minRustVersion = "1.31"
+$minRustVersion = "1.39"
 if ((vercomp $rustVersion $minRustVersion) -eq 2) {
     Write-Host "WARNING: Rust version is too old: $rustVersion - needs at least $minRustVersion"
     Write-Host "Please update Rust with 'rustup update'"

@@ -1,6 +1,7 @@
 use crate::exercise::{CompiledExercise, Exercise, Mode, State};
 use console::style;
 use indicatif::ProgressBar;
+use std::env;
 
 // Verify that the provided container of Exercise objects
 // can be compiled and run without any failures.
@@ -9,13 +10,13 @@ use indicatif::ProgressBar;
 // determines whether or not the test harness outputs are displayed.
 pub fn verify<'a>(
     start_at: impl IntoIterator<Item = &'a Exercise>,
-    verbose: bool
+    verbose: bool,
 ) -> Result<(), &'a Exercise> {
     for exercise in start_at {
         let compile_result = match exercise.mode {
-            Mode::Test => compile_and_test(&exercise, RunMode::Interactive, verbose),
-            Mode::Compile => compile_and_run_interactively(&exercise),
-            Mode::Clippy => compile_only(&exercise),
+            Mode::Test => compile_and_test(exercise, RunMode::Interactive, verbose),
+            Mode::Compile => compile_and_run_interactively(exercise),
+            Mode::Clippy => compile_only(exercise),
         };
         if !compile_result.unwrap_or(false) {
             return Err(exercise);
@@ -41,11 +42,11 @@ fn compile_only(exercise: &Exercise) -> Result<bool, ()> {
     progress_bar.set_message(format!("Compiling {}...", exercise).as_str());
     progress_bar.enable_steady_tick(100);
 
-    let _ = compile(&exercise, &progress_bar)?;
+    let _ = compile(exercise, &progress_bar)?;
     progress_bar.finish_and_clear();
 
     success!("Successfully compiled {}!", exercise);
-    Ok(prompt_for_completion(&exercise, None))
+    Ok(prompt_for_completion(exercise, None))
 }
 
 // Compile the given Exercise and run the resulting binary in an interactive mode
@@ -54,7 +55,7 @@ fn compile_and_run_interactively(exercise: &Exercise) -> Result<bool, ()> {
     progress_bar.set_message(format!("Compiling {}...", exercise).as_str());
     progress_bar.enable_steady_tick(100);
 
-    let compilation = compile(&exercise, &progress_bar)?;
+    let compilation = compile(exercise, &progress_bar)?;
 
     progress_bar.set_message(format!("Running {}...", exercise).as_str());
     let result = compilation.run();
@@ -72,14 +73,12 @@ fn compile_and_run_interactively(exercise: &Exercise) -> Result<bool, ()> {
 
     success!("Successfully ran {}!", exercise);
 
-    Ok(prompt_for_completion(&exercise, Some(output.stdout)))
+    Ok(prompt_for_completion(exercise, Some(output.stdout)))
 }
 
 // Compile the given Exercise as a test harness and display
 // the output if verbose is set to true
-fn compile_and_test(
-    exercise: &Exercise, run_mode: RunMode, verbose: bool
-) -> Result<bool, ()> {
+fn compile_and_test(exercise: &Exercise, run_mode: RunMode, verbose: bool) -> Result<bool, ()> {
     let progress_bar = ProgressBar::new_spinner();
     progress_bar.set_message(format!("Testing {}...", exercise).as_str());
     progress_bar.enable_steady_tick(100);
@@ -95,7 +94,7 @@ fn compile_and_test(
             }
             success!("Successfully tested {}", &exercise);
             if let RunMode::Interactive = run_mode {
-                Ok(prompt_for_completion(&exercise, None))
+                Ok(prompt_for_completion(exercise, None))
             } else {
                 Ok(true)
             }
@@ -139,14 +138,26 @@ fn prompt_for_completion(exercise: &Exercise, prompt_output: Option<String>) -> 
         State::Pending(context) => context,
     };
 
+    let no_emoji = env::var("NO_EMOJI").is_ok();
+
+    let clippy_success_msg = if no_emoji {
+        "The code is compiling, and Clippy is happy!"
+    } else {
+        "The code is compiling, and 📎 Clippy 📎 is happy!"
+    };
+
     let success_msg = match exercise.mode {
         Mode::Compile => "The code is compiling!",
         Mode::Test => "The code is compiling, and the tests pass!",
-        Mode::Clippy => "The code is compiling, and 📎 Clippy 📎 is happy!",
+        Mode::Clippy => clippy_success_msg,
     };
 
     println!();
-    println!("🎉 🎉  {} 🎉 🎉", success_msg);
+    if no_emoji {
+        println!("~*~ {} ~*~", success_msg)
+    } else {
+        println!("🎉 🎉  {} 🎉 🎉", success_msg)
+    }
     println!();
 
     if let Some(output) = prompt_output {
