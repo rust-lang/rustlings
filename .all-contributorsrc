@@ -1020,6 +1020,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "xuesongbj",
+      "name": "xuesong",
+      "avatar_url": "https://avatars.githubusercontent.com/u/18476085?v=4",
+      "profile": "http://xuesong.pydevops.com",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
