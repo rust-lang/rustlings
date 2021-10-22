@@ -64,7 +64,6 @@ impl Display for ParseClimateError {
         match self {
             NoCity => write!(f, "no city name"),
             ParseFloat(e) => write!(f, "error parsing temperature: {}", e),
-            _ => write!(f, "unhandled error!"),
         }
     }
 }
