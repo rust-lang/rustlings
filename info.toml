@@ -453,6 +453,45 @@ path = "exercises/quiz2.rs"
 mode = "compile"
 hint = "No hints this time ;)"
 
+# BORROWING
+
+[[exercises]]
+name = "borrowing1"
+path = "exercises/borrowing/borrowing1.rs"
+mode = "compile"
+hint = """
+To let a function borrow a variable, you must use a reference.
+
+Have a look in The Book, to find out more:
+https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html
+"""
+
+[[exercises]]
+name = "borrowing2"
+path = "exercises/borrowing/borrowing2.rs"
+mode = "compile"
+hint = """
+In order for a variable to be mutated, it must be declared mutable.
+
+In order for a borrowed variable to mutated, it must be a mutable reference.
+
+Have a look in The Book, to find out more:
+https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html
+"""
+
+
+[[exercises]]
+name = "borrowing3"
+path = "exercises/borrowing/borrowing3.rs"
+mode = "compile"
+hint = """
+Rust won't let you have multiple mutable borrows.  You can either have
+one mutable borrow, or multiple immutable borrows.
+
+Have a look in The Book, to find out more:
+https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html
+"""
+
 # ERROR HANDLING
 
 [[exercises]]
