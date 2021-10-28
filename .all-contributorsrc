@@ -1002,6 +1002,33 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "EmisonLu",
+      "name": "Zhenghao Lu",
+      "avatar_url": "https://avatars.githubusercontent.com/u/54395432?v=4",
+      "profile": "https://github.com/EmisonLu",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "fredr",
+      "name": "Fredrik Enestad",
+      "avatar_url": "https://avatars.githubusercontent.com/u/762956?v=4",
+      "profile": "https://soundtrackyourbrand.com",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "xuesongbj",
+      "name": "xuesong",
+      "avatar_url": "https://avatars.githubusercontent.com/u/18476085?v=4",
+      "profile": "http://xuesong.pydevops.com",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
