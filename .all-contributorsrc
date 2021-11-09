@@ -1020,6 +1020,24 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "xuesongbj",
+      "name": "xuesong",
+      "avatar_url": "https://avatars.githubusercontent.com/u/18476085?v=4",
+      "profile": "http://xuesong.pydevops.com",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "MpdWalsh",
+      "name": "Michael Walsh",
+      "avatar_url": "https://avatars.githubusercontent.com/u/48160144?v=4",
+      "profile": "https://github.com/MpdWalsh",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
