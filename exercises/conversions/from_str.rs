@@ -4,6 +4,8 @@
 // You can read more about it at https://doc.rust-lang.org/std/str/trait.FromStr.html
 use std::error;
 use std::str::FromStr;
+use std::fmt::Display;
+use std::fmt::Formatter;
 
 #[derive(Debug)]
 struct Person {
@@ -11,8 +13,22 @@ struct Person {
     age: usize,
 }
 
-// I AM NOT DONE
+#[derive(Debug)]
+struct ParseError {
+    reason: String
+}
 
+impl Display for ParseError {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), std::fmt::Error> 
+    { 
+        f.write_str("fucked up");
+        Ok(())
+    }
+}
+
+impl error::Error for ParseError {
+
+}
 // Steps:
 // 1. If the length of the provided string is 0, an error should be returned
 // 2. Split the given string on the commas present in it
@@ -26,6 +42,24 @@ struct Person {
 impl FromStr for Person {
     type Err = Box<dyn error::Error>;
     fn from_str(s: &str) -> Result<Person, Self::Err> {
+        let mut idx = -1;
+        for (i, &b) in s.as_bytes().iter().enumerate() {
+            if b',' == b {
+                idx = i as i32;
+            }
+        }
+        if idx <= 0 || idx as usize == (s.len() - 1) {
+            Err(Box::new(ParseError{reason:String::from("Not divided into two")}))
+        }else {
+            let idx = idx as usize;
+            match s[(idx +1)..].parse::<usize>() {
+                Ok(age) => Ok(Person{
+                    name: s[..idx ].into(),
+                    age: age
+                }),
+                Err(error) => Err(Box::new(ParseError{reason:String::from("invalid age string")}))
+            }
+        }
     }
 }
 

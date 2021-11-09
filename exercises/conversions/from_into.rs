@@ -33,10 +33,27 @@ impl Default for Person {
 // If while parsing the age, something goes wrong, then return the default of Person
 // Otherwise, then return an instantiated Person object with the results
 
-// I AM NOT DONE
 
 impl From<&str> for Person {
     fn from(s: &str) -> Person {
+        let mut idx = -1;
+        for (i, &b) in s.as_bytes().iter().enumerate() {
+            if b',' == b {
+                idx = i as i32;
+            }
+        }
+        if idx <= 0 || idx as usize == (s.len() - 1) {
+            Person::default()
+        }else {
+            let idx = idx as usize;
+            match s[(idx +1)..].parse::<usize>() {
+                Ok(age) => Person{
+                    name: s[..idx ].into(),
+                    age: age
+                },
+                Err(error) => Person::default()
+            }
+        }
     }
 }
 

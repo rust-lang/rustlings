@@ -4,6 +4,7 @@
 // You can read more about it at https://doc.rust-lang.org/std/convert/trait.TryFrom.html
 use std::convert::{TryFrom, TryInto};
 use std::error;
+use std::fmt::{Display, Formatter};
 
 #[derive(Debug, PartialEq)]
 struct Color {
@@ -12,7 +13,35 @@ struct Color {
     blue: u8,
 }
 
-// I AM NOT DONE
+fn in_color_range(color_pt: i16) -> bool {
+    color_pt >=0 && color_pt <= 255
+}
+
+fn safe_to_i16(color_pt: i16) -> Option<u8> {
+    if in_color_range(color_pt) {
+        Some(color_pt as u8)
+    } else {
+        None
+    }
+}
+
+#[derive(Debug)]
+enum ConvertError{
+    BadInputs,
+    MoreBadInputs
+} 
+
+impl Display for ConvertError {
+    fn fmt(&self, a: &mut Formatter<'_>) -> Result<(), std::fmt::Error> 
+    { 
+        a.write_str("Bad");
+        Result::Ok(()) 
+    }
+}
+
+impl error::Error for ConvertError {
+
+}
 
 // Your task is to complete this implementation
 // and return an Ok result of inner type Color.
@@ -26,19 +55,51 @@ struct Color {
 // Tuple implementation
 impl TryFrom<(i16, i16, i16)> for Color {
     type Error = Box<dyn error::Error>;
-    fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {}
+    fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {
+        if let (Some(r), Some(g), Some(b)) = (safe_to_i16(tuple.0),safe_to_i16(tuple.1), safe_to_i16(tuple.2)) {
+            Result::Ok(Color {
+                red: r,
+                green: g,
+                blue: b
+            })
+        } else {
+            Result::Err(Box::new(ConvertError::BadInputs))
+        }
+    }
 }
 
 // Array implementation
 impl TryFrom<[i16; 3]> for Color {
     type Error = Box<dyn error::Error>;
-    fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {}
+    fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {
+        if let (Some(r), Some(g), Some(b)) = (safe_to_i16(arr[0]),safe_to_i16(arr[1]), safe_to_i16(arr[2])) {
+            Result::Ok(Color {
+                red: r,
+                green: g,
+                blue: b
+            })
+        } else {
+            Result::Err(Box::new(ConvertError::BadInputs))
+        }
+    }
 }
 
 // Slice implementation
 impl TryFrom<&[i16]> for Color {
     type Error = Box<dyn error::Error>;
-    fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {}
+    fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {
+        if slice.len() != 3 {
+            Result::Err(Box::new(ConvertError::BadInputs))
+        } else if let (Some(r), Some(g), Some(b)) = (safe_to_i16(slice[0]),safe_to_i16(slice[1]), safe_to_i16(slice[2])) {
+            Result::Ok(Color {
+                red: r,
+                green: g,
+                blue: b
+            })
+        } else {
+            Result::Err(Box::new(ConvertError::BadInputs))
+        }
+    }
 }
 
 fn main() {
