@@ -9,6 +9,7 @@
 // I AM NOT DONE
 
 fn main() {
+    let x; // This variable lacked here.
     x = 5;
     println!("x has the value {}", x);
 }
