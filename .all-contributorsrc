@@ -966,6 +966,78 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "Weilet",
+      "name": "Weilet",
+      "avatar_url": "https://avatars.githubusercontent.com/u/32561597?v=4",
+      "profile": "https://weilet.me",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "Millione",
+      "name": "LIU JIE",
+      "avatar_url": "https://avatars.githubusercontent.com/u/38575932?v=4",
+      "profile": "https://github.com/Millione",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "abusch",
+      "name": "Antoine Büsch",
+      "avatar_url": "https://avatars.githubusercontent.com/u/506344?v=4",
+      "profile": "https://github.com/abusch",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "frogtd",
+      "name": "frogtd",
+      "avatar_url": "https://avatars.githubusercontent.com/u/31412003?v=4",
+      "profile": "https://frogtd.com/",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "EmisonLu",
+      "name": "Zhenghao Lu",
+      "avatar_url": "https://avatars.githubusercontent.com/u/54395432?v=4",
+      "profile": "https://github.com/EmisonLu",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "fredr",
+      "name": "Fredrik Enestad",
+      "avatar_url": "https://avatars.githubusercontent.com/u/762956?v=4",
+      "profile": "https://soundtrackyourbrand.com",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "xuesongbj",
+      "name": "xuesong",
+      "avatar_url": "https://avatars.githubusercontent.com/u/18476085?v=4",
+      "profile": "http://xuesong.pydevops.com",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "MpdWalsh",
+      "name": "Michael Walsh",
+      "avatar_url": "https://avatars.githubusercontent.com/u/48160144?v=4",
+      "profile": "https://github.com/MpdWalsh",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,

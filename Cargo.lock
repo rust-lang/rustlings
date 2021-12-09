@@ -541,7 +541,7 @@ checksum = "f497285884f3fcff424ffc933e56d7cbca511def0c9831a7f9b5f6153e3cc89b"
 
 [[package]]
 name = "rustlings"
-version = "4.5.0"
+version = "4.6.0"
 dependencies = [
  "argh",
  "assert_cmd",

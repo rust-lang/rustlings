@@ -18,11 +18,11 @@ impl Package {
         if weight_in_grams <= 0 {
             // Something goes here...
         } else {
-            return Package {
+            Package {
                 sender_country,
                 recipient_country,
                 weight_in_grams,
-            };
+            }
         }
     }
 
@@ -73,7 +73,7 @@ mod tests {
         let sender_country = String::from("Spain");
         let recipient_country = String::from("Spain");
 
-        let cents_per_gram = ???;
+        let cents_per_gram = 3;
 
         let package = Package::new(sender_country, recipient_country, 1500);
 
