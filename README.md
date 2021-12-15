@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-112-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-113-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️
@@ -316,6 +316,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://soundtrackyourbrand.com"><img src="https://avatars.githubusercontent.com/u/762956?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Fredrik Enestad</b></sub></a><br /><a href="#content-fredr" title="Content">🖋</a></td>
     <td align="center"><a href="http://xuesong.pydevops.com"><img src="https://avatars.githubusercontent.com/u/18476085?v=4?s=100" width="100px;" alt=""/><br /><sub><b>xuesong</b></sub></a><br /><a href="#content-xuesongbj" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/MpdWalsh"><img src="https://avatars.githubusercontent.com/u/48160144?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Michael Walsh</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=MpdWalsh" title="Code">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/alirezaghey"><img src="https://avatars.githubusercontent.com/u/26653424?v=4?s=100" width="100px;" alt=""/><br /><sub><b>alirezaghey</b></sub></a><br /><a href="#content-alirezaghey" title="Content">🖋</a></td>
   </tr>
 </table>
 
