@@ -906,15 +906,15 @@ name = "clippy1"
 path = "exercises/clippy/clippy1.rs"
 mode = "clippy"
 hint = """
-Not every floating point value can be represented exactly in binary values in
-memory. Take a look at the description of 
-https://doc.rust-lang.org/stable/std/primitive.f32.html
-When using the binary compare operators with floating points you won't compare
-the floating point values but the binary representation in memory. This is 
-usually not what you would like to do. 
+Rust stores the highest precision version of any long or inifinite precision
+mathematical constants in the rust standard library.
+https://doc.rust-lang.org/stable/std/f32/consts/index.html
+
+We may be tempted to use our own approximations for certain mathematical constants,
+but clippy recognizes those imprecise mathematical constants as a source of 
+potential error.
 See the suggestions of the clippy warning in compile output and use the
-machine epsilon value...
-https://doc.rust-lang.org/stable/std/primitive.f32.html#associatedconstant.EPSILON"""
+appropriate replacement constant from std::f32::consts..."""
 
 [[exercises]]
 name = "clippy2"
