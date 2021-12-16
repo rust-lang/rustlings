@@ -1047,6 +1047,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "frvannes16",
+      "name": "Franklin van Nes",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3188475?v=4",
+      "profile": "https://github.com/frvannes16",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
