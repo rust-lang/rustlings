@@ -878,6 +878,22 @@ name = "threads1"
 path = "exercises/threads/threads1.rs"
 mode = "compile"
 hint = """
+`JoinHandle` is a struct that is returned from a spawned thread: 
+https://doc.rust-lang.org/std/thread/fn.spawn.html
+
+A challenge with multi-threaded applications is that the main thread can 
+finish before the spawned threads are completed.
+https://doc.rust-lang.org/book/ch16-01-threads.html#waiting-for-all-threads-to-finish-using-join-handle
+
+Collect the JoinHandles and wait for them to finish.
+https://doc.rust-lang.org/std/thread/struct.JoinHandle.html
+"""
+
+[[exercises]]
+name = "threads2"
+path = "exercises/threads/threads2.rs"
+mode = "compile"
+hint = """
 `Arc` is an Atomic Reference Counted pointer that allows safe, shared access
 to **immutable** data. But we want to *change* the number of `jobs_completed`
 so we'll need to also use another type that will only allow one thread to
@@ -897,14 +913,6 @@ Make sure neither of your threads are holding onto the lock of the mutex
 while they are sleeping, since this will prevent the other thread from
 being allowed to get the lock. Locks are automatically released when
 they go out of scope.
-
-Ok, so, real talk, this was actually tricky for *me* to do too. And
-I could see a lot of different problems you might run into, so at this
-point I'm not sure which one you've hit :)
-
-Please open an issue if you're still running into a problem that
-these hints are not helping you with, or if you've looked at the sample
-answers and don't understand why they work and yours doesn't.
 
 If you've learned from the sample solutions, I encourage you to come
 back to this exercise and try it again in a few days to reinforce
