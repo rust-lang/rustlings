@@ -217,8 +217,7 @@ path = "{}.rs""#,
         let matched_line_index = source
             .lines()
             .enumerate()
-            .filter_map(|(i, line)| if re.is_match(line) { Some(i) } else { None })
-            .next()
+            .find_map(|(i, line)| if re.is_match(line) { Some(i) } else { None })
             .expect("This should not happen at all");
 
         let min_line = ((matched_line_index as i32) - (CONTEXT as i32)).max(0) as usize;
