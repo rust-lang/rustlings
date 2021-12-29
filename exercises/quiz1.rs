@@ -2,6 +2,7 @@
 // This is a quiz for the following sections:
 // - Variables
 // - Functions
+// - If
 
 // Mary is buying apples. One apple usually costs 2 Rustbucks, but if you buy
 // more than 40 at once, each apple only costs 1! Write a function that calculates
