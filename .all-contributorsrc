@@ -1065,6 +1065,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "tan-zx",
+      "name": "ZX",
+      "avatar_url": "https://avatars.githubusercontent.com/u/67887489?v=4",
+      "profile": "https://github.com/tan-zx",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
