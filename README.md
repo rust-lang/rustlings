@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-108-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-116-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️
@@ -312,6 +312,16 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/Millione"><img src="https://avatars.githubusercontent.com/u/38575932?v=4?s=100" width="100px;" alt=""/><br /><sub><b>LIU JIE</b></sub></a><br /><a href="#content-Millione" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/abusch"><img src="https://avatars.githubusercontent.com/u/506344?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Antoine Büsch</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=abusch" title="Code">💻</a></td>
     <td align="center"><a href="https://frogtd.com/"><img src="https://avatars.githubusercontent.com/u/31412003?v=4?s=100" width="100px;" alt=""/><br /><sub><b>frogtd</b></sub></a><br /><a href="#content-frogtd" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/EmisonLu"><img src="https://avatars.githubusercontent.com/u/54395432?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Zhenghao Lu</b></sub></a><br /><a href="#content-EmisonLu" title="Content">🖋</a></td>
+    <td align="center"><a href="https://soundtrackyourbrand.com"><img src="https://avatars.githubusercontent.com/u/762956?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Fredrik Enestad</b></sub></a><br /><a href="#content-fredr" title="Content">🖋</a></td>
+    <td align="center"><a href="http://xuesong.pydevops.com"><img src="https://avatars.githubusercontent.com/u/18476085?v=4?s=100" width="100px;" alt=""/><br /><sub><b>xuesong</b></sub></a><br /><a href="#content-xuesongbj" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/MpdWalsh"><img src="https://avatars.githubusercontent.com/u/48160144?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Michael Walsh</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=MpdWalsh" title="Code">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/alirezaghey"><img src="https://avatars.githubusercontent.com/u/26653424?v=4?s=100" width="100px;" alt=""/><br /><sub><b>alirezaghey</b></sub></a><br /><a href="#content-alirezaghey" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/frvannes16"><img src="https://avatars.githubusercontent.com/u/3188475?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Franklin van Nes</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=frvannes16" title="Code">💻</a></td>
+    <td align="center"><a href="https://nekonako.github.io"><img src="https://avatars.githubusercontent.com/u/46141275?v=4?s=100" width="100px;" alt=""/><br /><sub><b>nekonako</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=nekonako" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/tan-zx"><img src="https://avatars.githubusercontent.com/u/67887489?v=4?s=100" width="100px;" alt=""/><br /><sub><b>ZX</b></sub></a><br /><a href="#content-tan-zx" title="Content">🖋</a></td>
   </tr>
 </table>
 

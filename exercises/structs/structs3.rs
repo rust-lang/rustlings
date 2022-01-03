@@ -19,11 +19,11 @@ impl Package {
             // Something goes here...
             panic!("Weight of package is less than 0.");
         } else {
-            return Package {
+            Package {
                 sender_country,
                 recipient_country,
                 weight_in_grams,
-            };
+            }
         }
     }
 
