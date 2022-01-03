@@ -12,6 +12,14 @@
 // Put your function here!
 // fn calculate_apple_price {
 
+fn calculate_apple_price(quantity: usize) -> usize {
+    if quantity <= 40 {
+        quantity * 2
+    } else {
+        quantity * 1
+    }
+}
+
 // Don't modify this function!
 #[test]
 fn verify_test() {
