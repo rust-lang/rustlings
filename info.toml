@@ -415,7 +415,11 @@ such as no data, anonymous structs, a single string, tuples, ...etc"""
 name = "enums3"
 path = "exercises/enums/enums3.rs"
 mode = "test"
-hint = "No hints this time ;)"
+hint = """
+As a first step, you can define enums to compile this code without errors.
+and then create a match expression in `process()`. 
+Note that you need to deconstruct some message variants 
+in the match expression to get value in the variant."""
 
 # MODULES
 
