@@ -1,8 +1,12 @@
 [package]
 name = "rustlings"
 version = "4.6.0"
-authors = ["anastasie <ana@ana.st>", "Carol (Nichols || Goulding) <carol.nichols@gmail.com>"]
+authors = [
+	"anastasie <ana@ana.st>",
+	"Carol (Nichols || Goulding) <carol.nichols@gmail.com>",
+]
 edition = "2021"
+default-run = "rustlings"
 
 [dependencies]
 argh = "0.1.4"
@@ -11,11 +15,18 @@ console = "0.7.7"
 notify = "4.0.15"
 toml = "0.4.10"
 regex = "1.1.6"
-serde = {version = "1.0.10", features = ["derive"]}
+serde = { version = "1.0.133", features = ["derive"] }
+glob = "0.3.0"
+serde_json = "1.0.74"
+home = "0.5.3"
 
 [[bin]]
 name = "rustlings"
 path = "src/main.rs"
+
+[[bin]]
+name = "fix-rust-analyzer"
+path = "src/fix-rust-analyzer.rs"
 
 [dev-dependencies]
 assert_cmd = "0.11.0"
