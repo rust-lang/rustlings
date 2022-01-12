@@ -416,16 +416,7 @@ fn rustc_exists() -> bool {
 
 fn fix_rust_analyzer() {
     let mut rust_project = RustAnalyzerProject::new();
-    if let Err(err) = rust_project.check_rust_analyzer_exists() {
-        match err {
-            RustAnalyzerError::NoRustAnalyzerError => {
-                println!("rust-analyzer doesn't exist, skipping fix")
-            }
-            RustAnalyzerError::IoError(err) => {
-                println!("error trying to find rust-analyzer: {}", err)
-            }
-        }
-    } else {
+    if rust_project.check_rust_analyzer_exists().is_ok() {
         println!("rust-analyzer exists, fixing to work with rustlings");
         if let Err(err) = rust_project.get_sysroot_src() {
             println!("Error getting toolchain path: {}\nContinuing... rust-analyzer won't work with rustlings", &err)
@@ -433,6 +424,10 @@ fn fix_rust_analyzer() {
         if let Err(err) = rust_project.exercies_to_json() {
             println!("Error parsing exercises and converting to json: {}\nContinuing... rust-analyzer won't work with rustlings", &err)
         }
-        rust_project.write_to_disk();
+        if let Err(_) = rust_project.write_to_disk() {
+            println!("Failed to write rust-project.json to disk, rust-analyzer won't work with rustlings");
+        };
+    } else {
+        println!("Can't find rust-analyzer, skipping fix\n")
     }
 }

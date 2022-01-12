@@ -140,11 +140,6 @@ fn check_exists() {
     let rust_project = RustAnalyzerProject::new();
     match rust_project.check_rust_analyzer_exists() {
         Ok(_) => (),
-        Err(err) => match err {
-            RustAnalyzerError::NoRustAnalyzerError => {
-                println!("Correctly identifying rust-analyzer doesn't exist")
-            }
-            RustAnalyzerError::IoError(err) => panic!("io error: {}", err),
-        },
+        Err(_) => println!("Correctly identifying rust-analyzer doesn't exist"),
     }
 }
