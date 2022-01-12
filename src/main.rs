@@ -1,4 +1,5 @@
 use crate::exercise::{Exercise, ExerciseList};
+use crate::fix_rust_analyzer::{RustAnalyzerError, RustAnalyzerProject};
 use crate::run::run;
 use crate::verify::verify;
 use argh::FromArgs;
@@ -20,6 +21,7 @@ use std::time::Duration;
 mod ui;
 
 mod exercise;
+mod fix_rust_analyzer;
 mod run;
 mod verify;
 
@@ -37,6 +39,9 @@ struct Args {
     version: bool,
     #[argh(subcommand)]
     nested: Option<Subcommands>,
+    /// skip rust-analyzer fix check
+    #[argh(switch, short = 'x')]
+    skipfix: bool,
 }
 
 #[derive(FromArgs, PartialEq, Debug)]
@@ -126,6 +131,10 @@ fn main() {
         );
         println!("Try `cd rustlings/`!");
         std::process::exit(1);
+    }
+
+    if !Path::new("rust-project.json").exists() && !args.skipfix {
+        fix_rust_analyzer();
     }
 
     if !rustc_exists() {
@@ -403,4 +412,27 @@ fn rustc_exists() -> bool {
         .and_then(|mut child| child.wait())
         .map(|status| status.success())
         .unwrap_or(false)
+}
+
+fn fix_rust_analyzer() {
+    let mut rust_project = RustAnalyzerProject::new();
+    if let Err(err) = rust_project.check_rust_analyzer_exists() {
+        match err {
+            RustAnalyzerError::NoRustAnalyzerError => {
+                println!("rust-analyzer doesn't exist, skipping fix")
+            }
+            RustAnalyzerError::IoError(err) => {
+                println!("error trying to find rust-analyzer: {}", err)
+            }
+        }
+    } else {
+        println!("rust-analyzer exists, fixing to work with rustlings");
+        if let Err(err) = rust_project.get_sysroot_src() {
+            println!("Error getting toolchain path: {}\nContinuing... rust-analyzer won't work with rustlings", &err)
+        }
+        if let Err(err) = rust_project.exercies_to_json() {
+            println!("Error parsing exercises and converting to json: {}\nContinuing... rust-analyzer won't work with rustlings", &err)
+        }
+        rust_project.write_to_disk();
+    }
 }

@@ -21,10 +21,6 @@ home = "0.5.3"
 name = "rustlings"
 path = "src/main.rs"
 
-[[bin]]
-name = "fix-rust-analyzer"
-path = "src/fix-rust-analyzer.rs"
-
 [dev-dependencies]
 assert_cmd = "0.11.0"
 predicates = "1.0.1"
