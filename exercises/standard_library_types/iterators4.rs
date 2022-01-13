@@ -19,6 +19,11 @@ mod tests {
     use super::*;
 
     #[test]
+    fn factorial_of_0() {
+        assert_eq!(1, factorial(0));
+    }
+
+    #[test]
     fn factorial_of_1() {
         assert_eq!(1, factorial(1));
     }
