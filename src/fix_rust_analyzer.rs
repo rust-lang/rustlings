@@ -7,28 +7,7 @@
 use glob::glob;
 use serde::{Deserialize, Serialize};
 use std::error::Error;
-use std::fmt;
 use std::process::Command;
-
-/// Custom error to check if io error or rust-analyzer just doesn't exist
-/// if rust-analyzer doesn't exist don't want to panic, want to print
-/// message to console and continue
-pub enum RustAnalyzerError {
-    IoError(std::io::Error),
-    NoRustAnalyzerError,
-}
-
-impl fmt::Display for RustAnalyzerError {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "invalid first item to double")
-    }
-}
-
-impl RustAnalyzerError {
-    fn from_io(err: std::io::Error) -> RustAnalyzerError {
-        RustAnalyzerError::IoError(err)
-    }
-}
 
 /// Contains the structure of resulting rust-project.json file
 /// and functions to build the data required to create the file
@@ -87,21 +66,6 @@ impl RustAnalyzerProject {
         Ok(())
     }
 
-    /// Run `rust-analyzer --version` to check if rust analyzer exists, if it doesn't
-    /// then return custom error
-    pub fn check_rust_analyzer_exists(&self) -> Result<(), RustAnalyzerError> {
-        match Command::new("rust-analyzer").arg("--version").output() {
-            Ok(out) => {
-                if out.stderr.len() > 0 {
-                    return Err(RustAnalyzerError::NoRustAnalyzerError);
-                } else {
-                    return Ok(());
-                }
-            }
-            Err(err) => Err(RustAnalyzerError::from_io(err)),
-        }
-    }
-
     /// Use `rustup` command to determine the default toolchain, if it exists
     /// it will be put in RustAnalyzerProject.sysroot_src, otherwise an error will be returned
     pub fn get_sysroot_src(&mut self) -> Result<(), Box<dyn Error>> {
@@ -133,13 +97,4 @@ fn parses_exercises() {
         .exercies_to_json()
         .expect("Failed to parse exercises");
     assert_eq!(rust_project.crates.len() > 0, true);
-}
-
-#[test]
-fn check_exists() {
-    let rust_project = RustAnalyzerProject::new();
-    match rust_project.check_rust_analyzer_exists() {
-        Ok(_) => (),
-        Err(_) => println!("Correctly identifying rust-analyzer doesn't exist"),
-    }
 }

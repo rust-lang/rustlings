@@ -1,5 +1,5 @@
 use crate::exercise::{Exercise, ExerciseList};
-use crate::fix_rust_analyzer::{RustAnalyzerError, RustAnalyzerProject};
+use crate::fix_rust_analyzer::RustAnalyzerProject;
 use crate::run::run;
 use crate::verify::verify;
 use argh::FromArgs;
@@ -416,18 +416,13 @@ fn rustc_exists() -> bool {
 
 fn fix_rust_analyzer() {
     let mut rust_project = RustAnalyzerProject::new();
-    if rust_project.check_rust_analyzer_exists().is_ok() {
-        println!("rust-analyzer exists, fixing to work with rustlings");
-        if let Err(err) = rust_project.get_sysroot_src() {
-            println!("Error getting toolchain path: {}\nContinuing... rust-analyzer won't work with rustlings", &err)
-        }
-        if let Err(err) = rust_project.exercies_to_json() {
-            println!("Error parsing exercises and converting to json: {}\nContinuing... rust-analyzer won't work with rustlings", &err)
-        }
-        if let Err(_) = rust_project.write_to_disk() {
-            println!("Failed to write rust-project.json to disk, rust-analyzer won't work with rustlings");
-        };
-    } else {
-        println!("Can't find rust-analyzer, skipping fix\n")
+    if let Err(err) = rust_project.get_sysroot_src() {
+        println!("Couldn't find toolchain path for rust-analyzer: {}", &err)
     }
+    if let Err(err) = rust_project.exercies_to_json() {
+        println!("Couldn't parse exercises for rust-analyzer: {}", &err)
+    }
+    if let Err(_) = rust_project.write_to_disk() {
+        println!("Failed to write rust-project.json to disk for rust-analyzer");
+    };
 }
