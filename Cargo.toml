@@ -3,7 +3,6 @@ name = "rustlings"
 version = "4.6.0"
 authors = ["anastasie <ana@ana.st>", "Carol (Nichols || Goulding) <carol.nichols@gmail.com>"]
 edition = "2021"
-default-run = "rustlings"
 
 [dependencies]
 argh = "0.1.4"

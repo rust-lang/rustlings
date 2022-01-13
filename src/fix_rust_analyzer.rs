@@ -32,6 +32,15 @@ impl RustAnalyzerProject {
         }
     }
 
+    /// Write rust-project.json to disk
+    pub fn write_to_disk(&self) -> Result<(), std::io::Error> {
+        std::fs::write(
+            "./rust-project.json",
+            serde_json::to_vec(&self).expect("Failed to serialize to JSON"),
+        )?;
+        Ok(())
+    }
+
     /// If path contains .rs extension, add a crate to `rust-project.json`
     fn path_to_json(&mut self, path: String) {
         if let Some((_, ext)) = path.split_once(".") {
@@ -43,15 +52,6 @@ impl RustAnalyzerProject {
                 })
             }
         }
-    }
-
-    /// Write rust-project.json to disk
-    pub fn write_to_disk(&self) -> Result<(), std::io::Error> {
-        std::fs::write(
-            "./rust-project.json",
-            serde_json::to_vec(&self).expect("Failed to serialize to JSON"),
-        )?;
-        Ok(())
     }
 
     /// Parse the exercises folder for .rs files, any matches will create
