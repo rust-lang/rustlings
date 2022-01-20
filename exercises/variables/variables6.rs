@@ -3,7 +3,7 @@
 
 // I AM NOT DONE
 
-const NUMBER = 3;
+const NUMBER : i32 = 3; // ### Constants may always have a type annotation
 fn main() {
     println!("Number {}", NUMBER);
 }

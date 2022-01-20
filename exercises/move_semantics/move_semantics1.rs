@@ -6,10 +6,12 @@
 fn main() {
     let vec0 = Vec::new();
 
-    let vec1 = fill_vec(vec0);
+    let mut vec1 = fill_vec(vec0);
 
     println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1);
 
+    // ### Note that mutability is an attribute of names, thus when a value is moved mutability may
+    // change
     vec1.push(88);
 
     println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1);

@@ -9,7 +9,7 @@
 fn indexing_tuple() {
     let numbers = (1, 2, 3);
     // Replace below ??? with the tuple indexing syntax.
-    let second = ???;
+    let second = numbers.1; // ### Recall that tuples are indexed this way
 
     assert_eq!(2, second,
         "This is not the 2nd number in the tuple!")

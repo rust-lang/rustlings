@@ -3,6 +3,7 @@
 // I AM NOT DONE
 
 pub fn bigger(a: i32, b: i32) -> i32 {
+    if ( a > b ) { a } else { b }  // ### Recall the expr|stmt syntax and how if are expr in RUST.
     // Complete this function to return the bigger number!
     // Do not use:
     // - another function call
