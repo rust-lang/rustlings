@@ -2,6 +2,7 @@ use crate::exercise::{Exercise, ExerciseList};
 use crate::run::run;
 use crate::verify::verify;
 use argh::FromArgs;
+use colored::Colorize;
 use console::Emoji;
 use notify::DebouncedEvent;
 use notify::{RecommendedWatcher, RecursiveMode, Watcher};
@@ -163,6 +164,7 @@ fn main() {
                 } else {
                     "Pending"
                 };
+                let line_color = if status == "Done" { "green" } else { "red" };
                 let solve_cond = {
                     (e.looks_done() && subargs.solved)
                         || (!e.looks_done() && subargs.unsolved)
@@ -174,7 +176,12 @@ fn main() {
                     } else if subargs.names {
                         format!("{}\n", e.name)
                     } else {
-                        format!("{:<17}\t{:<46}\t{:<7}\n", e.name, fname, status)
+                        format!(
+                            "{:<17}\t{:<46}\t{:<7}\n",
+                            e.name.color(line_color),
+                            fname.color(line_color),
+                            status.color(line_color)
+                        )
                     };
                     // Somehow using println! leads to the binary panicking
                     // when its output is piped.

@@ -12,6 +12,7 @@ notify = "4.0.15"
 toml = "0.4.10"
 regex = "1.1.6"
 serde = {version = "1.0.10", features = ["derive"]}
+colored = "2.0"
 
 [[bin]]
 name = "rustlings"
