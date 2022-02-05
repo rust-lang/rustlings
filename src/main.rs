@@ -10,7 +10,8 @@ use std::fs;
 use std::io::{self, prelude::*};
 use std::path::Path;
 use std::process::{Command, Stdio};
-use std::sync::mpsc::channel;
+use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::mpsc::{channel, RecvTimeoutError};
 use std::sync::{Arc, Mutex};
 use std::thread;
 use std::time::Duration;
@@ -23,7 +24,7 @@ mod run;
 mod verify;
 
 // In sync with crate version
-const VERSION: &str = "4.4.0";
+const VERSION: &str = "4.6.0";
 
 #[derive(FromArgs, PartialEq, Debug)]
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
@@ -154,9 +155,7 @@ fn main() {
                     "Pending"
                 };
                 let solve_cond = {
-                    (e.looks_done() && subargs.solved)
-                        || (!e.looks_done() && subargs.unsolved)
-                        || (!subargs.solved && !subargs.unsolved)
+                    (e.looks_done() && subargs.solved) || (!e.looks_done() && subargs.unsolved) || (!subargs.solved && !subargs.unsolved)
                 };
                 if solve_cond && (filter_cond || subargs.filter.is_none()) {
                     let line = if subargs.paths {
@@ -194,7 +193,7 @@ fn main() {
         Subcommands::Run(subargs) => {
             let exercise = find_exercise(&subargs.name, &exercises);
 
-            run(&exercise, verbose).unwrap_or_else(|_| std::process::exit(1));
+            run(exercise, verbose).unwrap_or_else(|_| std::process::exit(1));
         }
 
         Subcommands::Hint(subargs) => {
@@ -207,38 +206,50 @@ fn main() {
             verify(&exercises, verbose).unwrap_or_else(|_| std::process::exit(1));
         }
 
-        Subcommands::Watch(_subargs) => {
-            if let Err(e) = watch(&exercises, verbose) {
-                println!(
-                    "Error: Could not watch your progress. Error message was {:?}.",
-                    e
-                );
+        Subcommands::Watch(_subargs) => match watch(&exercises, verbose) {
+            Err(e) => {
+                println!("Error: Could not watch your progress. Error message was {:?}.", e);
                 println!("Most likely you've run out of disk space or your 'inotify limit' has been reached.");
                 std::process::exit(1);
             }
-            println!(
-                "{emoji} All exercises completed! {emoji}",
-                emoji = Emoji("🎉", "★")
-            );
-            println!("\n{}\n", FENISH_LINE);
-        }
+            Ok(WatchStatus::Finished) => {
+                println!("{emoji} All exercises completed! {emoji}", emoji = Emoji("🎉", "★"));
+                println!("\n{}\n", FENISH_LINE);
+            }
+            Ok(WatchStatus::Unfinished) => {
+                println!("We hope you're enjoying learning about Rust!");
+                println!("If you want to continue working on the exercises at a later point, you can simply run `rustlings watch` again");
+            }
+        },
     }
 }
 
-fn spawn_watch_shell(failed_exercise_hint: &Arc<Mutex<Option<String>>>) {
+fn spawn_watch_shell(failed_exercise_hint: &Arc<Mutex<Option<String>>>, should_quit: Arc<AtomicBool>) {
     let failed_exercise_hint = Arc::clone(failed_exercise_hint);
-    println!("Type 'hint' or open the corresponding README.md file to get help or type 'clear' to clear the screen.");
+    println!("Welcome to watch mode! You can type 'help' to get an overview of the commands you can use here.");
     thread::spawn(move || loop {
         let mut input = String::new();
         match io::stdin().read_line(&mut input) {
             Ok(_) => {
                 let input = input.trim();
-                if input.eq("hint") {
+                if input == "hint" {
                     if let Some(hint) = &*failed_exercise_hint.lock().unwrap() {
                         println!("{}", hint);
                     }
-                } else if input.eq("clear") {
+                } else if input == "clear" {
                     println!("\x1B[2J\x1B[1;1H");
+                } else if input.eq("quit") {
+                    should_quit.store(true, Ordering::SeqCst);
+                    println!("Bye!");
+                } else if input.eq("help") {
+                    println!("Commands available to you in watch mode:");
+                    println!("  hint  - prints the current exercise's hint");
+                    println!("  clear - clears the screen");
+                    println!("  quit  - quits watch mode");
+                    println!("  help  - displays this help message");
+                    println!();
+                    println!("Watch mode automatically re-evaluates the current exercise");
+                    println!("when you edit a file's contents.")
                 } else {
                     println!("unknown command: {}", input);
                 }
@@ -249,16 +260,26 @@ fn spawn_watch_shell(failed_exercise_hint: &Arc<Mutex<Option<String>>>) {
 }
 
 fn find_exercise<'a>(name: &str, exercises: &'a [Exercise]) -> &'a Exercise {
-    exercises
-        .iter()
-        .find(|e| e.name == name)
-        .unwrap_or_else(|| {
+    if name.eq("next") {
+        exercises.iter().find(|e| !e.looks_done()).unwrap_or_else(|| {
+            println!("🎉 Congratulations! You have done all the exercises!");
+            println!("🔚 There are no more exercises to do next!");
+            std::process::exit(1)
+        })
+    } else {
+        exercises.iter().find(|e| e.name == name).unwrap_or_else(|| {
             println!("No exercise found for '{}'!", name);
             std::process::exit(1)
         })
+    }
 }
 
-fn watch(exercises: &[Exercise], verbose: bool) -> notify::Result<()> {
+enum WatchStatus {
+    Finished,
+    Unfinished,
+}
+
+fn watch(exercises: &[Exercise], verbose: bool) -> notify::Result<WatchStatus> {
     /* Clears the terminal with an ANSI escape code.
     Works in UNIX and newer Windows terminals. */
     fn clear_screen() {
@@ -266,6 +287,7 @@ fn watch(exercises: &[Exercise], verbose: bool) -> notify::Result<()> {
     }
 
     let (tx, rx) = channel();
+    let should_quit = Arc::new(AtomicBool::new(false));
 
     let mut watcher: RecommendedWatcher = Watcher::new(tx, Duration::from_secs(2))?;
     watcher.watch(Path::new("./exercises"), RecursiveMode::Recursive)?;
@@ -274,12 +296,12 @@ fn watch(exercises: &[Exercise], verbose: bool) -> notify::Result<()> {
 
     let to_owned_hint = |t: &Exercise| t.hint.to_owned();
     let failed_exercise_hint = match verify(exercises.iter(), verbose) {
-        Ok(_) => return Ok(()),
+        Ok(_) => return Ok(WatchStatus::Finished),
         Err(exercise) => Arc::new(Mutex::new(Some(to_owned_hint(exercise)))),
     };
-    spawn_watch_shell(&failed_exercise_hint);
+    spawn_watch_shell(&failed_exercise_hint, Arc::clone(&should_quit));
     loop {
-        match rx.recv() {
+        match rx.recv_timeout(Duration::from_secs(1)) {
             Ok(event) => match event {
                 DebouncedEvent::Create(b) | DebouncedEvent::Chmod(b) | DebouncedEvent::Write(b) => {
                     if b.extension() == Some(OsStr::new("rs")) && b.exists() {
@@ -288,14 +310,10 @@ fn watch(exercises: &[Exercise], verbose: bool) -> notify::Result<()> {
                             .iter()
                             .skip_while(|e| !filepath.ends_with(&e.path))
                             // .filter(|e| filepath.ends_with(&e.path))
-                            .chain(
-                                exercises
-                                    .iter()
-                                    .filter(|e| !e.looks_done() && !filepath.ends_with(&e.path)),
-                            );
+                            .chain(exercises.iter().filter(|e| !e.looks_done() && !filepath.ends_with(&e.path)));
                         clear_screen();
                         match verify(pending_exercises, verbose) {
-                            Ok(_) => return Ok(()),
+                            Ok(_) => return Ok(WatchStatus::Finished),
                             Err(exercise) => {
                                 let mut failed_exercise_hint = failed_exercise_hint.lock().unwrap();
                                 *failed_exercise_hint = Some(to_owned_hint(exercise));
@@ -305,7 +323,14 @@ fn watch(exercises: &[Exercise], verbose: bool) -> notify::Result<()> {
                 }
                 _ => {}
             },
+            Err(RecvTimeoutError::Timeout) => {
+                // the timeout expired, just check the `should_quit` variable below then loop again
+            }
             Err(e) => println!("watch error: {:?}", e),
+        }
+        // Check if we need to exit
+        if should_quit.load(Ordering::SeqCst) {
+            return Ok(WatchStatus::Unfinished);
         }
     }
 }

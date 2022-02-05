@@ -133,7 +133,7 @@ path = "{}.rs""#,
                     "Failed to write 📎 Clippy 📎 Cargo.toml file."
                 };
                 fs::write(CLIPPY_CARGO_TOML_PATH, cargo_toml).expect(cargo_toml_error_msg);
-                // To support the ability to run the clipy exercises, build
+                // To support the ability to run the clippy exercises, build
                 // an executable, in addition to running clippy. With a
                 // compilation failure, this would silently fail. But we expect
                 // clippy to reflect the same failure while compiling later.
@@ -154,7 +154,7 @@ path = "{}.rs""#,
                 Command::new("cargo")
                     .args(&["clippy", "--manifest-path", CLIPPY_CARGO_TOML_PATH])
                     .args(RUSTC_COLOR_ARGS)
-                    .args(&["--", "-D", "warnings"])
+                    .args(&["--", "-D", "warnings","-D","clippy::float_cmp"])
                     .output()
             }
         }
@@ -162,7 +162,7 @@ path = "{}.rs""#,
 
         if cmd.status.success() {
             Ok(CompiledExercise {
-                exercise: &self,
+                exercise: self,
                 _handle: FileHandle,
             })
         } else {
@@ -217,8 +217,7 @@ path = "{}.rs""#,
         let matched_line_index = source
             .lines()
             .enumerate()
-            .filter_map(|(i, line)| if re.is_match(line) { Some(i) } else { None })
-            .next()
+            .find_map(|(i, line)| if re.is_match(line) { Some(i) } else { None })
             .expect("This should not happen at all");
 
         let min_line = ((matched_line_index as i32) - (CONTEXT as i32)).max(0) as usize;

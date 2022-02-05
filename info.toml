@@ -1,3 +1,19 @@
+# INTRO
+
+[[exercises]]
+name = "intro1"
+path = "exercises/intro/intro1.rs"
+mode = "compile"
+hint = """
+Remove the I AM NOT DONE comment to move on to the next exercise."""
+
+[[exercises]]
+name = "intro2"
+path = "exercises/intro/intro2.rs"
+mode = "compile"
+hint = """
+Add an argument after the format string."""
+
 # VARIABLES
 
 [[exercises]]
@@ -114,8 +130,7 @@ path = "exercises/functions/functions5.rs"
 mode = "compile"
 hint = """
 This is a really common error that can be fixed by removing one character.
-It happens because Rust distinguishes between expressions and statements: expressions return
-a value based on its operand, and statements simply return a () type which behaves just like `void` in C/C++ language.
+It happens because Rust distinguishes between expressions and statements: expressions return a value based on their operand(s), and statements simply return a () type which behaves just like `void` in C/C++ language.
 We want to return a value of `i32` type from the `square` function, but it is returning a `()` type...
 They are not the same. There are two solutions:
 1. Add a `return` ahead of `num * num;`
@@ -209,6 +224,18 @@ So the end goal is to:
      reflect that it does not take any arguments
    - since we're not creating a new vec in `main` anymore, we need to create
      a new vec in `fill_vec`, similarly to the way we did in `main`"""
+
+[[exercises]]
+name = "move_semantics5"
+path = "exercises/move_semantics/move_semantics5.rs"
+mode = "compile"
+hint = """
+Carefully reason about the range in which each mutable reference is in
+vogue. Does it help to update the value of referent (x) immediately after
+the mutable reference is taken? Read more about 'Mutable References'
+in the book's section References and Borrowing':
+https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html#mutable-references.
+"""
 
 # PRIMITIVE TYPES
 
@@ -350,11 +377,19 @@ name = "modules2"
 path = "exercises/modules/modules2.rs"
 mode = "compile"
 hint = """
-The delicious_snacks module is trying to present an external
-interface (the `fruit` and `veggie` constants) that is different than
-its internal structure (the `fruits` and `veggies` modules and
-associated constants). It's almost there except for one keyword missing for
-each constant."""
+The delicious_snacks module is trying to present an external interface that is 
+different than its internal structure (the `fruits` and `veggies` modules and
+associated constants). Complete the `use` statements to fit the uses in main and
+find the one keyword missing for both constants."""
+
+[[exercises]]
+name = "modules3"
+path = "exercises/modules/modules3.rs"
+mode = "compile"
+hint = """
+UNIX_EPOCH and SystemTime are declared in the std::time module. Add a use statement
+for these two to bring them into scope. You can use nested paths or the glob
+operator to bring these two in using only one line."""
 
 # COLLECTIONS
 
@@ -475,42 +510,61 @@ hint = """
 If other functions can return a `Result`, why shouldn't `main`?"""
 
 [[exercises]]
-name = "errorsn"
-path = "exercises/error_handling/errorsn.rs"
+name = "errors4"
+path = "exercises/error_handling/errors4.rs"
 mode = "test"
 hint = """
-First hint: To figure out what type should go where the ??? is, take a look
-at the test helper function `test_with_str`, since it returns whatever
-`read_and_validate` returns and `test_with_str` has its signature fully
-specified.
+`PositiveNonzeroInteger::new` is always creating a new instance and returning an `Ok` result.
+It should be doing some checking, returning an `Err` result if those checks fail, and only
+returning an `Ok` result if those checks determine that everything is... okay :)"""
 
-
-Next hint: There are three places in `read_and_validate` that we call a
-function that returns a `Result` (that is, the functions might fail).
-Apply the `?` operator on those calls so that we return immediately from
-`read_and_validate` if those function calls fail.
-
+[[exercises]]
+name = "errors5"
+path = "exercises/error_handling/errors5.rs"
+mode = "compile"
+hint = """
+Hint: There are two different possible `Result` types produced within
+`main()`, which are propagated using `?` operators. How do we declare a
+return type from `main()` that allows both?
 
 Another hint: under the hood, the `?` operator calls `From::from`
-on the error value to convert it to a boxed trait object, a Box<dyn error::Error>,
-which is polymorphic-- that means that lots of different kinds of errors
-can be returned from the same function because all errors act the same
-since they all implement the `error::Error` trait.
+on the error value to convert it to a boxed trait object, a
+`Box<dyn error::Error>`, which is polymorphic-- that means that lots of
+different kinds of errors can be returned from the same function because
+all errors act the same since they all implement the `error::Error` trait.
 Check out this section of the book:
 https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator
 
+This exercise uses some concepts that we won't get to until later in the
+course, like `Box` and the `From` trait. It's not important to understand
+them in detail right now, but you can read ahead if you like.
 
-Another another hint: Note that because the `?` operator returns
-the *unwrapped* value in the `Ok` case, if we want to return a `Result` from
-`read_and_validate` for *its* success case, we'll have to rewrap a value
-that we got from the return value of a `?`ed call in an `Ok`-- this will
-look like `Ok(something)`.
+Read more about boxing errors:
+https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/boxing_errors.html
 
+Read more about using the `?` operator with boxed errors:
+https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/reenter_question_mark.html
+"""
 
-Another another another hint: `Result`s must be "used", that is, you'll
-get a warning if you don't handle a `Result` that you get in your
-function. Read more about that in the `std::result` module docs:
-https://doc.rust-lang.org/std/result/#results-must-be-used"""
+[[exercises]]
+name = "errors6"
+path = "exercises/error_handling/errors6.rs"
+mode = "test"
+hint = """
+This exercise uses a completed version of `PositiveNonzeroInteger` from
+errors4.
+
+Below the line that TODO asks you to change, there is an example of using
+the `map_err()` method on a `Result` to transform one type of error into
+another. Try using something similar on the `Result` from `parse()`. You
+might use the `?` operator to return early from the function, or you might
+use a `match` expression, or maybe there's another way!
+
+You can create another function inside `impl ParsePosNonzeroError` to use
+with `map_err()`.
+
+Read more about `map_err()` in the `std::result` documentation:
+https://doc.rust-lang.org/std/result/enum.Result.html#method.map_err"""
 
 # Generics
 
@@ -546,7 +600,7 @@ ReportCard struct generic, but also the correct property - you will need to chan
 of the struct slightly too...you can do it!
 """
 
-# OPTIONS / RESULTS
+# OPTIONS
 
 [[exercises]]
 name = "option1"
@@ -579,13 +633,14 @@ Also see Option::flatten
 """
 
 [[exercises]]
-name = "result1"
-path = "exercises/error_handling/result1.rs"
-mode = "test"
+name = "option3"
+path = "exercises/option/option3.rs"
+mode = "compile"
 hint = """
-`PositiveNonzeroInteger::new` is always creating a new instance and returning an `Ok` result.
-It should be doing some checking, returning an `Err` result if those checks fail, and only
-returning an `Ok` result if those checks determine that everything is... okay :)"""
+The compiler says a partial move happened in the `match`
+statement. How can this be avoided? The compiler shows the correction
+needed. After making the correction as suggested by the compiler, do
+read: https://doc.rust-lang.org/std/keyword.ref.html"""
 
 # TRAITS
 
@@ -737,7 +792,10 @@ The division_results variable needs to be collected into a collection type.
 The result_with_list function needs to return a single Result where the success
 case is a vector of integers and the failure case is a DivisionError.
 
-The list_of_results function needs to return a vector of results."""
+The list_of_results function needs to return a vector of results.
+
+See https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.collect for how 
+the `FromIterator` trait is used in `collect()`."""
 
 [[exercises]]
 name = "iterators4"
@@ -763,7 +821,10 @@ test count_iterator.
 The collection variable in count_collection_iterator is a slice of HashMaps. It
 needs to be converted into an iterator in order to use the iterator methods.
 
-The fold method can be useful in the count_collection_iterator function."""
+The fold method can be useful in the count_collection_iterator function.
+
+For a further challenge, consult the documentation for Iterator to find
+a different method that could make your code more compact than using fold."""
 
 # THREADS
 
@@ -861,7 +922,15 @@ name = "clippy1"
 path = "exercises/clippy/clippy1.rs"
 mode = "clippy"
 hint = """
-Floating point calculations are usually imprecise, so asking if two values are exactly equal is asking for trouble"""
+Rust stores the highest precision version of any long or inifinite precision
+mathematical constants in the rust standard library.
+https://doc.rust-lang.org/stable/std/f32/consts/index.html
+
+We may be tempted to use our own approximations for certain mathematical constants,
+but clippy recognizes those imprecise mathematical constants as a source of 
+potential error.
+See the suggestions of the clippy warning in compile output and use the
+appropriate replacement constant from std::f32::consts..."""
 
 [[exercises]]
 name = "clippy2"
@@ -888,12 +957,47 @@ hint = """
 Follow the steps provided right before the `From` implementation"""
 
 [[exercises]]
+name = "from_str"
+path = "exercises/conversions/from_str.rs"
+mode = "test"
+hint = """
+The implementation of FromStr should return an Ok with a Person object,
+or an Err with an error if the string is not valid.
+
+This is almost like the `from_into` exercise, but returning errors instead
+of falling back to a default value.
+
+Hint: Look at the test cases to see which error variants to return.
+
+Another hint: You can use the `map_err` method of `Result` with a function
+or a closure to wrap the error from `parse::<usize>`.
+
+Yet another hint: If you would like to propagate errors by using the `?`
+operator in your solution, you might want to look at
+https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/reenter_question_mark.html
+"""
+
+[[exercises]]
 name = "try_from_into"
 path = "exercises/conversions/try_from_into.rs"
 mode = "test"
 hint = """
 Follow the steps provided right before the `TryFrom` implementation.
-You can also use the example at https://doc.rust-lang.org/std/convert/trait.TryFrom.html"""
+You can also use the example at https://doc.rust-lang.org/std/convert/trait.TryFrom.html
+
+Hint: Is there an implementation of `TryFrom` in the standard library that
+can both do the required integer conversion and check the range of the input?
+
+Another hint: Look at the test cases to see which error variants to return.
+
+Yet another hint: You can use the `map_err` or `or` methods of `Result` to
+convert errors.
+
+Yet another hint: If you would like to propagate errors by using the `?`
+operator in your solution, you might want to look at
+https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/reenter_question_mark.html
+
+Challenge: Can you make the `TryFrom` implementations generic over many integer types?"""
 
 [[exercises]]
 name = "as_ref_mut"
@@ -902,11 +1006,54 @@ mode = "test"
 hint = """
 Add AsRef<str> as a trait bound to the functions."""
 
+# ADVANCED ERRORS
+
 [[exercises]]
-name = "from_str"
-path = "exercises/conversions/from_str.rs"
+name = "advanced_errs1"
+path = "exercises/advanced_errors/advanced_errs1.rs"
 mode = "test"
 hint = """
-The implementation of FromStr should return an Ok with a Person object,
-or an Err with an error if the string is not valid.
-This is almost like the `try_from_into` exercise."""
+This exercise uses an updated version of the code in errors6. The parsing
+code is now in an implementation of the `FromStr` trait. Note that the
+parsing code uses `?` directly, without any calls to `map_err()`. There is
+one partial implementation of the `From` trait example that you should
+complete.
+
+Details: The `?` operator calls `From::from()` on the error type to convert
+it to the error type of the return type of the surrounding function.
+
+Hint: You will need to write another implementation of `From` that has a
+different input type.
+"""
+
+[[exercises]]
+name = "advanced_errs2"
+path = "exercises/advanced_errors/advanced_errs2.rs"
+mode = "test"
+hint = """
+This exercise demonstrates a few traits that are useful for custom error
+types to implement. These traits make it easier for other code to consume
+the custom error type.
+
+Follow the steps in the comment near the top of the file. You will have to
+supply a missing trait implementation, and complete a few incomplete ones.
+
+You may find these pages to be helpful references:
+https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/define_error_type.html
+https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/boxing_errors.html
+https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/wrap_error.html
+
+Hint: What trait must our error type have for `main()` to return the return
+type that it returns?
+
+Another hint: It's not necessary to implement any methods inside the missing
+trait. (Some methods have default implementations that are supplied by the
+trait.)
+
+Another hint: Consult the tests to determine which error variants (and which
+error message text) to produce for certain error conditions.
+
+Challenge: There is one test that is marked `#[ignore]`. Can you supply the
+missing code that will make it pass? You may want to consult the standard
+library documentation for a certain trait for more hints.
+"""
