@@ -1054,3 +1054,9 @@ name = "palindrome"
 path = "exercises/palindrome/palindrome.rs"
 mode = "compile"
 hint = ""
+
+[[exercises]]
+name = "doubly-linked-list"
+path = "exercises/doubly_linked_list/dlist.rs"
+mode = "compile"
+hint = ""
