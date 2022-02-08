@@ -1056,7 +1056,7 @@ mode = "compile"
 hint = ""
 
 [[exercises]]
-name = "doubly-linked-list"
-path = "exercises/doubly_linked_list/dlist.rs"
+name = "students"
+path = "exercises/students/students.rs"
 mode = "compile"
 hint = ""
