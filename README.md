@@ -2,6 +2,11 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-118-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
+# My Solutions to the Rustlings Course!
+
+Working directly with concepts and code has historically been a really good for me to learn.  This
+repo serves to document my progress through Rustlings.
+
 # rustlings 🦀❤️
 
 Greetings and welcome to `rustlings`. This project contains small exercises to get you used to reading and writing Rust code. This includes reading and responding to compiler messages!
