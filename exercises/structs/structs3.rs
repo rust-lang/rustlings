@@ -14,7 +14,11 @@ struct Package {
 impl Package {
     fn new(sender_country: String, recipient_country: String, weight_in_grams: i32) -> Package {
         if weight_in_grams <= 0 {
+<<<<<<< HEAD
             panic!("Attempted to construct a package with negative weight");
+=======
+            // panic statement goes here...
+>>>>>>> upstream/main
         } else {
             Package {
                 sender_country,
