@@ -1074,6 +1074,24 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "sundevilyang",
+      "name": "Yang Wen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1499214?v=4",
+      "profile": "https://github.com/sundevilyang",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "highb",
+      "name": "Brandon High",
+      "avatar_url": "https://avatars.githubusercontent.com/u/759848?v=4",
+      "profile": "https://brandon-high.com",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 8,
