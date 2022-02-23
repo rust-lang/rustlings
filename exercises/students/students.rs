@@ -24,7 +24,7 @@ fn main() {
 
    // an instance of student (Michael Dodge, 1066, Bio, 2023)
 
-   // Note: shorthand possible for Rob and Michael; Adam and Helex
+   // Note: shorthand possible for Rob and Michael; Adam and Nick
 
    // call a function that will return list of students graduating by year
 

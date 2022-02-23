@@ -1060,3 +1060,9 @@ name = "students"
 path = "exercises/students/students.rs"
 mode = "compile"
 hint = ""
+
+[[exercises]]
+name = "simulator"
+path = "exercises/simulator/simulator.rs"
+mode = "compile"
+hint = ""
