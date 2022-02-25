@@ -727,6 +727,17 @@ Instead of using concrete types as parameters you can use traits. Try replacing 
 See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#traits-as-parameters
 """
 
+[[exercises]]
+name = "traits5"
+path = "exercises/traits/traits5.rs"
+mode = "compile"
+hint = """
+To ensure a paramter implements multiple traits use the '+ syntax'. Try replacing the
+'??' with 'impl <> + <>'.
+
+See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#specifying-multiple-trait-bounds-with-the--syntax
+"""
+
 # QUIZ 3
 
 [[exercises]]
