@@ -716,6 +716,17 @@ implement the function themselves.
 See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#default-implementations
 """
 
+[[exercises]]
+name = "traits4"
+path = "exercises/traits/traits4.rs"
+mode = "test"
+hint = """
+Instead of using concrete types as parameters you can use traits. Try replacing the
+'??' with 'impl <what goes here?>'
+
+See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#traits-as-parameters
+"""
+
 # QUIZ 3
 
 [[exercises]]
