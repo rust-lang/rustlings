@@ -79,7 +79,7 @@ path = "exercises/variables/variables6.rs"
 mode = "compile"
 hint = """
 We know about variables and mutability, but there is another important type of
-variable available; constants.
+variable available: constants.
 Constants are always immutable and they are declared with keyword 'const' rather
 than keyword 'let'.
 Constants types must also always be annotated.
