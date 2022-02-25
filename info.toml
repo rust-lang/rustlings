@@ -704,6 +704,18 @@ what the result should look like!
 Vectors provide suitable methods for adding an element at the end. See
 the documentation at: https://doc.rust-lang.org/std/vec/struct.Vec.html"""
 
+[[exercises]]
+name = "traits3"
+path = "exercises/traits/traits3.rs"
+mode = "test"
+hint = """
+Traits can have a default implementation for functions. Structs that implement
+the trait can then use the default version of these functions if they choose not
+implement the function themselves.
+
+See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#default-implementations
+"""
+
 # QUIZ 3
 
 [[exercises]]
