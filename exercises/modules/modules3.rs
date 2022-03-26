@@ -5,10 +5,11 @@
 // from the std::time module. Bonus style points if you can do it with one line!
 // Make me compile! Execute `rustlings hint modules3` for hints :)
 
-// I AM NOT DONE
 
 // TODO: Complete this use statement
-use ???
+use std::time::{UNIX_EPOCH,SystemTime}; // Hey, I did it! 
+// pub use std::time::SystemTime as SystemTime; // This is redundant, you just need everything before as
+// pub use std::time::UNIX_EPOCH as UNIX_EPOCH; 
 
 fn main() {
     match SystemTime::now().duration_since(UNIX_EPOCH) {
