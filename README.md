@@ -36,13 +36,13 @@ This will install Rustlings and give you access to the `rustlings` command. Run 
 
 In PowerShell (Run as Administrator), set `ExecutionPolicy` to `RemoteSigned`:
 
-```ps
+```ps1
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
 Then, you can run:
 
-```ps
+```ps1
 Start-BitsTransfer -Source https://git.io/JTL5v -Destination $env:TMP/install_rustlings.ps1; Unblock-File $env:TMP/install_rustlings.ps1; Invoke-Expression $env:TMP/install_rustlings.ps1
 ```
 
