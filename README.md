@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-118-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-119-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # rustlings 🦀❤️
@@ -325,6 +325,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/tan-zx"><img src="https://avatars.githubusercontent.com/u/67887489?v=4?s=100" width="100px;" alt=""/><br /><sub><b>ZX</b></sub></a><br /><a href="#content-tan-zx" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/sundevilyang"><img src="https://avatars.githubusercontent.com/u/1499214?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Yang Wen</b></sub></a><br /><a href="#content-sundevilyang" title="Content">🖋</a></td>
     <td align="center"><a href="https://brandon-high.com"><img src="https://avatars.githubusercontent.com/u/759848?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Brandon High</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=highb" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/x-hgg-x"><img src="https://avatars.githubusercontent.com/u/39058530?v=4?s=100" width="100px;" alt=""/><br /><sub><b>x-hgg-x</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=x-hgg-x" title="Code">💻</a></td>
   </tr>
 </table>
 
