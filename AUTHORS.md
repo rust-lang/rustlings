@@ -157,6 +157,10 @@ authors.
     <td align="center"><a href="https://github.com/sundevilyang"><img src="https://avatars.githubusercontent.com/u/1499214?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Yang Wen</b></sub></a><br /><a href="#content-sundevilyang" title="Content">🖋</a></td>
     <td align="center"><a href="https://brandon-high.com"><img src="https://avatars.githubusercontent.com/u/759848?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Brandon High</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=highb" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/x-hgg-x"><img src="https://avatars.githubusercontent.com/u/39058530?v=4?s=100" width="100px;" alt=""/><br /><sub><b>x-hgg-x</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=x-hgg-x" title="Code">💻</a></td>
+    <td align="center"><a href="http://kisaragieffective.github.io"><img src="https://avatars.githubusercontent.com/u/48310258?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kisaragi</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=KisaragiEffective" title="Documentation">📖</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/Kallu-A"><img src="https://avatars.githubusercontent.com/u/73198738?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Lucas Aries</b></sub></a><br /><a href="#content-Kallu-A" title="Content">🖋</a></td>
   </tr>
 </table>
 
