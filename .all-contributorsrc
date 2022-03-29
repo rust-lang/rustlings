@@ -1101,6 +1101,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "KisaragiEffective",
+      "name": "Kisaragi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/48310258?v=4",
+      "profile": "http://kisaragieffective.github.io",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 8,
