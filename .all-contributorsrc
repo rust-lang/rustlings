@@ -1092,6 +1092,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "x-hgg-x",
+      "name": "x-hgg-x",
+      "avatar_url": "https://avatars.githubusercontent.com/u/39058530?v=4",
+      "profile": "https://github.com/x-hgg-x",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
