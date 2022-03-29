@@ -1,0 +1,32 @@
+6
+Desk1 Desktop V4 127.0.5.101
+0
+Desk2 Desktop V4 127.0.6.202
+0
+Switch1 Switch V6 2001:0db8:85a3:0000:0000:8a2e:0370:7334
+1
+Desk1
+Router1 Router V4 192.10.12.145
+2
+Switch1 Desk2
+Switch2 Switch V6 2001:0db8:85a3:0000:0000:8aaa:0378:7544
+1
+Router1
+Desk3 Desktop V4 127.0.7.185
+1
+Switch2
+
+1
+Router1
+
+2
+V6
+
+3
+Desk1 Desk3
+
+4
+Switch2
+
+3
+Desk1 Desk3

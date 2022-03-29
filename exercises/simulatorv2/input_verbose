@@ -1,0 +1,42 @@
+Number of Devices: 6
+Device Info: Desk1 Desktop V4 127.0.5.101
+No. of Connections: 0
+Device Info: Desk2 Desktop V4 127.0.6.202
+No. of Connections: 0
+Device Info: Switch1 Switch V6 2001:0db8:85a3:0000:0000:8a2e:0370:7334
+No. of Connections: 1
+Connections are: Desk1
+Device Info: Router1 Router V4 192.10.12.145
+No. of Connections: 2
+Connections are: Switch1 Desk2
+Device Info: Switch2 Switch V6 2001:0db8:85a3:0000:0000:8aaa:0378:7544
+No. of Connections: 1
+Connections are: Router1
+Device Info: Desk3 Desktop V4 127.0.7.185
+No. of Connections: 1
+Connections are: Switch2
+
+Choice operation:
+1) Who are directly connected to <input>?
+2) Who are using <input> IP Kind?
+3) How does <input1> and <input2> can talk?
+4) Remove the <input>?
+
+Choice: 1
+Router1
+Answer: Switch1, Switch2, Desk2
+
+Choice: 2
+V6
+Answer: Switch1, Switch2
+
+Choice: 3
+Desk1 Desk3
+Answer: Desk1 -> Switch1 -> Router1 -> Switch2 -> Desk3
+
+Choice: 4
+Switch2
+
+Choice: 3
+Desk1 Desk3
+Answer: No connection.

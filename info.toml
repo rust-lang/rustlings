@@ -1082,3 +1082,9 @@ name = "simulator"
 path = "exercises/simulator/simulator.rs"
 mode = "compile"
 hint = ""
+
+[[exercises]]
+name = "simulatorv2"
+path = "exercises/simulatorv2/simulator.rs"
+mode = "compile"
+hint = ""
