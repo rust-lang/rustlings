@@ -1110,6 +1110,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "Kallu-A",
+      "name": "Lucas Aries",
+      "avatar_url": "https://avatars.githubusercontent.com/u/73198738?v=4",
+      "profile": "https://github.com/Kallu-A",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
