@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
 echo "Let's get you set up with Rustlings!"
 
@@ -100,8 +101,8 @@ function vercomp() {
 
 RustVersion=$(rustc --version | cut -d " " -f 2)
 MinRustVersion=1.39
-vercomp $RustVersion $MinRustVersion
-if [ $? -eq 2 ]
+vercomp "$RustVersion" $MinRustVersion || ec=$?
+if [ ${ec:-0} -eq 2 ]
 then
     echo "ERROR: Rust version is too old: $RustVersion - needs at least $MinRustVersion"
     echo "Please update Rust with 'rustup update'"
@@ -112,9 +113,9 @@ fi
 
 Path=${1:-rustlings/}
 echo "Cloning Rustlings at $Path..."
-git clone -q https://github.com/rust-lang/rustlings $Path
+git clone -q https://github.com/rust-lang/rustlings "$Path"
 
-cd $Path
+cd "$Path"
 
 Version=$(curl -s https://api.github.com/repos/rust-lang/rustlings/releases/latest | ${PY} -c "import json,sys;obj=json.load(sys.stdin);print(obj['tag_name']);")
 CargoBin="${CARGO_HOME:-$HOME/.cargo}/bin"
