@@ -8,7 +8,6 @@
 
 // Make these tests pass! Execute `rustlings hint errors6` for hints :)
 
-// I AM NOT DONE
 
 use std::num::ParseIntError;
 
@@ -16,7 +15,7 @@ use std::num::ParseIntError;
 #[derive(PartialEq, Debug)]
 enum ParsePosNonzeroError {
     Creation(CreationError),
-    ParseInt(ParseIntError)
+    ParseInt(ParseIntError),
 }
 
 impl ParsePosNonzeroError {
@@ -24,6 +23,9 @@ impl ParsePosNonzeroError {
         ParsePosNonzeroError::Creation(err)
     }
     // TODO: add another error conversion function here.
+    fn from_parse(err: ParseIntError) -> ParsePosNonzeroError {
+        ParsePosNonzeroError::ParseInt(err)
+    }
 }
 
 fn parse_pos_nonzero(s: &str)
@@ -31,9 +33,23 @@ fn parse_pos_nonzero(s: &str)
 {
     // TODO: change this to return an appropriate error instead of panicking
     // when `parse()` returns an error.
-    let x: i64 = s.parse().unwrap();
-    PositiveNonzeroInteger::new(x)
-        .map_err(ParsePosNonzeroError::from_creation)
+    /*
+    We're greeted with 
+    ############################
+    ---- test::test_parse_error stdout ----
+    thread 'test::test_parse_error' panicked at 'called `Result::unwrap()` 
+    on an `Err` value: ParseIntError { kind: InvalidDigit }', 
+    exercises/error_handling/errors6.rs:34:28
+    ############################
+    So this is really applying a function mapping one error to another
+    Applying map_err to something that is Ok doesn't affect the outcome
+    
+        pub fn map_err<F, O>(self, op: O) -> Result<T, F> 
+        where
+        O: FnOnce(E) -> F, 
+    */
+    let x: i64 = s.parse().map_err(ParsePosNonzeroError::from_parse)?; //Originally this was .unwrap() which causes a panic!;
+    PositiveNonzeroInteger::new(x).map_err(ParsePosNonzeroError::from_creation) 
 }
 
 // Don't change anything below this line.
