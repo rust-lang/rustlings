@@ -4,7 +4,6 @@
 // It won't compile right now! Why?
 // Execute `rustlings hint errors5` for hints!
 
-// I AM NOT DONE
 
 use std::error;
 use std::fmt;
@@ -14,7 +13,7 @@ use std::num::ParseIntError;
 fn main() -> Result<(), ParseIntError> {
     let pretend_user_input = "42";
     let x: i64 = pretend_user_input.parse()?;
-    println!("output={:?}", PositiveNonzeroInteger::new(x)?);
+    println!("output={:?}", PositiveNonzeroInteger::new(x)); // The ? here seemed to be superfluous as the erro handlnig had already bee instantiated
     Ok(())
 }
 
