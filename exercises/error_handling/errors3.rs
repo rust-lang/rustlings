@@ -8,11 +8,11 @@
 
 use std::num::ParseIntError;
 
-fn main() {
+fn main() -> Result<(),ParseIntError> { // This isn't too bad, main should return (), so we just float the result structure up to main.
     let mut tokens = 100;
     let pretend_user_input = "8";
 
-    let cost = total_cost(pretend_user_input)?;
+    let cost = total_cost(pretend_user_input)?; // Here we're making cost a result
 
     if cost > tokens {
         println!("You can't afford that many!");
@@ -20,6 +20,8 @@ fn main() {
         tokens -= cost;
         println!("You now have {} tokens.", tokens);
     }
+    Ok(()) // :facepalm: So, I was on https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html at the final example.
+            // Wish I had read further
 }
 
 pub fn total_cost(item_quantity: &str) -> Result<i32, ParseIntError> {
