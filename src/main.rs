@@ -108,15 +108,7 @@ fn main() {
     }
 
     if args.nested.is_none() {
-        println!();
-        println!(r#"       welcome to...                      "#);
-        println!(r#"                 _   _ _                  "#);
-        println!(r#"  _ __ _   _ ___| |_| (_)_ __   __ _ ___  "#);
-        println!(r#" | '__| | | / __| __| | | '_ \ / _` / __| "#);
-        println!(r#" | |  | |_| \__ \ |_| | | | | | (_| \__ \ "#);
-        println!(r#" |_|   \__,_|___/\__|_|_|_| |_|\__, |___/ "#);
-        println!(r#"                               |___/      "#);
-        println!();
+        println!("\n{}\n", WELCOME);
     }
 
     if !Path::new("info.toml").exists() {
@@ -140,8 +132,7 @@ fn main() {
     let verbose = args.nocapture;
 
     let command = args.nested.unwrap_or_else(|| {
-        let text = fs::read_to_string("default_out.txt").unwrap();
-        println!("{}", text);
+        println!("{}\n", DEFAULT_OUT);
         std::process::exit(0);
     });
     match command {
@@ -164,9 +155,7 @@ fn main() {
                     "Pending"
                 };
                 let solve_cond = {
-                    (e.looks_done() && subargs.solved)
-                        || (!e.looks_done() && subargs.unsolved)
-                        || (!subargs.solved && !subargs.unsolved)
+                    (e.looks_done() && subargs.solved) || (!e.looks_done() && subargs.unsolved) || (!subargs.solved && !subargs.unsolved)
                 };
                 if solve_cond && (filter_cond || subargs.filter.is_none()) {
                     let line = if subargs.paths {
@@ -219,49 +208,13 @@ fn main() {
 
         Subcommands::Watch(_subargs) => match watch(&exercises, verbose) {
             Err(e) => {
-                println!(
-                    "Error: Could not watch your progress. Error message was {:?}.",
-                    e
-                );
+                println!("Error: Could not watch your progress. Error message was {:?}.", e);
                 println!("Most likely you've run out of disk space or your 'inotify limit' has been reached.");
                 std::process::exit(1);
             }
             Ok(WatchStatus::Finished) => {
-                println!(
-                    "{emoji} All exercises completed! {emoji}",
-                    emoji = Emoji("🎉", "★")
-                );
-                println!();
-                println!("+----------------------------------------------------+");
-                println!("|          You made it to the Fe-nish line!          |");
-                println!("+--------------------------  ------------------------+");
-                println!("                          \\/                         ");
-                println!("     ▒▒          ▒▒▒▒▒▒▒▒      ▒▒▒▒▒▒▒▒          ▒▒   ");
-                println!("   ▒▒▒▒  ▒▒    ▒▒        ▒▒  ▒▒        ▒▒    ▒▒  ▒▒▒▒ ");
-                println!("   ▒▒▒▒  ▒▒  ▒▒            ▒▒            ▒▒  ▒▒  ▒▒▒▒ ");
-                println!(" ░░▒▒▒▒░░▒▒  ▒▒            ▒▒            ▒▒  ▒▒░░▒▒▒▒ ");
-                println!("   ▓▓▓▓▓▓▓▓  ▓▓      ▓▓██  ▓▓  ▓▓██      ▓▓  ▓▓▓▓▓▓▓▓ ");
-                println!("     ▒▒▒▒    ▒▒      ████  ▒▒  ████      ▒▒░░  ▒▒▒▒   ");
-                println!("       ▒▒  ▒▒▒▒▒▒        ▒▒▒▒▒▒        ▒▒▒▒▒▒  ▒▒     ");
-                println!("         ▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▒▒▒▒▒▒▒▒▓▓▒▒▓▓▒▒▒▒▒▒▒▒       ");
-                println!("           ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒         ");
-                println!("             ▒▒▒▒▒▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒▒▒▒▒▒           ");
-                println!("           ▒▒  ▒▒▒▒▒▒▒▒▒▒██████▒▒▒▒▒▒▒▒▒▒  ▒▒         ");
-                println!("         ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒       ");
-                println!("       ▒▒    ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒    ▒▒     ");
-                println!("       ▒▒  ▒▒    ▒▒                  ▒▒    ▒▒  ▒▒     ");
-                println!("           ▒▒  ▒▒                      ▒▒  ▒▒         ");
-                println!();
-                println!("We hope you enjoyed learning about the various aspects of Rust!");
-                println!(
-                    "If you noticed any issues, please don't hesitate to report them to our repo."
-                );
-                println!(
-                    "You can also contribute your own exercises to help the greater community!"
-                );
-                println!();
-                println!("Before reporting an issue or contributing, please read our guidelines:");
-                println!("https://github.com/rust-lang/rustlings/blob/main/CONTRIBUTING.md");
+                println!("{emoji} All exercises completed! {emoji}", emoji = Emoji("🎉", "★"));
+                println!("\n{}\n", FENISH_LINE);
             }
             Ok(WatchStatus::Unfinished) => {
                 println!("We hope you're enjoying learning about Rust!");
@@ -271,10 +224,7 @@ fn main() {
     }
 }
 
-fn spawn_watch_shell(
-    failed_exercise_hint: &Arc<Mutex<Option<String>>>,
-    should_quit: Arc<AtomicBool>,
-) {
+fn spawn_watch_shell(failed_exercise_hint: &Arc<Mutex<Option<String>>>, should_quit: Arc<AtomicBool>) {
     let failed_exercise_hint = Arc::clone(failed_exercise_hint);
     println!("Welcome to watch mode! You can type 'help' to get an overview of the commands you can use here.");
     thread::spawn(move || loop {
@@ -311,22 +261,16 @@ fn spawn_watch_shell(
 
 fn find_exercise<'a>(name: &str, exercises: &'a [Exercise]) -> &'a Exercise {
     if name.eq("next") {
-        exercises
-            .iter()
-            .find(|e| !e.looks_done())
-            .unwrap_or_else(|| {
-                println!("🎉 Congratulations! You have done all the exercises!");
-                println!("🔚 There are no more exercises to do next!");
-                std::process::exit(1)
-            })
+        exercises.iter().find(|e| !e.looks_done()).unwrap_or_else(|| {
+            println!("🎉 Congratulations! You have done all the exercises!");
+            println!("🔚 There are no more exercises to do next!");
+            std::process::exit(1)
+        })
     } else {
-        exercises
-            .iter()
-            .find(|e| e.name == name)
-            .unwrap_or_else(|| {
-                println!("No exercise found for '{}'!", name);
-                std::process::exit(1)
-            })
+        exercises.iter().find(|e| e.name == name).unwrap_or_else(|| {
+            println!("No exercise found for '{}'!", name);
+            std::process::exit(1)
+        })
     }
 }
 
@@ -366,11 +310,7 @@ fn watch(exercises: &[Exercise], verbose: bool) -> notify::Result<WatchStatus> {
                             .iter()
                             .skip_while(|e| !filepath.ends_with(&e.path))
                             // .filter(|e| filepath.ends_with(&e.path))
-                            .chain(
-                                exercises
-                                    .iter()
-                                    .filter(|e| !e.looks_done() && !filepath.ends_with(&e.path)),
-                            );
+                            .chain(exercises.iter().filter(|e| !e.looks_done() && !filepath.ends_with(&e.path)));
                         clear_screen();
                         match verify(pending_exercises, verbose) {
                             Ok(_) => return Ok(WatchStatus::Finished),
@@ -404,3 +344,64 @@ fn rustc_exists() -> bool {
         .map(|status| status.success())
         .unwrap_or(false)
 }
+
+const DEFAULT_OUT: &str = r#"Thanks for installing Rustlings!
+
+Is this your first time? Don't worry, Rustlings was made for beginners! We are
+going to teach you a lot of things about Rust, but before we can get
+started, here's a couple of notes about how Rustlings operates:
+
+1. The central concept behind Rustlings is that you solve exercises. These
+   exercises usually have some sort of syntax error in them, which will cause
+   them to fail compilation or testing. Sometimes there's a logic error instead
+   of a syntax error. No matter what error, it's your job to find it and fix it!
+   You'll know when you fixed it because then, the exercise will compile and
+   Rustlings will be able to move on to the next exercise.
+2. If you run Rustlings in watch mode (which we recommend), it'll automatically
+   start with the first exercise. Don't get confused by an error message popping
+   up as soon as you run Rustlings! This is part of the exercise that you're
+   supposed to solve, so open the exercise file in an editor and start your
+   detective work!
+3. If you're stuck on an exercise, there is a helpful hint you can view by typing
+   'hint' (in watch mode), or running `rustlings hint exercise_name`.
+4. If an exercise doesn't make sense to you, feel free to open an issue on GitHub!
+   (https://github.com/rust-lang/rustlings/issues/new). We look at every issue,
+   and sometimes, other learners do too so you can help each other out!
+
+Got all that? Great! To get started, run `rustlings watch` in order to get the first
+exercise. Make sure to have your editor open!"#;
+
+const FENISH_LINE: &str = r#"+----------------------------------------------------+
+|          You made it to the Fe-nish line!          |
++--------------------------  ------------------------+
+                          \\/
+     ▒▒          ▒▒▒▒▒▒▒▒      ▒▒▒▒▒▒▒▒          ▒▒
+   ▒▒▒▒  ▒▒    ▒▒        ▒▒  ▒▒        ▒▒    ▒▒  ▒▒▒▒
+   ▒▒▒▒  ▒▒  ▒▒            ▒▒            ▒▒  ▒▒  ▒▒▒▒
+ ░░▒▒▒▒░░▒▒  ▒▒            ▒▒            ▒▒  ▒▒░░▒▒▒▒
+   ▓▓▓▓▓▓▓▓  ▓▓      ▓▓██  ▓▓  ▓▓██      ▓▓  ▓▓▓▓▓▓▓▓
+     ▒▒▒▒    ▒▒      ████  ▒▒  ████      ▒▒░░  ▒▒▒▒
+       ▒▒  ▒▒▒▒▒▒        ▒▒▒▒▒▒        ▒▒▒▒▒▒  ▒▒
+         ▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▒▒▒▒▒▒▒▒▓▓▒▒▓▓▒▒▒▒▒▒▒▒
+           ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+             ▒▒▒▒▒▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒▒▒▒▒▒
+           ▒▒  ▒▒▒▒▒▒▒▒▒▒██████▒▒▒▒▒▒▒▒▒▒  ▒▒
+         ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒
+       ▒▒    ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒    ▒▒
+       ▒▒  ▒▒    ▒▒                  ▒▒    ▒▒  ▒▒
+           ▒▒  ▒▒                      ▒▒  ▒▒
+
+We hope you enjoyed learning about the various aspects of Rust!
+If you noticed any issues, please don't hesitate to report them to our repo.
+You can also contribute your own exercises to help the greater community!
+
+Before reporting an issue or contributing, please read our guidelines:
+https://github.com/rust-lang/rustlings/blob/main/CONTRIBUTING.md"#;
+
+const WELCOME: &str = r#"       welcome to...
+                 _   _ _
+  _ __ _   _ ___| |_| (_)_ __   __ _ ___
+ | '__| | | / __| __| | | '_ \ / _` / __|
+ | |  | |_| \__ \ |_| | | | | | (_| \__ \
+ |_|   \__,_|___/\__|_|_|_| |_|\__, |___/
+                               |___/"#;
