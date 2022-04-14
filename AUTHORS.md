@@ -162,6 +162,7 @@ authors.
   <tr>
     <td align="center"><a href="https://github.com/Kallu-A"><img src="https://avatars.githubusercontent.com/u/73198738?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Lucas Aries</b></sub></a><br /><a href="#content-Kallu-A" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/ragreenburg"><img src="https://avatars.githubusercontent.com/u/24358100?v=4?s=100" width="100px;" alt=""/><br /><sub><b>ragreenburg</b></sub></a><br /><a href="#content-ragreenburg" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/stevenfukase"><img src="https://avatars.githubusercontent.com/u/66785624?v=4?s=100" width="100px;" alt=""/><br /><sub><b>stevenfukase</b></sub></a><br /><a href="#content-stevenfukase" title="Content">🖋</a></td>
   </tr>
 </table>
 
