@@ -490,7 +490,7 @@ name = "errors1"
 path = "exercises/error_handling/errors1.rs"
 mode = "test"
 hint = """
-`Err` is one of the variants of `Result`, so what the 2nd test is saying
+`Ok` and `Err` are one of the variants of `Result`, so what the tests are saying
 is that `generate_nametag_text` should return a `Result` instead of an
 `Option`.
 
@@ -500,9 +500,7 @@ To make this change, you'll need to:
    - change the body of the function to return `Ok(stuff)` where it currently
      returns `Some(stuff)`
    - change the body of the function to return `Err(error message)` where it
-     currently returns `None`
-   - change the first test to expect `Ok(stuff)` where it currently expects
-     `Some(stuff)`."""
+     currently returns `None`"""
 
 [[exercises]]
 name = "errors2"
