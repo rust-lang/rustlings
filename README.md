@@ -124,6 +124,27 @@ rustlings list
 
 After every couple of sections, there will be a quiz that'll test your knowledge on a bunch of sections at once. These quizzes are found in `exercises/quizN.rs`.
 
+## Enabling `rust-analyzer`
+
+`rust-analyzer` support is provided, but it depends on your editor
+whether it's enabled by default. (RLS support is not provided)
+
+To enable `rust-analyzer`, you'll need to make Cargo build the project
+with the `exercises` feature, which will automatically include the `exercises/`
+subfolder in the project. The easiest way to do this is to tell your editor to
+build the project with all features (the equivalent of `cargo build --all-features`).
+For specific editor instructions:
+
+- **VSCode**: Add a `.vscode/settings.json` file with the following:
+```json
+{
+    "rust-analyzer.cargo.features": ["exercises"]
+}
+```
+- **IntelliJ-based Editors**: Using the Rust plugin, everything should work
+    by default.
+- _Missing your editor? Feel free to contribute more instructions!_
+
 ## Continuing On
 
 Once you've completed Rustlings, put your new knowledge to good use! Continue practicing your Rust skills by building your own projects, contributing to Rustlings, or finding other open-source projects to contribute to.
