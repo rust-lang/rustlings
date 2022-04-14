@@ -1,3 +1,46 @@
+<a name="4.7.0"></a>
+## 4.7.0 (2022-04-14)
+
+
+#### Features
+
+*   Add move_semantics6.rs exercise (#908) ([3f0e1303](https://github.com/rust-lang/rustlings/commit/3f0e1303e0b3bf3fecc0baced3c8b8a37f83c184))
+* **intro:**  Add intro section. ([21c9f441](https://github.com/rust-lang/rustlings/commit/21c9f44168394e08338fd470b5f49b1fd235986f))
+* Include exercises folder in the project structure behind a feature, enabling rust-analyzer to work (#917) ([179a75a6](https://github.com/rust-lang/rustlings/commit/179a75a68d03ac9518dec2297fb17f91a4fc506b))
+
+#### Bug Fixes
+
+* Fix a few spelling mistakes ([1c0fe3cb](https://github.com/rust-lang/rustlings/commit/1c0fe3cbcca85f90b3985985b8e265ee872a2ab2))
+* **cli:**
+  * Move long text strings into constants. ([f78c4802](https://github.com/rust-lang/rustlings/commit/f78c48020830d7900dd8d81f355606581670446d))
+  * Replace `filter_map()` with `find_map()` ([9b27e8d](https://github.com/rust-lang/rustlings/commit/9b27e8d993ca20232fe38a412750c3f845a83b65))
+* **clippy1:**
+  *  Set clippy::float_cmp lint to deny (#907) ([71a06044](https://github.com/rust-lang/rustlings/commit/71a06044e6a96ff756dc31d7b0ed665ae4badb57))
+  *  Updated code to test correctness clippy lint with approx_constant lint rule ([f2650de3](https://github.com/rust-lang/rustlings/commit/f2650de369810867d2763e935ac0963c32ec420e))
+* **errors1:**
+  * Add a comment to make the purpose more clear (#486) ([cbcde345](https://github.com/rust-lang/rustlings/commit/cbcde345409c3e550112e449242848eaa3391bb6))
+  * Don't modify tests (#958) ([60bb7cc](https://github.com/rust-lang/rustlings/commit/60bb7cc3931d21d3986ad52b2b302e632a93831c))
+* **errors6:** Remove existing answer code ([43d0623](https://github.com/rust-lang/rustlings/commit/43d0623086edbc46fe896ba59c7afa22c3da9f7a))
+* **functions5:**  Remove wrong new line and small English improvements (#885) ([8ef4869b](https://github.com/rust-lang/rustlings/commit/8ef4869b264094e5a9b50452b4534823a9df19c3))
+* **install:**  protect path with whitespaces using quotes and stop at the first error ([d114847f](https://github.com/rust-lang/rustlings/commit/d114847f256c5f571c0b4c87e04b04bce3435509))
+* **intro1:**  Add compiler error explanation. ([9b8de655](https://github.com/rust-lang/rustlings/commit/9b8de65525a5576b78cf0c8e4098cdd34296338f))
+* **iterators1:**  reorder TODO steps ([0bd7a063](https://github.com/rust-lang/rustlings/commit/0bd7a0631a17a9d69af5746795a30efc9cf64e6e))
+* **move_semantics2:**  Add comment ([89650f80](https://github.com/rust-lang/rustlings/commit/89650f808af23a32c9a2c6d46592b77547a6a464))
+* **move_semantics5:**  correct typo (#857) ([46c28d5c](https://github.com/rust-lang/rustlings/commit/46c28d5cef3d8446b5a356b19d8dbc725f91a3a0))
+* **quiz1:**  update to say quiz covers "If" ([1622e8c1](https://github.com/rust-lang/rustlings/commit/1622e8c198d89739765c915203efff0091bdeb78))
+* **structs3:**
+  * Add a hint for panic (#608) ([4f7ff5d9](https://github.com/rust-lang/rustlings/commit/4f7ff5d9c7b2d8b045194c1a9469d37e30257c4a))
+  * remove redundant 'return' (#852) ([bf33829d](https://github.com/rust-lang/rustlings/commit/bf33829da240375d086f96267fc2e02fa6b07001))
+  * Assigned value to `cents_per_gram` in test ([d1ee2da](https://github.com/rust-lang/rustlings/commit/d1ee2daf14f19105e6db3f9c610f44293d688532))
+* **structs3.rs:**  assigned value to cents_per_gram in test ([d1ee2daf](https://github.com/rust-lang/rustlings/commit/d1ee2daf14f19105e6db3f9c610f44293d688532))
+* **traits1:**  rename test functions to snake case (#854) ([1663a16e](https://github.com/rust-lang/rustlings/commit/1663a16eade6ca646b6ed061735f7982434d530d))
+
+#### Documentation improvements
+
+* Add hints on how to get GCC installed (#741) ([bc56861](https://github.com/rust-lang/rustlings/commit/bc5686174463ad6f4f6b824b0e9b97c3039d4886))
+* Fix some code blocks that were not highlighted ([17f9d74](https://github.com/rust-lang/rustlings/commit/17f9d7429ccd133a72e815fb5618e0ce79560929))
+
+
 <a name="4.6.0"></a>
 ## 4.6.0 (2021-09-25)
 
