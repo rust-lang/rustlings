@@ -2,9 +2,9 @@
 // Make me compile!
 // Execute the command `rustlings hint variables1` if you want a hint :)
 
-// I AM NOT DONE
+// I AM DONE
 
 fn main() {
-    x = 5;
+    let x = 5;
     println!("x has the value {}", x);
 }
