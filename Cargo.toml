@@ -1,6 +1,6 @@
 [package]
 name = "rustlings"
-version = "4.7.0"
+version = "4.7.1"
 authors = ["mokou <mokou@fastmail.com>", "Carol (Nichols || Goulding) <carol.nichols@gmail.com>"]
 edition = "2021"
 
