@@ -125,6 +125,9 @@ fn get_hint_for_single_test() {
 fn all_exercises_require_confirmation() {
     for exercise in glob("exercises/**/*.rs").unwrap() {
         let path = exercise.unwrap();
+        if path.file_name().unwrap() == "mod.rs" {
+            continue
+        }
         let source = {
             let mut file = File::open(&path).unwrap();
             let mut s = String::new();
