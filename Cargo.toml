@@ -5,13 +5,13 @@ authors = ["mokou <mokou@fastmail.com>", "Carol (Nichols || Goulding) <carol.nic
 edition = "2021"
 
 [dependencies]
-argh = "0.1.4"
-indicatif = "0.10.3"
-console = "0.7.7"
-notify = "4.0.15"
-toml = "0.4.10"
-regex = "1.1.6"
-serde = { version = "1.0.10", features = ["derive"] }
+argh = "0.1"
+indicatif = "0.16"
+console = "0.15"
+notify = "4.0"
+toml = "0.5"
+regex = "1.5"
+serde= { version = "1.0", features = ["derive"] }
 
 [[bin]]
 name = "rustlings"

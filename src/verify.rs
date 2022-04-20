@@ -39,7 +39,7 @@ pub fn test(exercise: &Exercise, verbose: bool) -> Result<(), ()> {
 // Invoke the rust compiler without running the resulting binary
 fn compile_only(exercise: &Exercise) -> Result<bool, ()> {
     let progress_bar = ProgressBar::new_spinner();
-    progress_bar.set_message(format!("Compiling {}...", exercise).as_str());
+    progress_bar.set_message(format!("Compiling {}...", exercise));
     progress_bar.enable_steady_tick(100);
 
     let _ = compile(exercise, &progress_bar)?;
@@ -52,12 +52,12 @@ fn compile_only(exercise: &Exercise) -> Result<bool, ()> {
 // Compile the given Exercise and run the resulting binary in an interactive mode
 fn compile_and_run_interactively(exercise: &Exercise) -> Result<bool, ()> {
     let progress_bar = ProgressBar::new_spinner();
-    progress_bar.set_message(format!("Compiling {}...", exercise).as_str());
+    progress_bar.set_message(format!("Compiling {}...", exercise));
     progress_bar.enable_steady_tick(100);
 
     let compilation = compile(exercise, &progress_bar)?;
 
-    progress_bar.set_message(format!("Running {}...", exercise).as_str());
+    progress_bar.set_message(format!("Running {}...", exercise));
     let result = compilation.run();
     progress_bar.finish_and_clear();
 
@@ -80,7 +80,7 @@ fn compile_and_run_interactively(exercise: &Exercise) -> Result<bool, ()> {
 // the output if verbose is set to true
 fn compile_and_test(exercise: &Exercise, run_mode: RunMode, verbose: bool) -> Result<bool, ()> {
     let progress_bar = ProgressBar::new_spinner();
-    progress_bar.set_message(format!("Testing {}...", exercise).as_str());
+    progress_bar.set_message(format!("Testing {}...", exercise));
     progress_bar.enable_steady_tick(100);
 
     let compilation = compile(exercise, &progress_bar)?;
