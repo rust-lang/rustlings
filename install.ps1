@@ -53,7 +53,7 @@ function vercomp($v1, $v2) {
 }
 
 $rustVersion = $(rustc --version).Split(" ")[1]
-$minRustVersion = "1.39"
+$minRustVersion = "1.56"
 if ((vercomp $rustVersion $minRustVersion) -eq 2) {
     Write-Host "WARNING: Rust version is too old: $rustVersion - needs at least $minRustVersion"
     Write-Host "Please update Rust with 'rustup update'"

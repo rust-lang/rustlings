@@ -1,6 +1,6 @@
 {
   "files": [
-    "README.md"
+    "AUTHORS.md"
   ],
   "imageSize": 100,
   "commit": false,
@@ -1091,6 +1091,69 @@
       "profile": "https://brandon-high.com",
       "contributions": [
         "doc"
+      ]
+    },
+    {
+      "login": "x-hgg-x",
+      "name": "x-hgg-x",
+      "avatar_url": "https://avatars.githubusercontent.com/u/39058530?v=4",
+      "profile": "https://github.com/x-hgg-x",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "KisaragiEffective",
+      "name": "Kisaragi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/48310258?v=4",
+      "profile": "http://kisaragieffective.github.io",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "Kallu-A",
+      "name": "Lucas Aries",
+      "avatar_url": "https://avatars.githubusercontent.com/u/73198738?v=4",
+      "profile": "https://github.com/Kallu-A",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "ragreenburg",
+      "name": "ragreenburg",
+      "avatar_url": "https://avatars.githubusercontent.com/u/24358100?v=4",
+      "profile": "https://github.com/ragreenburg",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "stevenfukase",
+      "name": "stevenfukase",
+      "avatar_url": "https://avatars.githubusercontent.com/u/66785624?v=4",
+      "profile": "https://github.com/stevenfukase",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "J-S-Kim",
+      "name": "J-S-Kim",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17569303?v=4",
+      "profile": "https://github.com/J-S-Kim",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "Fointard",
+      "name": "Fointard",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9333398?v=4",
+      "profile": "https://github.com/Fointard",
+      "contributions": [
+        "content"
       ]
     }
   ],
