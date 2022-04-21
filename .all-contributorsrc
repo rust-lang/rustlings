@@ -1155,6 +1155,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "rytheo",
+      "name": "Ryan Lowe",
+      "avatar_url": "https://avatars.githubusercontent.com/u/22184325?v=4",
+      "profile": "https://github.com/rytheo",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
