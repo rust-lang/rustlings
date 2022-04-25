@@ -1173,6 +1173,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "luskwater",
+      "name": "Ron Lusk",
+      "avatar_url": "https://avatars.githubusercontent.com/u/42529?v=4",
+      "profile": "https://github.com/luskwater",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
