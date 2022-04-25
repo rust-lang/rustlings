@@ -166,6 +166,7 @@ authors.
     <td align="center"><a href="https://github.com/J-S-Kim"><img src="https://avatars.githubusercontent.com/u/17569303?v=4?s=100" width="100px;" alt=""/><br /><sub><b>J-S-Kim</b></sub></a><br /><a href="#content-J-S-Kim" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/Fointard"><img src="https://avatars.githubusercontent.com/u/9333398?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Fointard</b></sub></a><br /><a href="#content-Fointard" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/rytheo"><img src="https://avatars.githubusercontent.com/u/22184325?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ryan Lowe</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=rytheo" title="Code">💻</a></td>
+    <td align="center"><a href="http://www.dashen.tech"><img src="https://avatars.githubusercontent.com/u/15921519?v=4?s=100" width="100px;" alt=""/><br /><sub><b>cui fliter</b></sub></a><br /><a href="#content-cuishuang" title="Content">🖋</a></td>
   </tr>
 </table>
 
