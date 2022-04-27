@@ -169,6 +169,9 @@ authors.
     <td align="center"><a href="http://www.dashen.tech"><img src="https://avatars.githubusercontent.com/u/15921519?v=4?s=100" width="100px;" alt=""/><br /><sub><b>cui fliter</b></sub></a><br /><a href="#content-cuishuang" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/luskwater"><img src="https://avatars.githubusercontent.com/u/42529?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ron Lusk</b></sub></a><br /><a href="#content-luskwater" title="Content">🖋</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="http://liby.github.io/liby/"><img src="https://avatars.githubusercontent.com/u/38807139?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Bryan Lee</b></sub></a><br /><a href="#content-liby" title="Content">🖋</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-restore -->
