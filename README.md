@@ -21,9 +21,9 @@ You will need to have Rust installed. You can get it by visiting https://rustup.
 Just run:
 
 ```bash
-curl -L https://git.io/install-rustlings | bash
+curl -L https://raw.githubusercontent.com/rust-lang/rustlings/master/install.sh | bash
 # Or if you want it to be installed to a different path:
-curl -L https://git.io/install-rustlings | bash -s mypath/
+curl -L https://raw.githubusercontent.com/rust-lang/rustlings/master/install.sh | bash -s mypath/
 ```
 
 This will install Rustlings and give you access to the `rustlings` command. Run it to get started!
@@ -39,7 +39,7 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 Then, you can run:
 
 ```ps1
-Start-BitsTransfer -Source https://git.io/JTL5v -Destination $env:TMP/install_rustlings.ps1; Unblock-File $env:TMP/install_rustlings.ps1; Invoke-Expression $env:TMP/install_rustlings.ps1
+Start-BitsTransfer -Source https://raw.githubusercontent.com/rust-lang/rustlings/main/install.ps1 -Destination $env:TMP/install_rustlings.ps1; Unblock-File $env:TMP/install_rustlings.ps1; Invoke-Expression $env:TMP/install_rustlings.ps1
 ```
 
 To install Rustlings. Same as on MacOS/Linux, you will have access to the `rustlings` command after it.
