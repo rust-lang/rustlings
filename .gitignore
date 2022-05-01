@@ -8,3 +8,6 @@ exercises/clippy/Cargo.lock
 .idea
 .vscode
 *.iml
+
+/*.exe
+/*.o
