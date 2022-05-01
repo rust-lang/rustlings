@@ -10,15 +10,14 @@
 
 // Execute 'rustlings hint generics3' for hints!
 
-// I AM NOT DONE
 
-pub struct ReportCard {
-    pub grade: f32,
+pub struct ReportCard<T> { // Tell the struct that ReportCard can have an arbitrary type T
+    pub grade: T, // specify that grade is of ambiguious type
     pub student_name: String,
     pub student_age: u8,
 }
 
-impl ReportCard {
+impl<T: std::fmt::Display> ReportCard<T> { // Listen to the compiler for impl, and then implement an arbitrary ReportCard type T.
     pub fn print(&self) -> String {
         format!("{} ({}) - achieved a grade of {}",
             &self.student_name, &self.student_age, &self.grade)
@@ -46,7 +45,7 @@ mod tests {
     fn generate_alphabetic_report_card() {
         // TODO: Make sure to change the grade here after you finish the exercise.
         let report_card = ReportCard {
-            grade: 2.1,
+            grade: "A+", // I actually forgot to modify Arry's grade!
             student_name: "Gary Plotter".to_string(),
             student_age: 11,
         };
