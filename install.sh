@@ -75,6 +75,21 @@ function vercomp() {
     then
         max_len=$len2
     fi
+
+    #pad right in short arr
+    if [[ len1 -gt len2 ]];
+    then
+        for ((i = len2; i < len1; i++));
+        do
+            v2[$i]=0
+        done
+    else
+        for ((i = len1; i < len2; i++));
+        do
+            v1[$i]=0
+        done
+    fi
+
     for i in `seq 0 $max_len`
     do
         # Fill empty fields with zeros in v1
