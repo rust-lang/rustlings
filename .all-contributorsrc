@@ -1191,6 +1191,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "nandajavarma",
+      "name": "Nandaja Varma",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2624550?v=4",
+      "profile": "http://nandaja.space",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 8,
