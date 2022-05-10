@@ -171,6 +171,7 @@ authors.
   </tr>
   <tr>
     <td align="center"><a href="http://liby.github.io/liby/"><img src="https://avatars.githubusercontent.com/u/38807139?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Bryan Lee</b></sub></a><br /><a href="#content-liby" title="Content">🖋</a></td>
+    <td align="center"><a href="http://nandaja.space"><img src="https://avatars.githubusercontent.com/u/2624550?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Nandaja Varma</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=nandajavarma" title="Documentation">📖</a></td>
   </tr>
 </table>
 
