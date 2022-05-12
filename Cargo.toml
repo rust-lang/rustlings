@@ -3,6 +3,12 @@ name = "rustlings"
 version = "4.7.1"
 authors = ["mokou <mokou@fastmail.com>", "Carol (Nichols || Goulding) <carol.nichols@gmail.com>"]
 edition = "2021"
+license = "MIT"
+readme = "README.md"
+description = "Small exercises to get you used to reading and writing Rust code!"
+documentation = "https://doc.rust-lang.org/rust-by-example/index.html"
+repository = "https://github.com/rust-lang/rustlings"
+homepage = "https://doc.rust-lang.org/rust-by-example/index.html"
 
 [dependencies]
 argh = "0.1"
