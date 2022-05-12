@@ -10,6 +10,7 @@ mod r#if;
 mod intro;
 mod macros;
 mod modules;
+mod matche;
 mod move_semantics;
 mod option;
 mod primitive_types;
