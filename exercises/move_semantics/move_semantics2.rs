@@ -7,6 +7,9 @@
 fn main() {
     let vec0 = Vec::new();
 
+    // solution 1
+    // let mut vec0_copy = &vec0;
+    // let mut vec1 = fill_vec(vec0_copy.to_vec());
     let mut vec1 = fill_vec(vec0);
 
     // Do not change the following line!
