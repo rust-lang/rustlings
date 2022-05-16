@@ -1,0 +1,67 @@
+// move_semantics2.rs
+// Make me compile without changing line 13 or moving line 10!
+// Execute `rustlings hint move_semantics2` for hints :)
+
+// I AM NOT DONE
+
+fn main() {
+    // original code
+    // comment out for solution1/solution2
+    let vec0 = Vec::new();
+
+    // solution1 (part0)
+    // let mut vec0 = Vec::new();
+
+    // solution2 (part0)
+    // let vec0 = &mut Vec::new();
+
+    // solution0
+    let mut vec0_copy = &vec0;
+    let mut vec1 = fill_vec(vec0_copy.to_vec());
+
+    // original code
+    let mut vec1 = fill_vec(vec0);
+
+    // solution1 (part0)
+    // let mut vec1 = fill_vec(&vec0);
+
+    // Do not change the following line!
+    println!("{} has length {} content `{:?}`", "vec0", vec0.len(), vec0);
+
+    vec1.push(88);
+
+    println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1);
+}
+
+// original code
+fn fill_vec(vec: Vec<i32>) -> Vec<i32> {
+    let mut vec = vec;
+
+    vec.push(22);
+    vec.push(44);
+    vec.push(66);
+
+    vec
+}
+
+// solution1 (part1)
+// fn fill_vec(vec: &Vec<i32>) -> Vec<i32> {
+//     let mut vec = vec.to_vec();
+
+//     vec.push(22);
+//     vec.push(44);
+//     vec.push(66);
+
+//     vec
+// }
+
+// solution2
+// fn fill_vec(vec: &mut Vec<i32>) -> Vec<i32> {
+//     let mut vec = vec.clone();
+
+//     vec.push(22);
+//     vec.push(44);
+//     vec.push(66);
+
+//     vec
+// }
