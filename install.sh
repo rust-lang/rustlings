@@ -25,12 +25,21 @@ else
     exit 1
 fi
 
+if [ -x "$(command -v rustup)" ]
+then
+    echo "SUCCESS: rustup is installed"
+else
+    echo "ERROR: rustup does not seem to be installed."
+    echo "Please download rustup using https://rustup.rs!"
+    exit 1
+fi
+
 if [ -x "$(command -v rustc)" ]
 then
     echo "SUCCESS: Rust is installed"
 else
     echo "ERROR: Rust does not seem to be installed."
-    echo "Please download Rust using https://rustup.rs!"
+    echo "Please download Rust using rustup!"
     exit 1
 fi
 
@@ -39,7 +48,7 @@ then
     echo "SUCCESS: Cargo is installed"
 else
     echo "ERROR: Cargo does not seem to be installed."
-    echo "Please download Rust and Cargo using https://rustup.rs!"
+    echo "Please download Rust and Cargo using rustup!"
     exit 1
 fi
 
