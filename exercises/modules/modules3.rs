@@ -5,10 +5,13 @@
 // from the std::time module. Bonus style points if you can do it with one line!
 // Make me compile! Execute `rustlings hint modules3` for hints :)
 
-// I AM NOT DONE
-
 // TODO: Complete this use statement
-use ???
+// solution0
+// use std::time::SystemTime;
+// use std::time::UNIX_EPOCH;
+// solution1
+// use unix shell-style glob pattern matching
+use std::time::{SystemTime, UNIX_EPOCH};
 
 fn main() {
     match SystemTime::now().duration_since(UNIX_EPOCH) {
