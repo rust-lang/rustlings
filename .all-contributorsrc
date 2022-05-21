@@ -1209,6 +1209,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "lucasgrvarela",
+      "name": "Lucas Grigolon Varela",
+      "avatar_url": "https://avatars.githubusercontent.com/u/37870368?v=4",
+      "profile": "http://linkedin.com/in/lucasgrvarela",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
