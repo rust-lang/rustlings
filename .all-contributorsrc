@@ -1218,6 +1218,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "bufo24",
+      "name": "Bufo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/32884105?v=4",
+      "profile": "https://github.com/bufo24",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
