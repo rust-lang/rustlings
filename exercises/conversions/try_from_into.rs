@@ -3,7 +3,7 @@
 // Basically, this is the same as From. The main difference is that this should return a Result type
 // instead of the target type itself.
 // You can read more about it at https://doc.rust-lang.org/std/convert/trait.TryFrom.html
-use std::convert::{TryFrom, TryInto};
+use std::{convert::{TryFrom, TryInto}, iter};
 
 #[derive(Debug, PartialEq)]
 struct Color {
@@ -21,7 +21,6 @@ enum IntoColorError {
     IntConversion,
 }
 
-// I AM NOT DONE
 
 // Your task is to complete this implementation
 // and return an Ok result of inner type Color.
@@ -36,6 +35,10 @@ enum IntoColorError {
 impl TryFrom<(i16, i16, i16)> for Color {
     type Error = IntoColorError;
     fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {
+        match tuple {
+            (red@0..=255, green@0..=255, blue@0..=255) => Ok(Color{red: red as u8, green: green as u8, blue:blue as u8}),
+            _ => Err(Self::Error::IntConversion),
+        }
     }
 }
 
@@ -43,6 +46,10 @@ impl TryFrom<(i16, i16, i16)> for Color {
 impl TryFrom<[i16; 3]> for Color {
     type Error = IntoColorError;
     fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {
+        match arr {
+            [red@0..=255, green@0..=255, blue@0..=255] => Ok(Color{red: red as u8, green: green as u8, blue:blue as u8}),
+            _ => Err(Self::Error::IntConversion),
+        }        
     }
 }
 
@@ -50,6 +57,11 @@ impl TryFrom<[i16; 3]> for Color {
 impl TryFrom<&[i16]> for Color {
     type Error = IntoColorError;
     fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {
+        match slice {
+            [red@0..=255, green@0..=255, blue@0..=255] => Ok(Color{red: *red as u8, green: *green as u8, blue: *blue as u8}),
+            _ if slice.len() != 3 => Err(Self::Error::BadLen),
+            _ => Err(Self::Error::IntConversion),
+        }
     }
 }
 
