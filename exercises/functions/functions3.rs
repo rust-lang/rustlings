@@ -1,10 +1,9 @@
 // functions3.rs
 // Make me compile! Execute `rustlings hint functions3` for hints :)
 
-// I AM NOT DONE
-
+// Need to pass in an unsigned 32 bit num to get this to work.
 fn main() {
-    call_me();
+    call_me(10);
 }
 
 fn call_me(num: u32) {
