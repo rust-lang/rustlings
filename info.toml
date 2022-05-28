@@ -21,7 +21,7 @@ name = "variables1"
 path = "exercises/variables/variables1.rs"
 mode = "compile"
 hint = """
-Hint: The declaration on line 12 is missing a keyword that is needed in Rust
+Hint: The declaration on line 8 is missing a keyword that is needed in Rust
 to create a new variable binding."""
 
 [[exercises]]
@@ -158,7 +158,7 @@ path = "exercises/if/if2.rs"
 mode = "test"
 hint = """
 For that first compiler error, it's important in Rust that each conditional
-block return the same type! To get the tests passing, you will need a couple
+block returns the same type! To get the tests passing, you will need a couple
 conditions checking different input values."""
 
 # TEST 1
@@ -231,7 +231,7 @@ path = "exercises/move_semantics/move_semantics5.rs"
 mode = "compile"
 hint = """
 Carefully reason about the range in which each mutable reference is in
-vogue. Does it help to update the value of referent (x) immediately after
+scope. Does it help to update the value of referent (x) immediately after
 the mutable reference is taken? Read more about 'Mutable References'
 in the book's section References and Borrowing':
 https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html#mutable-references.

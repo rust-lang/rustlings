@@ -165,6 +165,16 @@ authors.
     <td align="center"><a href="https://github.com/stevenfukase"><img src="https://avatars.githubusercontent.com/u/66785624?v=4?s=100" width="100px;" alt=""/><br /><sub><b>stevenfukase</b></sub></a><br /><a href="#content-stevenfukase" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/J-S-Kim"><img src="https://avatars.githubusercontent.com/u/17569303?v=4?s=100" width="100px;" alt=""/><br /><sub><b>J-S-Kim</b></sub></a><br /><a href="#content-J-S-Kim" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/Fointard"><img src="https://avatars.githubusercontent.com/u/9333398?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Fointard</b></sub></a><br /><a href="#content-Fointard" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/rytheo"><img src="https://avatars.githubusercontent.com/u/22184325?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ryan Lowe</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=rytheo" title="Code">💻</a></td>
+    <td align="center"><a href="http://www.dashen.tech"><img src="https://avatars.githubusercontent.com/u/15921519?v=4?s=100" width="100px;" alt=""/><br /><sub><b>cui fliter</b></sub></a><br /><a href="#content-cuishuang" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/luskwater"><img src="https://avatars.githubusercontent.com/u/42529?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ron Lusk</b></sub></a><br /><a href="#content-luskwater" title="Content">🖋</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="http://liby.github.io/liby/"><img src="https://avatars.githubusercontent.com/u/38807139?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Bryan Lee</b></sub></a><br /><a href="#content-liby" title="Content">🖋</a></td>
+    <td align="center"><a href="http://nandaja.space"><img src="https://avatars.githubusercontent.com/u/2624550?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Nandaja Varma</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=nandajavarma" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/merelymyself"><img src="https://avatars.githubusercontent.com/u/88221256?v=4?s=100" width="100px;" alt=""/><br /><sub><b>pwygab</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=merelymyself" title="Code">💻</a></td>
+    <td align="center"><a href="http://linkedin.com/in/lucasgrvarela"><img src="https://avatars.githubusercontent.com/u/37870368?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Lucas Grigolon Varela</b></sub></a><br /><a href="#content-lucasgrvarela" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/bufo24"><img src="https://avatars.githubusercontent.com/u/32884105?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Bufo</b></sub></a><br /><a href="#content-bufo24" title="Content">🖋</a></td>
   </tr>
 </table>
 
