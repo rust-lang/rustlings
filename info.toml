@@ -136,6 +136,50 @@ They are not the same. There are two solutions:
 1. Add a `return` ahead of `num * num;`
 2. remove `;`, make it to be `num * num`"""
 
+# CLOSURES
+
+[[exercises]]
+name = "closures1"
+path = "exercises/closures/closures1.rs"
+mode = "test"
+hint = """
+Take a look at this section of the book: https://doc.rust-lang.org/book/ch13-01-closures.html"""
+
+[[exercises]]
+name = "closures2"
+path = "exercises/closures/closures2.rs"
+mode = "compile"
+hint = """
+A bit taxing, but these should help:
+https://doc.rust-lang.org/rust-by-example/fn/closures/input_parameters.html
+https://doc.rust-lang.org/rust-by-example/fn/closures/anonymity.html
+https://doc.rust-lang.org/rust-by-example/fn/closures/input_functions.html"""
+
+[[exercises]]
+name = "closures3"
+path = "exercises/closures/closures3.rs"
+mode = "compile"
+hint = """
+The compiler has got you covered with this. After all, why IS it called a closure?"""
+
+[[exercises]]
+name = "closures4"
+path = "exercises/closures/closures4.rs"
+mode = "test"
+hint = """
+Don't try to actually implement any comparison other than using cmp:
+https://doc.rust-lang.org/stable/std/cmp/trait.Ord.html#tymethod.cmp
+e.g. x.cmp(y)"""
+
+[[exercises]]
+name = "closures5"
+path = "exercises/closures/closures5.rs"
+mode = "test"
+hint = """
+Honestly this was hard to write. Getting the signatures of closures right can be tough.
+Pay close attention to the documentation linked to in the exercise and which type
+parameters are the same in the function signatures."""
+
 # IF
 
 [[exercises]]

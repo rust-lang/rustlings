@@ -25,3 +25,4 @@ mod threads;
 mod traits;
 mod variables;
 mod lifetimes;
+mod closures;
