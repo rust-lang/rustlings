@@ -1,7 +1,8 @@
 // errors5.rs
 
 // This program uses a completed version of the code from errors4.
-// It won't compile right now! Why?
+// It won't compile right now! Why? What are all the possible return
+// types from main?
 // Execute `rustlings hint errors5` for hints!
 
 // I AM NOT DONE

@@ -1,4 +1,6 @@
 // errors4.rs
+// The code is excessively positive about the numbers given it. It should fail if
+// they aren't, returning the appropriate Result.
 // Make this test pass! Execute `rustlings hint errors4` for hints :)
 
 // I AM NOT DONE

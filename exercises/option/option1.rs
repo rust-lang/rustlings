@@ -1,4 +1,6 @@
 // option1.rs
+// How does the function signature of print_number differ from where
+// it is called in main?
 // Make me compile! Execute `rustlings hint option1` for hints
 
 // I AM NOT DONE

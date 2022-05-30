@@ -1,4 +1,5 @@
 // option3.rs
+// Let the compiler guide you. Also: https://doc.rust-lang.org/std/keyword.ref.html
 // Make me compile! Execute `rustlings hint option3` for hints
 
 // I AM NOT DONE

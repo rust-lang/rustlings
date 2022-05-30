@@ -1,4 +1,8 @@
 // option2.rs
+// You're gonna add if let and while let to the function below
+// where the todo: are
+// what's the difference between 'word' and 'optional_word'
+// and how do you get one from the other?
 // Make me compile! Execute `rustlings hint option2` for hints
 
 // I AM NOT DONE
