@@ -24,3 +24,4 @@ mod tests;
 mod threads;
 mod traits;
 mod variables;
+mod lifetimes;
