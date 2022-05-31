@@ -3,3 +3,4 @@ mod closures2;
 mod closures3;
 mod closures4;
 mod closures5;
+mod closures6;

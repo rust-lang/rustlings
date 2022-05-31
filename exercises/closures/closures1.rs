@@ -1,6 +1,6 @@
 // closures1.rs
 // Closures are anonymous functions, but they can be assigned to a variable
-// so that they can be used later on
+// so that they can be used later on.
 // make me compile and pass
 
 // Execute `rustlings hint closures1` for hints!

@@ -9,8 +9,8 @@ Closures are often used as arguments to higher order functions (functions which
 take other functions as parameters), e.g. map(), filter(), reduce() et al on iterators,
 but aren't restricted to these cases.
 
-Rust's ownership model means that we might have to do something extra when declaring
-closures which other languages don't require.
+Rust's ownership model means that we may need to think about how captured values
+are treated: copied, moved, or borrowed immutably or mutably. 
 
 ## Further information
 

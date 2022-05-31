@@ -1,9 +1,8 @@
 // closure5.rs
 // These are some fairly common uses of closures on iterator methods
 // https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.map
+// https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.reduce
 // https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.fold
-// my original version used 'reduce()' instead of 'fold()' but why would that
-// be unsuitable for a sum function in Rust (specifically)?
 
 // Execute `rustlings hint closures5` for hints!
 
@@ -12,16 +11,19 @@
 fn count_letters(animals: &Vec<&str>) -> Vec<usize>{
     // the compiler should help you figure out what signature to use
     // after you annotate it with one that fails.
+    // TODO: fill in this line with closure that compiles and passes the test.
     let count_closure = ;
     animals.iter().map(count_closure).collect()
 }
 
 fn sum_letters(animals: &Vec<&str>) -> usize {
-    let sum_closure =
     let animals = count_letters(animals);
-    // pay close attention to the where clause in the function signature
+    // pay close attention to the where clause in the function signatures
+    // https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.reduce
     // https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.fold
-    animals.iter().fold(0, sum_closure)
+    // TODO: change the next 2 lines to compile and pass the test.
+    let sum_closure = |x: &usize, y: &usize| &(x + y);
+    animals.iter().reduce(sum_closure).unwrap().to_owned()
 }
 
 fn main() {
@@ -36,7 +38,7 @@ mod tests {
     use super::*;
 
     # [test]
-    fn test_() {
+    fn test_closures() {
         let animals= vec!["cat","fish","horse"];
         assert_eq!(vec![3,4,5], count_letters(&animals));
         assert_eq!(12, sum_letters(&animals));

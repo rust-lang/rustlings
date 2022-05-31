@@ -1,10 +1,10 @@
 // closure4.rs
-// Where are you going to use closures? Where the context defines the code
+// Where are you going to use closures? Where the context defines the logic
 // you want some other code to invoke. So, unlike functions or methods, closures
 // are for when the code is not generally useful, or attached to a
 // type, but is specific to the context you are defining it in. Closures can
-// define parameters, just like functions, but these are defined by the context
-// it is intended to run in, where the actual arguments will be supplied.
+// define parameters, just like functions, but these are specified by the context
+// the closure is intended to be invoked in, where the actual arguments will be supplied.
 // https://doc.rust-lang.org/stable/std/primitive.slice.html#method.sort_by
 
 // Execute `rustlings hint closures4` for hints!

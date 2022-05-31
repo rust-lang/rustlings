@@ -160,14 +160,15 @@ name = "closures3"
 path = "exercises/closures/closures3.rs"
 mode = "compile"
 hint = """
-The compiler has got you covered with this. After all, why IS it called a closure?"""
+The compiler has got you covered with this. After all, why IS it called a closure?
+If you actually want to make it work, you can add a parameter to the function."""
 
 [[exercises]]
 name = "closures4"
 path = "exercises/closures/closures4.rs"
 mode = "test"
 hint = """
-Don't try to actually implement any comparison other than using cmp:
+Don't try to actually implement any comparison logic other than invoking cmp:
 https://doc.rust-lang.org/stable/std/cmp/trait.Ord.html#tymethod.cmp
 e.g. x.cmp(y)"""
 
@@ -176,9 +177,22 @@ name = "closures5"
 path = "exercises/closures/closures5.rs"
 mode = "test"
 hint = """
-Honestly this was hard to write. Getting the signatures of closures right can be tough.
-Pay close attention to the documentation linked to in the exercise and which type
-parameters are the same in the function signatures."""
+Getting the signatures of closures right can be tough. I don't think you can write
+any version that fulfills the tests using 'reduce()': you can never return a borrow
+of a value owned by a called function.
+You need to replace 'reduce()' with a different function call, update the closure
+so that it matches the signature of this new call, and change the code to return
+the correct type from the sum_letters function. (Using 'sum()' is cheating!)
+Pay close attention to the documentation linked to in the exercise: which type
+parameters are the same in the function signatures, and which are different."""
+
+[[exercises]]
+name = "closures6"
+path = "exercises/closures/closures6.rs"
+mode = "compile"
+hint = """
+There are two ways to solve this, neither is difficult and both involve just removing
+the offending part. If you're thinking hard, you've missed the point."""
 
 # IF
 
