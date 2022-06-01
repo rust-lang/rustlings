@@ -1,6 +1,6 @@
 use crate::exercise::{CompiledExercise, Exercise, Mode, State};
 use console::style;
-use indicatif::ProgressBar;
+use indicatif::{ProgressBar, ProgressStyle};
 use std::env;
 
 // Verify that the provided container of Exercise objects
@@ -9,10 +9,18 @@ use std::env;
 // If the Exercise being verified is a test, the verbose boolean
 // determines whether or not the test harness outputs are displayed.
 pub fn verify<'a>(
-    start_at: impl IntoIterator<Item = &'a Exercise>,
+    exercises: impl IntoIterator<Item = &'a Exercise>,
+    progress: (usize, usize),
     verbose: bool,
 ) -> Result<(), &'a Exercise> {
-    for exercise in start_at {
+    let (num_done, total) = progress;
+    let bar = ProgressBar::new(total as u64);
+    bar.set_style(ProgressStyle::default_bar()
+        .template("Progress: [{bar:60.green/red}] {pos}/{len}")
+        .progress_chars("#>-")
+    );
+    bar.set_position(num_done as u64);
+    for exercise in exercises {
         let compile_result = match exercise.mode {
             Mode::Test => compile_and_test(exercise, RunMode::Interactive, verbose),
             Mode::Compile => compile_and_run_interactively(exercise),
@@ -21,6 +29,7 @@ pub fn verify<'a>(
         if !compile_result.unwrap_or(false) {
             return Err(exercise);
         }
+        bar.inc(1);
     }
     Ok(())
 }
@@ -39,25 +48,24 @@ pub fn test(exercise: &Exercise, verbose: bool) -> Result<(), ()> {
 // Invoke the rust compiler without running the resulting binary
 fn compile_only(exercise: &Exercise) -> Result<bool, ()> {
     let progress_bar = ProgressBar::new_spinner();
-    progress_bar.set_message(format!("Compiling {}...", exercise).as_str());
+    progress_bar.set_message(format!("Compiling {}...", exercise));
     progress_bar.enable_steady_tick(100);
 
     let _ = compile(exercise, &progress_bar)?;
     progress_bar.finish_and_clear();
 
-    success!("Successfully compiled {}!", exercise);
     Ok(prompt_for_completion(exercise, None))
 }
 
 // Compile the given Exercise and run the resulting binary in an interactive mode
 fn compile_and_run_interactively(exercise: &Exercise) -> Result<bool, ()> {
     let progress_bar = ProgressBar::new_spinner();
-    progress_bar.set_message(format!("Compiling {}...", exercise).as_str());
+    progress_bar.set_message(format!("Compiling {}...", exercise));
     progress_bar.enable_steady_tick(100);
 
     let compilation = compile(exercise, &progress_bar)?;
 
-    progress_bar.set_message(format!("Running {}...", exercise).as_str());
+    progress_bar.set_message(format!("Running {}...", exercise));
     let result = compilation.run();
     progress_bar.finish_and_clear();
 
@@ -71,8 +79,6 @@ fn compile_and_run_interactively(exercise: &Exercise) -> Result<bool, ()> {
         }
     };
 
-    success!("Successfully ran {}!", exercise);
-
     Ok(prompt_for_completion(exercise, Some(output.stdout)))
 }
 
@@ -80,7 +86,7 @@ fn compile_and_run_interactively(exercise: &Exercise) -> Result<bool, ()> {
 // the output if verbose is set to true
 fn compile_and_test(exercise: &Exercise, run_mode: RunMode, verbose: bool) -> Result<bool, ()> {
     let progress_bar = ProgressBar::new_spinner();
-    progress_bar.set_message(format!("Testing {}...", exercise).as_str());
+    progress_bar.set_message(format!("Testing {}...", exercise));
     progress_bar.enable_steady_tick(100);
 
     let compilation = compile(exercise, &progress_bar)?;
@@ -92,7 +98,6 @@ fn compile_and_test(exercise: &Exercise, run_mode: RunMode, verbose: bool) -> Re
             if verbose {
                 println!("{}", output.stdout);
             }
-            success!("Successfully tested {}", &exercise);
             if let RunMode::Interactive = run_mode {
                 Ok(prompt_for_completion(exercise, None))
             } else {
@@ -137,6 +142,12 @@ fn prompt_for_completion(exercise: &Exercise, prompt_output: Option<String>) -> 
         State::Done => return true,
         State::Pending(context) => context,
     };
+
+    match exercise.mode {
+        Mode::Compile => success!("Successfully ran {}!", exercise),
+        Mode::Test => success!("Successfully tested {}!", exercise),
+        Mode::Clippy => success!("Successfully compiled {}!", exercise),
+    }
 
     let no_emoji = env::var("NO_EMOJI").is_ok();
 

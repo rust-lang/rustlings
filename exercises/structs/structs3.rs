@@ -16,7 +16,7 @@ struct Package {
 impl Package {
     fn new(sender_country: String, recipient_country: String, weight_in_grams: i32) -> Package {
         if weight_in_grams <= 0 {
-            // Something goes here...
+            // panic statement goes here...
         } else {
             Package {
                 sender_country,
@@ -73,7 +73,7 @@ mod tests {
         let sender_country = String::from("Spain");
         let recipient_country = String::from("Spain");
 
-        let cents_per_gram = ???;
+        let cents_per_gram = 3;
 
         let package = Package::new(sender_country, recipient_country, 1500);
 
