@@ -194,6 +194,14 @@ hint = """
 There are two ways to solve this, neither is difficult and both involve just removing
 the offending part. If you're thinking hard, you've missed the point."""
 
+[[exercises]]
+name = "closures7"
+path = "exercises/closures/closures7.rs"
+mode = "compile"
+hint = """
+This is where the info is https://doc.rust-lang.org/book/ch18-02-refutability.html
+So there isn't a satisfying solution, just an acceptance of the facts."""
+
 # IF
 
 [[exercises]]
