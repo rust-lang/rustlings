@@ -20,7 +20,7 @@ fn main() {
     let maybe = Some("yes");
     let list = vec![maybe];
 
-    list.iter().inspect(|&Some(value)| {
+    list.into_iter().inspect(|Some(value)| {
         println!("maybe {:?}", value);
     });
 }

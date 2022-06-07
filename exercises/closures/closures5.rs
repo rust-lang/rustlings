@@ -21,6 +21,9 @@ fn sum_letters(animals: &Vec<&str>) -> usize {
     // pay close attention to the where clause in the function signatures
     // https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.reduce
     // https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.fold
+    // and the return types of the different ways of getting an iterator
+    // https://doc.rust-lang.org/stable/std/iter/
+    // https://doc.rust-lang.org/std/iter/trait.IntoIterator.html#tymethod.into_iter
     // TODO: change the next 2 lines to compile and pass the test.
     let sum_closure = |x: &usize, y: &usize| &(x + y);
     animals.iter().reduce(sum_closure).unwrap().to_owned()
