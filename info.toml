@@ -183,9 +183,9 @@ of a value owned by a called function.
 You can replace 'reduce()' with a different function call. Update the closure
 so that it matches the signature of this new call, and change the code to return
 the correct type from the sum_letters function. (Using 'sum()' is cheating!)
-OR you can change the sort of iterator you get, so that you don't have to return a reference.
+OR you can change the way you get the iterator, so that you don't have to return a reference.
 Pay close attention to the documentation linked to in the exercise: which type
-parameters are the same in the function signatures, and which are different. And
+parameters are the same in the function signatures, and which are different? And
 how do the return types of the variations of getting an iterator differ from each other?"""
 
 [[exercises]]
