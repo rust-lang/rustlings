@@ -84,7 +84,7 @@ than keyword 'let'.
 Constants types must also always be annotated.
 
 Read more about constants under 'Differences Between Variables and Constants' in the book's section 'Variables and Mutability':
-https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html#differences-between-variables-and-constants
+https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html#constants
 """
 
 # FUNCTIONS
