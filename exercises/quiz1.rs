@@ -11,7 +11,13 @@
 // I AM NOT DONE
 
 // Put your function here!
-// fn calculate_apple_price {
+fn calculate_apple_price(quantity: i32) -> i32 {
+    if quantity > 40 {
+        return quantity;
+    } else {
+        return quantity * 2;
+    }
+}
 
 // Don't modify this function!
 #[test]
