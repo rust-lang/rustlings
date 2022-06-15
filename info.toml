@@ -619,21 +619,16 @@ name = "errors5"
 path = "exercises/error_handling/errors5.rs"
 mode = "compile"
 hint = """
-There are two different possible `Result` types produced within
-`main()`, which are propagated using `?` operators. How do we declare a
-return type from `main()` that allows both?
+There are two different possible `Result` types produced within `main()`, which are
+propagated using `?` operators. How do we declare a return type from `main()` that allows both? 
 
-Another hint: under the hood, the `?` operator calls `From::from`
-on the error value to convert it to a boxed trait object, a
-`Box<dyn error::Error>`, which is polymorphic-- that means that lots of
-different kinds of errors can be returned from the same function because
-all errors act the same since they all implement the `error::Error` trait.
+Under the hood, the `?` operator calls `From::from` on the error value to convert it to a boxed
+trait object, a `Box<dyn error::Error>`. This boxed trait object is polymorphic, and since all
+errors implement the `error:Error` trait, we can capture lots of different errors in one "Box" 
+object. 
+
 Check out this section of the book:
 https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator
-
-This exercise uses some concepts that we won't get to until later in the
-course, like `Box` and the `From` trait. It's not important to understand
-them in detail right now, but you can read ahead if you like.
 
 Read more about boxing errors:
 https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/boxing_errors.html
