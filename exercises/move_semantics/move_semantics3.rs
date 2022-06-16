@@ -3,7 +3,6 @@
 // (no lines with multiple semicolons necessary!)
 // Execute `rustlings hint move_semantics3` for hints :)
 
-// I AM NOT DONE
 
 fn main() {
     let vec0 = Vec::new();
