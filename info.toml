@@ -475,6 +475,16 @@ Yes, it would be really easy to fix this by just changing the value bound to `wo
 string slice instead of a `String`, wouldn't it?? There is a way to add one character to line
 9, though, that will coerce the `String` into a string slice."""
 
+[[exercises]]
+name = "strings3"
+path = "exercises/strings/strings3.rs"
+mode = "compile"
+hint = """
+There are several easy ways to append to a String! In this case use push_str() to append
+a string slice to a String, and push() to append a character to a String.
+Learn more at https://doc.rust-lang.org/book/ch08-02-strings.html#updating-a-string
+"""
+
 # TEST 2
 
 [[exercises]]
