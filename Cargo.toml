@@ -1,3 +1,5 @@
+cargo-features = ["edition2021"]
+
 [package]
 name = "rustlings"
 version = "4.7.1"
