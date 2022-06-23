@@ -5,11 +5,14 @@
 // construct to `Option` that can be used to express error conditions. Let's use it!
 // Execute `rustlings hint errors1` for hints!
 
-pub fn generate_nametag_text(name: String) -> Result<String, String> {
+// I AM NOT DONE
+
+pub fn generate_nametag_text(name: String) -> Option<String> {
     if name.len() > 0 {
-        Ok(format!("Hi! My name is {}", name))
+        Some(format!("Hi! My name is {}", name))
     } else {
-        Err(String::from("`name` was empty; it must be nonempty."))
+        // Empty names aren't allowed.
+        None
     }
 }
 
