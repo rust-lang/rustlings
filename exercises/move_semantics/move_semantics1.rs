@@ -1,10 +1,12 @@
 // move_semantics1.rs
 // Make me compile! Execute `rustlings hint move_semantics1` for hints :)
 
+// I AM NOT DONE
+
 fn main() {
     let vec0 = Vec::new();
 
-    let mut vec1 = fill_vec(vec0);
+    let vec1 = fill_vec(vec0);
 
     println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1);
 
