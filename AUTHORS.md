@@ -175,6 +175,7 @@ authors.
     <td align="center"><a href="https://github.com/merelymyself"><img src="https://avatars.githubusercontent.com/u/88221256?v=4?s=100" width="100px;" alt=""/><br /><sub><b>pwygab</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=merelymyself" title="Code">💻</a></td>
     <td align="center"><a href="http://linkedin.com/in/lucasgrvarela"><img src="https://avatars.githubusercontent.com/u/37870368?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Lucas Grigolon Varela</b></sub></a><br /><a href="#content-lucasgrvarela" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/bufo24"><img src="https://avatars.githubusercontent.com/u/32884105?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Bufo</b></sub></a><br /><a href="#content-bufo24" title="Content">🖋</a></td>
+    <td align="center"><a href="http://rustnote.com"><img src="https://avatars.githubusercontent.com/u/77730378?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jack Clayton</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=jackos" title="Code">💻</a></td>
   </tr>
 </table>
 

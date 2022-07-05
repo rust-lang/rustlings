@@ -1,3 +1,24 @@
+<a name="4.8.0"></a>
+## 4.8.0 (2022-07-01)
+
+#### Features
+
+- Added a progress indicator for `rustlings watch`.
+- The installation script now checks for Rustup being installed.
+- Added a `rustlings lsp` command to enable `rust-analyzer`.
+
+#### Bug Fixes
+
+- **move_semantics5**: Replaced "in vogue" with "in scope" in hint.
+- **if2**: Fixed a typo in the hint.
+- **variables1**: Fixed an incorrect line reference in the hint.
+- Fixed an out of bounds check in the installation Bash script.
+
+#### Housekeeping
+
+- Replaced the git.io URL with the fully qualified URL because of git.io's sunsetting.
+- Removed the deprecated Rust GitPod extension.
+
 <a name="4.7.1"></a>
 ## 4.7.1 (2022-04-20)
 
