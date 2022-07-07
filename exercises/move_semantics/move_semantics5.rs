@@ -3,13 +3,17 @@
 // adding, changing or removing any of them.
 // Execute `rustlings hint move_semantics5` for hints :)
 
-// I AM NOT DONE
+// TOTHINK
 
 fn main() {
     let mut x = 100;
-    let y = &mut x;
+
     let z = &mut x;
-    *y += 100;
     *z += 1000;
+    
+    let y = &mut x; //cannot borrow `x` as mutable more than once at a time
+    *y += 100;
+
+
     assert_eq!(x, 1200);
 }

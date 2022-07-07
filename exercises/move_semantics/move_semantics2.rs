@@ -2,14 +2,14 @@
 // Make me compile without changing line 13 or moving line 10!
 // Execute `rustlings hint move_semantics2` for hints :)
 
-// I AM NOT DONE
+// TOTHINK
 
-fn main() {
-    let vec0 = Vec::new();
+pub fn main() {
+    let vec0 : Vec<i32> = Vec::new();
+    let vec_ = Vec::new();
 
-    let mut vec1 = fill_vec(vec0);
+    let mut vec1 = fill_vec(vec_);
 
-    let vec0 = vec1.clone();
     // Do not change the following line!
     println!("{} has length {} content `{:?}`", "vec0", vec0.len(), vec0);
 
