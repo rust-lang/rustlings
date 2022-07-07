@@ -4,8 +4,6 @@
 // freshly created vector from fill_vec to its caller.
 // Execute `rustlings hint move_semantics4` for hints!
 
-// I AM NOT DONE
-
 fn main() {
     let vec0 = Vec::new();
 
@@ -19,7 +17,7 @@ fn main() {
 }
 
 // `fill_vec()` no longer takes `vec: Vec<i32>` as argument
-fn fill_vec() -> Vec<i32> {
+fn fill_vec(vec: Vec<i32>) -> Vec<i32> {
     let mut vec = vec;
 
     vec.push(22);
