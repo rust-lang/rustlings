@@ -21,7 +21,7 @@ name = "variables1"
 path = "exercises/variables/variables1.rs"
 mode = "compile"
 hint = """
-Hint: The declaration on line 8 is missing a keyword that is needed in Rust
+The declaration on line 8 is missing a keyword that is needed in Rust
 to create a new variable binding."""
 
 [[exercises]]
@@ -360,14 +360,14 @@ name = "enums1"
 path = "exercises/enums/enums1.rs"
 mode = "compile"
 hint = """
-Hint: The declaration of the enumeration type has not been defined yet."""
+The declaration of the enumeration type has not been defined yet."""
 
 [[exercises]]
 name = "enums2"
 path = "exercises/enums/enums2.rs"
 mode = "compile"
 hint = """
-Hint: you can create enumerations that have different variants with different types
+You can create enumerations that have different variants with different types
 such as no data, anonymous structs, a single string, tuples, ...etc"""
 
 [[exercises]]
@@ -536,7 +536,7 @@ name = "errors5"
 path = "exercises/error_handling/errors5.rs"
 mode = "compile"
 hint = """
-Hint: There are two different possible `Result` types produced within
+There are two different possible `Result` types produced within
 `main()`, which are propagated using `?` operators. How do we declare a
 return type from `main()` that allows both?
 
@@ -980,7 +980,7 @@ or an Err with an error if the string is not valid.
 This is almost like the `from_into` exercise, but returning errors instead
 of falling back to a default value.
 
-Hint: Look at the test cases to see which error variants to return.
+Look at the test cases to see which error variants to return.
 
 Another hint: You can use the `map_err` method of `Result` with a function
 or a closure to wrap the error from `parse::<usize>`.
@@ -998,7 +998,7 @@ hint = """
 Follow the steps provided right before the `TryFrom` implementation.
 You can also use the example at https://doc.rust-lang.org/std/convert/trait.TryFrom.html
 
-Hint: Is there an implementation of `TryFrom` in the standard library that
+Is there an implementation of `TryFrom` in the standard library that
 can both do the required integer conversion and check the range of the input?
 
 Another hint: Look at the test cases to see which error variants to return.
