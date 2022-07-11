@@ -1,5 +1,5 @@
 // variables6.rs
-// Make me compile! Execute the command `rustlings hint variables6` if you want a hint :)
+// Execute `rustlings hint variables6` or use the `hint` watch subcommand for a hint.
 
 // I AM NOT DONE
 
