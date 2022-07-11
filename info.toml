@@ -5,7 +5,8 @@ name = "intro1"
 path = "exercises/intro/intro1.rs"
 mode = "compile"
 hint = """
-Remove the I AM NOT DONE comment to move on to the next exercise."""
+Remove the I AM NOT DONE comment in the exercises/intro/intro1.rs file
+to move on to the next exercise."""
 
 [[exercises]]
 name = "intro2"
