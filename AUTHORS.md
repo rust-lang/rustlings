@@ -179,6 +179,9 @@ authors.
     <td align="center"><a href="https://github.com/klkl0808"><img src="https://avatars.githubusercontent.com/u/24694249?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Konstantin</b></sub></a><br /><a href="#content-klkl0808" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/0pling"><img src="https://avatars.githubusercontent.com/u/104090344?v=4?s=100" width="100px;" alt=""/><br /><sub><b>0pling</b></sub></a><br /><a href="#content-0pling" title="Content">🖋</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/KatanaFluorescent"><img src="https://avatars.githubusercontent.com/u/60199077?v=4?s=100" width="100px;" alt=""/><br /><sub><b>KatanaFluorescent</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=KatanaFluorescent" title="Code">💻</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-restore -->
