@@ -1254,6 +1254,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "KatanaFluorescent",
+      "name": "KatanaFluorescent",
+      "avatar_url": "https://avatars.githubusercontent.com/u/60199077?v=4",
+      "profile": "https://github.com/KatanaFluorescent",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
