@@ -260,9 +260,15 @@ name = "vec2"
 path = "exercises/collections/vec2.rs"
 mode = "test"
 hint = """
-Hint 1: `i` is each element from the Vec as they are being iterated.
-  Can you try multiplying this?
-Hint 2: Check the suggestion from the compiler error ;)
+Hint 1: `i` is each element from the Vec as they are being iterated. Can you try
+multiplying this?
+
+Hint 2: For the first function, there's a way to directly access the numbers stored
+in the Vec, using the * dereference operator. You can both access and write to the
+number that way.
+
+After you've completed both functions, decide for yourself which approach you like
+better. What do you think is the more commonly used pattern under Rust developers?
 """
 
 # MOVE SEMANTICS
