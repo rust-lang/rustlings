@@ -300,7 +300,7 @@ There's a few ways to fix this, try them all if you want:
 2. Make `fill_vec` borrow its argument instead of taking ownership of it,
    and then copy the data within the function in order to return an owned
    `Vec<i32>`
-3. Make `fill_vec` *mutably* borrow its argument (which will need to be
+3. Make `fill_vec` *mutably* borrow a reference to its argument (which will need to be
    mutable), modify it directly, then not return anything. Then you can get rid
    of `vec1` entirely -- note that this will change what gets printed by the
    first `println!`"""
