@@ -1,11 +1,11 @@
 // functions5.rs
-// Make me compile! Execute `rustlings hint functions5` for hints :)
+// Execute `rustlings hint functions5` or use the `hint` watch subcommand for a hint.
 
 // I AM NOT DONE
 
 fn main() {
     let answer = square(3);
-    println!("The answer is {}", answer);
+    println!("The square of 3 is {}", answer);
 }
 
 fn square(num: i32) -> i32 {
