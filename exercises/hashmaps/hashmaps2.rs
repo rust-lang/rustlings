@@ -1,4 +1,4 @@
-// hashmap2.rs
+// hashmaps2.rs
 
 // A basket of fruits in the form of a hash map is given. The key
 // represents the name of the fruit and the value represents how many
@@ -9,7 +9,7 @@
 //
 // Make me pass the tests!
 //
-// Execute the command `rustlings hint hashmap2` if you need
+// Execute the command `rustlings hint hashmaps2` if you need
 // hints.
 
 // I AM NOT DONE
