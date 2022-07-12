@@ -280,18 +280,21 @@ mode = "compile"
 hint = """
 So you've got the "cannot borrow immutable local variable `vec1` as mutable" error on line 13,
 right? The fix for this is going to be adding one keyword, and the addition is NOT on line 13
-where the error is."""
+where the error is.
+
+Also: Try accessing `vec0` after having called `fill_vec()`. See what happens!"""
 
 [[exercises]]
 name = "move_semantics2"
 path = "exercises/move_semantics/move_semantics2.rs"
 mode = "compile"
 hint = """
-So `vec0` is being *moved* into the function `fill_vec` when we call it on
-line 10, which means it gets dropped at the end of `fill_vec`, which means we
-can't use `vec0` again on line 13 (or anywhere else in `main` after the
-`fill_vec` call for that matter). We could fix this in a few ways, try them
-all!
+So, `vec0` is passed into the `fill_vec` function as an argument. In Rust,
+when an argument is passed to a function and it's not explicitly returned,
+you can't use the original variable anymore. We call this "moving" a variable.
+Variables that are moved into a function (or block scope) and aren't explicitly
+returned get "dropped" at the end of that function. This is also what happens here.
+There's a few ways to fix this, try them all if you want:
 1. Make another, separate version of the data that's in `vec0` and pass that
    to `fill_vec` instead.
 2. Make `fill_vec` borrow its argument instead of taking ownership of it,
