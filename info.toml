@@ -242,8 +242,8 @@ Now you have another tool in your toolbox!"""
 # VECS
 
 [[exercises]]
-name = "vec1"
-path = "exercises/collections/vec1.rs"
+name = "vecs1"
+path = "exercises/vecs/vecs1.rs"
 mode = "test"
 hint = """
 In Rust, there are two ways to define a Vector.
@@ -256,8 +256,8 @@ of the Rust book to learn more.
 """
 
 [[exercises]]
-name = "vec2"
-path = "exercises/collections/vec2.rs"
+name = "vecs2"
+path = "exercises/vecs/vecs2.rs"
 mode = "test"
 hint = """
 Hint 1: `i` is each element from the Vec as they are being iterated. Can you try
