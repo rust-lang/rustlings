@@ -4,6 +4,7 @@
 
 // I AM NOT DONE
 
+#[test]
 fn main() {
     // Booleans (`bool`)
 
