@@ -9,8 +9,7 @@
 //
 // Make me pass the tests!
 //
-// Execute the command `rustlings hint hashmaps2` if you need
-// hints.
+// Execute `rustlings hint hashmaps2` or use the `hint` watch subcommand for a hint.
 
 // I AM NOT DONE
 
