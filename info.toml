@@ -802,7 +802,8 @@ case is a vector of integers and the failure case is a DivisionError.
 The list_of_results function needs to return a vector of results.
 
 See https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.collect for how 
-the `FromIterator` trait is used in `collect()`."""
+the `FromIterator` trait is used in `collect()`. This trait is REALLY powerful! It
+can make the solution to this exercise infinitely easier."""
 
 [[exercises]]
 name = "iterators4"
@@ -812,7 +813,9 @@ hint = """
 In an imperative language, you might write a for loop that updates
 a mutable variable. Or, you might write code utilizing recursion
 and a match clause. In Rust you can take another functional
-approach, computing the factorial elegantly with ranges and iterators."""
+approach, computing the factorial elegantly with ranges and iterators.
+
+Hint 2: Check out the `fold` and `rfold` methods!"""
 
 [[exercises]]
 name = "iterators5"
