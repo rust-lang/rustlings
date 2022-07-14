@@ -603,7 +603,10 @@ name = "errors3"
 path = "exercises/error_handling/errors3.rs"
 mode = "compile"
 hint = """
-If other functions can return a `Result`, why shouldn't `main`?"""
+If other functions can return a `Result`, why shouldn't `main`? It's a fairly common
+convention to return something like Result<(), ErrorType> from your main function.
+The unit (`()`) type is there because nothing is really needed in terms of positive
+results."""
 
 [[exercises]]
 name = "errors4"

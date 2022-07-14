@@ -2,7 +2,7 @@
 // This is a program that is trying to use a completed version of the
 // `total_cost` function from the previous exercise. It's not working though!
 // Why not? What should we do to fix it?
-// Execute `rustlings hint errors3` for hints!
+// Execute `rustlings hint errors3` or use the `hint` watch subcommand for a hint.
 
 // I AM NOT DONE
 

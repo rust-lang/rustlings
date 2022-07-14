@@ -12,7 +12,7 @@
 
 // What can we use to describe both errors? In other words, is there a trait which both errors implement?
 
-// Execute `rustlings hint errors5` for hints!
+// Execute `rustlings hint errors5` or use the `hint` watch subcommand for a hint.
 
 // I AM NOT DONE
 
