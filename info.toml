@@ -681,19 +681,6 @@ Maybe we could update the explicit references to this data type somehow?
 If you are still stuck https://doc.rust-lang.org/stable/book/ch10-01-syntax.html#in-method-definitions
 """
 
-[[exercises]]
-name = "generics3"
-path = "exercises/generics/generics3.rs"
-mode = "test"
-hint = """
-To find the best solution to this challenge you're going to need to think back to your
-knowledge of traits, specifically Trait Bound Syntax -  you may also need this: "use std::fmt::Display;"
-
-This is definitely harder than the last two exercises! You need to think about not only making the
-ReportCard struct generic, but also the correct property - you will need to change the implementation
-of the struct slightly too...you can do it!
-"""
-
 # TRAITS
 
 [[exercises]]
@@ -715,6 +702,16 @@ Try mutating the incoming string vector.
 
 Vectors provide suitable methods for adding an element at the end. See
 the documentation at: https://doc.rust-lang.org/std/vec/struct.Vec.html"""
+
+# QUIZ 3
+
+[[exercises]]
+name = "quiz3"
+path = "exercises/quiz3.rs"
+mode = "test"
+hint = """
+To find the best solution to this challenge you're going to need to think back to your
+knowledge of traits, specifically Trait Bound Syntax -  you may also need this: "use std::fmt::Display;""""
 
 # TESTS
 
@@ -747,14 +744,6 @@ hint = """
 You can call a function right where you're passing arguments to `assert!` -- so you could do
 something like `assert!(having_fun())`. If you want to check that you indeed get false, you
 can negate the result of what you're doing using `!`, like `assert!(!having_fun())`."""
-
-# TEST 3
-
-[[exercises]]
-name = "quiz3"
-path = "exercises/quiz3.rs"
-mode = "test"
-hint = "No hints this time ;)"
 
 # STANDARD LIBRARY TYPES
 
