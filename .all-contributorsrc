@@ -1272,6 +1272,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "camperdue42",
+      "name": "camperdue42",
+      "avatar_url": "https://avatars.githubusercontent.com/u/43047763?v=4",
+      "profile": "https://github.com/camperdue42",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
