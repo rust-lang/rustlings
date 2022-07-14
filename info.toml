@@ -420,6 +420,29 @@ and then create a match expression in `process()`.
 Note that you need to deconstruct some message variants 
 in the match expression to get value in the variant."""
 
+# STRINGS
+
+[[exercises]]
+name = "strings1"
+path = "exercises/strings/strings1.rs"
+mode = "compile"
+hint = """
+The `current_favorite_color` function is currently returning a string slice with the `'static`
+lifetime. We know this because the data of the string lives in our code itself -- it doesn't
+come from a file or user input or another program -- so it will live as long as our program
+lives. But it is still a string slice. There's one way to create a `String` by converting a
+string slice covered in the Strings chapter of the book, and another way that uses the `From`
+trait."""
+
+[[exercises]]
+name = "strings2"
+path = "exercises/strings/strings2.rs"
+mode = "compile"
+hint = """
+Yes, it would be really easy to fix this by just changing the value bound to `word` to be a
+string slice instead of a `String`, wouldn't it?? There is a way to add one character to line
+9, though, that will coerce the `String` into a string slice."""
+
 # MODULES
 
 [[exercises]]
@@ -471,29 +494,6 @@ hint = """
 Use the `entry()` and `or_insert()` methods of `HashMap` to achieve this.
 Learn more at https://doc.rust-lang.org/stable/book/ch08-03-hash-maps.html#only-inserting-a-value-if-the-key-has-no-value
 """
-
-# STRINGS
-
-[[exercises]]
-name = "strings1"
-path = "exercises/strings/strings1.rs"
-mode = "compile"
-hint = """
-The `current_favorite_color` function is currently returning a string slice with the `'static`
-lifetime. We know this because the data of the string lives in our code itself -- it doesn't
-come from a file or user input or another program -- so it will live as long as our program
-lives. But it is still a string slice. There's one way to create a `String` by converting a
-string slice covered in the Strings chapter of the book, and another way that uses the `From`
-trait."""
-
-[[exercises]]
-name = "strings2"
-path = "exercises/strings/strings2.rs"
-mode = "compile"
-hint = """
-Yes, it would be really easy to fix this by just changing the value bound to `word` to be a
-string slice instead of a `String`, wouldn't it?? There is a way to add one character to line
-9, though, that will coerce the `String` into a string slice."""
 
 # TEST 2
 
