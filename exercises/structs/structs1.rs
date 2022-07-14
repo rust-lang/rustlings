@@ -11,7 +11,7 @@ struct ColorClassicStruct {
 struct ColorTupleStruct(/* TODO: Something goes here */);
 
 #[derive(Debug)]
-struct UnitStruct;
+struct UnitLikeStruct;
 
 #[cfg(test)]
 mod tests {
@@ -39,10 +39,10 @@ mod tests {
 
     #[test]
     fn unit_structs() {
-        // TODO: Instantiate a unit struct!
-        // let unit_struct =
-        let message = format!("{:?}s are fun!", unit_struct);
+        // TODO: Instantiate a unit-like struct!
+        // let unit_like_struct =
+        let message = format!("{:?}s are fun!", unit_like_struct);
 
-        assert_eq!(message, "UnitStructs are fun!");
+        assert_eq!(message, "UnitLikeStructs are fun!");
     }
 }
