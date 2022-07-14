@@ -400,8 +400,7 @@ Have a look in The Book, to find out more about method implementations: https://
 name = "enums1"
 path = "exercises/enums/enums1.rs"
 mode = "compile"
-hint = """
-The declaration of the enumeration type has not been defined yet."""
+hint = "No hints this time ;)"
 
 [[exercises]]
 name = "enums2"
