@@ -528,7 +528,7 @@ Learn more at https://doc.rust-lang.org/book/ch08-03-hash-maps.html#updating-a-v
 [[exercises]]
 name = "quiz2"
 path = "exercises/quiz2.rs"
-mode = "compile"
+mode = "test"
 hint = "No hints this time ;)"
 
 # ERROR HANDLING
