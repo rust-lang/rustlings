@@ -183,6 +183,7 @@ authors.
     <td align="center"><a href="https://github.com/KatanaFluorescent"><img src="https://avatars.githubusercontent.com/u/60199077?v=4?s=100" width="100px;" alt=""/><br /><sub><b>KatanaFluorescent</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=KatanaFluorescent" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/Drew-Morris"><img src="https://avatars.githubusercontent.com/u/95818166?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Drew Morris</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=Drew-Morris" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/camperdue42"><img src="https://avatars.githubusercontent.com/u/43047763?v=4?s=100" width="100px;" alt=""/><br /><sub><b>camperdue42</b></sub></a><br /><a href="#content-camperdue42" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/YsuOS"><img src="https://avatars.githubusercontent.com/u/30138661?v=4?s=100" width="100px;" alt=""/><br /><sub><b>YsuOS</b></sub></a><br /><a href="#content-YsuOS" title="Content">🖋</a></td>
   </tr>
 </table>
 

@@ -1281,6 +1281,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "YsuOS",
+      "name": "YsuOS",
+      "avatar_url": "https://avatars.githubusercontent.com/u/30138661?v=4",
+      "profile": "https://github.com/YsuOS",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
