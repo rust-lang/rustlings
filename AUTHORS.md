@@ -185,6 +185,7 @@ authors.
     <td align="center"><a href="https://github.com/camperdue42"><img src="https://avatars.githubusercontent.com/u/43047763?v=4?s=100" width="100px;" alt=""/><br /><sub><b>camperdue42</b></sub></a><br /><a href="#content-camperdue42" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/YsuOS"><img src="https://avatars.githubusercontent.com/u/30138661?v=4?s=100" width="100px;" alt=""/><br /><sub><b>YsuOS</b></sub></a><br /><a href="#content-YsuOS" title="Content">🖋</a></td>
     <td align="center"><a href="https://lichess.org/@/StevenEmily"><img src="https://avatars.githubusercontent.com/u/58114641?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Steven Nguyen</b></sub></a><br /><a href="#content-icecream17" title="Content">🖋</a></td>
+    <td align="center"><a href="https://noahcairns.dev"><img src="https://avatars.githubusercontent.com/u/94420090?v=4?s=100" width="100px;" alt=""/><br /><sub><b>nacairns1</b></sub></a><br /><a href="#content-nacairns1" title="Content">🖋</a></td>
   </tr>
 </table>
 
