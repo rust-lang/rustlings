@@ -1290,6 +1290,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "icecream17",
+      "name": "Steven Nguyen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/58114641?v=4",
+      "profile": "https://lichess.org/@/StevenEmily",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
