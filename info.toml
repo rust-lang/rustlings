@@ -536,18 +536,11 @@ hint = "No hints this time ;)"
 [[exercises]]
 name = "options1"
 path = "exercises/options/options1.rs"
-mode = "compile"
+mode = "test"
 hint = """
-Hint 1: Check out some functions of Option:
-is_some
-is_none
-unwrap
-
-and:
-pattern matching
-
-Hint 2: There are no sensible defaults for the value of an Array; the values need to be filled before use.
-"""
+Options can have a Some value, with an inner value, or a None value, without an inner value.
+There's multiple ways to get at the inner value, you can use unwrap, or pattern match. Unwrapping
+is the easiest, but how do you do it safely so that it doesn't panic in your face later?"""
 
 [[exercises]]
 name = "options2"

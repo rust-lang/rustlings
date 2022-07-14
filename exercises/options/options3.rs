@@ -1,5 +1,5 @@
 // options3.rs
-// Make me compile! Execute `rustlings hint option3` for hints
+// Execute `rustlings hint options3` or use the `hint` watch subcommand for a hint.
 
 // I AM NOT DONE
 
