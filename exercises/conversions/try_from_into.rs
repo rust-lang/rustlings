@@ -56,7 +56,7 @@ impl TryFrom<&[i16]> for Color {
 }
 
 fn main() {
-    // Use the `from` function
+    // Use the `try_from` function
     let c1 = Color::try_from((183, 65, 14));
     println!("{:?}", c1);
 
