@@ -3,7 +3,7 @@
 // Basically, this is the same as From. The main difference is that this should return a Result type
 // instead of the target type itself.
 // You can read more about it at https://doc.rust-lang.org/std/convert/trait.TryFrom.html
-// Execute `rustlings hint from_str` or use the `hint` watch subcommand for a hint.
+// Execute `rustlings hint try_from_into` or use the `hint` watch subcommand for a hint.
 
 use std::convert::{TryFrom, TryInto};
 
