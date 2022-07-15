@@ -189,6 +189,9 @@ authors.
     <td align="center"><a href="https://github.com/pgjbz"><img src="https://avatars.githubusercontent.com/u/22059237?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Paulo Gabriel Justino Bezerra</b></sub></a><br /><a href="#content-pgjbz" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/jaystile"><img src="https://avatars.githubusercontent.com/u/46078028?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jason</b></sub></a><br /><a href="#content-jaystile" title="Content">🖋</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://exdx.github.io"><img src="https://avatars.githubusercontent.com/u/31546601?v=4?s=100" width="100px;" alt=""/><br /><sub><b>exdx</b></sub></a><br /><a href="#content-exdx" title="Content">🖋</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-restore -->
