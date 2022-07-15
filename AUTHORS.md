@@ -191,6 +191,7 @@ authors.
   </tr>
   <tr>
     <td align="center"><a href="https://exdx.github.io"><img src="https://avatars.githubusercontent.com/u/31546601?v=4?s=100" width="100px;" alt=""/><br /><sub><b>exdx</b></sub></a><br /><a href="#content-exdx" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/Jzow"><img src="https://avatars.githubusercontent.com/u/68860495?v=4?s=100" width="100px;" alt=""/><br /><sub><b>James Zow</b></sub></a><br /><a href="#content-Jzow" title="Content">🖋</a></td>
   </tr>
 </table>
 
