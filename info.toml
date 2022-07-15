@@ -746,6 +746,30 @@ You can call a function right where you're passing arguments to `assert!` -- so 
 something like `assert!(having_fun())`. If you want to check that you indeed get false, you
 can negate the result of what you're doing using `!`, like `assert!(!having_fun())`."""
 
+# LIFETIMES
+
+[[exercises]]
+name = "lifetimes1"
+path = "exercises/lifetimes/lifetimes1.rs"
+mode = "compile"
+hint = """
+Let the compiler guide you. Also take a look at the book if you need help:
+https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html"""
+
+[[exercises]]
+name = "lifetimes2"
+path = "exercises/lifetimes/lifetimes2.rs"
+mode = "compile"
+hint = """
+What is the compiler checking? How could you change how long an owned variable lives?"""
+
+[[exercises]]
+name = "lifetimes3"
+path = "exercises/lifetimes/lifetimes3.rs"
+mode = "compile"
+hint = """
+If you use a lifetime annotation in a struct's fields, where else does it need to be added?"""
+
 # STANDARD LIBRARY TYPES
 
 [[exercises]]
