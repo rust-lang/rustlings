@@ -1,5 +1,5 @@
 // threads2.rs
-// Make this compile! Execute `rustlings hint threads2` for hints :)
+// Execute `rustlings hint threads2` or use the `hint` watch subcommand for a hint.
 // Building on the last exercise, we want all of the threads to complete their work but this time
 // the spawned threads need to be in charge of updating a shared value: JobStatus.jobs_completed
 

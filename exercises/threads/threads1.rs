@@ -1,5 +1,5 @@
 // threads1.rs
-// Make this compile and run! Execute 'rustlings hint threads1' for hints :)
+// Execute `rustlings hint threads1` or use the `hint` watch subcommand for a hint.
 // This program should wait until all the spawned threads have finished before exiting.
 
 // I AM NOT DONE
