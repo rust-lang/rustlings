@@ -965,14 +965,6 @@ scratching the surface of what you can do with Rust's macros. For a more
 thorough introduction, you can have a read through the little book of Rust
 macros: https://veykril.github.io/tlborm/"""
 
-# TEST 4
-
-[[exercises]]
-name = "quiz4"
-path = "exercises/quiz4.rs"
-mode = "test"
-hint = "No hints this time ;)"
-
 #  CLIPPY
 
 [[exercises]]
