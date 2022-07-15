@@ -918,6 +918,20 @@ If you've learned from the sample solutions, I encourage you to come
 back to this exercise and try it again in a few days to reinforce
 what you've learned :)"""
 
+[[exercises]]
+name = "threads3"
+path = "exercises/threads/threads3.rs"
+mode = "compile"
+hint = """
+An alternate way to handle concurrency between threads is to use
+a mpsc (multiple producer, single consumer) channel to communicate.
+With both a sending end and a receiving end, it's possible to
+send values in one thread and receieve them in another.
+Multiple producers are possibile by using clone() to create a duplicate
+of the original sending end.
+See https://doc.rust-lang.org/book/ch16-02-message-passing.html for more info.
+"""
+
 # MACROS
 
 [[exercises]]
