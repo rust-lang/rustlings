@@ -1362,6 +1362,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "neilpate",
+      "name": "Neil Pate",
+      "avatar_url": "https://avatars.githubusercontent.com/u/7802334?v=4",
+      "profile": "https://github.com/neilpate",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,

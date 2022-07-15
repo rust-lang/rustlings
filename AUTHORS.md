@@ -194,6 +194,7 @@ authors.
     <td align="center"><a href="https://github.com/Jzow"><img src="https://avatars.githubusercontent.com/u/68860495?v=4?s=100" width="100px;" alt=""/><br /><sub><b>James Zow</b></sub></a><br /><a href="#content-Jzow" title="Content">🖋</a></td>
     <td align="center"><a href="https://jamesabromley.wordpress.com/"><img src="https://avatars.githubusercontent.com/u/2474334?v=4?s=100" width="100px;" alt=""/><br /><sub><b>James Bromley</b></sub></a><br /><a href="#content-jayber" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/swhiteCQC"><img src="https://avatars.githubusercontent.com/u/77438466?v=4?s=100" width="100px;" alt=""/><br /><sub><b>swhiteCQC</b></sub></a><br /><a href="#content-swhiteCQC" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/neilpate"><img src="https://avatars.githubusercontent.com/u/7802334?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Neil Pate</b></sub></a><br /><a href="#content-neilpate" title="Content">🖋</a></td>
   </tr>
 </table>
 
