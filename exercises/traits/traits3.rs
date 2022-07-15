@@ -5,6 +5,7 @@
 // information without writing the same function twice.
 //
 // Consider what you can add to the Licensed trait.
+// Execute `rustlings hint traits3` or use the `hint` watch subcommand for a hint.
 
 // I AM NOT DONE
 
