@@ -1317,6 +1317,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "jaystile",
+      "name": "Jason",
+      "avatar_url": "https://avatars.githubusercontent.com/u/46078028?v=4",
+      "profile": "https://github.com/jaystile",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
