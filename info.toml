@@ -989,6 +989,12 @@ mode = "clippy"
 hint = """
 `for` loops over Option values are more clearly expressed as an `if let`"""
 
+[[exercises]]
+name = "clippy3"
+path = "exercises/clippy/clippy3.rs"
+mode = "clippy"
+hint = "No hints this time!"
+
 # TYPE CONVERSIONS
 
 [[exercises]]
