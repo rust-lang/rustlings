@@ -1344,6 +1344,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "jayber",
+      "name": "James Bromley",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2474334?v=4",
+      "profile": "https://jamesabromley.wordpress.com/",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
