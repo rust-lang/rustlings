@@ -1,7 +1,7 @@
 // iterators2.rs
 // In this exercise, you'll learn some of the unique advantages that iterators
 // can offer. Follow the steps to complete the exercise.
-// As always, there are hints if you execute `rustlings hint iterators2`!
+// Execute `rustlings hint iterators2` or use the `hint` watch subcommand for a hint.
 
 // I AM NOT DONE
 

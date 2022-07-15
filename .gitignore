@@ -9,3 +9,4 @@ rust-project.json
 .idea
 .vscode
 *.iml
+*.o

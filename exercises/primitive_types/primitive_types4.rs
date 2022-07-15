@@ -1,6 +1,6 @@
 // primitive_types4.rs
 // Get a slice out of Array a where the ??? is so that the test passes.
-// Execute `rustlings hint primitive_types4` for hints!!
+// Execute `rustlings hint primitive_types4` or use the `hint` watch subcommand for a hint.
 
 // I AM NOT DONE
 

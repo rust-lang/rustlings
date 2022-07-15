@@ -1,6 +1,6 @@
 // move_semantics6.rs
-// Make me compile! `rustlings hint move_semantics6` for hints
-// You can't change anything except adding or removing references
+// Execute `rustlings hint move_semantics6` or use the `hint` watch subcommand for a hint.
+// You can't change anything except adding or removing references.
 
 // I AM NOT DONE
 
