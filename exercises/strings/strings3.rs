@@ -4,7 +4,7 @@
 // I AM NOT DONE
 
 fn trim_me(input: &str) -> String {
-    // TODO: Remove whitespace from the end of a string!
+    // TODO: Remove whitespace from both ends of a string!
     ???
 }
 
