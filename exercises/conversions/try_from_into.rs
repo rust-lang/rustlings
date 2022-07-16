@@ -21,8 +21,6 @@ enum IntoColorError {
     IntConversion,
 }
 
-// I AM NOT DONE
-
 // Your task is to complete this implementation
 // and return an Ok result of inner type Color.
 // You need to create an implementation for a tuple of three integers,
@@ -36,6 +34,15 @@ enum IntoColorError {
 impl TryFrom<(i16, i16, i16)> for Color {
     type Error = IntoColorError;
     fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {
+        if (tuple.0 | tuple.1 | tuple.2 > 255) | (tuple.0 | tuple.1 | tuple.2 < 0) {
+            return Err(IntoColorError::IntConversion);
+        };
+        let color: Color = Color {
+            red: tuple.0 as u8,
+            green: tuple.1 as u8,
+            blue: tuple.2 as u8,
+        };
+        return Ok(color);
     }
 }
 
@@ -43,6 +50,22 @@ impl TryFrom<(i16, i16, i16)> for Color {
 impl TryFrom<[i16; 3]> for Color {
     type Error = IntoColorError;
     fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {
+        let aarr: Vec<&i16> = arr
+            .iter()
+            .filter(|n| n < &&255)
+            .filter(|n| n > &&0)
+            .collect();
+
+        println!("{:?}debug call", aarr);
+        if aarr.len() != 3 {
+            return Err(IntoColorError::IntConversion);
+        };
+        let color = Color {
+            blue: *aarr[2] as u8,
+            green: *aarr[1] as u8,
+            red: *aarr[0] as u8,
+        };
+        return Ok(color);
     }
 }
 
@@ -50,6 +73,23 @@ impl TryFrom<[i16; 3]> for Color {
 impl TryFrom<&[i16]> for Color {
     type Error = IntoColorError;
     fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {
+        if slice.len() != 3 {
+            return Err(IntoColorError::BadLen);
+        };
+        let slic: Vec<&i16> = slice
+            .into_iter()
+            .filter(|n| n < &&255)
+            .filter(|n| n > &&0)
+            .collect();
+        if slic.len() != 3 {
+            return Err(IntoColorError::IntConversion);
+        };
+        let color = Color {
+            blue: *slic[2] as u8,
+            green: *slic[1] as u8,
+            red: *slic[0] as u8,
+        };
+        return Ok(color);
     }
 }
 
