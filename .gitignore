@@ -5,6 +5,8 @@ target/
 *.pdb
 exercises/clippy/Cargo.toml
 exercises/clippy/Cargo.lock
+rust-project.json
 .idea
 .vscode
 *.iml
+*.o

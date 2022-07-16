@@ -1,7 +1,7 @@
 [package]
 name = "rustlings"
-version = "4.7.1"
-authors = ["mokou <mokou@fastmail.com>", "Carol (Nichols || Goulding) <carol.nichols@gmail.com>"]
+version = "5.0.0"
+authors = ["Liv <mokou@fastmail.com>", "Carol (Nichols || Goulding) <carol.nichols@gmail.com>"]
 edition = "2021"
 
 [dependencies]
@@ -11,7 +11,10 @@ console = "0.15"
 notify = "4.0"
 toml = "0.5"
 regex = "1.5"
-serde= { version = "1.0", features = ["derive"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0.81"
+home = "0.5.3"
+glob = "0.3.0"
 
 [[bin]]
 name = "rustlings"
@@ -21,6 +24,3 @@ path = "src/main.rs"
 assert_cmd = "0.11.0"
 predicates = "1.0.1"
 glob = "0.3.0"
-
-[features]
-exercises = []
