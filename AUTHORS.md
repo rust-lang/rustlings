@@ -196,6 +196,7 @@ authors.
     <td align="center"><a href="https://github.com/swhiteCQC"><img src="https://avatars.githubusercontent.com/u/77438466?v=4?s=100" width="100px;" alt=""/><br /><sub><b>swhiteCQC</b></sub></a><br /><a href="#content-swhiteCQC" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/neilpate"><img src="https://avatars.githubusercontent.com/u/7802334?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Neil Pate</b></sub></a><br /><a href="#content-neilpate" title="Content">🖋</a></td>
     <td align="center"><a href="https://wojexe.com"><img src="https://avatars.githubusercontent.com/u/21208490?v=4?s=100" width="100px;" alt=""/><br /><sub><b>wojexe</b></sub></a><br /><a href="#content-wojexe" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/Tostapunk"><img src="https://avatars.githubusercontent.com/u/25140297?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Mattia Schiavon</b></sub></a><br /><a href="#content-Tostapunk" title="Content">🖋</a></td>
   </tr>
 </table>
 
