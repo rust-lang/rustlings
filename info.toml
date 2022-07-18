@@ -795,7 +795,10 @@ name = "lifetimes2"
 path = "exercises/lifetimes/lifetimes2.rs"
 mode = "compile"
 hint = """
-What is the compiler checking? How could you change how long an owned variable lives?"""
+Remember that the generic lifetime 'a will get the concrete lifetime that is equal to the smaller of the lifetimes of x and y.
+You can take at least two paths to achieve the desired result while keeping the inner block:
+1. Move the string2 declaration to make it live as long as string1 (how is result declared?)
+2. Move println! into the inner block"""
 
 [[exercises]]
 name = "lifetimes3"
