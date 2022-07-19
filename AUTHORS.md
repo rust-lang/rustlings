@@ -197,6 +197,7 @@ authors.
     <td align="center"><a href="https://github.com/neilpate"><img src="https://avatars.githubusercontent.com/u/7802334?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Neil Pate</b></sub></a><br /><a href="#content-neilpate" title="Content">🖋</a></td>
     <td align="center"><a href="https://wojexe.com"><img src="https://avatars.githubusercontent.com/u/21208490?v=4?s=100" width="100px;" alt=""/><br /><sub><b>wojexe</b></sub></a><br /><a href="#content-wojexe" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/Tostapunk"><img src="https://avatars.githubusercontent.com/u/25140297?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Mattia Schiavon</b></sub></a><br /><a href="#content-Tostapunk" title="Content">🖋</a></td>
+    <td align="center"><a href="http://toucantoco.com"><img src="https://avatars.githubusercontent.com/u/18406791?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Eric Jolibois</b></sub></a><br /><a href="#content-PrettyWood" title="Content">🖋</a></td>
   </tr>
 </table>
 
