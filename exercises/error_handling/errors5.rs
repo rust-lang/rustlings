@@ -5,7 +5,7 @@
 // This exercise uses some concepts that we won't get to until later in the course, like `Box` and the
 // `From` trait. It's not important to understand them in detail right now, but you can read ahead if you like.
 
-// In short, this particular use case for boxes is for when you want to own a value and you care only that it is a 
+// In short, this particular use case for boxes is for when you want to own a value and you care only that it is a
 // type which implements a particular trait. To do so, The Box is declared as of type Box<dyn Trait> where Trait is the trait
 // the compiler looks for on any value used in that context. For this exercise, that context is the potential errors
 // which can be returned in a Result.
@@ -14,14 +14,12 @@
 
 // Execute `rustlings hint errors5` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
-
 use std::error;
 use std::fmt;
 use std::num::ParseIntError;
 
 // TODO: update the return type of `main()` to make this compile.
-fn main() -> Result<(), Box<dyn ???>> {
+fn main() -> Result<(), Box<dyn error::Error>> {
     let pretend_user_input = "42";
     let x: i64 = pretend_user_input.parse()?;
     println!("output={:?}", PositiveNonzeroInteger::new(x)?);
@@ -44,7 +42,7 @@ impl PositiveNonzeroInteger {
         match value {
             x if x < 0 => Err(CreationError::Negative),
             x if x == 0 => Err(CreationError::Zero),
-            x => Ok(PositiveNonzeroInteger(x as u64))
+            x => Ok(PositiveNonzeroInteger(x as u64)),
         }
     }
 }

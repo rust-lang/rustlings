@@ -85,7 +85,6 @@ struct HintArgs {
 /// Enable rust-analyzer for exercises
 struct LspArgs {}
 
-
 #[derive(FromArgs, PartialEq, Debug)]
 #[argh(subcommand, name = "list")]
 /// Lists the exercises available in Rustlings
@@ -164,7 +163,9 @@ fn main() {
                     "Pending"
                 };
                 let solve_cond = {
-                    (e.looks_done() && subargs.solved) || (!e.looks_done() && subargs.unsolved) || (!subargs.solved && !subargs.unsolved)
+                    (e.looks_done() && subargs.solved)
+                        || (!e.looks_done() && subargs.unsolved)
+                        || (!subargs.solved && !subargs.unsolved)
                 };
                 if solve_cond && (filter_cond || subargs.filter.is_none()) {
                     let line = if subargs.paths {
@@ -212,7 +213,8 @@ fn main() {
         }
 
         Subcommands::Verify(_subargs) => {
-            verify(&exercises, (0, exercises.len()), verbose).unwrap_or_else(|_| std::process::exit(1));
+            verify(&exercises, (0, exercises.len()), verbose)
+                .unwrap_or_else(|_| std::process::exit(1));
         }
 
         Subcommands::Lsp(_subargs) => {
@@ -236,12 +238,18 @@ fn main() {
 
         Subcommands::Watch(_subargs) => match watch(&exercises, verbose) {
             Err(e) => {
-                println!("Error: Could not watch your progress. Error message was {:?}.", e);
+                println!(
+                    "Error: Could not watch your progress. Error message was {:?}.",
+                    e
+                );
                 println!("Most likely you've run out of disk space or your 'inotify limit' has been reached.");
                 std::process::exit(1);
             }
             Ok(WatchStatus::Finished) => {
-                println!("{emoji} All exercises completed! {emoji}", emoji = Emoji("🎉", "★"));
+                println!(
+                    "{emoji} All exercises completed! {emoji}",
+                    emoji = Emoji("🎉", "★")
+                );
                 println!("\n{}\n", FENISH_LINE);
             }
             Ok(WatchStatus::Unfinished) => {
@@ -252,8 +260,10 @@ fn main() {
     }
 }
 
-
-fn spawn_watch_shell(failed_exercise_hint: &Arc<Mutex<Option<String>>>, should_quit: Arc<AtomicBool>) {
+fn spawn_watch_shell(
+    failed_exercise_hint: &Arc<Mutex<Option<String>>>,
+    should_quit: Arc<AtomicBool>,
+) {
     let failed_exercise_hint = Arc::clone(failed_exercise_hint);
     println!("Welcome to watch mode! You can type 'help' to get an overview of the commands you can use here.");
     thread::spawn(move || loop {
@@ -290,16 +300,22 @@ fn spawn_watch_shell(failed_exercise_hint: &Arc<Mutex<Option<String>>>, should_q
 
 fn find_exercise<'a>(name: &str, exercises: &'a [Exercise]) -> &'a Exercise {
     if name.eq("next") {
-        exercises.iter().find(|e| !e.looks_done()).unwrap_or_else(|| {
-            println!("🎉 Congratulations! You have done all the exercises!");
-            println!("🔚 There are no more exercises to do next!");
-            std::process::exit(1)
-        })
+        exercises
+            .iter()
+            .find(|e| !e.looks_done())
+            .unwrap_or_else(|| {
+                println!("🎉 Congratulations! You have done all the exercises!");
+                println!("🔚 There are no more exercises to do next!");
+                std::process::exit(1)
+            })
     } else {
-        exercises.iter().find(|e| e.name == name).unwrap_or_else(|| {
-            println!("No exercise found for '{}'!", name);
-            std::process::exit(1)
-        })
+        exercises
+            .iter()
+            .find(|e| e.name == name)
+            .unwrap_or_else(|| {
+                println!("No exercise found for '{}'!", name);
+                std::process::exit(1)
+            })
     }
 }
 
@@ -337,8 +353,13 @@ fn watch(exercises: &[Exercise], verbose: bool) -> notify::Result<WatchStatus> {
                         let filepath = b.as_path().canonicalize().unwrap();
                         let pending_exercises = exercises
                             .iter()
-                            .find(|e| filepath.ends_with(&e.path)).into_iter()
-                            .chain(exercises.iter().filter(|e| !e.looks_done() && !filepath.ends_with(&e.path)));
+                            .find(|e| filepath.ends_with(&e.path))
+                            .into_iter()
+                            .chain(
+                                exercises
+                                    .iter()
+                                    .filter(|e| !e.looks_done() && !filepath.ends_with(&e.path)),
+                            );
                         let num_done = exercises.iter().filter(|e| e.looks_done()).count();
                         clear_screen();
                         match verify(pending_exercises, (num_done, exercises.len()), verbose) {
