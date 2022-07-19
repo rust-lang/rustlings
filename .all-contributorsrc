@@ -1389,6 +1389,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "PrettyWood",
+      "name": "Eric Jolibois",
+      "avatar_url": "https://avatars.githubusercontent.com/u/18406791?v=4",
+      "profile": "http://toucantoco.com",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
