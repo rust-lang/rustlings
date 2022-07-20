@@ -732,7 +732,7 @@ name = "traits5"
 path = "exercises/traits/traits5.rs"
 mode = "compile"
 hint = """
-To ensure a paramter implements multiple traits use the '+ syntax'. Try replacing the
+To ensure a parameter implements multiple traits use the '+ syntax'. Try replacing the
 '??' with 'impl <> + <>'.
 
 See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#specifying-multiple-trait-bounds-with-the--syntax
