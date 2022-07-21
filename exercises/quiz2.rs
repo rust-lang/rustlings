@@ -56,7 +56,7 @@ mod tests {
         ]);
         assert_eq!(output[0], "HELLO");
         assert_eq!(output[1], "all roads lead to rome!");
-        assert_eq!(output[2], "foobar");
+        assert_eq!(output[2], "foofoo");
         assert_eq!(output[3], "barbarbarbarbarbar");
     }
 }
