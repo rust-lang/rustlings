@@ -6,7 +6,7 @@
 // imperative style for loops. Recreate this counting functionality using
 // iterators. Only the two iterator methods (count_iterator and
 // count_collection_iterator) need to be modified.
-// Execute `rustlings hint iterators5` for hints.
+// Execute `rustlings hint iterators5` or use the `hint` watch subcommand for a hint.
 //
 // Make the code compile and the tests pass.
 
@@ -32,7 +32,7 @@ fn count_for(map: &HashMap<String, Progress>, value: Progress) -> usize {
 fn count_iterator(map: &HashMap<String, Progress>, value: Progress) -> usize {
     // map is a hashmap with String keys and Progress values.
     // map = { "variables1": Complete, "from_str": None, ... }
-    map.into_iter().filter(|&(k, v)| v == &value).count()
+    todo!();
 }
 
 fn count_collection_for(collection: &[HashMap<String, Progress>], value: Progress) -> usize {
@@ -51,9 +51,7 @@ fn count_collection_iterator(collection: &[HashMap<String, Progress>], value: Pr
     // collection is a slice of hashmaps.
     // collection = [{ "variables1": Complete, "from_str": None, ... },
     //     { "variables2": Complete, ... }, ... ]
-    collection
-        .into_iter()
-        .fold(0, |acc, x| acc + count_iterator(x, value))
+    todo!();
 }
 
 #[cfg(test)]

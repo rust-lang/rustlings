@@ -1,4 +1,5 @@
 // iterators4.rs
+// Execute `rustlings hint iterators4` or use the `hint` watch subcommand for a hint.
 
 pub fn factorial(num: u64) -> u64 {
     (1..=num).into_iter().fold(1, |acc, x| acc * x)
@@ -7,6 +8,11 @@ pub fn factorial(num: u64) -> u64 {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn factorial_of_0() {
+        assert_eq!(1, factorial(0));
+    }
 
     #[test]
     fn factorial_of_1() {
