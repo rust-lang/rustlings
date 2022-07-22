@@ -73,9 +73,9 @@ Then, same as above, run `rustlings` to get started.
 
 ## Doing exercises
 
-The exercises are sorted by topic and can be found in the subdirectory `rustlings/exercises/<topic>`. For every topic there is an additional README file with some resources to get you started on the topic. We really recommend that you have a look at them before you start.
+The exercises are sorted by topic and can be found in the subdirectory `rustlings/exercises/<topic>`. For every topic, there is an additional README file with some resources to get you started on the topic. We really recommend that you have a look at them before you start.
 
-The task is simple. Most exercises contain an error that keeps them from compiling, and it's up to you to fix it! Some exercises are also run as tests, but rustlings handles them all the same. To run the exercises in the recommended order, execute:
+The task is simple. Most exercises contain an error that keeps them from compiling, and it's up to you to fix it! Some exercises are also run as tests, but rustlings handle them all the same. To run the exercises in the recommended order, execute:
 
 ```bash
 rustlings watch
@@ -89,7 +89,7 @@ rustlings verify
 
 This will do the same as watch, but it'll quit after running.
 
-In case you want to go by your own order, or want to only verify a single exercise, you can run:
+In case you want to go by your own order or want to only verify a single exercise, you can run:
 
 ```bash
 rustlings run myExercise1
