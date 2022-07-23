@@ -199,6 +199,9 @@ authors.
     <td align="center"><a href="https://github.com/Tostapunk"><img src="https://avatars.githubusercontent.com/u/25140297?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Mattia Schiavon</b></sub></a><br /><a href="#content-Tostapunk" title="Content">🖋</a></td>
     <td align="center"><a href="http://toucantoco.com"><img src="https://avatars.githubusercontent.com/u/18406791?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Eric Jolibois</b></sub></a><br /><a href="#content-PrettyWood" title="Content">🖋</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="http://edwinchang.vercel.app"><img src="https://avatars.githubusercontent.com/u/88263098?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Edwin Chang</b></sub></a><br /><a href="#content-EdwinChang24" title="Content">🖋</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-restore -->
