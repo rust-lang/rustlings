@@ -63,7 +63,7 @@ name = "variables5"
 path = "exercises/variables/variables5.rs"
 mode = "compile"
 hint = """
-In variables3 we already learned how to make an immutable variable mutable
+In variables4 we already learned how to make an immutable variable mutable
 using a special keyword. Unfortunately this doesn't help us much in this exercise
 because we want to assign a different typed value to an existing variable. Sometimes
 you may also like to reuse existing variable names because you are just converting
