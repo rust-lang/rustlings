@@ -1398,6 +1398,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "EdwinChang24",
+      "name": "Edwin Chang",
+      "avatar_url": "https://avatars.githubusercontent.com/u/88263098?v=4",
+      "profile": "http://edwinchang.vercel.app",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
