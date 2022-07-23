@@ -932,6 +932,17 @@ is too much of a struggle, consider reading through all of Chapter 16 in the boo
 https://doc.rust-lang.org/stable/book/ch16-00-concurrency.html
 """
 
+[[exercises]]
+name = "cow1"
+path = "exercises/standard_library_types/cow1.rs"
+mode = "compile"
+hint = """
+Since the vector is already owned, the `Cow` type doesn't need to clone it.
+
+Checkout https://doc.rust-lang.org/std/borrow/enum.Cow.html for documentation
+on the `Cow` type.
+"""
+
 # THREADS
 
 [[exercises]]
