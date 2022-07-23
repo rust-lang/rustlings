@@ -201,6 +201,7 @@ authors.
   </tr>
   <tr>
     <td align="center"><a href="http://edwinchang.vercel.app"><img src="https://avatars.githubusercontent.com/u/88263098?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Edwin Chang</b></sub></a><br /><a href="#content-EdwinChang24" title="Content">🖋</a></td>
+    <td align="center"><a href="https://saikat.dev/"><img src="https://avatars.githubusercontent.com/u/7412443?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Saikat Das</b></sub></a><br /><a href="#content-saikatdas0790" title="Content">🖋</a></td>
   </tr>
 </table>
 
