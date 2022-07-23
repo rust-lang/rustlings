@@ -176,7 +176,7 @@ fn run_single_test_success_with_output() {
         .current_dir("tests/fixture/success/")
         .assert()
         .code(0)
-        .stdout(predicates::str::contains("THIS TEST TOO SHALL PAS"));
+        .stdout(predicates::str::contains("THIS TEST TOO SHALL PASS"));
 }
 
 #[test]
@@ -187,7 +187,7 @@ fn run_single_test_success_without_output() {
         .current_dir("tests/fixture/success/")
         .assert()
         .code(0)
-        .stdout(predicates::str::contains("THIS TEST TOO SHALL PAS").not());
+        .stdout(predicates::str::contains("THIS TEST TOO SHALL PASS").not());
 }
 
 #[test]
