@@ -63,7 +63,7 @@ name = "variables5"
 path = "exercises/variables/variables5.rs"
 mode = "compile"
 hint = """
-In variables3 we already learned how to make an immutable variable mutable
+In variables4 we already learned how to make an immutable variable mutable
 using a special keyword. Unfortunately this doesn't help us much in this exercise
 because we want to assign a different typed value to an existing variable. Sometimes
 you may also like to reuse existing variable names because you are just converting
@@ -123,8 +123,8 @@ name = "functions4"
 path = "exercises/functions/functions4.rs"
 mode = "compile"
 hint = """
-The error message points to line 14 and says it expects a type after the
-`->`. This is where the function's return type should be-- take a look at
+The error message points to line 17 and says it expects a type after the
+`->`. This is where the function's return type should be -- take a look at
 the `is_even` function for an example!
 
 Also: Did you figure out that, technically, u32 would be the more fitting type
