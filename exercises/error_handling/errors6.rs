@@ -6,7 +6,7 @@
 // we define a custom error type to make it possible for callers to decide
 // what to do next when our function returns an error.
 
-// Make these tests pass! Execute `rustlings hint errors6` for hints :)
+// Execute `rustlings hint errors6` or use the `hint` watch subcommand for a hint.
 
 // I AM NOT DONE
 
@@ -20,7 +20,11 @@ enum ParsePosNonzeroError {
 }
 
 impl ParsePosNonzeroError {
+    fn from_creation(err: CreationError) -> ParsePosNonzeroError {
+        ParsePosNonzeroError::Creation(err)
+    }
     // TODO: add another error conversion function here.
+    // fn from_parseint...
 }
 
 fn parse_pos_nonzero(s: &str)

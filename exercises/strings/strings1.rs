@@ -1,6 +1,6 @@
 // strings1.rs
 // Make me compile without changing the function signature!
-// Execute `rustlings hint strings1` for hints ;)
+// Execute `rustlings hint strings1` or use the `hint` watch subcommand for a hint.
 
 // I AM NOT DONE
 

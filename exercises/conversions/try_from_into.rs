@@ -3,6 +3,8 @@
 // Basically, this is the same as From. The main difference is that this should return a Result type
 // instead of the target type itself.
 // You can read more about it at https://doc.rust-lang.org/std/convert/trait.TryFrom.html
+// Execute `rustlings hint try_from_into` or use the `hint` watch subcommand for a hint.
+
 use std::convert::{TryFrom, TryInto};
 
 #[derive(Debug, PartialEq)]
@@ -54,7 +56,7 @@ impl TryFrom<&[i16]> for Color {
 }
 
 fn main() {
-    // Use the `from` function
+    // Use the `try_from` function
     let c1 = Color::try_from((183, 65, 14));
     println!("{:?}", c1);
 

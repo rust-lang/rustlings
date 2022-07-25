@@ -1,32 +1,31 @@
 // threads1.rs
-// Make this compile! Execute `rustlings hint threads1` for hints :)
-// The idea is the thread spawned on line 22 is completing jobs while the main thread is
-// monitoring progress until 10 jobs are completed. Because of the difference between the
-// spawned threads' sleep time, and the waiting threads sleep time, when you see 6 lines
-// of "waiting..." and the program ends without timing out when running,
-// you've got it :)
+// Execute `rustlings hint threads1` or use the `hint` watch subcommand for a hint.
+// This program should wait until all the spawned threads have finished before exiting.
 
 // I AM NOT DONE
 
-use std::sync::Arc;
 use std::thread;
 use std::time::Duration;
 
-struct JobStatus {
-    jobs_completed: u32,
-}
 
 fn main() {
-    let status = Arc::new(JobStatus { jobs_completed: 0 });
-    let status_shared = status.clone();
-    thread::spawn(move || {
-        for _ in 0..10 {
+
+    let mut handles = vec![];
+    for i in 0..10 {
+        thread::spawn(move || {
             thread::sleep(Duration::from_millis(250));
-            status_shared.jobs_completed += 1;
-        }
-    });
-    while status.jobs_completed < 10 {
-        println!("waiting... ");
-        thread::sleep(Duration::from_millis(500));
+            println!("thread {} is complete", i);
+        });
     }
+
+    let mut completed_threads = 0;
+    for handle in handles {
+        // TODO: a struct is returned from thread::spawn, can you use it?
+        completed_threads += 1;
+    }
+
+    if completed_threads != 10 {
+        panic!("Oh no! All the spawned threads did not finish!");
+    }
+    
 }

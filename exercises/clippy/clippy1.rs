@@ -4,7 +4,7 @@
 //
 // For these exercises the code will fail to compile when there are clippy warnings
 // check clippy's suggestions from the output to solve the exercise.
-// Execute `rustlings hint clippy1` for hints :)
+// Execute `rustlings hint clippy1` or use the `hint` watch subcommand for a hint.
 
 // I AM NOT DONE
 

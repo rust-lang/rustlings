@@ -4,7 +4,7 @@
 // 1. Complete the divide function to get the first four tests to pass.
 // 2. Get the remaining tests to pass by completing the result_with_list and
 //    list_of_results functions.
-// Execute `rustlings hint iterators3` to get some hints!
+// Execute `rustlings hint iterators3` or use the `hint` watch subcommand for a hint.
 
 // I AM NOT DONE
 
@@ -22,7 +22,9 @@ pub struct NotDivisibleError {
 
 // Calculate `a` divided by `b` if `a` is evenly divisible by `b`.
 // Otherwise, return a suitable error.
-pub fn divide(a: i32, b: i32) -> Result<i32, DivisionError> {}
+pub fn divide(a: i32, b: i32) -> Result<i32, DivisionError> {
+    todo!();
+}
 
 // Complete the function and return a value of the correct type so the test passes.
 // Desired output: Ok([1, 11, 1426, 3])
