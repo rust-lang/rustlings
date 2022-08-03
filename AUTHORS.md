@@ -204,6 +204,7 @@ authors.
     <td align="center"><a href="https://saikat.dev/"><img src="https://avatars.githubusercontent.com/u/7412443?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Saikat Das</b></sub></a><br /><a href="#content-saikatdas0790" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/thatlittleboy"><img src="https://avatars.githubusercontent.com/u/30731072?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jeremy Goh</b></sub></a><br /><a href="#content-thatlittleboy" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/Lioness100"><img src="https://avatars.githubusercontent.com/u/65814829?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Lioness100</b></sub></a><br /><a href="#content-Lioness100" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/tvkn"><img src="https://avatars.githubusercontent.com/u/79277926?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Tristan Nicholls</b></sub></a><br /><a href="#content-tvkn" title="Content">🖋</a></td>
   </tr>
 </table>
 
