@@ -1443,6 +1443,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "clairew",
+      "name": "Claire",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9344258?v=4",
+      "profile": "http://clairewang.net",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
