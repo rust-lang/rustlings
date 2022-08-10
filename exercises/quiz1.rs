@@ -17,13 +17,14 @@ fn calculate_apple_price(quantity: i32) -> i32 {
         return quantity * 2;
     }
 }
+// fn calculate_price_of_apples {
 
 // Don't modify this function!
 #[test]
 fn verify_test() {
-    let price1 = calculate_apple_price(35);
-    let price2 = calculate_apple_price(40);
-    let price3 = calculate_apple_price(65);
+    let price1 = calculate_price_of_apples(35);
+    let price2 = calculate_price_of_apples(40);
+    let price3 = calculate_price_of_apples(65);
 
     assert_eq!(70, price1);
     assert_eq!(80, price2);

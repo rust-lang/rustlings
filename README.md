@@ -44,9 +44,9 @@ Start-BitsTransfer -Source https://raw.githubusercontent.com/rust-lang/rustlings
 
 To install Rustlings. Same as on MacOS/Linux, you will have access to the `rustlings` command after it.
 
-When you get a permission denied message then you have to exclude the directory where you placed the rustlings in your virus-scanner
+If you get a permission denied message, you might have to exclude the directory where you cloned Rustlings in your antivirus.
 
-## Browser:
+## Browser
 
 [Run on Repl.it](https://repl.it/github/rust-lang/rustlings)
 
@@ -54,11 +54,11 @@ When you get a permission denied message then you have to exclude the directory 
 
 ## Manually
 
-Basically: Clone the repository at the latest tag, run `cargo install`.
+Basically: Clone the repository at the latest tag, run `cargo install --path .`.
 
 ```bash
-# find out the latest version at https://github.com/rust-lang/rustlings/releases/latest (on edit 4.7.1)
-git clone -b 4.7.1 --depth 1 https://github.com/rust-lang/rustlings
+# find out the latest version at https://github.com/rust-lang/rustlings/releases/latest (on edit 5.0.0)
+git clone -b 5.0.0 --depth 1 https://github.com/rust-lang/rustlings
 cd rustlings
 cargo install --force --path .
 ```
@@ -126,24 +126,7 @@ After every couple of sections, there will be a quiz that'll test your knowledge
 
 ## Enabling `rust-analyzer`
 
-`rust-analyzer` support is provided, but it depends on your editor
-whether it's enabled by default. (RLS support is not provided)
-
-To enable `rust-analyzer`, you'll need to make Cargo build the project
-with the `exercises` feature, which will automatically include the `exercises/`
-subfolder in the project. The easiest way to do this is to tell your editor to
-build the project with all features (the equivalent of `cargo build --all-features`).
-For specific editor instructions:
-
-- **VSCode**: Add a `.vscode/settings.json` file with the following:
-```json
-{
-    "rust-analyzer.cargo.features": ["exercises"]
-}
-```
-- **IntelliJ-based Editors**: Using the Rust plugin, everything should work
-    by default.
-- _Missing your editor? Feel free to contribute more instructions!_
+Run the command `rustlings lsp` which will generate a `rust-project.json` at the root of the project, this allows [rust-analyzer](https://rust-analyzer.github.io/) to parse each exercise. 
 
 ## Continuing On
 
@@ -166,24 +149,6 @@ cargo uninstall rustlings
 ```
 
 Now you should be done!
-
-## Completion
-
-Rustlings isn't done; there are a couple of sections that are very experimental and don't have proper documentation. These include:
-
-- Errors (`exercises/errors/`)
-- Option (`exercises/option/`)
-- Result (`exercises/result/`)
-- Move Semantics (could still be improved, `exercises/move_semantics/`)
-
-Additionally, we could use exercises on a couple of topics:
-
-- Structs
-- Better ownership stuff
-- `impl`
-- ??? probably more
-
-If you are interested in improving or adding new ones, please feel free to contribute! Read on for more information :)
 
 ## Contributing
 

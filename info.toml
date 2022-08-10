@@ -5,7 +5,8 @@ name = "intro1"
 path = "exercises/intro/intro1.rs"
 mode = "compile"
 hint = """
-Remove the I AM NOT DONE comment to move on to the next exercise."""
+Remove the I AM NOT DONE comment in the exercises/intro/intro1.rs file
+to move on to the next exercise."""
 
 [[exercises]]
 name = "intro2"
@@ -21,7 +22,7 @@ name = "variables1"
 path = "exercises/variables/variables1.rs"
 mode = "compile"
 hint = """
-Hint: The declaration on line 8 is missing a keyword that is needed in Rust
+The declaration on line 8 is missing a keyword that is needed in Rust
 to create a new variable binding."""
 
 [[exercises]]
@@ -42,15 +43,6 @@ name = "variables3"
 path = "exercises/variables/variables3.rs"
 mode = "compile"
 hint = """
-In Rust, variable bindings are immutable by default. But here we're trying
-to reassign a different value to x! There's a keyword we can use to make
-a variable binding mutable instead."""
-
-[[exercises]]
-name = "variables4"
-path = "exercises/variables/variables4.rs"
-mode = "compile"
-hint = """
 Oops! In this exercise, we have a variable binding that we've created on
 line 7, and we're trying to use it on line 8, but we haven't given it a
 value. We can't print out something that isn't there; try giving x a value!
@@ -58,11 +50,20 @@ This is an error that can cause bugs that's very easy to make in any
 programming language -- thankfully the Rust compiler has caught this for us!"""
 
 [[exercises]]
+name = "variables4"
+path = "exercises/variables/variables4.rs"
+mode = "compile"
+hint = """
+In Rust, variable bindings are immutable by default. But here we're trying
+to reassign a different value to x! There's a keyword we can use to make
+a variable binding mutable instead."""
+
+[[exercises]]
 name = "variables5"
 path = "exercises/variables/variables5.rs"
 mode = "compile"
 hint = """
-In variables3 we already learned how to make an immutable variable mutable
+In variables4 we already learned how to make an immutable variable mutable
 using a special keyword. Unfortunately this doesn't help us much in this exercise
 because we want to assign a different typed value to an existing variable. Sometimes
 you may also like to reuse existing variable names because you are just converting
@@ -78,13 +79,13 @@ path = "exercises/variables/variables6.rs"
 mode = "compile"
 hint = """
 We know about variables and mutability, but there is another important type of
-variable available; constants.
+variable available: constants.
 Constants are always immutable and they are declared with keyword 'const' rather
 than keyword 'let'.
 Constants types must also always be annotated.
 
-Read more about constants under 'Differences Between Variables and Constants' in the book's section 'Variables and Mutability':
-https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html#differences-between-variables-and-constants
+Read more about constants and the differences between variables and constants under 'Constants' in the book's section 'Variables and Mutability':
+https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html#constants
 """
 
 # FUNCTIONS
@@ -113,16 +114,21 @@ path = "exercises/functions/functions3.rs"
 mode = "compile"
 hint = """
 This time, the function *declaration* is okay, but there's something wrong
-with the place where we're calling the function."""
+with the place where we're calling the function.
+As a reminder, you can freely play around with different solutions in Rustlings!
+Watch mode will only jump to the next exercise if you remove the I AM NOT DONE comment."""
 
 [[exercises]]
 name = "functions4"
 path = "exercises/functions/functions4.rs"
 mode = "compile"
 hint = """
-The error message points to line 14 and says it expects a type after the
-`->`. This is where the function's return type should be-- take a look at
-the `is_even` function for an example!"""
+The error message points to line 17 and says it expects a type after the
+`->`. This is where the function's return type should be -- take a look at
+the `is_even` function for an example!
+
+Also: Did you figure out that, technically, u32 would be the more fitting type
+for the prices here, since they can't be negative? If so, kudos!"""
 
 [[exercises]]
 name = "functions5"
@@ -161,13 +167,109 @@ For that first compiler error, it's important in Rust that each conditional
 block returns the same type! To get the tests passing, you will need a couple
 conditions checking different input values."""
 
-# TEST 1
+# QUIZ 1
 
 [[exercises]]
 name = "quiz1"
 path = "exercises/quiz1.rs"
 mode = "test"
 hint = "No hints this time ;)"
+
+# PRIMITIVE TYPES
+
+[[exercises]]
+name = "primitive_types1"
+path = "exercises/primitive_types/primitive_types1.rs"
+mode = "compile"
+hint = "No hints this time ;)"
+
+[[exercises]]
+name = "primitive_types2"
+path = "exercises/primitive_types/primitive_types2.rs"
+mode = "compile"
+hint = "No hints this time ;)"
+
+[[exercises]]
+name = "primitive_types3"
+path = "exercises/primitive_types/primitive_types3.rs"
+mode = "compile"
+hint = """
+There's a shorthand to initialize Arrays with a certain size that does not
+require you to type in 100 items (but you certainly can if you want!).
+For example, you can do:
+let array = ["Are we there yet?"; 10];
+
+Bonus: what are some other things you could have that would return true
+for `a.len() >= 100`?"""
+
+[[exercises]]
+name = "primitive_types4"
+path = "exercises/primitive_types/primitive_types4.rs"
+mode = "test"
+hint = """
+Take a look at the Understanding Ownership -> Slices -> Other Slices section of the book:
+https://doc.rust-lang.org/book/ch04-03-slices.html
+and use the starting and ending indices of the items in the Array
+that you want to end up in the slice.
+
+If you're curious why the first argument of `assert_eq!` does not
+have an ampersand for a reference since the second argument is a
+reference, take a look at the coercion chapter of the nomicon:
+https://doc.rust-lang.org/nomicon/coercions.html"""
+
+[[exercises]]
+name = "primitive_types5"
+path = "exercises/primitive_types/primitive_types5.rs"
+mode = "compile"
+hint = """
+Take a look at the Data Types -> The Tuple Type section of the book:
+https://doc.rust-lang.org/book/ch03-02-data-types.html#the-tuple-type
+Particularly the part about destructuring (second to last example in the section).
+You'll need to make a pattern to bind `name` and `age` to the appropriate parts
+of the tuple. You can do it!!"""
+
+[[exercises]]
+name = "primitive_types6"
+path = "exercises/primitive_types/primitive_types6.rs"
+mode = "test"
+hint = """
+While you could use a destructuring `let` for the tuple here, try
+indexing into it instead, as explained in the last example of the
+Data Types -> The Tuple Type section of the book:
+https://doc.rust-lang.org/book/ch03-02-data-types.html#the-tuple-type
+Now you have another tool in your toolbox!"""
+
+# VECS
+
+[[exercises]]
+name = "vecs1"
+path = "exercises/vecs/vecs1.rs"
+mode = "test"
+hint = """
+In Rust, there are two ways to define a Vector.
+1. One way is to use the `Vec::new()` function to create a new vector
+  and fill it with the `push()` method.
+2. The second way, which is simpler is to use the `vec![]` macro and
+  define your elements inside the square brackets.
+Check this chapter: https://doc.rust-lang.org/stable/book/ch08-01-vectors.html
+of the Rust book to learn more.
+"""
+
+[[exercises]]
+name = "vecs2"
+path = "exercises/vecs/vecs2.rs"
+mode = "test"
+hint = """
+Hint 1: `i` is each element from the Vec as they are being iterated. Can you try
+multiplying this?
+
+Hint 2: For the first function, there's a way to directly access the numbers stored
+in the Vec, using the * dereference operator. You can both access and write to the
+number that way.
+
+After you've completed both functions, decide for yourself which approach you like
+better. What do you think is the more commonly used pattern under Rust developers?
+"""
 
 # MOVE SEMANTICS
 
@@ -178,24 +280,27 @@ mode = "compile"
 hint = """
 So you've got the "cannot borrow immutable local variable `vec1` as mutable" error on line 13,
 right? The fix for this is going to be adding one keyword, and the addition is NOT on line 13
-where the error is."""
+where the error is.
+
+Also: Try accessing `vec0` after having called `fill_vec()`. See what happens!"""
 
 [[exercises]]
 name = "move_semantics2"
 path = "exercises/move_semantics/move_semantics2.rs"
 mode = "compile"
 hint = """
-So `vec0` is being *moved* into the function `fill_vec` when we call it on
-line 10, which means it gets dropped at the end of `fill_vec`, which means we
-can't use `vec0` again on line 13 (or anywhere else in `main` after the
-`fill_vec` call for that matter). We could fix this in a few ways, try them
-all!
+So, `vec0` is passed into the `fill_vec` function as an argument. In Rust,
+when an argument is passed to a function and it's not explicitly returned,
+you can't use the original variable anymore. We call this "moving" a variable.
+Variables that are moved into a function (or block scope) and aren't explicitly
+returned get "dropped" at the end of that function. This is also what happens here.
+There's a few ways to fix this, try them all if you want:
 1. Make another, separate version of the data that's in `vec0` and pass that
    to `fill_vec` instead.
 2. Make `fill_vec` borrow its argument instead of taking ownership of it,
    and then copy the data within the function in order to return an owned
    `Vec<i32>`
-3. Make `fill_vec` *mutably* borrow its argument (which will need to be
+3. Make `fill_vec` *mutably* borrow a reference to its argument (which will need to be
    mutable), modify it directly, then not return anything. Then you can get rid
    of `vec1` entirely -- note that this will change what gets printed by the
    first `println!`"""
@@ -252,70 +357,6 @@ Can you figure out how?
 
 Another hint: it has to do with the `&` character."""
 
-# PRIMITIVE TYPES
-
-[[exercises]]
-name = "primitive_types1"
-path = "exercises/primitive_types/primitive_types1.rs"
-mode = "compile"
-hint = "No hints this time ;)"
-
-[[exercises]]
-name = "primitive_types2"
-path = "exercises/primitive_types/primitive_types2.rs"
-mode = "compile"
-hint = "No hints this time ;)"
-
-[[exercises]]
-name = "primitive_types3"
-path = "exercises/primitive_types/primitive_types3.rs"
-mode = "compile"
-hint = """
-There's a shorthand to initialize Arrays with a certain size that does not
-require you to type in 100 items (but you certainly can if you want!).
-For example, you can do:
-let array = ["Are we there yet?"; 10];
-
-Bonus: what are some other things you could have that would return true
-for `a.len() >= 100`?"""
-
-[[exercises]]
-name = "primitive_types4"
-path = "exercises/primitive_types/primitive_types4.rs"
-mode = "test"
-hint = """
-Take a look at the Understanding Ownership -> Slices -> Other Slices section of the book:
-https://doc.rust-lang.org/book/ch04-03-slices.html
-and use the starting and ending indices of the items in the Array
-that you want to end up in the slice.
-
-If you're curious why the first argument of `assert_eq!` does not
-have an ampersand for a reference since the second argument is a
-reference, take a look at the Deref coercions section of the book:
-https://doc.rust-lang.org/book/ch15-02-deref.html"""
-
-[[exercises]]
-name = "primitive_types5"
-path = "exercises/primitive_types/primitive_types5.rs"
-mode = "compile"
-hint = """
-Take a look at the Data Types -> The Tuple Type section of the book:
-https://doc.rust-lang.org/book/ch03-02-data-types.html#the-tuple-type
-Particularly the part about destructuring (second to last example in the section).
-You'll need to make a pattern to bind `name` and `age` to the appropriate parts
-of the tuple. You can do it!!"""
-
-[[exercises]]
-name = "primitive_types6"
-path = "exercises/primitive_types/primitive_types6.rs"
-mode = "test"
-hint = """
-While you could use a destructuring `let` for the tuple here, try
-indexing into it instead, as explained in the last example of the
-Data Types -> The Tuple Type section of the book:
-https://doc.rust-lang.org/book/ch03-02-data-types.html#the-tuple-type
-Now you have another tool in your toolbox!"""
-
 # STRUCTS
 
 [[exercises]]
@@ -326,7 +367,7 @@ hint = """
 Rust has more than one type of struct. Three actually, all variants are used to package related data together.
 There are normal (or classic) structs. These are named collections of related data stored in fields.
 Tuple structs are basically just named tuples.
-Finally, Unit structs. These don't have any fields and are useful for generics.
+Finally, Unit-like structs. These don't have any fields and are useful for generics.
 
 In this exercise you need to complete and implement one of each kind.
 Read more about structs in The Book: https://doc.rust-lang.org/book/ch05-01-defining-structs.html"""
@@ -359,21 +400,64 @@ Have a look in The Book, to find out more about method implementations: https://
 name = "enums1"
 path = "exercises/enums/enums1.rs"
 mode = "compile"
-hint = """
-Hint: The declaration of the enumeration type has not been defined yet."""
+hint = "No hints this time ;)"
 
 [[exercises]]
 name = "enums2"
 path = "exercises/enums/enums2.rs"
 mode = "compile"
 hint = """
-Hint: you can create enumerations that have different variants with different types
+You can create enumerations that have different variants with different types
 such as no data, anonymous structs, a single string, tuples, ...etc"""
 
 [[exercises]]
 name = "enums3"
 path = "exercises/enums/enums3.rs"
 mode = "test"
+hint = """
+As a first step, you can define enums to compile this code without errors.
+and then create a match expression in `process()`. 
+Note that you need to deconstruct some message variants 
+in the match expression to get value in the variant."""
+
+# STRINGS
+
+[[exercises]]
+name = "strings1"
+path = "exercises/strings/strings1.rs"
+mode = "compile"
+hint = """
+The `current_favorite_color` function is currently returning a string slice with the `'static`
+lifetime. We know this because the data of the string lives in our code itself -- it doesn't
+come from a file or user input or another program -- so it will live as long as our program
+lives. But it is still a string slice. There's one way to create a `String` by converting a
+string slice covered in the Strings chapter of the book, and another way that uses the `From`
+trait."""
+
+[[exercises]]
+name = "strings2"
+path = "exercises/strings/strings2.rs"
+mode = "compile"
+hint = """
+Yes, it would be really easy to fix this by just changing the value bound to `word` to be a
+string slice instead of a `String`, wouldn't it?? There is a way to add one character to line
+9, though, that will coerce the `String` into a string slice."""
+
+[[exercises]]
+name = "strings3"
+path = "exercises/strings/strings3.rs"
+mode = "test"
+hint = """
+There's tons of useful standard library functions for strings. Let's try and use some of
+them!
+
+For the compose_me method: You can either use the `format!` macro, or convert the string
+slice into an owned string, which you can then freely extend."""
+
+[[exercises]]
+name = "strings4"
+path = "exercises/strings/strings4.rs"
+mode = "compile"
 hint = "No hints this time ;)"
 
 # MODULES
@@ -406,35 +490,11 @@ UNIX_EPOCH and SystemTime are declared in the std::time module. Add a use statem
 for these two to bring them into scope. You can use nested paths or the glob
 operator to bring these two in using only one line."""
 
-# COLLECTIONS
+# HASHMAPS
 
 [[exercises]]
-name = "vec1"
-path = "exercises/collections/vec1.rs"
-mode = "test"
-hint = """
-In Rust, there are two ways to define a Vector.
-1. One way is to use the `Vec::new()` function to create a new vector
-  and fill it with the `push()` method.
-2. The second way, which is simpler is to use the `vec![]` macro and
-  define your elements inside the square brackets.
-Check this chapter: https://doc.rust-lang.org/stable/book/ch08-01-vectors.html
-of the Rust book to learn more.
-"""
-
-[[exercises]]
-name = "vec2"
-path = "exercises/collections/vec2.rs"
-mode = "test"
-hint = """
-Hint 1: `i` is each element from the Vec as they are being iterated.
-  Can you try multiplying this?
-Hint 2: Check the suggestion from the compiler error ;)
-"""
-
-[[exercises]]
-name = "hashmap1"
-path = "exercises/collections/hashmap1.rs"
+name = "hashmaps1"
+path = "exercises/hashmaps/hashmaps1.rs"
 mode = "test"
 hint = """
 Hint 1: Take a look at the return type of the function to figure out
@@ -444,44 +504,67 @@ Hint 2: Number of fruits should be at least 5. And you have to put
 """
 
 [[exercises]]
-name = "hashmap2"
-path = "exercises/collections/hashmap2.rs"
+name = "hashmaps2"
+path = "exercises/hashmaps/hashmaps2.rs"
 mode = "test"
 hint = """
 Use the `entry()` and `or_insert()` methods of `HashMap` to achieve this.
 Learn more at https://doc.rust-lang.org/stable/book/ch08-03-hash-maps.html#only-inserting-a-value-if-the-key-has-no-value
 """
 
-# STRINGS
-
 [[exercises]]
-name = "strings1"
-path = "exercises/strings/strings1.rs"
-mode = "compile"
+name = "hashmaps3"
+path = "exercises/hashmaps/hashmaps3.rs"
+mode = "test"
 hint = """
-The `current_favorite_color` function is currently returning a string slice with the `'static`
-lifetime. We know this because the data of the string lives in our code itself -- it doesn't
-come from a file or user input or another program -- so it will live as long as our program
-lives. But it is still a string slice. There's one way to create a `String` by converting a
-string slice covered in the Strings chapter of the book, and another way that uses the `From`
-trait."""
+Hint 1: Use the `entry()` and `or_insert()` methods of `HashMap` to insert entries corresponding to each team in the scores table.
+Learn more at https://doc.rust-lang.org/stable/book/ch08-03-hash-maps.html#only-inserting-a-value-if-the-key-has-no-value
+Hint 2: If there is already an entry for a given key, the value returned by `entry()` can be updated based on the existing value.
+Learn more at https://doc.rust-lang.org/book/ch08-03-hash-maps.html#updating-a-value-based-on-the-old-value
+"""
 
-[[exercises]]
-name = "strings2"
-path = "exercises/strings/strings2.rs"
-mode = "compile"
-hint = """
-Yes, it would be really easy to fix this by just changing the value bound to `word` to be a
-string slice instead of a `String`, wouldn't it?? There is a way to add one character to line
-9, though, that will coerce the `String` into a string slice."""
-
-# TEST 2
+# QUIZ 2
 
 [[exercises]]
 name = "quiz2"
 path = "exercises/quiz2.rs"
-mode = "compile"
+mode = "test"
 hint = "No hints this time ;)"
+
+# OPTIONS
+
+[[exercises]]
+name = "options1"
+path = "exercises/options/options1.rs"
+mode = "test"
+hint = """
+Options can have a Some value, with an inner value, or a None value, without an inner value.
+There's multiple ways to get at the inner value, you can use unwrap, or pattern match. Unwrapping
+is the easiest, but how do you do it safely so that it doesn't panic in your face later?"""
+
+[[exercises]]
+name = "options2"
+path = "exercises/options/options2.rs"
+mode = "compile"
+hint = """
+check out:
+https://doc.rust-lang.org/rust-by-example/flow_control/if_let.html
+https://doc.rust-lang.org/rust-by-example/flow_control/while_let.html
+
+Remember that Options can be stacked in if let and while let.
+For example: Some(Some(variable)) = variable2
+Also see Option::flatten
+"""
+
+[[exercises]]
+name = "options3"
+path = "exercises/options/options3.rs"
+mode = "compile"
+hint = """
+The compiler says a partial move happened in the `match`
+statement. How can this be avoided? The compiler shows the correction
+needed. After making the correction as suggested by the compiler, do
+read: https://doc.rust-lang.org/std/keyword.ref.html"""
 
 # ERROR HANDLING
 
@@ -520,7 +603,10 @@ name = "errors3"
 path = "exercises/error_handling/errors3.rs"
 mode = "compile"
 hint = """
-If other functions can return a `Result`, why shouldn't `main`?"""
+If other functions can return a `Result`, why shouldn't `main`? It's a fairly common
+convention to return something like Result<(), ErrorType> from your main function.
+The unit (`()`) type is there because nothing is really needed in terms of positive
+results."""
 
 [[exercises]]
 name = "errors4"
@@ -536,21 +622,16 @@ name = "errors5"
 path = "exercises/error_handling/errors5.rs"
 mode = "compile"
 hint = """
-Hint: There are two different possible `Result` types produced within
-`main()`, which are propagated using `?` operators. How do we declare a
-return type from `main()` that allows both?
+There are two different possible `Result` types produced within `main()`, which are
+propagated using `?` operators. How do we declare a return type from `main()` that allows both? 
 
-Another hint: under the hood, the `?` operator calls `From::from`
-on the error value to convert it to a boxed trait object, a
-`Box<dyn error::Error>`, which is polymorphic-- that means that lots of
-different kinds of errors can be returned from the same function because
-all errors act the same since they all implement the `error::Error` trait.
+Under the hood, the `?` operator calls `From::from` on the error value to convert it to a boxed
+trait object, a `Box<dyn error::Error>`. This boxed trait object is polymorphic, and since all
+errors implement the `error:Error` trait, we can capture lots of different errors in one "Box" 
+object. 
+
 Check out this section of the book:
 https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator
-
-This exercise uses some concepts that we won't get to until later in the
-course, like `Box` and the `From` trait. It's not important to understand
-them in detail right now, but you can read ahead if you like.
 
 Read more about boxing errors:
 https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/boxing_errors.html
@@ -600,61 +681,6 @@ Maybe we could update the explicit references to this data type somehow?
 If you are still stuck https://doc.rust-lang.org/stable/book/ch10-01-syntax.html#in-method-definitions
 """
 
-[[exercises]]
-name = "generics3"
-path = "exercises/generics/generics3.rs"
-mode = "test"
-hint = """
-To find the best solution to this challenge you're going to need to think back to your
-knowledge of traits, specifically Trait Bound Syntax -  you may also need this: "use std::fmt::Display;"
-
-This is definitely harder than the last two exercises! You need to think about not only making the
-ReportCard struct generic, but also the correct property - you will need to change the implementation
-of the struct slightly too...you can do it!
-"""
-
-# OPTIONS
-
-[[exercises]]
-name = "option1"
-path = "exercises/option/option1.rs"
-mode = "compile"
-hint = """
-Hint 1: Check out some functions of Option:
-is_some
-is_none
-unwrap
-
-and:
-pattern matching
-
-Hint 2: There are no sensible defaults for the value of an Array; the values need to be filled before use.
-"""
-
-[[exercises]]
-name = "option2"
-path = "exercises/option/option2.rs"
-mode = "compile"
-hint = """
-check out:
-https://doc.rust-lang.org/rust-by-example/flow_control/if_let.html
-https://doc.rust-lang.org/rust-by-example/flow_control/while_let.html
-
-Remember that Options can be stacked in if let and while let.
-For example: Some(Some(variable)) = variable2
-Also see Option::flatten
-"""
-
-[[exercises]]
-name = "option3"
-path = "exercises/option/option3.rs"
-mode = "compile"
-hint = """
-The compiler says a partial move happened in the `match`
-statement. How can this be avoided? The compiler shows the correction
-needed. After making the correction as suggested by the compiler, do
-read: https://doc.rust-lang.org/std/keyword.ref.html"""
-
 # TRAITS
 
 [[exercises]]
@@ -672,10 +698,55 @@ path = "exercises/traits/traits2.rs"
 mode = "test"
 hint = """
 Notice how the trait takes ownership of 'self',and returns `Self'.
-Try mutating the incoming string vector.
+Try mutating the incoming string vector. Have a look at the tests to see
+what the result should look like!
 
 Vectors provide suitable methods for adding an element at the end. See
 the documentation at: https://doc.rust-lang.org/std/vec/struct.Vec.html"""
+
+[[exercises]]
+name = "traits3"
+path = "exercises/traits/traits3.rs"
+mode = "test"
+hint = """
+Traits can have a default implementation for functions. Structs that implement
+the trait can then use the default version of these functions if they choose not
+implement the function themselves.
+
+See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#default-implementations
+"""
+
+[[exercises]]
+name = "traits4"
+path = "exercises/traits/traits4.rs"
+mode = "test"
+hint = """
+Instead of using concrete types as parameters you can use traits. Try replacing the
+'??' with 'impl <what goes here?>'
+
+See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#traits-as-parameters
+"""
+
+[[exercises]]
+name = "traits5"
+path = "exercises/traits/traits5.rs"
+mode = "compile"
+hint = """
+To ensure a parameter implements multiple traits use the '+ syntax'. Try replacing the
+'??' with 'impl <> + <>'.
+
+See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#specifying-multiple-trait-bounds-with-the--syntax
+"""
+
+# QUIZ 3
+
+[[exercises]]
+name = "quiz3"
+path = "exercises/quiz3.rs"
+mode = "test"
+hint = """
+To find the best solution to this challenge you're going to need to think back to your
+knowledge of traits, specifically Trait Bound Syntax -  you may also need this: `use std::fmt::Display;`."""
 
 # TESTS
 
@@ -709,50 +780,34 @@ You can call a function right where you're passing arguments to `assert!` -- so 
 something like `assert!(having_fun())`. If you want to check that you indeed get false, you
 can negate the result of what you're doing using `!`, like `assert!(!having_fun())`."""
 
-# TEST 3
+# LIFETIMES
 
 [[exercises]]
-name = "quiz3"
-path = "exercises/quiz3.rs"
-mode = "test"
-hint = "No hints this time ;)"
-
-# STANDARD LIBRARY TYPES
-
-[[exercises]]
-name = "box1"
-path = "exercises/standard_library_types/box1.rs"
-mode = "test"
-hint = """
-Step 1
-The compiler's message should help: since we cannot store the value of the actual type
-when working with recursive types, we need to store a reference (pointer) to its value.
-We should, therefore, place our `List` inside a `Box`. More details in the book here:
-https://doc.rust-lang.org/book/ch15-01-box.html#enabling-recursive-types-with-boxes
-
-Step 2
-Creating an empty list should be fairly straightforward (hint: peek at the assertions).
-For a non-empty list keep in mind that we want to use our Cons "list builder".
-Although the current list is one of integers (i32), feel free to change the definition
-and try other types!
-"""
-
-[[exercises]]
-name = "arc1"
-path = "exercises/standard_library_types/arc1.rs"
+name = "lifetimes1"
+path = "exercises/lifetimes/lifetimes1.rs"
 mode = "compile"
 hint = """
-Make `shared_numbers` be an `Arc` from the numbers vector. Then, in order
-to avoid creating a copy of `numbers`, you'll need to create `child_numbers`
-inside the loop but still in the main thread.
+Let the compiler guide you. Also take a look at the book if you need help:
+https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html"""
 
-`child_numbers` should be a clone of the Arc of the numbers instead of a
-thread-local copy of the numbers.
+[[exercises]]
+name = "lifetimes2"
+path = "exercises/lifetimes/lifetimes2.rs"
+mode = "compile"
+hint = """
+Remember that the generic lifetime 'a will get the concrete lifetime that is equal to the smaller of the lifetimes of x and y.
+You can take at least two paths to achieve the desired result while keeping the inner block:
+1. Move the string2 declaration to make it live as long as string1 (how is result declared?)
+2. Move println! into the inner block"""
 
-This is a simple exercise if you understand the underlying concepts, but if this
-is too much of a struggle, consider reading through all of Chapter 16 in the book:
-https://doc.rust-lang.org/stable/book/ch16-00-concurrency.html
-"""
+[[exercises]]
+name = "lifetimes3"
+path = "exercises/lifetimes/lifetimes3.rs"
+mode = "compile"
+hint = """
+If you use a lifetime annotation in a struct's fields, where else does it need to be added?"""
+
+# STANDARD LIBRARY TYPES
 
 [[exercises]]
 name = "iterators1"
@@ -808,7 +863,8 @@ case is a vector of integers and the failure case is a DivisionError.
 The list_of_results function needs to return a vector of results.
 
 See https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.collect for how 
-the `FromIterator` trait is used in `collect()`."""
+the `FromIterator` trait is used in `collect()`. This trait is REALLY powerful! It
+can make the solution to this exercise infinitely easier."""
 
 [[exercises]]
 name = "iterators4"
@@ -818,7 +874,9 @@ hint = """
 In an imperative language, you might write a for loop that updates
 a mutable variable. Or, you might write code utilizing recursion
 and a match clause. In Rust you can take another functional
-approach, computing the factorial elegantly with ranges and iterators."""
+approach, computing the factorial elegantly with ranges and iterators.
+
+Hint 2: Check out the `fold` and `rfold` methods!"""
 
 [[exercises]]
 name = "iterators5"
@@ -839,11 +897,62 @@ The fold method can be useful in the count_collection_iterator function.
 For a further challenge, consult the documentation for Iterator to find
 a different method that could make your code more compact than using fold."""
 
+[[exercises]]
+name = "box1"
+path = "exercises/standard_library_types/box1.rs"
+mode = "test"
+hint = """
+Step 1
+The compiler's message should help: since we cannot store the value of the actual type
+when working with recursive types, we need to store a reference (pointer) to its value.
+We should, therefore, place our `List` inside a `Box`. More details in the book here:
+https://doc.rust-lang.org/book/ch15-01-box.html#enabling-recursive-types-with-boxes
+
+Step 2
+Creating an empty list should be fairly straightforward (hint: peek at the assertions).
+For a non-empty list keep in mind that we want to use our Cons "list builder".
+Although the current list is one of integers (i32), feel free to change the definition
+and try other types!
+"""
+
+[[exercises]]
+name = "arc1"
+path = "exercises/standard_library_types/arc1.rs"
+mode = "compile"
+hint = """
+Make `shared_numbers` be an `Arc` from the numbers vector. Then, in order
+to avoid creating a copy of `numbers`, you'll need to create `child_numbers`
+inside the loop but still in the main thread.
+
+`child_numbers` should be a clone of the Arc of the numbers instead of a
+thread-local copy of the numbers.
+
+This is a simple exercise if you understand the underlying concepts, but if this
+is too much of a struggle, consider reading through all of Chapter 16 in the book:
+https://doc.rust-lang.org/stable/book/ch16-00-concurrency.html
+"""
+
 # THREADS
 
 [[exercises]]
 name = "threads1"
 path = "exercises/threads/threads1.rs"
+mode = "compile"
+hint = """
+`JoinHandle` is a struct that is returned from a spawned thread: 
+https://doc.rust-lang.org/std/thread/fn.spawn.html
+
+A challenge with multi-threaded applications is that the main thread can 
+finish before the spawned threads are completed.
+https://doc.rust-lang.org/book/ch16-01-threads.html#waiting-for-all-threads-to-finish-using-join-handle
+
+Collect the JoinHandles and wait for them to finish.
+https://doc.rust-lang.org/std/thread/struct.JoinHandle.html
+"""
+
+[[exercises]]
+name = "threads2"
+path = "exercises/threads/threads2.rs"
 mode = "compile"
 hint = """
 `Arc` is an Atomic Reference Counted pointer that allows safe, shared access
@@ -866,17 +975,23 @@ while they are sleeping, since this will prevent the other thread from
 being allowed to get the lock. Locks are automatically released when
 they go out of scope.
 
-Ok, so, real talk, this was actually tricky for *me* to do too. And
-I could see a lot of different problems you might run into, so at this
-point I'm not sure which one you've hit :)
-
-Please open an issue if you're still running into a problem that
-these hints are not helping you with, or if you've looked at the sample
-answers and don't understand why they work and yours doesn't.
-
 If you've learned from the sample solutions, I encourage you to come
 back to this exercise and try it again in a few days to reinforce
 what you've learned :)"""
+
+[[exercises]]
+name = "threads3"
+path = "exercises/threads/threads3.rs"
+mode = "compile"
+hint = """
+An alternate way to handle concurrency between threads is to use
+a mpsc (multiple producer, single consumer) channel to communicate.
+With both a sending end and a receiving end, it's possible to
+send values in one thread and receieve them in another.
+Multiple producers are possible by using clone() to create a duplicate
+of the original sending end.
+See https://doc.rust-lang.org/book/ch16-02-message-passing.html for more info.
+"""
 
 # MACROS
 
@@ -918,15 +1033,12 @@ mode = "compile"
 hint = """
 You only need to add a single character to make this compile.
 The way macros are written, it wants to see something between each
-"macro arm", so it can separate them."""
+"macro arm", so it can separate them.
 
-# TEST 4
-
-[[exercises]]
-name = "quiz4"
-path = "exercises/quiz4.rs"
-mode = "test"
-hint = "No hints this time ;)"
+That's all the macro exercises we have in here, but it's barely even
+scratching the surface of what you can do with Rust's macros. For a more
+thorough introduction, you can have a read through the little book of Rust
+macros: https://veykril.github.io/tlborm/"""
 
 #  CLIPPY
 
@@ -951,6 +1063,12 @@ path = "exercises/clippy/clippy2.rs"
 mode = "clippy"
 hint = """
 `for` loops over Option values are more clearly expressed as an `if let`"""
+
+[[exercises]]
+name = "clippy3"
+path = "exercises/clippy/clippy3.rs"
+mode = "clippy"
+hint = "No hints this time!"
 
 # TYPE CONVERSIONS
 
@@ -980,7 +1098,7 @@ or an Err with an error if the string is not valid.
 This is almost like the `from_into` exercise, but returning errors instead
 of falling back to a default value.
 
-Hint: Look at the test cases to see which error variants to return.
+Look at the test cases to see which error variants to return.
 
 Another hint: You can use the `map_err` method of `Result` with a function
 or a closure to wrap the error from `parse::<usize>`.
@@ -998,7 +1116,7 @@ hint = """
 Follow the steps provided right before the `TryFrom` implementation.
 You can also use the example at https://doc.rust-lang.org/std/convert/trait.TryFrom.html
 
-Hint: Is there an implementation of `TryFrom` in the standard library that
+Is there an implementation of `TryFrom` in the standard library that
 can both do the required integer conversion and check the range of the input?
 
 Another hint: Look at the test cases to see which error variants to return.
@@ -1018,55 +1136,3 @@ path = "exercises/conversions/as_ref_mut.rs"
 mode = "test"
 hint = """
 Add AsRef<str> as a trait bound to the functions."""
-
-# ADVANCED ERRORS
-
-[[exercises]]
-name = "advanced_errs1"
-path = "exercises/advanced_errors/advanced_errs1.rs"
-mode = "test"
-hint = """
-This exercise uses an updated version of the code in errors6. The parsing
-code is now in an implementation of the `FromStr` trait. Note that the
-parsing code uses `?` directly, without any calls to `map_err()`. There is
-one partial implementation of the `From` trait example that you should
-complete.
-
-Details: The `?` operator calls `From::from()` on the error type to convert
-it to the error type of the return type of the surrounding function.
-
-Hint: You will need to write another implementation of `From` that has a
-different input type.
-"""
-
-[[exercises]]
-name = "advanced_errs2"
-path = "exercises/advanced_errors/advanced_errs2.rs"
-mode = "test"
-hint = """
-This exercise demonstrates a few traits that are useful for custom error
-types to implement. These traits make it easier for other code to consume
-the custom error type.
-
-Follow the steps in the comment near the top of the file. You will have to
-supply a missing trait implementation, and complete a few incomplete ones.
-
-You may find these pages to be helpful references:
-https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/define_error_type.html
-https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/boxing_errors.html
-https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/wrap_error.html
-
-Hint: What trait must our error type have for `main()` to return the return
-type that it returns?
-
-Another hint: It's not necessary to implement any methods inside the missing
-trait. (Some methods have default implementations that are supplied by the
-trait.)
-
-Another hint: Consult the tests to determine which error variants (and which
-error message text) to produce for certain error conditions.
-
-Challenge: There is one test that is marked `#[ignore]`. Can you supply the
-missing code that will make it pass? You may want to consult the standard
-library documentation for a certain trait for more hints.
-"""

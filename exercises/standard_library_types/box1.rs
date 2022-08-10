@@ -10,11 +10,11 @@
 // elements: the value of the current item and the next item. The last item is a value called `Nil`.
 //
 // Step 1: use a `Box` in the enum definition to make the code compile
-// Step 2: create both empty and non-empty cons lists by replacing `unimplemented!()`
+// Step 2: create both empty and non-empty cons lists by replacing `todo!()`
 //
 // Note: the tests should not be changed
 //
-// Execute `rustlings hint box1` for hints :)
+// Execute `rustlings hint box1` or use the `hint` watch subcommand for a hint.
 
 // I AM NOT DONE
 
@@ -33,11 +33,11 @@ fn main() {
 }
 
 pub fn create_empty_list() -> List {
-    unimplemented!()
+    todo!()
 }
 
 pub fn create_non_empty_list() -> List {
-    unimplemented!()
+    todo!()
 }
 
 #[cfg(test)]

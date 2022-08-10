@@ -1,3 +1,97 @@
+<a name="5.0.0"></a>
+## 5.0.0 (2022-07-16)
+
+#### Features
+
+- Hint comments in exercises now also include a reference to the
+  `hint` watch mode subcommand.
+- **intro1**: Added more hints to point the user to the source file.
+- **variables**: Switched variables3 and variables4.
+- Moved `vec` and `primitive_types` exercises before `move_semantics`.
+- Renamed `vec` to `vecs` to be more in line with the naming in general.
+- Split up the `collections` exercises in their own folders.
+- **vec2**: Added a second part of the function that provides an alternative,
+  immutable way of modifying vec values.
+- **enums3**: Added a hint.
+- Moved `strings` before `modules`.
+- Added a `strings3` exercise to teach modifying strings.
+- Added a `hashmaps3` exercise for some advanced usage of hashmaps.
+- Moved the original `quiz2` to be `strings4`, since it only tested strings
+  anyways.
+- Reworked `quiz2` into a new exercise that tests more chapters.
+- Renamed `option` to `options`.
+- **options1**: Rewrote parts of the exercise to remove the weird array
+  iteration stuff.
+- Moved `generics3` to be `quiz3`.
+- Moved box/arc exercises behind `iterators`.
+- **iterators4**: Added a test for factorials of zero.
+- Split `threads1` between two exercises, the first one focusing more on
+  `JoinHandle`s.
+- Added a `threads3` exercises that uses `std::sync::mpsc`.
+- Added a `clippy3` exercises with some more interesting checks.
+- **as_ref_mut**: Added a section that actually tests `AsMut`.
+- Added 3 new lifetimes exercises.
+- Added 3 new traits exercises.
+
+#### Bug Fixes
+
+- **variables2**: Made output messages more verbose.
+- **variables5**: Added a nudging hint about shadowing.
+- **variables6**: Fixed link to book.
+- **functions**: Clarified the README wording. Generally cleaned up
+  some hints and added some extra comments.
+- **if2**: Renamed function name to `foo_if_fizz`.
+- **move_semantics**: Clarified some hints.
+- **quiz1**: Renamed the function name to be more verbose.
+- **structs1**: Use an integer type instead of strings. Renamed "unit structs"
+  to "unit-like structs", as is used in the book.
+- **structs3**: Added the `panic!` statement in from the beginning.
+- **errors1**: Use `is_empty()` instead of `len() > 0`
+- **errors3**: Improved the hint.
+- **errors5**: Improved exercise instructions and the hint.
+- **errors6**: Provided the skeleton of one of the functions that's supposed
+  to be implemented.
+- **iterators3**: Inserted `todo!` into `divide()` to keep a compiler error
+  from happening.
+- **from_str**: Added a hint comment about string error message conversion with
+  `Box<dyn Error>`.
+- **try_from_into**: Fixed the function name in comment.
+  
+#### Removed
+
+- Removed the legacy LSP feature that was using `mod.rs` files.
+- Removed `quiz4`.
+- Removed `advanced_errs`. These were the last exercises in the recommended
+  order, and I've always felt like they didn't quite fit in with the mostly
+  simple, book-following style we've had in Rustlings.
+
+#### Housekeeping
+
+- Added missing exercises to the book index.
+- Updated spacing in Cargo.toml.
+- Added a GitHub actions config so that tests run on every PR/commit.
+
+<a name="4.8.0"></a>
+## 4.8.0 (2022-07-01)
+
+#### Features
+
+- Added a progress indicator for `rustlings watch`.
+- The installation script now checks for Rustup being installed.
+- Added a `rustlings lsp` command to enable `rust-analyzer`.
+
+#### Bug Fixes
+
+- **move_semantics5**: Replaced "in vogue" with "in scope" in hint.
+- **if2**: Fixed a typo in the hint.
+- **variables1**: Fixed an incorrect line reference in the hint.
+- Fixed an out of bounds check in the installation Bash script.
+
+#### Housekeeping
+
+- Replaced the git.io URL with the fully qualified URL because of git.io's sunsetting.
+- Removed the deprecated Rust GitPod extension.
+
 <a name="4.7.1"></a>
 ## 4.7.1 (2022-04-20)
 

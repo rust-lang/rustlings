@@ -1,5 +1,5 @@
 // variables5.rs
-// Make me compile! Execute the command `rustlings hint variables5` if you want a hint :)
+// Execute `rustlings hint variables5` or use the `hint` watch subcommand for a hint.
 
 
 fn main() {
@@ -8,4 +8,6 @@ fn main() {
     
     number = "T-W-O";
     // println!("Number plus two is : {}", number + 2);
+    number = 3; // don't rename this variable
+    println!("Number plus two is : {}", number + 2);
 }

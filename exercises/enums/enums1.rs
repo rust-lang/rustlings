@@ -1,5 +1,5 @@
 // enums1.rs
-// Make me compile! Execute `rustlings hint enums1` for hints!
+// No hints this time! ;)
 
 // I AM NOT DONE
 

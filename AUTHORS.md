@@ -175,6 +175,37 @@ authors.
     <td align="center"><a href="https://github.com/merelymyself"><img src="https://avatars.githubusercontent.com/u/88221256?v=4?s=100" width="100px;" alt=""/><br /><sub><b>pwygab</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=merelymyself" title="Code">💻</a></td>
     <td align="center"><a href="http://linkedin.com/in/lucasgrvarela"><img src="https://avatars.githubusercontent.com/u/37870368?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Lucas Grigolon Varela</b></sub></a><br /><a href="#content-lucasgrvarela" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/bufo24"><img src="https://avatars.githubusercontent.com/u/32884105?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Bufo</b></sub></a><br /><a href="#content-bufo24" title="Content">🖋</a></td>
+    <td align="center"><a href="http://rustnote.com"><img src="https://avatars.githubusercontent.com/u/77730378?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jack Clayton</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=jackos" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/klkl0808"><img src="https://avatars.githubusercontent.com/u/24694249?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Konstantin</b></sub></a><br /><a href="#content-klkl0808" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/0pling"><img src="https://avatars.githubusercontent.com/u/104090344?v=4?s=100" width="100px;" alt=""/><br /><sub><b>0pling</b></sub></a><br /><a href="#content-0pling" title="Content">🖋</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/KatanaFluorescent"><img src="https://avatars.githubusercontent.com/u/60199077?v=4?s=100" width="100px;" alt=""/><br /><sub><b>KatanaFluorescent</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=KatanaFluorescent" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/Drew-Morris"><img src="https://avatars.githubusercontent.com/u/95818166?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Drew Morris</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=Drew-Morris" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/camperdue42"><img src="https://avatars.githubusercontent.com/u/43047763?v=4?s=100" width="100px;" alt=""/><br /><sub><b>camperdue42</b></sub></a><br /><a href="#content-camperdue42" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/YsuOS"><img src="https://avatars.githubusercontent.com/u/30138661?v=4?s=100" width="100px;" alt=""/><br /><sub><b>YsuOS</b></sub></a><br /><a href="#content-YsuOS" title="Content">🖋</a></td>
+    <td align="center"><a href="https://lichess.org/@/StevenEmily"><img src="https://avatars.githubusercontent.com/u/58114641?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Steven Nguyen</b></sub></a><br /><a href="#content-icecream17" title="Content">🖋</a></td>
+    <td align="center"><a href="https://noahcairns.dev"><img src="https://avatars.githubusercontent.com/u/94420090?v=4?s=100" width="100px;" alt=""/><br /><sub><b>nacairns1</b></sub></a><br /><a href="#content-nacairns1" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/pgjbz"><img src="https://avatars.githubusercontent.com/u/22059237?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Paulo Gabriel Justino Bezerra</b></sub></a><br /><a href="#content-pgjbz" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/jaystile"><img src="https://avatars.githubusercontent.com/u/46078028?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jason</b></sub></a><br /><a href="#content-jaystile" title="Content">🖋</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://exdx.github.io"><img src="https://avatars.githubusercontent.com/u/31546601?v=4?s=100" width="100px;" alt=""/><br /><sub><b>exdx</b></sub></a><br /><a href="#content-exdx" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/Jzow"><img src="https://avatars.githubusercontent.com/u/68860495?v=4?s=100" width="100px;" alt=""/><br /><sub><b>James Zow</b></sub></a><br /><a href="#content-Jzow" title="Content">🖋</a></td>
+    <td align="center"><a href="https://jamesabromley.wordpress.com/"><img src="https://avatars.githubusercontent.com/u/2474334?v=4?s=100" width="100px;" alt=""/><br /><sub><b>James Bromley</b></sub></a><br /><a href="#content-jayber" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/swhiteCQC"><img src="https://avatars.githubusercontent.com/u/77438466?v=4?s=100" width="100px;" alt=""/><br /><sub><b>swhiteCQC</b></sub></a><br /><a href="#content-swhiteCQC" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/neilpate"><img src="https://avatars.githubusercontent.com/u/7802334?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Neil Pate</b></sub></a><br /><a href="#content-neilpate" title="Content">🖋</a></td>
+    <td align="center"><a href="https://wojexe.com"><img src="https://avatars.githubusercontent.com/u/21208490?v=4?s=100" width="100px;" alt=""/><br /><sub><b>wojexe</b></sub></a><br /><a href="#content-wojexe" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/Tostapunk"><img src="https://avatars.githubusercontent.com/u/25140297?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Mattia Schiavon</b></sub></a><br /><a href="#content-Tostapunk" title="Content">🖋</a></td>
+    <td align="center"><a href="http://toucantoco.com"><img src="https://avatars.githubusercontent.com/u/18406791?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Eric Jolibois</b></sub></a><br /><a href="#content-PrettyWood" title="Content">🖋</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="http://edwinchang.vercel.app"><img src="https://avatars.githubusercontent.com/u/88263098?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Edwin Chang</b></sub></a><br /><a href="#content-EdwinChang24" title="Content">🖋</a></td>
+    <td align="center"><a href="https://saikat.dev/"><img src="https://avatars.githubusercontent.com/u/7412443?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Saikat Das</b></sub></a><br /><a href="#content-saikatdas0790" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/thatlittleboy"><img src="https://avatars.githubusercontent.com/u/30731072?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jeremy Goh</b></sub></a><br /><a href="#content-thatlittleboy" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/Lioness100"><img src="https://avatars.githubusercontent.com/u/65814829?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Lioness100</b></sub></a><br /><a href="#content-Lioness100" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/tvkn"><img src="https://avatars.githubusercontent.com/u/79277926?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Tristan Nicholls</b></sub></a><br /><a href="#content-tvkn" title="Content">🖋</a></td>
+    <td align="center"><a href="http://clairewang.net"><img src="https://avatars.githubusercontent.com/u/9344258?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Claire</b></sub></a><br /><a href="#content-clairew" title="Content">🖋</a></td>
   </tr>
 </table>
 

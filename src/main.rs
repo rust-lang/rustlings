@@ -1,4 +1,5 @@
 use crate::exercise::{Exercise, ExerciseList};
+use crate::project::RustAnalyzerProject;
 use crate::run::run;
 use crate::verify::verify;
 use argh::FromArgs;
@@ -20,11 +21,12 @@ use std::time::Duration;
 mod ui;
 
 mod exercise;
+mod project;
 mod run;
 mod verify;
 
 // In sync with crate version
-const VERSION: &str = "4.7.1";
+const VERSION: &str = "5.0.0";
 
 #[derive(FromArgs, PartialEq, Debug)]
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
@@ -47,6 +49,7 @@ enum Subcommands {
     Run(RunArgs),
     Hint(HintArgs),
     List(ListArgs),
+    Lsp(LspArgs),
 }
 
 #[derive(FromArgs, PartialEq, Debug)]
@@ -76,6 +79,12 @@ struct HintArgs {
     /// the name of the exercise
     name: String,
 }
+
+#[derive(FromArgs, PartialEq, Debug)]
+#[argh(subcommand, name = "lsp")]
+/// Enable rust-analyzer for exercises
+struct LspArgs {}
+
 
 #[derive(FromArgs, PartialEq, Debug)]
 #[argh(subcommand, name = "list")]
@@ -206,6 +215,25 @@ fn main() {
             verify(&exercises, (0, exercises.len()), verbose).unwrap_or_else(|_| std::process::exit(1));
         }
 
+        Subcommands::Lsp(_subargs) => {
+            let mut project = RustAnalyzerProject::new();
+            project
+                .get_sysroot_src()
+                .expect("Couldn't find toolchain path, do you have `rustc` installed?");
+            project
+                .exercies_to_json()
+                .expect("Couldn't parse rustlings exercises files");
+
+            if project.crates.is_empty() {
+                println!("Failed find any exercises, make sure you're in the `rustlings` folder");
+            } else if project.write_to_disk().is_err() {
+                println!("Failed to write rust-project.json to disk for rust-analyzer");
+            } else {
+                println!("Successfully generated rust-project.json");
+                println!("rust-analyzer will now parse exercises, restart your language server or editor")
+            }
+        }
+
         Subcommands::Watch(_subargs) => match watch(&exercises, verbose) {
             Err(e) => {
                 println!("Error: Could not watch your progress. Error message was {:?}.", e);
@@ -223,6 +251,7 @@ fn main() {
         },
     }
 }
+
 
 fn spawn_watch_shell(failed_exercise_hint: &Arc<Mutex<Option<String>>>, should_quit: Arc<AtomicBool>) {
     let failed_exercise_hint = Arc::clone(failed_exercise_hint);
@@ -367,6 +396,8 @@ started, here's a couple of notes about how Rustlings operates:
 4. If an exercise doesn't make sense to you, feel free to open an issue on GitHub!
    (https://github.com/rust-lang/rustlings/issues/new). We look at every issue,
    and sometimes, other learners do too so you can help each other out!
+5. If you want to use `rust-analyzer` with exercises, which provides features like 
+   autocompletion, run the command `rustlings lsp`. 
 
 Got all that? Great! To get started, run `rustlings watch` in order to get the first
 exercise. Make sure to have your editor open!"#;
