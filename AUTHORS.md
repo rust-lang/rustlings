@@ -209,6 +209,9 @@ authors.
     <td align="center"><a href="https://github.com/Mouwrice"><img src="https://avatars.githubusercontent.com/u/56763273?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Maurice Van Wassenhove</b></sub></a><br /><a href="#content-Mouwrice" title="Content">🖋</a></td>
     <td align="center"><a href="http://jmthree.com"><img src="https://avatars.githubusercontent.com/u/77524?v=4?s=100" width="100px;" alt=""/><br /><sub><b>John Mendelewski</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=johnmendel" title="Code">💻</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="http://fakhoury.xyz"><img src="https://avatars.githubusercontent.com/u/20828724?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Brian Fakhoury</b></sub></a><br /><a href="#content-brianfakhoury" title="Content">🖋</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-restore -->
