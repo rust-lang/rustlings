@@ -3,11 +3,6 @@
 
 // I AM NOT DONE
 
-// you can modify anything EXCEPT for this function's signature
-fn print_number(maybe_number: Option<u16>) {
-    println!("printing: {}", maybe_number.unwrap());
-}
-
 // This function returns how much icecream there is left in the fridge.
 // If it's before 10PM, there's 5 pieces left. At 10PM, someone eats them
 // all, so there'll be no more left :(
