@@ -207,6 +207,7 @@ authors.
     <td align="center"><a href="https://github.com/tvkn"><img src="https://avatars.githubusercontent.com/u/79277926?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Tristan Nicholls</b></sub></a><br /><a href="#content-tvkn" title="Content">🖋</a></td>
     <td align="center"><a href="http://clairewang.net"><img src="https://avatars.githubusercontent.com/u/9344258?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Claire</b></sub></a><br /><a href="#content-clairew" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/Mouwrice"><img src="https://avatars.githubusercontent.com/u/56763273?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Maurice Van Wassenhove</b></sub></a><br /><a href="#content-Mouwrice" title="Content">🖋</a></td>
+    <td align="center"><a href="http://jmthree.com"><img src="https://avatars.githubusercontent.com/u/77524?v=4?s=100" width="100px;" alt=""/><br /><sub><b>John Mendelewski</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=johnmendel" title="Code">💻</a></td>
   </tr>
 </table>
 
