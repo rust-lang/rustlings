@@ -1479,6 +1479,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "markusboehme",
+      "name": "Markus Boehme",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5074759?v=4",
+      "profile": "https://github.com/markusboehme",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
