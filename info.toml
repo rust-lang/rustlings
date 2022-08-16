@@ -933,6 +933,20 @@ https://doc.rust-lang.org/stable/book/ch16-00-concurrency.html
 """
 
 [[exercises]]
+name = "rc1"
+path = "exercises/standard_library_types/rc1.rs"
+mode = "compile"
+hint = """
+This is a straightforward exercise to use the Rc<T> type. Each Planet has
+ownership of the Sun, and uses Rc::clone() to increment the reference count of the Sun.
+After using drop() to move the Planets out of scope individually, the reference count goes down.
+In the end the sun only has one reference again, to itself. See more at:
+https://doc.rust-lang.org/book/ch15-04-rc.html
+
+* Unforunately Pluto is no longer considered a planet :(
+"""
+
+[[exercises]]
 name = "cow1"
 path = "exercises/standard_library_types/cow1.rs"
 mode = "compile"
