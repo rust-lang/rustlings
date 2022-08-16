@@ -63,7 +63,7 @@ name = "variables5"
 path = "exercises/variables/variables5.rs"
 mode = "compile"
 hint = """
-In variables3 we already learned how to make an immutable variable mutable
+In variables4 we already learned how to make an immutable variable mutable
 using a special keyword. Unfortunately this doesn't help us much in this exercise
 because we want to assign a different typed value to an existing variable. Sometimes
 you may also like to reuse existing variable names because you are just converting
@@ -123,8 +123,8 @@ name = "functions4"
 path = "exercises/functions/functions4.rs"
 mode = "compile"
 hint = """
-The error message points to line 14 and says it expects a type after the
-`->`. This is where the function's return type should be-- take a look at
+The error message points to line 17 and says it expects a type after the
+`->`. This is where the function's return type should be -- take a look at
 the `is_even` function for an example!
 
 Also: Did you figure out that, technically, u32 would be the more fitting type
@@ -732,7 +732,7 @@ name = "traits5"
 path = "exercises/traits/traits5.rs"
 mode = "compile"
 hint = """
-To ensure a paramter implements multiple traits use the '+ syntax'. Try replacing the
+To ensure a parameter implements multiple traits use the '+ syntax'. Try replacing the
 '??' with 'impl <> + <>'.
 
 See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#specifying-multiple-trait-bounds-with-the--syntax
@@ -746,7 +746,7 @@ path = "exercises/quiz3.rs"
 mode = "test"
 hint = """
 To find the best solution to this challenge you're going to need to think back to your
-knowledge of traits, specifically Trait Bound Syntax -  you may also need this: "use std::fmt::Display;""""
+knowledge of traits, specifically Trait Bound Syntax -  you may also need this: `use std::fmt::Display;`."""
 
 # TESTS
 
@@ -795,7 +795,10 @@ name = "lifetimes2"
 path = "exercises/lifetimes/lifetimes2.rs"
 mode = "compile"
 hint = """
-What is the compiler checking? How could you change how long an owned variable lives?"""
+Remember that the generic lifetime 'a will get the concrete lifetime that is equal to the smaller of the lifetimes of x and y.
+You can take at least two paths to achieve the desired result while keeping the inner block:
+1. Move the string2 declaration to make it live as long as string1 (how is result declared?)
+2. Move println! into the inner block"""
 
 [[exercises]]
 name = "lifetimes3"
@@ -943,6 +946,17 @@ https://doc.rust-lang.org/book/ch15-04-rc.html
 * Unforunately Pluto is no longer considered a planet :(
 """
 
+[[exercises]]
+name = "cow1"
+path = "exercises/standard_library_types/cow1.rs"
+mode = "compile"
+hint = """
+Since the vector is already owned, the `Cow` type doesn't need to clone it.
+
+Checkout https://doc.rust-lang.org/std/borrow/enum.Cow.html for documentation
+on the `Cow` type.
+"""
+
 # THREADS
 
 [[exercises]]
@@ -999,7 +1013,7 @@ An alternate way to handle concurrency between threads is to use
 a mpsc (multiple producer, single consumer) channel to communicate.
 With both a sending end and a receiving end, it's possible to
 send values in one thread and receieve them in another.
-Multiple producers are possibile by using clone() to create a duplicate
+Multiple producers are possible by using clone() to create a duplicate
 of the original sending end.
 See https://doc.rust-lang.org/book/ch16-02-message-passing.html for more info.
 """

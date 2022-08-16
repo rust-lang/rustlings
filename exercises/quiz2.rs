@@ -42,7 +42,7 @@ mod my_module {
 
 #[cfg(test)]
 mod tests {
-    // TODO: What to we have to import to have `transformer` in scope?
+    // TODO: What do we have to import to have `transformer` in scope?
     use ???;
     use super::Command;
 

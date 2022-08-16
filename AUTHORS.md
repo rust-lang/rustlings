@@ -195,6 +195,24 @@ authors.
     <td align="center"><a href="https://jamesabromley.wordpress.com/"><img src="https://avatars.githubusercontent.com/u/2474334?v=4?s=100" width="100px;" alt=""/><br /><sub><b>James Bromley</b></sub></a><br /><a href="#content-jayber" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/swhiteCQC"><img src="https://avatars.githubusercontent.com/u/77438466?v=4?s=100" width="100px;" alt=""/><br /><sub><b>swhiteCQC</b></sub></a><br /><a href="#content-swhiteCQC" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/neilpate"><img src="https://avatars.githubusercontent.com/u/7802334?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Neil Pate</b></sub></a><br /><a href="#content-neilpate" title="Content">🖋</a></td>
+    <td align="center"><a href="https://wojexe.com"><img src="https://avatars.githubusercontent.com/u/21208490?v=4?s=100" width="100px;" alt=""/><br /><sub><b>wojexe</b></sub></a><br /><a href="#content-wojexe" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/Tostapunk"><img src="https://avatars.githubusercontent.com/u/25140297?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Mattia Schiavon</b></sub></a><br /><a href="#content-Tostapunk" title="Content">🖋</a></td>
+    <td align="center"><a href="http://toucantoco.com"><img src="https://avatars.githubusercontent.com/u/18406791?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Eric Jolibois</b></sub></a><br /><a href="#content-PrettyWood" title="Content">🖋</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="http://edwinchang.vercel.app"><img src="https://avatars.githubusercontent.com/u/88263098?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Edwin Chang</b></sub></a><br /><a href="#content-EdwinChang24" title="Content">🖋</a></td>
+    <td align="center"><a href="https://saikat.dev/"><img src="https://avatars.githubusercontent.com/u/7412443?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Saikat Das</b></sub></a><br /><a href="#content-saikatdas0790" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/thatlittleboy"><img src="https://avatars.githubusercontent.com/u/30731072?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jeremy Goh</b></sub></a><br /><a href="#content-thatlittleboy" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/Lioness100"><img src="https://avatars.githubusercontent.com/u/65814829?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Lioness100</b></sub></a><br /><a href="#content-Lioness100" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/tvkn"><img src="https://avatars.githubusercontent.com/u/79277926?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Tristan Nicholls</b></sub></a><br /><a href="#content-tvkn" title="Content">🖋</a></td>
+    <td align="center"><a href="http://clairewang.net"><img src="https://avatars.githubusercontent.com/u/9344258?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Claire</b></sub></a><br /><a href="#content-clairew" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/Mouwrice"><img src="https://avatars.githubusercontent.com/u/56763273?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Maurice Van Wassenhove</b></sub></a><br /><a href="#content-Mouwrice" title="Content">🖋</a></td>
+    <td align="center"><a href="http://jmthree.com"><img src="https://avatars.githubusercontent.com/u/77524?v=4?s=100" width="100px;" alt=""/><br /><sub><b>John Mendelewski</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=johnmendel" title="Code">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="http://fakhoury.xyz"><img src="https://avatars.githubusercontent.com/u/20828724?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Brian Fakhoury</b></sub></a><br /><a href="#content-brianfakhoury" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/markusboehme"><img src="https://avatars.githubusercontent.com/u/5074759?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Markus Boehme</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=markusboehme" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/nico-vromans"><img src="https://avatars.githubusercontent.com/u/48183857?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Nico Vromans</b></sub></a><br /><a href="#content-nico-vromans" title="Content">🖋</a></td>
   </tr>
 </table>
 
