@@ -1488,6 +1488,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "nico-vromans",
+      "name": "Nico Vromans",
+      "avatar_url": "https://avatars.githubusercontent.com/u/48183857?v=4",
+      "profile": "https://github.com/nico-vromans",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
