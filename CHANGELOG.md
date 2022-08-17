@@ -1,3 +1,10 @@
+<a name="5.1.1"></a>
+## 5.1.1 (2022-08-17)
+
+#### Bug Fixes
+
+- Fixed an incorrect assertion in options1
+
 <a name="5.1.0"></a>
 ## 5.1.0 (2022-08-16)
 
