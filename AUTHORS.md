@@ -214,6 +214,7 @@ authors.
     <td align="center"><a href="https://github.com/markusboehme"><img src="https://avatars.githubusercontent.com/u/5074759?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Markus Boehme</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=markusboehme" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/nico-vromans"><img src="https://avatars.githubusercontent.com/u/48183857?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Nico Vromans</b></sub></a><br /><a href="#content-nico-vromans" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/vostok92"><img src="https://avatars.githubusercontent.com/u/540339?v=4?s=100" width="100px;" alt=""/><br /><sub><b>vostok92</b></sub></a><br /><a href="#content-vostok92" title="Content">🖋</a></td>
+    <td align="center"><a href="http://magnusrodseth.vercel.app"><img src="https://avatars.githubusercontent.com/u/59113973?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Magnus Rødseth</b></sub></a><br /><a href="#content-magnusrodseth" title="Content">🖋</a></td>
   </tr>
 </table>
 
