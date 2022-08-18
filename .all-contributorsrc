@@ -1506,6 +1506,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "magnusrodseth",
+      "name": "Magnus Rødseth",
+      "avatar_url": "https://avatars.githubusercontent.com/u/59113973?v=4",
+      "profile": "http://magnusrodseth.vercel.app",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
