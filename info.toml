@@ -545,7 +545,7 @@ is the easiest, but how do you do it safely so that it doesn't panic in your fac
 [[exercises]]
 name = "options2"
 path = "exercises/options/options2.rs"
-mode = "compile"
+mode = "test"
 hint = """
 check out:
 https://doc.rust-lang.org/rust-by-example/flow_control/if_let.html
