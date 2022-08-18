@@ -1,10 +1,7 @@
+use crate::exercise::{Exercise, ExerciseList};
 use crate::project::RustAnalyzerProject;
-use crate::run::run;
+use crate::run::{reset, run};
 use crate::verify::verify;
-use crate::{
-    exercise::{Exercise, ExerciseList},
-    run::reset,
-};
 use argh::FromArgs;
 use console::Emoji;
 use notify::DebouncedEvent;
@@ -77,7 +74,7 @@ struct RunArgs {
 
 #[derive(FromArgs, PartialEq, Debug)]
 #[argh(subcommand, name = "reset")]
-/// Resets a single exercise
+/// Resets a single exercise using "git stash -- <filename>"
 struct ResetArgs {
     #[argh(positional)]
     /// the name of the exercise
