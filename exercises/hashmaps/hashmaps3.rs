@@ -53,7 +53,8 @@ mod tests {
             + "England,France,4,2\n"
             + "France,Italy,3,1\n"
             + "Poland,Spain,2,0\n"
-            + "Germany,England,2,1\n";
+            + "Germany,England,2,1\n"
+            + "England,Spain,1,0\n";
         results
     }
 
@@ -73,7 +74,7 @@ mod tests {
     fn validate_team_score_1() {
         let scores = build_scores_table(get_results());
         let team = scores.get("England").unwrap();
-        assert_eq!(team.goals_scored, 5);
+        assert_eq!(team.goals_scored, 6);
         assert_eq!(team.goals_conceded, 4);
     }
 
@@ -82,6 +83,6 @@ mod tests {
         let scores = build_scores_table(get_results());
         let team = scores.get("Spain").unwrap();
         assert_eq!(team.goals_scored, 0);
-        assert_eq!(team.goals_conceded, 2);
+        assert_eq!(team.goals_conceded, 3);
     }
 }
