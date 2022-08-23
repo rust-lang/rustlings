@@ -1,3 +1,5 @@
+use std::process::Command;
+
 use crate::exercise::{Exercise, Mode};
 use crate::verify::test;
 use indicatif::ProgressBar;
@@ -13,6 +15,19 @@ pub fn run(exercise: &Exercise, verbose: bool) -> Result<(), ()> {
         Mode::Clippy => compile_and_run(exercise)?,
     }
     Ok(())
+}
+
+// Resets the exercise by stashing the changes.
+pub fn reset(exercise: &Exercise) -> Result<(), ()> {
+    let command = Command::new("git")
+        .args(["stash", "--"])
+        .arg(&exercise.path)
+        .spawn();
+
+    match command {
+        Ok(_) => Ok(()),
+        Err(_) => Err(()),
+    }
 }
 
 // Invoke the rust compiler on the path of the given exercise

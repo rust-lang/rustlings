@@ -1,3 +1,45 @@
+<a name="5.1.1"></a>
+## 5.1.1 (2022-08-17)
+
+#### Bug Fixes
+
+- Fixed an incorrect assertion in options1
+
+<a name="5.1.0"></a>
+## 5.1.0 (2022-08-16)
+
+#### Features
+
+- Added a new `rc1` exercise.
+- Added a new `cow1` exercise.
+
+#### Bug Fixes
+
+- **variables5**: Corrected reference to previous exercise
+- **functions4**: Fixed line number reference
+- **strings3**: Clarified comment wording
+- **traits4, traits5**: Fixed line number reference
+- **traits5**:
+  - Fixed typo in "parameter"
+  - Made exercise prefer a traits-based solution
+- **lifetimes2**: Improved hint
+- **threads3**: Fixed typo in hint
+- **box1**: Replaced `unimplemented!` with `todo!`
+- **errors5**: Provided an explanation for usage of `Box<dyn Error>`
+- **quiz2**: Fixed a typo
+- **macros**: Updated the macros book link
+- **options1**:
+  - Removed unused code
+  - Added more granular tests
+- Fixed some comment syntax shenanigans in info.toml
+
+#### Housekeeping
+
+- Fixed a typo in .editorconfig
+- Fixed a typo in integration_tests.rs
+- Clarified manual installation instructions using `cargo install --path .`
+- Added a link to our Zulip in the readme file
+
 <a name="5.0.0"></a>
 ## 5.0.0 (2022-07-16)
 
