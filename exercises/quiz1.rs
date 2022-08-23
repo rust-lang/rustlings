@@ -8,7 +8,6 @@
 // more than 40 at once, each apple only costs 1! Write a function that calculates
 // the price of an order of apples given the quantity bought. No hints this time!
 
-// I AM NOT DONE
 
 // Put your function here!
 // fn calculate_price_of_apples {
@@ -23,4 +22,14 @@ fn verify_test() {
     assert_eq!(70, price1);
     assert_eq!(80, price2);
     assert_eq!(65, price3);
+}
+
+fn calculate_price_of_apples(quantity: u32) -> u32{
+    let mut price: u32 = 2;
+
+    if (quantity > 40){
+        price = 1;
+    }
+
+    return price * quantity;
 }
