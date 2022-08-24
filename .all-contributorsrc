@@ -1524,6 +1524,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "GabrielBianconi",
+      "name": "Gabriel Bianconi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1275491?v=4",
+      "profile": "http://www.gabrielbianconi.com/",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
