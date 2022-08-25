@@ -1,7 +1,6 @@
 // if1.rs
 // Execute `rustlings hint if1` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
 
 pub fn bigger(a: i32, b: i32) -> i32 {
     // Complete this function to return the bigger number!
@@ -23,5 +22,10 @@ mod tests {
     #[test]
     fn fortytwo_is_bigger_than_thirtytwo() {
         assert_eq!(42, bigger(32, 42));
+    }
+
+    #[test]
+    fn same_value(){
+        assert_eq!(42, bigger(42,42))
     }
 }
