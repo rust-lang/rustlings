@@ -1,3 +1,20 @@
+<a name="5.2.0"></a>
+## 5.2.0 (2022-08-27)
+
+#### Added
+
+- Added a `reset` command
+
+#### Changed
+
+- **options2**: Convert the exercise to use tests
+
+#### Fixed
+
+- **threads3**: Fixed a typo
+- **quiz1**: Adjusted the explanations to be consistent with
+  the tests
+
 <a name="5.1.1"></a>
 ## 5.1.1 (2022-08-17)
 
