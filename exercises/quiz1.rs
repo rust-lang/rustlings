@@ -21,6 +21,6 @@ fn verify_test() {
     let price3 = calculate_price_of_apples(65);
 
     assert_eq!(70, price1);
-    assert_eq!(80, price2);
+    assert_eq!(40, price2);
     assert_eq!(65, price3);
 }
