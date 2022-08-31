@@ -19,6 +19,7 @@ mod tests {
 
     #[test]
     fn check_icecream() {
+        assert_eq!(maybe_icecream(9), Some(5));
         assert_eq!(maybe_icecream(10), Some(5));
         assert_eq!(maybe_icecream(23), Some(0));
         assert_eq!(maybe_icecream(22), Some(0));

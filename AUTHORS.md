@@ -212,6 +212,12 @@ authors.
   <tr>
     <td align="center"><a href="http://fakhoury.xyz"><img src="https://avatars.githubusercontent.com/u/20828724?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Brian Fakhoury</b></sub></a><br /><a href="#content-brianfakhoury" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/markusboehme"><img src="https://avatars.githubusercontent.com/u/5074759?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Markus Boehme</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=markusboehme" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/nico-vromans"><img src="https://avatars.githubusercontent.com/u/48183857?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Nico Vromans</b></sub></a><br /><a href="#content-nico-vromans" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/vostok92"><img src="https://avatars.githubusercontent.com/u/540339?v=4?s=100" width="100px;" alt=""/><br /><sub><b>vostok92</b></sub></a><br /><a href="#content-vostok92" title="Content">🖋</a></td>
+    <td align="center"><a href="http://magnusrodseth.vercel.app"><img src="https://avatars.githubusercontent.com/u/59113973?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Magnus Rødseth</b></sub></a><br /><a href="#content-magnusrodseth" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/rubiesonthesky"><img src="https://avatars.githubusercontent.com/u/2591240?v=4?s=100" width="100px;" alt=""/><br /><sub><b>rubiesonthesky</b></sub></a><br /><a href="#content-rubiesonthesky" title="Content">🖋</a></td>
+    <td align="center"><a href="http://www.gabrielbianconi.com/"><img src="https://avatars.githubusercontent.com/u/1275491?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Gabriel Bianconi</b></sub></a><br /><a href="#content-GabrielBianconi" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/Kodylow"><img src="https://avatars.githubusercontent.com/u/74332828?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kody Low</b></sub></a><br /><a href="#content-Kodylow" title="Content">🖋</a></td>
   </tr>
 </table>
 
