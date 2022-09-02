@@ -10,3 +10,4 @@ fn call_me(num: i32) {
         println!("Ring! Call number {}", i + 1);
     }
 }
+
