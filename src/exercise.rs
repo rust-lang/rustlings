@@ -1,5 +1,6 @@
 use regex::Regex;
 use serde::Deserialize;
+use std::env;
 use std::fmt::{self, Display, Formatter};
 use std::fs::{self, remove_file, File};
 use std::io::Read;
@@ -23,7 +24,7 @@ fn temp_file() -> String {
 }
 
 // The mode of the exercise.
-#[derive(Deserialize, Copy, Clone)]
+#[derive(Deserialize, Copy, Clone, Debug)]
 #[serde(rename_all = "lowercase")]
 pub enum Mode {
     // Indicates that the exercise should be compiled as a binary
@@ -41,7 +42,7 @@ pub struct ExerciseList {
 
 // A representation of a rustlings exercise.
 // This is deserialized from the accompanying info.toml file
-#[derive(Deserialize)]
+#[derive(Deserialize, Debug)]
 pub struct Exercise {
     // Name of the exercise
     pub name: String,
@@ -120,15 +121,19 @@ impl Exercise {
                     r#"[package]
 name = "{}"
 version = "0.0.1"
-edition = "2018"
+edition = "2021"
 [[bin]]
 name = "{}"
 path = "{}.rs""#,
                     self.name, self.name, self.name
                 );
-                fs::write(CLIPPY_CARGO_TOML_PATH, cargo_toml)
-                    .expect("Failed to write 📎 Clippy 📎 Cargo.toml file.");
-                // To support the ability to run the clipy exercises, build
+                let cargo_toml_error_msg = if env::var("NO_EMOJI").is_ok() {
+                    "Failed to write Clippy Cargo.toml file."
+                } else {
+                    "Failed to write 📎 Clippy 📎 Cargo.toml file."
+                };
+                fs::write(CLIPPY_CARGO_TOML_PATH, cargo_toml).expect(cargo_toml_error_msg);
+                // To support the ability to run the clippy exercises, build
                 // an executable, in addition to running clippy. With a
                 // compilation failure, this would silently fail. But we expect
                 // clippy to reflect the same failure while compiling later.
@@ -149,7 +154,7 @@ path = "{}.rs""#,
                 Command::new("cargo")
                     .args(&["clippy", "--manifest-path", CLIPPY_CARGO_TOML_PATH])
                     .args(RUSTC_COLOR_ARGS)
-                    .args(&["--", "-D", "warnings"])
+                    .args(&["--", "-D", "warnings","-D","clippy::float_cmp"])
                     .output()
             }
         }
@@ -157,7 +162,7 @@ path = "{}.rs""#,
 
         if cmd.status.success() {
             Ok(CompiledExercise {
-                exercise: &self,
+                exercise: self,
                 _handle: FileHandle,
             })
         } else {
@@ -212,8 +217,7 @@ path = "{}.rs""#,
         let matched_line_index = source
             .lines()
             .enumerate()
-            .filter_map(|(i, line)| if re.is_match(line) { Some(i) } else { None })
-            .next()
+            .find_map(|(i, line)| if re.is_match(line) { Some(i) } else { None })
             .expect("This should not happen at all");
 
         let min_line = ((matched_line_index as i32) - (CONTEXT as i32)).max(0) as usize;
@@ -231,6 +235,16 @@ path = "{}.rs""#,
             .collect();
 
         State::Pending(context)
+    }
+
+    // Check that the exercise looks to be solved using self.state()
+    // This is not the best way to check since
+    // the user can just remove the "I AM NOT DONE" string from the file
+    // without actually having solved anything.
+    // The only other way to truly check this would to compile and run
+    // the exercise; which would be both costly and counterintuitive
+    pub fn looks_done(&self) -> bool {
+        self.state() == State::Done
     }
 }
 

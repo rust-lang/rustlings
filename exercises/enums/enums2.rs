@@ -1,5 +1,5 @@
 // enums2.rs
-// Make me compile! Execute `rustlings hint enums2` for hints!
+// Execute `rustlings hint enums2` or use the `hint` watch subcommand for a hint.
 
 // I AM NOT DONE
 

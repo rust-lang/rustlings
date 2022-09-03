@@ -1,5 +1,5 @@
 // clippy2.rs
-// Make me compile! Execute `rustlings hint clippy2` for hints :)
+// Execute `rustlings hint clippy2` or use the `hint` watch subcommand for a hint.
 
 // I AM NOT DONE
 

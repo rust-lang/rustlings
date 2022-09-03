@@ -1,17 +1,20 @@
 [package]
 name = "rustlings"
-version = "4.2.0"
-authors = ["Marisa <mokou@posteo.de>", "Carol (Nichols || Goulding) <carol.nichols@gmail.com>"]
-edition = "2018"
+version = "5.2.0"
+authors = ["Liv <mokou@fastmail.com>", "Carol (Nichols || Goulding) <carol.nichols@gmail.com>"]
+edition = "2021"
 
 [dependencies]
-clap = "2.32.0"
-indicatif = "0.10.3"
-console = "0.7.7"
-notify = "4.0.15"
-toml = "0.4.10"
-regex = "1.1.6"
-serde = {version = "1.0.10", features = ["derive"]}
+argh = "0.1"
+indicatif = "0.16"
+console = "0.15"
+notify = "4.0"
+toml = "0.5"
+regex = "1.5"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0.81"
+home = "0.5.3"
+glob = "0.3.0"
 
 [[bin]]
 name = "rustlings"
