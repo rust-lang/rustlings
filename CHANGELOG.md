@@ -1,3 +1,17 @@
+<a name="5.2.1"></a>
+## 5.2.1 (2022-09-06)
+
+#### Fixed
+
+- **quiz1**: Reworded the comment to actually reflect what's going on in the tests.
+  Also added another assert just to make sure.
+- **rc1**: Fixed a typo in the hint.
+- **lifetimes**: Add quotes to the `println!` output, for readability.
+
+#### Housekeeping
+
+- Fixed a typo in README.md
+
 <a name="5.2.0"></a>
 ## 5.2.0 (2022-08-27)
 
