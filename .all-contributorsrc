@@ -1560,6 +1560,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "memark",
+      "name": "Magnus Markling",
+      "avatar_url": "https://avatars.githubusercontent.com/u/318504?v=4",
+      "profile": "https://github.com/memark",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
