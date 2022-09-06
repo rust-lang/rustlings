@@ -23,5 +23,5 @@ fn main() {
         let string2 = String::from("xyz");
         result = longest(string1.as_str(), string2.as_str());
     }
-    println!("The longest string is {}", result);
+    println!("The longest string is '{}'", result);
 }
