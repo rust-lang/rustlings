@@ -943,7 +943,7 @@ After using drop() to move the Planets out of scope individually, the reference 
 In the end the sun only has one reference again, to itself. See more at:
 https://doc.rust-lang.org/book/ch15-04-rc.html
 
-* Unforunately Pluto is no longer considered a planet :(
+* Unfortunately Pluto is no longer considered a planet :(
 """
 
 [[exercises]]
