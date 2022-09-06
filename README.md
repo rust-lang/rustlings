@@ -134,7 +134,7 @@ Once you've completed Rustlings, put your new knowledge to good use! Continue pr
 
 ## Uninstalling Rustlings
 
-If you want to remove Rustlings from your system, there's two steps. First, you'll need to remove the exercises folder that the install script created
+If you want to remove Rustlings from your system, there are two steps. First, you'll need to remove the exercises folder that the install script created
 for you:
 
 ```bash
