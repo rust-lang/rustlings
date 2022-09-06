@@ -219,6 +219,9 @@ authors.
     <td align="center"><a href="http://www.gabrielbianconi.com/"><img src="https://avatars.githubusercontent.com/u/1275491?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Gabriel Bianconi</b></sub></a><br /><a href="#content-GabrielBianconi" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/Kodylow"><img src="https://avatars.githubusercontent.com/u/74332828?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kody Low</b></sub></a><br /><a href="#content-Kodylow" title="Content">🖋</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/rzrymiak"><img src="https://avatars.githubusercontent.com/u/106121613?v=4?s=100" width="100px;" alt=""/><br /><sub><b>rzrymiak</b></sub></a><br /><a href="#content-rzrymiak" title="Content">🖋</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-restore -->
