@@ -222,6 +222,7 @@ authors.
   <tr>
     <td align="center"><a href="https://github.com/rzrymiak"><img src="https://avatars.githubusercontent.com/u/106121613?v=4?s=100" width="100px;" alt=""/><br /><sub><b>rzrymiak</b></sub></a><br /><a href="#content-rzrymiak" title="Content">🖋</a></td>
     <td align="center"><a href="https://github.com/miguelraz"><img src="https://avatars.githubusercontent.com/u/13056181?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Miguel Raz Guzmán Macedo</b></sub></a><br /><a href="#content-miguelraz" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/memark"><img src="https://avatars.githubusercontent.com/u/318504?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Magnus Markling</b></sub></a><br /><a href="#content-memark" title="Content">🖋</a></td>
   </tr>
 </table>
 
