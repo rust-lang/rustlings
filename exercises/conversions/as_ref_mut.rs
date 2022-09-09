@@ -54,7 +54,7 @@ mod tests {
     #[test]
     fn mult_box() {
         let mut num: Box<u32> = Box::new(3);
-        num_sq(&mut num);
+        num_sq(&mut *num);
         assert_eq!(*num, 9);
     }
 }
