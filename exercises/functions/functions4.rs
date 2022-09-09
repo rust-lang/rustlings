@@ -7,7 +7,7 @@
 // in the signatures for now. If anything, this is a good way to peek ahead
 // to future exercises!)
 
-// I AM NOT DONE
+
 
 fn main() {
     let original_price = 51;
