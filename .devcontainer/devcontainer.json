@@ -10,5 +10,6 @@
         "serayuzgur.crates"
       ]
     }
-  }
+  },
+  "postCreateCommand": ["rustup update", "cargo install --force --path ."]
 }
