@@ -11,5 +11,5 @@
       ]
     }
   },
-  "postCreateCommand": ["rustup update", "cargo install --force --path ."]
+  "postCreateCommand": "cargo install --force --path ."
 }
