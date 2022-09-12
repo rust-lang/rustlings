@@ -3,7 +3,7 @@
 // You can put the expression for the second element where ??? is so that the test passes.
 // Execute `rustlings hint primitive_types6` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
+
 
 #[test]
 fn indexing_tuple() {
