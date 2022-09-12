@@ -16,7 +16,7 @@
 // - The input is going to be a Vector of a 2-length tuple,
 //   the first element is the string, the second one is the command.
 // - The output element is going to be a Vector of strings.
-// Execute `rustlings hint quiz2` or use the `hint` watch subcommand for a hint.
+// No hints this time!
 
 // I AM NOT DONE
 
