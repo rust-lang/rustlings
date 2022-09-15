@@ -225,6 +225,7 @@ authors.
       <td align="center"><a href="https://github.com/miguelraz"><img src="https://avatars.githubusercontent.com/u/13056181?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Miguel Raz Guzmán Macedo</b></sub></a><br /><a href="#content-miguelraz" title="Content">🖋</a></td>
       <td align="center"><a href="https://github.com/memark"><img src="https://avatars.githubusercontent.com/u/318504?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Magnus Markling</b></sub></a><br /><a href="#content-memark" title="Content">🖋</a></td>
       <td align="center"><a href="https://github.com/gasparitiago"><img src="https://avatars.githubusercontent.com/u/3237254?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Tiago De Gaspari</b></sub></a><br /><a href="#content-gasparitiago" title="Content">🖋</a></td>
+      <td align="center"><a href="https://github.com/skaunov"><img src="https://avatars.githubusercontent.com/u/65976143?v=4?s=100" width="100px;" alt=""/><br /><sub><b>skaunov</b></sub></a><br /><a href="#content-skaunov" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
