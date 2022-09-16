@@ -969,7 +969,7 @@ https://doc.rust-lang.org/std/thread/fn.spawn.html
 
 A challenge with multi-threaded applications is that the main thread can 
 finish before the spawned threads are completed.
-https://doc.rust-lang.org/book/ch16-01-threads.html#waiting-for-all-threads-to-finish-using-join-handle
+https://doc.rust-lang.org/book/ch16-01-threads.html#waiting-for-all-threads-to-finish-using-join-handles
 
 Collect the JoinHandles and wait for them to finish.
 https://doc.rust-lang.org/std/thread/struct.JoinHandle.html
