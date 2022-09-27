@@ -50,6 +50,7 @@ enum Subcommands {
     Reset(ResetArgs),
     Hint(HintArgs),
     List(ListArgs),
+    Next(NextArgs),
     Lsp(LspArgs),
 }
 
@@ -115,6 +116,20 @@ struct ListArgs {
     #[argh(switch, short = 's')]
     /// display only exercises that have been solved
     solved: bool,
+}
+
+#[derive(FromArgs, PartialEq, Debug)]
+#[argh(subcommand, name = "next")]
+/// Opens the next pending exercise in Rustlings using the EDITOR environment variable.
+/// Please set your EDITOR environment variable in your .bashrc or run EDITOR=vim rustlings next
+struct NextArgs {
+    #[argh(switch, short = 'p')]
+    /// print the path of the next pending exercise
+    path: bool,
+
+    #[argh(switch, short = 'n')]
+    /// print the name of the next pending exercise
+    name: bool,
 }
 
 fn main() {
@@ -208,6 +223,19 @@ fn main() {
                 percentage_progress
             );
             std::process::exit(0);
+        }
+
+        Subcommands::Next(subargs) => {
+            let exercise = find_exercise(&"next", &exercises);
+
+            if subargs.name {
+                println!("{}", exercise.name);
+            } else if subargs.path {
+                println!("{}", exercise.path.display());
+            } else {
+                edit::edit_file(&exercise.path)
+                    .expect("Couldn't open the default EDITOR, have you configured $EDITOR properly?");
+            }
         }
 
         Subcommands::Run(subargs) => {

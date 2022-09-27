@@ -120,6 +120,13 @@ To check your progress, you can run the following command:
 rustlings list
 ```
 
+To open the next pending exercise:
+```bash
+rustlings next
+# or EDITOR=vim rustlings next
+```
+> Please make sure to properly configure your `$EDITOR` env variable in your _.bashrc_ with `export EDITOR='vim'`. Or any of your favorite editor ;)
+
 ## Testing yourself
 
 After every couple of sections, there will be a quiz that'll test your knowledge on a bunch of sections at once. These quizzes are found in `exercises/quizN.rs`.
