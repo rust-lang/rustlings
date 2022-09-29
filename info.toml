@@ -627,7 +627,7 @@ propagated using `?` operators. How do we declare a return type from `main()` th
 
 Under the hood, the `?` operator calls `From::from` on the error value to convert it to a boxed
 trait object, a `Box<dyn error::Error>`. This boxed trait object is polymorphic, and since all
-errors implement the `error:Error` trait, we can capture lots of different errors in one "Box" 
+errors implement the `error::Error` trait, we can capture lots of different errors in one "Box"
 object. 
 
 Check out this section of the book:
