@@ -1587,6 +1587,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "cj81499",
+      "name": "Cal Jacobson",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9152032?v=4",
+      "profile": "http://caljacobson.dev",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
