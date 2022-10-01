@@ -15,14 +15,15 @@ pub fn verify<'a>(
 ) -> Result<(), &'a Exercise> {
     let (num_done, total) = progress;
     let bar = ProgressBar::new(total as u64);
-    bar.set_style(ProgressStyle::default_bar()
-        .template("Progress: [{bar:60.green/red}] {pos}/{len}")
-        .progress_chars("#>-")
+    bar.set_style(
+        ProgressStyle::default_bar()
+            .template("Progress: [{bar:60.green/red}] {pos}/{len}")
+            .progress_chars("#>-"),
     );
     bar.set_position(num_done as u64);
     for exercise in exercises {
         let compile_result = match exercise.mode {
-            Mode::Test => compile_and_test(exercise, RunMode::Interactive, verbose),
+            Mode::Test => compile_and_test(exercise, verbose),
             Mode::Compile => compile_and_run_interactively(exercise),
             Mode::Clippy => compile_only(exercise),
         };
@@ -34,14 +35,9 @@ pub fn verify<'a>(
     Ok(())
 }
 
-enum RunMode {
-    Interactive,
-    NonInteractive,
-}
-
 // Compile and run the resulting test harness of the given Exercise
 pub fn test(exercise: &Exercise, verbose: bool) -> Result<(), ()> {
-    compile_and_test(exercise, RunMode::NonInteractive, verbose)?;
+    compile_and_test(exercise, verbose)?;
     Ok(())
 }
 
@@ -84,7 +80,7 @@ fn compile_and_run_interactively(exercise: &Exercise) -> Result<bool, ()> {
 
 // Compile the given Exercise as a test harness and display
 // the output if verbose is set to true
-fn compile_and_test(exercise: &Exercise, run_mode: RunMode, verbose: bool) -> Result<bool, ()> {
+fn compile_and_test(exercise: &Exercise, verbose: bool) -> Result<bool, ()> {
     let progress_bar = ProgressBar::new_spinner();
     progress_bar.set_message(format!("Testing {}...", exercise));
     progress_bar.enable_steady_tick(100);
@@ -98,11 +94,7 @@ fn compile_and_test(exercise: &Exercise, run_mode: RunMode, verbose: bool) -> Re
             if verbose {
                 println!("{}", output.stdout);
             }
-            if let RunMode::Interactive = run_mode {
-                Ok(prompt_for_completion(exercise, None))
-            } else {
-                Ok(true)
-            }
+            Ok(prompt_for_completion(exercise, None))
         }
         Err(output) => {
             warn!(
