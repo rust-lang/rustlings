@@ -1596,6 +1596,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "duchonic",
+      "name": "Duchoud Nicolas",
+      "avatar_url": "https://avatars.githubusercontent.com/u/34117620?v=4",
+      "profile": "https://github.com/duchonic",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
