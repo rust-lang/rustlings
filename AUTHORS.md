@@ -227,11 +227,9 @@ authors.
       <td align="center"><a href="https://github.com/gasparitiago"><img src="https://avatars.githubusercontent.com/u/3237254?v=4?s=100" width="100px;" alt="Tiago De Gaspari"/><br /><sub><b>Tiago De Gaspari</b></sub></a><br /><a href="#content-gasparitiago" title="Content">🖋</a></td>
       <td align="center"><a href="https://github.com/skaunov"><img src="https://avatars.githubusercontent.com/u/65976143?v=4?s=100" width="100px;" alt="skaunov"/><br /><sub><b>skaunov</b></sub></a><br /><a href="#content-skaunov" title="Content">🖋</a></td>
       <td align="center"><a href="http://caljacobson.dev"><img src="https://avatars.githubusercontent.com/u/9152032?v=4?s=100" width="100px;" alt="Cal Jacobson"/><br /><sub><b>Cal Jacobson</b></sub></a><br /><a href="#content-cj81499" title="Content">🖋</a></td>
+      <td align="center"><a href="https://github.com/duchonic"><img src="https://avatars.githubusercontent.com/u/34117620?v=4?s=100" width="100px;" alt="Duchoud Nicolas"/><br /><sub><b>Duchoud Nicolas</b></sub></a><br /><a href="#content-duchonic" title="Content">🖋</a></td>
     </tr>
   </tbody>
-  <tfoot>
-    
-  </tfoot>
 </table>
 
 <!-- markdownlint-restore -->
