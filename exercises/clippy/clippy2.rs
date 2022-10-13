@@ -9,5 +9,5 @@ fn main() {
     for x in option {
         res += x;
     }
-    println!("{}", res);
+    println!("{res}");
 }

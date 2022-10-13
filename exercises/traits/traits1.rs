@@ -22,7 +22,7 @@ impl AppendBar for String {
 fn main() {
     let s = String::from("Foo");
     let s = s.append_bar();
-    println!("s: {}", s);
+    println!("s: {s}");
 }
 
 #[cfg(test)]

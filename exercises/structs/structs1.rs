@@ -41,7 +41,7 @@ mod tests {
     fn unit_structs() {
         // TODO: Instantiate a unit-like struct!
         // let unit_like_struct =
-        let message = format!("{:?}s are fun!", unit_like_struct);
+        let message = format!("{unit_like_struct:?}s are fun!");
 
         assert_eq!(message, "UnitLikeStructs are fun!");
     }

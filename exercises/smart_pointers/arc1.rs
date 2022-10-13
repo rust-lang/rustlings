@@ -33,7 +33,7 @@ fn main() {
         let child_numbers = // TODO
         joinhandles.push(thread::spawn(move || {
             let sum: u32 = child_numbers.iter().filter(|n| *n % 8 == offset).sum();
-            println!("Sum of offset {} is {}", offset, sum);
+            println!("Sum of offset {offset} is {sum}");
         }));
     }
     for handle in joinhandles.into_iter() {

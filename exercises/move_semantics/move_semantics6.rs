@@ -21,5 +21,5 @@ fn get_char(data: String) -> char {
 fn string_uppercase(mut data: &String) {
     data = &data.to_uppercase();
 
-    println!("{}", data);
+    println!("{data}");
 }

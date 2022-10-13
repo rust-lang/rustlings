@@ -26,7 +26,7 @@ enum Planet {
 
 impl Planet {
     fn details(&self) {
-        println!("Hi from {:?}!", self)
+        println!("Hi from {self:?}!")
     }
 }
 

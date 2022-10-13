@@ -12,7 +12,7 @@ pub fn generate_nametag_text(name: String) -> Option<String> {
         // Empty names aren't allowed.
         None
     } else {
-        Some(format!("Hi! My name is {}", name))
+        Some(format!("Hi! My name is {name}"))
     }
 }
 

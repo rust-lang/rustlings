@@ -29,7 +29,7 @@ impl State {
     }
 
     fn echo(&self, s: String) {
-        println!("{}", s);
+        println!("{s}");
     }
 
     fn move_position(&mut self, p: Point) {

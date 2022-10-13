@@ -51,7 +51,7 @@ impl FromStr for Person {
 
 fn main() {
     let p = "Mark,20".parse::<Person>().unwrap();
-    println!("{:?}", p);
+    println!("{p:?}");
 }
 
 #[cfg(test)]

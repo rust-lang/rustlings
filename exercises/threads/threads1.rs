@@ -14,7 +14,7 @@ fn main() {
     for i in 0..10 {
         thread::spawn(move || {
             thread::sleep(Duration::from_millis(250));
-            println!("thread {} is complete", i);
+            println!("thread {i} is complete");
         });
     }
 

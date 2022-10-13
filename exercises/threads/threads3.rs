@@ -31,7 +31,7 @@ fn send_tx(q: Queue, tx: mpsc::Sender<u32>) -> () {
 
     thread::spawn(move || {
         for val in &qc1.first_half {
-            println!("sending {:?}", val);
+            println!("sending {val:?}");
             tx.send(*val).unwrap();
             thread::sleep(Duration::from_secs(1));
         }
@@ -39,7 +39,7 @@ fn send_tx(q: Queue, tx: mpsc::Sender<u32>) -> () {
 
     thread::spawn(move || {
         for val in &qc2.second_half {
-            println!("sending {:?}", val);
+            println!("sending {val:?}");
             tx.send(*val).unwrap();
             thread::sleep(Duration::from_secs(1));
         }
@@ -55,10 +55,10 @@ fn main() {
 
     let mut total_received: u32 = 0;
     for received in rx {
-        println!("Got: {}", received);
+        println!("Got: {received}");
         total_received += 1;
     }
 
-    println!("total numbers received: {}", total_received);
+    println!("total numbers received: {total_received:?}");
     assert_eq!(total_received, queue_length)
 }
