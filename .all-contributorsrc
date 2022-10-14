@@ -1632,6 +1632,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "azzamsa",
+      "name": "azzamsa",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17734314?v=4",
+      "profile": "http://azzamsa.com",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
