@@ -233,6 +233,7 @@ authors.
     <tr>
       <td align="center"><a href="https://github.com/bhbuehler"><img src="https://avatars.githubusercontent.com/u/25541343?v=4?s=100" width="100px;" alt="bhbuehler"/><br /><sub><b>bhbuehler</b></sub></a><br /><a href="#content-bhbuehler" title="Content">🖋</a></td>
       <td align="center"><a href="https://github.com/nyurik"><img src="https://avatars.githubusercontent.com/u/1641515?v=4?s=100" width="100px;" alt="Yuri Astrakhan"/><br /><sub><b>Yuri Astrakhan</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=nyurik" title="Code">💻</a></td>
+      <td align="center"><a href="http://azzamsa.com"><img src="https://avatars.githubusercontent.com/u/17734314?v=4?s=100" width="100px;" alt="azzamsa"/><br /><sub><b>azzamsa</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=azzamsa" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
