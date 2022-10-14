@@ -202,7 +202,7 @@ fn main() {
             });
             let percentage_progress = exercises_done as f32 / exercises.len() as f32 * 100.0;
             println!(
-                "Progress: You completed {} / {} exercises ({:.2} %).",
+                "Progress: You completed {} / {} exercises ({:.1} %).",
                 exercises_done,
                 exercises.len(),
                 percentage_progress

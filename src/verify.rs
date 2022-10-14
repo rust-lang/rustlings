@@ -16,7 +16,7 @@ pub fn verify<'a>(
     let (num_done, total) = progress;
     let bar = ProgressBar::new(total as u64);
     bar.set_style(ProgressStyle::default_bar()
-        .template("Progress: [{bar:60.green/red}] {pos}/{len}")
+        .template("Progress: [{bar:60.green/red}] {pos}/{len} {msg}")
         .progress_chars("#>-")
     );
     bar.set_position(num_done as u64);
@@ -29,6 +29,8 @@ pub fn verify<'a>(
         if !compile_result.unwrap_or(false) {
             return Err(exercise);
         }
+        let percentage = num_done as f32 / total as f32 * 100.0;
+        bar.set_message(format!("({:.1} %)", percentage));
         bar.inc(1);
     }
     Ok(())
