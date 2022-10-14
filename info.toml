@@ -460,6 +460,12 @@ path = "exercises/strings/strings4.rs"
 mode = "compile"
 hint = "No hints this time ;)"
 
+[[exercises]]
+name = "strings5"
+path = "exercises/strings/strings5.rs"
+mode = "test"
+hint = "You can find documentation for println! / format! syntax at https://doc.rust-lang.org/std/fmt/index.html"
+
 # MODULES
 
 [[exercises]]
