@@ -235,6 +235,7 @@ authors.
       <td align="center"><a href="https://github.com/nyurik"><img src="https://avatars.githubusercontent.com/u/1641515?v=4?s=100" width="100px;" alt="Yuri Astrakhan"/><br /><sub><b>Yuri Astrakhan</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=nyurik" title="Code">💻</a></td>
       <td align="center"><a href="http://azzamsa.com"><img src="https://avatars.githubusercontent.com/u/17734314?v=4?s=100" width="100px;" alt="azzamsa"/><br /><sub><b>azzamsa</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=azzamsa" title="Code">💻</a></td>
       <td align="center"><a href="https://github.com/mvanschellebeeck"><img src="https://avatars.githubusercontent.com/u/17671052?v=4?s=100" width="100px;" alt="mvanschellebeeck"/><br /><sub><b>mvanschellebeeck</b></sub></a><br /><a href="#content-mvanschellebeeck" title="Content">🖋</a></td>
+      <td align="center"><a href="https://github.com/aaarkid"><img src="https://avatars.githubusercontent.com/u/39987510?v=4?s=100" width="100px;" alt="Arkid"/><br /><sub><b>Arkid</b></sub></a><br /><a href="#content-aaarkid" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
