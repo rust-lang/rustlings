@@ -1641,6 +1641,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "mvanschellebeeck",
+      "name": "mvanschellebeeck",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17671052?v=4",
+      "profile": "https://github.com/mvanschellebeeck",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
