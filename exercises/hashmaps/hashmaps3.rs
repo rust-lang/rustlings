@@ -73,8 +73,8 @@ mod tests {
     fn validate_team_score_1() {
         let scores = build_scores_table(get_results());
         let team = scores.get("England").unwrap();
-        assert_eq!(team.goals_scored, 5);
-        assert_eq!(team.goals_conceded, 4);
+        assert_eq!(team.goals_scored, 4);
+        assert_eq!(team.goals_conceded, 2);
     }
 
     #[test]
