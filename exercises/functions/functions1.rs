@@ -3,6 +3,9 @@
 
 // I AM NOT DONE
 
+fn call_me() {
+    print!("hello world!");
+}
 fn main() {
     call_me();
 }

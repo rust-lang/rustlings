@@ -9,6 +9,6 @@ fn main() {
     println!("My current favorite color is {}", answer);
 }
 
-fn current_favorite_color() -> String {
+fn current_favorite_color() -> &'static str {
     "blue"
 }
