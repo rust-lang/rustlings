@@ -33,7 +33,7 @@ mod my_module {
             Command::Uppercase => content.to_uppercase(),
             Command::Trim => content.trim().to_string(),
             Command::Append(n) => format!("{}{}", content, "bar".repeat(*n))
-        }
+          }
         }).collect()
     }
 }
