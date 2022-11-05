@@ -17,14 +17,20 @@ trait AppendBar {
     fn append_bar(self) -> Self;
 }
 
-//TODO: Add your code here
+impl AppendBar for Vec<String> {
+    fn append_bar(self) -> Vec<String> {
+        let mut _vec = self.clone();
+        _vec.push(String::from("Bar"));
+        return _vec;
+    }
+}
 
 #[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
-    fn is_vec_pop_eq_bar() {
+    fn is_vec_pop_eq_bar() { 
         let mut foo = vec![String::from("Foo")].append_bar();
         assert_eq!(foo.pop().unwrap(), String::from("Bar"));
         assert_eq!(foo.pop().unwrap(), String::from("Foo"));
