@@ -1668,6 +1668,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "mfurak",
+      "name": "Marek Furák",
+      "avatar_url": "https://avatars.githubusercontent.com/u/38523093?v=4",
+      "profile": "https://github.com/mfurak",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
