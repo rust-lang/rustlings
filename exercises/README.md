@@ -1,3 +1,9 @@
+todo [b] for loops
+todo [b] format!
+https://doc.rust-lang.org/rust-by-example/hello/print.html
+https://doc.rust-lang.org/std/fmt/index.html
+todo [b] into
+
 # Exercise to Book Chapter mapping
 
 | Exercise               | Book Chapter        |

@@ -17,7 +17,7 @@ fn char_counter<T>(arg: T) -> usize {
     arg.as_ref().chars().count()
 }
 
-// Squares a number using as_mut(). Add the trait bound as is appropriate and
+// Squares a number using AsMut. Add the trait bound as is appropriate and
 // implement the function body.
 fn num_sq<T>(arg: &mut T) {
     ???
