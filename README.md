@@ -126,7 +126,7 @@ After every couple of sections, there will be a quiz that'll test your knowledge
 
 ## Enabling `rust-analyzer`
 
-Run the command `rustlings lsp` which will generate a `rust-project.json` at the root of the project, this allows [rust-analyzer](https://rust-analyzer.github.io/) to parse each exercise. 
+Run the command `rustlings lsp` which will generate a `rust-project.json` at the root of the project, this allows [rust-analyzer](https://rust-analyzer.github.io/) to parse each exercise.
 
 ## Continuing On
 

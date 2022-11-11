@@ -416,8 +416,8 @@ path = "exercises/enums/enums3.rs"
 mode = "test"
 hint = """
 As a first step, you can define enums to compile this code without errors.
-and then create a match expression in `process()`. 
-Note that you need to deconstruct some message variants 
+and then create a match expression in `process()`.
+Note that you need to deconstruct some message variants
 in the match expression to get value in the variant."""
 
 # STRINGS
@@ -476,7 +476,7 @@ name = "modules2"
 path = "exercises/modules/modules2.rs"
 mode = "compile"
 hint = """
-The delicious_snacks module is trying to present an external interface that is 
+The delicious_snacks module is trying to present an external interface that is
 different than its internal structure (the `fruits` and `veggies` modules and
 associated constants). Complete the `use` statements to fit the uses in main and
 find the one keyword missing for both constants."""
@@ -623,12 +623,12 @@ path = "exercises/error_handling/errors5.rs"
 mode = "compile"
 hint = """
 There are two different possible `Result` types produced within `main()`, which are
-propagated using `?` operators. How do we declare a return type from `main()` that allows both? 
+propagated using `?` operators. How do we declare a return type from `main()` that allows both?
 
 Under the hood, the `?` operator calls `From::from` on the error value to convert it to a boxed
 trait object, a `Box<dyn error::Error>`. This boxed trait object is polymorphic, and since all
 errors implement the `error::Error` trait, we can capture lots of different errors in one "Box"
-object. 
+object.
 
 Check out this section of the book:
 https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator
@@ -862,7 +862,7 @@ case is a vector of integers and the failure case is a DivisionError.
 
 The list_of_results function needs to return a vector of results.
 
-See https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.collect for how 
+See https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.collect for how
 the `FromIterator` trait is used in `collect()`. This trait is REALLY powerful! It
 can make the solution to this exercise infinitely easier."""
 
@@ -964,10 +964,10 @@ name = "threads1"
 path = "exercises/threads/threads1.rs"
 mode = "compile"
 hint = """
-`JoinHandle` is a struct that is returned from a spawned thread: 
+`JoinHandle` is a struct that is returned from a spawned thread:
 https://doc.rust-lang.org/std/thread/fn.spawn.html
 
-A challenge with multi-threaded applications is that the main thread can 
+A challenge with multi-threaded applications is that the main thread can
 finish before the spawned threads are completed.
 https://doc.rust-lang.org/book/ch16-01-threads.html#waiting-for-all-threads-to-finish-using-join-handles
 
@@ -1077,7 +1077,7 @@ mathematical constants in the rust standard library.
 https://doc.rust-lang.org/stable/std/f32/consts/index.html
 
 We may be tempted to use our own approximations for certain mathematical constants,
-but clippy recognizes those imprecise mathematical constants as a source of 
+but clippy recognizes those imprecise mathematical constants as a source of
 potential error.
 See the suggestions of the clippy warning in compile output and use the
 appropriate replacement constant from std::f32::consts..."""
