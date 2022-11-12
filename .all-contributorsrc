@@ -1677,6 +1677,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "winterqt",
+      "name": "Winter",
+      "avatar_url": "https://avatars.githubusercontent.com/u/78392041?v=4",
+      "profile": "https://winter.cafe",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
