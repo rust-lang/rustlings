@@ -240,6 +240,9 @@ authors.
       <td align="center"><a href="https://github.com/mfurak"><img src="https://avatars.githubusercontent.com/u/38523093?v=4?s=100" width="100px;" alt="Marek Furák"/><br /><sub><b>Marek Furák</b></sub></a><br /><a href="#content-mfurak" title="Content">🖋</a></td>
       <td align="center"><a href="https://winter.cafe"><img src="https://avatars.githubusercontent.com/u/78392041?v=4?s=100" width="100px;" alt="Winter"/><br /><sub><b>Winter</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=winterqt" title="Code">💻</a></td>
     </tr>
+    <tr>
+      <td align="center"><a href="https://moritzboeh.me"><img src="https://avatars.githubusercontent.com/u/42215704?v=4?s=100" width="100px;" alt="Moritz Böhme"/><br /><sub><b>Moritz Böhme</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=MoritzBoehme" title="Code">💻</a></td>
+    </tr>
   </tbody>
 </table>
 
