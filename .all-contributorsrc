@@ -1686,6 +1686,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "MoritzBoehme",
+      "name": "Moritz Böhme",
+      "avatar_url": "https://avatars.githubusercontent.com/u/42215704?v=4",
+      "profile": "https://moritzboeh.me",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
