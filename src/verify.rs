@@ -48,7 +48,7 @@ pub fn test(exercise: &Exercise, verbose: bool) -> Result<(), ()> {
 }
 
 // Invoke the rust compiler without running the resulting binary
-fn compile_only(exercise: &Exercise) -> Result<bool, ()> {
+pub fn compile_only(exercise: &Exercise) -> Result<bool, ()> {
     let progress_bar = ProgressBar::new_spinner();
     progress_bar.set_message(format!("Compiling {exercise}..."));
     progress_bar.enable_steady_tick(100);
