@@ -4,8 +4,8 @@
 
 
 fn main() {
-    call_me();
+    call();
 }
-fn call_me () {
+fn call () {
 
 }
