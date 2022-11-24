@@ -695,7 +695,7 @@ name = "traits2"
 path = "exercises/traits/traits2.rs"
 mode = "test"
 hint = """
-Notice how the trait takes ownership of 'self',and returns `Self'.
+Notice how the trait takes ownership of 'self',and returns `Self`.
 Try mutating the incoming string vector. Have a look at the tests to see
 what the result should look like!
 
