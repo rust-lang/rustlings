@@ -1,10 +1,13 @@
 // iterators5.rs
 // Let's define a simple model to track Rustlings exercise progress. Progress
-// will be modelled using a hash map. The name of the exercise is the key and
-// the progress is the value. Two counting functions were created to count the
-// number of exercises with a given progress. These counting functions use
-// imperative style for loops. Recreate this counting functionality using
-// iterators. Only the two iterator methods (count_iterator and
+// will be modelled using a hash map.
+// The name of the exercise is the key and
+// the progress is the value.  map(name,progress)
+// Two counting functions were created to count the
+// number of exercises with a given progress. (统计给定的过程的号码)
+// These counting functions use imperative style for loops. 使用了必要的循环
+// Recreate this counting functionality using iterators. 使用迭代器重新创建一个
+// Only the two iterator methods (count_iterator and
 // count_collection_iterator) need to be modified.
 // Execute `rustlings hint iterators5` or use the `hint` watch subcommand for a hint.
 //
@@ -34,7 +37,11 @@ fn count_for(map: &HashMap<String, Progress>, value: Progress) -> usize {
 fn count_iterator(map: &HashMap<String, Progress>, value: Progress) -> usize {
     // map is a hashmap with String keys and Progress values.
     // map = { "variables1": Complete, "from_str": None, ... }
-    todo!();
+    // todo!();
+    map.values()
+        .into_iter()
+        .filter(|x| **x == value)
+        .fold(0, |acc, _| acc + 1)
 }
 
 fn count_collection_for(collection: &[HashMap<String, Progress>], value: Progress) -> usize {
@@ -53,7 +60,15 @@ fn count_collection_iterator(collection: &[HashMap<String, Progress>], value: Pr
     // collection is a slice of hashmaps.
     // collection = [{ "variables1": Complete, "from_str": None, ... },
     //     { "variables2": Complete, ... }, ... ]
-    todo!();
+    collection
+        .iter()
+        .map(|x| {
+            x.values()
+                .into_iter()
+                .filter(|v| **v == value)
+                .fold(0, |acc, _| acc + 1)
+        })
+        .sum()
 }
 
 #[cfg(test)]
