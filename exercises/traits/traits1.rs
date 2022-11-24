@@ -16,7 +16,7 @@ trait AppendBar {
 }
 
 impl AppendBar for String {
-    //Add your code here
+    // TODO: Implement `AppendBar` for type `String`.
 }
 
 fn main() {
