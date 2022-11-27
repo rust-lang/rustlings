@@ -6,7 +6,6 @@
 //
 // Execute `rustlings hint vecs2` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
 
 fn vec_loop(mut v: Vec<i32>) -> Vec<i32> {
     for i in v.iter_mut() {
@@ -18,11 +17,15 @@ fn vec_loop(mut v: Vec<i32>) -> Vec<i32> {
 }
 
 fn vec_map(v: &Vec<i32>) -> Vec<i32> {
-    v.iter().map(|num| {
+    v.iter()
+        .map(|num| {
         // TODO: Do the same thing as above - but instead of mutating the
         // Vec, you can just return the new number!
-        num * 2;
-    }).collect()
+                num * 2
+        
+        })
+        .collect()
+    
 }
 
 #[cfg(test)]
