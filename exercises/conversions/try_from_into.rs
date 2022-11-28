@@ -23,8 +23,6 @@ enum IntoColorError {
     IntConversion,
 }
 
-// I AM NOT DONE
-
 // Your task is to complete this implementation
 // and return an Ok result of inner type Color.
 // You need to create an implementation for a tuple of three integers,
@@ -38,6 +36,24 @@ enum IntoColorError {
 impl TryFrom<(i16, i16, i16)> for Color {
     type Error = IntoColorError;
     fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {
+        let x: u8 = tuple
+            .0
+            .try_into()
+            .map_err(|_| IntoColorError::IntConversion)?;
+        let y: u8 = tuple
+            .1
+            .try_into()
+            .map_err(|_| IntoColorError::IntConversion)?;
+        let z: u8 = tuple
+            .2
+            .try_into()
+            .map_err(|_| IntoColorError::IntConversion)?;
+
+        Ok(Color {
+            red: x,
+            green: y,
+            blue: z,
+        })
     }
 }
 
@@ -45,6 +61,30 @@ impl TryFrom<(i16, i16, i16)> for Color {
 impl TryFrom<[i16; 3]> for Color {
     type Error = IntoColorError;
     fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {
+        let mut a: [u8; 3] = [0, 0, 0];
+        // arr.into_iter().enumerate().map(|(i, x)| {
+        //     let t: u8 = match x.try_into() {
+        //         Ok(i) => i,
+        //         Err(err) => {
+        //             return Err(IntoColorError::IntConversion);
+        //         }
+        //     };
+        // });
+        for (i, x) in arr.into_iter().enumerate() {
+            let tmp: u8 = match x.to_owned().try_into() {
+                Ok(i) => i,
+                Err(err) => {
+                    return Err(IntoColorError::IntConversion);
+                }
+            };
+            // let tmp: u8 = x.try_into():IntoColorError::IntConversion;
+            a[i] = tmp
+        }
+        Ok(Color {
+            red: a[0],
+            green: a[1],
+            blue: a[2],
+        })
     }
 }
 
@@ -52,6 +92,27 @@ impl TryFrom<[i16; 3]> for Color {
 impl TryFrom<&[i16]> for Color {
     type Error = IntoColorError;
     fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {
+        if slice.len() != 3 {
+            return Err(IntoColorError::BadLen);
+        }
+        let mut a: [u8; 3] = [0, 0, 0];
+        // arr.iter().enumerate().map(|(i, x)| {
+        //     x = x.try_into()
+        // })
+        for (i, x) in slice.into_iter().enumerate() {
+            let tmp: u8 = match x.to_owned().try_into() {
+                Ok(i) => i,
+                Err(err) => {
+                    return Err(IntoColorError::IntConversion);
+                }
+            };
+            a[i] = tmp
+        }
+        Ok(Color {
+            red: a[0],
+            green: a[1],
+            blue: a[2],
+        })
     }
 }
 
