@@ -65,6 +65,8 @@ If you get a permission denied message, you might have to exclude the directory 
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/rust-lang/rustlings)
 
+Open up Rustlings in [Codespaces](https://docs.github.com/en/codespaces/developing-in-codespaces/creating-a-codespace-for-a-repository#creating-a-codespace-for-a-repository)
+
 ## Manually
 
 Basically: Clone the repository at the latest tag, run `cargo install --path .`.
