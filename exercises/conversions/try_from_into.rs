@@ -62,14 +62,6 @@ impl TryFrom<[i16; 3]> for Color {
     type Error = IntoColorError;
     fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {
         let mut a: [u8; 3] = [0, 0, 0];
-        // arr.into_iter().enumerate().map(|(i, x)| {
-        //     let t: u8 = match x.try_into() {
-        //         Ok(i) => i,
-        //         Err(err) => {
-        //             return Err(IntoColorError::IntConversion);
-        //         }
-        //     };
-        // });
         for (i, x) in arr.into_iter().enumerate() {
             let tmp: u8 = match x.to_owned().try_into() {
                 Ok(i) => i,
