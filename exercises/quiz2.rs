@@ -27,7 +27,8 @@ pub enum Command {
 }
 
 mod my_module {
-    use super::Command;
+    use Command;
+    use Command::*;
 
     // TODO: Complete the function signature!
     pub fn transformer(input: ???) -> ??? {
@@ -44,7 +45,7 @@ mod my_module {
 mod tests {
     // TODO: What do we have to import to have `transformer` in scope?
     use ???;
-    use super::Command;
+    use Command;
 
     #[test]
     fn it_works() {
