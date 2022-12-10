@@ -1,5 +1,6 @@
 use glob::glob;
 use serde::{Deserialize, Serialize};
+use std::env;
 use std::error::Error;
 use std::process::Command;
 
@@ -64,6 +65,12 @@ impl RustAnalyzerProject {
 
     /// Use `rustc` to determine the default toolchain
     pub fn get_sysroot_src(&mut self) -> Result<(), Box<dyn Error>> {
+        // check if RUST_SRC_PATH is set
+        if let Ok(path) = env::var("RUST_SRC_PATH") {
+            self.sysroot_src = path;
+            return Ok(());
+        }
+
         let toolchain = Command::new("rustc")
             .arg("--print")
             .arg("sysroot")
