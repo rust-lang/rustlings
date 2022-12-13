@@ -28,6 +28,19 @@ curl -L https://raw.githubusercontent.com/rust-lang/rustlings/main/install.sh | 
 
 This will install Rustlings and give you access to the `rustlings` command. Run it to get started!
 
+### Nix
+Basically: Clone the repository at the latest tag, finally run `nix develop` or `nix-shell`.
+
+```bash
+# find out the latest version at https://github.com/rust-lang/rustlings/releases/latest (on edit 5.2.1)
+git clone -b 5.2.1 --depth 1 https://github.com/rust-lang/rustlings
+cd rustlings
+# if nix version > 2.3
+nix develop
+# if nix version <= 2.3
+nix-shell
+```
+
 ## Windows
 
 In PowerShell (Run as Administrator), set `ExecutionPolicy` to `RemoteSigned`:
@@ -126,7 +139,7 @@ After every couple of sections, there will be a quiz that'll test your knowledge
 
 ## Enabling `rust-analyzer`
 
-Run the command `rustlings lsp` which will generate a `rust-project.json` at the root of the project, this allows [rust-analyzer](https://rust-analyzer.github.io/) to parse each exercise. 
+Run the command `rustlings lsp` which will generate a `rust-project.json` at the root of the project, this allows [rust-analyzer](https://rust-analyzer.github.io/) to parse each exercise.
 
 ## Continuing On
 

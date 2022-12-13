@@ -1569,6 +1569,141 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "gasparitiago",
+      "name": "Tiago De Gaspari",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3237254?v=4",
+      "profile": "https://github.com/gasparitiago",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "skaunov",
+      "name": "skaunov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/65976143?v=4",
+      "profile": "https://github.com/skaunov",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "cj81499",
+      "name": "Cal Jacobson",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9152032?v=4",
+      "profile": "http://caljacobson.dev",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "duchonic",
+      "name": "Duchoud Nicolas",
+      "avatar_url": "https://avatars.githubusercontent.com/u/34117620?v=4",
+      "profile": "https://github.com/duchonic",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "gfaugere",
+      "name": "Gaëtan Faugère",
+      "avatar_url": "https://avatars.githubusercontent.com/u/11901979?v=4",
+      "profile": "https://github.com/gfaugere",
+      "contributions": [
+        "tool"
+      ]
+    },
+    {
+      "login": "bhbuehler",
+      "name": "bhbuehler",
+      "avatar_url": "https://avatars.githubusercontent.com/u/25541343?v=4",
+      "profile": "https://github.com/bhbuehler",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "nyurik",
+      "name": "Yuri Astrakhan",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1641515?v=4",
+      "profile": "https://github.com/nyurik",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "azzamsa",
+      "name": "azzamsa",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17734314?v=4",
+      "profile": "http://azzamsa.com",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "mvanschellebeeck",
+      "name": "mvanschellebeeck",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17671052?v=4",
+      "profile": "https://github.com/mvanschellebeeck",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "aaarkid",
+      "name": "Arkid",
+      "avatar_url": "https://avatars.githubusercontent.com/u/39987510?v=4",
+      "profile": "https://github.com/aaarkid",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "tfpk",
+      "name": "Tom Kunc",
+      "avatar_url": "https://avatars.githubusercontent.com/u/10906982?v=4",
+      "profile": "http://tfpk.dev",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "mfurak",
+      "name": "Marek Furák",
+      "avatar_url": "https://avatars.githubusercontent.com/u/38523093?v=4",
+      "profile": "https://github.com/mfurak",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "winterqt",
+      "name": "Winter",
+      "avatar_url": "https://avatars.githubusercontent.com/u/78392041?v=4",
+      "profile": "https://winter.cafe",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "MoritzBoehme",
+      "name": "Moritz Böhme",
+      "avatar_url": "https://avatars.githubusercontent.com/u/42215704?v=4",
+      "profile": "https://moritzboeh.me",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "craymel",
+      "name": "craymel",
+      "avatar_url": "https://avatars.githubusercontent.com/u/71062756?v=4",
+      "profile": "https://github.com/craymel",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
@@ -1576,5 +1711,6 @@
   "projectOwner": "rust-lang",
   "repoType": "github",
   "repoHost": "https://github.com",
-  "skipCi": true
+  "skipCi": true,
+  "commitConvention": "angular"
 }
