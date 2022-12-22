@@ -7,7 +7,7 @@
 // For now, think of the `Box<dyn ...>` type as an "I want anything that does ???" type, which, given
 // Rust's usual standards for runtime safety, should strike you as somewhat lenient!
 
-// In short, this particular use case for boxes is for when you want to own a value and you care only that it is a
+// In short, this particular use case for boxes is for when you want to own a value and you care only that it is a 
 // type which implements a particular trait. To do so, The Box is declared as of type Box<dyn Trait> where Trait is the trait
 // the compiler looks for on any value used in that context. For this exercise, that context is the potential errors
 // which can be returned in a Result.
@@ -46,7 +46,7 @@ impl PositiveNonzeroInteger {
         match value {
             x if x < 0 => Err(CreationError::Negative),
             x if x == 0 => Err(CreationError::Zero),
-            x => Ok(PositiveNonzeroInteger(x as u64)),
+            x => Ok(PositiveNonzeroInteger(x as u64))
         }
     }
 }
