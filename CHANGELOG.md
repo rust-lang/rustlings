@@ -1,3 +1,36 @@
+<a name="5.3.0"></a>
+## 5.3.0 (2022-12-23)
+
+#### Added
+
+- **cli**: Added a percentage display in watch mode
+- Added a `flake.nix` for Nix users
+
+#### Changed
+
+- **structs3**: Added an additional test
+- **macros**: Added a link to MacroKata in the README
+
+#### Fixed
+
+- **strings3**: Added a link to `std` in the hint
+- **threads1**: Corrected a hint link
+- **iterators1**: Clarified hint steps
+- **errors5**: Fix a typo in the hint
+- **options1**: Clarified on the usage of the 24-hour system
+- **threads2, threads3**: Explicitly use `Arc::clone`
+- **structs3**: Clarifed the hint
+- **quiz2, as_ref_mut, options1, traits1, traits2**: Clarified hints
+- **traits1, traits2, cli**: Tidied up unmatching backticks
+- **enums2**: Removed unneccessary indirection of self
+- **enums3**: Added an extra tuple comment
+
+#### Housekeeping
+
+- Added a VSCode extension recommendation
+- Applied some Clippy and rustfmt formatting
+- Added a note on Windows PowerShell and other shell compatibility
+
 <a name="5.2.1"></a>
 ## 5.2.1 (2022-09-06)
 
