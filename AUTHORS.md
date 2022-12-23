@@ -243,6 +243,7 @@ authors.
     <tr>
       <td align="center"><a href="https://moritzboeh.me"><img src="https://avatars.githubusercontent.com/u/42215704?v=4?s=100" width="100px;" alt="Moritz Böhme"/><br /><sub><b>Moritz Böhme</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=MoritzBoehme" title="Code">💻</a></td>
       <td align="center"><a href="https://github.com/craymel"><img src="https://avatars.githubusercontent.com/u/71062756?v=4?s=100" width="100px;" alt="craymel"/><br /><sub><b>craymel</b></sub></a><br /><a href="#content-craymel" title="Content">🖋</a></td>
+      <td align="center"><a href="https://github.com/tkburis"><img src="https://avatars.githubusercontent.com/u/20501289?v=4?s=100" width="100px;" alt="TK Buristrakul"/><br /><sub><b>TK Buristrakul</b></sub></a><br /><a href="#content-tkburis" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
