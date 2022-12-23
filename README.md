@@ -32,8 +32,8 @@ This will install Rustlings and give you access to the `rustlings` command. Run 
 Basically: Clone the repository at the latest tag, finally run `nix develop` or `nix-shell`.
 
 ```bash
-# find out the latest version at https://github.com/rust-lang/rustlings/releases/latest (on edit 5.2.1)
-git clone -b 5.2.1 --depth 1 https://github.com/rust-lang/rustlings
+# find out the latest version at https://github.com/rust-lang/rustlings/releases/latest (on edit 5.3.0)
+git clone -b 5.3.0 --depth 1 https://github.com/rust-lang/rustlings
 cd rustlings
 # if nix version > 2.3
 nix develop
@@ -70,8 +70,8 @@ If you get a permission denied message, you might have to exclude the directory 
 Basically: Clone the repository at the latest tag, run `cargo install --path .`.
 
 ```bash
-# find out the latest version at https://github.com/rust-lang/rustlings/releases/latest (on edit 5.2.1)
-git clone -b 5.2.1 --depth 1 https://github.com/rust-lang/rustlings
+# find out the latest version at https://github.com/rust-lang/rustlings/releases/latest (on edit 5.3.0)
+git clone -b 5.3.0 --depth 1 https://github.com/rust-lang/rustlings
 cd rustlings
 cargo install --force --path .
 ```

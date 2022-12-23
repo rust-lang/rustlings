@@ -17,7 +17,7 @@
         rustlings =
           pkgs.rustPlatform.buildRustPackage {
             name = "rustlings";
-            version = "5.2.1";
+            version = "5.3.0";
 
             src = with pkgs.lib; cleanSourceWith {
               src = self;
