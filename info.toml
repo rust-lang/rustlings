@@ -1154,8 +1154,27 @@ https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/reen
 Challenge: Can you make the `TryFrom` implementations generic over many integer types?"""
 
 [[exercises]]
-name = "as_ref_mut"
-path = "exercises/conversions/as_ref_mut.rs"
+name = "as_ref"
+path = "exercises/conversions/as_ref.rs"
 mode = "test"
 hint = """
 Add AsRef<str> as a trait bound to the functions."""
+
+[[exercises]]
+name = "as_mut1"
+path = "exercises/conversions/as_mut1.rs"
+mode = "test"
+hint = """
+Add AsMut<u32> as a trait bound to the function."""
+
+[[exercises]]
+name = "as_mut2"
+path = "exercises/conversions/as_mut2.rs"
+mode = "test"
+hint = """
+Now we need to tell the compiler about two types. Type T is Box<U>, while
+type U is a number. Numbers can implement std::ops::MulAssign (more at
+https://doc.rust-lang.org/std/ops/trait.MulAssign.html). The number
+might also need to be copyable.
+
+You might need to use a temporary variable in the function's body."""
