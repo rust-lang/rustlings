@@ -16,7 +16,7 @@ pub fn verify<'a>(
     let (num_done, total) = progress;
     let bar = ProgressBar::new(total as u64);
     bar.set_style(ProgressStyle::default_bar()
-        .template("Progress: [{bar:60.green/red}] {pos}/{len}")
+        .template("Progress: [{bar:60.green/red}] {pos}/{len} {msg}")
         .progress_chars("#>-")
     );
     bar.set_position(num_done as u64);
@@ -29,6 +29,8 @@ pub fn verify<'a>(
         if !compile_result.unwrap_or(false) {
             return Err(exercise);
         }
+        let percentage = num_done as f32 / total as f32 * 100.0;
+        bar.set_message(format!("({:.1} %)", percentage));
         bar.inc(1);
     }
     Ok(())
@@ -48,7 +50,7 @@ pub fn test(exercise: &Exercise, verbose: bool) -> Result<(), ()> {
 // Invoke the rust compiler without running the resulting binary
 fn compile_only(exercise: &Exercise) -> Result<bool, ()> {
     let progress_bar = ProgressBar::new_spinner();
-    progress_bar.set_message(format!("Compiling {}...", exercise));
+    progress_bar.set_message(format!("Compiling {exercise}..."));
     progress_bar.enable_steady_tick(100);
 
     let _ = compile(exercise, &progress_bar)?;
@@ -60,12 +62,12 @@ fn compile_only(exercise: &Exercise) -> Result<bool, ()> {
 // Compile the given Exercise and run the resulting binary in an interactive mode
 fn compile_and_run_interactively(exercise: &Exercise) -> Result<bool, ()> {
     let progress_bar = ProgressBar::new_spinner();
-    progress_bar.set_message(format!("Compiling {}...", exercise));
+    progress_bar.set_message(format!("Compiling {exercise}..."));
     progress_bar.enable_steady_tick(100);
 
     let compilation = compile(exercise, &progress_bar)?;
 
-    progress_bar.set_message(format!("Running {}...", exercise));
+    progress_bar.set_message(format!("Running {exercise}..."));
     let result = compilation.run();
     progress_bar.finish_and_clear();
 
@@ -86,7 +88,7 @@ fn compile_and_run_interactively(exercise: &Exercise) -> Result<bool, ()> {
 // the output if verbose is set to true
 fn compile_and_test(exercise: &Exercise, run_mode: RunMode, verbose: bool) -> Result<bool, ()> {
     let progress_bar = ProgressBar::new_spinner();
-    progress_bar.set_message(format!("Testing {}...", exercise));
+    progress_bar.set_message(format!("Testing {exercise}..."));
     progress_bar.enable_steady_tick(100);
 
     let compilation = compile(exercise, &progress_bar)?;
@@ -165,16 +167,16 @@ fn prompt_for_completion(exercise: &Exercise, prompt_output: Option<String>) -> 
 
     println!();
     if no_emoji {
-        println!("~*~ {} ~*~", success_msg)
+        println!("~*~ {success_msg} ~*~")
     } else {
-        println!("🎉 🎉  {} 🎉 🎉", success_msg)
+        println!("🎉 🎉  {success_msg} 🎉 🎉")
     }
     println!();
 
     if let Some(output) = prompt_output {
         println!("Output:");
         println!("{}", separator());
-        println!("{}", output);
+        println!("{output}");
         println!("{}", separator());
         println!();
     }
