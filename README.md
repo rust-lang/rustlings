@@ -1,5 +1,6 @@
 # Solutions to rustlings 🦀❤️
 
+```bash
 🎉 All exercises completed! 🎉
 
 +----------------------------------------------------+
@@ -28,6 +29,8 @@ You can also contribute your own exercises to help the greater community!
 
 Before reporting an issue or contributing, please read our guidelines:
 https://github.com/rust-lang/rustlings/blob/main/CONTRIBUTING.md
+
+```
 
 ## Original readme
 
@@ -60,6 +63,7 @@ curl -L https://raw.githubusercontent.com/rust-lang/rustlings/main/install.sh | 
 This will install Rustlings and give you access to the `rustlings` command. Run it to get started!
 
 ### Nix
+
 Basically: Clone the repository at the latest tag, finally run `nix develop` or `nix-shell`.
 
 ```bash
