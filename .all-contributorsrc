@@ -1713,6 +1713,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "HerschelW",
+      "name": "Kent Worthington",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17935816?v=4",
+      "profile": "https://github.com/HerschelW",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
