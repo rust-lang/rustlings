@@ -809,7 +809,7 @@ If you use a lifetime annotation in a struct's fields, where else does it need t
 
 [[exercises]]
 name = "iterators1"
-path = "exercises/standard_library_types/iterators1.rs"
+path = "exercises/iterators/iterators1.rs"
 mode = "compile"
 hint = """
 Step 1:
@@ -826,7 +826,7 @@ https://doc.rust-lang.org/std/iter/trait.Iterator.html for some ideas.
 
 [[exercises]]
 name = "iterators2"
-path = "exercises/standard_library_types/iterators2.rs"
+path = "exercises/iterators/iterators2.rs"
 mode = "test"
 hint = """
 Step 1
@@ -847,7 +847,7 @@ and very general. Rust just needs to know the desired type."""
 
 [[exercises]]
 name = "iterators3"
-path = "exercises/standard_library_types/iterators3.rs"
+path = "exercises/iterators/iterators3.rs"
 mode = "test"
 hint = """
 The divide function needs to return the correct error when even division is not
@@ -866,7 +866,7 @@ can make the solution to this exercise infinitely easier."""
 
 [[exercises]]
 name = "iterators4"
-path = "exercises/standard_library_types/iterators4.rs"
+path = "exercises/iterators/iterators4.rs"
 mode = "test"
 hint = """
 In an imperative language, you might write a for loop that updates
@@ -878,7 +878,7 @@ Hint 2: Check out the `fold` and `rfold` methods!"""
 
 [[exercises]]
 name = "iterators5"
-path = "exercises/standard_library_types/iterators5.rs"
+path = "exercises/iterators/iterators5.rs"
 mode = "test"
 hint = """
 The documentation for the std::iter::Iterator trait contains numerous methods
@@ -960,7 +960,7 @@ See https://doc.rust-lang.org/book/ch16-02-message-passing.html for more info.
 
 [[exercises]]
 name = "box1"
-path = "exercises/standard_library_types/box1.rs"
+path = "exercises/smart_pointers/box1.rs"
 mode = "test"
 hint = """
 Step 1
@@ -978,7 +978,7 @@ and try other types!
 
 [[exercises]]
 name = "rc1"
-path = "exercises/standard_library_types/rc1.rs"
+path = "exercises/smart_pointers/rc1.rs"
 mode = "compile"
 hint = """
 This is a straightforward exercise to use the Rc<T> type. Each Planet has
@@ -992,7 +992,7 @@ https://doc.rust-lang.org/book/ch15-04-rc.html
 
 [[exercises]]
 name = "arc1"
-path = "exercises/standard_library_types/arc1.rs"
+path = "exercises/smart_pointers/arc1.rs"
 mode = "compile"
 hint = """
 Make `shared_numbers` be an `Arc` from the numbers vector. Then, in order
@@ -1009,7 +1009,7 @@ https://doc.rust-lang.org/stable/book/ch16-00-concurrency.html
 
 [[exercises]]
 name = "cow1"
-path = "exercises/standard_library_types/cow1.rs"
+path = "exercises/smart_pointers/cow1.rs"
 mode = "compile"
 hint = """
 Since the vector is already owned, the `Cow` type doesn't need to clone it.
