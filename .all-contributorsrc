@@ -1722,6 +1722,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "seporterfield",
+      "name": "seporterfield",
+      "avatar_url": "https://avatars.githubusercontent.com/u/107010978?v=4",
+      "profile": "https://github.com/seporterfield",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,

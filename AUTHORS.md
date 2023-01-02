@@ -245,6 +245,7 @@ authors.
       <td align="center"><a href="https://github.com/craymel"><img src="https://avatars.githubusercontent.com/u/71062756?v=4?s=100" width="100px;" alt="craymel"/><br /><sub><b>craymel</b></sub></a><br /><a href="#content-craymel" title="Content">🖋</a></td>
       <td align="center"><a href="https://github.com/tkburis"><img src="https://avatars.githubusercontent.com/u/20501289?v=4?s=100" width="100px;" alt="TK Buristrakul"/><br /><sub><b>TK Buristrakul</b></sub></a><br /><a href="#content-tkburis" title="Content">🖋</a></td>
       <td align="center"><a href="https://github.com/HerschelW"><img src="https://avatars.githubusercontent.com/u/17935816?v=4?s=100" width="100px;" alt="Kent Worthington"/><br /><sub><b>Kent Worthington</b></sub></a><br /><a href="#content-HerschelW" title="Content">🖋</a></td>
+      <td align="center"><a href="https://github.com/seporterfield"><img src="https://avatars.githubusercontent.com/u/107010978?v=4?s=100" width="100px;" alt="seporterfield"/><br /><sub><b>seporterfield</b></sub></a><br /><a href="#content-seporterfield" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
