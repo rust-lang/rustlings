@@ -246,6 +246,7 @@ authors.
       <td align="center"><a href="https://github.com/tkburis"><img src="https://avatars.githubusercontent.com/u/20501289?v=4?s=100" width="100px;" alt="TK Buristrakul"/><br /><sub><b>TK Buristrakul</b></sub></a><br /><a href="#content-tkburis" title="Content">🖋</a></td>
       <td align="center"><a href="https://github.com/HerschelW"><img src="https://avatars.githubusercontent.com/u/17935816?v=4?s=100" width="100px;" alt="Kent Worthington"/><br /><sub><b>Kent Worthington</b></sub></a><br /><a href="#content-HerschelW" title="Content">🖋</a></td>
       <td align="center"><a href="https://github.com/seporterfield"><img src="https://avatars.githubusercontent.com/u/107010978?v=4?s=100" width="100px;" alt="seporterfield"/><br /><sub><b>seporterfield</b></sub></a><br /><a href="#content-seporterfield" title="Content">🖋</a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/dbarrosop"><img src="https://avatars.githubusercontent.com/u/6246622?v=4?s=100" width="100px;" alt="David Barroso"/><br /><sub><b>David Barroso</b></sub></a><br /><a href="#infra-dbarrosop" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
     </tr>
   </tbody>
 </table>

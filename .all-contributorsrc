@@ -1731,6 +1731,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "dbarrosop",
+      "name": "David Barroso",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6246622?v=4",
+      "profile": "https://www.linkedin.com/in/dbarrosop",
+      "contributions": [
+        "infra"
+      ]
     }
   ],
   "contributorsPerLine": 8,
