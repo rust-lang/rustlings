@@ -55,7 +55,7 @@ impl RustAnalyzerProject {
     /// Parse the exercises folder for .rs files, any matches will create
     /// a new `crate` in rust-project.json which allows rust-analyzer to
     /// treat it like a normal binary
-    pub fn exercies_to_json(&mut self) -> Result<(), Box<dyn Error>> {
+    pub fn exercises_to_json(&mut self) -> Result<(), Box<dyn Error>> {
         for e in glob("./exercises/**/*")? {
             let path = e?.to_string_lossy().to_string();
             self.path_to_json(path);
