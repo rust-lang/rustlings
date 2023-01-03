@@ -1740,6 +1740,15 @@
       "contributions": [
         "infra"
       ]
+    },
+    {
+      "login": "tklauser",
+      "name": "Tobias Klauser",
+      "avatar_url": "https://avatars.githubusercontent.com/u/539708?v=4",
+      "profile": "https://distanz.ch",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
