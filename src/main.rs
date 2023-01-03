@@ -239,7 +239,7 @@ fn main() {
                 .get_sysroot_src()
                 .expect("Couldn't find toolchain path, do you have `rustc` installed?");
             project
-                .exercies_to_json()
+                .exercises_to_json()
                 .expect("Couldn't parse rustlings exercises files");
 
             if project.crates.is_empty() {
