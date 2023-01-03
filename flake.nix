@@ -14,14 +14,17 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
+
+        cargoBuildInputs = with pkgs; lib.optionals stdenv.isDarwin [
+          darwin.apple_sdk.frameworks.CoreServices
+        ];
+
         rustlings =
           pkgs.rustPlatform.buildRustPackage {
             name = "rustlings";
             version = "5.2.1";
 
-            buildInputs = with pkgs; lib.optionals stdenv.isDarwin [
-              darwin.apple_sdk.frameworks.CoreServices
-            ];
+            buildInputs = cargoBuildInputs;
 
             src = with pkgs.lib; cleanSourceWith {
               src = self;
@@ -53,7 +56,9 @@
             rustc
             rust-analyzer
             rustlings
-          ];
+            rustfmt
+            clippy
+          ] ++ cargoBuildInputs;
         };
       });
 }
