@@ -1,5 +1,6 @@
 use glob::glob;
 use serde::{Deserialize, Serialize};
+use std::env;
 use std::error::Error;
 use std::process::Command;
 
@@ -54,7 +55,7 @@ impl RustAnalyzerProject {
     /// Parse the exercises folder for .rs files, any matches will create
     /// a new `crate` in rust-project.json which allows rust-analyzer to
     /// treat it like a normal binary
-    pub fn exercies_to_json(&mut self) -> Result<(), Box<dyn Error>> {
+    pub fn exercises_to_json(&mut self) -> Result<(), Box<dyn Error>> {
         for e in glob("./exercises/**/*")? {
             let path = e?.to_string_lossy().to_string();
             self.path_to_json(path);
@@ -64,6 +65,12 @@ impl RustAnalyzerProject {
 
     /// Use `rustc` to determine the default toolchain
     pub fn get_sysroot_src(&mut self) -> Result<(), Box<dyn Error>> {
+        // check if RUST_SRC_PATH is set
+        if let Ok(path) = env::var("RUST_SRC_PATH") {
+            self.sysroot_src = path;
+            return Ok(());
+        }
+
         let toolchain = Command::new("rustc")
             .arg("--print")
             .arg("sysroot")
