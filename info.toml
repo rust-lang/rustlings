@@ -1072,7 +1072,7 @@ name = "clippy1"
 path = "exercises/clippy/clippy1.rs"
 mode = "clippy"
 hint = """
-Rust stores the highest precision version of any long or inifinite precision
+Rust stores the highest precision version of any long or infinite precision
 mathematical constants in the Rust standard library.
 https://doc.rust-lang.org/stable/std/f32/consts/index.html
 
