@@ -250,6 +250,9 @@ authors.
       <td align="center"><a href="https://distanz.ch"><img src="https://avatars.githubusercontent.com/u/539708?v=4?s=100" width="100px;" alt="Tobias Klauser"/><br /><sub><b>Tobias Klauser</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=tklauser" title="Code">💻</a></td>
       <td align="center"><a href="https://github.com/0xMySt1c"><img src="https://avatars.githubusercontent.com/u/101825630?v=4?s=100" width="100px;" alt="0xMySt1c"/><br /><sub><b>0xMySt1c</b></sub></a><br /><a href="#tool-0xMySt1c" title="Tools">🔧</a></td>
     </tr>
+    <tr>
+      <td align="center"><a href="https://github.com/AxolotlTears"><img src="https://avatars.githubusercontent.com/u/87157047?v=4?s=100" width="100px;" alt="Ten"/><br /><sub><b>Ten</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=AxolotlTears" title="Code">💻</a></td>
+    </tr>
   </tbody>
 </table>
 
