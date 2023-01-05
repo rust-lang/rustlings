@@ -248,6 +248,7 @@ authors.
       <td align="center"><a href="https://github.com/seporterfield"><img src="https://avatars.githubusercontent.com/u/107010978?v=4?s=100" width="100px;" alt="seporterfield"/><br /><sub><b>seporterfield</b></sub></a><br /><a href="#content-seporterfield" title="Content">🖋</a></td>
       <td align="center"><a href="https://www.linkedin.com/in/dbarrosop"><img src="https://avatars.githubusercontent.com/u/6246622?v=4?s=100" width="100px;" alt="David Barroso"/><br /><sub><b>David Barroso</b></sub></a><br /><a href="#infra-dbarrosop" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
       <td align="center"><a href="https://distanz.ch"><img src="https://avatars.githubusercontent.com/u/539708?v=4?s=100" width="100px;" alt="Tobias Klauser"/><br /><sub><b>Tobias Klauser</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=tklauser" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/0xMySt1c"><img src="https://avatars.githubusercontent.com/u/101825630?v=4?s=100" width="100px;" alt="0xMySt1c"/><br /><sub><b>0xMySt1c</b></sub></a><br /><a href="#tool-0xMySt1c" title="Tools">🔧</a></td>
     </tr>
   </tbody>
 </table>
