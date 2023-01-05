@@ -1749,6 +1749,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "0xMySt1c",
+      "name": "0xMySt1c",
+      "avatar_url": "https://avatars.githubusercontent.com/u/101825630?v=4",
+      "profile": "https://github.com/0xMySt1c",
+      "contributions": [
+        "tool"
+      ]
     }
   ],
   "contributorsPerLine": 8,
