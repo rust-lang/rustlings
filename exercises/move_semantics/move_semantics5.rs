@@ -3,13 +3,15 @@
 // adding, changing or removing any of them.
 // Execute `rustlings hint move_semantics5` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
-
 fn main() {
     let mut x = 100;
     let y = &mut x;
+    let y2 = &mut x;
     let z = &mut x;
-    *y += 100;
-    *z += 1000;
+     asd(z,1100);
     assert_eq!(x, 1200);
+}
+
+fn asd(r:&mut i32, n:i32) {
+    *r += n;
 }
