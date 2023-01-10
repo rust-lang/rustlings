@@ -29,7 +29,7 @@ pub fn verify<'a>(
         if !compile_result.unwrap_or(false) {
             return Err(exercise);
         }
-        let percentage = num_done as f32 / total as f32 * 100.0;
+        let percentage = bar.position() as f32 / total as f32 * 100.0;
         bar.set_message(format!("({:.1} %)", percentage));
         bar.inc(1);
     }
