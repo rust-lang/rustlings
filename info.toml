@@ -815,7 +815,7 @@ hint = """
 Step 1:
 We need to apply something to the collection `my_fav_fruits` before we start to go through
 it. What could that be? Take a look at the struct definition for a vector for inspiration:
-https://doc.rust-lang.org/std/vec/struct.Vec.html.
+https://doc.rust-lang.org/std/vec/struct.Vec.html
 Step 2 & step 3:
 Very similar to the lines above and below. You've got this!
 Step 4:
