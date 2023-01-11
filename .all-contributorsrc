@@ -1776,6 +1776,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "cloppingemu",
+      "name": "cloppingemu",
+      "avatar_url": "https://avatars.githubusercontent.com/u/12227963?v=4",
+      "profile": "https://github.com/cloppingemu",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
