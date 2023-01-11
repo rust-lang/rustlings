@@ -1162,11 +1162,5 @@ mode = "test"
 hint = """
 Add AsRef<str> as a trait bound to the functions."""
 
-[[exercises]]
-name = "dikjstra-algorithm"
-path = "exercises\Algorithms\Dijkstra-Algorithm\src\main.rs"
-mode = "test"
-hint = """
-Add AsRef<str> as a trait bound to the functions."""
 
 
