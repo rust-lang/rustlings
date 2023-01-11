@@ -1165,7 +1165,7 @@ Add AsRef<str> as a trait bound to the functions."""
 [[exercises]]
 name = "dikjstra-algorithm"
 path = "exercises\Algorithms\Dijkstra-Algorithm\src\main.rs"
-mode = "compile"
+mode = "test"
 hint = """
 Add AsRef<str> as a trait bound to the functions."""
 
