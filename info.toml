@@ -1160,4 +1160,6 @@ name = "as_ref_mut"
 path = "exercises/conversions/as_ref_mut.rs"
 mode = "test"
 hint = """
-Add AsRef<str> as a trait bound to the functions."""
+Hint 1: Add AsRef<str> as a trait bound to the functions.
+Hint 2: This function doesn't need to return anything as it's holding a mutable 
+reference, but consider the data type you'd want it to hold."""
