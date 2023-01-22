@@ -13,5 +13,6 @@ return results to new Vec<i32> vector
 12) generics2. review https://doc.rust-lang.org/book/ch10-01-syntax.html
 13) traits1 why is self accepted since it's being updated?
 14) revisit all traits exercises
-
+15) options1 (understand Some and None)
+16) option2 (important to understand if let, while let statements alternative to match ). ChatGPT explanation was great.
 
