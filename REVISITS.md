@@ -15,4 +15,5 @@ return results to new Vec<i32> vector
 14) revisit all traits exercises
 15) options1 (understand Some and None)
 16) option2 (important to understand if let, while let statements alternative to match ). ChatGPT explanation was great.
+17) errors2 make sure you understand error propagation but also the long-form solution (just for understanding). "The ? placed after a Result value is defined to work in almost the same way as the match expressions we defined to handle the Result values in Listing 9-6. If the value of the Result is an Ok, the value inside the Ok will get returned from this expression, and the program will continue. If the value is an Err, the Err will be returned from the whole function as if we had used the return keyword so the error value gets propagated to the calling code."
 
