@@ -254,6 +254,7 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/AxolotlTears"><img src="https://avatars.githubusercontent.com/u/87157047?v=4?s=100" width="100px;" alt="Ten"/><br /><sub><b>Ten</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=AxolotlTears" title="Code">💻</a></td>
       <td align="center" valign="top" width="12.5%"><a href="http://h4x5p4c3.xyz"><img src="https://avatars.githubusercontent.com/u/66133688?v=4?s=100" width="100px;" alt="jones martin"/><br /><sub><b>jones martin</b></sub></a><br /><a href="#content-h4x5p4c3" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/cloppingemu"><img src="https://avatars.githubusercontent.com/u/12227963?v=4?s=100" width="100px;" alt="cloppingemu"/><br /><sub><b>cloppingemu</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=cloppingemu" title="Code">💻</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="http://github.com/zeromicro/go-zero"><img src="https://avatars.githubusercontent.com/u/1918356?v=4?s=100" width="100px;" alt="Kevin Wan"/><br /><sub><b>Kevin Wan</b></sub></a><br /><a href="#content-kevwan" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
