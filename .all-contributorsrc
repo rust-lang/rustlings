@@ -1785,6 +1785,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "kevwan",
+      "name": "Kevin Wan",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1918356?v=4",
+      "profile": "http://github.com/zeromicro/go-zero",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
