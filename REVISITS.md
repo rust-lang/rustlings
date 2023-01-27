@@ -18,4 +18,8 @@ return results to new Vec<i32> vector
 17) errors2 make sure you understand error propagation but also the long-form solution (just for understanding). "The ? placed after a Result value is defined to work in almost the same way as the match expressions we defined to handle the Result values in Listing 9-6. If the value of the Result is an Ok, the value inside the Ok will get returned from this expression, and the program will continue. If the value is an Err, the Err will be returned from the whole function as if we had used the return keyword so the error value gets propagated to the calling code."
 18) errors3
 19) HAVE to revisit error5 - > great pre-intro to Box<dyn `Trait`>
+20) error6 map_err for transforming Err type in Result into a new error value of the same type.
+21) Revisit error6 => HARD
+22) trait3 -> very important for understanding default implementation and overrides. Also reread this page: https://doc.rust-lang.org/book/ch10-02-traits.html#default-implementations. Answer also here: https://users.rust-lang.org/t/rustlings-traits3-rs-question/80742/3
+25) trait5 -> important to understand trait bounds with generics. Also be sure to understand the short format vs. clearer format and pros/cons
 
