@@ -22,4 +22,5 @@ return results to new Vec<i32> vector
 21) Revisit error6 => HARD
 22) trait3 -> very important for understanding default implementation and overrides. Also reread this page: https://doc.rust-lang.org/book/ch10-02-traits.html#default-implementations. Answer also here: https://users.rust-lang.org/t/rustlings-traits3-rs-question/80742/3
 25) trait5 -> important to understand trait bounds with generics. Also be sure to understand the short format vs. clearer format and pros/cons
+26) Retake quiz3 for more traits+generics practice
 
