@@ -8,7 +8,7 @@
 mod delicious_snacks {
     // TODO: Fix these use statements
     use self::fruits::PEAR as ???
-    use self::veggies::CUCUMBER as ???
+    use self::veggies::BROCCOLI as ???
 
     mod fruits {
         pub const PEAR: &'static str = "Pear";
@@ -16,7 +16,7 @@ mod delicious_snacks {
     }
 
     mod veggies {
-        pub const CUCUMBER: &'static str = "Cucumber";
+        pub const BROCCOLI: &'static str = "Broccoli";
         pub const CARROT: &'static str = "Carrot";
     }
 }
