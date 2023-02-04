@@ -26,6 +26,10 @@ return results to new Vec<i32> vector
 27) lifetimes1
 28) standard library types iterators2 -> VERY IMPORTANT to understand map, chain/chain::<Vec<String>>, join
 29) iterator4 to make sure you understand fold/rfold
+30) iterator5 to make sure you understand looping through hashmaps with filter, flat_map, count
+31) box.rs for smart pointer to allocate memory in recursive types
+32) arc.rs for atomic reference counters, moving ownershup to thread::spawn.
+33) rc.rs Rc::strong_count, Rc::new and Rc::clone, and drop(). Also note "In summary, if you need shared ownership in a single-threaded context, you can use Rc. If you need shared ownership across multiple threads, you should use Arc." Rc is faster and smaller than Arc
 
-clippy conversions macros standard_library_types  threads
+clippy conversions macros threads
 
