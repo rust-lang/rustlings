@@ -47,6 +47,7 @@ impl State {
             Message::Quit => self.quit(),
             _ => ()
         }
+
     }
 }
 
@@ -63,6 +64,7 @@ mod tests {
         };
         
         state.process(Message::ChangeColor((255, 0, 255))); // Remember: The extra parentheses mark a tuple type.
+
         state.process(Message::Echo(String::from("hello world")));
         state.process(Message::Move(Point { x: 10, y: 15 }));
         state.process(Message::Quit);
