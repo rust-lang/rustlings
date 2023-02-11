@@ -99,7 +99,7 @@ function vercomp() {
         done
     fi
 
-    for i in `seq 0 $max_len`
+    for i in `seq 0 $((max_len-1))`
     do
         # Fill empty fields with zeros in v1
         if [ -z "${v1[$i]}" ]
