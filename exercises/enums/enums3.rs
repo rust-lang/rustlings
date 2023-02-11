@@ -39,7 +39,7 @@ impl State {
     }
 
     fn process(&mut self, message: Message) {
-        // TODO: create a match expression to process the different message variants
+        // TODO:  create a match expression to process the different message variants
         match message {
             Message::ChangeColor((x, y, z)) => self.change_color((x, y, z)),
             Message::Echo(s) => self.echo(s),
