@@ -1812,6 +1812,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "kawaiiPlat",
+      "name": "Jarrod Sanders",
+      "avatar_url": "https://avatars.githubusercontent.com/u/50600614?v=4",
+      "profile": "https://www.linkedin.com/in/jarrod-sanders/",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,

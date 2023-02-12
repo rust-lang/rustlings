@@ -257,6 +257,7 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="http://github.com/zeromicro/go-zero"><img src="https://avatars.githubusercontent.com/u/1918356?v=4?s=100" width="100px;" alt="Kevin Wan"/><br /><sub><b>Kevin Wan</b></sub></a><br /><a href="#content-kevwan" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="http://kurowasaruby.cn"><img src="https://avatars.githubusercontent.com/u/43495006?v=4?s=100" width="100px;" alt="Ruby"/><br /><sub><b>Ruby</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=wjwrh" title="Code">💻</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/alexandergill"><img src="https://avatars.githubusercontent.com/u/7033716?v=4?s=100" width="100px;" alt="Alexander Gill"/><br /><sub><b>Alexander Gill</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=alexandergill" title="Code">💻</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://www.linkedin.com/in/jarrod-sanders/"><img src="https://avatars.githubusercontent.com/u/50600614?v=4?s=100" width="100px;" alt="Jarrod Sanders"/><br /><sub><b>Jarrod Sanders</b></sub></a><br /><a href="#content-kawaiiPlat" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
