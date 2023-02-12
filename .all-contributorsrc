@@ -1803,6 +1803,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "alexandergill",
+      "name": "Alexander Gill",
+      "avatar_url": "https://avatars.githubusercontent.com/u/7033716?v=4",
+      "profile": "https://github.com/alexandergill",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
