@@ -99,7 +99,7 @@ function vercomp() {
         done
     fi
 
-    for i in `seq 0 $max_len`
+    for i in `seq 0 $((max_len-1))`
     do
         # Fill empty fields with zeros in v1
         if [ -z "${v1[$i]}" ]
@@ -124,7 +124,7 @@ function vercomp() {
 }
 
 RustVersion=$(rustc --version | cut -d " " -f 2)
-MinRustVersion=1.56
+MinRustVersion=1.58
 vercomp "$RustVersion" $MinRustVersion || ec=$?
 if [ ${ec:-0} -eq 2 ]
 then
