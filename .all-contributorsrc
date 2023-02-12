@@ -1821,6 +1821,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "platformer",
+      "name": "Andrew Sen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/40146328?v=4",
+      "profile": "https://github.com/platformer",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
