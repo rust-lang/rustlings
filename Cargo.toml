@@ -9,10 +9,10 @@ edition = "2021"
 
 [dependencies]
 argh = "0.1"
-indicatif = "0.16"
+indicatif = "0.17.3"
 console = "0.15"
-notify = "4.0"
-toml = "0.5"
+notify = "5.0.0"
+toml = "0.6.0"
 regex = "1.5"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0.81"
@@ -24,6 +24,6 @@ name = "rustlings"
 path = "src/main.rs"
 
 [dev-dependencies]
-assert_cmd = "0.11.0"
-predicates = "1.0.1"
+assert_cmd = "2.0.8"
+predicates = "2.1.5"
 glob = "0.3.0"

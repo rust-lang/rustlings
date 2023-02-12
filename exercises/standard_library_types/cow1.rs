@@ -5,7 +5,6 @@
 // It can enclose and provide immutable access to borrowed data, and clone the data lazily when mutation or ownership is required.
 // The type is designed to work with general borrowed data via the Borrow trait.
 
-// I AM NOT DONE
 
 use std::borrow::Cow;
 
@@ -42,7 +41,7 @@ fn main() {
     let mut input = Cow::from(slice);
     match abs_all(&mut input) {
         // TODO
-        Cow::Borrowed(_) => println!("I own this slice!"),
+        Cow::Owned(_) => println!("I own this slice!"),
         _ => panic!("expected borrowed value"),
     }
 }
