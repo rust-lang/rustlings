@@ -1830,6 +1830,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "grzegorz-zur",
+      "name": "Grzegorz Żur",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5297583?v=4",
+      "profile": "https://grzegorz-zur.com/",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
