@@ -6,4 +6,9 @@ fn main() {
     println!("Spell a Number : {}", number);
     let number: u32 = 3; // don't rename this variable
     println!("Number plus two is : {}", number + 2);
+    {
+        let number: f32 = 0.1;
+        println!("Number plus 1 is : {}", number + 1.0)
+    }
+    println!("Number plust 0.1 is : {}", number + 1.1 as u32)
 }
