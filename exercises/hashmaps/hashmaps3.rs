@@ -40,6 +40,51 @@ fn build_scores_table(results: String) -> HashMap<String, Team> {
         // will be the number of goals conceded from team_2, and similarly
         // goals scored by team_2 will be the number of goals conceded by
         // team_1.
+
+        let t1: Team = Team {
+            name: team_1_name.clone(),
+            goals_scored: team_1_score,
+            goals_conceded: team_2_score,
+        };
+
+        let t2: Team = Team {
+            name: team_2_name.clone(),
+            goals_scored: team_2_score,
+            goals_conceded: team_1_score,
+        };
+
+        let t1 = scores
+            .entry(team_1_name)
+            .and_modify(|ot1| {
+                ot1.goals_scored += t1.goals_scored;
+                ot1.goals_conceded += t1.goals_conceded;
+            })
+            .or_insert(t1);
+
+        let t2 = scores
+            .entry(team_2_name)
+            .and_modify(|ot2| {
+                ot2.goals_scored += t2.goals_scored;
+                ot2.goals_conceded += t2.goals_conceded;
+            })
+            .or_insert(t2);
+
+        // match scores.get_mut(&team_1_name){
+        //     Some(ot1) => {
+        //         ot1.goals_scored += t1.goals_scored;
+        //         ot1.goals_conceded += t1.goals_conceded;
+        //     },
+        //     None => {scores.insert(team_1_name, t1);},
+        // }
+        //
+        // match scores.get_mut(&team_2_name){
+        //     Some(ot2) => {
+        //         ot2.goals_scored += t2.goals_scored;
+        //         ot2.goals_conceded += t2.goals_conceded;
+        //     },
+        //     None => {scores.insert(team_2_name, t2);},
+        // }
+        //
     }
     scores
 }
