@@ -1839,6 +1839,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "black-puppydog",
+      "name": "Daan Wynen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/189241?v=4",
+      "profile": "https://github.com/black-puppydog",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
