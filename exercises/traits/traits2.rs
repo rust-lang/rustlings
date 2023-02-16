@@ -11,13 +11,19 @@
 // you can do this!
 // Execute `rustlings hint traits2` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
-
 trait AppendBar {
     fn append_bar(self) -> Self;
 }
 
 // TODO: Implement trait `AppendBar` for a vector of strings.
+impl AppendBar for Vec<String> {
+    // In other words, when a value is owned, its mutability is not part of the type, only the binding. When calling a function or implementing a trait, only the types have to match, not the patterns of the parameters
+    // When a value is moved, it doesn't matter for the method declaration whether or not it is mutated. An owned value can always be made mutable anyway: let mut x = x;
+    fn append_bar(mut self) -> Self {
+        self.push("Bar".into());
+        self
+    }
+}
 
 #[cfg(test)]
 mod tests {
