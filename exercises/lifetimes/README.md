@@ -3,12 +3,12 @@
 Lifetimes tell the compiler how to check whether references live long
 enough to be valid in any given situation. For example lifetimes say
 "make sure parameter 'a' lives as long as parameter 'b' so that the return
-value is valid". 
+value is valid".
 
-They are only necessary on borrows, i.e. references, 
+They are only necessary on borrows, i.e. references,
 since copied parameters or moves are owned in their scope and cannot
 be referenced outside. Lifetimes mean that calling code of e.g. functions
-can be checked to make sure their arguments are valid. Lifetimes are 
+can be checked to make sure their arguments are valid. Lifetimes are
 restrictive of their callers.
 
 ## Further information
