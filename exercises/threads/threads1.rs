@@ -6,13 +6,14 @@
 // The program should wait until all the spawned threads have finished and
 // should collect their return values into a vector.
 
-// I AM NOT DONE
 
+// use rand::Rng;
 use std::thread;
 use std::time::{Duration, Instant};
 
 fn main() {
     let mut handles = vec![];
+    // let rng = rand::thread_rng();
     for i in 0..10 {
         handles.push(thread::spawn(move || {
             let start = Instant::now();
@@ -22,15 +23,17 @@ fn main() {
         }));
     }
 
+    print!("next move, handler len {} \n", handles.len());
     let mut results: Vec<u128> = vec![];
     for handle in handles {
         // TODO: a struct is returned from thread::spawn, can you use it?
+        results.push(handle.join().unwrap());
     }
 
     if results.len() != 10 {
         panic!("Oh no! All the spawned threads did not finish!");
     }
-    
+
     println!();
     for (i, result) in results.into_iter().enumerate() {
         println!("thread {} took {}ms", i, result);
