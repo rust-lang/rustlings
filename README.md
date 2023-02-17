@@ -155,8 +155,7 @@ for you:
 rm -rf rustlings # or your custom folder name, if you chose and or renamed it
 ```
 
-Second, since Rustlings got installed via `cargo install`, it's only reasonable to assume that you can also remove it using Cargo, and
-exactly that is the case. Run `cargo uninstall` to remove the `rustlings` binary:
+Second, run `cargo uninstall` to remove the `rustlings` binary:
 
 ```bash
 cargo uninstall rustlings
