@@ -263,6 +263,7 @@ authors.
     <tr>
       <td align="center" valign="top" width="12.5%"><a href="https://grzegorz-zur.com/"><img src="https://avatars.githubusercontent.com/u/5297583?v=4?s=100" width="100px;" alt="Grzegorz Żur"/><br /><sub><b>Grzegorz Żur</b></sub></a><br /><a href="#content-grzegorz-zur" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/black-puppydog"><img src="https://avatars.githubusercontent.com/u/189241?v=4?s=100" width="100px;" alt="Daan Wynen"/><br /><sub><b>Daan Wynen</b></sub></a><br /><a href="#content-black-puppydog" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/Anush008"><img src="https://avatars.githubusercontent.com/u/46051506?v=4?s=100" width="100px;" alt="Anush"/><br /><sub><b>Anush</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=Anush008" title="Documentation">📖</a></td>
     </tr>
   </tbody>
 </table>
