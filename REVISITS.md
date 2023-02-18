@@ -30,6 +30,11 @@ return results to new Vec<i32> vector
 31) box.rs for smart pointer to allocate memory in recursive types
 32) arc.rs for atomic reference counters, moving ownershup to thread::spawn.
 33) rc.rs Rc::strong_count, Rc::new and Rc::clone, and drop(). Also note "In summary, if you need shared ownership in a single-threaded context, you can use Rc. If you need shared ownership across multiple threads, you should use Arc." Rc is faster and smaller than Arc
+34) Cow
+35) All threads exercises :(. handles and join methods for thread completion wait in the main thread.
+36) threads2 exercises important for understanding synchorization primitize Mutex
+37) threads3  - again - all threads exercises.
+38) all macros exercises
 
-clippy conversions macros threads
+conversions
 
