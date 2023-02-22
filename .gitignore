@@ -11,3 +11,5 @@ rust-project.json
 !.vscode/extensions.json
 *.iml
 *.o
+
+REVISITS.md

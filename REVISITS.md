@@ -34,7 +34,16 @@ return results to new Vec<i32> vector
 35) All threads exercises :(. handles and join methods for thread completion wait in the main thread.
 36) threads2 exercises important for understanding synchorization primitize Mutex
 37) threads3  - again - all threads exercises.
-38) all macros exercises
+38) all macros 
+39) Conversions from_str be sure to understand map_err() for error projection!
+40) All conversions man: 
+    ```let mut x = 5;
+    let x_ref = &mut x;
 
-conversions
+    let x_ref2 = x_ref.as_mut(); // convert to mutable reference
+
+    *x_ref2 = 10; // modify the value
+
+    assert_eq!(x, 10);
+    In this example, x_ref is a mutable reference to x. We can use the as_mut method to convert x_ref to a mutable reference, which we store in x_ref2. We can then use x_ref2 to modify the value of x.```
 
