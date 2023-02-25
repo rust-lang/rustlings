@@ -26,7 +26,7 @@ mod run;
 mod verify;
 
 // In sync with crate version
-const VERSION: &str = "5.2.1";
+const VERSION: &str = "5.4.0";
 
 #[derive(FromArgs, PartialEq, Debug)]
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
@@ -239,7 +239,7 @@ fn main() {
                 .get_sysroot_src()
                 .expect("Couldn't find toolchain path, do you have `rustc` installed?");
             project
-                .exercies_to_json()
+                .exercises_to_json()
                 .expect("Couldn't parse rustlings exercises files");
 
             if project.crates.is_empty() {
@@ -350,7 +350,7 @@ fn watch(exercises: &[Exercise], verbose: bool) -> notify::Result<WatchStatus> {
     let (tx, rx) = channel();
     let should_quit = Arc::new(AtomicBool::new(false));
 
-    let mut watcher: RecommendedWatcher = Watcher::new(tx, Duration::from_secs(2))?;
+    let mut watcher: RecommendedWatcher = Watcher::new(tx, Duration::from_secs(1))?;
     watcher.watch(Path::new("./exercises"), RecursiveMode::Recursive)?;
 
     clear_screen();

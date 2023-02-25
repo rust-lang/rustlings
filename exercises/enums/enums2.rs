@@ -10,7 +10,7 @@ enum Message {
 
 impl Message {
     fn call(&self) {
-        println!("{:?}", &self);
+        println!("{:?}", self);
     }
 }
 

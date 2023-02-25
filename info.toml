@@ -665,7 +665,7 @@ name = "generics1"
 path = "exercises/generics/generics1.rs"
 mode = "compile"
 hint = """
-Vectors in rust make use of generics to create dynamically sized arrays of any type.
+Vectors in Rust make use of generics to create dynamically sized arrays of any type.
 You need to tell the compiler what type we are pushing onto this vector."""
 
 [[exercises]]
@@ -695,7 +695,7 @@ name = "traits2"
 path = "exercises/traits/traits2.rs"
 mode = "test"
 hint = """
-Notice how the trait takes ownership of 'self',and returns `Self'.
+Notice how the trait takes ownership of 'self',and returns `Self`.
 Try mutating the incoming string vector. Have a look at the tests to see
 what the result should look like!
 
@@ -809,13 +809,13 @@ If you use a lifetime annotation in a struct's fields, where else does it need t
 
 [[exercises]]
 name = "iterators1"
-path = "exercises/standard_library_types/iterators1.rs"
+path = "exercises/iterators/iterators1.rs"
 mode = "compile"
 hint = """
 Step 1:
 We need to apply something to the collection `my_fav_fruits` before we start to go through
 it. What could that be? Take a look at the struct definition for a vector for inspiration:
-https://doc.rust-lang.org/std/vec/struct.Vec.html.
+https://doc.rust-lang.org/std/vec/struct.Vec.html
 Step 2 & step 3:
 Very similar to the lines above and below. You've got this!
 Step 4:
@@ -826,7 +826,7 @@ https://doc.rust-lang.org/std/iter/trait.Iterator.html for some ideas.
 
 [[exercises]]
 name = "iterators2"
-path = "exercises/standard_library_types/iterators2.rs"
+path = "exercises/iterators/iterators2.rs"
 mode = "test"
 hint = """
 Step 1
@@ -847,7 +847,7 @@ and very general. Rust just needs to know the desired type."""
 
 [[exercises]]
 name = "iterators3"
-path = "exercises/standard_library_types/iterators3.rs"
+path = "exercises/iterators/iterators3.rs"
 mode = "test"
 hint = """
 The divide function needs to return the correct error when even division is not
@@ -866,7 +866,7 @@ can make the solution to this exercise infinitely easier."""
 
 [[exercises]]
 name = "iterators4"
-path = "exercises/standard_library_types/iterators4.rs"
+path = "exercises/iterators/iterators4.rs"
 mode = "test"
 hint = """
 In an imperative language, you might write a for loop that updates
@@ -878,7 +878,7 @@ Hint 2: Check out the `fold` and `rfold` methods!"""
 
 [[exercises]]
 name = "iterators5"
-path = "exercises/standard_library_types/iterators5.rs"
+path = "exercises/iterators/iterators5.rs"
 mode = "test"
 hint = """
 The documentation for the std::iter::Iterator trait contains numerous methods
@@ -895,66 +895,6 @@ The fold method can be useful in the count_collection_iterator function.
 For a further challenge, consult the documentation for Iterator to find
 a different method that could make your code more compact than using fold."""
 
-[[exercises]]
-name = "box1"
-path = "exercises/standard_library_types/box1.rs"
-mode = "test"
-hint = """
-Step 1
-The compiler's message should help: since we cannot store the value of the actual type
-when working with recursive types, we need to store a reference (pointer) to its value.
-We should, therefore, place our `List` inside a `Box`. More details in the book here:
-https://doc.rust-lang.org/book/ch15-01-box.html#enabling-recursive-types-with-boxes
-
-Step 2
-Creating an empty list should be fairly straightforward (hint: peek at the assertions).
-For a non-empty list keep in mind that we want to use our Cons "list builder".
-Although the current list is one of integers (i32), feel free to change the definition
-and try other types!
-"""
-
-[[exercises]]
-name = "arc1"
-path = "exercises/standard_library_types/arc1.rs"
-mode = "compile"
-hint = """
-Make `shared_numbers` be an `Arc` from the numbers vector. Then, in order
-to avoid creating a copy of `numbers`, you'll need to create `child_numbers`
-inside the loop but still in the main thread.
-
-`child_numbers` should be a clone of the Arc of the numbers instead of a
-thread-local copy of the numbers.
-
-This is a simple exercise if you understand the underlying concepts, but if this
-is too much of a struggle, consider reading through all of Chapter 16 in the book:
-https://doc.rust-lang.org/stable/book/ch16-00-concurrency.html
-"""
-
-[[exercises]]
-name = "rc1"
-path = "exercises/standard_library_types/rc1.rs"
-mode = "compile"
-hint = """
-This is a straightforward exercise to use the Rc<T> type. Each Planet has
-ownership of the Sun, and uses Rc::clone() to increment the reference count of the Sun.
-After using drop() to move the Planets out of scope individually, the reference count goes down.
-In the end the sun only has one reference again, to itself. See more at:
-https://doc.rust-lang.org/book/ch15-04-rc.html
-
-* Unfortunately Pluto is no longer considered a planet :(
-"""
-
-[[exercises]]
-name = "cow1"
-path = "exercises/standard_library_types/cow1.rs"
-mode = "compile"
-hint = """
-Since the vector is already owned, the `Cow` type doesn't need to clone it.
-
-Checkout https://doc.rust-lang.org/std/borrow/enum.Cow.html for documentation
-on the `Cow` type.
-"""
-
 # THREADS
 
 [[exercises]]
@@ -969,7 +909,7 @@ A challenge with multi-threaded applications is that the main thread can
 finish before the spawned threads are completed.
 https://doc.rust-lang.org/book/ch16-01-threads.html#waiting-for-all-threads-to-finish-using-join-handles
 
-Collect the JoinHandles and wait for them to finish.
+Use the JoinHandles to wait for each thread to finish and collect their results.
 https://doc.rust-lang.org/std/thread/struct.JoinHandle.html
 """
 
@@ -1014,6 +954,68 @@ send values in one thread and receive them in another.
 Multiple producers are possible by using clone() to create a duplicate
 of the original sending end.
 See https://doc.rust-lang.org/book/ch16-02-message-passing.html for more info.
+"""
+
+# SMART POINTERS
+
+[[exercises]]
+name = "box1"
+path = "exercises/smart_pointers/box1.rs"
+mode = "test"
+hint = """
+Step 1
+The compiler's message should help: since we cannot store the value of the actual type
+when working with recursive types, we need to store a reference (pointer) to its value.
+We should, therefore, place our `List` inside a `Box`. More details in the book here:
+https://doc.rust-lang.org/book/ch15-01-box.html#enabling-recursive-types-with-boxes
+
+Step 2
+Creating an empty list should be fairly straightforward (hint: peek at the assertions).
+For a non-empty list keep in mind that we want to use our Cons "list builder".
+Although the current list is one of integers (i32), feel free to change the definition
+and try other types!
+"""
+
+[[exercises]]
+name = "rc1"
+path = "exercises/smart_pointers/rc1.rs"
+mode = "compile"
+hint = """
+This is a straightforward exercise to use the Rc<T> type. Each Planet has
+ownership of the Sun, and uses Rc::clone() to increment the reference count of the Sun.
+After using drop() to move the Planets out of scope individually, the reference count goes down.
+In the end the sun only has one reference again, to itself. See more at:
+https://doc.rust-lang.org/book/ch15-04-rc.html
+
+* Unfortunately Pluto is no longer considered a planet :(
+"""
+
+[[exercises]]
+name = "arc1"
+path = "exercises/smart_pointers/arc1.rs"
+mode = "compile"
+hint = """
+Make `shared_numbers` be an `Arc` from the numbers vector. Then, in order
+to avoid creating a copy of `numbers`, you'll need to create `child_numbers`
+inside the loop but still in the main thread.
+
+`child_numbers` should be a clone of the Arc of the numbers instead of a
+thread-local copy of the numbers.
+
+This is a simple exercise if you understand the underlying concepts, but if this
+is too much of a struggle, consider reading through all of Chapter 16 in the book:
+https://doc.rust-lang.org/stable/book/ch16-00-concurrency.html
+"""
+
+[[exercises]]
+name = "cow1"
+path = "exercises/smart_pointers/cow1.rs"
+mode = "test"
+hint = """
+If Cow already owns the data it doesn't need to clone it when to_mut() is called.
+
+Check out https://doc.rust-lang.org/std/borrow/enum.Cow.html for documentation
+on the `Cow` type.
 """
 
 # MACROS
@@ -1070,8 +1072,8 @@ name = "clippy1"
 path = "exercises/clippy/clippy1.rs"
 mode = "clippy"
 hint = """
-Rust stores the highest precision version of any long or inifinite precision
-mathematical constants in the rust standard library.
+Rust stores the highest precision version of any long or infinite precision
+mathematical constants in the Rust standard library.
 https://doc.rust-lang.org/stable/std/f32/consts/index.html
 
 We may be tempted to use our own approximations for certain mathematical constants,

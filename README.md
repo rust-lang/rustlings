@@ -29,11 +29,12 @@ curl -L https://raw.githubusercontent.com/rust-lang/rustlings/main/install.sh | 
 This will install Rustlings and give you access to the `rustlings` command. Run it to get started!
 
 ### Nix
+
 Basically: Clone the repository at the latest tag, finally run `nix develop` or `nix-shell`.
 
 ```bash
-# find out the latest version at https://github.com/rust-lang/rustlings/releases/latest (on edit 5.2.1)
-git clone -b 5.2.1 --depth 1 https://github.com/rust-lang/rustlings
+# find out the latest version at https://github.com/rust-lang/rustlings/releases/latest (on edit 5.4.0)
+git clone -b 5.4.0 --depth 1 https://github.com/rust-lang/rustlings
 cd rustlings
 # if nix version > 2.3
 nix develop
@@ -55,7 +56,7 @@ Then, you can run:
 Start-BitsTransfer -Source https://raw.githubusercontent.com/rust-lang/rustlings/main/install.ps1 -Destination $env:TMP/install_rustlings.ps1; Unblock-File $env:TMP/install_rustlings.ps1; Invoke-Expression $env:TMP/install_rustlings.ps1
 ```
 
-To install Rustlings. Same as on MacOS/Linux, you will have access to the `rustlings` command after it.
+To install Rustlings. Same as on MacOS/Linux, you will have access to the `rustlings` command after it. Keep in mind that this works best in PowerShell, and any other terminals may give you errors.
 
 If you get a permission denied message, you might have to exclude the directory where you cloned Rustlings in your antivirus.
 
@@ -72,8 +73,8 @@ Open up Rustlings in [Codespaces](https://docs.github.com/en/codespaces/developi
 Basically: Clone the repository at the latest tag, run `cargo install --path .`.
 
 ```bash
-# find out the latest version at https://github.com/rust-lang/rustlings/releases/latest (on edit 5.2.1)
-git clone -b 5.2.1 --depth 1 https://github.com/rust-lang/rustlings
+# find out the latest version at https://github.com/rust-lang/rustlings/releases/latest (on edit 5.4.0)
+git clone -b 5.4.0 --depth 1 https://github.com/rust-lang/rustlings
 cd rustlings
 cargo install --force --path .
 ```
@@ -156,8 +157,7 @@ for you:
 rm -rf rustlings # or your custom folder name, if you chose and or renamed it
 ```
 
-Second, since Rustlings got installed via `cargo install`, it's only reasonable to assume that you can also remove it using Cargo, and
-exactly that is the case. Run `cargo uninstall` to remove the `rustlings` binary:
+Second, run `cargo uninstall` to remove the `rustlings` binary:
 
 ```bash
 cargo uninstall rustlings
