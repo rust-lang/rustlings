@@ -4,7 +4,7 @@
 
 // This exercise uses some concepts that we won't get to until later in the course, like `Box` and the
 // `From` trait. It's not important to understand them in detail right now, but you can read ahead if you like.
-// For now, think of the `Box<dyn ???>` type as an "I want anything that does ???" type, which, given
+// For now, think of the `Box<dyn ...>` type as an "I want anything that does ???" type, which, given
 // Rust's usual standards for runtime safety, should strike you as somewhat lenient!
 
 // In short, this particular use case for boxes is for when you want to own a value and you care only that it is a

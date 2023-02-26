@@ -10,7 +10,7 @@
 
 // I AM NOT DONE
 
-fn main() {
+fn main () {
     let my_fav_fruits = vec!["banana", "custard apple", "avocado", "peach", "raspberry"];
 
     let mut my_iterable_fav_fruits = ???;   // TODO: Step 1

@@ -10,10 +10,20 @@
 // Write a function that calculates the price of an order of apples given
 // the quantity bought. No hints this time!
 
-// I AM NOT DONE
-
 // Put your function here!
-// fn calculate_price_of_apples {
+fn calculate_price_of_apples(quantity: i32) -> i32 {
+    let mut quantity= quantity;
+    if quantity <= 40 {
+        quantity = quantity * 2;
+    }
+    return quantity;
+
+    // if quantity > 40 {
+    //     quantity
+    // } else {
+    //     quantity * 2
+    // }
+}
 
 // Don't modify this function!
 #[test]

@@ -3,7 +3,6 @@
 
 // I AM NOT DONE
 
-#[rustfmt::skip]
 macro_rules! my_macro {
     () => {
         println!("Check out my macro!");
