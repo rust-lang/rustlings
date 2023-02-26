@@ -1875,6 +1875,15 @@
       "contributions": [
         "infra"
       ]
+    },
+    {
+      "login": "eroullit",
+      "name": "Emmanuel Roullit",
+      "avatar_url": "https://avatars.githubusercontent.com/u/301795?v=4",
+      "profile": "https://github.com/eroullit",
+      "contributions": [
+        "infra"
+      ]
     }
   ],
   "contributorsPerLine": 8,
