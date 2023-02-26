@@ -1866,6 +1866,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "mdmundo",
+      "name": "Edmundo Paulino",
+      "avatar_url": "https://avatars.githubusercontent.com/u/60408300?v=4",
+      "profile": "https://github.com/mdmundo",
+      "contributions": [
+        "infra"
+      ]
     }
   ],
   "contributorsPerLine": 8,
