@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build
-      run: cargo build --verbose
+      run: cargo install --force --path . --verbose
     - name: Run tests
       run: cargo test --verbose
     - name: Run rustlings
