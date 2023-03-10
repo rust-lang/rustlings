@@ -270,6 +270,9 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="https://nidhalmessaoudi.herokuapp.com"><img src="https://avatars.githubusercontent.com/u/63377412?v=4?s=100" width="100px;" alt="Nidhal Messaoudi"/><br /><sub><b>Nidhal Messaoudi</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=nidhalmessaoudi" title="Code">💻</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/MahdiBM"><img src="https://avatars.githubusercontent.com/u/54685446?v=4?s=100" width="100px;" alt="Mahdi Bahrami"/><br /><sub><b>Mahdi Bahrami</b></sub></a><br /><a href="#tool-MahdiBM" title="Tools">🔧</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/Nagidal"><img src="https://avatars.githubusercontent.com/u/7075397?v=4?s=100" width="100px;" alt="Nagidal"/><br /><sub><b>Nagidal</b></sub></a><br /><a href="#content-Nagidal" title="Content">🖋</a></td>
+    </tr>
   </tbody>
 </table>
 
