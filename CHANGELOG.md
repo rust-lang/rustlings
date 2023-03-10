@@ -1,3 +1,19 @@
+<a name="5.4.1"></a>
+## 5.4.1 (2023-03-10)
+
+#### Changed
+
+- `vecs`: Added links to `iter_mut` and `map` to README.md
+- `cow1`: Changed main to tests
+- `iterators1`: Formatted according to rustfmt
+
+#### Fixed
+
+- `errors5`: Unified undisclosed type notation
+- `arc1`: Improved readability by avoiding implicit dereference
+- `macros4`: Prevented auto-fix by adding `#[rustfmt::skip]`
+- `cli`: Actually show correct progress percentages
+
 <a name="5.4.0"></a>
 
 ## 5.4.0 (2023-02-12)
