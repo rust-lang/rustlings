@@ -1884,6 +1884,15 @@
       "contributions": [
         "infra"
       ]
+    },
+    {
+      "login": "nidhalmessaoudi",
+      "name": "Nidhal Messaoudi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/63377412?v=4",
+      "profile": "https://nidhalmessaoudi.herokuapp.com",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
