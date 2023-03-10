@@ -268,6 +268,7 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/mdmundo"><img src="https://avatars.githubusercontent.com/u/60408300?v=4?s=100" width="100px;" alt="Edmundo Paulino"/><br /><sub><b>Edmundo Paulino</b></sub></a><br /><a href="#infra-mdmundo" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/eroullit"><img src="https://avatars.githubusercontent.com/u/301795?v=4?s=100" width="100px;" alt="Emmanuel Roullit"/><br /><sub><b>Emmanuel Roullit</b></sub></a><br /><a href="#infra-eroullit" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://nidhalmessaoudi.herokuapp.com"><img src="https://avatars.githubusercontent.com/u/63377412?v=4?s=100" width="100px;" alt="Nidhal Messaoudi"/><br /><sub><b>Nidhal Messaoudi</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=nidhalmessaoudi" title="Code">💻</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/MahdiBM"><img src="https://avatars.githubusercontent.com/u/54685446?v=4?s=100" width="100px;" alt="Mahdi Bahrami"/><br /><sub><b>Mahdi Bahrami</b></sub></a><br /><a href="#tool-MahdiBM" title="Tools">🔧</a></td>
     </tr>
   </tbody>
 </table>
