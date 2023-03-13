@@ -24,5 +24,12 @@ fn main() {
     println!("solve the exercises. Good luck!");
     println!();
     println!("The source for this exercise is in `exercises/intro/intro1.rs`. Have a look!");
-    println!("Going forward, the source of the exercises will always be in the success/failure output.");
+    println!(
+        "Going forward, the source of the exercises will always be in the success/failure output."
+    );
+    println!();
+    println!(
+        "If you want to use rust-analyzer, Rust's LSP implementation, make sure your editor is set"
+    );
+    println!("up, and then run `rustlings lsp` before continuing.")
 }

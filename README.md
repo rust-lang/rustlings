@@ -29,11 +29,12 @@ curl -L https://raw.githubusercontent.com/rust-lang/rustlings/main/install.sh | 
 This will install Rustlings and give you access to the `rustlings` command. Run it to get started!
 
 ### Nix
+
 Basically: Clone the repository at the latest tag, finally run `nix develop` or `nix-shell`.
 
 ```bash
-# find out the latest version at https://github.com/rust-lang/rustlings/releases/latest (on edit 5.3.0)
-git clone -b 5.3.0 --depth 1 https://github.com/rust-lang/rustlings
+# find out the latest version at https://github.com/rust-lang/rustlings/releases/latest (on edit 5.4.1)
+git clone -b 5.4.1 --depth 1 https://github.com/rust-lang/rustlings
 cd rustlings
 # if nix version > 2.3
 nix develop
@@ -61,17 +62,17 @@ If you get a permission denied message, you might have to exclude the directory 
 
 ## Browser
 
-[Run on Repl.it](https://repl.it/github/rust-lang/rustlings)
-
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/rust-lang/rustlings)
+
+[![Open Rustlings On Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new/?repo=rust-lang%2Frustlings&ref=main)
 
 ## Manually
 
 Basically: Clone the repository at the latest tag, run `cargo install --path .`.
 
 ```bash
-# find out the latest version at https://github.com/rust-lang/rustlings/releases/latest (on edit 5.3.0)
-git clone -b 5.3.0 --depth 1 https://github.com/rust-lang/rustlings
+# find out the latest version at https://github.com/rust-lang/rustlings/releases/latest (on edit 5.4.1)
+git clone -b 5.4.1 --depth 1 https://github.com/rust-lang/rustlings
 cd rustlings
 cargo install --force --path .
 ```
@@ -154,8 +155,7 @@ for you:
 rm -rf rustlings # or your custom folder name, if you chose and or renamed it
 ```
 
-Second, since Rustlings got installed via `cargo install`, it's only reasonable to assume that you can also remove it using Cargo, and
-exactly that is the case. Run `cargo uninstall` to remove the `rustlings` binary:
+Second, run `cargo uninstall` to remove the `rustlings` binary:
 
 ```bash
 cargo uninstall rustlings
