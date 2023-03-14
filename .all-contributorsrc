@@ -1884,6 +1884,42 @@
       "contributions": [
         "infra"
       ]
+    },
+    {
+      "login": "nidhalmessaoudi",
+      "name": "Nidhal Messaoudi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/63377412?v=4",
+      "profile": "https://nidhalmessaoudi.herokuapp.com",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "MahdiBM",
+      "name": "Mahdi Bahrami",
+      "avatar_url": "https://avatars.githubusercontent.com/u/54685446?v=4",
+      "profile": "https://github.com/MahdiBM",
+      "contributions": [
+        "tool"
+      ]
+    },
+    {
+      "login": "Nagidal",
+      "name": "Nagidal",
+      "avatar_url": "https://avatars.githubusercontent.com/u/7075397?v=4",
+      "profile": "https://github.com/Nagidal",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "adamhb123",
+      "name": "Adam Brewer",
+      "avatar_url": "https://avatars.githubusercontent.com/u/25161597?v=4",
+      "profile": "https://adabrew.com",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,

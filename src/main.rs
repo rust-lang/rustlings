@@ -26,7 +26,7 @@ mod run;
 mod verify;
 
 // In sync with crate version
-const VERSION: &str = "5.4.0";
+const VERSION: &str = "5.4.1";
 
 #[derive(FromArgs, PartialEq, Debug)]
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
