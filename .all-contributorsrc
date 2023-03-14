@@ -1911,6 +1911,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "adamhb123",
+      "name": "Adam Brewer",
+      "avatar_url": "https://avatars.githubusercontent.com/u/25161597?v=4",
+      "profile": "https://adabrew.com",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,

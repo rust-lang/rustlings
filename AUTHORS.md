@@ -272,6 +272,7 @@ authors.
     </tr>
     <tr>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/Nagidal"><img src="https://avatars.githubusercontent.com/u/7075397?v=4?s=100" width="100px;" alt="Nagidal"/><br /><sub><b>Nagidal</b></sub></a><br /><a href="#content-Nagidal" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://adabrew.com"><img src="https://avatars.githubusercontent.com/u/25161597?v=4?s=100" width="100px;" alt="Adam Brewer"/><br /><sub><b>Adam Brewer</b></sub></a><br /><a href="#content-adamhb123" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
