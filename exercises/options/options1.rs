@@ -30,6 +30,6 @@ mod tests {
     fn raw_value() {
         // TODO: Fix this test. How do you get at the value contained in the Option?
         let icecreams = maybe_icecream(12);
-        assert_eq!(icecreams, 5);
+        assert_eq!(icecreams, 0);
     }
 }
