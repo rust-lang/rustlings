@@ -844,7 +844,7 @@ Create an iterator from the slice. Transform the iterated values by applying
 the `capitalize_first` function. Remember to collect the iterator.
 
 Step 3.
-This is surprising similar to the previous solution. Collect is very powerful
+This is surprisingly similar to the previous solution. Collect is very powerful
 and very general. Rust just needs to know the desired type."""
 
 [[exercises]]
