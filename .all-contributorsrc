@@ -1929,6 +1929,15 @@
       "contributions": [
         "tool"
       ]
+    },
+    {
+      "login": "navicore",
+      "name": "Ed Sweeney",
+      "avatar_url": "https://avatars.githubusercontent.com/u/110999?v=4",
+      "profile": "https://social.linux.pizza/@navicore",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
