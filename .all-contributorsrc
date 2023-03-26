@@ -1920,6 +1920,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "eugkhp",
+      "name": "Eugene",
+      "avatar_url": "https://avatars.githubusercontent.com/u/25910599?v=4",
+      "profile": "https://github.com/eugkhp",
+      "contributions": [
+        "tool"
+      ]
     }
   ],
   "contributorsPerLine": 8,
