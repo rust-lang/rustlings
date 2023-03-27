@@ -23,8 +23,6 @@ enum IntoColorError {
     IntConversion,
 }
 
-// I AM NOT DONE
-
 // Your task is to complete this implementation
 // and return an Ok result of inner type Color.
 // You need to create an implementation for a tuple of three integers,
@@ -34,17 +32,43 @@ enum IntoColorError {
 // but the slice implementation needs to check the slice length!
 // Also note that correct RGB color values must be integers in the 0..=255 range.
 
+fn check(c: i16) -> bool {
+    if c < 256 && c > -1 {
+        return true;
+    }
+    false
+}
+
+fn color_build(red: i16, green: i16, blue: i16) -> Option<Color> {
+    if check(red) && check(green) && check(blue) {
+        return Some(Color {
+            red: red as u8,
+            green: green as u8,
+            blue: blue as u8,
+        });
+    }
+    None
+}
+
 // Tuple implementation
 impl TryFrom<(i16, i16, i16)> for Color {
     type Error = IntoColorError;
-    fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {
+    fn try_from((red, green, blue): (i16, i16, i16)) -> Result<Self, Self::Error> {
+        if let Some(color) = color_build(red, green, blue) {
+            return Ok(color);
+        }
+        Err(IntoColorError::IntConversion)
     }
 }
 
 // Array implementation
 impl TryFrom<[i16; 3]> for Color {
     type Error = IntoColorError;
-    fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {
+    fn try_from([red, green, blue]: [i16; 3]) -> Result<Self, Self::Error> {
+        if let Some(color) = color_build(red, green, blue) {
+            return Ok(color);
+        }
+        Err(IntoColorError::IntConversion)
     }
 }
 
@@ -52,6 +76,14 @@ impl TryFrom<[i16; 3]> for Color {
 impl TryFrom<&[i16]> for Color {
     type Error = IntoColorError;
     fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {
+        if slice.len() != 3 {
+            return Err(IntoColorError::BadLen);
+        }
+        let [red, green, blue]: [i16; 3] = slice.try_into().unwrap();
+        if let Some(color) = color_build(red, green, blue) {
+            return Ok(color);
+        }
+        Err(IntoColorError::IntConversion)
     }
 }
 
