@@ -1956,6 +1956,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "ryanwhitehouse",
+      "name": "Ryan Whitehouse",
+      "avatar_url": "https://avatars.githubusercontent.com/u/13400784?v=4",
+      "profile": "https://github.com/ryanwhitehouse",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
