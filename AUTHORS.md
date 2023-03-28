@@ -278,6 +278,7 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/javihernant"><img src="https://avatars.githubusercontent.com/u/73640929?v=4?s=100" width="100px;" alt="javihernant"/><br /><sub><b>javihernant</b></sub></a><br /><a href="#content-javihernant" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/VegardMatthey"><img src="https://avatars.githubusercontent.com/u/59250656?v=4?s=100" width="100px;" alt="Vegard"/><br /><sub><b>Vegard</b></sub></a><br /><a href="#content-VegardMatthey" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/ryanwhitehouse"><img src="https://avatars.githubusercontent.com/u/13400784?v=4?s=100" width="100px;" alt="Ryan Whitehouse"/><br /><sub><b>Ryan Whitehouse</b></sub></a><br /><a href="#content-ryanwhitehouse" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/guoard"><img src="https://avatars.githubusercontent.com/u/65511355?v=4?s=100" width="100px;" alt="Ali Afsharzadeh"/><br /><sub><b>Ali Afsharzadeh</b></sub></a><br /><a href="#content-guoard" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
