@@ -1965,6 +1965,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "guoard",
+      "name": "Ali Afsharzadeh",
+      "avatar_url": "https://avatars.githubusercontent.com/u/65511355?v=4",
+      "profile": "https://github.com/guoard",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
