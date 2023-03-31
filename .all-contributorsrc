@@ -1974,6 +1974,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "keogami",
+      "name": "Keogami",
+      "avatar_url": "https://avatars.githubusercontent.com/u/41939011?v=4",
+      "profile": "http://keogami.ml",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 8,
