@@ -280,6 +280,9 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/ryanwhitehouse"><img src="https://avatars.githubusercontent.com/u/13400784?v=4?s=100" width="100px;" alt="Ryan Whitehouse"/><br /><sub><b>Ryan Whitehouse</b></sub></a><br /><a href="#content-ryanwhitehouse" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/guoard"><img src="https://avatars.githubusercontent.com/u/65511355?v=4?s=100" width="100px;" alt="Ali Afsharzadeh"/><br /><sub><b>Ali Afsharzadeh</b></sub></a><br /><a href="#content-guoard" title="Content">🖋</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="12.5%"><a href="http://keogami.ml"><img src="https://avatars.githubusercontent.com/u/41939011?v=4?s=100" width="100px;" alt="Keogami"/><br /><sub><b>Keogami</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=keogami" title="Documentation">📖</a></td>
+    </tr>
   </tbody>
 </table>
 
