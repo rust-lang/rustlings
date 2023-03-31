@@ -1983,6 +1983,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "ahresse",
+      "name": "Alexandre Esse",
+      "avatar_url": "https://avatars.githubusercontent.com/u/28402488?v=4",
+      "profile": "https://github.com/ahresse",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
