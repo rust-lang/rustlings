@@ -433,8 +433,8 @@ started, here's a couple of notes about how Rustlings operates:
 4. If an exercise doesn't make sense to you, feel free to open an issue on GitHub!
    (https://github.com/rust-lang/rustlings/issues/new). We look at every issue,
    and sometimes, other learners do too so you can help each other out!
-5. If you want to use `rust-analyzer` with exercises, which provides features like 
-   autocompletion, run the command `rustlings lsp`. 
+5. If you want to use `rust-analyzer` with exercises, which provides features like
+   autocompletion, run the command `rustlings lsp`.
 
 Got all that? Great! To get started, run `rustlings watch` in order to get the first
 exercise. Make sure to have your editor open!"#;
