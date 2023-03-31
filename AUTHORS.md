@@ -282,6 +282,7 @@ authors.
     </tr>
     <tr>
       <td align="center" valign="top" width="12.5%"><a href="http://keogami.ml"><img src="https://avatars.githubusercontent.com/u/41939011?v=4?s=100" width="100px;" alt="Keogami"/><br /><sub><b>Keogami</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=keogami" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/ahresse"><img src="https://avatars.githubusercontent.com/u/28402488?v=4?s=100" width="100px;" alt="Alexandre Esse"/><br /><sub><b>Alexandre Esse</b></sub></a><br /><a href="#content-ahresse" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
