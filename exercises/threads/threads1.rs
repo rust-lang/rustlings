@@ -30,7 +30,7 @@ fn main() {
     if results.len() != 10 {
         panic!("Oh no! All the spawned threads did not finish!");
     }
-    
+
     println!();
     for (i, result) in results.into_iter().enumerate() {
         println!("thread {} took {}ms", i, result);
