@@ -748,6 +748,33 @@ hint = """
 To find the best solution to this challenge you're going to need to think back to your
 knowledge of traits, specifically Trait Bound Syntax -  you may also need this: `use std::fmt::Display;`."""
 
+# LIFETIMES
+
+[[exercises]]
+name = "lifetimes1"
+path = "exercises/lifetimes/lifetimes1.rs"
+mode = "compile"
+hint = """
+Let the compiler guide you. Also take a look at the book if you need help:
+https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html"""
+
+[[exercises]]
+name = "lifetimes2"
+path = "exercises/lifetimes/lifetimes2.rs"
+mode = "compile"
+hint = """
+Remember that the generic lifetime 'a will get the concrete lifetime that is equal to the smaller of the lifetimes of x and y.
+You can take at least two paths to achieve the desired result while keeping the inner block:
+1. Move the string2 declaration to make it live as long as string1 (how is result declared?)
+2. Move println! into the inner block"""
+
+[[exercises]]
+name = "lifetimes3"
+path = "exercises/lifetimes/lifetimes3.rs"
+mode = "compile"
+hint = """
+If you use a lifetime annotation in a struct's fields, where else does it need to be added?"""
+
 # TESTS
 
 [[exercises]]
@@ -779,33 +806,6 @@ hint = """
 You can call a function right where you're passing arguments to `assert!` -- so you could do
 something like `assert!(having_fun())`. If you want to check that you indeed get false, you
 can negate the result of what you're doing using `!`, like `assert!(!having_fun())`."""
-
-# LIFETIMES
-
-[[exercises]]
-name = "lifetimes1"
-path = "exercises/lifetimes/lifetimes1.rs"
-mode = "compile"
-hint = """
-Let the compiler guide you. Also take a look at the book if you need help:
-https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html"""
-
-[[exercises]]
-name = "lifetimes2"
-path = "exercises/lifetimes/lifetimes2.rs"
-mode = "compile"
-hint = """
-Remember that the generic lifetime 'a will get the concrete lifetime that is equal to the smaller of the lifetimes of x and y.
-You can take at least two paths to achieve the desired result while keeping the inner block:
-1. Move the string2 declaration to make it live as long as string1 (how is result declared?)
-2. Move println! into the inner block"""
-
-[[exercises]]
-name = "lifetimes3"
-path = "exercises/lifetimes/lifetimes3.rs"
-mode = "compile"
-hint = """
-If you use a lifetime annotation in a struct's fields, where else does it need to be added?"""
 
 # STANDARD LIBRARY TYPES
 
