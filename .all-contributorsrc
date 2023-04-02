@@ -1992,6 +1992,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "sagarvora",
+      "name": "Sagar Vora",
+      "avatar_url": "https://avatars.githubusercontent.com/u/16315650?v=4",
+      "profile": "https://resilient.tech",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
