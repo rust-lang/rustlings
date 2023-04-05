@@ -12,7 +12,7 @@ struct Rectangle {
 impl Rectangle {
     // Only change the test functions themselves
     pub fn new(width: i32, height: i32) -> Self {
-        if width < 0 || height < 0 {
+        if width <= 0 || height <= 0 {
             panic!("Rectangle width and height cannot be negative!")
         }
         Rectangle {width, height}
@@ -33,13 +33,13 @@ mod tests {
 
     #[test]
     fn negative_width() {
-        // This test should check if thread panics when we try to create rectangle with negative width
+        // This test should check if program panics when we try to create rectangle with negative width
         let _rect = Rectangle::new(-10, 10);
     }
 
     #[test]
     fn negative_height() {
-        // This test should check if thread panics when we try to create rectangle with negative height
+        // This test should check if program panics when we try to create rectangle with negative height
         let _rect = Rectangle::new(10, -10);
     }
 }
