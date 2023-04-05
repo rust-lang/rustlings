@@ -285,6 +285,7 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/ahresse"><img src="https://avatars.githubusercontent.com/u/28402488?v=4?s=100" width="100px;" alt="Alexandre Esse"/><br /><sub><b>Alexandre Esse</b></sub></a><br /><a href="#content-ahresse" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://resilient.tech"><img src="https://avatars.githubusercontent.com/u/16315650?v=4?s=100" width="100px;" alt="Sagar Vora"/><br /><sub><b>Sagar Vora</b></sub></a><br /><a href="#content-sagarvora" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/poneciak57"><img src="https://avatars.githubusercontent.com/u/94321164?v=4?s=100" width="100px;" alt="Kacper Poneta"/><br /><sub><b>Kacper Poneta</b></sub></a><br /><a href="#content-poneciak57" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://ktheory.com/"><img src="https://avatars.githubusercontent.com/u/975?v=4?s=100" width="100px;" alt="Aaron Suggs"/><br /><sub><b>Aaron Suggs</b></sub></a><br /><a href="#content-ktheory" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>

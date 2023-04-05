@@ -2010,6 +2010,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "ktheory",
+      "name": "Aaron Suggs",
+      "avatar_url": "https://avatars.githubusercontent.com/u/975?v=4",
+      "profile": "https://ktheory.com/",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
