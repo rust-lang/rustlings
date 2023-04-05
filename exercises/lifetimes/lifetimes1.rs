@@ -7,7 +7,8 @@
 //
 // Execute `rustlings hint lifetimes1` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
+
+//we tell the compiler that x,y, and the string returned all at least share the same lifetime
 
 fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
     if x.len() > y.len() {
