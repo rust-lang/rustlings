@@ -807,6 +807,16 @@ You can call a function right where you're passing arguments to `assert!` -- so 
 something like `assert!(having_fun())`. If you want to check that you indeed get false, you
 can negate the result of what you're doing using `!`, like `assert!(!having_fun())`."""
 
+[[exercises]]
+name = "tests4"
+path = "exercises/tests/tests4.rs"
+mode = "test"
+hint = """
+We expect method `Rectangle::new()` to panic for negative values.
+To handle that you need to add special attribute to test function.
+You can refer to the docs: https://doc.rust-lang.org/stable/book/ch11-01-writing-tests.html"""
+
+
 # STANDARD LIBRARY TYPES
 
 [[exercises]]
