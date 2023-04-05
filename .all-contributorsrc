@@ -2028,6 +2028,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "stornquist",
+      "name": "Sebastian Törnquist",
+      "avatar_url": "https://avatars.githubusercontent.com/u/42915664?v=4",
+      "profile": "https://github.com/stornquist",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
