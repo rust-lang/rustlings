@@ -737,6 +737,28 @@ To ensure a parameter implements multiple traits use the '+ syntax'. Try replaci
 See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#specifying-multiple-trait-bounds-with-the--syntax
 """
 
+[[exercises]]
+name = "traits6"
+path = "exercises/traits/traits6.rs"
+mode = "test"
+hint = """
+To ensure a function is able to return incompatible types can be done by using a trait bound that is common to them.
+Wrap the shared trait (implemented by the 2 struct types/objects) as a Boxed trait object. Try replacing the '??' with Box<_> 
+
+See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#returning-types-that-implement-traits
+"""
+
+[[exercises]]
+name = "traits7"
+path = "exercises/traits/traits7.rs"
+mode = "compile"
+hint = """
+To make the function printable on console using `:?` symbol. Use the `Debug` trait for the `Details` trait.
+Here, if the trait implements `Debug` trait then the corresponding struct types also has to implement `Debug` trait,
+otherwise the function returning trait object will not be printable on console.
+See the documentation at: https://doc.rust-lang.org/std/fmt/trait.Debug.html
+"""
+
 # QUIZ 3
 
 [[exercises]]
