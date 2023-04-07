@@ -754,8 +754,9 @@ path = "exercises/traits/traits7.rs"
 mode = "compile"
 hint = """
 To make the function printable on console using `:?` symbol. Use the `Debug` trait for the `Details` trait.
-Here, if the trait implements `Debug` trait then the corresponding struct types also has to implement `Debug` trait,
-otherwise the function returning trait object will not be printable on console.
+Here, the trait object has to implement `Debug` trait, otherwise the function returning trait object will 
+not be printable on console using {:?} symbol.
+
 See the documentation at: https://doc.rust-lang.org/std/fmt/trait.Debug.html
 """
 

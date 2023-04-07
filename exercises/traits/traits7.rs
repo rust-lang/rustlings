@@ -6,28 +6,24 @@
 
 // I AM NOT DONE
 
-#[allow(unused_imports)]
-use std::fmt::{Debug, Formatter};
+use std::fmt::{Debug};
 
 /// Struct representing a house
-// TODO: Complete the Code
-#[derive(??, Default)]
+#[derive(Default)]
 struct House {
     area_sqft: u32,
     purchase_date: String,
 }
 
 /// Struct representing a vehicle
-// TODO: Complete the Code
-#[derive(??, Default)]
+#[derive(Default)]
 struct Vehicle {
     name: String,
     model: String,
     purchase_date: String,
 }
 
-// TODO: Complete the code
-trait Details: ?? {
+trait Details {
     fn summary(&self) -> String;
 }
 
@@ -61,6 +57,13 @@ fn foo(flag: bool) -> ?? {
             model: "320d".to_string(),
             purchase_date: "13 Aug 2022".to_string(),
         })
+    }
+}
+
+impl Debug for dyn Details {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+    // print the summary of the struct returned from the function `foo`
+        write!(f, "{}", ??) // TODO: Complete the code
     }
 }
 
