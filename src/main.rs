@@ -298,13 +298,21 @@ fn spawn_watch_shell(
                     println!("Bye!");
                 } else if input.eq("help") {
                     println!("Commands available to you in watch mode:");
-                    println!("  hint  - prints the current exercise's hint");
-                    println!("  clear - clears the screen");
-                    println!("  quit  - quits watch mode");
-                    println!("  help  - displays this help message");
+                    println!("  hint   - prints the current exercise's hint");
+                    println!("  clear  - clears the screen");
+                    println!("  quit   - quits watch mode");
+                    println!("  !<cmd> - executes a command, like `!rustc --explain E0381`");
+                    println!("  help   - displays this help message");
                     println!();
                     println!("Watch mode automatically re-evaluates the current exercise");
                     println!("when you edit a file's contents.")
+                } else if let Some(cmd) = input.strip_prefix('!') {
+                    let parts: Vec<&str> = cmd.split_whitespace().collect();
+                    if parts.is_empty() {
+                        println!("no command provided");
+                    } else if let Err(e) = Command::new(parts[0]).args(&parts[1..]).status() {
+                        println!("failed to execute command `{}`: {}", cmd, e);
+                    }
                 } else {
                     println!("unknown command: {input}");
                 }
