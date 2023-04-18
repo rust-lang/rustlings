@@ -288,6 +288,7 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="https://ktheory.com/"><img src="https://avatars.githubusercontent.com/u/975?v=4?s=100" width="100px;" alt="Aaron Suggs"/><br /><sub><b>Aaron Suggs</b></sub></a><br /><a href="#content-ktheory" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/alexwh"><img src="https://avatars.githubusercontent.com/u/1723612?v=4?s=100" width="100px;" alt="Alex"/><br /><sub><b>Alex</b></sub></a><br /><a href="#content-alexwh" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/stornquist"><img src="https://avatars.githubusercontent.com/u/42915664?v=4?s=100" width="100px;" alt="Sebastian Törnquist"/><br /><sub><b>Sebastian Törnquist</b></sub></a><br /><a href="#content-stornquist" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="http://smlavine.com"><img src="https://avatars.githubusercontent.com/u/33563640?v=4?s=100" width="100px;" alt="Sebastian LaVine"/><br /><sub><b>Sebastian LaVine</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=smlavine" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
