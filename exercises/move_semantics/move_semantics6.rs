@@ -2,8 +2,6 @@
 // Execute `rustlings hint move_semantics6` or use the `hint` watch subcommand for a hint.
 // You can't change anything except adding or removing references.
 
-// I AM NOT DONE
-
 fn main() {
     let data = "Rust is great!".to_string();
 
