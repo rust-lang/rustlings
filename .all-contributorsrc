@@ -2037,6 +2037,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "smlavine",
+      "name": "Sebastian LaVine",
+      "avatar_url": "https://avatars.githubusercontent.com/u/33563640?v=4",
+      "profile": "http://smlavine.com",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
