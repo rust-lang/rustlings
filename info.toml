@@ -325,8 +325,7 @@ doing one step and then fixing the compiler errors that result!
 So the end goal is to:
    - get rid of the first line in main that creates the new vector
    - so then `vec0` doesn't exist, so we can't pass it to `fill_vec`
-   - we don't want to pass anything to `fill_vec`, so its signature should
-     reflect that it does not take any arguments
+   - `fill_vec` has had its signature changed, which our call should reflect
    - since we're not creating a new vec in `main` anymore, we need to create
      a new vec in `fill_vec`, similarly to the way we did in `main`"""
 
@@ -439,7 +438,9 @@ mode = "compile"
 hint = """
 Yes, it would be really easy to fix this by just changing the value bound to `word` to be a
 string slice instead of a `String`, wouldn't it?? There is a way to add one character to line
-9, though, that will coerce the `String` into a string slice."""
+9, though, that will coerce the `String` into a string slice.
+
+Side note: If you're interested in learning about how this kind of reference conversion works, you can jump ahead in the book and read this part in the smart pointers chapter: https://doc.rust-lang.org/stable/book/ch15-02-deref.html#implicit-deref-coercions-with-functions-and-methods"""
 
 [[exercises]]
 name = "strings3"
@@ -746,6 +747,33 @@ hint = """
 To find the best solution to this challenge you're going to need to think back to your
 knowledge of traits, specifically Trait Bound Syntax -  you may also need this: `use std::fmt::Display;`."""
 
+# LIFETIMES
+
+[[exercises]]
+name = "lifetimes1"
+path = "exercises/lifetimes/lifetimes1.rs"
+mode = "compile"
+hint = """
+Let the compiler guide you. Also take a look at the book if you need help:
+https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html"""
+
+[[exercises]]
+name = "lifetimes2"
+path = "exercises/lifetimes/lifetimes2.rs"
+mode = "compile"
+hint = """
+Remember that the generic lifetime 'a will get the concrete lifetime that is equal to the smaller of the lifetimes of x and y.
+You can take at least two paths to achieve the desired result while keeping the inner block:
+1. Move the string2 declaration to make it live as long as string1 (how is result declared?)
+2. Move println! into the inner block"""
+
+[[exercises]]
+name = "lifetimes3"
+path = "exercises/lifetimes/lifetimes3.rs"
+mode = "compile"
+hint = """
+If you use a lifetime annotation in a struct's fields, where else does it need to be added?"""
+
 # TESTS
 
 [[exercises]]
@@ -778,32 +806,16 @@ You can call a function right where you're passing arguments to `assert!` -- so 
 something like `assert!(having_fun())`. If you want to check that you indeed get false, you
 can negate the result of what you're doing using `!`, like `assert!(!having_fun())`."""
 
-# LIFETIMES
-
 [[exercises]]
-name = "lifetimes1"
-path = "exercises/lifetimes/lifetimes1.rs"
-mode = "compile"
+name = "tests4"
+path = "exercises/tests/tests4.rs"
+mode = "test"
 hint = """
-Let the compiler guide you. Also take a look at the book if you need help:
-https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html"""
+We expect method `Rectangle::new()` to panic for negative values.
+To handle that you need to add a special attribute to the test function.
+You can refer to the docs:
+https://doc.rust-lang.org/stable/book/ch11-01-writing-tests.html#checking-for-panics-with-should_panic"""
 
-[[exercises]]
-name = "lifetimes2"
-path = "exercises/lifetimes/lifetimes2.rs"
-mode = "compile"
-hint = """
-Remember that the generic lifetime 'a will get the concrete lifetime that is equal to the smaller of the lifetimes of x and y.
-You can take at least two paths to achieve the desired result while keeping the inner block:
-1. Move the string2 declaration to make it live as long as string1 (how is result declared?)
-2. Move println! into the inner block"""
-
-[[exercises]]
-name = "lifetimes3"
-path = "exercises/lifetimes/lifetimes3.rs"
-mode = "compile"
-hint = """
-If you use a lifetime annotation in a struct's fields, where else does it need to be added?"""
 
 # STANDARD LIBRARY TYPES
 
@@ -842,7 +854,7 @@ Create an iterator from the slice. Transform the iterated values by applying
 the `capitalize_first` function. Remember to collect the iterator.
 
 Step 3.
-This is surprising similar to the previous solution. Collect is very powerful
+This is surprisingly similar to the previous solution. Collect is very powerful
 and very general. Rust just needs to know the desired type."""
 
 [[exercises]]
