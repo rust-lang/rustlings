@@ -2046,6 +2046,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "akgerber",
+      "name": "Alan Gerber",
+      "avatar_url": "https://avatars.githubusercontent.com/u/201313?v=4",
+      "profile": "http://www.alangerber.us",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
