@@ -26,7 +26,7 @@ mod run;
 mod verify;
 
 // In sync with crate version
-const VERSION: &str = "5.3.0";
+const VERSION: &str = "5.4.1";
 
 #[derive(FromArgs, PartialEq, Debug)]
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
@@ -239,7 +239,7 @@ fn main() {
                 .get_sysroot_src()
                 .expect("Couldn't find toolchain path, do you have `rustc` installed?");
             project
-                .exercies_to_json()
+                .exercises_to_json()
                 .expect("Couldn't parse rustlings exercises files");
 
             if project.crates.is_empty() {
@@ -298,13 +298,21 @@ fn spawn_watch_shell(
                     println!("Bye!");
                 } else if input.eq("help") {
                     println!("Commands available to you in watch mode:");
-                    println!("  hint  - prints the current exercise's hint");
-                    println!("  clear - clears the screen");
-                    println!("  quit  - quits watch mode");
-                    println!("  help  - displays this help message");
+                    println!("  hint   - prints the current exercise's hint");
+                    println!("  clear  - clears the screen");
+                    println!("  quit   - quits watch mode");
+                    println!("  !<cmd> - executes a command, like `!rustc --explain E0381`");
+                    println!("  help   - displays this help message");
                     println!();
                     println!("Watch mode automatically re-evaluates the current exercise");
                     println!("when you edit a file's contents.")
+                } else if let Some(cmd) = input.strip_prefix('!') {
+                    let parts: Vec<&str> = cmd.split_whitespace().collect();
+                    if parts.is_empty() {
+                        println!("no command provided");
+                    } else if let Err(e) = Command::new(parts[0]).args(&parts[1..]).status() {
+                        println!("failed to execute command `{}`: {}", cmd, e);
+                    }
                 } else {
                     println!("unknown command: {input}");
                 }
@@ -350,7 +358,7 @@ fn watch(exercises: &[Exercise], verbose: bool) -> notify::Result<WatchStatus> {
     let (tx, rx) = channel();
     let should_quit = Arc::new(AtomicBool::new(false));
 
-    let mut watcher: RecommendedWatcher = Watcher::new(tx, Duration::from_secs(2))?;
+    let mut watcher: RecommendedWatcher = Watcher::new(tx, Duration::from_secs(1))?;
     watcher.watch(Path::new("./exercises"), RecursiveMode::Recursive)?;
 
     clear_screen();
@@ -433,8 +441,8 @@ started, here's a couple of notes about how Rustlings operates:
 4. If an exercise doesn't make sense to you, feel free to open an issue on GitHub!
    (https://github.com/rust-lang/rustlings/issues/new). We look at every issue,
    and sometimes, other learners do too so you can help each other out!
-5. If you want to use `rust-analyzer` with exercises, which provides features like 
-   autocompletion, run the command `rustlings lsp`. 
+5. If you want to use `rust-analyzer` with exercises, which provides features like
+   autocompletion, run the command `rustlings lsp`.
 
 Got all that? Great! To get started, run `rustlings watch` in order to get the first
 exercise. Make sure to have your editor open!"#;

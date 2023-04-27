@@ -6,7 +6,7 @@
 // - Modules
 // - Enums
 
-// Let's build a little machine in form of a function.
+// Let's build a little machine in the form of a function.
 // As input, we're going to give a list of strings and commands. These commands
 // determine what action is going to be applied to the string. It can either be:
 // - Uppercase the string
