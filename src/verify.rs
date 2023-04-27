@@ -15,12 +15,14 @@ pub fn verify<'a>(
 ) -> Result<(), &'a Exercise> {
     let (num_done, total) = progress;
     let bar = ProgressBar::new(total as u64);
-    bar.set_style(
-        ProgressStyle::default_bar()
-            .template("Progress: [{bar:60.green/red}] {pos}/{len} {msg}")
-            .progress_chars("#>-"),
+    let mut percentage = num_done as f32 / total as f32 * 100.0;
+    bar.set_style(ProgressStyle::default_bar()
+        .template("Progress: [{bar:60.green/red}] {pos}/{len} {msg}")
+        .progress_chars("#>-")
     );
     bar.set_position(num_done as u64);
+    bar.set_message(format!("({:.1} %)", percentage));
+
     for exercise in exercises {
         let compile_result = match exercise.mode {
             Mode::Test => compile_and_test(exercise, RunMode::Interactive, verbose),
@@ -30,9 +32,9 @@ pub fn verify<'a>(
         if !compile_result.unwrap_or(false) {
             return Err(exercise);
         }
-        let percentage = num_done as f32 / total as f32 * 100.0;
-        bar.set_message(format!("({:.1} %)", percentage));
+        percentage += 100.0 / total as f32;
         bar.inc(1);
+        bar.set_message(format!("({:.1} %)", percentage));
     }
     Ok(())
 }

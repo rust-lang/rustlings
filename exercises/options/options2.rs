@@ -4,8 +4,6 @@
 
 #[cfg(test)]
 mod tests {
-    use super::*;
-
     #[test]
     fn simple_option() {
         let target = "rustlings";
