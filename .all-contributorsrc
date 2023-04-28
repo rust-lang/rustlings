@@ -2055,6 +2055,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "esotuvaka",
+      "name": "Eric",
+      "avatar_url": "https://avatars.githubusercontent.com/u/104941850?v=4",
+      "profile": "http://esotuvaka.github.io",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
