@@ -2037,6 +2037,33 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "smlavine",
+      "name": "Sebastian LaVine",
+      "avatar_url": "https://avatars.githubusercontent.com/u/33563640?v=4",
+      "profile": "http://smlavine.com",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "akgerber",
+      "name": "Alan Gerber",
+      "avatar_url": "https://avatars.githubusercontent.com/u/201313?v=4",
+      "profile": "http://www.alangerber.us",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "esotuvaka",
+      "name": "Eric",
+      "avatar_url": "https://avatars.githubusercontent.com/u/104941850?v=4",
+      "profile": "http://esotuvaka.github.io",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
