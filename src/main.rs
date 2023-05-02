@@ -37,9 +37,6 @@ struct Args {
     /// show the executable version
     #[argh(switch, short = 'v')]
     version: bool,
-    /// show hints on success
-    #[argh(switch)]
-    success_hints: bool,
     #[argh(subcommand)]
     nested: Option<Subcommands>,
 }
@@ -64,7 +61,11 @@ struct VerifyArgs {}
 #[derive(FromArgs, PartialEq, Debug)]
 #[argh(subcommand, name = "watch")]
 /// Reruns `verify` when files were edited
-struct WatchArgs {}
+struct WatchArgs {
+    /// show hints on success
+    #[argh(switch)]
+    success_hints: bool,
+}
 
 #[derive(FromArgs, PartialEq, Debug)]
 #[argh(subcommand, name = "run")]
@@ -151,7 +152,6 @@ fn main() {
     let toml_str = &fs::read_to_string("info.toml").unwrap();
     let exercises = toml::from_str::<ExerciseList>(toml_str).unwrap().exercises;
     let verbose = args.nocapture;
-    let success_hints = args.success_hints;
 
     let command = args.nested.unwrap_or_else(|| {
         println!("{DEFAULT_OUT}\n");
@@ -233,7 +233,7 @@ fn main() {
         }
 
         Subcommands::Verify(_subargs) => {
-            verify(&exercises, (0, exercises.len()), verbose, success_hints)
+            verify(&exercises, (0, exercises.len()), verbose, false)
                 .unwrap_or_else(|_| std::process::exit(1));
         }
 
@@ -256,7 +256,7 @@ fn main() {
             }
         }
 
-        Subcommands::Watch(_subargs) => match watch(&exercises, verbose, success_hints) {
+        Subcommands::Watch(_subargs) => match watch(&exercises, verbose, _subargs.success_hints) {
             Err(e) => {
                 println!(
                     "Error: Could not watch your progress. Error message was {:?}.",
