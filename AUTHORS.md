@@ -293,6 +293,7 @@ authors.
     <tr>
       <td align="center" valign="top" width="12.5%"><a href="http://www.alangerber.us"><img src="https://avatars.githubusercontent.com/u/201313?v=4?s=100" width="100px;" alt="Alan Gerber"/><br /><sub><b>Alan Gerber</b></sub></a><br /><a href="#content-akgerber" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="http://esotuvaka.github.io"><img src="https://avatars.githubusercontent.com/u/104941850?v=4?s=100" width="100px;" alt="Eric"/><br /><sub><b>Eric</b></sub></a><br /><a href="#content-esotuvaka" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/az0977776"><img src="https://avatars.githubusercontent.com/u/9172038?v=4?s=100" width="100px;" alt="Aaron Wang"/><br /><sub><b>Aaron Wang</b></sub></a><br /><a href="#content-az0977776" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
