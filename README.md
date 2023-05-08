@@ -16,7 +16,9 @@ _Note: If you're on Linux, make sure you've installed gcc. Deb: `sudo apt instal
 
 You will need to have Rust installed. You can get it by visiting https://rustup.rs. This'll also install Cargo, Rust's package/project manager.
 
-## MacOS/Linux
+## Installing
+
+### MacOS/Linux
 
 Just run:
 
@@ -31,7 +33,7 @@ curl -L https://raw.githubusercontent.com/rust-lang/rustlings/main/install.sh | 
 
 This will install Rustlings and give you access to the `rustlings` command. Run it to get started!
 
-### Nix
+#### Nix
 
 Basically: Clone the repository at the latest tag, finally run `nix develop` or `nix-shell`.
 
@@ -45,7 +47,7 @@ nix develop
 nix-shell
 ```
 
-## Windows
+### Windows
 
 In PowerShell (Run as Administrator), set `ExecutionPolicy` to `RemoteSigned`:
 
@@ -63,13 +65,13 @@ To install Rustlings. Same as on MacOS/Linux, you will have access to the `rustl
 
 If you get a permission denied message, you might have to exclude the directory where you cloned Rustlings in your antivirus.
 
-## Browser
+### Browser
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/rust-lang/rustlings)
 
 [![Open Rustlings On Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new/?repo=rust-lang%2Frustlings&ref=main)
 
-## Manually
+### Manually
 
 Basically: Clone the repository at the latest tag, run `cargo install --path .`.
 
