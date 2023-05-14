@@ -1,7 +1,7 @@
 use std::process::Command;
 
 use crate::exercise::{Exercise, Mode};
-use crate::verify::test;
+use crate::verify::{test, compile_only};
 use indicatif::ProgressBar;
 
 // Invoke the rust compiler on the path of the given exercise,
@@ -12,7 +12,10 @@ pub fn run(exercise: &Exercise, verbose: bool) -> Result<(), ()> {
     match exercise.mode {
         Mode::Test => test(exercise, verbose)?,
         Mode::Compile => compile_and_run(exercise)?,
-        Mode::Clippy => compile_and_run(exercise)?,
+        Mode::Clippy => match compile_only(exercise).unwrap() {
+            true => return Err(()),
+            false => return Ok(()),
+        },
     }
     Ok(())
 }
