@@ -4,11 +4,22 @@
 // Make me compile and pass the test!
 // Execute `rustlings hint vecs1` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
+struct User {
+    active: bool,
+    username: String,
+    email: String,
+    sign_in_count: u64,
+}
 
 fn array_and_vec() -> ([i32; 4], Vec<i32>) {
     let a = [10, 20, 30, 40]; // a plain array
-    let v = // TODO: declare your vector here with the macro for vectors
+    let mut v = vec![10, 20, 30, 40]; // TODO: declare your vector here with the macro for vectors
+    let user1 = User {
+        active: true,
+        email: String::from("someone@example.com"),
+        username: "test".to_string(),
+        sign_in_count: 1,
+    };
 
     (a, v)
 }
