@@ -65,12 +65,27 @@ mod tests {
     }
 
     #[test]
-    fn count_equals_for() {
+    fn count_some() {
         let map = get_map();
-        assert_eq!(
-            count_for(&map, Progress::Complete),
-            count_iterator(&map, Progress::Complete)
-        );
+        assert_eq!(1, count_iterator(&map, Progress::Some));
+    }
+
+    #[test]
+    fn count_none() {
+        let map = get_map();
+        assert_eq!(2, count_iterator(&map, Progress::None));
+    }
+
+    #[test]
+    fn count_complete_equals_for() {
+        let map = get_map();
+        let progressStates = vec![Progress::Complete, Progress::Some, Progress::None];
+        for progressState in progressStates {
+            assert_eq!(
+                count_for(&map, progressState),
+                count_iterator(&map, progressState)
+            );
+        }
     }
 
     #[test]
@@ -83,12 +98,28 @@ mod tests {
     }
 
     #[test]
-    fn count_collection_equals_for() {
+    fn count_collection_some() {
         let collection = get_vec_map();
-        assert_eq!(
-            count_collection_for(&collection, Progress::Complete),
-            count_collection_iterator(&collection, Progress::Complete)
-        );
+        assert_eq!(1, count_collection_iterator(&collection, Progress::Some));
+    }
+
+    #[test]
+    fn count_collection_none() {
+        let collection = get_vec_map();
+        assert_eq!(4, count_collection_iterator(&collection, Progress::None));
+    }
+
+    #[test]
+    fn count_collection_equals_for() {
+        let progressStates = vec![Progress::Complete, Progress::Some, Progress::None];
+        let collection = get_vec_map();
+
+        for progressState in progressStates {
+            assert_eq!(
+                count_collection_for(&collection, progressState),
+                count_collection_iterator(&collection, progressState)
+            );
+        }
     }
 
     fn get_map() -> HashMap<String, Progress> {
