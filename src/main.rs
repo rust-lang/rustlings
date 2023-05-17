@@ -26,7 +26,7 @@ mod run;
 mod verify;
 
 // In sync with crate version
-const VERSION: &str = "5.4.1";
+const VERSION: &str = "5.5.0";
 
 #[derive(FromArgs, PartialEq, Debug)]
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
@@ -352,7 +352,11 @@ enum WatchStatus {
     Unfinished,
 }
 
-fn watch(exercises: &[Exercise], verbose: bool, success_hints: bool) -> notify::Result<WatchStatus> {
+fn watch(
+    exercises: &[Exercise],
+    verbose: bool,
+    success_hints: bool,
+) -> notify::Result<WatchStatus> {
     /* Clears the terminal with an ANSI escape code.
     Works in UNIX and newer Windows terminals. */
     fn clear_screen() {
@@ -368,7 +372,12 @@ fn watch(exercises: &[Exercise], verbose: bool, success_hints: bool) -> notify::
     clear_screen();
 
     let to_owned_hint = |t: &Exercise| t.hint.to_owned();
-    let failed_exercise_hint = match verify(exercises.iter(), (0, exercises.len()), verbose, success_hints) {
+    let failed_exercise_hint = match verify(
+        exercises.iter(),
+        (0, exercises.len()),
+        verbose,
+        success_hints,
+    ) {
         Ok(_) => return Ok(WatchStatus::Finished),
         Err(exercise) => Arc::new(Mutex::new(Some(to_owned_hint(exercise)))),
     };
@@ -390,7 +399,12 @@ fn watch(exercises: &[Exercise], verbose: bool, success_hints: bool) -> notify::
                             );
                         let num_done = exercises.iter().filter(|e| e.looks_done()).count();
                         clear_screen();
-                        match verify(pending_exercises, (num_done, exercises.len()), verbose, success_hints) {
+                        match verify(
+                            pending_exercises,
+                            (num_done, exercises.len()),
+                            verbose,
+                            success_hints,
+                        ) {
                             Ok(_) => return Ok(WatchStatus::Finished),
                             Err(exercise) => {
                                 let mut failed_exercise_hint = failed_exercise_hint.lock().unwrap();
