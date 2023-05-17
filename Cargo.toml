@@ -1,5 +1,6 @@
 [package]
 name = "rustlings"
+description = "Small exercises to get you used to reading and writing Rust code!"
 version = "5.5.0"
 authors = [
   "Liv <mokou@fastmail.com>",

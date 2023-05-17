@@ -1,0 +1,11 @@
+{
+  "homepage": "https://rustlings.cool",
+  "readme_path": "website.md",
+  "repository": "https://github.com/rust-lang/rustlings",
+  "analytics": {
+    "plausible": {
+      "domain": "rustlings.cool"
+    }
+  },
+  "changelog": true
+}
