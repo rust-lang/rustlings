@@ -295,6 +295,7 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="http://esotuvaka.github.io"><img src="https://avatars.githubusercontent.com/u/104941850?v=4?s=100" width="100px;" alt="Eric"/><br /><sub><b>Eric</b></sub></a><br /><a href="#content-esotuvaka" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/az0977776"><img src="https://avatars.githubusercontent.com/u/9172038?v=4?s=100" width="100px;" alt="Aaron Wang"/><br /><sub><b>Aaron Wang</b></sub></a><br /><a href="#content-az0977776" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/nmay231"><img src="https://avatars.githubusercontent.com/u/35386821?v=4?s=100" width="100px;" alt="Noah"/><br /><sub><b>Noah</b></sub></a><br /><a href="#content-nmay231" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/rb5014"><img src="https://avatars.githubusercontent.com/u/105397317?v=4?s=100" width="100px;" alt="rb5014"/><br /><sub><b>rb5014</b></sub></a><br /><a href="#content-rb5014" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
