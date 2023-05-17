@@ -77,7 +77,7 @@ mod tests {
     }
 
     #[test]
-    fn count_complete_equals_for() {       
+    fn count_complete_equals_for() {
         let map = get_map();
         let progressStates = vec![Progress::Complete, Progress::Some, Progress::None];
         for progressState in progressStates {
@@ -100,19 +100,13 @@ mod tests {
     #[test]
     fn count_collection_some() {
         let collection = get_vec_map();
-        assert_eq!(
-            1,
-            count_collection_iterator(&collection, Progress::Some)
-        );
+        assert_eq!(1, count_collection_iterator(&collection, Progress::Some));
     }
 
     #[test]
     fn count_collection_none() {
         let collection = get_vec_map();
-        assert_eq!(
-            4,
-            count_collection_iterator(&collection, Progress::None)
-        );
+        assert_eq!(4, count_collection_iterator(&collection, Progress::None));
     }
 
     #[test]
