@@ -1,8 +1,9 @@
 use glob::glob;
 use serde::{Deserialize, Serialize};
-use std::env;
 use std::error::Error;
+use std::path::PathBuf;
 use std::process::Command;
+use std::{env, fs};
 
 /// Contains the structure of resulting rust-project.json file
 /// and functions to build the data required to create the file
@@ -38,11 +39,12 @@ impl RustAnalyzerProject {
     }
 
     /// If path contains .rs extension, add a crate to `rust-project.json`
-    fn path_to_json(&mut self, path: String) {
-        if let Some((_, ext)) = path.split_once('.') {
+    fn path_to_json(&mut self, path: PathBuf) -> Result<(), Box<dyn Error>> {
+        if let Some(ext) = path.extension() {
             if ext == "rs" {
+                let abspath = fs::canonicalize(path)?;
                 self.crates.push(Crate {
-                    root_module: path,
+                    root_module: abspath.display().to_string(),
                     edition: "2021".to_string(),
                     deps: Vec::new(),
                     // This allows rust_analyzer to work inside #[test] blocks
@@ -50,15 +52,16 @@ impl RustAnalyzerProject {
                 })
             }
         }
+
+        Ok(())
     }
 
     /// Parse the exercises folder for .rs files, any matches will create
     /// a new `crate` in rust-project.json which allows rust-analyzer to
     /// treat it like a normal binary
     pub fn exercises_to_json(&mut self) -> Result<(), Box<dyn Error>> {
-        for e in glob("./exercises/**/*")? {
-            let path = e?.to_string_lossy().to_string();
-            self.path_to_json(path);
+        for path in glob("./exercises/**/*")? {
+            self.path_to_json(path?)?;
         }
         Ok(())
     }
