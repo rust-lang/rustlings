@@ -1,3 +1,10 @@
+<a name="5.5.1"></a>
+## 5.5.1 (2023-05-17)
+
+#### Fixed
+
+- Reverted `rust-project.json` path generation due to an upstream `rust-analyzer` fix.
+
 <a name="5.5.0"></a>
 ## 5.5.0 (2023-05-17)
 

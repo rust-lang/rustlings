@@ -22,7 +22,7 @@
         rustlings =
           pkgs.rustPlatform.buildRustPackage {
             name = "rustlings";
-            version = "5.5.0";
+            version = "5.5.1";
 
             buildInputs = cargoBuildInputs;
 
