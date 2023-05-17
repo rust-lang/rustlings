@@ -1,9 +1,9 @@
 use glob::glob;
 use serde::{Deserialize, Serialize};
+use std::env;
 use std::error::Error;
 use std::path::PathBuf;
 use std::process::Command;
-use std::{env, fs};
 
 /// Contains the structure of resulting rust-project.json file
 /// and functions to build the data required to create the file
@@ -42,9 +42,8 @@ impl RustAnalyzerProject {
     fn path_to_json(&mut self, path: PathBuf) -> Result<(), Box<dyn Error>> {
         if let Some(ext) = path.extension() {
             if ext == "rs" {
-                let abspath = fs::canonicalize(path)?;
                 self.crates.push(Crate {
-                    root_module: abspath.display().to_string(),
+                    root_module: path.display().to_string(),
                     edition: "2021".to_string(),
                     deps: Vec::new(),
                     // This allows rust_analyzer to work inside #[test] blocks
