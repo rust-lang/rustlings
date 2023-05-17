@@ -297,6 +297,7 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/nmay231"><img src="https://avatars.githubusercontent.com/u/35386821?v=4?s=100" width="100px;" alt="Noah"/><br /><sub><b>Noah</b></sub></a><br /><a href="#content-nmay231" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/rb5014"><img src="https://avatars.githubusercontent.com/u/105397317?v=4?s=100" width="100px;" alt="rb5014"/><br /><sub><b>rb5014</b></sub></a><br /><a href="#content-rb5014" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/deedy5"><img src="https://avatars.githubusercontent.com/u/65482418?v=4?s=100" width="100px;" alt="deedy5"/><br /><sub><b>deedy5</b></sub></a><br /><a href="#content-deedy5" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/lionel-rowe"><img src="https://avatars.githubusercontent.com/u/26078826?v=4?s=100" width="100px;" alt="lionel-rowe"/><br /><sub><b>lionel-rowe</b></sub></a><br /><a href="#content-lionel-rowe" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
