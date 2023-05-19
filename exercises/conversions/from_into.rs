@@ -35,10 +35,34 @@ impl Default for Person {
 // If while parsing the age, something goes wrong, then return the default of Person
 // Otherwise, then return an instantiated Person object with the results
 
-// I AM NOT DONE
-
 impl From<&str> for Person {
     fn from(s: &str) -> Person {
+        if s.is_empty() {
+            return Default::default();
+        }
+        let vals = s.split(",");
+        let mut idx = 0;
+        let mut name: &str = "";
+        let mut age: usize = 0;
+        for val in vals {
+            if idx > 2 {
+                return Default::default();
+            }
+            if idx == 0 {
+                name = val;
+            } else if idx == 1 {
+                if let Ok(age_num) = val.parse::<usize>() {
+                    age = age_num;
+                } else {
+                    return Default::default();
+                }
+            }
+            idx += 1;
+        }
+        if idx != 2 || name.is_empty() {
+            return Default::default();
+        }
+        return Person { name: String::from(name), age };
     }
 }
 
@@ -54,6 +78,7 @@ fn main() {
 #[cfg(test)]
 mod tests {
     use super::*;
+
     #[test]
     fn test_default() {
         // Test that the default person is 30 year old John
@@ -61,6 +86,7 @@ mod tests {
         assert_eq!(dp.name, "John");
         assert_eq!(dp.age, 30);
     }
+
     #[test]
     fn test_bad_convert() {
         // Test that John is returned when bad string is provided
@@ -68,6 +94,7 @@ mod tests {
         assert_eq!(p.name, "John");
         assert_eq!(p.age, 30);
     }
+
     #[test]
     fn test_good_convert() {
         // Test that "Mark,20" works
@@ -75,6 +102,7 @@ mod tests {
         assert_eq!(p.name, "Mark");
         assert_eq!(p.age, 20);
     }
+
     #[test]
     fn test_bad_age() {
         // Test that "Mark,twenty" will return the default person due to an error in parsing age

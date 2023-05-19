@@ -7,6 +7,9 @@
 
 use std::convert::{TryFrom, TryInto};
 
+const LEFT_MARGIN: i16 = 0;
+const RIGHT_MARGIN: i16 = 255;
+
 #[derive(Debug, PartialEq)]
 struct Color {
     red: u8,
@@ -23,8 +26,6 @@ enum IntoColorError {
     IntConversion,
 }
 
-// I AM NOT DONE
-
 // Your task is to complete this implementation
 // and return an Ok result of inner type Color.
 // You need to create an implementation for a tuple of three integers,
@@ -38,6 +39,12 @@ enum IntoColorError {
 impl TryFrom<(i16, i16, i16)> for Color {
     type Error = IntoColorError;
     fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {
+        if tuple.0 < LEFT_MARGIN || tuple.0 > RIGHT_MARGIN ||
+            tuple.1 < LEFT_MARGIN || tuple.1 > RIGHT_MARGIN ||
+            tuple.2 < LEFT_MARGIN || tuple.2 > RIGHT_MARGIN {
+            return Err(IntoColorError::IntConversion);
+        }
+        return Ok(Color { red: tuple.0 as u8, green: tuple.1 as u8, blue: tuple.2 as u8 });
     }
 }
 
@@ -45,6 +52,27 @@ impl TryFrom<(i16, i16, i16)> for Color {
 impl TryFrom<[i16; 3]> for Color {
     type Error = IntoColorError;
     fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {
+        let mut red: u8 = 0;
+        let mut green: u8 = 0;
+        let mut blue: u8 = 0;
+        for (idx, num) in arr.iter().enumerate() {
+            if idx > 2 {
+                return Err(IntoColorError::BadLen);
+            }
+            if num < &LEFT_MARGIN || num > &RIGHT_MARGIN {
+                return Err(IntoColorError::IntConversion);
+            }
+            if idx == 0 {
+                red = *num as u8;
+            }
+            if idx == 1 {
+                green = *num as u8;
+            }
+            if idx == 2 {
+                blue = *num as u8;
+            }
+        }
+        return Ok(Color { red, green, blue });
     }
 }
 
@@ -52,6 +80,30 @@ impl TryFrom<[i16; 3]> for Color {
 impl TryFrom<&[i16]> for Color {
     type Error = IntoColorError;
     fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {
+        if slice.len() != 3 {
+            return Err(IntoColorError::BadLen);
+        }
+        let mut red: u8 = 0;
+        let mut green: u8 = 0;
+        let mut blue: u8 = 0;
+        for (idx, num) in slice.iter().enumerate() {
+            if idx > 2 {
+                return Err(IntoColorError::BadLen);
+            }
+            if num < &LEFT_MARGIN || num > &RIGHT_MARGIN {
+                return Err(IntoColorError::IntConversion);
+            }
+            if idx == 0 {
+                red = *num as u8;
+            }
+            if idx == 1 {
+                green = *num as u8;
+            }
+            if idx == 2 {
+                blue = *num as u8;
+            }
+        }
+        return Ok(Color { red, green, blue });
     }
 }
 
@@ -84,6 +136,7 @@ mod tests {
             Err(IntoColorError::IntConversion)
         );
     }
+
     #[test]
     fn test_tuple_out_of_range_negative() {
         assert_eq!(
@@ -91,6 +144,7 @@ mod tests {
             Err(IntoColorError::IntConversion)
         );
     }
+
     #[test]
     fn test_tuple_sum() {
         assert_eq!(
@@ -98,6 +152,7 @@ mod tests {
             Err(IntoColorError::IntConversion)
         );
     }
+
     #[test]
     fn test_tuple_correct() {
         let c: Result<Color, _> = (183, 65, 14).try_into();
@@ -107,25 +162,29 @@ mod tests {
             Color {
                 red: 183,
                 green: 65,
-                blue: 14
+                blue: 14,
             }
         );
     }
+
     #[test]
     fn test_array_out_of_range_positive() {
         let c: Result<Color, _> = [1000, 10000, 256].try_into();
         assert_eq!(c, Err(IntoColorError::IntConversion));
     }
+
     #[test]
     fn test_array_out_of_range_negative() {
         let c: Result<Color, _> = [-10, -256, -1].try_into();
         assert_eq!(c, Err(IntoColorError::IntConversion));
     }
+
     #[test]
     fn test_array_sum() {
         let c: Result<Color, _> = [-1, 255, 255].try_into();
         assert_eq!(c, Err(IntoColorError::IntConversion));
     }
+
     #[test]
     fn test_array_correct() {
         let c: Result<Color, _> = [183, 65, 14].try_into();
@@ -135,10 +194,11 @@ mod tests {
             Color {
                 red: 183,
                 green: 65,
-                blue: 14
+                blue: 14,
             }
         );
     }
+
     #[test]
     fn test_slice_out_of_range_positive() {
         let arr = [10000, 256, 1000];
@@ -147,6 +207,7 @@ mod tests {
             Err(IntoColorError::IntConversion)
         );
     }
+
     #[test]
     fn test_slice_out_of_range_negative() {
         let arr = [-256, -1, -10];
@@ -155,6 +216,7 @@ mod tests {
             Err(IntoColorError::IntConversion)
         );
     }
+
     #[test]
     fn test_slice_sum() {
         let arr = [-1, 255, 255];
@@ -163,6 +225,7 @@ mod tests {
             Err(IntoColorError::IntConversion)
         );
     }
+
     #[test]
     fn test_slice_correct() {
         let v = vec![183, 65, 14];
@@ -173,15 +236,17 @@ mod tests {
             Color {
                 red: 183,
                 green: 65,
-                blue: 14
+                blue: 14,
             }
         );
     }
+
     #[test]
     fn test_slice_excess_length() {
         let v = vec![0, 0, 0, 0];
         assert_eq!(Color::try_from(&v[..]), Err(IntoColorError::BadLen));
     }
+
     #[test]
     fn test_slice_insufficient_length() {
         let v = vec![0, 0];
