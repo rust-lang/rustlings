@@ -897,9 +897,6 @@ hint = """
 The documentation for the std::iter::Iterator trait contains numerous methods
 that would be helpful here.
 
-Return 0 from count_collection_iterator to make the code compile in order to
-test count_iterator.
-
 The collection variable in count_collection_iterator is a slice of HashMaps. It
 needs to be converted into an iterator in order to use the iterator methods.
 
