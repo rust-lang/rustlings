@@ -300,6 +300,9 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/lionel-rowe"><img src="https://avatars.githubusercontent.com/u/26078826?v=4?s=100" width="100px;" alt="lionel-rowe"/><br /><sub><b>lionel-rowe</b></sub></a><br /><a href="#content-lionel-rowe" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/Ben2917"><img src="https://avatars.githubusercontent.com/u/10279994?v=4?s=100" width="100px;" alt="Ben"/><br /><sub><b>Ben</b></sub></a><br /><a href="#content-Ben2917" title="Content">🖋</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/b1ue64"><img src="https://avatars.githubusercontent.com/u/77976308?v=4?s=100" width="100px;" alt="b1ue64"/><br /><sub><b>b1ue64</b></sub></a><br /><a href="#content-b1ue64" title="Content">🖋</a></td>
+    </tr>
   </tbody>
 </table>
 
