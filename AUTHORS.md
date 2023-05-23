@@ -302,6 +302,7 @@ authors.
     </tr>
     <tr>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/b1ue64"><img src="https://avatars.githubusercontent.com/u/77976308?v=4?s=100" width="100px;" alt="b1ue64"/><br /><sub><b>b1ue64</b></sub></a><br /><a href="#content-b1ue64" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/lazywalker"><img src="https://avatars.githubusercontent.com/u/53956?v=4?s=100" width="100px;" alt="lazywalker"/><br /><sub><b>lazywalker</b></sub></a><br /><a href="#content-lazywalker" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
