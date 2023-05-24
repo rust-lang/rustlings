@@ -26,7 +26,7 @@ mod run;
 mod verify;
 
 // In sync with crate version
-const VERSION: &str = "5.4.1";
+const VERSION: &str = "5.5.1";
 
 #[derive(FromArgs, PartialEq, Debug)]
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
@@ -61,7 +61,11 @@ struct VerifyArgs {}
 #[derive(FromArgs, PartialEq, Debug)]
 #[argh(subcommand, name = "watch")]
 /// Reruns `verify` when files were edited
-struct WatchArgs {}
+struct WatchArgs {
+    /// show hints on success
+    #[argh(switch)]
+    success_hints: bool,
+}
 
 #[derive(FromArgs, PartialEq, Debug)]
 #[argh(subcommand, name = "run")]
@@ -229,7 +233,7 @@ fn main() {
         }
 
         Subcommands::Verify(_subargs) => {
-            verify(&exercises, (0, exercises.len()), verbose)
+            verify(&exercises, (0, exercises.len()), verbose, false)
                 .unwrap_or_else(|_| std::process::exit(1));
         }
 
@@ -252,7 +256,7 @@ fn main() {
             }
         }
 
-        Subcommands::Watch(_subargs) => match watch(&exercises, verbose) {
+        Subcommands::Watch(_subargs) => match watch(&exercises, verbose, _subargs.success_hints) {
             Err(e) => {
                 println!(
                     "Error: Could not watch your progress. Error message was {:?}.",
@@ -298,13 +302,21 @@ fn spawn_watch_shell(
                     println!("Bye!");
                 } else if input.eq("help") {
                     println!("Commands available to you in watch mode:");
-                    println!("  hint  - prints the current exercise's hint");
-                    println!("  clear - clears the screen");
-                    println!("  quit  - quits watch mode");
-                    println!("  help  - displays this help message");
+                    println!("  hint   - prints the current exercise's hint");
+                    println!("  clear  - clears the screen");
+                    println!("  quit   - quits watch mode");
+                    println!("  !<cmd> - executes a command, like `!rustc --explain E0381`");
+                    println!("  help   - displays this help message");
                     println!();
                     println!("Watch mode automatically re-evaluates the current exercise");
                     println!("when you edit a file's contents.")
+                } else if let Some(cmd) = input.strip_prefix('!') {
+                    let parts: Vec<&str> = cmd.split_whitespace().collect();
+                    if parts.is_empty() {
+                        println!("no command provided");
+                    } else if let Err(e) = Command::new(parts[0]).args(&parts[1..]).status() {
+                        println!("failed to execute command `{}`: {}", cmd, e);
+                    }
                 } else {
                     println!("unknown command: {input}");
                 }
@@ -340,7 +352,11 @@ enum WatchStatus {
     Unfinished,
 }
 
-fn watch(exercises: &[Exercise], verbose: bool) -> notify::Result<WatchStatus> {
+fn watch(
+    exercises: &[Exercise],
+    verbose: bool,
+    success_hints: bool,
+) -> notify::Result<WatchStatus> {
     /* Clears the terminal with an ANSI escape code.
     Works in UNIX and newer Windows terminals. */
     fn clear_screen() {
@@ -356,7 +372,12 @@ fn watch(exercises: &[Exercise], verbose: bool) -> notify::Result<WatchStatus> {
     clear_screen();
 
     let to_owned_hint = |t: &Exercise| t.hint.to_owned();
-    let failed_exercise_hint = match verify(exercises.iter(), (0, exercises.len()), verbose) {
+    let failed_exercise_hint = match verify(
+        exercises.iter(),
+        (0, exercises.len()),
+        verbose,
+        success_hints,
+    ) {
         Ok(_) => return Ok(WatchStatus::Finished),
         Err(exercise) => Arc::new(Mutex::new(Some(to_owned_hint(exercise)))),
     };
@@ -378,7 +399,12 @@ fn watch(exercises: &[Exercise], verbose: bool) -> notify::Result<WatchStatus> {
                             );
                         let num_done = exercises.iter().filter(|e| e.looks_done()).count();
                         clear_screen();
-                        match verify(pending_exercises, (num_done, exercises.len()), verbose) {
+                        match verify(
+                            pending_exercises,
+                            (num_done, exercises.len()),
+                            verbose,
+                            success_hints,
+                        ) {
                             Ok(_) => return Ok(WatchStatus::Finished),
                             Err(exercise) => {
                                 let mut failed_exercise_hint = failed_exercise_hint.lock().unwrap();

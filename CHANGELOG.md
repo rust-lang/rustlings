@@ -1,3 +1,45 @@
+<a name="5.5.1"></a>
+## 5.5.1 (2023-05-17)
+
+#### Fixed
+
+- Reverted `rust-project.json` path generation due to an upstream `rust-analyzer` fix.
+
+<a name="5.5.0"></a>
+## 5.5.0 (2023-05-17)
+
+#### Added
+
+- `strings2`: Added a reference to the book chapter for reference conversion
+- `lifetimes`: Added a link to the lifetimekata project
+- Added a new `tests4` exercises, which teaches about testing for panics
+- Added a `!` prefix command to watch mode that runs an external command
+- Added a `--success-hints` option to watch mode that shows hints on exercise success
+
+#### Changed
+
+- `vecs2`: Renamed iterator variable bindings for clarify
+- `lifetimes`: Changed order of book references
+- `hashmaps2`: Clarified instructions in the todo block
+- Moved lifetime exercises before test exercises (via the recommended book ordering)
+- `options2`: Improved tests for layering options
+- `modules2`: Added more information to the hint
+
+#### Fixed
+
+- `errors2`: Corrected a comment wording
+- `iterators2`: Fixed a spelling mistake in the hint text
+- `variables`: Wrapped the mut keyword with backticks for readability
+- `move_semantics2`: Removed references to line numbers
+- `cow1`: Clarified the `owned_no_mutation` comments
+- `options3`: Changed exercise to panic when no match is found
+- `rustlings lsp` now generates absolute paths, which should fix VSCode `rust-analyzer` usage on Windows
+
+#### Housekeeping
+
+- Added a markdown linter to run on GitHub actions
+- Split quick installation section into two code blocks
+
 <a name="5.4.1"></a>
 ## 5.4.1 (2023-03-10)
 

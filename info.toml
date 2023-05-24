@@ -325,8 +325,7 @@ doing one step and then fixing the compiler errors that result!
 So the end goal is to:
    - get rid of the first line in main that creates the new vector
    - so then `vec0` doesn't exist, so we can't pass it to `fill_vec`
-   - we don't want to pass anything to `fill_vec`, so its signature should
-     reflect that it does not take any arguments
+   - `fill_vec` has had its signature changed, which our call should reflect
    - since we're not creating a new vec in `main` anymore, we need to create
      a new vec in `fill_vec`, similarly to the way we did in `main`"""
 
@@ -479,7 +478,8 @@ hint = """
 The delicious_snacks module is trying to present an external interface that is
 different than its internal structure (the `fruits` and `veggies` modules and
 associated constants). Complete the `use` statements to fit the uses in main and
-find the one keyword missing for both constants."""
+find the one keyword missing for both constants.
+Learn more at https://doc.rust-lang.org/book/ch07-04-bringing-paths-into-scope-with-the-use-keyword.html#re-exporting-names-with-pub-use"""
 
 [[exercises]]
 name = "modules3"
@@ -807,6 +807,17 @@ You can call a function right where you're passing arguments to `assert!` -- so 
 something like `assert!(having_fun())`. If you want to check that you indeed get false, you
 can negate the result of what you're doing using `!`, like `assert!(!having_fun())`."""
 
+[[exercises]]
+name = "tests4"
+path = "exercises/tests/tests4.rs"
+mode = "test"
+hint = """
+We expect method `Rectangle::new()` to panic for negative values.
+To handle that you need to add a special attribute to the test function.
+You can refer to the docs:
+https://doc.rust-lang.org/stable/book/ch11-01-writing-tests.html#checking-for-panics-with-should_panic"""
+
+
 # STANDARD LIBRARY TYPES
 
 [[exercises]]
@@ -885,9 +896,6 @@ mode = "test"
 hint = """
 The documentation for the std::iter::Iterator trait contains numerous methods
 that would be helpful here.
-
-Return 0 from count_collection_iterator to make the code compile in order to
-test count_iterator.
 
 The collection variable in count_collection_iterator is a slice of HashMaps. It
 needs to be converted into an iterator in order to use the iterator methods.

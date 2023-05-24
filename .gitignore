@@ -11,3 +11,7 @@ rust-project.json
 !.vscode/extensions.json
 *.iml
 *.o
+public/
+
+# Local Netlify folder
+.netlify
