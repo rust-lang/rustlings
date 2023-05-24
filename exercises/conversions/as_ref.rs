@@ -1,7 +1,6 @@
-// AsRef and AsMut allow for cheap reference-to-reference conversions.
-// Read more about them at https://doc.rust-lang.org/std/convert/trait.AsRef.html
-// and https://doc.rust-lang.org/std/convert/trait.AsMut.html, respectively.
-// Execute `rustlings hint as_ref_mut` or use the `hint` watch subcommand for a hint.
+// AsRef allows for cheap reference-to-reference conversions.
+// Read more about it at https://doc.rust-lang.org/std/convert/trait.AsRef.html
+// Execute `rustlings hint as_ref` or use the `hint` watch subcommand for a hint.
 
 // I AM NOT DONE
 
@@ -15,13 +14,6 @@ fn byte_counter<T>(arg: T) -> usize {
 // TODO: Add the AsRef trait appropriately as a trait bound.
 fn char_counter<T>(arg: T) -> usize {
     arg.as_ref().chars().count()
-}
-
-// Squares a number using as_mut().
-// TODO: Add the appropriate trait bound.
-fn num_sq<T>(arg: &mut T) {
-    // TODO: Implement the function body.
-    ???
 }
 
 #[cfg(test)]
@@ -50,12 +42,5 @@ mod tests {
     fn same_counts_using_string() {
         let s = String::from("Cafe au lait");
         assert_eq!(char_counter(s.clone()), byte_counter(s));
-    }
-
-    #[test]
-    fn mult_box() {
-        let mut num: Box<u32> = Box::new(3);
-        num_sq(&mut num);
-        assert_eq!(*num, 9);
     }
 }
