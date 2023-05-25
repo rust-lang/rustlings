@@ -6,12 +6,11 @@
 // check clippy's suggestions from the output to solve the exercise.
 // Execute `rustlings hint clippy1` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
-
 use std::f32;
+use std::f32::consts::PI;
 
 fn main() {
-    let pi = 3.14f32;
+    let pi = PI;
     let radius = 5.00f32;
 
     let area = pi * f32::powi(radius, 2);
