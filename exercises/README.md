@@ -7,7 +7,7 @@
 | if                     | §3.5                |
 | primitive_types        | §3.2, §4.3          |
 | vecs                   | §8.1                |
-| move_semantics         | §4.1, §4.2          |
+| move_semantics         | §4.1-2              |
 | structs                | §5.1, §5.3          |
 | enums                  | §6, §18.3           |
 | strings                | §8.2                |
@@ -19,8 +19,9 @@
 | traits                 | §10.2               |
 | tests                  | §11.1               |
 | lifetimes              | §10.3               |
-| standard_library_types | §13.2, §15.1, §16.3 |
-| threads                | §16.1, §16.2, §16.3 |
+| iterators              | §13.2-4             |
+| threads                | §16.1-3             |
+| smart_pointers         | §15, §16.3          |
 | macros                 | §19.6               |
-| clippy                 | n/a                 |
+| clippy                 | §21.4               |
 | conversions            | n/a                 |

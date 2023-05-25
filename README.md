@@ -1,4 +1,8 @@
+<div class="oranda-hide">
+
 # rustlings 🦀❤️
+
+</div>
 
 Greetings and welcome to `rustlings`. This project contains small exercises to get you used to reading and writing Rust code. This includes reading and responding to compiler messages!
 
@@ -22,11 +26,28 @@ Just run:
 
 ```bash
 curl -L https://raw.githubusercontent.com/rust-lang/rustlings/main/install.sh | bash
-# Or if you want it to be installed to a different path:
+```
+Or if you want it to be installed to a different path:
+
+```bash
 curl -L https://raw.githubusercontent.com/rust-lang/rustlings/main/install.sh | bash -s mypath/
 ```
 
 This will install Rustlings and give you access to the `rustlings` command. Run it to get started!
+
+### Nix
+
+Basically: Clone the repository at the latest tag, finally run `nix develop` or `nix-shell`.
+
+```bash
+# find out the latest version at https://github.com/rust-lang/rustlings/releases/latest (on edit 5.5.1)
+git clone -b 5.5.1 --depth 1 https://github.com/rust-lang/rustlings
+cd rustlings
+# if nix version > 2.3
+nix develop
+# if nix version <= 2.3
+nix-shell
+```
 
 ## Windows
 
@@ -42,23 +63,23 @@ Then, you can run:
 Start-BitsTransfer -Source https://raw.githubusercontent.com/rust-lang/rustlings/main/install.ps1 -Destination $env:TMP/install_rustlings.ps1; Unblock-File $env:TMP/install_rustlings.ps1; Invoke-Expression $env:TMP/install_rustlings.ps1
 ```
 
-To install Rustlings. Same as on MacOS/Linux, you will have access to the `rustlings` command after it.
+To install Rustlings. Same as on MacOS/Linux, you will have access to the `rustlings` command after it. Keep in mind that this works best in PowerShell, and any other terminals may give you errors.
 
 If you get a permission denied message, you might have to exclude the directory where you cloned Rustlings in your antivirus.
 
 ## Browser
 
-[Run on Repl.it](https://repl.it/github/rust-lang/rustlings)
-
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/rust-lang/rustlings)
+
+[![Open Rustlings On Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new/?repo=rust-lang%2Frustlings&ref=main)
 
 ## Manually
 
 Basically: Clone the repository at the latest tag, run `cargo install --path .`.
 
 ```bash
-# find out the latest version at https://github.com/rust-lang/rustlings/releases/latest (on edit 5.2.1)
-git clone -b 5.2.1 --depth 1 https://github.com/rust-lang/rustlings
+# find out the latest version at https://github.com/rust-lang/rustlings/releases/latest (on edit 5.5.1)
+git clone -b 5.5.1 --depth 1 https://github.com/rust-lang/rustlings
 cd rustlings
 cargo install --force --path .
 ```
@@ -126,7 +147,7 @@ After every couple of sections, there will be a quiz that'll test your knowledge
 
 ## Enabling `rust-analyzer`
 
-Run the command `rustlings lsp` which will generate a `rust-project.json` at the root of the project, this allows [rust-analyzer](https://rust-analyzer.github.io/) to parse each exercise. 
+Run the command `rustlings lsp` which will generate a `rust-project.json` at the root of the project, this allows [rust-analyzer](https://rust-analyzer.github.io/) to parse each exercise.
 
 ## Continuing On
 
@@ -141,8 +162,7 @@ for you:
 rm -rf rustlings # or your custom folder name, if you chose and or renamed it
 ```
 
-Second, since Rustlings got installed via `cargo install`, it's only reasonable to assume that you can also remove it using Cargo, and
-exactly that is the case. Run `cargo uninstall` to remove the `rustlings` binary:
+Second, run `cargo uninstall` to remove the `rustlings` binary:
 
 ```bash
 cargo uninstall rustlings
