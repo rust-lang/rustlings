@@ -1,11 +1,13 @@
 // hashmaps2.rs
-
-// A basket of fruits in the form of a hash map is given. The key
-// represents the name of the fruit and the value represents how many
-// of that particular fruit is in the basket. You have to put *MORE
-// THAN 11* fruits in the basket. Three types of fruits - Apple (4),
-// Mango (2) and Lychee (5) are already given in the basket. You are
-// not allowed to insert any more of these fruits!
+// We're collecting different fruits to bake a delicious fruit cake.
+// For this, we have a basket, which we'll represent in the form of a hash
+// map. The key represents the name of each fruit we collect and the value
+// represents how many of that particular fruit we have collected.
+// Three types of fruits - Apple (4), Mango (2) and Lychee (5) are already
+// in the basket hash map.
+// You must add fruit to the basket so that there is at least
+// one of each kind and more than 11 in total - we have a lot of mouths to feed.
+// You are not allowed to insert any more of these fruits!
 //
 // Make me pass the tests!
 //
@@ -34,8 +36,8 @@ fn fruit_basket(basket: &mut HashMap<Fruit, u32>) {
     ];
 
     for fruit in fruit_kinds {
-        // TODO: Put new fruits if not already present. Note that you
-        // are not allowed to put any type of fruit that's already
+        // TODO: Insert new fruits if they are not already present in the basket.
+        // Note that you are not allowed to put any type of fruit that's already
         // present!
     }
 }
@@ -44,6 +46,7 @@ fn fruit_basket(basket: &mut HashMap<Fruit, u32>) {
 mod tests {
     use super::*;
 
+    // Don't modify this function!
     fn get_fruit_basket() -> HashMap<Fruit, u32> {
         let mut basket = HashMap::<Fruit, u32>::new();
         basket.insert(Fruit::Apple, 4);

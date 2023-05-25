@@ -26,7 +26,7 @@ mod run;
 mod verify;
 
 // In sync with crate version
-const VERSION: &str = "5.2.1";
+const VERSION: &str = "5.5.1";
 
 #[derive(FromArgs, PartialEq, Debug)]
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
@@ -61,7 +61,11 @@ struct VerifyArgs {}
 #[derive(FromArgs, PartialEq, Debug)]
 #[argh(subcommand, name = "watch")]
 /// Reruns `verify` when files were edited
-struct WatchArgs {}
+struct WatchArgs {
+    /// show hints on success
+    #[argh(switch)]
+    success_hints: bool,
+}
 
 #[derive(FromArgs, PartialEq, Debug)]
 #[argh(subcommand, name = "run")]
@@ -121,12 +125,12 @@ fn main() {
     let args: Args = argh::from_env();
 
     if args.version {
-        println!("v{}", VERSION);
+        println!("v{VERSION}");
         std::process::exit(0);
     }
 
     if args.nested.is_none() {
-        println!("\n{}\n", WELCOME);
+        println!("\n{WELCOME}\n");
     }
 
     if !Path::new("info.toml").exists() {
@@ -150,7 +154,7 @@ fn main() {
     let verbose = args.nocapture;
 
     let command = args.nested.unwrap_or_else(|| {
-        println!("{}\n", DEFAULT_OUT);
+        println!("{DEFAULT_OUT}\n");
         std::process::exit(0);
     });
     match command {
@@ -179,11 +183,11 @@ fn main() {
                 };
                 if solve_cond && (filter_cond || subargs.filter.is_none()) {
                     let line = if subargs.paths {
-                        format!("{}\n", fname)
+                        format!("{fname}\n")
                     } else if subargs.names {
                         format!("{}\n", e.name)
                     } else {
-                        format!("{:<17}\t{:<46}\t{:<7}\n", e.name, fname, status)
+                        format!("{:<17}\t{fname:<46}\t{status:<7}\n", e.name)
                     };
                     // Somehow using println! leads to the binary panicking
                     // when its output is piped.
@@ -202,7 +206,7 @@ fn main() {
             });
             let percentage_progress = exercises_done as f32 / exercises.len() as f32 * 100.0;
             println!(
-                "Progress: You completed {} / {} exercises ({:.2} %).",
+                "Progress: You completed {} / {} exercises ({:.1} %).",
                 exercises_done,
                 exercises.len(),
                 percentage_progress
@@ -229,7 +233,7 @@ fn main() {
         }
 
         Subcommands::Verify(_subargs) => {
-            verify(&exercises, (0, exercises.len()), verbose)
+            verify(&exercises, (0, exercises.len()), verbose, false)
                 .unwrap_or_else(|_| std::process::exit(1));
         }
 
@@ -239,7 +243,7 @@ fn main() {
                 .get_sysroot_src()
                 .expect("Couldn't find toolchain path, do you have `rustc` installed?");
             project
-                .exercies_to_json()
+                .exercises_to_json()
                 .expect("Couldn't parse rustlings exercises files");
 
             if project.crates.is_empty() {
@@ -252,7 +256,7 @@ fn main() {
             }
         }
 
-        Subcommands::Watch(_subargs) => match watch(&exercises, verbose) {
+        Subcommands::Watch(_subargs) => match watch(&exercises, verbose, _subargs.success_hints) {
             Err(e) => {
                 println!(
                     "Error: Could not watch your progress. Error message was {:?}.",
@@ -266,7 +270,7 @@ fn main() {
                     "{emoji} All exercises completed! {emoji}",
                     emoji = Emoji("🎉", "★")
                 );
-                println!("\n{}\n", FENISH_LINE);
+                println!("\n{FENISH_LINE}\n");
             }
             Ok(WatchStatus::Unfinished) => {
                 println!("We hope you're enjoying learning about Rust!");
@@ -289,7 +293,7 @@ fn spawn_watch_shell(
                 let input = input.trim();
                 if input == "hint" {
                     if let Some(hint) = &*failed_exercise_hint.lock().unwrap() {
-                        println!("{}", hint);
+                        println!("{hint}");
                     }
                 } else if input == "clear" {
                     println!("\x1B[2J\x1B[1;1H");
@@ -298,18 +302,26 @@ fn spawn_watch_shell(
                     println!("Bye!");
                 } else if input.eq("help") {
                     println!("Commands available to you in watch mode:");
-                    println!("  hint  - prints the current exercise's hint");
-                    println!("  clear - clears the screen");
-                    println!("  quit  - quits watch mode");
-                    println!("  help  - displays this help message");
+                    println!("  hint   - prints the current exercise's hint");
+                    println!("  clear  - clears the screen");
+                    println!("  quit   - quits watch mode");
+                    println!("  !<cmd> - executes a command, like `!rustc --explain E0381`");
+                    println!("  help   - displays this help message");
                     println!();
                     println!("Watch mode automatically re-evaluates the current exercise");
                     println!("when you edit a file's contents.")
+                } else if let Some(cmd) = input.strip_prefix('!') {
+                    let parts: Vec<&str> = cmd.split_whitespace().collect();
+                    if parts.is_empty() {
+                        println!("no command provided");
+                    } else if let Err(e) = Command::new(parts[0]).args(&parts[1..]).status() {
+                        println!("failed to execute command `{}`: {}", cmd, e);
+                    }
                 } else {
-                    println!("unknown command: {}", input);
+                    println!("unknown command: {input}");
                 }
             }
-            Err(error) => println!("error reading command: {}", error),
+            Err(error) => println!("error reading command: {error}"),
         }
     });
 }
@@ -329,7 +341,7 @@ fn find_exercise<'a>(name: &str, exercises: &'a [Exercise]) -> &'a Exercise {
             .iter()
             .find(|e| e.name == name)
             .unwrap_or_else(|| {
-                println!("No exercise found for '{}'!", name);
+                println!("No exercise found for '{name}'!");
                 std::process::exit(1)
             })
     }
@@ -340,7 +352,11 @@ enum WatchStatus {
     Unfinished,
 }
 
-fn watch(exercises: &[Exercise], verbose: bool) -> notify::Result<WatchStatus> {
+fn watch(
+    exercises: &[Exercise],
+    verbose: bool,
+    success_hints: bool,
+) -> notify::Result<WatchStatus> {
     /* Clears the terminal with an ANSI escape code.
     Works in UNIX and newer Windows terminals. */
     fn clear_screen() {
@@ -350,13 +366,18 @@ fn watch(exercises: &[Exercise], verbose: bool) -> notify::Result<WatchStatus> {
     let (tx, rx) = channel();
     let should_quit = Arc::new(AtomicBool::new(false));
 
-    let mut watcher: RecommendedWatcher = Watcher::new(tx, Duration::from_secs(2))?;
+    let mut watcher: RecommendedWatcher = Watcher::new(tx, Duration::from_secs(1))?;
     watcher.watch(Path::new("./exercises"), RecursiveMode::Recursive)?;
 
     clear_screen();
 
     let to_owned_hint = |t: &Exercise| t.hint.to_owned();
-    let failed_exercise_hint = match verify(exercises.iter(), (0, exercises.len()), verbose) {
+    let failed_exercise_hint = match verify(
+        exercises.iter(),
+        (0, exercises.len()),
+        verbose,
+        success_hints,
+    ) {
         Ok(_) => return Ok(WatchStatus::Finished),
         Err(exercise) => Arc::new(Mutex::new(Some(to_owned_hint(exercise)))),
     };
@@ -378,7 +399,12 @@ fn watch(exercises: &[Exercise], verbose: bool) -> notify::Result<WatchStatus> {
                             );
                         let num_done = exercises.iter().filter(|e| e.looks_done()).count();
                         clear_screen();
-                        match verify(pending_exercises, (num_done, exercises.len()), verbose) {
+                        match verify(
+                            pending_exercises,
+                            (num_done, exercises.len()),
+                            verbose,
+                            success_hints,
+                        ) {
                             Ok(_) => return Ok(WatchStatus::Finished),
                             Err(exercise) => {
                                 let mut failed_exercise_hint = failed_exercise_hint.lock().unwrap();
@@ -392,7 +418,7 @@ fn watch(exercises: &[Exercise], verbose: bool) -> notify::Result<WatchStatus> {
             Err(RecvTimeoutError::Timeout) => {
                 // the timeout expired, just check the `should_quit` variable below then loop again
             }
-            Err(e) => println!("watch error: {:?}", e),
+            Err(e) => println!("watch error: {e:?}"),
         }
         // Check if we need to exit
         if should_quit.load(Ordering::SeqCst) {
@@ -433,8 +459,8 @@ started, here's a couple of notes about how Rustlings operates:
 4. If an exercise doesn't make sense to you, feel free to open an issue on GitHub!
    (https://github.com/rust-lang/rustlings/issues/new). We look at every issue,
    and sometimes, other learners do too so you can help each other out!
-5. If you want to use `rust-analyzer` with exercises, which provides features like 
-   autocompletion, run the command `rustlings lsp`. 
+5. If you want to use `rust-analyzer` with exercises, which provides features like
+   autocompletion, run the command `rustlings lsp`.
 
 Got all that? Great! To get started, run `rustlings watch` in order to get the first
 exercise. Make sure to have your editor open!"#;

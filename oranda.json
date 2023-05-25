@@ -1,0 +1,10 @@
+{
+  "homepage": "https://rustlings.cool",
+  "repository": "https://github.com/rust-lang/rustlings",
+  "analytics": {
+    "plausible": {
+      "domain": "rustlings.cool"
+    }
+  },
+  "changelog": false
+}

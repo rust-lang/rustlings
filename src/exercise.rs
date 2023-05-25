@@ -8,6 +8,7 @@ use std::path::PathBuf;
 use std::process::{self, Command};
 
 const RUSTC_COLOR_ARGS: &[&str] = &["--color", "always"];
+const RUSTC_EDITION_ARGS: &[&str] = &["--edition", "2021"];
 const I_AM_DONE_REGEX: &str = r"(?m)^\s*///?\s*I\s+AM\s+NOT\s+DONE";
 const CONTEXT: usize = 2;
 const CLIPPY_CARGO_TOML_PATH: &str = "./exercises/clippy/Cargo.toml";
@@ -20,7 +21,7 @@ fn temp_file() -> String {
         .filter(|c| c.is_alphanumeric())
         .collect();
 
-    format!("./temp_{}_{}", process::id(), thread_id)
+    format!("./temp_{}_{thread_id}", process::id())
 }
 
 // The mode of the exercise.
@@ -111,10 +112,12 @@ impl Exercise {
             Mode::Compile => Command::new("rustc")
                 .args(&[self.path.to_str().unwrap(), "-o", &temp_file()])
                 .args(RUSTC_COLOR_ARGS)
+                .args(RUSTC_EDITION_ARGS)
                 .output(),
             Mode::Test => Command::new("rustc")
                 .args(&["--test", self.path.to_str().unwrap(), "-o", &temp_file()])
                 .args(RUSTC_COLOR_ARGS)
+                .args(RUSTC_EDITION_ARGS)
                 .output(),
             Mode::Clippy => {
                 let cargo_toml = format!(
@@ -140,6 +143,7 @@ path = "{}.rs""#,
                 Command::new("rustc")
                     .args(&[self.path.to_str().unwrap(), "-o", &temp_file()])
                     .args(RUSTC_COLOR_ARGS)
+                    .args(RUSTC_EDITION_ARGS)
                     .output()
                     .expect("Failed to compile!");
                 // Due to an issue with Clippy, a cargo clean is required to catch all lints.
@@ -154,7 +158,7 @@ path = "{}.rs""#,
                 Command::new("cargo")
                     .args(&["clippy", "--manifest-path", CLIPPY_CARGO_TOML_PATH])
                     .args(RUSTC_COLOR_ARGS)
-                    .args(&["--", "-D", "warnings","-D","clippy::float_cmp"])
+                    .args(&["--", "-D", "warnings", "-D", "clippy::float_cmp"])
                     .output()
             }
         }

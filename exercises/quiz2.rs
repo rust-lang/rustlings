@@ -6,7 +6,7 @@
 // - Modules
 // - Enums
 
-// Let's build a little machine in form of a function.
+// Let's build a little machine in the form of a function.
 // As input, we're going to give a list of strings and commands. These commands
 // determine what action is going to be applied to the string. It can either be:
 // - Uppercase the string
@@ -16,7 +16,7 @@
 // - The input is going to be a Vector of a 2-length tuple,
 //   the first element is the string, the second one is the command.
 // - The output element is going to be a Vector of strings.
-// Execute `rustlings hint quiz2` or use the `hint` watch subcommand for a hint.
+// No hints this time!
 
 // I AM NOT DONE
 
@@ -42,7 +42,7 @@ mod my_module {
 
 #[cfg(test)]
 mod tests {
-    // TODO: What do we have to import to have `transformer` in scope?
+    // TODO: What do we need to import to have `transformer` in scope?
     use ???;
     use super::Command;
 
