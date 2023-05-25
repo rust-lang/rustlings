@@ -31,10 +31,6 @@ mod tests {
         while let Some(Some(integer)) = optional_integers.pop() {
             assert_eq!(integer, range);
             range -= 1;
-        // You can stack `Option<T>`s into while let and if let
-        integer = optional_integers.pop() {
-            assert_eq!(integer, cursor);
-            cursor -= 1;
         }
 
         assert_eq!(cursor, 0);
