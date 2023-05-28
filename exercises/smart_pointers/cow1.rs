@@ -8,7 +8,6 @@
 // This exercise is meant to show you what to expect when passing data to Cow.
 // Fix the unit tests by checking for Cow::Owned(_) and Cow::Borrowed(_) at the TODO markers.
 
-// I AM NOT DONE
 
 use std::borrow::Cow;
 
@@ -45,6 +44,11 @@ mod tests {
         let mut input = Cow::from(&slice[..]);
         match abs_all(&mut input) {
             // TODO
+            Cow::Borrowed(x)=>{
+                Ok(())
+            },
+            _=> Err(""),
+
         }
     }
 
@@ -58,6 +62,10 @@ mod tests {
         let mut input = Cow::from(slice);
         match abs_all(&mut input) {
             // TODO
+            Cow::Borrowed(x)=>{
+                Err("")
+            },
+            _=> Ok(()),
         }
     }
 
@@ -70,6 +78,10 @@ mod tests {
         let mut input = Cow::from(slice);
         match abs_all(&mut input) {
             // TODO
+            Cow::Borrowed(x)=>{
+                Ok(())
+            },
+            _=> Ok(()),
         }
     }
 }
