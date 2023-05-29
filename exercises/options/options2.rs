@@ -1,5 +1,7 @@
 // options2.rs
-// Execute `rustlings hint options2` or use the `hint` watch subcommand for a hint.
+//
+// Execute `rustlings hint options2` or use the `hint` watch subcommand for a
+// hint.
 
 // I AM NOT DONE
 
@@ -27,8 +29,9 @@ mod tests {
 
         let mut cursor = range;
 
-        // TODO: make this a while let statement - remember that vector.pop also adds another layer of Option<T>
-        // You can stack `Option<T>`s into while let and if let
+        // TODO: make this a while let statement - remember that vector.pop also
+        // adds another layer of Option<T>. You can stack `Option<T>`s into
+        // while let and if let.
         integer = optional_integers.pop() {
             assert_eq!(integer, cursor);
             cursor -= 1;
