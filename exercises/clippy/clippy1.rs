@@ -19,5 +19,5 @@ fn main() {
     println!(
         "The area of a circle with radius {:.2} is {:.5}!",
         radius, area
-    )
+    );
 }
