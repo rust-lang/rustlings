@@ -295,6 +295,14 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="http://esotuvaka.github.io"><img src="https://avatars.githubusercontent.com/u/104941850?v=4?s=100" width="100px;" alt="Eric"/><br /><sub><b>Eric</b></sub></a><br /><a href="#content-esotuvaka" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/az0977776"><img src="https://avatars.githubusercontent.com/u/9172038?v=4?s=100" width="100px;" alt="Aaron Wang"/><br /><sub><b>Aaron Wang</b></sub></a><br /><a href="#content-az0977776" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/nmay231"><img src="https://avatars.githubusercontent.com/u/35386821?v=4?s=100" width="100px;" alt="Noah"/><br /><sub><b>Noah</b></sub></a><br /><a href="#content-nmay231" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/rb5014"><img src="https://avatars.githubusercontent.com/u/105397317?v=4?s=100" width="100px;" alt="rb5014"/><br /><sub><b>rb5014</b></sub></a><br /><a href="#content-rb5014" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/deedy5"><img src="https://avatars.githubusercontent.com/u/65482418?v=4?s=100" width="100px;" alt="deedy5"/><br /><sub><b>deedy5</b></sub></a><br /><a href="#content-deedy5" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/lionel-rowe"><img src="https://avatars.githubusercontent.com/u/26078826?v=4?s=100" width="100px;" alt="lionel-rowe"/><br /><sub><b>lionel-rowe</b></sub></a><br /><a href="#content-lionel-rowe" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/Ben2917"><img src="https://avatars.githubusercontent.com/u/10279994?v=4?s=100" width="100px;" alt="Ben"/><br /><sub><b>Ben</b></sub></a><br /><a href="#content-Ben2917" title="Content">🖋</a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/b1ue64"><img src="https://avatars.githubusercontent.com/u/77976308?v=4?s=100" width="100px;" alt="b1ue64"/><br /><sub><b>b1ue64</b></sub></a><br /><a href="#content-b1ue64" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/lazywalker"><img src="https://avatars.githubusercontent.com/u/53956?v=4?s=100" width="100px;" alt="lazywalker"/><br /><sub><b>lazywalker</b></sub></a><br /><a href="#content-lazywalker" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
