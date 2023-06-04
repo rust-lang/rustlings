@@ -24,6 +24,7 @@
             name = "rustlings";
             version = "5.5.1";
 
+            nativeBuildInputs = [ pkgs.git ];
             buildInputs = cargoBuildInputs;
 
             src = with pkgs.lib; cleanSourceWith {
