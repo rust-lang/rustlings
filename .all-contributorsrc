@@ -2181,6 +2181,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "Frosthage",
+      "name": "Mikael Frosthage",
+      "avatar_url": "https://avatars.githubusercontent.com/u/14823314?v=4",
+      "profile": "https://github.com/Frosthage",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
