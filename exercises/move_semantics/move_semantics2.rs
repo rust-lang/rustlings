@@ -2,23 +2,21 @@
 // Execute `rustlings hint move_semantics2` or use the `hint` watch subcommand for a hint.
 
 // Expected output:
-// vec0 has length 3 content `[22, 44, 66]`
-// vec1 has length 4 content `[22, 44, 66, 88]`
+// vec0 has length 3, with contents `[22, 44, 66]`
+// vec1 has length 4, with contents `[22, 44, 66, 88]`
 
 // I AM NOT DONE
 
 fn main() {
     let vec0 = Vec::new();
 
-    // Do not move the following line!
     let mut vec1 = fill_vec(vec0);
 
-    // Do not change the following line!
-    println!("{} has length {} content `{:?}`", "vec0", vec0.len(), vec0);
+    println!("{} has length {}, with contents: `{:?}`", "vec0", vec0.len(), vec0);
 
     vec1.push(88);
 
-    println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1);
+    println!("{} has length {}, with contents `{:?}`", "vec1", vec1.len(), vec1);
 }
 
 fn fill_vec(vec: Vec<i32>) -> Vec<i32> {
