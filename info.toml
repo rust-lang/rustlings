@@ -260,8 +260,8 @@ name = "vecs2"
 path = "exercises/vecs/vecs2.rs"
 mode = "test"
 hint = """
-Hint 1: `i` is each element from the Vec as they are being iterated. Can you try
-multiplying this?
+Hint 1: `element` is each element from the Vec as they are being iterated. Can you
+try multiplying this?
 
 Hint 2: For the first function, there's a way to directly access the numbers stored
 in the Vec, using the * dereference operator. You can both access and write to the
