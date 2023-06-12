@@ -2136,6 +2136,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "proofconstruction",
+      "name": "proofconstruction",
+      "avatar_url": "https://avatars.githubusercontent.com/u/74747193?v=4",
+      "profile": "https://github.com/proofconstruction",
+      "contributions": [
+        "infra"
+      ]
     }
   ],
   "contributorsPerLine": 8,
@@ -2144,5 +2153,6 @@
   "repoType": "github",
   "repoHost": "https://github.com",
   "skipCi": true,
-  "commitConvention": "angular"
+  "commitConvention": "angular",
+  "commitType": "docs"
 }
