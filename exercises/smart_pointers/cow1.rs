@@ -1,12 +1,16 @@
 // cow1.rs
-
-// This exercise explores the Cow, or Clone-On-Write type.
-// Cow is a clone-on-write smart pointer.
-// It can enclose and provide immutable access to borrowed data, and clone the data lazily when mutation or ownership is required.
-// The type is designed to work with general borrowed data via the Borrow trait.
+//
+// This exercise explores the Cow, or Clone-On-Write type. Cow is a
+// clone-on-write smart pointer. It can enclose and provide immutable access to
+// borrowed data, and clone the data lazily when mutation or ownership is
+// required. The type is designed to work with general borrowed data via the
+// Borrow trait.
 //
 // This exercise is meant to show you what to expect when passing data to Cow.
-// Fix the unit tests by checking for Cow::Owned(_) and Cow::Borrowed(_) at the TODO markers.
+// Fix the unit tests by checking for Cow::Owned(_) and Cow::Borrowed(_) at the
+// TODO markers.
+//
+// Execute `rustlings hint cow1` or use the `hint` watch subcommand for a hint.
 
 // I AM NOT DONE
 
@@ -50,10 +54,9 @@ mod tests {
 
     #[test]
     fn owned_no_mutation() -> Result<(), &'static str> {
-        // We can also pass `slice` without `&` so Cow owns it directly.
-        // In this case no mutation occurs and thus also no clone,
-        // but the result is still owned because it was never borrowed
-        // or mutated.
+        // We can also pass `slice` without `&` so Cow owns it directly. In this
+        // case no mutation occurs and thus also no clone, but the result is
+        // still owned because it was never borrowed or mutated.
         let slice = vec![0, 1, 2];
         let mut input = Cow::from(slice);
         match abs_all(&mut input) {
@@ -63,9 +66,9 @@ mod tests {
 
     #[test]
     fn owned_mutation() -> Result<(), &'static str> {
-        // Of course this is also the case if a mutation does occur.
-        // In this case the call to `to_mut()` returns a reference to
-        // the same data as before.
+        // Of course this is also the case if a mutation does occur. In this
+        // case the call to `to_mut()` returns a reference to the same data as
+        // before.
         let slice = vec![-1, 0, 1];
         let mut input = Cow::from(slice);
         match abs_all(&mut input) {

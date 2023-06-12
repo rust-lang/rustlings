@@ -1,9 +1,11 @@
 // move_semantics2.rs
-// Execute `rustlings hint move_semantics2` or use the `hint` watch subcommand for a hint.
-
+//
 // Expected output:
 // vec0 has length 3, with contents `[22, 44, 66]`
 // vec1 has length 4, with contents `[22, 44, 66, 88]`
+//
+// Execute `rustlings hint move_semantics2` or use the `hint` watch subcommand
+// for a hint.
 
 // I AM NOT DONE
 
