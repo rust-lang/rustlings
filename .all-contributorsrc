@@ -2190,6 +2190,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "robertefry",
+      "name": "Robert Fry",
+      "avatar_url": "https://avatars.githubusercontent.com/u/43712054?v=4",
+      "profile": "https://robertfry.xyz",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
