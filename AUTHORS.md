@@ -304,6 +304,7 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/b1ue64"><img src="https://avatars.githubusercontent.com/u/77976308?v=4?s=100" width="100px;" alt="b1ue64"/><br /><sub><b>b1ue64</b></sub></a><br /><a href="#content-b1ue64" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/lazywalker"><img src="https://avatars.githubusercontent.com/u/53956?v=4?s=100" width="100px;" alt="lazywalker"/><br /><sub><b>lazywalker</b></sub></a><br /><a href="#content-lazywalker" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/proofconstruction"><img src="https://avatars.githubusercontent.com/u/74747193?v=4?s=100" width="100px;" alt="proofconstruction"/><br /><sub><b>proofconstruction</b></sub></a><br /><a href="#infra-proofconstruction" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://www.youtube.com/channel/UCQCjA6qUutAtWqkCA4Z36CQ"><img src="https://avatars.githubusercontent.com/u/16007179?v=4?s=100" width="100px;" alt="IVIURRAY"/><br /><sub><b>IVIURRAY</b></sub></a><br /><a href="#content-IVIURRAY" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
