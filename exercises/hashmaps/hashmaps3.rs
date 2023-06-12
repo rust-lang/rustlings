@@ -18,9 +18,8 @@
 
 use std::collections::HashMap;
 
-// A structure to store team name and its goal details.
+// A structure to store the goal details of a team.
 struct Team {
-    name: String,
     goals_scored: u8,
     goals_conceded: u8,
 }
