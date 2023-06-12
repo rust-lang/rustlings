@@ -310,6 +310,9 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/luhem7"><img src="https://avatars.githubusercontent.com/u/4008215?v=4?s=100" width="100px;" alt="Mehul Gangavelli"/><br /><sub><b>Mehul Gangavelli</b></sub></a><br /><a href="#content-luhem7" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/Frosthage"><img src="https://avatars.githubusercontent.com/u/14823314?v=4?s=100" width="100px;" alt="Mikael Frosthage"/><br /><sub><b>Mikael Frosthage</b></sub></a><br /><a href="#content-Frosthage" title="Content">🖋</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="12.5%"><a href="https://robertfry.xyz"><img src="https://avatars.githubusercontent.com/u/43712054?v=4?s=100" width="100px;" alt="Robert Fry"/><br /><sub><b>Robert Fry</b></sub></a><br /><a href="#content-robertefry" title="Content">🖋</a></td>
+    </tr>
   </tbody>
 </table>
 
