@@ -1,5 +1,7 @@
 // options3.rs
-// Execute `rustlings hint options3` or use the `hint` watch subcommand for a hint.
+//
+// Execute `rustlings hint options3` or use the `hint` watch subcommand for a
+// hint.
 
 struct Point {
     x: i32,

@@ -303,6 +303,15 @@ authors.
     <tr>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/b1ue64"><img src="https://avatars.githubusercontent.com/u/77976308?v=4?s=100" width="100px;" alt="b1ue64"/><br /><sub><b>b1ue64</b></sub></a><br /><a href="#content-b1ue64" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/lazywalker"><img src="https://avatars.githubusercontent.com/u/53956?v=4?s=100" width="100px;" alt="lazywalker"/><br /><sub><b>lazywalker</b></sub></a><br /><a href="#content-lazywalker" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/proofconstruction"><img src="https://avatars.githubusercontent.com/u/74747193?v=4?s=100" width="100px;" alt="proofconstruction"/><br /><sub><b>proofconstruction</b></sub></a><br /><a href="#infra-proofconstruction" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://www.youtube.com/channel/UCQCjA6qUutAtWqkCA4Z36CQ"><img src="https://avatars.githubusercontent.com/u/16007179?v=4?s=100" width="100px;" alt="IVIURRAY"/><br /><sub><b>IVIURRAY</b></sub></a><br /><a href="#content-IVIURRAY" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/b-apperlo"><img src="https://avatars.githubusercontent.com/u/91734527?v=4?s=100" width="100px;" alt="Bert Apperlo"/><br /><sub><b>Bert Apperlo</b></sub></a><br /><a href="#content-b-apperlo" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://fwdekker.com/"><img src="https://avatars.githubusercontent.com/u/13442533?v=4?s=100" width="100px;" alt="Florine W. Dekker"/><br /><sub><b>Florine W. Dekker</b></sub></a><br /><a href="#content-FWDekker" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/luhem7"><img src="https://avatars.githubusercontent.com/u/4008215?v=4?s=100" width="100px;" alt="Mehul Gangavelli"/><br /><sub><b>Mehul Gangavelli</b></sub></a><br /><a href="#content-luhem7" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/Frosthage"><img src="https://avatars.githubusercontent.com/u/14823314?v=4?s=100" width="100px;" alt="Mikael Frosthage"/><br /><sub><b>Mikael Frosthage</b></sub></a><br /><a href="#content-Frosthage" title="Content">🖋</a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="12.5%"><a href="https://robertfry.xyz"><img src="https://avatars.githubusercontent.com/u/43712054?v=4?s=100" width="100px;" alt="Robert Fry"/><br /><sub><b>Robert Fry</b></sub></a><br /><a href="#content-robertefry" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>

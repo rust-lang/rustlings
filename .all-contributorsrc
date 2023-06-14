@@ -2136,6 +2136,69 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "proofconstruction",
+      "name": "proofconstruction",
+      "avatar_url": "https://avatars.githubusercontent.com/u/74747193?v=4",
+      "profile": "https://github.com/proofconstruction",
+      "contributions": [
+        "infra"
+      ]
+    },
+    {
+      "login": "IVIURRAY",
+      "name": "IVIURRAY",
+      "avatar_url": "https://avatars.githubusercontent.com/u/16007179?v=4",
+      "profile": "https://www.youtube.com/channel/UCQCjA6qUutAtWqkCA4Z36CQ",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "b-apperlo",
+      "name": "Bert Apperlo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/91734527?v=4",
+      "profile": "https://github.com/b-apperlo",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "FWDekker",
+      "name": "Florine W. Dekker",
+      "avatar_url": "https://avatars.githubusercontent.com/u/13442533?v=4",
+      "profile": "https://fwdekker.com/",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "luhem7",
+      "name": "Mehul Gangavelli",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4008215?v=4",
+      "profile": "https://github.com/luhem7",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "Frosthage",
+      "name": "Mikael Frosthage",
+      "avatar_url": "https://avatars.githubusercontent.com/u/14823314?v=4",
+      "profile": "https://github.com/Frosthage",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "robertefry",
+      "name": "Robert Fry",
+      "avatar_url": "https://avatars.githubusercontent.com/u/43712054?v=4",
+      "profile": "https://robertfry.xyz",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
@@ -2144,5 +2207,6 @@
   "repoType": "github",
   "repoHost": "https://github.com",
   "skipCi": true,
-  "commitConvention": "angular"
+  "commitConvention": "angular",
+  "commitType": "docs"
 }
