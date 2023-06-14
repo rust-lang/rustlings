@@ -14,6 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    - name: Fetch & maybe update Cargo.lock
+      run: cargo fetch --locked
     - name: Build
       run: cargo build --verbose
     - name: Run tests
