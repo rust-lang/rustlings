@@ -312,6 +312,7 @@ authors.
     </tr>
     <tr>
       <td align="center" valign="top" width="12.5%"><a href="https://robertfry.xyz"><img src="https://avatars.githubusercontent.com/u/43712054?v=4?s=100" width="100px;" alt="Robert Fry"/><br /><sub><b>Robert Fry</b></sub></a><br /><a href="#content-robertefry" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/tajo48"><img src="https://avatars.githubusercontent.com/u/55502906?v=4?s=100" width="100px;" alt="tajo48"/><br /><sub><b>tajo48</b></sub></a><br /><a href="#content-tajo48" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
