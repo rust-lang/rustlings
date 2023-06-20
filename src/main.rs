@@ -125,6 +125,8 @@ fn main() {
         std::process::exit(0);
     }
 
+    let foo = 5;
+
     if args.nested.is_none() {
         println!("\n{WELCOME}\n");
     }
