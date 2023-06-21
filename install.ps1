@@ -1,7 +1,7 @@
 #!/usr/bin/env pwsh
 
 #Requires -Version 5
-param($path = "$pwd/rustlings")
+param($path = "$home/rustlings")
 
 Write-Host "Let's get you set up with Rustlings!"
 
@@ -91,4 +91,4 @@ if (!$clippy) {
     rustup component add clippy
 }
 
-Write-Host "All done! Run 'rustlings' to get started."
+Write-Host "All done! Navigate to $path and run 'rustlings' to get started!"
