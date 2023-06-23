@@ -3,7 +3,7 @@
 // This function refuses to generate text to be printed on a nametag if you pass
 // it an empty string. It'd be nicer if it explained what the problem was,
 // instead of just sometimes returning `None`. Thankfully, Rust has a similar
-// construct to `Option` that can be used to express error conditions. Let's use
+// construct to `Result` that can be used to express error conditions. Let's use
 // it!
 //
 // Execute `rustlings hint errors1` or use the `hint` watch subcommand for a
