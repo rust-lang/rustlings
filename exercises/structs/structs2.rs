@@ -5,7 +5,6 @@
 // Execute `rustlings hint structs2` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
 
 #[derive(Debug)]
 struct Order {
@@ -38,7 +37,15 @@ mod tests {
     fn your_order() {
         let order_template = create_order_template();
         // TODO: Create your own order using the update syntax and template above!
-        // let your_order =
+        let your_order = Order {
+            name: String::from("Hacker in Rust"),
+            count: 1,
+            item_number: order_template.item_number,
+            made_by_email: order_template.made_by_email,
+            made_by_mobile: order_template.made_by_mobile,
+            made_by_phone: order_template.made_by_phone,
+            year: order_template.year,
+        };
         assert_eq!(your_order.name, "Hacker in Rust");
         assert_eq!(your_order.year, order_template.year);
         assert_eq!(your_order.made_by_phone, order_template.made_by_phone);
