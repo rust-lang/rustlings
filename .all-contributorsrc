@@ -2208,6 +2208,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "novanish",
+      "name": "Anish",
+      "avatar_url": "https://avatars.githubusercontent.com/u/98446102?v=4",
+      "profile": "https://anishchhetri.com.np",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
