@@ -2217,6 +2217,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "vnprc",
+      "name": "vnprc",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9425366?v=4",
+      "profile": "https://github.com/vnprc",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
