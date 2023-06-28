@@ -6,8 +6,6 @@
 // Execute `rustlings hint move_semantics3` or use the `hint` watch subcommand
 // for a hint.
 
-// I AM NOT DONE
-
 fn main() {
     let vec0 = Vec::new();
 
@@ -21,9 +19,10 @@ fn main() {
 }
 
 fn fill_vec(vec: Vec<i32>) -> Vec<i32> {
-    vec.push(22);
-    vec.push(44);
-    vec.push(66);
+    let mut vec2 = vec;
+    vec2.push(22);
+    vec2.push(44);
+    vec2.push(66);
 
-    vec
+    vec2
 }
