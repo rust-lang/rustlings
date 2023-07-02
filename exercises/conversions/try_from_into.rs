@@ -27,7 +27,7 @@ enum IntoColorError {
     IntConversion,
 }
 
-// I AM NOT DONE
+// I AM NOT DON
 
 // Your task is to complete this implementation and return an Ok result of inner
 // type Color. You need to create an implementation for a tuple of three
@@ -41,6 +41,14 @@ enum IntoColorError {
 impl TryFrom<(i16, i16, i16)> for Color {
     type Error = IntoColorError;
     fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {
+        match tuple {
+            (r @ 0..=255, g @ 0..=255, b @ 0..=255) => Ok(Color {
+                red: r as u8,
+                green: g as u8,
+                blue: b as u8,
+            }),
+            _ => Err(Self::Error::IntConversion),
+        }
     }
 }
 
@@ -48,13 +56,41 @@ impl TryFrom<(i16, i16, i16)> for Color {
 impl TryFrom<[i16; 3]> for Color {
     type Error = IntoColorError;
     fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {
+        // https://stackoverflow.com/questions/69591303/idioms-for-dry-code-inside-trait-implementations-rustlings-example
+        match arr
+            .iter()
+            .map(|x| u8::try_from(*x))
+            .collect::<Result<Vec<_>, _>>()
+        {
+            Ok(v) => Ok(Color {
+                red: v[0],
+                green: v[1],
+                blue: v[2],
+            }),
+            _ => Err(Self::Error::IntConversion),
+        }
     }
 }
 
-// Slice implementation
+// Slice implementation // ???
 impl TryFrom<&[i16]> for Color {
     type Error = IntoColorError;
     fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {
+        if slice.len() != 3 {
+            return Err(Self::Error::BadLen);
+        }
+        match slice
+            .iter()
+            .map(|x| u8::try_from(*x))
+            .collect::<Result<Vec<_>, _>>()
+        {
+            Ok(v) => Ok(Color {
+                red: v[0],
+                green: v[1],
+                blue: v[2],
+            }),
+            _ => Err(Self::Error::IntConversion),
+        }
     }
 }
 

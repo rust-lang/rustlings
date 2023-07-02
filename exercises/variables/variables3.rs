@@ -3,9 +3,9 @@
 // Execute `rustlings hint variables3` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
+// I AM NOT DON
 
 fn main() {
-    let x: i32;
+    let x: i32 = 2;
     println!("Number {}", x);
 }
