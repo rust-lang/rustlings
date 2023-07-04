@@ -2208,6 +2208,33 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "novanish",
+      "name": "Anish",
+      "avatar_url": "https://avatars.githubusercontent.com/u/98446102?v=4",
+      "profile": "https://anishchhetri.com.np",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "vnprc",
+      "name": "vnprc",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9425366?v=4",
+      "profile": "https://github.com/vnprc",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "jrcarl624",
+      "name": "Joshua Carlson",
+      "avatar_url": "https://avatars.githubusercontent.com/u/61999256?v=4",
+      "profile": "http://androecia.net",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,

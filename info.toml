@@ -167,6 +167,13 @@ For that first compiler error, it's important in Rust that each conditional
 block returns the same type! To get the tests passing, you will need a couple
 conditions checking different input values."""
 
+[[exercises]]
+name = "if3"
+path = "exercises/if/if3.rs"
+mode = "test"
+hint = """
+In Rust, every arm of an `if` expression has to return the same type of value. Make sure the type is consistent across all arms."""
+
 # QUIZ 1
 
 [[exercises]]
@@ -287,7 +294,7 @@ Also: Try accessing `vec0` after having called `fill_vec()`. See what happens!""
 [[exercises]]
 name = "move_semantics2"
 path = "exercises/move_semantics/move_semantics2.rs"
-mode = "test"
+mode = "compile"
 hint = """
 When running this exercise for the first time, you'll notice an error about
 "borrow of moved value". In Rust, when an argument is passed to a function and
