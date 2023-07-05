@@ -1,5 +1,7 @@
 // iterators4.rs
-// Execute `rustlings hint iterators4` or use the `hint` watch subcommand for a hint.
+//
+// Execute `rustlings hint iterators4` or use the `hint` watch subcommand for a
+// hint.
 
 // I AM NOT DONE
 

@@ -1,11 +1,12 @@
 // traits3.rs
 //
-// Your task is to implement the Licensed trait for
-// both structures and have them return the same
-// information without writing the same function twice.
+// Your task is to implement the Licensed trait for both structures and have
+// them return the same information without writing the same function twice.
 //
 // Consider what you can add to the Licensed trait.
-// Execute `rustlings hint traits3` or use the `hint` watch subcommand for a hint.
+//
+// Execute `rustlings hint traits3` or use the `hint` watch subcommand for a
+// hint.
 
 // I AM NOT DONE
 

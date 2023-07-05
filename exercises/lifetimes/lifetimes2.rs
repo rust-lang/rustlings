@@ -1,10 +1,10 @@
 // lifetimes2.rs
 //
-// So if the compiler is just validating the references passed
-// to the annotated parameters and the return type, what do
-// we need to change?
+// So if the compiler is just validating the references passed to the annotated
+// parameters and the return type, what do we need to change?
 //
-// Execute `rustlings hint lifetimes2` or use the `hint` watch subcommand for a hint.
+// Execute `rustlings hint lifetimes2` or use the `hint` watch subcommand for a
+// hint.
 
 // I AM NOT DONE
 
