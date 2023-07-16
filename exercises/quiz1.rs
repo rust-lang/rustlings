@@ -10,10 +10,18 @@
 // Write a function that calculates the price of an order of apples given
 // the quantity bought. No hints this time!
 
-// I AM NOT DONE
-
 // Put your function here!
-// fn calculate_price_of_apples {
+fn calculate_price_of_apples(no_of_apples:i32)->i32{
+    let mut price_of_apples :i32;
+    if no_of_apples >40{
+        price_of_apples = no_of_apples;
+    }else{
+        price_of_apples = 2*no_of_apples;
+    }
+    
+    println!("Price of {} is {}",no_of_apples, price_of_apples);
+    return price_of_apples;
+}
 
 // Don't modify this function!
 #[test]
