@@ -2244,6 +2244,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "alexfertel",
+      "name": "Alexander González",
+      "avatar_url": "https://avatars.githubusercontent.com/u/22298999?v=4",
+      "profile": "https://alexfertel.me",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
