@@ -52,6 +52,7 @@ impl PositiveNonzeroInteger {
             x if x < 0 => Err(CreationError::Negative),
             x if x == 0 => Err(CreationError::Zero),
             x => Ok(PositiveNonzeroInteger(x as u64)),
+            Err(e) => Err(ParsePosNonzeroError::from_creation(e)),
         }
     }
 }

@@ -3,8 +3,6 @@
 // Execute `rustlings hint errors4` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
-
 #[derive(PartialEq, Debug)]
 struct PositiveNonzeroInteger(u64);
 
@@ -17,7 +15,19 @@ enum CreationError {
 impl PositiveNonzeroInteger {
     fn new(value: i64) -> Result<PositiveNonzeroInteger, CreationError> {
         // Hmm...? Why is this only returning an Ok value?
-        Ok(PositiveNonzeroInteger(value as u64))
+        // if value > 0 {
+        //     Ok(PositiveNonzeroInteger(value as u64))
+        // } else if value == 0 {
+        //     Err(CreationError::Zero)
+        // } else {
+        //     Err(CreationError::Negative)
+        // }
+        use std::cmp::Ordering;
+        match value.cmp(&0) {
+            Ordering::Greater => Ok(PositiveNonzeroInteger(value as u64)),
+            Ordering::Equal => Err(CreationError::Zero),
+            Ordering::Less =>Err(CreationError::Negative),
+        }
     }
 }
 
