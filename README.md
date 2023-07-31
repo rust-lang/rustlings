@@ -3,6 +3,8 @@
 # rustlings 🦀❤️
 
 </div>
+##Intro 
+This is a branch of the rustlings repo that I'm using to test and document some of my progression through rust, git. 
 
 Greetings and welcome to `rustlings`. This project contains small exercises to get you used to reading and writing Rust code. This includes reading and responding to compiler messages!
 
