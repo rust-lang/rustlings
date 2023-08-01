@@ -2244,6 +2244,24 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "alexfertel",
+      "name": "Alexander González",
+      "avatar_url": "https://avatars.githubusercontent.com/u/22298999?v=4",
+      "profile": "https://alexfertel.me",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "softarn",
+      "name": "Marcus Höjvall",
+      "avatar_url": "https://avatars.githubusercontent.com/u/517619?v=4",
+      "profile": "https://github.com/softarn",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
