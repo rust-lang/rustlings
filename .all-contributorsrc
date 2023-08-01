@@ -2253,6 +2253,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "softarn",
+      "name": "Marcus Höjvall",
+      "avatar_url": "https://avatars.githubusercontent.com/u/517619?v=4",
+      "profile": "https://github.com/softarn",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,

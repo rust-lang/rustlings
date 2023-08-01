@@ -318,6 +318,7 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="http://androecia.net"><img src="https://avatars.githubusercontent.com/u/61999256?v=4?s=100" width="100px;" alt="Joshua Carlson"/><br /><sub><b>Joshua Carlson</b></sub></a><br /><a href="#content-jrcarl624" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://johndesilencio.me"><img src="https://avatars.githubusercontent.com/u/20136554?v=4?s=100" width="100px;" alt="Nicholas R. Smith"/><br /><sub><b>Nicholas R. Smith</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=johnDeSilencio" title="Code">💻</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://alexfertel.me"><img src="https://avatars.githubusercontent.com/u/22298999?v=4?s=100" width="100px;" alt="Alexander González"/><br /><sub><b>Alexander González</b></sub></a><br /><a href="#content-alexfertel" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/softarn"><img src="https://avatars.githubusercontent.com/u/517619?v=4?s=100" width="100px;" alt="Marcus Höjvall"/><br /><sub><b>Marcus Höjvall</b></sub></a><br /><a href="#content-softarn" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
