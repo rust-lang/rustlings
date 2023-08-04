@@ -1,8 +1,11 @@
 // macros4.rs
-// Execute `rustlings hint macros4` or use the `hint` watch subcommand for a hint.
+//
+// Execute `rustlings hint macros4` or use the `hint` watch subcommand for a
+// hint.
 
 // I AM NOT DONE
 
+#[rustfmt::skip]
 macro_rules! my_macro {
     () => {
         println!("Check out my macro!");

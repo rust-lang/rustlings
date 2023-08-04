@@ -1,5 +1,7 @@
 // threads3.rs
-// Execute `rustlings hint threads3` or use the `hint` watch subcommand for a hint.
+//
+// Execute `rustlings hint threads3` or use the `hint` watch subcommand for a
+// hint.
 
 // I AM NOT DONE
 
@@ -26,8 +28,8 @@ impl Queue {
 
 fn send_tx(q: Queue, tx: mpsc::Sender<u32>) -> () {
     let qc = Arc::new(q);
-    let qc1 = qc.clone();
-    let qc2 = qc.clone();
+    let qc1 = Arc::clone(&qc);
+    let qc2 = Arc::clone(&qc);
 
     thread::spawn(move || {
         for val in &qc1.first_half {
