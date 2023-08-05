@@ -24,7 +24,15 @@ pub struct ReportCard<T> {
     pub student_age: u8,
 }
 
-impl <T: Display> ReportCard<T> {
+impl<T: Display> ReportCard<T> {
+    pub fn new (grade: T, name: String, age: u8) -> Self {
+        Self {
+            grade : grade, 
+            student_name : name,
+            student_age  : age,   
+        }
+    }
+  
     pub fn print(&self) -> String {
         format!("{} ({}) - achieved a grade of {}",
             &self.student_name, &self.student_age, &self.grade)
