@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
 echo "Let's get you set up with Rustlings!"
 
@@ -12,12 +13,33 @@ else
     exit 1
 fi
 
+if [ -x "$(command -v cc)" ]
+then
+    echo "SUCCESS: cc is installed"
+else
+    echo "ERROR: cc does not seem to be installed."
+    echo "Please download (g)cc using your package manager."
+    echo "OSX: xcode-select --install"
+    echo "Deb: sudo apt install gcc"
+    echo "Yum: sudo yum -y install gcc"
+    exit 1
+fi
+
+if [ -x "$(command -v rustup)" ]
+then
+    echo "SUCCESS: rustup is installed"
+else
+    echo "ERROR: rustup does not seem to be installed."
+    echo "Please download rustup using https://rustup.rs!"
+    exit 1
+fi
+
 if [ -x "$(command -v rustc)" ]
 then
     echo "SUCCESS: Rust is installed"
 else
     echo "ERROR: Rust does not seem to be installed."
-    echo "Please download Rust using https://rustup.rs!"
+    echo "Please download Rust using rustup!"
     exit 1
 fi
 
@@ -26,7 +48,7 @@ then
     echo "SUCCESS: Cargo is installed"
 else
     echo "ERROR: Cargo does not seem to be installed."
-    echo "Please download Rust and Cargo using https://rustup.rs!"
+    echo "Please download Rust and Cargo using rustup!"
     exit 1
 fi
 
@@ -62,7 +84,22 @@ function vercomp() {
     then
         max_len=$len2
     fi
-    for i in `seq 0 $max_len`
+
+    #pad right in short arr
+    if [[ len1 -gt len2 ]];
+    then
+        for ((i = len2; i < len1; i++));
+        do
+            v2[$i]=0
+        done
+    else
+        for ((i = len1; i < len2; i++));
+        do
+            v1[$i]=0
+        done
+    fi
+
+    for i in `seq 0 $((max_len-1))`
     do
         # Fill empty fields with zeros in v1
         if [ -z "${v1[$i]}" ]
@@ -87,9 +124,9 @@ function vercomp() {
 }
 
 RustVersion=$(rustc --version | cut -d " " -f 2)
-MinRustVersion=1.31
-vercomp $RustVersion $MinRustVersion
-if [ $? -eq 2 ]
+MinRustVersion=1.58
+vercomp "$RustVersion" $MinRustVersion || ec=$?
+if [ ${ec:-0} -eq 2 ]
 then
     echo "ERROR: Rust version is too old: $RustVersion - needs at least $MinRustVersion"
     echo "Please update Rust with 'rustup update'"
@@ -100,11 +137,11 @@ fi
 
 Path=${1:-rustlings/}
 echo "Cloning Rustlings at $Path..."
-git clone -q https://github.com/rust-lang/rustlings $Path
+git clone -q https://github.com/rust-lang/rustlings "$Path"
 
-cd $Path
+cd "$Path"
 
-Version=$(curl -s https://api.github.com/repos/rust-lang/rustlings/releases/latest | ${PY} -c "import json,sys;obj=json.load(sys.stdin);print(obj['tag_name']);")
+Version=$(curl -s https://api.github.com/repos/rust-lang/rustlings/releases/latest | ${PY} -c "import json,sys;obj=json.load(sys.stdin);print(obj['tag_name']) if 'tag_name' in obj else sys.exit(f\"Error: {obj['message']}\");")
 CargoBin="${CARGO_HOME:-$HOME/.cargo}/bin"
 
 if [[ -z ${Version} ]]
@@ -115,8 +152,8 @@ then
     if [[ -z ${Version}  ]]
     then
         echo "No valid tag version found"
-        echo "Rustlings will be installed using the master branch"
-        Version="master"
+        echo "Rustlings will be installed using the main branch"
+        Version="main"
     else
         Version="tags/${Version}"
     fi

@@ -1,11 +1,24 @@
 // quiz2.rs
+//
 // This is a quiz for the following sections:
 // - Strings
-
-// Ok, here are a bunch of values-- some are `String`s, some are `&str`s. Your
-// task is to call one of these two functions on each value depending on what
-// you think each value is. That is, add either `string_slice` or `string`
-// before the parentheses on each line. If you're right, it will compile!
+// - Vecs
+// - Move semantics
+// - Modules
+// - Enums
+//
+// Let's build a little machine in the form of a function. As input, we're going
+// to give a list of strings and commands. These commands determine what action
+// is going to be applied to the string. It can either be:
+// - Uppercase the string
+// - Trim the string
+// - Append "bar" to the string a specified amount of times
+// The exact form of this will be:
+// - The input is going to be a Vector of a 2-length tuple,
+//   the first element is the string, the second one is the command.
+// - The output element is going to be a Vector of strings.
+//
+// No hints this time!
 
 fn string_slice(arg: &str) {
     println!("{}", arg);

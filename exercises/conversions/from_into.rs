@@ -1,6 +1,12 @@
-// The From trait is used for value-to-value conversions.
-// If From is implemented correctly for a type, the Into trait should work conversely.
-// You can read more about it at https://doc.rust-lang.org/std/convert/trait.From.html
+// from_into.rs
+//
+// The From trait is used for value-to-value conversions. If From is implemented
+// correctly for a type, the Into trait should work conversely. You can read
+// more about it at https://doc.rust-lang.org/std/convert/trait.From.html
+//
+// Execute `rustlings hint from_into` or use the `hint` watch subcommand for a
+// hint.
+
 #[derive(Debug)]
 struct Person {
     name: String,
@@ -18,20 +24,32 @@ impl Default for Person {
     }
 }
 
+<<<<<<< HEAD
 // Your task is to complete this implementation
 // in order for the line `let p = Person::from("Mark,20")` to compile
 // Please note that you'll need to parse the age component into a `usize`
 // with something like `"4".parse::<usize>()`. The outcome of this needs to
 // be handled appropriately.
+=======
+// Your task is to complete this implementation in order for the line `let p =
+// Person::from("Mark,20")` to compile Please note that you'll need to parse the
+// age component into a `usize` with something like `"4".parse::<usize>()`. The
+// outcome of this needs to be handled appropriately.
+>>>>>>> 11d8aea96f2c744d970ed1ffb38785cf5b511e5e
 //
 // Steps:
-// 1. If the length of the provided string is 0, then return the default of Person
-// 2. Split the given string on the commas present in it
-// 3. Extract the first element from the split operation and use it as the name
-// 4. If the name is empty, then return the default of Person
-// 5. Extract the other element from the split operation and parse it into a `usize` as the age
-// If while parsing the age, something goes wrong, then return the default of Person
-// Otherwise, then return an instantiated Person object with the results
+// 1. If the length of the provided string is 0, then return the default of
+//    Person.
+// 2. Split the given string on the commas present in it.
+// 3. Extract the first element from the split operation and use it as the name.
+// 4. If the name is empty, then return the default of Person.
+// 5. Extract the other element from the split operation and parse it into a
+//    `usize` as the age.
+// If while parsing the age, something goes wrong, then return the default of
+// Person Otherwise, then return an instantiated Person object with the results
+
+// I AM NOT DONE
+
 impl From<&str> for Person {
     fn from(s: &str) -> Person {
         // Can be neglected as in this case the age rule will always fail
@@ -89,7 +107,8 @@ mod tests {
     }
     #[test]
     fn test_bad_age() {
-        // Test that "Mark.twenty" will return the default person due to an error in parsing age
+        // Test that "Mark,twenty" will return the default person due to an
+        // error in parsing age
         let p = Person::from("Mark,twenty");
         println!("{:?}", p);
         assert_eq!(p.name, "John");
@@ -127,6 +146,20 @@ mod tests {
     #[test]
     fn test_missing_name_and_invalid_age() {
         let p: Person = Person::from(",one");
+        assert_eq!(p.name, "John");
+        assert_eq!(p.age, 30);
+    }
+
+    #[test]
+    fn test_trailing_comma() {
+        let p: Person = Person::from("Mike,32,");
+        assert_eq!(p.name, "John");
+        assert_eq!(p.age, 30);
+    }
+
+    #[test]
+    fn test_trailing_comma_and_some_string() {
+        let p: Person = Person::from("Mike,32,man");
         assert_eq!(p.name, "John");
         assert_eq!(p.age, 30);
     }

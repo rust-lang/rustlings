@@ -1,0 +1,7 @@
+tasks:
+  - init: /workspace/rustlings/install.sh
+    command: /workspace/.cargo/bin/rustlings watch
+
+vscode:
+  extensions:
+    - rust-lang.rust-analyzer@0.3.1348

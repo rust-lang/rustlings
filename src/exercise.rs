@@ -1,5 +1,6 @@
 use regex::Regex;
 use serde::Deserialize;
+use std::env;
 use std::fmt::{self, Display, Formatter};
 use std::fs::{self, remove_file, File};
 use std::io::Read;
@@ -7,18 +8,24 @@ use std::path::PathBuf;
 use std::process::{self, Command};
 
 const RUSTC_COLOR_ARGS: &[&str] = &["--color", "always"];
+const RUSTC_EDITION_ARGS: &[&str] = &["--edition", "2021"];
 const I_AM_DONE_REGEX: &str = r"(?m)^\s*///?\s*I\s+AM\s+NOT\s+DONE";
 const CONTEXT: usize = 2;
 const CLIPPY_CARGO_TOML_PATH: &str = "./exercises/clippy/Cargo.toml";
 
-// Get a temporary file name that is hopefully unique to this process
+// Get a temporary file name that is hopefully unique
 #[inline]
 fn temp_file() -> String {
-    format!("./temp_{}", process::id())
+    let thread_id: String = format!("{:?}", std::thread::current().id())
+        .chars()
+        .filter(|c| c.is_alphanumeric())
+        .collect();
+
+    format!("./temp_{}_{thread_id}", process::id())
 }
 
 // The mode of the exercise.
-#[derive(Deserialize, Copy, Clone)]
+#[derive(Deserialize, Copy, Clone, Debug)]
 #[serde(rename_all = "lowercase")]
 pub enum Mode {
     // Indicates that the exercise should be compiled as a binary
@@ -36,7 +43,7 @@ pub struct ExerciseList {
 
 // A representation of a rustlings exercise.
 // This is deserialized from the accompanying info.toml file
-#[derive(Deserialize)]
+#[derive(Deserialize, Debug)]
 pub struct Exercise {
     // Name of the exercise
     pub name: String,
@@ -105,36 +112,43 @@ impl Exercise {
             Mode::Compile => Command::new("rustc")
                 .args(&[self.path.to_str().unwrap(), "-o", &temp_file()])
                 .args(RUSTC_COLOR_ARGS)
+                .args(RUSTC_EDITION_ARGS)
                 .output(),
             Mode::Test => Command::new("rustc")
                 .args(&["--test", self.path.to_str().unwrap(), "-o", &temp_file()])
                 .args(RUSTC_COLOR_ARGS)
+                .args(RUSTC_EDITION_ARGS)
                 .output(),
             Mode::Clippy => {
                 let cargo_toml = format!(
                     r#"[package]
 name = "{}"
 version = "0.0.1"
-edition = "2018"
+edition = "2021"
 [[bin]]
 name = "{}"
 path = "{}.rs""#,
                     self.name, self.name, self.name
                 );
-                fs::write(CLIPPY_CARGO_TOML_PATH, cargo_toml)
-                    .expect("Failed to write 📎 Clippy 📎 Cargo.toml file.");
-                // To support the ability to run the clipy exercises, build
+                let cargo_toml_error_msg = if env::var("NO_EMOJI").is_ok() {
+                    "Failed to write Clippy Cargo.toml file."
+                } else {
+                    "Failed to write 📎 Clippy 📎 Cargo.toml file."
+                };
+                fs::write(CLIPPY_CARGO_TOML_PATH, cargo_toml).expect(cargo_toml_error_msg);
+                // To support the ability to run the clippy exercises, build
                 // an executable, in addition to running clippy. With a
                 // compilation failure, this would silently fail. But we expect
                 // clippy to reflect the same failure while compiling later.
                 Command::new("rustc")
                     .args(&[self.path.to_str().unwrap(), "-o", &temp_file()])
                     .args(RUSTC_COLOR_ARGS)
+                    .args(RUSTC_EDITION_ARGS)
                     .output()
                     .expect("Failed to compile!");
                 // Due to an issue with Clippy, a cargo clean is required to catch all lints.
                 // See https://github.com/rust-lang/rust-clippy/issues/2604
-                // This is already fixed on master branch. See this issue to track merging into Cargo:
+                // This is already fixed on Clippy's master branch. See this issue to track merging into Cargo:
                 // https://github.com/rust-lang/rust-clippy/issues/3837
                 Command::new("cargo")
                     .args(&["clean", "--manifest-path", CLIPPY_CARGO_TOML_PATH])
@@ -144,7 +158,7 @@ path = "{}.rs""#,
                 Command::new("cargo")
                     .args(&["clippy", "--manifest-path", CLIPPY_CARGO_TOML_PATH])
                     .args(RUSTC_COLOR_ARGS)
-                    .args(&["--", "-D", "warnings"])
+                    .args(&["--", "-D", "warnings", "-D", "clippy::float_cmp"])
                     .output()
             }
         }
@@ -152,7 +166,7 @@ path = "{}.rs""#,
 
         if cmd.status.success() {
             Ok(CompiledExercise {
-                exercise: &self,
+                exercise: self,
                 _handle: FileHandle,
             })
         } else {
@@ -167,9 +181,10 @@ path = "{}.rs""#,
     fn run(&self) -> Result<ExerciseOutput, ExerciseOutput> {
         let arg = match self.mode {
             Mode::Test => "--show-output",
-            _ => ""
+            _ => "",
         };
-        let cmd = Command::new(&temp_file()).arg(arg)
+        let cmd = Command::new(&temp_file())
+            .arg(arg)
             .output()
             .expect("Failed to run 'run' command");
 
@@ -206,8 +221,7 @@ path = "{}.rs""#,
         let matched_line_index = source
             .lines()
             .enumerate()
-            .filter_map(|(i, line)| if re.is_match(line) { Some(i) } else { None })
-            .next()
+            .find_map(|(i, line)| if re.is_match(line) { Some(i) } else { None })
             .expect("This should not happen at all");
 
         let min_line = ((matched_line_index as i32) - (CONTEXT as i32)).max(0) as usize;
@@ -225,6 +239,16 @@ path = "{}.rs""#,
             .collect();
 
         State::Pending(context)
+    }
+
+    // Check that the exercise looks to be solved using self.state()
+    // This is not the best way to check since
+    // the user can just remove the "I AM NOT DONE" string from the file
+    // without actually having solved anything.
+    // The only other way to truly check this would to compile and run
+    // the exercise; which would be both costly and counterintuitive
+    pub fn looks_done(&self) -> bool {
+        self.state() == State::Done
     }
 }
 
@@ -314,7 +338,7 @@ mod test {
     #[test]
     fn test_exercise_with_output() {
         let exercise = Exercise {
-            name: "finished_exercise".into(),
+            name: "exercise_with_output".into(),
             path: PathBuf::from("tests/fixture/success/testSuccess.rs"),
             mode: Mode::Test,
             hint: String::new(),

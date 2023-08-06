@@ -1,11 +1,21 @@
 // primitive_types2.rs
-// Fill in the rest of the line that has code missing!
-// No hints, there's no tricks, just get used to typing these :)
+//
+// Fill in the rest of the line that has code missing! No hints, there's no
+// tricks, just get used to typing these :)
+//
+// Execute `rustlings hint primitive_types2` or use the `hint` watch subcommand
+// for a hint.
 
 fn main() {
     // Characters (`char`)
 
+<<<<<<< HEAD
     let my_first_initial: char = 'C';
+=======
+    // Note the _single_ quotes, these are different from the double quotes
+    // you've been seeing around.
+    let my_first_initial = 'C';
+>>>>>>> 11d8aea96f2c744d970ed1ffb38785cf5b511e5e
     if my_first_initial.is_alphabetic() {
         println!("Alphabetical!");
     } else if my_first_initial.is_numeric() {

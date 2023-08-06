@@ -1,7 +1,7 @@
 #!/usr/bin/env pwsh
 
 #Requires -Version 5
-param($path = "$pwd/rustlings")
+param($path = "$home/rustlings")
 
 Write-Host "Let's get you set up with Rustlings!"
 
@@ -35,7 +35,7 @@ if (Get-Command cargo -ErrorAction SilentlyContinue) {
 function vercomp($v1, $v2) {
     if ($v1 -eq $v2) {
        return 0
-    } 
+    }
 
     $v1 = $v1.Replace(".", "0")
     $v2 = $v2.Replace(".", "0")
@@ -53,7 +53,7 @@ function vercomp($v1, $v2) {
 }
 
 $rustVersion = $(rustc --version).Split(" ")[1]
-$minRustVersion = "1.31"
+$minRustVersion = "1.56"
 if ((vercomp $rustVersion $minRustVersion) -eq 2) {
     Write-Host "WARNING: Rust version is too old: $rustVersion - needs at least $minRustVersion"
     Write-Host "Please update Rust with 'rustup update'"
@@ -91,4 +91,4 @@ if (!$clippy) {
     rustup component add clippy
 }
 
-Write-Host "All done! Run 'rustlings' to get started."
+Write-Host "All done! Navigate to $path and run 'rustlings' to get started!"

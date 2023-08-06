@@ -1,3 +1,5 @@
+use std::process::Command;
+
 use crate::exercise::{Exercise, Mode};
 use crate::verify::test;
 use indicatif::ProgressBar;
@@ -15,12 +17,25 @@ pub fn run(exercise: &Exercise, verbose: bool) -> Result<(), ()> {
     Ok(())
 }
 
+// Resets the exercise by stashing the changes.
+pub fn reset(exercise: &Exercise) -> Result<(), ()> {
+    let command = Command::new("git")
+        .args(["stash", "--"])
+        .arg(&exercise.path)
+        .spawn();
+
+    match command {
+        Ok(_) => Ok(()),
+        Err(_) => Err(()),
+    }
+}
+
 // Invoke the rust compiler on the path of the given exercise
 // and run the ensuing binary.
 // This is strictly for non-test binaries, so output is displayed
 fn compile_and_run(exercise: &Exercise) -> Result<(), ()> {
     let progress_bar = ProgressBar::new_spinner();
-    progress_bar.set_message(format!("Compiling {}...", exercise).as_str());
+    progress_bar.set_message(format!("Compiling {exercise}..."));
     progress_bar.enable_steady_tick(100);
 
     let compilation_result = exercise.compile();
@@ -37,7 +52,7 @@ fn compile_and_run(exercise: &Exercise) -> Result<(), ()> {
         }
     };
 
-    progress_bar.set_message(format!("Running {}...", exercise).as_str());
+    progress_bar.set_message(format!("Running {exercise}..."));
     let result = compilation.run();
     progress_bar.finish_and_clear();
 
