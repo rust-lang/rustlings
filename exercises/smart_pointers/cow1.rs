@@ -70,7 +70,7 @@ mod tests {
         // case the call to `to_mut()` returns a reference to the same data as
         // before.
         let slice = vec![-1, 0, 1];
-        let mut input = Cow::from(slice);
+        let mut input = Cow::from(slice).to_mut();
         match abs_all(&mut input) {
             // TODO
         }
