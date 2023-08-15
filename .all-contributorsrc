@@ -2271,6 +2271,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "shirts",
+      "name": "shirts",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4952151?v=4",
+      "profile": "https://github.com/shirts",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
