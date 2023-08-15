@@ -322,6 +322,7 @@ authors.
     </tr>
     <tr>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/barlevalon"><img src="https://avatars.githubusercontent.com/u/3397911?v=4?s=100" width="100px;" alt="Alon Hearter"/><br /><sub><b>Alon Hearter</b></sub></a><br /><a href="#content-barlevalon" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/shirts"><img src="https://avatars.githubusercontent.com/u/4952151?v=4?s=100" width="100px;" alt="shirts"/><br /><sub><b>shirts</b></sub></a><br /><a href="#content-shirts" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
