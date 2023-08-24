@@ -27,8 +27,6 @@ enum IntoColorError {
     IntConversion,
 }
 
-// I AM NOT DONE
-
 // Your task is to complete this implementation and return an Ok result of inner
 // type Color. You need to create an implementation for a tuple of three
 // integers, an array of three integers, and a slice of integers.
@@ -41,6 +39,21 @@ enum IntoColorError {
 impl TryFrom<(i16, i16, i16)> for Color {
     type Error = IntoColorError;
     fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {
+        return if tuple.0 > 255
+            || tuple.0 < 0
+            || tuple.1 > 255
+            || tuple.1 < 0
+            || tuple.2 > 255
+            || tuple.2 < 0
+        {
+            Err(IntoColorError::IntConversion)
+        } else {
+            Ok(Color {
+                red: tuple.0 as u8,
+                green: tuple.1 as u8,
+                blue: tuple.2 as u8,
+            })
+        };
     }
 }
 
@@ -48,6 +61,17 @@ impl TryFrom<(i16, i16, i16)> for Color {
 impl TryFrom<[i16; 3]> for Color {
     type Error = IntoColorError;
     fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {
+        match arr {
+            array if array.into_iter().any(|item| item < 0 || item > 255) => {
+                Err(IntoColorError::IntConversion)
+            }
+            [red, green, blue] => Ok(Color {
+                red: red as u8,
+                green: green as u8,
+                blue: blue as u8,
+            }),
+            _ => panic!("Would only happen if array is incorrect length"),
+        }
     }
 }
 
@@ -55,6 +79,17 @@ impl TryFrom<[i16; 3]> for Color {
 impl TryFrom<&[i16]> for Color {
     type Error = IntoColorError;
     fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {
+        match slice {
+            slice if slice.len() != 3 => Err(IntoColorError::BadLen),
+            slice if slice.into_iter().any(|x| x < &0 || x > &255) => {
+                Err(IntoColorError::IntConversion)
+            }
+            _ => Ok(Color {
+                red: slice[0] as u8,
+                green: slice[1] as u8,
+                blue: slice[2] as u8,
+            }),
+        }
     }
 }
 

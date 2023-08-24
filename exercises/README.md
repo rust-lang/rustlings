@@ -25,3 +25,6 @@
 | macros                 | §19.6               |
 | clippy                 | §21.4               |
 | conversions            | n/a                 |
+Pattern matching
+OOP Project
+multi-threaded web server project
