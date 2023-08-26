@@ -831,7 +831,7 @@ https://doc.rust-lang.org/stable/book/ch11-01-writing-tests.html#checking-for-pa
 [[exercises]]
 name = "iterators1"
 path = "exercises/iterators/iterators1.rs"
-mode = "compile"
+mode = "test"
 hint = """
 Step 1:
 We need to apply something to the collection `my_fav_fruits` before we start to go through
@@ -936,7 +936,7 @@ and try other types!
 [[exercises]]
 name = "rc1"
 path = "exercises/smart_pointers/rc1.rs"
-mode = "compile"
+mode = "test"
 hint = """
 This is a straightforward exercise to use the Rc<T> type. Each Planet has
 ownership of the Sun, and uses Rc::clone() to increment the reference count of the Sun.
@@ -1025,7 +1025,7 @@ what you've learned :)"""
 [[exercises]]
 name = "threads3"
 path = "exercises/threads/threads3.rs"
-mode = "compile"
+mode = "test"
 hint = """
 An alternate way to handle concurrency between threads is to use
 a mpsc (multiple producer, single consumer) channel to communicate.
