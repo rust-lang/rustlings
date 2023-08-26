@@ -340,7 +340,7 @@ So the end goal is to:
 [[exercises]]
 name = "move_semantics5"
 path = "exercises/move_semantics/move_semantics5.rs"
-mode = "compile"
+mode = "test"
 hint = """
 Carefully reason about the range in which each mutable reference is in
 scope. Does it help to update the value of referent (x) immediately after
