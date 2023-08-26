@@ -2,7 +2,7 @@ use crate::exercise::{Exercise, ExerciseList};
 use crate::project::RustAnalyzerProject;
 use crate::run::{reset, run};
 use crate::verify::verify;
-use argh::FromArgs;
+use bpaf::Bpaf;
 use console::Emoji;
 use notify::DebouncedEvent;
 use notify::{RecommendedWatcher, RecursiveMode, Watcher};
@@ -25,111 +25,77 @@ mod project;
 mod run;
 mod verify;
 
-// In sync with crate version
-const VERSION: &str = "5.5.1";
-
-#[derive(FromArgs, PartialEq, Debug)]
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
+#[derive(Bpaf)]
+#[bpaf(options, version)]
 struct Args {
-    /// show outputs from the test exercises
-    #[argh(switch)]
+    /// Show outputs from the test exercises
     nocapture: bool,
-    /// show the executable version
-    #[argh(switch, short = 'v')]
-    version: bool,
-    #[argh(subcommand)]
-    nested: Option<Subcommands>,
+    #[bpaf(external, optional)]
+    subcommand: Option<Subcommand>,
 }
 
-#[derive(FromArgs, PartialEq, Debug)]
-#[argh(subcommand)]
-enum Subcommands {
-    Verify(VerifyArgs),
-    Watch(WatchArgs),
-    Run(RunArgs),
-    Reset(ResetArgs),
-    Hint(HintArgs),
-    List(ListArgs),
-    Lsp(LspArgs),
-}
-
-#[derive(FromArgs, PartialEq, Debug)]
-#[argh(subcommand, name = "verify")]
-/// Verifies all exercises according to the recommended order
-struct VerifyArgs {}
-
-#[derive(FromArgs, PartialEq, Debug)]
-#[argh(subcommand, name = "watch")]
-/// Reruns `verify` when files were edited
-struct WatchArgs {
-    /// show hints on success
-    #[argh(switch)]
-    success_hints: bool,
-}
-
-#[derive(FromArgs, PartialEq, Debug)]
-#[argh(subcommand, name = "run")]
-/// Runs/Tests a single exercise
-struct RunArgs {
-    #[argh(positional)]
-    /// the name of the exercise
-    name: String,
-}
-
-#[derive(FromArgs, PartialEq, Debug)]
-#[argh(subcommand, name = "reset")]
-/// Resets a single exercise using "git stash -- <filename>"
-struct ResetArgs {
-    #[argh(positional)]
-    /// the name of the exercise
-    name: String,
-}
-
-#[derive(FromArgs, PartialEq, Debug)]
-#[argh(subcommand, name = "hint")]
-/// Returns a hint for the given exercise
-struct HintArgs {
-    #[argh(positional)]
-    /// the name of the exercise
-    name: String,
-}
-
-#[derive(FromArgs, PartialEq, Debug)]
-#[argh(subcommand, name = "lsp")]
-/// Enable rust-analyzer for exercises
-struct LspArgs {}
-
-#[derive(FromArgs, PartialEq, Debug)]
-#[argh(subcommand, name = "list")]
-/// Lists the exercises available in Rustlings
-struct ListArgs {
-    #[argh(switch, short = 'p')]
-    /// show only the paths of the exercises
-    paths: bool,
-    #[argh(switch, short = 'n')]
-    /// show only the names of the exercises
-    names: bool,
-    #[argh(option, short = 'f')]
-    /// provide a string to match exercise names
-    /// comma separated patterns are acceptable
-    filter: Option<String>,
-    #[argh(switch, short = 'u')]
-    /// display only exercises not yet solved
-    unsolved: bool,
-    #[argh(switch, short = 's')]
-    /// display only exercises that have been solved
-    solved: bool,
+#[derive(Bpaf, Clone)]
+enum Subcommand {
+    /// Verify all exercises according to the recommended order
+    #[bpaf(command)]
+    Verify,
+    /// Rerun `verify` when files were edited
+    #[bpaf(command)]
+    Watch {
+        /// Show hints on success
+        success_hints: bool,
+    },
+    /// Run/Test a single exercise
+    #[bpaf(command)]
+    Run {
+        /// The name of the exercise
+        #[bpaf(positional("NAME"))]
+        name: String,
+    },
+    /// Reset a single exercise using "git stash -- <filename>"
+    #[bpaf(command)]
+    Reset {
+        /// The name of the exercise
+        #[bpaf(positional("NAME"))]
+        name: String,
+    },
+    /// Return a hint for the given exercise
+    #[bpaf(command)]
+    Hint {
+        /// The name of the exercise
+        #[bpaf(positional("NAME"))]
+        name: String,
+    },
+    /// List the exercises available in Rustlings
+    #[bpaf(command)]
+    List {
+        /// Show only the paths of the exercises
+        #[bpaf(short, long)]
+        paths: bool,
+        /// Show only the names of the exercises
+        #[bpaf(short, long)]
+        names: bool,
+        /// Provide a string to match exercise names.
+        /// Comma separated patterns are accepted
+        #[bpaf(short, long)]
+        filter: Option<String>,
+        /// Display only exercises not yet solved
+        #[bpaf(short, long)]
+        unsolved: bool,
+        /// Display only exercises that have been solved
+        #[bpaf(short, long)]
+        solved: bool,
+    },
+    /// Enable rust-analyzer for exercises
+    #[bpaf(command)]
+    Lsp,
 }
 
 fn main() {
-    let args: Args = argh::from_env();
+    let args = args().run();
 
-    if args.version {
-        println!("v{VERSION}");
-        std::process::exit(0);
-    }
-
-    if args.nested.is_none() {
+    if args.subcommand.is_none() {
         println!("\n{WELCOME}\n");
     }
 
@@ -153,17 +119,24 @@ fn main() {
     let exercises = toml::from_str::<ExerciseList>(toml_str).unwrap().exercises;
     let verbose = args.nocapture;
 
-    let command = args.nested.unwrap_or_else(|| {
+    let subcommand = args.subcommand.unwrap_or_else(|| {
         println!("{DEFAULT_OUT}\n");
         std::process::exit(0);
     });
-    match command {
-        Subcommands::List(subargs) => {
-            if !subargs.paths && !subargs.names {
+
+    match subcommand {
+        Subcommand::List {
+            paths,
+            names,
+            filter,
+            unsolved,
+            solved,
+        } => {
+            if !paths && !names {
                 println!("{:<17}\t{:<46}\t{:<7}", "Name", "Path", "Status");
             }
             let mut exercises_done: u16 = 0;
-            let filters = subargs.filter.clone().unwrap_or_default().to_lowercase();
+            let filters = filter.clone().unwrap_or_default().to_lowercase();
             exercises.iter().for_each(|e| {
                 let fname = format!("{}", e.path.display());
                 let filter_cond = filters
@@ -177,14 +150,14 @@ fn main() {
                     "Pending"
                 };
                 let solve_cond = {
-                    (e.looks_done() && subargs.solved)
-                        || (!e.looks_done() && subargs.unsolved)
-                        || (!subargs.solved && !subargs.unsolved)
+                    (e.looks_done() && solved)
+                        || (!e.looks_done() && unsolved)
+                        || (!solved && !unsolved)
                 };
-                if solve_cond && (filter_cond || subargs.filter.is_none()) {
-                    let line = if subargs.paths {
+                if solve_cond && (filter_cond || filter.is_none()) {
+                    let line = if paths {
                         format!("{fname}\n")
-                    } else if subargs.names {
+                    } else if names {
                         format!("{}\n", e.name)
                     } else {
                         format!("{:<17}\t{fname:<46}\t{status:<7}\n", e.name)
@@ -214,30 +187,30 @@ fn main() {
             std::process::exit(0);
         }
 
-        Subcommands::Run(subargs) => {
-            let exercise = find_exercise(&subargs.name, &exercises);
+        Subcommand::Run { name } => {
+            let exercise = find_exercise(&name, &exercises);
 
             run(exercise, verbose).unwrap_or_else(|_| std::process::exit(1));
         }
 
-        Subcommands::Reset(subargs) => {
-            let exercise = find_exercise(&subargs.name, &exercises);
+        Subcommand::Reset { name } => {
+            let exercise = find_exercise(&name, &exercises);
 
             reset(exercise).unwrap_or_else(|_| std::process::exit(1));
         }
 
-        Subcommands::Hint(subargs) => {
-            let exercise = find_exercise(&subargs.name, &exercises);
+        Subcommand::Hint { name } => {
+            let exercise = find_exercise(&name, &exercises);
 
             println!("{}", exercise.hint);
         }
 
-        Subcommands::Verify(_subargs) => {
+        Subcommand::Verify => {
             verify(&exercises, (0, exercises.len()), verbose, false)
                 .unwrap_or_else(|_| std::process::exit(1));
         }
 
-        Subcommands::Lsp(_subargs) => {
+        Subcommand::Lsp => {
             let mut project = RustAnalyzerProject::new();
             project
                 .get_sysroot_src()
@@ -256,7 +229,7 @@ fn main() {
             }
         }
 
-        Subcommands::Watch(_subargs) => match watch(&exercises, verbose, _subargs.success_hints) {
+        Subcommand::Watch { success_hints } => match watch(&exercises, verbose, success_hints) {
             Err(e) => {
                 println!(
                     "Error: Could not watch your progress. Error message was {:?}.",
