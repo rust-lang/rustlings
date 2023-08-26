@@ -97,7 +97,8 @@ fn run_single_test_no_filename() {
         .arg("run")
         .current_dir("tests/fixture/")
         .assert()
-        .code(1);
+        .code(1)
+        .stderr(predicates::str::contains("Error: expected `NAME`"));
 }
 
 #[test]
@@ -126,9 +127,7 @@ fn reset_no_exercise() {
         .arg("reset")
         .assert()
         .code(1)
-        .stderr(predicates::str::contains(
-            "positional arguments not provided",
-        ));
+        .stderr(predicates::str::contains("Error: expected `NAME`"));
 }
 
 #[test]
