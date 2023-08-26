@@ -123,9 +123,9 @@ fn compile_and_test(exercise: &Exercise, run_mode: RunMode, verbose: bool, succe
 
 // Compile the given Exercise and return an object with information
 // about the state of the compilation
-fn compile<'a, 'b>(
+fn compile<'a>(
     exercise: &'a Exercise,
-    progress_bar: &'b ProgressBar,
+    progress_bar: &ProgressBar,
 ) -> Result<CompiledExercise<'a>, ()> {
     let compilation_result = exercise.compile();
 
