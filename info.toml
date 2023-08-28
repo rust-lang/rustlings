@@ -22,8 +22,8 @@ name = "variables1"
 path = "exercises/variables/variables1.rs"
 mode = "compile"
 hint = """
-The declaration on line 8 is missing a keyword that is needed in Rust
-to create a new variable binding."""
+The declaration in the first line in the main function is missing a keyword
+that is needed in Rust to create a new variable binding."""
 
 [[exercises]]
 name = "variables2"
@@ -32,7 +32,7 @@ mode = "compile"
 hint = """
 The compiler message is saying that Rust cannot infer the type that the
 variable binding `x` has with what is given here.
-What happens if you annotate line 7 with a type annotation?
+What happens if you annotate the first line in the main function with a type annotation?
 What if you give x a value?
 What if you do both?
 What type should x be, anyway?
@@ -44,8 +44,9 @@ path = "exercises/variables/variables3.rs"
 mode = "compile"
 hint = """
 Oops! In this exercise, we have a variable binding that we've created on
-line 7, and we're trying to use it on line 8, but we haven't given it a
-value. We can't print out something that isn't there; try giving x a value!
+in the first line in the main function, and we're trying to use it in the next line,
+but we haven't given it a value.
+We can't print out something that isn't there; try giving x a value!
 This is an error that can cause bugs that's very easy to make in any
 programming language -- thankfully the Rust compiler has caught this for us!"""
 
@@ -123,8 +124,8 @@ name = "functions4"
 path = "exercises/functions/functions4.rs"
 mode = "compile"
 hint = """
-The error message points to line 17 and says it expects a type after the
-`->`. This is where the function's return type should be -- take a look at
+The error message points to the function `sale_price` and says it expects a type
+after the `->`. This is where the function's return type should be -- take a look at
 the `is_even` function for an example!
 
 Also: Did you figure out that, technically, u32 would be the more fitting type
@@ -285,9 +286,10 @@ name = "move_semantics1"
 path = "exercises/move_semantics/move_semantics1.rs"
 mode = "compile"
 hint = """
-So you've got the "cannot borrow immutable local variable `vec1` as mutable" error on line 13,
-right? The fix for this is going to be adding one keyword, and the addition is NOT on line 13
-where the error is.
+So you've got the "cannot borrow immutable local variable `vec1` as mutable" error on the line
+where we push an element to the vector, right?
+The fix for this is going to be adding one keyword, and the addition is NOT on the line where
+we push to the vector (where the error is).
 
 Also: Try accessing `vec0` after having called `fill_vec()`. See what happens!"""
 
@@ -445,8 +447,9 @@ path = "exercises/strings/strings2.rs"
 mode = "compile"
 hint = """
 Yes, it would be really easy to fix this by just changing the value bound to `word` to be a
-string slice instead of a `String`, wouldn't it?? There is a way to add one character to line
-12, though, that will coerce the `String` into a string slice.
+string slice instead of a `String`, wouldn't it?? There is a way to add one character to the
+line with the function call `is_a_color_word`, though, that will coerce the `String` into a
+string slice.
 
 Side note: If you're interested in learning about how this kind of reference conversion works, you can jump ahead in the book and read this part in the smart pointers chapter: https://doc.rust-lang.org/stable/book/ch15-02-deref.html#implicit-deref-coercions-with-functions-and-methods"""
 
@@ -824,7 +827,6 @@ We expect method `Rectangle::new()` to panic for negative values.
 To handle that you need to add a special attribute to the test function.
 You can refer to the docs:
 https://doc.rust-lang.org/stable/book/ch11-01-writing-tests.html#checking-for-panics-with-should_panic"""
-
 
 # STANDARD LIBRARY TYPES
 
