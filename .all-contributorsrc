@@ -2289,6 +2289,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "mo8it",
+      "name": "Mo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/76752051?v=4",
+      "profile": "https://mo8it.com",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
