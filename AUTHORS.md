@@ -324,6 +324,7 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/barlevalon"><img src="https://avatars.githubusercontent.com/u/3397911?v=4?s=100" width="100px;" alt="Alon Hearter"/><br /><sub><b>Alon Hearter</b></sub></a><br /><a href="#content-barlevalon" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/shirts"><img src="https://avatars.githubusercontent.com/u/4952151?v=4?s=100" width="100px;" alt="shirts"/><br /><sub><b>shirts</b></sub></a><br /><a href="#content-shirts" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/eLVas"><img src="https://avatars.githubusercontent.com/u/6797156?v=4?s=100" width="100px;" alt="Ivan Vasiunyk"/><br /><sub><b>Ivan Vasiunyk</b></sub></a><br /><a href="#content-eLVas" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://mo8it.com"><img src="https://avatars.githubusercontent.com/u/76752051?v=4?s=100" width="100px;" alt="Mo"/><br /><sub><b>Mo</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=mo8it" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
