@@ -169,7 +169,7 @@ fn main() {
                 let filter_cond = filters
                     .split(',')
                     .filter(|f| !f.trim().is_empty())
-                    .any(|f| e.name.contains(&f) || fname.contains(&f));
+                    .any(|f| e.name.contains(f) || fname.contains(f));
                 let status = if e.looks_done() {
                     exercises_done += 1;
                     "Done"
@@ -429,7 +429,7 @@ fn watch(
 
 fn rustc_exists() -> bool {
     Command::new("rustc")
-        .args(&["--version"])
+        .args(["--version"])
         .stdout(Stdio::null())
         .spawn()
         .and_then(|mut child| child.wait())
@@ -465,7 +465,7 @@ started, here's a couple of notes about how Rustlings operates:
 Got all that? Great! To get started, run `rustlings watch` in order to get the first
 exercise. Make sure to have your editor open!"#;
 
-const FENISH_LINE: &str = r#"+----------------------------------------------------+
+const FENISH_LINE: &str = r"+----------------------------------------------------+
 |          You made it to the Fe-nish line!          |
 +--------------------------  ------------------------+
                           \\/
@@ -490,12 +490,12 @@ If you noticed any issues, please don't hesitate to report them to our repo.
 You can also contribute your own exercises to help the greater community!
 
 Before reporting an issue or contributing, please read our guidelines:
-https://github.com/rust-lang/rustlings/blob/main/CONTRIBUTING.md"#;
+https://github.com/rust-lang/rustlings/blob/main/CONTRIBUTING.md";
 
-const WELCOME: &str = r#"       welcome to...
+const WELCOME: &str = r"       welcome to...
                  _   _ _
   _ __ _   _ ___| |_| (_)_ __   __ _ ___
  | '__| | | / __| __| | | '_ \ / _` / __|
  | |  | |_| \__ \ |_| | | | | | (_| \__ \
  |_|   \__,_|___/\__|_|_|_| |_|\__, |___/
-                               |___/"#;
+                               |___/";
