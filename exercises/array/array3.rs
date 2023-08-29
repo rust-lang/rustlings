@@ -5,7 +5,6 @@
 // I AM NOT DONE
 
 
-
 struct soultion;
 
 impl soultion{
