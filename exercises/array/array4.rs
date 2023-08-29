@@ -6,7 +6,6 @@
 // I AM NOT DONE
 
 
-
 fn main(){
     // define  arrays a 
 let a =[1,2,3,4,5];
