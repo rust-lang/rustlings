@@ -1,5 +1,5 @@
 // array3.rs
-//
+
 // Here is the code for how the array learns
 
 // I AM NOT DONE
