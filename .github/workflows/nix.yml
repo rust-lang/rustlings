@@ -1,0 +1,24 @@
+name: Ensure nix-dev environment still builds correctly
+
+on:
+  # On any push or PR
+  push:
+  pull_request:
+
+jobs:
+  nix-dev-shell:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: nixbuild/nix-quick-install-action@v25
+    - run: nix build --version
+    - run: nix build .#devShell
+
+  nix-build-and-run-rustlings:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: nixbuild/nix-quick-install-action@v25
+    - run: nix build --version
+    - name: Build & Run
+      run: nix run .#rustlings -- --help
