@@ -60,5 +60,18 @@
             clippy
           ] ++ cargoBuildInputs;
         };
+        apps = let
+          rustlings-app = {
+            type = "app";
+            program = "${rustlings}/bin/rustlings";
+          };
+        in {
+          default = rustlings-app;
+          rustlings = rustlings-app;
+        };
+        packages = {
+          inherit rustlings;
+          default = rustlings;
+        };
       });
 }
