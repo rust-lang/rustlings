@@ -2307,6 +2307,15 @@
       "contributions": [
         "infra"
       ]
+    },
+    {
+      "login": "gabay",
+      "name": "Roi Gabay",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5773610?v=4",
+      "profile": "https://github.com/gabay",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
