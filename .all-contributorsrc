@@ -2316,6 +2316,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "mkovaxx",
+      "name": "Máté Kovács",
+      "avatar_url": "https://avatars.githubusercontent.com/u/481354?v=4",
+      "profile": "https://github.com/mkovaxx",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
