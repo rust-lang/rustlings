@@ -2235,6 +2235,114 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "johnDeSilencio",
+      "name": "Nicholas R. Smith",
+      "avatar_url": "https://avatars.githubusercontent.com/u/20136554?v=4",
+      "profile": "https://johndesilencio.me",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "alexfertel",
+      "name": "Alexander González",
+      "avatar_url": "https://avatars.githubusercontent.com/u/22298999?v=4",
+      "profile": "https://alexfertel.me",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "softarn",
+      "name": "Marcus Höjvall",
+      "avatar_url": "https://avatars.githubusercontent.com/u/517619?v=4",
+      "profile": "https://github.com/softarn",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "barlevalon",
+      "name": "Alon Hearter",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3397911?v=4",
+      "profile": "https://github.com/barlevalon",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "shirts",
+      "name": "shirts",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4952151?v=4",
+      "profile": "https://github.com/shirts",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "eLVas",
+      "name": "Ivan Vasiunyk",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6797156?v=4",
+      "profile": "https://github.com/eLVas",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "mo8it",
+      "name": "Mo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/76752051?v=4",
+      "profile": "https://mo8it.com",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "x10an14",
+      "name": "x10an14",
+      "avatar_url": "https://avatars.githubusercontent.com/u/710608?v=4",
+      "profile": "https://github.com/x10an14",
+      "contributions": [
+        "infra"
+      ]
+    },
+    {
+      "login": "gabay",
+      "name": "Roi Gabay",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5773610?v=4",
+      "profile": "https://github.com/gabay",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "mkovaxx",
+      "name": "Máté Kovács",
+      "avatar_url": "https://avatars.githubusercontent.com/u/481354?v=4",
+      "profile": "https://github.com/mkovaxx",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "szabgab",
+      "name": "Gábor Szabó",
+      "avatar_url": "https://avatars.githubusercontent.com/u/48833?v=4",
+      "profile": "https://szabgab.com/",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "yamila-moreno",
+      "name": "Yamila Moreno",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3340793?v=4",
+      "profile": "https://moduslaborandi.net",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,

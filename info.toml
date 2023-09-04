@@ -22,8 +22,8 @@ name = "variables1"
 path = "exercises/variables/variables1.rs"
 mode = "compile"
 hint = """
-The declaration on line 8 is missing a keyword that is needed in Rust
-to create a new variable binding."""
+The declaration in the first line in the main function is missing a keyword
+that is needed in Rust to create a new variable binding."""
 
 [[exercises]]
 name = "variables2"
@@ -32,7 +32,7 @@ mode = "compile"
 hint = """
 The compiler message is saying that Rust cannot infer the type that the
 variable binding `x` has with what is given here.
-What happens if you annotate line 7 with a type annotation?
+What happens if you annotate the first line in the main function with a type annotation?
 What if you give x a value?
 What if you do both?
 What type should x be, anyway?
@@ -44,8 +44,9 @@ path = "exercises/variables/variables3.rs"
 mode = "compile"
 hint = """
 Oops! In this exercise, we have a variable binding that we've created on
-line 7, and we're trying to use it on line 8, but we haven't given it a
-value. We can't print out something that isn't there; try giving x a value!
+in the first line in the main function, and we're trying to use it in the next line,
+but we haven't given it a value.
+We can't print out something that isn't there; try giving x a value!
 This is an error that can cause bugs that's very easy to make in any
 programming language -- thankfully the Rust compiler has caught this for us!"""
 
@@ -123,8 +124,8 @@ name = "functions4"
 path = "exercises/functions/functions4.rs"
 mode = "compile"
 hint = """
-The error message points to line 17 and says it expects a type after the
-`->`. This is where the function's return type should be -- take a look at
+The error message points to the function `sale_price` and says it expects a type
+after the `->`. This is where the function's return type should be -- take a look at
 the `is_even` function for an example!
 
 Also: Did you figure out that, technically, u32 would be the more fitting type
@@ -216,7 +217,7 @@ mode = "test"
 hint = """
 Take a look at the Understanding Ownership -> Slices -> Other Slices section of the book:
 https://doc.rust-lang.org/book/ch04-03-slices.html
-and use the starting and ending indices of the items in the Array
+and use the starting and ending (plus one) indices of the items in the Array
 that you want to end up in the slice.
 
 If you're curious why the first argument of `assert_eq!` does not
@@ -283,18 +284,19 @@ better. What do you think is the more commonly used pattern under Rust developer
 [[exercises]]
 name = "move_semantics1"
 path = "exercises/move_semantics/move_semantics1.rs"
-mode = "compile"
+mode = "test"
 hint = """
-So you've got the "cannot borrow immutable local variable `vec1` as mutable" error on line 13,
-right? The fix for this is going to be adding one keyword, and the addition is NOT on line 13
-where the error is.
+So you've got the "cannot borrow immutable local variable `vec` as mutable" error on the line
+where we push an element to the vector, right?
+The fix for this is going to be adding one keyword, and the addition is NOT on the line where
+we push to the vector (where the error is).
 
 Also: Try accessing `vec0` after having called `fill_vec()`. See what happens!"""
 
 [[exercises]]
 name = "move_semantics2"
 path = "exercises/move_semantics/move_semantics2.rs"
-mode = "compile"
+mode = "test"
 hint = """
 When running this exercise for the first time, you'll notice an error about
 "borrow of moved value". In Rust, when an argument is passed to a function and
@@ -307,16 +309,12 @@ Rust provides a couple of different ways to mitigate this issue, feel free to tr
 2. Make `fill_vec` borrow its argument instead of taking ownership of it,
    and then copy the data within the function (`vec.clone()`) in order to return an owned
    `Vec<i32>`.
-3. Or, you could make `fill_vec` *mutably* borrow a reference to its argument (which will need to be
-   mutable), modify it directly, then not return anything. This means that `vec0` will change over the
-   course of the function, and makes `vec1` redundant (make sure to change the parameters of the `println!`
-   statements if you go this route)
 """
 
 [[exercises]]
 name = "move_semantics3"
 path = "exercises/move_semantics/move_semantics3.rs"
-mode = "compile"
+mode = "test"
 hint = """
 The difference between this one and the previous ones is that the first line
 of `fn fill_vec` that had `let mut vec = vec;` is no longer there. You can,
@@ -326,7 +324,7 @@ an existing binding to be a mutable binding instead of an immutable one :)"""
 [[exercises]]
 name = "move_semantics4"
 path = "exercises/move_semantics/move_semantics4.rs"
-mode = "compile"
+mode = "test"
 hint = """
 Stop reading whenever you feel like you have enough direction :) Or try
 doing one step and then fixing the compiler errors that result!
@@ -335,7 +333,7 @@ So the end goal is to:
    - so then `vec0` doesn't exist, so we can't pass it to `fill_vec`
    - `fill_vec` has had its signature changed, which our call should reflect
    - since we're not creating a new vec in `main` anymore, we need to create
-     a new vec in `fill_vec`, similarly to the way we did in `main`"""
+     a new vec in `fill_vec`, and fill it with the expected values"""
 
 [[exercises]]
 name = "move_semantics5"
@@ -825,7 +823,6 @@ To handle that you need to add a special attribute to the test function.
 You can refer to the docs:
 https://doc.rust-lang.org/stable/book/ch11-01-writing-tests.html#checking-for-panics-with-should_panic"""
 
-
 # STANDARD LIBRARY TYPES
 
 [[exercises]]
@@ -1009,7 +1006,7 @@ and keep reading if you'd like more hints :)
 Do you now have an `Arc` `Mutex` `JobStatus` at the beginning of main? Like:
 `let status = Arc::new(Mutex::new(JobStatus { jobs_completed: 0 }));`
 Similar to the code in the example in the book that happens after the text
-that says "We can use Arc<T> to fix this.". If not, give that a try! If you
+that says "Sharing a Mutex<T> Between Multiple Threads". If not, give that a try! If you
 do and would like more hints, keep reading!!
 
 

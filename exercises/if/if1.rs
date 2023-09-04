@@ -25,4 +25,9 @@ mod tests {
     fn fortytwo_is_bigger_than_thirtytwo() {
         assert_eq!(42, bigger(32, 42));
     }
+
+    #[test]
+    fn equal_numbers() {
+        assert_eq!(42, bigger(42, 42));
+    }
 }

@@ -316,6 +316,22 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="https://anishchhetri.com.np"><img src="https://avatars.githubusercontent.com/u/98446102?v=4?s=100" width="100px;" alt="Anish"/><br /><sub><b>Anish</b></sub></a><br /><a href="#content-novanish" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/vnprc"><img src="https://avatars.githubusercontent.com/u/9425366?v=4?s=100" width="100px;" alt="vnprc"/><br /><sub><b>vnprc</b></sub></a><br /><a href="#content-vnprc" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="http://androecia.net"><img src="https://avatars.githubusercontent.com/u/61999256?v=4?s=100" width="100px;" alt="Joshua Carlson"/><br /><sub><b>Joshua Carlson</b></sub></a><br /><a href="#content-jrcarl624" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://johndesilencio.me"><img src="https://avatars.githubusercontent.com/u/20136554?v=4?s=100" width="100px;" alt="Nicholas R. Smith"/><br /><sub><b>Nicholas R. Smith</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=johnDeSilencio" title="Code">💻</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://alexfertel.me"><img src="https://avatars.githubusercontent.com/u/22298999?v=4?s=100" width="100px;" alt="Alexander González"/><br /><sub><b>Alexander González</b></sub></a><br /><a href="#content-alexfertel" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/softarn"><img src="https://avatars.githubusercontent.com/u/517619?v=4?s=100" width="100px;" alt="Marcus Höjvall"/><br /><sub><b>Marcus Höjvall</b></sub></a><br /><a href="#content-softarn" title="Content">🖋</a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/barlevalon"><img src="https://avatars.githubusercontent.com/u/3397911?v=4?s=100" width="100px;" alt="Alon Hearter"/><br /><sub><b>Alon Hearter</b></sub></a><br /><a href="#content-barlevalon" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/shirts"><img src="https://avatars.githubusercontent.com/u/4952151?v=4?s=100" width="100px;" alt="shirts"/><br /><sub><b>shirts</b></sub></a><br /><a href="#content-shirts" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/eLVas"><img src="https://avatars.githubusercontent.com/u/6797156?v=4?s=100" width="100px;" alt="Ivan Vasiunyk"/><br /><sub><b>Ivan Vasiunyk</b></sub></a><br /><a href="#content-eLVas" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://mo8it.com"><img src="https://avatars.githubusercontent.com/u/76752051?v=4?s=100" width="100px;" alt="Mo"/><br /><sub><b>Mo</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=mo8it" title="Code">💻</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/x10an14"><img src="https://avatars.githubusercontent.com/u/710608?v=4?s=100" width="100px;" alt="x10an14"/><br /><sub><b>x10an14</b></sub></a><br /><a href="#infra-x10an14" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/gabay"><img src="https://avatars.githubusercontent.com/u/5773610?v=4?s=100" width="100px;" alt="Roi Gabay"/><br /><sub><b>Roi Gabay</b></sub></a><br /><a href="#content-gabay" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/mkovaxx"><img src="https://avatars.githubusercontent.com/u/481354?v=4?s=100" width="100px;" alt="Máté Kovács"/><br /><sub><b>Máté Kovács</b></sub></a><br /><a href="#content-mkovaxx" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://szabgab.com/"><img src="https://avatars.githubusercontent.com/u/48833?v=4?s=100" width="100px;" alt="Gábor Szabó"/><br /><sub><b>Gábor Szabó</b></sub></a><br /><a href="#content-szabgab" title="Content">🖋</a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="12.5%"><a href="https://moduslaborandi.net"><img src="https://avatars.githubusercontent.com/u/3340793?v=4?s=100" width="100px;" alt="Yamila Moreno"/><br /><sub><b>Yamila Moreno</b></sub></a><br /><a href="#content-yamila-moreno" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
