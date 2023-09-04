@@ -1011,7 +1011,7 @@ and keep reading if you'd like more hints :)
 Do you now have an `Arc` `Mutex` `JobStatus` at the beginning of main? Like:
 `let status = Arc::new(Mutex::new(JobStatus { jobs_completed: 0 }));`
 Similar to the code in the example in the book that happens after the text
-that says "We can use Arc<T> to fix this.". If not, give that a try! If you
+that says "Sharing a Mutex<T> Between Multiple Threads". If not, give that a try! If you
 do and would like more hints, keep reading!!
 
 
