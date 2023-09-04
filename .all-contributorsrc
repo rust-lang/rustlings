@@ -2343,6 +2343,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "willhack",
+      "name": "Will Hack",
+      "avatar_url": "https://avatars.githubusercontent.com/u/18036720?v=4",
+      "profile": "https://github.com/willhack",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
