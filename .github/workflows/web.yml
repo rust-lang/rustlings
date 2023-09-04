@@ -1,0 +1,98 @@
+# Workflow to build your docs with oranda (and mdbook)
+# and deploy them to Github Pages
+name: Web
+
+# We're going to push to the gh-pages branch, so we need that permission
+permissions:
+  contents: write
+
+# What situations do we want to build docs in?
+# All of these work independently and can be removed / commented out
+# if you don't want oranda/mdbook running in that situation
+on:
+  # Check that a PR didn't break docs!
+  #
+  # Note that the "Deploy to Github Pages" step won't run in this mode,
+  # so this won't have any side-effects. But it will tell you if a PR
+  # completely broke oranda/mdbook. Sadly we don't provide previews (yet)!
+  pull_request:
+
+  # Whenever something gets pushed to main, update the docs!
+  # This is great for getting docs changes live without cutting a full release.
+  #
+  # Note that if you're using cargo-dist, this will "race" the Release workflow
+  # that actually builds the Github Release that oranda tries to read (and
+  # this will almost certainly complete first). As a result you will publish
+  # docs for the latest commit but the oranda landing page won't know about
+  # the latest release. The workflow_run trigger below will properly wait for
+  # cargo-dist, and so this half-published state will only last for ~10 minutes.
+  #
+  # If you only want docs to update with releases, disable this, or change it to
+  # a "release" branch. You can, of course, also manually trigger a workflow run
+  # when you want the docs to update.
+  push:
+    branches:
+      - main
+
+  # Whenever a workflow called "Release" completes, update the docs!
+  #
+  # If you're using cargo-dist, this is recommended, as it will ensure that
+  # oranda always sees the latest release right when it's available. Note
+  # however that Github's UI is wonky when you use workflow_run, and won't
+  # show this workflow as part of any commit. You have to go to the "actions"
+  # tab for your repo to see this one running (the gh-pages deploy will also
+  # only show up there).
+  workflow_run:
+    workflows: [ "Release" ]
+    types:
+      - completed
+
+# Alright, let's do it!
+jobs:
+  web:
+    name: Build and deploy site and docs
+    runs-on: ubuntu-latest
+    steps:
+      # Setup
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: swatinem/rust-cache@v2
+
+      # If you use any mdbook plugins, here's the place to install them!
+
+      # Install and run oranda (and mdbook)
+      # This will write all output to ./public/ (including copying mdbook's output to there)
+      - name: Install and run oranda
+        run: |
+          curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/oranda/releases/download/v0.3.1/oranda-installer.sh | sh
+          oranda build
+      
+      - name: Prepare HTML for link checking
+        # untitaker/hyperlink supports no site prefixes, move entire site into
+        # a subfolder
+        run: mkdir /tmp/public/ && cp -R public /tmp/public/oranda
+
+      - name: Check HTML for broken internal links
+        uses: untitaker/hyperlink@0.1.29
+        with:
+          args: /tmp/public/ --sources docs/
+      
+      # Deploy to our gh-pages branch (creating it if it doesn't exist)
+      # the "public" dir that oranda made above will become the root dir
+      # of this branch.
+      #
+      # Note that once the gh-pages branch exists, you must
+      # go into repo's settings > pages and set "deploy from branch: gh-pages"
+      # the other defaults work fine.
+      - name: Deploy to Github Pages
+        uses: JamesIves/github-pages-deploy-action@v4.4.1
+        # ONLY if we're on main (so no PRs or feature branches allowed!)
+        if: ${{ github.ref == 'refs/heads/main' }}
+        with:
+          branch: gh-pages
+          # Gotta tell the action where to find oranda's output
+          folder: public
+          token: ${{ secrets.GITHUB_TOKEN }}
+          single-commit: true
