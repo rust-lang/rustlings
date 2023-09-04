@@ -2298,6 +2298,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "x10an14",
+      "name": "x10an14",
+      "avatar_url": "https://avatars.githubusercontent.com/u/710608?v=4",
+      "profile": "https://github.com/x10an14",
+      "contributions": [
+        "infra"
+      ]
     }
   ],
   "contributorsPerLine": 8,
