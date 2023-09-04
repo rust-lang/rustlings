@@ -332,6 +332,7 @@ authors.
     </tr>
     <tr>
       <td align="center" valign="top" width="12.5%"><a href="https://moduslaborandi.net"><img src="https://avatars.githubusercontent.com/u/3340793?v=4?s=100" width="100px;" alt="Yamila Moreno"/><br /><sub><b>Yamila Moreno</b></sub></a><br /><a href="#content-yamila-moreno" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/willhack"><img src="https://avatars.githubusercontent.com/u/18036720?v=4?s=100" width="100px;" alt="Will Hack"/><br /><sub><b>Will Hack</b></sub></a><br /><a href="#content-willhack" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
