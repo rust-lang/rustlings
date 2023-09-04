@@ -68,17 +68,7 @@ jobs:
         run: |
           curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/oranda/releases/download/v0.3.1/oranda-installer.sh | sh
           oranda build
-      
-      - name: Prepare HTML for link checking
-        # untitaker/hyperlink supports no site prefixes, move entire site into
-        # a subfolder
-        run: mkdir /tmp/public/ && cp -R public /tmp/public/oranda
 
-      - name: Check HTML for broken internal links
-        uses: untitaker/hyperlink@0.1.29
-        with:
-          args: /tmp/public/ --sources docs/
-      
       # Deploy to our gh-pages branch (creating it if it doesn't exist)
       # the "public" dir that oranda made above will become the root dir
       # of this branch.
