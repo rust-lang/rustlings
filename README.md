@@ -173,12 +173,8 @@ Now you should be done!
 
 ## Contributing
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md).
-
-Development-focused discussion about Rustlings happens in the [**rustlings** stream](https://rust-lang.zulipchat.com/#narrow/stream/334454-rustlings)
-on the [Rust Project Zulip](https://rust-lang.zulipchat.com). Feel free to start a new thread there
-if you have ideas or suggestions!
+See [CONTRIBUTING.md](https://github.com/rust-lang/rustlings/blob/main/CONTRIBUTING.md).
 
 ## Contributors ✨
 
-Thanks goes to the wonderful people listed in [AUTHORS.md](./AUTHORS.md) 🎉
+Thanks goes to the wonderful people listed in [AUTHORS.md](https://github.com/rust-lang/rustlings/blob/main/AUTHORS.md) 🎉
