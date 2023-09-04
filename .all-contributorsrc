@@ -2352,6 +2352,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "bean5",
+      "name": "Michael",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2052646?v=4",
+      "profile": "http://cancompute.tech",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
