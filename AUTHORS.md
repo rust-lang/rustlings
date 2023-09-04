@@ -326,6 +326,7 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/eLVas"><img src="https://avatars.githubusercontent.com/u/6797156?v=4?s=100" width="100px;" alt="Ivan Vasiunyk"/><br /><sub><b>Ivan Vasiunyk</b></sub></a><br /><a href="#content-eLVas" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://mo8it.com"><img src="https://avatars.githubusercontent.com/u/76752051?v=4?s=100" width="100px;" alt="Mo"/><br /><sub><b>Mo</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=mo8it" title="Code">💻</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/x10an14"><img src="https://avatars.githubusercontent.com/u/710608?v=4?s=100" width="100px;" alt="x10an14"/><br /><sub><b>x10an14</b></sub></a><br /><a href="#infra-x10an14" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/gabay"><img src="https://avatars.githubusercontent.com/u/5773610?v=4?s=100" width="100px;" alt="Roi Gabay"/><br /><sub><b>Roi Gabay</b></sub></a><br /><a href="#content-gabay" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
