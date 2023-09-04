@@ -25,6 +25,7 @@
             version = "5.5.1";
 
             buildInputs = cargoBuildInputs;
+            nativeBuildInputs = [pkgs.git];
 
             src = with pkgs.lib; cleanSourceWith {
               src = self;
