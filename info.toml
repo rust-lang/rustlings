@@ -268,15 +268,14 @@ name = "vecs2"
 path = "exercises/vecs/vecs2.rs"
 mode = "test"
 hint = """
-Hint 1: In the code, the variable `element` represents an item from the Vec as it is being iterated.
-Can you try multiplying this?
+In the first function we are looping over the Vector and getting a reference to one `element` at a time.
+To modify the value of that `element` we need to use the * dereference operator. You can learn more in this chapter of the Rust book:
+https://doc.rust-lang.org/stable/book/ch08-01-vectors.html#iterating-over-the-values-in-a-vector
 
-Hint 2: For the first function, there's a way to directly access the numbers stored
-in the Vec, using the * dereference operator. You can both access and write to the
-number that way.
+In the second function this dereferencing is not necessary, because the map function expects the new value to be returned.
 
-After you've completed both functions, decide for yourself which approach you like
-better. What do you think is the more commonly used pattern under Rust developers?
+After you've completed both functions, decide for yourself which approach you like better.
+What do you think is the more commonly used pattern under Rust developers?
 """
 
 # MOVE SEMANTICS
