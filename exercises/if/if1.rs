@@ -1,4 +1,5 @@
 // if1.rs
+//
 // Execute `rustlings hint if1` or use the `hint` watch subcommand for a hint.
 
 // I AM NOT DONE
@@ -23,5 +24,10 @@ mod tests {
     #[test]
     fn fortytwo_is_bigger_than_thirtytwo() {
         assert_eq!(42, bigger(32, 42));
+    }
+
+    #[test]
+    fn equal_numbers() {
+        assert_eq!(42, bigger(42, 42));
     }
 }

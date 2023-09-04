@@ -1,7 +1,7 @@
 use crate::exercise::{CompiledExercise, Exercise, Mode, State};
 use console::style;
 use indicatif::{ProgressBar, ProgressStyle};
-use std::env;
+use std::{env, time::Duration};
 
 // Verify that the provided container of Exercise objects
 // can be compiled and run without any failures.
@@ -12,22 +12,25 @@ pub fn verify<'a>(
     exercises: impl IntoIterator<Item = &'a Exercise>,
     progress: (usize, usize),
     verbose: bool,
+    success_hints: bool,
 ) -> Result<(), &'a Exercise> {
     let (num_done, total) = progress;
     let bar = ProgressBar::new(total as u64);
     let mut percentage = num_done as f32 / total as f32 * 100.0;
-    bar.set_style(ProgressStyle::default_bar()
-        .template("Progress: [{bar:60.green/red}] {pos}/{len} {msg}")
-        .progress_chars("#>-")
+    bar.set_style(
+        ProgressStyle::default_bar()
+            .template("Progress: [{bar:60.green/red}] {pos}/{len} {msg}")
+            .expect("Progressbar template should be valid!")
+            .progress_chars("#>-"),
     );
     bar.set_position(num_done as u64);
     bar.set_message(format!("({:.1} %)", percentage));
 
     for exercise in exercises {
         let compile_result = match exercise.mode {
-            Mode::Test => compile_and_test(exercise, RunMode::Interactive, verbose),
-            Mode::Compile => compile_and_run_interactively(exercise),
-            Mode::Clippy => compile_only(exercise),
+            Mode::Test => compile_and_test(exercise, RunMode::Interactive, verbose, success_hints),
+            Mode::Compile => compile_and_run_interactively(exercise, success_hints),
+            Mode::Clippy => compile_only(exercise, success_hints),
         };
         if !compile_result.unwrap_or(false) {
             return Err(exercise);
@@ -46,27 +49,27 @@ enum RunMode {
 
 // Compile and run the resulting test harness of the given Exercise
 pub fn test(exercise: &Exercise, verbose: bool) -> Result<(), ()> {
-    compile_and_test(exercise, RunMode::NonInteractive, verbose)?;
+    compile_and_test(exercise, RunMode::NonInteractive, verbose, false)?;
     Ok(())
 }
 
 // Invoke the rust compiler without running the resulting binary
-fn compile_only(exercise: &Exercise) -> Result<bool, ()> {
+fn compile_only(exercise: &Exercise, success_hints: bool) -> Result<bool, ()> {
     let progress_bar = ProgressBar::new_spinner();
     progress_bar.set_message(format!("Compiling {exercise}..."));
-    progress_bar.enable_steady_tick(100);
+    progress_bar.enable_steady_tick(Duration::from_millis(100));
 
     let _ = compile(exercise, &progress_bar)?;
     progress_bar.finish_and_clear();
 
-    Ok(prompt_for_completion(exercise, None))
+    Ok(prompt_for_completion(exercise, None, success_hints))
 }
 
 // Compile the given Exercise and run the resulting binary in an interactive mode
-fn compile_and_run_interactively(exercise: &Exercise) -> Result<bool, ()> {
+fn compile_and_run_interactively(exercise: &Exercise, success_hints: bool) -> Result<bool, ()> {
     let progress_bar = ProgressBar::new_spinner();
     progress_bar.set_message(format!("Compiling {exercise}..."));
-    progress_bar.enable_steady_tick(100);
+    progress_bar.enable_steady_tick(Duration::from_millis(100));
 
     let compilation = compile(exercise, &progress_bar)?;
 
@@ -84,15 +87,24 @@ fn compile_and_run_interactively(exercise: &Exercise) -> Result<bool, ()> {
         }
     };
 
-    Ok(prompt_for_completion(exercise, Some(output.stdout)))
+    Ok(prompt_for_completion(
+        exercise,
+        Some(output.stdout),
+        success_hints,
+    ))
 }
 
 // Compile the given Exercise as a test harness and display
 // the output if verbose is set to true
-fn compile_and_test(exercise: &Exercise, run_mode: RunMode, verbose: bool) -> Result<bool, ()> {
+fn compile_and_test(
+    exercise: &Exercise,
+    run_mode: RunMode,
+    verbose: bool,
+    success_hints: bool,
+) -> Result<bool, ()> {
     let progress_bar = ProgressBar::new_spinner();
     progress_bar.set_message(format!("Testing {exercise}..."));
-    progress_bar.enable_steady_tick(100);
+    progress_bar.enable_steady_tick(Duration::from_millis(100));
 
     let compilation = compile(exercise, &progress_bar)?;
     let result = compilation.run();
@@ -104,7 +116,7 @@ fn compile_and_test(exercise: &Exercise, run_mode: RunMode, verbose: bool) -> Re
                 println!("{}", output.stdout);
             }
             if let RunMode::Interactive = run_mode {
-                Ok(prompt_for_completion(exercise, None))
+                Ok(prompt_for_completion(exercise, None, success_hints))
             } else {
                 Ok(true)
             }
@@ -122,9 +134,9 @@ fn compile_and_test(exercise: &Exercise, run_mode: RunMode, verbose: bool) -> Re
 
 // Compile the given Exercise and return an object with information
 // about the state of the compilation
-fn compile<'a, 'b>(
+fn compile<'a>(
     exercise: &'a Exercise,
-    progress_bar: &'b ProgressBar,
+    progress_bar: &ProgressBar,
 ) -> Result<CompiledExercise<'a>, ()> {
     let compilation_result = exercise.compile();
 
@@ -142,12 +154,15 @@ fn compile<'a, 'b>(
     }
 }
 
-fn prompt_for_completion(exercise: &Exercise, prompt_output: Option<String>) -> bool {
+fn prompt_for_completion(
+    exercise: &Exercise,
+    prompt_output: Option<String>,
+    success_hints: bool,
+) -> bool {
     let context = match exercise.state() {
         State::Done => return true,
         State::Pending(context) => context,
     };
-
     match exercise.mode {
         Mode::Compile => success!("Successfully ran {}!", exercise),
         Mode::Test => success!("Successfully tested {}!", exercise),
@@ -167,7 +182,6 @@ fn prompt_for_completion(exercise: &Exercise, prompt_output: Option<String>) -> 
         Mode::Test => "The code is compiling, and the tests pass!",
         Mode::Clippy => clippy_success_msg,
     };
-
     println!();
     if no_emoji {
         println!("~*~ {success_msg} ~*~")
@@ -180,6 +194,13 @@ fn prompt_for_completion(exercise: &Exercise, prompt_output: Option<String>) -> 
         println!("Output:");
         println!("{}", separator());
         println!("{output}");
+        println!("{}", separator());
+        println!();
+    }
+    if success_hints {
+        println!("Hints:");
+        println!("{}", separator());
+        println!("{}", exercise.hint);
         println!("{}", separator());
         println!();
     }

@@ -22,9 +22,10 @@
         rustlings =
           pkgs.rustPlatform.buildRustPackage {
             name = "rustlings";
-            version = "5.4.1";
+            version = "5.5.1";
 
             buildInputs = cargoBuildInputs;
+            nativeBuildInputs = [pkgs.git];
 
             src = with pkgs.lib; cleanSourceWith {
               src = self;
@@ -59,6 +60,19 @@
             rustfmt
             clippy
           ] ++ cargoBuildInputs;
+        };
+        apps = let
+          rustlings-app = {
+            type = "app";
+            program = "${rustlings}/bin/rustlings";
+          };
+        in {
+          default = rustlings-app;
+          rustlings = rustlings-app;
+        };
+        packages = {
+          inherit rustlings;
+          default = rustlings;
         };
       });
 }

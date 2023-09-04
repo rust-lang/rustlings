@@ -22,8 +22,8 @@ name = "variables1"
 path = "exercises/variables/variables1.rs"
 mode = "compile"
 hint = """
-The declaration on line 8 is missing a keyword that is needed in Rust
-to create a new variable binding."""
+The declaration in the first line in the main function is missing a keyword
+that is needed in Rust to create a new variable binding."""
 
 [[exercises]]
 name = "variables2"
@@ -32,7 +32,7 @@ mode = "compile"
 hint = """
 The compiler message is saying that Rust cannot infer the type that the
 variable binding `x` has with what is given here.
-What happens if you annotate line 7 with a type annotation?
+What happens if you annotate the first line in the main function with a type annotation?
 What if you give x a value?
 What if you do both?
 What type should x be, anyway?
@@ -44,8 +44,9 @@ path = "exercises/variables/variables3.rs"
 mode = "compile"
 hint = """
 Oops! In this exercise, we have a variable binding that we've created on
-line 7, and we're trying to use it on line 8, but we haven't given it a
-value. We can't print out something that isn't there; try giving x a value!
+in the first line in the main function, and we're trying to use it in the next line,
+but we haven't given it a value.
+We can't print out something that isn't there; try giving x a value!
 This is an error that can cause bugs that's very easy to make in any
 programming language -- thankfully the Rust compiler has caught this for us!"""
 
@@ -123,8 +124,8 @@ name = "functions4"
 path = "exercises/functions/functions4.rs"
 mode = "compile"
 hint = """
-The error message points to line 17 and says it expects a type after the
-`->`. This is where the function's return type should be -- take a look at
+The error message points to the function `sale_price` and says it expects a type
+after the `->`. This is where the function's return type should be -- take a look at
 the `is_even` function for an example!
 
 Also: Did you figure out that, technically, u32 would be the more fitting type
@@ -166,6 +167,13 @@ hint = """
 For that first compiler error, it's important in Rust that each conditional
 block returns the same type! To get the tests passing, you will need a couple
 conditions checking different input values."""
+
+[[exercises]]
+name = "if3"
+path = "exercises/if/if3.rs"
+mode = "test"
+hint = """
+In Rust, every arm of an `if` expression has to return the same type of value. Make sure the type is consistent across all arms."""
 
 # QUIZ 1
 
@@ -209,7 +217,7 @@ mode = "test"
 hint = """
 Take a look at the Understanding Ownership -> Slices -> Other Slices section of the book:
 https://doc.rust-lang.org/book/ch04-03-slices.html
-and use the starting and ending indices of the items in the Array
+and use the starting and ending (plus one) indices of the items in the Array
 that you want to end up in the slice.
 
 If you're curious why the first argument of `assert_eq!` does not
@@ -275,39 +283,37 @@ What do you think is the more commonly used pattern under Rust developers?
 [[exercises]]
 name = "move_semantics1"
 path = "exercises/move_semantics/move_semantics1.rs"
-mode = "compile"
+mode = "test"
 hint = """
-So you've got the "cannot borrow immutable local variable `vec1` as mutable" error on line 13,
-right? The fix for this is going to be adding one keyword, and the addition is NOT on line 13
-where the error is.
+So you've got the "cannot borrow immutable local variable `vec` as mutable" error on the line
+where we push an element to the vector, right?
+The fix for this is going to be adding one keyword, and the addition is NOT on the line where
+we push to the vector (where the error is).
 
 Also: Try accessing `vec0` after having called `fill_vec()`. See what happens!"""
 
 [[exercises]]
 name = "move_semantics2"
 path = "exercises/move_semantics/move_semantics2.rs"
-mode = "compile"
+mode = "test"
 hint = """
-So, `vec0` is passed into the `fill_vec` function as an argument. In Rust,
-when an argument is passed to a function and it's not explicitly returned,
-you can't use the original variable anymore. We call this "moving" a variable.
-Variables that are moved into a function (or block scope) and aren't explicitly
-returned get "dropped" at the end of that function. This is also what happens here.
-There's a few ways to fix this, try them all if you want:
-1. Make another, separate version of the data that's in `vec0` and pass that
+When running this exercise for the first time, you'll notice an error about
+"borrow of moved value". In Rust, when an argument is passed to a function and
+it's not explicitly returned, you can't use the original variable anymore.
+We call this "moving" a variable. When we pass `vec0` into `fill_vec`, it's being
+"moved" into `vec1`, meaning we can't access `vec0` anymore after the fact.
+Rust provides a couple of different ways to mitigate this issue, feel free to try them all:
+1. You could make another, separate version of the data that's in `vec0` and pass that
    to `fill_vec` instead.
 2. Make `fill_vec` borrow its argument instead of taking ownership of it,
-   and then copy the data within the function in order to return an owned
-   `Vec<i32>`
-3. Make `fill_vec` *mutably* borrow a reference to its argument (which will need to be
-   mutable), modify it directly, then not return anything. Then you can get rid
-   of `vec1` entirely -- note that this will change what gets printed by the
-   first `println!`"""
+   and then copy the data within the function (`vec.clone()`) in order to return an owned
+   `Vec<i32>`.
+"""
 
 [[exercises]]
 name = "move_semantics3"
 path = "exercises/move_semantics/move_semantics3.rs"
-mode = "compile"
+mode = "test"
 hint = """
 The difference between this one and the previous ones is that the first line
 of `fn fill_vec` that had `let mut vec = vec;` is no longer there. You can,
@@ -317,7 +323,7 @@ an existing binding to be a mutable binding instead of an immutable one :)"""
 [[exercises]]
 name = "move_semantics4"
 path = "exercises/move_semantics/move_semantics4.rs"
-mode = "compile"
+mode = "test"
 hint = """
 Stop reading whenever you feel like you have enough direction :) Or try
 doing one step and then fixing the compiler errors that result!
@@ -326,7 +332,7 @@ So the end goal is to:
    - so then `vec0` doesn't exist, so we can't pass it to `fill_vec`
    - `fill_vec` has had its signature changed, which our call should reflect
    - since we're not creating a new vec in `main` anymore, we need to create
-     a new vec in `fill_vec`, similarly to the way we did in `main`"""
+     a new vec in `fill_vec`, and fill it with the expected values"""
 
 [[exercises]]
 name = "move_semantics5"
@@ -436,8 +442,8 @@ path = "exercises/strings/strings2.rs"
 mode = "compile"
 hint = """
 Yes, it would be really easy to fix this by just changing the value bound to `word` to be a
-string slice instead of a `String`, wouldn't it?? There is a way to add one character to line
-9, though, that will coerce the `String` into a string slice.
+string slice instead of a `String`, wouldn't it?? There is a way to add one character to the
+if statement, though, that will coerce the `String` into a string slice.
 
 Side note: If you're interested in learning about how this kind of reference conversion works, you can jump ahead in the book and read this part in the smart pointers chapter: https://doc.rust-lang.org/stable/book/ch15-02-deref.html#implicit-deref-coercions-with-functions-and-methods"""
 
@@ -477,7 +483,8 @@ hint = """
 The delicious_snacks module is trying to present an external interface that is
 different than its internal structure (the `fruits` and `veggies` modules and
 associated constants). Complete the `use` statements to fit the uses in main and
-find the one keyword missing for both constants."""
+find the one keyword missing for both constants.
+Learn more at https://doc.rust-lang.org/book/ch07-04-bringing-paths-into-scope-with-the-use-keyword.html#re-exporting-names-with-pub-use"""
 
 [[exercises]]
 name = "modules3"
@@ -815,7 +822,6 @@ To handle that you need to add a special attribute to the test function.
 You can refer to the docs:
 https://doc.rust-lang.org/stable/book/ch11-01-writing-tests.html#checking-for-panics-with-should_panic"""
 
-
 # STANDARD LIBRARY TYPES
 
 [[exercises]]
@@ -895,9 +901,6 @@ hint = """
 The documentation for the std::iter::Iterator trait contains numerous methods
 that would be helpful here.
 
-Return 0 from count_collection_iterator to make the code compile in order to
-test count_iterator.
-
 The collection variable in count_collection_iterator is a slice of HashMaps. It
 needs to be converted into an iterator in order to use the iterator methods.
 
@@ -905,67 +908,6 @@ The fold method can be useful in the count_collection_iterator function.
 
 For a further challenge, consult the documentation for Iterator to find
 a different method that could make your code more compact than using fold."""
-
-# THREADS
-
-[[exercises]]
-name = "threads1"
-path = "exercises/threads/threads1.rs"
-mode = "compile"
-hint = """
-`JoinHandle` is a struct that is returned from a spawned thread:
-https://doc.rust-lang.org/std/thread/fn.spawn.html
-
-A challenge with multi-threaded applications is that the main thread can
-finish before the spawned threads are completed.
-https://doc.rust-lang.org/book/ch16-01-threads.html#waiting-for-all-threads-to-finish-using-join-handles
-
-Use the JoinHandles to wait for each thread to finish and collect their results.
-https://doc.rust-lang.org/std/thread/struct.JoinHandle.html
-"""
-
-[[exercises]]
-name = "threads2"
-path = "exercises/threads/threads2.rs"
-mode = "compile"
-hint = """
-`Arc` is an Atomic Reference Counted pointer that allows safe, shared access
-to **immutable** data. But we want to *change* the number of `jobs_completed`
-so we'll need to also use another type that will only allow one thread to
-mutate the data at a time. Take a look at this section of the book:
-https://doc.rust-lang.org/book/ch16-03-shared-state.html#atomic-reference-counting-with-arct
-and keep reading if you'd like more hints :)
-
-
-Do you now have an `Arc` `Mutex` `JobStatus` at the beginning of main? Like:
-`let status = Arc::new(Mutex::new(JobStatus { jobs_completed: 0 }));`
-Similar to the code in the example in the book that happens after the text
-that says "We can use Arc<T> to fix this.". If not, give that a try! If you
-do and would like more hints, keep reading!!
-
-
-Make sure neither of your threads are holding onto the lock of the mutex
-while they are sleeping, since this will prevent the other thread from
-being allowed to get the lock. Locks are automatically released when
-they go out of scope.
-
-If you've learned from the sample solutions, I encourage you to come
-back to this exercise and try it again in a few days to reinforce
-what you've learned :)"""
-
-[[exercises]]
-name = "threads3"
-path = "exercises/threads/threads3.rs"
-mode = "compile"
-hint = """
-An alternate way to handle concurrency between threads is to use
-a mpsc (multiple producer, single consumer) channel to communicate.
-With both a sending end and a receiving end, it's possible to
-send values in one thread and receive them in another.
-Multiple producers are possible by using clone() to create a duplicate
-of the original sending end.
-See https://doc.rust-lang.org/book/ch16-02-message-passing.html for more info.
-"""
 
 # SMART POINTERS
 
@@ -1027,6 +969,67 @@ If Cow already owns the data it doesn't need to clone it when to_mut() is called
 
 Check out https://doc.rust-lang.org/std/borrow/enum.Cow.html for documentation
 on the `Cow` type.
+"""
+
+# THREADS
+
+[[exercises]]
+name = "threads1"
+path = "exercises/threads/threads1.rs"
+mode = "compile"
+hint = """
+`JoinHandle` is a struct that is returned from a spawned thread:
+https://doc.rust-lang.org/std/thread/fn.spawn.html
+
+A challenge with multi-threaded applications is that the main thread can
+finish before the spawned threads are completed.
+https://doc.rust-lang.org/book/ch16-01-threads.html#waiting-for-all-threads-to-finish-using-join-handles
+
+Use the JoinHandles to wait for each thread to finish and collect their results.
+https://doc.rust-lang.org/std/thread/struct.JoinHandle.html
+"""
+
+[[exercises]]
+name = "threads2"
+path = "exercises/threads/threads2.rs"
+mode = "compile"
+hint = """
+`Arc` is an Atomic Reference Counted pointer that allows safe, shared access
+to **immutable** data. But we want to *change* the number of `jobs_completed`
+so we'll need to also use another type that will only allow one thread to
+mutate the data at a time. Take a look at this section of the book:
+https://doc.rust-lang.org/book/ch16-03-shared-state.html#atomic-reference-counting-with-arct
+and keep reading if you'd like more hints :)
+
+
+Do you now have an `Arc` `Mutex` `JobStatus` at the beginning of main? Like:
+`let status = Arc::new(Mutex::new(JobStatus { jobs_completed: 0 }));`
+Similar to the code in the example in the book that happens after the text
+that says "Sharing a Mutex<T> Between Multiple Threads". If not, give that a try! If you
+do and would like more hints, keep reading!!
+
+
+Make sure neither of your threads are holding onto the lock of the mutex
+while they are sleeping, since this will prevent the other thread from
+being allowed to get the lock. Locks are automatically released when
+they go out of scope.
+
+If you've learned from the sample solutions, I encourage you to come
+back to this exercise and try it again in a few days to reinforce
+what you've learned :)"""
+
+[[exercises]]
+name = "threads3"
+path = "exercises/threads/threads3.rs"
+mode = "compile"
+hint = """
+An alternate way to handle concurrency between threads is to use
+a mpsc (multiple producer, single consumer) channel to communicate.
+With both a sending end and a receiving end, it's possible to
+send values in one thread and receive them in another.
+Multiple producers are possible by using clone() to create a duplicate
+of the original sending end.
+See https://doc.rust-lang.org/book/ch16-02-message-passing.html for more info.
 """
 
 # MACROS
@@ -1171,4 +1174,4 @@ name = "as_ref_mut"
 path = "exercises/conversions/as_ref_mut.rs"
 mode = "test"
 hint = """
-Add AsRef<str> as a trait bound to the functions."""
+Add AsRef<str> or AsMut<u32> as a trait bound to the functions."""

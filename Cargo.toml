@@ -1,6 +1,7 @@
 [package]
 name = "rustlings"
-version = "5.4.1"
+description = "Small exercises to get you used to reading and writing Rust code!"
+version = "5.5.1"
 authors = [
   "Liv <mokou@fastmail.com>",
   "Carol (Nichols || Goulding) <carol.nichols@gmail.com>",
@@ -9,21 +10,22 @@ edition = "2021"
 
 [dependencies]
 argh = "0.1"
-indicatif = "0.16"
+indicatif = "0.17.6"
 console = "0.15"
 notify = "4.0"
-toml = "0.5"
+toml = "0.7.6"
 regex = "1.5"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0.81"
 home = "0.5.3"
 glob = "0.3.0"
+clap = { version = "4.4.0", features = ["derive"] }
 
 [[bin]]
 name = "rustlings"
 path = "src/main.rs"
 
 [dev-dependencies]
-assert_cmd = "0.11.0"
-predicates = "1.0.1"
+assert_cmd = "2.0.12"
+predicates = "3.0.3"
 glob = "0.3.0"
