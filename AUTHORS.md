@@ -328,6 +328,7 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/x10an14"><img src="https://avatars.githubusercontent.com/u/710608?v=4?s=100" width="100px;" alt="x10an14"/><br /><sub><b>x10an14</b></sub></a><br /><a href="#infra-x10an14" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/gabay"><img src="https://avatars.githubusercontent.com/u/5773610?v=4?s=100" width="100px;" alt="Roi Gabay"/><br /><sub><b>Roi Gabay</b></sub></a><br /><a href="#content-gabay" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/mkovaxx"><img src="https://avatars.githubusercontent.com/u/481354?v=4?s=100" width="100px;" alt="Máté Kovács"/><br /><sub><b>Máté Kovács</b></sub></a><br /><a href="#content-mkovaxx" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://szabgab.com/"><img src="https://avatars.githubusercontent.com/u/48833?v=4?s=100" width="100px;" alt="Gábor Szabó"/><br /><sub><b>Gábor Szabó</b></sub></a><br /><a href="#content-szabgab" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
