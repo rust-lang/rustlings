@@ -2325,6 +2325,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "szabgab",
+      "name": "Gábor Szabó",
+      "avatar_url": "https://avatars.githubusercontent.com/u/48833?v=4",
+      "profile": "https://szabgab.com/",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
