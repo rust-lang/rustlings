@@ -1,4 +1,4 @@
-name: Ensure nix-dev environment still builds correctly
+name: Verify nix environment
 
 on:
   # On any push or PR
