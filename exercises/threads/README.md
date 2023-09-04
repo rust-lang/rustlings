@@ -1,6 +1,6 @@
 # Threads
 
-In most current operating systems, an executed program’s code is run in a process, and the operating system manages multiple processes at once.
+In most current operating systems, an executed program's code is run in a process, and the operating system manages multiple processes at once.
 Within your program, you can also have independent parts that run simultaneously. The features that run these independent parts are called threads.
 
 ## Further information
