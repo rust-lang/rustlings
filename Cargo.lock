@@ -585,7 +585,7 @@ checksum = "dbb5fb1acd8a1a18b3dd5be62d25485eb770e05afb408a9627d14d451bae12da"
 
 [[package]]
 name = "rustlings"
-version = "5.5.1"
+version = "5.6.0"
 dependencies = [
  "assert_cmd",
  "clap",

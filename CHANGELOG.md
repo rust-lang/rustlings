@@ -1,3 +1,43 @@
+<a name="5.6.0"></a>
+## 5.6.0 (2023-09-04)
+
+#### Added
+
+- New exercise: `if3`, teaching the user about `if let` statements.
+- `hashmaps2`: Added an extra test function to check if the amount of fruits is higher than zero.
+- `enums3`: Added a test for `Message`.
+- `if1`: Added a test case to check equal values.
+- `if3`: Added a note specifying that there are no test changes needed.
+
+#### Changed
+
+- Swapped the order of threads and smart pointer exercises.
+- Rewrote the CLI to use `clap` - it's matured much since we switched to `argh` :)
+- `structs3`: Switched from i32 to u32.
+- `move_semantics`: Switched 1-4 to tests, and rewrote them to be way simpler, while still teaching about the same 
+  concepts.
+
+#### Fixed
+
+- `iterators5`:
+  - Removed an outdated part of the hint.
+  - Renamed variables to use snake_case.
+- `vecs2`: Updated the hint to reference the renamed loop variable.
+- `enums3`: Changed message string in test so that it gets properly tested.
+- `strings2`: Corrected line number in hint, then removed it (this both happened as part of this release cycle).
+- `primitive_types4`: Updated hint to the correct ending index.
+- `quiz1`: Removed duplicated sentence from exercise comments.
+- `errors4`: Improved comment.
+- `from_into`: Fixed test values.
+- `cow1`: Added `.to_mut()` to distinguish from the previous test case.
+- `threads2`: Updated hint text to reference the correct book heading.
+
+#### Housekeeping
+
+- Cleaned up the explanation paragraphs at the start of each exercise.
+- Lots of Nix housekeeping that I don't feel qualified to write about!
+- Improved CI workflows, we're now testing on multiple platforms at once.
+
 <a name="5.5.1"></a>
 ## 5.5.1 (2023-05-17)
 
