@@ -10,13 +10,28 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
+  fmt:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Fetch & maybe update Cargo.lock
-      run: cargo fetch --locked
-    - name: Build
-      run: cargo build --verbose
-    - name: Run tests
-      run: cargo test --verbose
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+      - uses: DavidAnson/markdownlint-cli2-action@v9
+        with:
+          globs: "exercises/**/*.md"
+      - name: Run cargo fmt
+        run: |
+          cargo fmt --all -- --check
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: swatinem/rust-cache@v2
+      - name: Run cargo test
+        run: |
+          cargo test
