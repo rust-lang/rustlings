@@ -330,6 +330,9 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/mkovaxx"><img src="https://avatars.githubusercontent.com/u/481354?v=4?s=100" width="100px;" alt="Máté Kovács"/><br /><sub><b>Máté Kovács</b></sub></a><br /><a href="#content-mkovaxx" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://szabgab.com/"><img src="https://avatars.githubusercontent.com/u/48833?v=4?s=100" width="100px;" alt="Gábor Szabó"/><br /><sub><b>Gábor Szabó</b></sub></a><br /><a href="#content-szabgab" title="Content">🖋</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="12.5%"><a href="https://moduslaborandi.net"><img src="https://avatars.githubusercontent.com/u/3340793?v=4?s=100" width="100px;" alt="Yamila Moreno"/><br /><sub><b>Yamila Moreno</b></sub></a><br /><a href="#content-yamila-moreno" title="Content">🖋</a></td>
+    </tr>
   </tbody>
 </table>
 
