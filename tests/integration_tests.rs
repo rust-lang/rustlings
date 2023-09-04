@@ -97,7 +97,10 @@ fn run_single_test_no_filename() {
         .arg("run")
         .current_dir("tests/fixture/")
         .assert()
-        .code(1);
+        .code(2)
+        .stderr(predicates::str::contains(
+            "required arguments were not provided",
+        ));
 }
 
 #[test]
@@ -125,9 +128,9 @@ fn reset_no_exercise() {
         .unwrap()
         .arg("reset")
         .assert()
-        .code(1)
+        .code(2)
         .stderr(predicates::str::contains(
-            "positional arguments not provided",
+            "required arguments were not provided",
         ));
 }
 
