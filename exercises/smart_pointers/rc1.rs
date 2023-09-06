@@ -35,6 +35,7 @@ impl Planet {
     }
 }
 
+#[test]
 fn main() {
     let sun = Rc::new(Sun {});
     println!("reference count = {}", Rc::strong_count(&sun)); // 1 reference
