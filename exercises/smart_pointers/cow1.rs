@@ -67,10 +67,10 @@ mod tests {
     #[test]
     fn owned_mutation() -> Result<(), &'static str> {
         // Of course this is also the case if a mutation does occur. In this
-        // case the call to `to_mut()` returns a reference to the same data as
-        // before.
+        // case the call to `to_mut()` in the abs_all() function returns a
+        // reference to the same data as before.
         let slice = vec![-1, 0, 1];
-        let mut input = Cow::from(slice).to_mut();
+        let mut input = Cow::from(slice);
         match abs_all(&mut input) {
             // TODO
         }
