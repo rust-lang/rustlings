@@ -3,7 +3,12 @@
 // Execute `rustlings hint functions1` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
+
+use std::ffi::c_void;
+
+fn call_me() {
+
+}
 
 fn main() {
     call_me();
