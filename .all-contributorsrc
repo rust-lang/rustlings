@@ -2379,6 +2379,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "ob",
+      "name": "Oscar Bonilla",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4950?v=4",
+      "profile": "http://oscarbonilla.com",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
