@@ -2388,6 +2388,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "husjon",
+      "name": "Jon Erling Hustadnes",
+      "avatar_url": "https://avatars.githubusercontent.com/u/554229?v=4",
+      "profile": "https://github.com/husjon",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
