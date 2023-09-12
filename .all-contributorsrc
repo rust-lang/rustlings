@@ -2397,6 +2397,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "CobaltCause",
+      "name": "Charles Hall",
+      "avatar_url": "https://avatars.githubusercontent.com/u/7003738?v=4",
+      "profile": "https://github.com/CobaltCause",
+      "contributions": [
+        "infra"
+      ]
     }
   ],
   "contributorsPerLine": 8,
