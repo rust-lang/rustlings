@@ -27,8 +27,6 @@ enum IntoColorError {
     IntConversion,
 }
 
-// I AM NOT DONE
-
 // Your task is to complete this implementation and return an Ok result of inner
 // type Color. You need to create an implementation for a tuple of three
 // integers, an array of three integers, and a slice of integers.
@@ -38,23 +36,60 @@ enum IntoColorError {
 // that correct RGB color values must be integers in the 0..=255 range.
 
 // Tuple implementation
-impl TryFrom<(i16, i16, i16)> for Color {
+impl<T> TryFrom<(T, T, T)> for Color
+where
+    u8: TryFrom<T>,
+{
     type Error = IntoColorError;
-    fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {
+    fn try_from(tuple: (T, T, T)) -> Result<Self, Self::Error> {
+        Ok(Color {
+            red: u8::try_from(tuple.0).map_err(|_| IntoColorError::IntConversion)?,
+            green: u8::try_from(tuple.1).map_err(|_| IntoColorError::IntConversion)?,
+            blue: u8::try_from(tuple.2).map_err(|_| IntoColorError::IntConversion)?,
+        })
     }
 }
 
 // Array implementation
-impl TryFrom<[i16; 3]> for Color {
+impl<T> TryFrom<[T; 3]> for Color
+where
+    u8: TryFrom<T>,
+    T: Copy,
+{
     type Error = IntoColorError;
-    fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {
+    fn try_from(arr: [T; 3]) -> Result<Self, Self::Error> {
+        let color = Color {
+            red: u8::try_from(arr[0]).map_err(|_| IntoColorError::IntConversion)?,
+            green: u8::try_from(arr[1]).map_err(|_| IntoColorError::IntConversion)?,
+            blue: u8::try_from(arr[2]).map_err(|_| IntoColorError::IntConversion)?,
+        };
+        Ok(color)
     }
 }
 
 // Slice implementation
-impl TryFrom<&[i16]> for Color {
+impl<T> TryFrom<&[T]> for Color
+where
+    u8: TryFrom<T>,
+    T: Copy,
+{
     type Error = IntoColorError;
-    fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {
+    fn try_from(slice: &[T]) -> Result<Self, Self::Error> {
+        if slice.len() != 3 {
+            return Err(IntoColorError::BadLen);
+        }
+        let color = Color {
+            red: slice[0]
+                .try_into()
+                .map_err(|_| IntoColorError::IntConversion)?,
+            green: slice[1]
+                .try_into()
+                .map_err(|_| IntoColorError::IntConversion)?,
+            blue: slice[2]
+                .try_into()
+                .map_err(|_| IntoColorError::IntConversion)?,
+        };
+        Ok(color)
     }
 }
 
