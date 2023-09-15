@@ -127,6 +127,7 @@ fn compile_and_test(
                 exercise
             );
             println!("{}", output.stdout);
+            println!("View: {}", exercise);
             Err(())
         }
     }
@@ -149,6 +150,7 @@ fn compile<'a>(
                 exercise
             );
             println!("{}", output.stderr);
+            println!("View: {}", exercise);
             Err(())
         }
     }
