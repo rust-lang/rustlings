@@ -2,9 +2,6 @@
 //
 // Fill in the rest of the line that has code missing! No hints, there's no
 // tricks, just get used to typing these :)
-//
-// Execute `rustlings hint primitive_types2` or use the `hint` watch subcommand
-// for a hint.
 
 // I AM NOT DONE
 
