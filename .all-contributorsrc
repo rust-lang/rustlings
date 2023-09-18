@@ -2406,6 +2406,15 @@
       "contributions": [
         "infra"
       ]
+    },
+    {
+      "login": "krmpotic",
+      "name": "Luka Krmpotić",
+      "avatar_url": "https://avatars.githubusercontent.com/u/10350645?v=4",
+      "profile": "https://github.com/krmpotic",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
