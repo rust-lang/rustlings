@@ -342,6 +342,7 @@ authors.
     </tr>
     <tr>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/krmpotic"><img src="https://avatars.githubusercontent.com/u/10350645?v=4?s=100" width="100px;" alt="Luka Krmpotić"/><br /><sub><b>Luka Krmpotić</b></sub></a><br /><a href="#content-krmpotic" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/jurglic"><img src="https://avatars.githubusercontent.com/u/112600?v=4?s=100" width="100px;" alt="Jurglic"/><br /><sub><b>Jurglic</b></sub></a><br /><a href="#content-jurglic" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>

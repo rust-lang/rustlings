@@ -2415,6 +2415,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "jurglic",
+      "name": "Jurglic",
+      "avatar_url": "https://avatars.githubusercontent.com/u/112600?v=4",
+      "profile": "https://github.com/jurglic",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
