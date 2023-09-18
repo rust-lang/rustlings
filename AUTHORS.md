@@ -340,6 +340,9 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/husjon"><img src="https://avatars.githubusercontent.com/u/554229?v=4?s=100" width="100px;" alt="Jon Erling Hustadnes"/><br /><sub><b>Jon Erling Hustadnes</b></sub></a><br /><a href="#content-husjon" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/CobaltCause"><img src="https://avatars.githubusercontent.com/u/7003738?v=4?s=100" width="100px;" alt="Charles Hall"/><br /><sub><b>Charles Hall</b></sub></a><br /><a href="#infra-CobaltCause" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/krmpotic"><img src="https://avatars.githubusercontent.com/u/10350645?v=4?s=100" width="100px;" alt="Luka Krmpotić"/><br /><sub><b>Luka Krmpotić</b></sub></a><br /><a href="#content-krmpotic" title="Content">🖋</a></td>
+    </tr>
   </tbody>
 </table>
 
