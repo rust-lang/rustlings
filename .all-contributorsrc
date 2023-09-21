@@ -2424,6 +2424,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "OfirLauber",
+      "name": "Ofir Lauber",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5631030?v=4",
+      "profile": "https://github.com/OfirLauber",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
