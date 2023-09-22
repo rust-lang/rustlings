@@ -124,7 +124,7 @@ function vercomp() {
 }
 
 RustVersion=$(rustc --version | cut -d " " -f 2)
-MinRustVersion=1.58
+MinRustVersion=1.70
 vercomp "$RustVersion" $MinRustVersion || ec=$?
 if [ ${ec:-0} -eq 2 ]
 then
