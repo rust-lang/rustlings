@@ -201,14 +201,21 @@ path = "{}.rs""#,
     }
 
     pub fn state(&self) -> State {
-        let mut source_file =
-            File::open(&self.path).expect("We were unable to open the exercise file!");
+        let mut source_file = File::open(&self.path).unwrap_or_else(|e| {
+            panic!(
+                "We were unable to open the exercise file {}! {e}",
+                self.path.display()
+            )
+        });
 
         let source = {
             let mut s = String::new();
-            source_file
-                .read_to_string(&mut s)
-                .expect("We were unable to read the exercise file!");
+            source_file.read_to_string(&mut s).unwrap_or_else(|e| {
+                panic!(
+                    "We were unable to read the exercise file {}! {e}",
+                    self.path.display()
+                )
+            });
             s
         };
 
