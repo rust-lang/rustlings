@@ -345,6 +345,7 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/jurglic"><img src="https://avatars.githubusercontent.com/u/112600?v=4?s=100" width="100px;" alt="Jurglic"/><br /><sub><b>Jurglic</b></sub></a><br /><a href="#content-jurglic" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/OfirLauber"><img src="https://avatars.githubusercontent.com/u/5631030?v=4?s=100" width="100px;" alt="Ofir Lauber"/><br /><sub><b>Ofir Lauber</b></sub></a><br /><a href="#content-OfirLauber" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/offbyone"><img src="https://avatars.githubusercontent.com/u/181693?v=4?s=100" width="100px;" alt="Chris Rose"/><br /><sub><b>Chris Rose</b></sub></a><br /><a href="#infra-offbyone" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/dieterplex"><img src="https://avatars.githubusercontent.com/u/507502?v=4?s=100" width="100px;" alt="d1t2"/><br /><sub><b>d1t2</b></sub></a><br /><a href="#infra-dieterplex" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
     </tr>
   </tbody>
 </table>
