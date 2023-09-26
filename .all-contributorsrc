@@ -2433,6 +2433,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "offbyone",
+      "name": "Chris Rose",
+      "avatar_url": "https://avatars.githubusercontent.com/u/181693?v=4",
+      "profile": "https://github.com/offbyone",
+      "contributions": [
+        "infra"
+      ]
     }
   ],
   "contributorsPerLine": 8,
