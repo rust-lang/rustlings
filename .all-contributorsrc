@@ -2433,6 +2433,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "dieterplex",
+      "name": "d1t2",
+      "avatar_url": "https://avatars.githubusercontent.com/u/507502?v=4",
+      "profile": "https://github.com/dieterplex",
+      "contributions": [
+        "infra"
+      ]
     }
   ],
   "contributorsPerLine": 8,
