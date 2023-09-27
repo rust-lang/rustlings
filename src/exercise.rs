@@ -9,6 +9,7 @@ use std::process::{self, Command};
 
 const RUSTC_COLOR_ARGS: &[&str] = &["--color", "always"];
 const RUSTC_EDITION_ARGS: &[&str] = &["--edition", "2021"];
+const RUSTC_NO_DEBUG_ARGS: &[&str] = &["-C", "strip=debuginfo"];
 const I_AM_DONE_REGEX: &str = r"(?m)^\s*///?\s*I\s+AM\s+NOT\s+DONE";
 const CONTEXT: usize = 2;
 const CLIPPY_CARGO_TOML_PATH: &str = "./exercises/clippy/Cargo.toml";
@@ -113,11 +114,13 @@ impl Exercise {
                 .args([self.path.to_str().unwrap(), "-o", &temp_file()])
                 .args(RUSTC_COLOR_ARGS)
                 .args(RUSTC_EDITION_ARGS)
+                .args(RUSTC_NO_DEBUG_ARGS)
                 .output(),
             Mode::Test => Command::new("rustc")
                 .args(["--test", self.path.to_str().unwrap(), "-o", &temp_file()])
                 .args(RUSTC_COLOR_ARGS)
                 .args(RUSTC_EDITION_ARGS)
+                .args(RUSTC_NO_DEBUG_ARGS)
                 .output(),
             Mode::Clippy => {
                 let cargo_toml = format!(
@@ -144,6 +147,7 @@ path = "{}.rs""#,
                     .args([self.path.to_str().unwrap(), "-o", &temp_file()])
                     .args(RUSTC_COLOR_ARGS)
                     .args(RUSTC_EDITION_ARGS)
+                    .args(RUSTC_NO_DEBUG_ARGS)
                     .output()
                     .expect("Failed to compile!");
                 // Due to an issue with Clippy, a cargo clean is required to catch all lints.
@@ -287,6 +291,24 @@ mod test {
         let compiled = exercise.compile().unwrap();
         drop(compiled);
         assert!(!Path::new(&temp_file()).exists());
+    }
+
+    #[test]
+    #[cfg(target_os = "windows")]
+    fn test_no_pdb_file() {
+        [Mode::Compile, Mode::Test] // Clippy doesn't like to test
+            .iter()
+            .for_each(|mode| {
+                let exercise = Exercise {
+                    name: String::from("example"),
+                    // We want a file that does actually compile
+                    path: PathBuf::from("tests/fixture/state/pending_exercise.rs"),
+                    mode: *mode,
+                    hint: String::from(""),
+                };
+                let _ = exercise.compile().unwrap();
+                assert!(!Path::new(&format!("{}.pdb", temp_file())).exists());
+            });
     }
 
     #[test]
