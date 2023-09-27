@@ -3,9 +3,11 @@
 // Execute `rustlings hint variables6` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
+// I AM DONE
 
-const NUMBER = 3;
+// Constants types must also always be annotated.
+// 常量的类型总是需要标注
+const NUMBER: i32 = 3;
 fn main() {
     println!("Number {}", NUMBER);
 }
