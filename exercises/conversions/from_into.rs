@@ -40,10 +40,36 @@ impl Default for Person {
 // If while parsing the age, something goes wrong, then return the default of
 // Person Otherwise, then return an instantiated Person object with the results
 
-// I AM NOT DONE
-
+// Requirements for the conversion:
+// - string is not empty
+// - I can split in 2 elements
+// First element is a NOT empty string
+// Second element is a string correctly representing a number
 impl From<&str> for Person {
     fn from(s: &str) -> Person {
+        if s.len() == 0 {
+            Default::default()
+        } else {
+            let strs : Vec<&str> = s.split(',').collect();
+            if strs.len() == 2 {
+                let name = strs[0];
+                if name.len() > 0 {
+                    let age = strs[1].parse::<usize>();
+                    match age {
+                        Ok(a) =>
+                                Person {
+                                    name : name.to_string(),
+                                    age : a,
+                                },
+                        Err(_) => Default::default()
+                    }
+                } else {
+                    Default::default()
+                }
+            } else {
+                Default::default()
+            }
+        }
     }
 }
 
