@@ -23,9 +23,9 @@ fn char_counter<T>(arg: T) -> usize {
 
 // Squares a number using as_mut().
 // TODO: Add the appropriate trait bound.
-fn num_sq<T>(arg: &mut T) {
+fn num_sq<T : std::ops::Add<Output = T>>(arg: &mut T) {
     // TODO: Implement the function body.
-    ???
+    arg = arg * arg;
 }
 
 #[cfg(test)]
