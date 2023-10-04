@@ -189,7 +189,7 @@ fn run_test_exercise_does_not_prompt() {
         .current_dir("tests/fixture/state")
         .assert()
         .code(0)
-        .stdout(predicates::str::contains("I AM NOT DONE").not());
+        .stdout(predicates::str::contains("Exercise pending_test_exercise.rs is done. Remove `I AM NOT DONE` line to go to the next exercise."));
 }
 
 #[test]
