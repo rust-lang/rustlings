@@ -50,6 +50,11 @@ enum RunMode {
 // Compile and run the resulting test harness of the given Exercise
 pub fn test(exercise: &Exercise, verbose: bool) -> Result<(), ()> {
     compile_and_test(exercise, RunMode::NonInteractive, verbose, false)?;
+    println!(
+        "Exercise {} is done. Remove {} line to go to the next exercise.",
+        style(exercise).bold(),
+        style("`I AM NOT DONE`").bold()
+    );
     Ok(())
 }
 
