@@ -6,7 +6,7 @@
 // Execute `rustlings hint primitive_types6` or use the `hint` watch subcommand
 // for a hint.
 
-// I AM NOT DONE
+// I AM DONE
 
 #[test]
 fn indexing_tuple() {
