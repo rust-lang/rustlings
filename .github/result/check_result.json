@@ -1,0 +1,411 @@
+{
+  "exercises": [
+    {
+      "name": "intro2",
+      "result": false
+    },
+    {
+      "name": "move_semantics1",
+      "result": false
+    },
+    {
+      "name": "functions3",
+      "result": false
+    },
+    {
+      "name": "primitive_types2",
+      "result": false
+    },
+    {
+      "name": "options2",
+      "result": false
+    },
+    {
+      "name": "hashmaps1",
+      "result": false
+    },
+    {
+      "name": "strings2",
+      "result": false
+    },
+    {
+      "name": "structs2",
+      "result": false
+    },
+    {
+      "name": "variables5",
+      "result": false
+    },
+    {
+      "name": "generics2",
+      "result": false
+    },
+    {
+      "name": "variables2",
+      "result": false
+    },
+    {
+      "name": "variables1",
+      "result": false
+    },
+    {
+      "name": "functions4",
+      "result": false
+    },
+    {
+      "name": "move_semantics2",
+      "result": false
+    },
+    {
+      "name": "primitive_types3",
+      "result": false
+    },
+    {
+      "name": "options3",
+      "result": false
+    },
+    {
+      "name": "variables6",
+      "result": false
+    },
+    {
+      "name": "strings3",
+      "result": false
+    },
+    {
+      "name": "traits1",
+      "result": false
+    },
+    {
+      "name": "variables3",
+      "result": false
+    },
+    {
+      "name": "traits4",
+      "result": false
+    },
+    {
+      "name": "functions5",
+      "result": false
+    },
+    {
+      "name": "structs3",
+      "result": false
+    },
+    {
+      "name": "strings4",
+      "result": false
+    },
+    {
+      "name": "errors1",
+      "result": false
+    },
+    {
+      "name": "move_semantics3",
+      "result": false
+    },
+    {
+      "name": "primitive_types4",
+      "result": false
+    },
+    {
+      "name": "functions1",
+      "result": false
+    },
+    {
+      "name": "traits2",
+      "result": false
+    },
+    {
+      "name": "variables4",
+      "result": false
+    },
+    {
+      "name": "if1",
+      "result": false
+    },
+    {
+      "name": "traits5",
+      "result": false
+    },
+    {
+      "name": "modules1",
+      "result": false
+    },
+    {
+      "name": "errors2",
+      "result": false
+    },
+    {
+      "name": "enums1",
+      "result": false
+    },
+    {
+      "name": "move_semantics4",
+      "result": false
+    },
+    {
+      "name": "primitive_types5",
+      "result": false
+    },
+    {
+      "name": "lifetimes2",
+      "result": false
+    },
+    {
+      "name": "traits3",
+      "result": false
+    },
+    {
+      "name": "functions2",
+      "result": false
+    },
+    {
+      "name": "if2",
+      "result": false
+    },
+    {
+      "name": "modules2",
+      "result": false
+    },
+    {
+      "name": "errors3",
+      "result": false
+    },
+    {
+      "name": "move_semantics5",
+      "result": false
+    },
+    {
+      "name": "enums2",
+      "result": false
+    },
+    {
+      "name": "lifetimes3",
+      "result": false
+    },
+    {
+      "name": "primitive_types6",
+      "result": false
+    },
+    {
+      "name": "tests2",
+      "result": false
+    },
+    {
+      "name": "iterators1",
+      "result": false
+    },
+    {
+      "name": "modules3",
+      "result": false
+    },
+    {
+      "name": "if3",
+      "result": false
+    },
+    {
+      "name": "iterators4",
+      "result": false
+    },
+    {
+      "name": "tests1",
+      "result": false
+    },
+    {
+      "name": "enums3",
+      "result": false
+    },
+    {
+      "name": "move_semantics6",
+      "result": false
+    },
+    {
+      "name": "vecs1",
+      "result": false
+    },
+    {
+      "name": "tests3",
+      "result": false
+    },
+    {
+      "name": "iterators2",
+      "result": false
+    },
+    {
+      "name": "quiz1",
+      "result": false
+    },
+    {
+      "name": "tests4",
+      "result": false
+    },
+    {
+      "name": "vecs2",
+      "result": false
+    },
+    {
+      "name": "strings1",
+      "result": false
+    },
+    {
+      "name": "cow1",
+      "result": false
+    },
+    {
+      "name": "structs1",
+      "result": false
+    },
+    {
+      "name": "primitive_types1",
+      "result": false
+    },
+    {
+      "name": "macros1",
+      "result": false
+    },
+    {
+      "name": "macros3",
+      "result": false
+    },
+    {
+      "name": "threads2",
+      "result": false
+    },
+    {
+      "name": "errors4",
+      "result": false
+    },
+    {
+      "name": "macros4",
+      "result": false
+    },
+    {
+      "name": "errors5",
+      "result": false
+    },
+    {
+      "name": "macros2",
+      "result": false
+    },
+    {
+      "name": "threads3",
+      "result": false
+    },
+    {
+      "name": "using_as",
+      "result": false
+    },
+    {
+      "name": "from_into",
+      "result": false
+    },
+    {
+      "name": "from_str",
+      "result": false
+    },
+    {
+      "name": "try_from_into",
+      "result": false
+    },
+    {
+      "name": "as_ref_mut",
+      "result": false
+    },
+    {
+      "name": "tests5",
+      "result": false
+    },
+    {
+      "name": "tests6",
+      "result": false
+    },
+    {
+      "name": "tests7",
+      "result": false
+    },
+    {
+      "name": "tests8",
+      "result": false
+    },
+    {
+      "name": "hashmaps2",
+      "result": false
+    },
+    {
+      "name": "tests9",
+      "result": false
+    },
+    {
+      "name": "generics1",
+      "result": false
+    },
+    {
+      "name": "lifetimes1",
+      "result": false
+    },
+    {
+      "name": "quiz2",
+      "result": false
+    },
+    {
+      "name": "box1",
+      "result": false
+    },
+    {
+      "name": "options1",
+      "result": false
+    },
+    {
+      "name": "arc1",
+      "result": false
+    },
+    {
+      "name": "clippy1",
+      "result": false
+    },
+    {
+      "name": "clippy3",
+      "result": false
+    },
+    {
+      "name": "quiz3",
+      "result": false
+    },
+    {
+      "name": "clippy2",
+      "result": false
+    },
+    {
+      "name": "rc1",
+      "result": false
+    },
+    {
+      "name": "iterators5",
+      "result": false
+    },
+    {
+      "name": "iterators3",
+      "result": false
+    },
+    {
+      "name": "threads1",
+      "result": false
+    },
+    {
+      "name": "errors6",
+      "result": false
+    },
+    {
+      "name": "hashmaps3",
+      "result": false
+    }
+  ],
+  "user_name": null,
+  "statistics": {
+    "total_exercations": 100,
+    "total_succeeds": 0,
+    "total_failures": 100,
+    "total_time": 3
+  }
+}

@@ -1,37 +1,71 @@
-name: Rustlings Tests
+name: GitHub Classroom Workflow
 
 on:
   push:
     branches: [ main ]
+    paths-ignore:
+      - 'README.md'
+      # - '.github/**'
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
 
 env:
   CARGO_TERM_COLOR: always
+  TZ: Asia/Shanghai # 设置时区
 
 jobs:
-  fmt:
+  build:
+    name: Autograding
+    runs-on: ubuntu-latest
+    outputs:
+      details: ${{ steps.autograding.outputs.details }}
+      points: ${{ steps.autograding.outputs.points}}
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run tests
+      run: cargo test --test cicv --verbose
+    - uses: yfblock/os-autograding@master
+      id: autograding
+      with:
+        outputFile: .github/result/check_result.json
+  deploy:
+    name: Deploy to pages
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: dtolnay/rust-toolchain@stable
+        continue-on-error: true
         with:
-          components: rustfmt
-      - uses: DavidAnson/markdownlint-cli2-action@v9
+          ref: 'gh-pages'
+      - name: Save Log File
+        run: |
+          mkdir autograding_logs
+          cd autograding_logs
+          if [  -f "../latest.json"  ]; then
+              cp ../latest.json older.json
+          else
+              echo "{}" > older.json
+          fi
+          FILE_NAME=`date +%Y_%m_%d_%H_%M_%S`.txt
+          echo -ne "${{ needs.build.outputs.details }}\n" > $FILE_NAME
+          echo -ne "Points: ${{ needs.build.outputs.points }}" >> $FILE_NAME
+          cat older.json | jq ".default |= \"$FILE_NAME\"" > latest.json
+          rm older.json
+          echo -ne "# Got Points\n" > README.md
+          echo "![Points bar](../../blob/gh-pages/points-badge.svg)" >> README.md
+      - name: Make points svg
+        uses: markpatterson27/points-bar@v1
         with:
-          globs: "exercises/**/*.md"
-      - name: Run cargo fmt
-        run: |
-          cargo fmt --all -- --check
-  test:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macOS-latest]
-    steps:
-      - uses: actions/checkout@v3
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: swatinem/rust-cache@v2
-      - name: Run cargo test
-        run: |
-          cargo test
+          points: '${{ needs.build.outputs.points }}'
+          path: 'autograding_logs/points-badge.svg'
+          type: 'badge'
+      - name: GitHub Pages
+        uses: crazy-max/ghaction-github-pages@v3
+        with:
+          target_branch: gh-pages
+          build_dir: autograding_logs
+          keep_history: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
