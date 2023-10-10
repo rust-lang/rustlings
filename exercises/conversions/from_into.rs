@@ -40,10 +40,26 @@ impl Default for Person {
 // If while parsing the age, something goes wrong, then return the default of
 // Person Otherwise, then return an instantiated Person object with the results
 
-// I AM NOT DONE
+
 
 impl From<&str> for Person {
     fn from(s: &str) -> Person {
+
+        let persion: Vec<&str> = s.split(',').collect();
+        if persion.len() < 2 || persion[0].len() == 0 {
+            return Person::default();
+        }
+
+        let name = persion[0].to_string();
+        let age = match persion[1].parse::<usize>() {
+            Ok(r) => r,
+            _ => return Person::default()
+        };
+
+        Person {
+            name,
+            age
+        }
     }
 }
 
