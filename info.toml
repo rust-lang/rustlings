@@ -658,7 +658,7 @@ name = "errors1"
 path = "exercises/error_handling/errors1.rs"
 mode = "test"
 hint = """
-`Ok` and `Err` are one of the variants of `Result`, so what the tests are saying
+`Ok` and `Err` are the two variants of `Result`, so what the tests are saying
 is that `generate_nametag_text` should return a `Result` instead of an `Option`.
 
 To make this change, you'll need to:
