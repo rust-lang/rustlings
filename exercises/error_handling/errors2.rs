@@ -3,7 +3,7 @@
 // Say we're writing a game where you can buy items with tokens. All items cost
 // 5 tokens, and whenever you purchase items there is a processing fee of 1
 // token. A player of the game will type in how many items they want to buy, and
-// the `total_cost` function will calculate the total cost of the tokens. Since
+// the `total_cost` function will calculate the total cost of the items. Since
 // the player typed in the quantity, though, we get it as a string-- and they
 // might have typed anything, not just numbers!
 //
