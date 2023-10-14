@@ -876,6 +876,25 @@ hint = """
 If you use a lifetime annotation in a struct's fields, where else does it need
 to be added?"""
 
+[[exercises]]
+name = "lifetimes4"
+path = "exercises/lifetimes/lifetimes4.rs"
+mode = "compile"
+hint = """
+The compiler complains that the `Router` is dropped at the end of the smaller
+scope while still being borrowed. However, we never intended to return a borrow
+to the `Router`. What are we really returning from
+`Router::return_connection`?
+
+The method `Router::return_connection` only takes `&mut self`
+and returns `Option<&u64>`. No explicit lifetimes are specified. What lifetime
+will the borrow checker assume for the `&u64` in the `Option`? You may want to
+re-read the chapter on lifetime elision:
+https://doc.rust-lang.org/reference/lifetime-elision.html
+
+What lifetime do we really want the `Option<&u64>` to have? Can we make that
+explicit?"""
+
 # TESTS
 
 [[exercises]]
