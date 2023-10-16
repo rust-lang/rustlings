@@ -12,7 +12,7 @@ const RUSTC_EDITION_ARGS: &[&str] = &["--edition", "2021"];
 const RUSTC_NO_DEBUG_ARGS: &[&str] = &["-C", "strip=debuginfo"];
 const I_AM_DONE_REGEX: &str = r"(?m)^\s*///?\s*I\s+AM\s+NOT\s+DONE";
 const CONTEXT: usize = 2;
-const CLIPPY_CARGO_TOML_PATH: &str = "./exercises/clippy/Cargo.toml";
+const CLIPPY_CARGO_TOML_PATH: &str = "./exercises/22_clippy/Cargo.toml";
 
 // Get a temporary file name that is hopefully unique
 #[inline]
