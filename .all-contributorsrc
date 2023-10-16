@@ -2460,6 +2460,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "matthewjnield",
+      "name": "Matt Nield",
+      "avatar_url": "https://avatars.githubusercontent.com/u/64328730?v=4",
+      "profile": "https://www.linkedin.com/in/matthew-nield1/",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
