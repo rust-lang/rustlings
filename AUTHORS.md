@@ -350,6 +350,9 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="https://www.linkedin.com/in/matthew-nield1/"><img src="https://avatars.githubusercontent.com/u/64328730?v=4?s=100" width="100px;" alt="Matt Nield"/><br /><sub><b>Matt Nield</b></sub></a><br /><a href="#content-matthewjnield" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/TheBearodactyl"><img src="https://avatars.githubusercontent.com/u/114454115?v=4?s=100" width="100px;" alt="The Bearodactyl"/><br /><sub><b>The Bearodactyl</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=TheBearodactyl" title="Code">💻</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/markgreene74"><img src="https://avatars.githubusercontent.com/u/18945890?v=4?s=100" width="100px;" alt="markgreene74"/><br /><sub><b>markgreene74</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=markgreene74" title="Code">💻</a></td>
+    </tr>
   </tbody>
 </table>
 
