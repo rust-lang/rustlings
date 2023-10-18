@@ -2469,6 +2469,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "TheBearodactyl",
+      "name": "The Bearodactyl",
+      "avatar_url": "https://avatars.githubusercontent.com/u/114454115?v=4",
+      "profile": "https://github.com/TheBearodactyl",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
