@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "Let's get you set up with Rustlings!"
+echo -e "\nLet's get you set up with Rustlings!"
 
 echo "Checking requirements..."
 if [ -x "$(command -v git)" ]
