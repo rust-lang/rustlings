@@ -396,6 +396,8 @@ fn rustc_exists() -> bool {
     Command::new("rustc")
         .args(["--version"])
         .stdout(Stdio::null())
+        .stderr(Stdio::null())
+        .stdin(Stdio::null())
         .spawn()
         .and_then(|mut child| child.wait())
         .map(|status| status.success())
