@@ -13,7 +13,7 @@ name = "intro2"
 path = "exercises/00_intro/intro2.rs"
 mode = "compile"
 hint = """
-Add an argument after the format string."""
+The compiler is informing us that we've got the name of the print macro wrong, and has suggested an alternative."""
 
 # VARIABLES
 
