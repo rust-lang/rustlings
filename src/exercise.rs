@@ -1,5 +1,6 @@
 use regex::Regex;
 use serde::Deserialize;
+use serde_json::Value;
 use std::env;
 use std::fmt::{self, Display, Formatter};
 use std::fs::{self, remove_file, File};
@@ -35,6 +36,10 @@ pub enum Mode {
     Test,
     // Indicates that the exercise should be linted with clippy
     Clippy,
+    // Indicates that the exercise should be compiled as a binary and requires a crate
+    CrateCompile,
+    // Indicates that the exercise should be compiled as a test harness and requires a crate
+    CrateTest,
 }
 
 #[derive(Deserialize)]
@@ -50,7 +55,7 @@ pub struct Exercise {
     pub name: String,
     // The path to the file containing the exercise's source code
     pub path: PathBuf,
-    // The mode of the exercise (Test, Compile, or Clippy)
+    // The mode of the exercise (Test, Compile, Clippy, CrateCompile or CrateTest
     pub mode: Mode,
     // The hint text associated with the exercise
     pub hint: String,
@@ -81,12 +86,13 @@ pub struct ContextLine {
 pub struct CompiledExercise<'a> {
     exercise: &'a Exercise,
     _handle: FileHandle,
+    pub stdout: String,
 }
 
 impl<'a> CompiledExercise<'a> {
     // Run the compiled exercise
     pub fn run(&self) -> Result<ExerciseOutput, ExerciseOutput> {
-        self.exercise.run()
+        self.exercise.run(&self.stdout)
     }
 }
 
@@ -164,6 +170,19 @@ path = "{}.rs""#,
                     .args(RUSTC_COLOR_ARGS)
                     .args(["--", "-D", "warnings", "-D", "clippy::float_cmp"])
                     .output()
+            },
+            Mode::CrateCompile => {
+                Command::new("cargo")
+                    .args(["build", "--manifest-path", self.path.to_str().unwrap(), "--target-dir", &temp_file()])
+                    .output()
+            },
+            Mode::CrateTest => {
+                Command::new("cargo")
+                    .args(["test", "--no-run"])
+                    .args(["--manifest-path", self.path.to_str().unwrap()])
+                    .args(["--target-dir", &temp_file()])
+                    .args(["--message-format", "json-render-diagnostics"])
+                    .output()
             }
         }
         .expect("Failed to run 'compile' command.");
@@ -172,8 +191,10 @@ path = "{}.rs""#,
             Ok(CompiledExercise {
                 exercise: self,
                 _handle: FileHandle,
+                stdout: String::from_utf8_lossy(&cmd.stdout).to_string(),
             })
         } else {
+            self.cleanup_temporary_dirs_by_mode();
             clean();
             Err(ExerciseOutput {
                 stdout: String::from_utf8_lossy(&cmd.stdout).to_string(),
@@ -182,26 +203,72 @@ path = "{}.rs""#,
         }
     }
 
-    fn run(&self) -> Result<ExerciseOutput, ExerciseOutput> {
+    fn get_crate_test_filename(&self, stdout: &str) -> Result<String, ()> {
+        let json_objects = stdout.split("\n");
+        for json_object in json_objects {
+            let parsed_json: Value = serde_json::from_str(json_object).unwrap();
+            if parsed_json["target"]["kind"][0] == "bin" {
+                return Ok(String::from(parsed_json["filenames"][0].as_str().unwrap()));
+            }
+        }
+        Err(())
+    }
+
+    fn get_compiled_filename_by_mode(&self, compilation_stdout: &str) -> String {
+        match self.mode {
+            Mode::CrateCompile => temp_file() + "/debug/" + &self.name,
+            Mode::CrateTest => {
+                let get_filename_result = self.get_crate_test_filename(&compilation_stdout);
+                match get_filename_result {
+                    Ok(filename) => filename,
+                    Err(()) => panic!("Failed to get crate test filename")
+                }
+            },
+            _ => temp_file()
+        }
+    }
+
+    fn cleanup_temporary_dirs_by_mode(&self) {
+        match self.mode {
+            Mode::CrateCompile | Mode::CrateTest => fs::remove_dir_all(temp_file())
+                .expect("Failed to cleanup temp build dir"),
+            _ => ()
+        }
+    }
+
+    fn run(&self, compilation_stdout: &str) -> Result<ExerciseOutput, ExerciseOutput> {
         let arg = match self.mode {
-            Mode::Test => "--show-output",
+            Mode::Test | Mode::CrateTest => "--show-output",
             _ => "",
         };
-        let cmd = Command::new(temp_file())
+
+        let filename = self.get_compiled_filename_by_mode(compilation_stdout);
+
+        let command_output = Command::new(filename)
             .arg(arg)
-            .output()
-            .expect("Failed to run 'run' command");
-
-        let output = ExerciseOutput {
-            stdout: String::from_utf8_lossy(&cmd.stdout).to_string(),
-            stderr: String::from_utf8_lossy(&cmd.stderr).to_string(),
+            .output();
+        let result = match command_output {
+            Ok(cmd) => {
+                let output = ExerciseOutput {
+                    stdout: String::from_utf8_lossy(&cmd.stdout).to_string(),
+                    stderr: String::from_utf8_lossy(&cmd.stderr).to_string(),
+                };
+        
+                self.cleanup_temporary_dirs_by_mode();
+        
+                if cmd.status.success() {
+                    Ok(output)
+                } else {
+                    Err(output)
+                }
+            },
+            Err(msg) => {
+                self.cleanup_temporary_dirs_by_mode();
+                println!("Error: {}", msg);
+                panic!("Failed to run 'run' command");
+            }
         };
-
-        if cmd.status.success() {
-            Ok(output)
-        } else {
-            Err(output)
-        }
+        result
     }
 
     pub fn state(&self) -> State {

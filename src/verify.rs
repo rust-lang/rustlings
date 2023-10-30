@@ -28,8 +28,8 @@ pub fn verify<'a>(
 
     for exercise in exercises {
         let compile_result = match exercise.mode {
-            Mode::Test => compile_and_test(exercise, RunMode::Interactive, verbose, success_hints),
-            Mode::Compile => compile_and_run_interactively(exercise, success_hints),
+            Mode::Test | Mode::CrateTest => compile_and_test(exercise, RunMode::Interactive, verbose, success_hints),
+            Mode::Compile | Mode::CrateCompile => compile_and_run_interactively(exercise, success_hints),
             Mode::Clippy => compile_only(exercise, success_hints),
         };
         if !compile_result.unwrap_or(false) {
@@ -164,8 +164,8 @@ fn prompt_for_completion(
         State::Pending(context) => context,
     };
     match exercise.mode {
-        Mode::Compile => success!("Successfully ran {}!", exercise),
-        Mode::Test => success!("Successfully tested {}!", exercise),
+        Mode::Compile | Mode::CrateCompile => success!("Successfully ran {}!", exercise),
+        Mode::Test | Mode::CrateTest => success!("Successfully tested {}!", exercise),
         Mode::Clippy => success!("Successfully compiled {}!", exercise),
     }
 
@@ -178,8 +178,8 @@ fn prompt_for_completion(
     };
 
     let success_msg = match exercise.mode {
-        Mode::Compile => "The code is compiling!",
-        Mode::Test => "The code is compiling, and the tests pass!",
+        Mode::Compile | Mode::CrateCompile => "The code is compiling!",
+        Mode::Test | Mode::CrateTest => "The code is compiling, and the tests pass!",
         Mode::Clippy => clippy_success_msg,
     };
     println!();

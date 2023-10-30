@@ -11,8 +11,8 @@ use indicatif::ProgressBar;
 // the output from the test harnesses (if the mode of the exercise is test)
 pub fn run(exercise: &Exercise, verbose: bool) -> Result<(), ()> {
     match exercise.mode {
-        Mode::Test => test(exercise, verbose)?,
-        Mode::Compile => compile_and_run(exercise)?,
+        Mode::Test | Mode::CrateTest => test(exercise, verbose)?,
+        Mode::Compile | Mode::CrateCompile => compile_and_run(exercise)?,
         Mode::Clippy => compile_and_run(exercise)?,
     }
     Ok(())
