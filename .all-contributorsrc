@@ -2496,6 +2496,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "0atman",
+      "name": "Tristram Oaten",
+      "avatar_url": "https://avatars.githubusercontent.com/u/114097?v=4",
+      "profile": "http://0atman.com",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
