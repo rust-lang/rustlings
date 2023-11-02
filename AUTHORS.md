@@ -353,6 +353,7 @@ authors.
     <tr>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/markgreene74"><img src="https://avatars.githubusercontent.com/u/18945890?v=4?s=100" width="100px;" alt="markgreene74"/><br /><sub><b>markgreene74</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=markgreene74" title="Code">💻</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/VeeDeltaVee"><img src="https://avatars.githubusercontent.com/u/45564258?v=4?s=100" width="100px;" alt="Versha Dhankar"/><br /><sub><b>Versha Dhankar</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=VeeDeltaVee" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="http://0atman.com"><img src="https://avatars.githubusercontent.com/u/114097?v=4?s=100" width="100px;" alt="Tristram Oaten"/><br /><sub><b>Tristram Oaten</b></sub></a><br /><a href="#content-0atman" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
