@@ -359,10 +359,20 @@ fn watch(
                             .into_iter()
                             .chain(
                                 exercises
-                                    .iter()
-                                    .filter(|e| !e.looks_done() && !filepath.ends_with(&e.path)),
+                                    .into_iter()
+                                    .take_while(|e| !filepath.ends_with(&e.path))
+                                    .filter(|e| !e.looks_done()),
+                            )
+                            .chain(
+                              exercises
+                                  .into_iter()
+                                  .skip_while(|e| !filepath.ends_with(&e.path)),
                             );
-                        let num_done = exercises.iter().filter(|e| e.looks_done()).count();
+                        let num_done = exercises
+                          .iter()
+                          .take_while(|e| !filepath.ends_with(&e.path))
+                          .filter(|e| e.looks_done())
+                          .count();
                         clear_screen();
                         match verify(
                             pending_exercises,
