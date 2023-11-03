@@ -167,7 +167,7 @@
 - **structs3**: Clarifed the hint
 - **quiz2, as_ref_mut, options1, traits1, traits2**: Clarified hints
 - **traits1, traits2, cli**: Tidied up unmatching backticks
-- **enums2**: Removed unneccessary indirection of self
+- **enums2**: Removed unnecessary indirection of self
 - **enums3**: Added an extra tuple comment
 
 #### Housekeeping
@@ -657,7 +657,7 @@
 
 #### Bug Fixes
 
-- Update deps to version compatable with aarch64-pc-windows (#263) ([19a93428](https://github.com/rust-lang/rustlings/commit/19a93428b3c73d994292671f829bdc8e5b7b3401))
+- Update deps to version compatible with aarch64-pc-windows (#263) ([19a93428](https://github.com/rust-lang/rustlings/commit/19a93428b3c73d994292671f829bdc8e5b7b3401))
 - **docs:**
   - Added a necessary step to Windows installation process (#242) ([3906efcd](https://github.com/rust-lang/rustlings/commit/3906efcd52a004047b460ed548037093de3f523f))
   - Fixed mangled sentence from book; edited for clarity (#266) ([ade52ff](https://github.com/rust-lang/rustlings/commit/ade52ffb739987287ddd5705944c8777705faed9))
