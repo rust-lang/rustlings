@@ -170,20 +170,22 @@ path = "{}.rs""#,
                     .args(RUSTC_COLOR_ARGS)
                     .args(["--", "-D", "warnings", "-D", "clippy::float_cmp"])
                     .output()
-            },
-            Mode::CrateCompile => {
-                Command::new("cargo")
-                    .args(["build", "--manifest-path", self.path.to_str().unwrap(), "--target-dir", &temp_file()])
-                    .output()
-            },
-            Mode::CrateTest => {
-                Command::new("cargo")
-                    .args(["test", "--no-run"])
-                    .args(["--manifest-path", self.path.to_str().unwrap()])
-                    .args(["--target-dir", &temp_file()])
-                    .args(["--message-format", "json-render-diagnostics"])
-                    .output()
             }
+            Mode::CrateCompile => Command::new("cargo")
+                .args([
+                    "build",
+                    "--manifest-path",
+                    self.path.to_str().unwrap(),
+                    "--target-dir",
+                    &temp_file(),
+                ])
+                .output(),
+            Mode::CrateTest => Command::new("cargo")
+                .args(["test", "--no-run"])
+                .args(["--manifest-path", self.path.to_str().unwrap()])
+                .args(["--target-dir", &temp_file()])
+                .args(["--message-format", "json-render-diagnostics"])
+                .output(),
         }
         .expect("Failed to run 'compile' command.");
 
@@ -221,18 +223,19 @@ path = "{}.rs""#,
                 let get_filename_result = self.get_crate_test_filename(&compilation_stdout);
                 match get_filename_result {
                     Ok(filename) => filename,
-                    Err(()) => panic!("Failed to get crate test filename")
+                    Err(()) => panic!("Failed to get crate test filename"),
                 }
-            },
-            _ => temp_file()
+            }
+            _ => temp_file(),
         }
     }
 
     fn cleanup_temporary_dirs_by_mode(&self) {
         match self.mode {
-            Mode::CrateCompile | Mode::CrateTest => fs::remove_dir_all(temp_file())
-                .expect("Failed to cleanup temp build dir"),
-            _ => ()
+            Mode::CrateCompile | Mode::CrateTest => {
+                fs::remove_dir_all(temp_file()).expect("Failed to cleanup temp build dir")
+            }
+            _ => (),
         }
     }
 
@@ -244,24 +247,22 @@ path = "{}.rs""#,
 
         let filename = self.get_compiled_filename_by_mode(compilation_stdout);
 
-        let command_output = Command::new(filename)
-            .arg(arg)
-            .output();
+        let command_output = Command::new(filename).arg(arg).output();
         let result = match command_output {
             Ok(cmd) => {
                 let output = ExerciseOutput {
                     stdout: String::from_utf8_lossy(&cmd.stdout).to_string(),
                     stderr: String::from_utf8_lossy(&cmd.stderr).to_string(),
                 };
-        
+
                 self.cleanup_temporary_dirs_by_mode();
-        
+
                 if cmd.status.success() {
                     Ok(output)
                 } else {
                     Err(output)
                 }
-            },
+            }
             Err(msg) => {
                 self.cleanup_temporary_dirs_by_mode();
                 println!("Error: {}", msg);

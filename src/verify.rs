@@ -28,8 +28,12 @@ pub fn verify<'a>(
 
     for exercise in exercises {
         let compile_result = match exercise.mode {
-            Mode::Test | Mode::CrateTest => compile_and_test(exercise, RunMode::Interactive, verbose, success_hints),
-            Mode::Compile | Mode::CrateCompile => compile_and_run_interactively(exercise, success_hints),
+            Mode::Test | Mode::CrateTest => {
+                compile_and_test(exercise, RunMode::Interactive, verbose, success_hints)
+            }
+            Mode::Compile | Mode::CrateCompile => {
+                compile_and_run_interactively(exercise, success_hints)
+            }
             Mode::Clippy => compile_only(exercise, success_hints),
         };
         if !compile_result.unwrap_or(false) {
