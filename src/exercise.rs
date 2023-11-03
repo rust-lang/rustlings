@@ -55,7 +55,7 @@ pub struct Exercise {
     pub name: String,
     // The path to the file containing the exercise's source code
     pub path: PathBuf,
-    // The mode of the exercise (Test, Compile, Clippy, CrateCompile or CrateTest
+    // The mode of the exercise (Test, Compile, Clippy, CrateCompile or CrateTest)
     pub mode: Mode,
     // The hint text associated with the exercise
     pub hint: String,
