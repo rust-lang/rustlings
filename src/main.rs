@@ -362,7 +362,10 @@ fn watch(
                                     .iter()
                                     .filter(|e| !e.looks_done() && !filepath.ends_with(&e.path)),
                             );
-                        let num_done = exercises.iter().filter(|e| e.looks_done()).count();
+                        let num_done = exercises
+                            .iter()
+                            .filter(|e| e.looks_done() && !filepath.ends_with(&e.path))
+                            .count();
                         clear_screen();
                         match verify(
                             pending_exercises,
