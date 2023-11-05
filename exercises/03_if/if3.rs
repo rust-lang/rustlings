@@ -2,17 +2,21 @@
 //
 // Execute `rustlings hint if3` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
-
+// <note> &'static str 
+//  this is a type
+//  the & without a mut keyword means this is a "shared reference" - aka an "immutable reference"
+//  it points to memory owned by another value - aka ownership and borrowing
+//  the "static" keyword implies the value is global - available anywhere in the program
+//  a "static" value CAN BE MUTABLE - unlike a "const" which is ONLY IMMUTABLE
 pub fn animal_habitat(animal: &str) -> &'static str {
     let identifier = if animal == "crab" {
         1
     } else if animal == "gopher" {
-        2.0
+        2
     } else if animal == "snake" {
         3
     } else {
-        "Unknown"
+        4
     };
 
     // DO NOT CHANGE THIS STATEMENT BELOW
