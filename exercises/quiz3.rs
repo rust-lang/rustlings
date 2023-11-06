@@ -11,8 +11,7 @@
 // print both types of report card!
 //
 // Make the necessary code changes in the struct ReportCard and the impl block
-// to support alphabetical report cards. Change the Grade in the second test to
-// "A+" to show that your changes allow alphabetical grades.
+// to support alphabetical report cards.
 //
 // Execute `rustlings hint quiz3` or use the `hint` watch subcommand for a hint.
 
@@ -50,9 +49,8 @@ mod tests {
 
     #[test]
     fn generate_alphabetic_report_card() {
-        // TODO: Make sure to change the grade here after you finish the exercise.
         let report_card = ReportCard {
-            grade: 2.1,
+            grade: "A+",
             student_name: "Gary Plotter".to_string(),
             student_age: 11,
         };
