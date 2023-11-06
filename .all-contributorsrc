@@ -2514,6 +2514,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "raymon-roos",
+      "name": "Raymon Roos",
+      "avatar_url": "https://avatars.githubusercontent.com/u/38888470?v=4",
+      "profile": "https://github.com/raymon-roos",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
