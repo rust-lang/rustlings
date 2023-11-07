@@ -2523,6 +2523,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "sarupbanskota",
+      "name": "Sarup Banskota",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3149580?v=4",
+      "profile": "https://codecrafters.io",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 8,
