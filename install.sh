@@ -135,34 +135,40 @@ else
     echo "SUCCESS: Rust is up to date"
 fi
 
-Path=${1:-rustlings/}
-echo "Cloning Rustlings at $Path..."
-git clone -q https://github.com/rust-lang/rustlings "$Path"
+# Check if GITPOD_WORKSPACE_ID environment variable exists
+if [ -z "$GITPOD_WORKSPACE_ID" ]; then
+    Path=${1:-rustlings/}
 
-cd "$Path"
+    echo "Cloning Rustlings at $Path..."
+    git clone -q https://github.com/rust-lang/rustlings "$Path"
 
-Version=$(curl -s https://api.github.com/repos/rust-lang/rustlings/releases/latest | ${PY} -c "import json,sys;obj=json.load(sys.stdin);print(obj['tag_name']) if 'tag_name' in obj else sys.exit(f\"Error: {obj['message']}\");")
-CargoBin="${CARGO_HOME:-$HOME/.cargo}/bin"
+    cd "$Path"
 
-if [[ -z ${Version} ]]
-then
-    echo "The latest tag version could not be fetched remotely."
-    echo "Using the local git repository..."
-    Version=$(ls -tr .git/refs/tags/ | tail -1)
-    if [[ -z ${Version}  ]]
+    Version=$(curl -s https://api.github.com/repos/rust-lang/rustlings/releases/latest | ${PY} -c "import json,sys;obj=json.load(sys.stdin);print(obj['tag_name']) if 'tag_name' in obj else sys.exit(f\"Error: {obj['message']}\");")
+    CargoBin="${CARGO_HOME:-$HOME/.cargo}/bin"
+
+    if [[ -z ${Version} ]]
     then
-        echo "No valid tag version found"
-        echo "Rustlings will be installed using the main branch"
-        Version="main"
+        echo "The latest tag version could not be fetched remotely."
+        echo "Using the local git repository..."
+        Version=$(ls -tr .git/refs/tags/ | tail -1)
+        if [[ -z ${Version}  ]]
+        then
+            echo "No valid tag version found"
+            echo "Rustlings will be installed using the main branch"
+            Version="main"
+        else
+            Version="tags/${Version}"
+        fi
     else
         Version="tags/${Version}"
     fi
-else
-    Version="tags/${Version}"
-fi
 
-echo "Checking out version $Version..."
-git checkout -q ${Version}
+    echo "Checking out version $Version..."
+    git checkout -q ${Version}
+else
+    echo "GITPOD_WORKSPACE_ID found. Skipping git clone and git checkout."
+fi
 
 echo "Installing the 'rustlings' executable..."
 cargo install --force --path .
