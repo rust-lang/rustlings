@@ -135,8 +135,9 @@ else
     echo "SUCCESS: Rust is up to date"
 fi
 
-# Check if GITPOD_WORKSPACE_ID environment variable exists
-if [ -z "$GITPOD_WORKSPACE_ID" ]; then
+# We don't need to clone if installing in Gitpod.io environment
+if [[ -z ${GITPOD_WORKSPACE_ID} ]]
+then
     Path=${1:-rustlings/}
 
     echo "Cloning Rustlings at $Path..."
