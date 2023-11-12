@@ -154,8 +154,6 @@ Run the command `rustlings lsp` which will generate a `rust-project.json` at the
 
 Once you've completed Rustlings, put your new knowledge to good use! Continue practicing your Rust skills by building your own projects, contributing to Rustlings, or finding other open-source projects to contribute to.
 
-On [CodeCrafters](https://codecrafters.io/rust) you can get some quality practice through recreating different technologies from scratch in Rust (e.g Build your own BitTorrent, HTTP Server, SQLite, etc).
-
 ## Uninstalling Rustlings
 
 If you want to remove Rustlings from your system, there are two steps. First, you'll need to remove the exercises folder that the install script created
