@@ -1,0 +1,23 @@
+# For caching typos
+# See https://github.com/crate-ci/typos
+
+name: Typo
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: "full"
+
+jobs:
+  typo:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Spell Check
+      uses: crate-ci/typos@master
