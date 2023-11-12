@@ -1,0 +1,12 @@
+[files]
+extend-exclude = [
+  # Author names.
+  "AUTHORS.md"
+]
+
+[default]
+extend-ignore-identifiers-re = [
+  # False positives.
+  "ba",
+  "ded"
+]
