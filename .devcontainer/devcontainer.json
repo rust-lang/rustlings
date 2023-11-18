@@ -2,10 +2,10 @@
   "image": "mcr.microsoft.com/devcontainers/universal:2-linux",
   "waitFor": "onCreateCommand",
   "onCreateCommand": ".devcontainer/setup.sh",
-  "updateContentCommand": "cargo build",
+  "updateContentCommand": ". $HOME/.cargo/env && cargo build",
   "postCreateCommand": "",
   "postAttachCommand": {
-    "server": "rustlings watch"
+    "server": ". $HOME/.cargo/env && rustlings watch"
   },
   "customizations": {
     "vscode": {
