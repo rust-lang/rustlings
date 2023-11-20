@@ -2496,6 +2496,33 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "0atman",
+      "name": "Tristram Oaten",
+      "avatar_url": "https://avatars.githubusercontent.com/u/114097?v=4",
+      "profile": "http://0atman.com",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "danieltinazzi",
+      "name": "Daniel Tinazzi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/11833533?v=4",
+      "profile": "https://github.com/danieltinazzi",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "raymon-roos",
+      "name": "Raymon Roos",
+      "avatar_url": "https://avatars.githubusercontent.com/u/38888470?v=4",
+      "profile": "https://github.com/raymon-roos",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
