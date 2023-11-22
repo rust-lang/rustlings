@@ -438,7 +438,7 @@ exercise. Make sure to have your editor open!"#;
 const FENISH_LINE: &str = "+----------------------------------------------------+
 |          You made it to the Fe-nish line!          |
 +--------------------------  ------------------------+
-                           \\/
+                           \\/\x1b[31m
      ▒▒          ▒▒▒▒▒▒▒▒      ▒▒▒▒▒▒▒▒          ▒▒
    ▒▒▒▒  ▒▒    ▒▒        ▒▒  ▒▒        ▒▒    ▒▒  ▒▒▒▒
    ▒▒▒▒  ▒▒  ▒▒            ▒▒            ▒▒  ▒▒  ▒▒▒▒
@@ -453,7 +453,7 @@ const FENISH_LINE: &str = "+----------------------------------------------------
          ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒
        ▒▒    ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒    ▒▒
        ▒▒  ▒▒    ▒▒                  ▒▒    ▒▒  ▒▒
-           ▒▒  ▒▒                      ▒▒  ▒▒
+           ▒▒  ▒▒                      ▒▒  ▒▒\x1b[0m
 
 We hope you enjoyed learning about the various aspects of Rust!
 If you noticed any issues, please don't hesitate to report them to our repo.
