@@ -435,10 +435,10 @@ started, here's a couple of notes about how Rustlings operates:
 Got all that? Great! To get started, run `rustlings watch` in order to get the first
 exercise. Make sure to have your editor open!"#;
 
-const FENISH_LINE: &str = r"+----------------------------------------------------+
+const FENISH_LINE: &str = "+----------------------------------------------------+
 |          You made it to the Fe-nish line!          |
 +--------------------------  ------------------------+
-                          \\/
+                           \\/
      ▒▒          ▒▒▒▒▒▒▒▒      ▒▒▒▒▒▒▒▒          ▒▒
    ▒▒▒▒  ▒▒    ▒▒        ▒▒  ▒▒        ▒▒    ▒▒  ▒▒▒▒
    ▒▒▒▒  ▒▒  ▒▒            ▒▒            ▒▒  ▒▒  ▒▒▒▒
