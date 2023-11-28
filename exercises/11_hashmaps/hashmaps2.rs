@@ -11,8 +11,7 @@
 //
 // Make me pass the tests!
 //
-// Execute `rustlings hint hashmaps2` or use the `hint` watch subcommand for a
-// hint.
+
 
 
 
@@ -46,6 +45,8 @@ fn fruit_basket(basket: &mut HashMap<Fruit, u32>) {
             basket.insert(fruit,1);
         }
     }
+    // Calculate the total count of fruits
+    let total_count: u32 = basket.values().sum();
 
     let total_count:u32 = basket.values().sum();
     if total_count <=11{
