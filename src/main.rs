@@ -443,10 +443,10 @@ started, here's a couple of notes about how Rustlings operates:
 Got all that? Great! To get started, run `rustlings watch` in order to get the first
 exercise. Make sure to have your editor open!"#;
 
-const FENISH_LINE: &str = r"+----------------------------------------------------+
+const FENISH_LINE: &str = "+----------------------------------------------------+
 |          You made it to the Fe-nish line!          |
 +--------------------------  ------------------------+
-                          \\/
+                           \\/\x1b[31m
      ▒▒          ▒▒▒▒▒▒▒▒      ▒▒▒▒▒▒▒▒          ▒▒
    ▒▒▒▒  ▒▒    ▒▒        ▒▒  ▒▒        ▒▒    ▒▒  ▒▒▒▒
    ▒▒▒▒  ▒▒  ▒▒            ▒▒            ▒▒  ▒▒  ▒▒▒▒
@@ -461,7 +461,7 @@ const FENISH_LINE: &str = r"+---------------------------------------------------
          ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒
        ▒▒    ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒    ▒▒
        ▒▒  ▒▒    ▒▒                  ▒▒    ▒▒  ▒▒
-           ▒▒  ▒▒                      ▒▒  ▒▒
+           ▒▒  ▒▒                      ▒▒  ▒▒\x1b[0m
 
 We hope you enjoyed learning about the various aspects of Rust!
 If you noticed any issues, please don't hesitate to report them to our repo.
