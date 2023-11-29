@@ -358,6 +358,7 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/raymon-roos"><img src="https://avatars.githubusercontent.com/u/38888470?v=4?s=100" width="100px;" alt="Raymon Roos"/><br /><sub><b>Raymon Roos</b></sub></a><br /><a href="#content-raymon-roos" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/matthri"><img src="https://avatars.githubusercontent.com/u/67913999?v=4?s=100" width="100px;" alt="Matthias"/><br /><sub><b>Matthias</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=matthri" title="Code">💻</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/neuschaefer"><img src="https://avatars.githubusercontent.com/u/1021512?v=4?s=100" width="100px;" alt="J. Neuschäfer"/><br /><sub><b>J. Neuschäfer</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=neuschaefer" title="Code">💻</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://scooterhacking.org"><img src="https://avatars.githubusercontent.com/u/58905488?v=4?s=100" width="100px;" alt="Bastian Pedersen"/><br /><sub><b>Bastian Pedersen</b></sub></a><br /><a href="#content-bastianpedersen" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
