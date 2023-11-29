@@ -2523,6 +2523,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "matthri",
+      "name": "Matthias",
+      "avatar_url": "https://avatars.githubusercontent.com/u/67913999?v=4",
+      "profile": "https://github.com/matthri",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
