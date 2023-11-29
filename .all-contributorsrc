@@ -2541,6 +2541,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "bastianpedersen",
+      "name": "Bastian Pedersen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/58905488?v=4",
+      "profile": "https://scooterhacking.org",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
