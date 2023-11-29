@@ -2532,6 +2532,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "neuschaefer",
+      "name": "J. Neuschäfer",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1021512?v=4",
+      "profile": "https://github.com/neuschaefer",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
