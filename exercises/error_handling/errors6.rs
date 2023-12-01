@@ -13,6 +13,12 @@
 
 use std::num::ParseIntError;
 
+#[derive(PartialEq, Debug)]
+enum CreationError {
+    Negative,
+    Zero,
+}
+
 // This is a custom error type that we will be using in `parse_pos_nonzero()`.
 #[derive(PartialEq, Debug)]
 enum ParsePosNonzeroError {
@@ -24,8 +30,9 @@ impl ParsePosNonzeroError {
     fn from_creation(err: CreationError) -> ParsePosNonzeroError {
         ParsePosNonzeroError::Creation(err)
     }
-    // TODO: add another error conversion function here.
-    // fn from_parseint...
+    fn from_parseint(err: ParseIntError) -> ParsePosNonzeroError {
+        ParsePosNonzeroError::ParseInt(err)
+    }
 }
 
 fn parse_pos_nonzero(s: &str) -> Result<PositiveNonzeroInteger, ParsePosNonzeroError> {
@@ -40,11 +47,6 @@ fn parse_pos_nonzero(s: &str) -> Result<PositiveNonzeroInteger, ParsePosNonzeroE
 #[derive(PartialEq, Debug)]
 struct PositiveNonzeroInteger(u64);
 
-#[derive(PartialEq, Debug)]
-enum CreationError {
-    Negative,
-    Zero,
-}
 
 impl PositiveNonzeroInteger {
     fn new(value: i64) -> Result<PositiveNonzeroInteger, CreationError> {
