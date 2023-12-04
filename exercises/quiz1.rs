@@ -13,10 +13,12 @@
 //
 // No hints this time ;)
 
-// I AM NOT DONE
 
 // Put your function here!
-// fn calculate_price_of_apples {
+fn calculate_price_of_apples(apple_count: i32) -> i32 {
+    let multiplier = if apple_count <= 40 { 2 } else { 1 };
+    return multiplier * apple_count;
+}
 
 // Don't modify this function!
 #[test]
