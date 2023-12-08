@@ -5,4 +5,4 @@ in more complex code.
 
 ## Further information
 
-- [How Functions Work](https://doc.rust-lang.org/book/ch03-03-how-functions-work.html)
+- [How Functions Work](https://rust-book.cs.brown.edu/book/ch03-03-how-functions-work.html)

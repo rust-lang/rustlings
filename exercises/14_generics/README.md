@@ -7,5 +7,5 @@ The simplest and most common use of generics is for type parameters.
 
 ## Further information
 
-- [Generic Data Types](https://doc.rust-lang.org/stable/book/ch10-01-syntax.html)
-- [Bounds](https://doc.rust-lang.org/rust-by-example/generics/bounds.html)
+- [Generic Data Types](https://rust-book.cs.brown.edu/stable/book/ch10-01-syntax.html)
+- [Bounds](https://rust-book.cs.brown.edu/rust-by-example/generics/bounds.html)

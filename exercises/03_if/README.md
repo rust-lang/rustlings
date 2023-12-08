@@ -4,4 +4,4 @@
 
 ## Further information
 
-- [Control Flow - if expressions](https://doc.rust-lang.org/book/ch03-05-control-flow.html#if-expressions)
+- [Control Flow - if expressions](https://rust-book.cs.brown.edu/book/ch03-05-control-flow.html#if-expressions)

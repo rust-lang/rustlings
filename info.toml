@@ -81,7 +81,7 @@ you are just converting values to different types like in this exercise.
 Fortunately Rust has a powerful solution to this problem: 'Shadowing'!
 You can read more about 'Shadowing' in the book's section 'Variables and
 Mutability':
-https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html#shadowing
+https://rust-book.cs.brown.edu/book/ch03-01-variables-and-mutability.html#shadowing
 
 Try to solve this exercise afterwards using this technique."""
 
@@ -100,7 +100,7 @@ Constants types must also always be annotated.
 
 Read more about constants and the differences between variables and constants
 under 'Constants' in the book's section 'Variables and Mutability':
-https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html#constants
+https://rust-book.cs.brown.edu/book/ch03-01-variables-and-mutability.html#constants
 """
 
 # FUNCTIONS
@@ -243,14 +243,14 @@ path = "exercises/04_primitive_types/primitive_types4.rs"
 mode = "test"
 hint = """
 Take a look at the 'Understanding Ownership -> Slices -> Other Slices' section
-of the book: https://doc.rust-lang.org/book/ch04-03-slices.html and use the
+of the book: https://rust-book.cs.brown.edu/book/ch04-03-slices.html and use the
 starting and ending (plus one) indices of the items in the `Array` that you
 want to end up in the slice.
 
 If you're curious why the first argument of `assert_eq!` does not have an
 ampersand for a reference since the second argument is areference, take a look
 at the coercion chapter of the nomicon:
-https://doc.rust-lang.org/nomicon/coercions.html"""
+https://rust-book.cs.brown.edu/nomicon/coercions.html"""
 
 [[exercises]]
 name = "primitive_types5"
@@ -258,7 +258,7 @@ path = "exercises/04_primitive_types/primitive_types5.rs"
 mode = "compile"
 hint = """
 Take a look at the 'Data Types -> The Tuple Type' section of the book:
-https://doc.rust-lang.org/book/ch03-02-data-types.html#the-tuple-type
+https://rust-book.cs.brown.edu/book/ch03-02-data-types.html#the-tuple-type
 Particularly the part about destructuring (second to last example in the
 section).
 
@@ -273,7 +273,7 @@ hint = """
 While you could use a destructuring `let` for the tuple here, try
 indexing into it instead, as explained in the last example of the
 'Data Types -> The Tuple Type' section of the book:
-https://doc.rust-lang.org/book/ch03-02-data-types.html#the-tuple-type
+https://rust-book.cs.brown.edu/book/ch03-02-data-types.html#the-tuple-type
 Now you have another tool in your toolbox!"""
 
 # VECS
@@ -289,7 +289,7 @@ In Rust, there are two ways to define a Vector.
 2. The second way, which is simpler is to use the `vec![]` macro and
    define your elements inside the square brackets.
 
-Check this chapter: https://doc.rust-lang.org/stable/book/ch08-01-vectors.html
+Check this chapter: https://rust-book.cs.brown.edu/stable/book/ch08-01-vectors.html
 of the Rust book to learn more.
 """
 
@@ -303,7 +303,7 @@ one `element` at a time.
 
 To modify the value of that `element` we need to use the `*` dereference
 operator. You can learn more in this chapter of the Rust book:
-https://doc.rust-lang.org/stable/book/ch08-01-vectors.html#iterating-over-the-values-in-a-vector
+https://rust-book.cs.brown.edu/stable/book/ch08-01-vectors.html#iterating-over-the-values-in-a-vector
 
 In the second function this dereferencing is not necessary, because the `map`
 function expects the new value to be returned.
@@ -384,7 +384,7 @@ Carefully reason about the range in which each mutable reference is in
 scope. Does it help to update the value of referent (`x`) immediately after
 the mutable reference is taken? Read more about 'Mutable References'
 in the book's section 'References and Borrowing':
-https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html#mutable-references.
+https://rust-book.cs.brown.edu/book/ch04-02-references-and-borrowing.html#mutable-references.
 """
 
 [[exercises]]
@@ -393,7 +393,7 @@ path = "exercises/06_move_semantics/move_semantics6.rs"
 mode = "compile"
 hint = """
 To find the answer, you can consult the book section "References and Borrowing":
-https://doc.rust-lang.org/stable/book/ch04-02-references-and-borrowing.html
+https://rust-book.cs.brown.edu/stable/book/ch04-02-references-and-borrowing.html
 
 The first problem is that `get_char` is taking ownership of the string. So
 `data` is moved and can't be used for `string_uppercase`. `data` is moved to
@@ -426,7 +426,7 @@ generics.
 
 In this exercise you need to complete and implement one of each kind.
 Read more about structs in The Book:
-https://doc.rust-lang.org/book/ch05-01-defining-structs.html"""
+https://rust-book.cs.brown.edu/book/ch05-01-defining-structs.html"""
 
 [[exercises]]
 name = "structs2"
@@ -438,7 +438,7 @@ to its fields.
 
 There are however some shortcuts that can be taken when instantiating structs.
 Have a look in The Book, to find out more:
-https://doc.rust-lang.org/stable/book/ch05-01-defining-structs.html#creating-instances-from-other-instances-with-struct-update-syntax"""
+https://rust-book.cs.brown.edu/stable/book/ch05-01-defining-structs.html#creating-instances-from-other-instances-with-struct-update-syntax"""
 
 [[exercises]]
 name = "structs3"
@@ -452,7 +452,7 @@ For `get_fees`: This method takes an additional argument, is there a field in
 the `Package` struct that this relates to?
 
 Have a look in The Book, to find out more about method implementations:
-https://doc.rust-lang.org/book/ch05-03-method-syntax.html"""
+https://rust-book.cs.brown.edu/book/ch05-03-method-syntax.html"""
 
 # ENUMS
 
@@ -511,7 +511,7 @@ to add one character to the `if` statement, though, that will coerce the
 Side note: If you're interested in learning about how this kind of reference
 conversion works, you can jump ahead in the book and read this part in the
 smart pointers chapter:
-https://doc.rust-lang.org/stable/book/ch15-02-deref.html#implicit-deref-coercions-with-functions-and-methods"""
+https://rust-book.cs.brown.edu/stable/book/ch15-02-deref.html#implicit-deref-coercions-with-functions-and-methods"""
 
 [[exercises]]
 name = "strings3"
@@ -519,7 +519,7 @@ path = "exercises/09_strings/strings3.rs"
 mode = "test"
 hint = """
 There's tons of useful standard library functions for strings. Let's try and use some of them:
-https://doc.rust-lang.org/std/string/struct.String.html#method.trim
+https://rust-book.cs.brown.edu/std/string/struct.String.html#method.trim
 
 For the `compose_me` method: You can either use the `format!` macro, or convert
 the string slice into an owned string, which you can then freely extend."""
@@ -551,7 +551,7 @@ different than its internal structure (the `fruits` and `veggies` modules and
 associated constants). Complete the `use` statements to fit the uses in main and
 find the one keyword missing for both constants.
 
-Learn more at https://doc.rust-lang.org/book/ch07-04-bringing-paths-into-scope-with-the-use-keyword.html#re-exporting-names-with-pub-use"""
+Learn more at https://rust-book.cs.brown.edu/book/ch07-04-bringing-paths-into-scope-with-the-use-keyword.html#re-exporting-names-with-pub-use"""
 
 [[exercises]]
 name = "modules3"
@@ -582,7 +582,7 @@ path = "exercises/11_hashmaps/hashmaps2.rs"
 mode = "test"
 hint = """
 Use the `entry()` and `or_insert()` methods of `HashMap` to achieve this.
-Learn more at https://doc.rust-lang.org/stable/book/ch08-03-hash-maps.html#only-inserting-a-value-if-the-key-has-no-value
+Learn more at https://rust-book.cs.brown.edu/stable/book/ch08-03-hash-maps.html#only-inserting-a-value-if-the-key-has-no-value
 """
 
 [[exercises]]
@@ -593,12 +593,12 @@ hint = """
 Hint 1: Use the `entry()` and `or_insert()` methods of `HashMap` to insert
         entries corresponding to each team in the scores table.
 
-Learn more at https://doc.rust-lang.org/stable/book/ch08-03-hash-maps.html#only-inserting-a-value-if-the-key-has-no-value
+Learn more at https://rust-book.cs.brown.edu/stable/book/ch08-03-hash-maps.html#only-inserting-a-value-if-the-key-has-no-value
 
 Hint 2: If there is already an entry for a given key, the value returned by
         `entry()` can be updated based on the existing value.
 
-Learn more at https://doc.rust-lang.org/book/ch08-03-hash-maps.html#updating-a-value-based-on-the-old-value
+Learn more at https://rust-book.cs.brown.edu/book/ch08-03-hash-maps.html#updating-a-value-based-on-the-old-value
 """
 
 # QUIZ 2
@@ -630,8 +630,8 @@ mode = "test"
 hint = """
 Check out:
 
-- https://doc.rust-lang.org/rust-by-example/flow_control/if_let.html
-- https://doc.rust-lang.org/rust-by-example/flow_control/while_let.html
+- https://rust-book.cs.brown.edu/rust-by-example/flow_control/if_let.html
+- https://rust-book.cs.brown.edu/rust-by-example/flow_control/while_let.html
 
 Remember that `Option`s can be stacked in `if let` and `while let`.
 
@@ -649,7 +649,7 @@ The compiler says a partial move happened in the `match` statement. How can
 this be avoided? The compiler shows the correction needed.
 
 After making the correction as suggested by the compiler, do read:
-https://doc.rust-lang.org/std/keyword.ref.html"""
+https://rust-book.cs.brown.edu/std/keyword.ref.html"""
 
 # ERROR HANDLING
 
@@ -682,7 +682,7 @@ This pattern is very common in Rust, though, so there's a `?` operator that
 does pretty much what you would make that match statement do for you!
 
 Take a look at this section of the 'Error Handling' chapter:
-https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator
+https://rust-book.cs.brown.edu/book/ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator
 and give it a try!"""
 
 [[exercises]]
@@ -724,13 +724,13 @@ object is polymorphic, and since all errors implement the `error::Error` trait,
 we can capture lots of different errors in one "Box" object.
 
 Check out this section of the book:
-https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator
+https://rust-book.cs.brown.edu/book/ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator
 
 Read more about boxing errors:
-https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/boxing_errors.html
+https://rust-book.cs.brown.edu/stable/rust-by-example/error/multiple_error_types/boxing_errors.html
 
 Read more about using the `?` operator with boxed errors:
-https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/reenter_question_mark.html
+https://rust-book.cs.brown.edu/stable/rust-by-example/error/multiple_error_types/reenter_question_mark.html
 """
 
 [[exercises]]
@@ -751,7 +751,7 @@ You can create another function inside `impl ParsePosNonzeroError` to use
 with `map_err()`.
 
 Read more about `map_err()` in the `std::result` documentation:
-https://doc.rust-lang.org/std/result/enum.Result.html#method.map_err"""
+https://rust-book.cs.brown.edu/std/result/enum.Result.html#method.map_err"""
 
 # Generics
 
@@ -774,7 +774,7 @@ Currently we are wrapping only values of type `u32`.
 
 Maybe we could update the explicit references to this data type somehow?
 
-If you are still stuck https://doc.rust-lang.org/stable/book/ch10-01-syntax.html#in-method-definitions
+If you are still stuck https://rust-book.cs.brown.edu/stable/book/ch10-01-syntax.html#in-method-definitions
 """
 
 # TRAITS
@@ -785,7 +785,7 @@ path = "exercises/15_traits/traits1.rs"
 mode = "test"
 hint = """
 A discussion about Traits in Rust can be found at:
-https://doc.rust-lang.org/book/ch10-02-traits.html
+https://rust-book.cs.brown.edu/book/ch10-02-traits.html
 """
 
 [[exercises]]
@@ -799,7 +799,7 @@ Try mutating the incoming string vector. Have a look at the tests to see
 what the result should look like!
 
 Vectors provide suitable methods for adding an element at the end. See
-the documentation at: https://doc.rust-lang.org/std/vec/struct.Vec.html"""
+the documentation at: https://rust-book.cs.brown.edu/std/vec/struct.Vec.html"""
 
 [[exercises]]
 name = "traits3"
@@ -810,7 +810,7 @@ Traits can have a default implementation for functions. Structs that implement
 the trait can then use the default version of these functions if they choose not
 to implement the function themselves.
 
-See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#default-implementations
+See the documentation at: https://rust-book.cs.brown.edu/book/ch10-02-traits.html#default-implementations
 """
 
 [[exercises]]
@@ -821,7 +821,7 @@ hint = """
 Instead of using concrete types as parameters you can use traits. Try replacing
 the '??' with 'impl <what goes here?>'
 
-See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#traits-as-parameters
+See the documentation at: https://rust-book.cs.brown.edu/book/ch10-02-traits.html#traits-as-parameters
 """
 
 [[exercises]]
@@ -832,7 +832,7 @@ hint = """
 To ensure a parameter implements multiple traits use the '+ syntax'. Try
 replacing the '??' with 'impl <> + <>'.
 
-See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#specifying-multiple-trait-bounds-with-the--syntax
+See the documentation at: https://rust-book.cs.brown.edu/book/ch10-02-traits.html#specifying-multiple-trait-bounds-with-the--syntax
 """
 
 # QUIZ 3
@@ -855,7 +855,7 @@ path = "exercises/16_lifetimes/lifetimes1.rs"
 mode = "compile"
 hint = """
 Let the compiler guide you. Also take a look at the book if you need help:
-https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html"""
+https://rust-book.cs.brown.edu/book/ch10-03-lifetime-syntax.html"""
 
 [[exercises]]
 name = "lifetimes2"
@@ -930,7 +930,7 @@ We expect method `Rectangle::new()` to panic for negative values.
 To handle that you need to add a special attribute to the test function.
 
 You can refer to the docs:
-https://doc.rust-lang.org/stable/book/ch11-01-writing-tests.html#checking-for-panics-with-should_panic"""
+https://rust-book.cs.brown.edu/stable/book/ch11-01-writing-tests.html#checking-for-panics-with-should_panic"""
 
 # STANDARD LIBRARY TYPES
 
@@ -944,7 +944,7 @@ Step 1:
 We need to apply something to the collection `my_fav_fruits` before we start to
 go through it. What could that be? Take a look at the struct definition for a
 vector for inspiration:
-https://doc.rust-lang.org/std/vec/struct.Vec.html
+https://rust-book.cs.brown.edu/std/vec/struct.Vec.html
 
 Step 2 & step 3:
 
@@ -954,7 +954,7 @@ Step 4:
 
 An iterator goes through all elements in a collection, but what if we've run
 out of elements? What should we expect here? If you're stuck, take a look at
-https://doc.rust-lang.org/std/iter/trait.Iterator.html for some ideas.
+https://rust-book.cs.brown.edu/std/iter/trait.Iterator.html for some ideas.
 """
 
 [[exercises]]
@@ -971,7 +971,7 @@ The remaining characters in `c` can be viewed as a string slice using the
 `as_str` method.
 
 The documentation for `char` contains many useful methods.
-https://doc.rust-lang.org/std/primitive.char.html
+https://rust-book.cs.brown.edu/std/primitive.char.html
 
 Step 2:
 
@@ -998,7 +998,7 @@ success case is a vector of integers and the failure case is a `DivisionError`.
 
 The `list_of_results` function needs to return a vector of results.
 
-See https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.collect for
+See https://rust-book.cs.brown.edu/std/iter/trait.Iterator.html#method.collect for
 how the `FromIterator` trait is used in `collect()`. This trait is REALLY
 powerful! It can make the solution to this exercise infinitely easier."""
 
@@ -1045,7 +1045,7 @@ actual type when working with recursive types, we need to store a reference
 (pointer) to its value.
 
 We should, therefore, place our `List` inside a `Box`. More details in the book
-here: https://doc.rust-lang.org/book/ch15-01-box.html#enabling-recursive-types-with-boxes
+here: https://rust-book.cs.brown.edu/book/ch15-01-box.html#enabling-recursive-types-with-boxes
 
 Step 2:
 
@@ -1071,7 +1071,7 @@ reference count goes down.
 
 In the end the `Sun` only has one reference again, to itself.
 
-See more at: https://doc.rust-lang.org/book/ch15-04-rc.html
+See more at: https://rust-book.cs.brown.edu/book/ch15-04-rc.html
 
 * Unfortunately Pluto is no longer considered a planet :(
 """
@@ -1091,7 +1091,7 @@ thread-local copy of the numbers.
 This is a simple exercise if you understand the underlying concepts, but if this
 is too much of a struggle, consider reading through all of Chapter 16 in the
 book:
-https://doc.rust-lang.org/stable/book/ch16-00-concurrency.html
+https://rust-book.cs.brown.edu/stable/book/ch16-00-concurrency.html
 """
 
 [[exercises]]
@@ -1102,7 +1102,7 @@ hint = """
 If `Cow` already owns the data it doesn't need to clone it when `to_mut()` is
 called.
 
-Check out https://doc.rust-lang.org/std/borrow/enum.Cow.html for documentation
+Check out https://rust-book.cs.brown.edu/std/borrow/enum.Cow.html for documentation
 on the `Cow` type.
 """
 
@@ -1114,16 +1114,16 @@ path = "exercises/20_threads/threads1.rs"
 mode = "compile"
 hint = """
 `JoinHandle` is a struct that is returned from a spawned thread:
-https://doc.rust-lang.org/std/thread/fn.spawn.html
+https://rust-book.cs.brown.edu/std/thread/fn.spawn.html
 
 A challenge with multi-threaded applications is that the main thread can
 finish before the spawned threads are completed.
-https://doc.rust-lang.org/book/ch16-01-threads.html#waiting-for-all-threads-to-finish-using-join-handles
+https://rust-book.cs.brown.edu/book/ch16-01-threads.html#waiting-for-all-threads-to-finish-using-join-handles
 
 Use the `JoinHandle`s to wait for each thread to finish and collect their
 results.
 
-https://doc.rust-lang.org/std/thread/struct.JoinHandle.html
+https://rust-book.cs.brown.edu/std/thread/struct.JoinHandle.html
 """
 
 [[exercises]]
@@ -1135,7 +1135,7 @@ hint = """
 to **immutable** data. But we want to *change* the number of `jobs_completed`
 so we'll need to also use another type that will only allow one thread to
 mutate the data at a time. Take a look at this section of the book:
-https://doc.rust-lang.org/book/ch16-03-shared-state.html#atomic-reference-counting-with-arct
+https://rust-book.cs.brown.edu/book/ch16-03-shared-state.html#atomic-reference-counting-with-arct
 and keep reading if you'd like more hints :)
 
 Do you now have an `Arc` `Mutex` `JobStatus` at the beginning of main? Like:
@@ -1170,7 +1170,7 @@ one thread and receive them in another.
 Multiple producers are possible by using clone() to create a duplicate of the
 original sending end.
 
-See https://doc.rust-lang.org/book/ch16-02-message-passing.html for more info.
+See https://rust-book.cs.brown.edu/book/ch16-02-message-passing.html for more info.
 """
 
 # MACROS
@@ -1230,7 +1230,7 @@ mode = "clippy"
 hint = """
 Rust stores the highest precision version of any long or infinite precision
 mathematical constants in the Rust standard library:
-https://doc.rust-lang.org/stable/std/f32/consts/index.html
+https://rust-book.cs.brown.edu/stable/std/f32/consts/index.html
 
 We may be tempted to use our own approximations for certain mathematical
 constants, but clippy recognizes those imprecise mathematical constants as a
@@ -1287,7 +1287,7 @@ or a closure to wrap the error from `parse::<usize>`.
 
 Yet another hint: If you would like to propagate errors by using the `?`
 operator in your solution, you might want to look at
-https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/reenter_question_mark.html
+https://rust-book.cs.brown.edu/stable/rust-by-example/error/multiple_error_types/reenter_question_mark.html
 """
 
 [[exercises]]
@@ -1297,7 +1297,7 @@ mode = "test"
 hint = """
 Follow the steps provided right before the `TryFrom` implementation.
 You can also use the example at
-https://doc.rust-lang.org/std/convert/trait.TryFrom.html
+https://rust-book.cs.brown.edu/std/convert/trait.TryFrom.html
 
 Is there an implementation of `TryFrom` in the standard library that
 can both do the required integer conversion and check the range of the input?
@@ -1309,7 +1309,7 @@ convert errors.
 
 Yet another hint: If you would like to propagate errors by using the `?`
 operator in your solution, you might want to look at
-https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/reenter_question_mark.html
+https://rust-book.cs.brown.edu/stable/rust-by-example/error/multiple_error_types/reenter_question_mark.html
 
 Challenge: Can you make the `TryFrom` implementations generic over many integer types?"""
 

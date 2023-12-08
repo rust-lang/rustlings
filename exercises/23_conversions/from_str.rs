@@ -4,7 +4,7 @@
 // return errors instead of falling back to a default value. Additionally, upon
 // implementing FromStr, you can use the `parse` method on strings to generate
 // an object of the implementor type. You can read more about it at
-// https://doc.rust-lang.org/std/str/trait.FromStr.html
+// https://rust-book.cs.brown.edu/std/str/trait.FromStr.html
 //
 // Execute `rustlings hint from_str` or use the `hint` watch subcommand for a
 // hint.

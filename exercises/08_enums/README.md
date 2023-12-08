@@ -6,5 +6,5 @@ Useful in combination with enums is Rust's "pattern matching" facility, which ma
 
 ## Further information
 
-- [Enums](https://doc.rust-lang.org/book/ch06-00-enums.html)
-- [Pattern syntax](https://doc.rust-lang.org/book/ch18-03-pattern-syntax.html)
+- [Enums](https://rust-book.cs.brown.edu/book/ch06-00-enums.html)
+- [Pattern syntax](https://rust-book.cs.brown.edu/book/ch18-03-pattern-syntax.html)

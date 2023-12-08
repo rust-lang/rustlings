@@ -2,7 +2,7 @@
 //
 // The From trait is used for value-to-value conversions. If From is implemented
 // correctly for a type, the Into trait should work conversely. You can read
-// more about it at https://doc.rust-lang.org/std/convert/trait.From.html
+// more about it at https://rust-book.cs.brown.edu/std/convert/trait.From.html
 //
 // Execute `rustlings hint from_into` or use the `hint` watch subcommand for a
 // hint.
