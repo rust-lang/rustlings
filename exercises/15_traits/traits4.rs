@@ -23,7 +23,23 @@ impl Licensed for SomeSoftware {}
 impl Licensed for OtherSoftware {}
 
 // YOU MAY ONLY CHANGE THE NEXT LINE
-fn compare_license_types(software: ??, software_two: ??) -> bool {
+
+// 1. straight foreword
+// fn compare_license_types(software: impl Licensed, software_two: impl Licensed) -> bool {
+//     software.licensing_info() == software_two.licensing_info()
+// }
+
+// 2. trait bound
+// fn compare_license_types<T: Licensed, P: Licensed>(software: T, software_two: P) -> bool {
+//     software.licensing_info() == software_two.licensing_info()
+// }
+
+
+// 3. trait bound + where clause
+fn compare_license_types<T, P>(software: T, software_two: P) -> bool 
+    where T: Licensed,
+          P: Licensed
+{
     software.licensing_info() == software_two.licensing_info()
 }
 
