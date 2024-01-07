@@ -2118,6 +2118,168 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "b1ue64",
+      "name": "b1ue64",
+      "avatar_url": "https://avatars.githubusercontent.com/u/77976308?v=4",
+      "profile": "https://github.com/b1ue64",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "lazywalker",
+      "name": "lazywalker",
+      "avatar_url": "https://avatars.githubusercontent.com/u/53956?v=4",
+      "profile": "https://github.com/lazywalker",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "proofconstruction",
+      "name": "proofconstruction",
+      "avatar_url": "https://avatars.githubusercontent.com/u/74747193?v=4",
+      "profile": "https://github.com/proofconstruction",
+      "contributions": [
+        "infra"
+      ]
+    },
+    {
+      "login": "IVIURRAY",
+      "name": "IVIURRAY",
+      "avatar_url": "https://avatars.githubusercontent.com/u/16007179?v=4",
+      "profile": "https://www.youtube.com/channel/UCQCjA6qUutAtWqkCA4Z36CQ",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "b-apperlo",
+      "name": "Bert Apperlo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/91734527?v=4",
+      "profile": "https://github.com/b-apperlo",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "FWDekker",
+      "name": "Florine W. Dekker",
+      "avatar_url": "https://avatars.githubusercontent.com/u/13442533?v=4",
+      "profile": "https://fwdekker.com/",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "luhem7",
+      "name": "Mehul Gangavelli",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4008215?v=4",
+      "profile": "https://github.com/luhem7",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "Frosthage",
+      "name": "Mikael Frosthage",
+      "avatar_url": "https://avatars.githubusercontent.com/u/14823314?v=4",
+      "profile": "https://github.com/Frosthage",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "robertefry",
+      "name": "Robert Fry",
+      "avatar_url": "https://avatars.githubusercontent.com/u/43712054?v=4",
+      "profile": "https://robertfry.xyz",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "tajo48",
+      "name": "tajo48",
+      "avatar_url": "https://avatars.githubusercontent.com/u/55502906?v=4",
+      "profile": "https://github.com/tajo48",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "novanish",
+      "name": "Anish",
+      "avatar_url": "https://avatars.githubusercontent.com/u/98446102?v=4",
+      "profile": "https://anishchhetri.com.np",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "vnprc",
+      "name": "vnprc",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9425366?v=4",
+      "profile": "https://github.com/vnprc",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "jrcarl624",
+      "name": "Joshua Carlson",
+      "avatar_url": "https://avatars.githubusercontent.com/u/61999256?v=4",
+      "profile": "http://androecia.net",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "johnDeSilencio",
+      "name": "Nicholas R. Smith",
+      "avatar_url": "https://avatars.githubusercontent.com/u/20136554?v=4",
+      "profile": "https://johndesilencio.me",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "alexfertel",
+      "name": "Alexander González",
+      "avatar_url": "https://avatars.githubusercontent.com/u/22298999?v=4",
+      "profile": "https://alexfertel.me",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "softarn",
+      "name": "Marcus Höjvall",
+      "avatar_url": "https://avatars.githubusercontent.com/u/517619?v=4",
+      "profile": "https://github.com/softarn",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "barlevalon",
+      "name": "Alon Hearter",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3397911?v=4",
+      "profile": "https://github.com/barlevalon",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "shirts",
+      "name": "shirts",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4952151?v=4",
+      "profile": "https://github.com/shirts",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
@@ -2126,5 +2288,6 @@
   "repoType": "github",
   "repoHost": "https://github.com",
   "skipCi": true,
-  "commitConvention": "angular"
+  "commitConvention": "angular",
+  "commitType": "docs"
 }

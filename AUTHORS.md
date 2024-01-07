@@ -300,6 +300,30 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/lionel-rowe"><img src="https://avatars.githubusercontent.com/u/26078826?v=4?s=100" width="100px;" alt="lionel-rowe"/><br /><sub><b>lionel-rowe</b></sub></a><br /><a href="#content-lionel-rowe" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/Ben2917"><img src="https://avatars.githubusercontent.com/u/10279994?v=4?s=100" width="100px;" alt="Ben"/><br /><sub><b>Ben</b></sub></a><br /><a href="#content-Ben2917" title="Content">🖋</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/b1ue64"><img src="https://avatars.githubusercontent.com/u/77976308?v=4?s=100" width="100px;" alt="b1ue64"/><br /><sub><b>b1ue64</b></sub></a><br /><a href="#content-b1ue64" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/lazywalker"><img src="https://avatars.githubusercontent.com/u/53956?v=4?s=100" width="100px;" alt="lazywalker"/><br /><sub><b>lazywalker</b></sub></a><br /><a href="#content-lazywalker" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/proofconstruction"><img src="https://avatars.githubusercontent.com/u/74747193?v=4?s=100" width="100px;" alt="proofconstruction"/><br /><sub><b>proofconstruction</b></sub></a><br /><a href="#infra-proofconstruction" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://www.youtube.com/channel/UCQCjA6qUutAtWqkCA4Z36CQ"><img src="https://avatars.githubusercontent.com/u/16007179?v=4?s=100" width="100px;" alt="IVIURRAY"/><br /><sub><b>IVIURRAY</b></sub></a><br /><a href="#content-IVIURRAY" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/b-apperlo"><img src="https://avatars.githubusercontent.com/u/91734527?v=4?s=100" width="100px;" alt="Bert Apperlo"/><br /><sub><b>Bert Apperlo</b></sub></a><br /><a href="#content-b-apperlo" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://fwdekker.com/"><img src="https://avatars.githubusercontent.com/u/13442533?v=4?s=100" width="100px;" alt="Florine W. Dekker"/><br /><sub><b>Florine W. Dekker</b></sub></a><br /><a href="#content-FWDekker" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/luhem7"><img src="https://avatars.githubusercontent.com/u/4008215?v=4?s=100" width="100px;" alt="Mehul Gangavelli"/><br /><sub><b>Mehul Gangavelli</b></sub></a><br /><a href="#content-luhem7" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/Frosthage"><img src="https://avatars.githubusercontent.com/u/14823314?v=4?s=100" width="100px;" alt="Mikael Frosthage"/><br /><sub><b>Mikael Frosthage</b></sub></a><br /><a href="#content-Frosthage" title="Content">🖋</a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="12.5%"><a href="https://robertfry.xyz"><img src="https://avatars.githubusercontent.com/u/43712054?v=4?s=100" width="100px;" alt="Robert Fry"/><br /><sub><b>Robert Fry</b></sub></a><br /><a href="#content-robertefry" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/tajo48"><img src="https://avatars.githubusercontent.com/u/55502906?v=4?s=100" width="100px;" alt="tajo48"/><br /><sub><b>tajo48</b></sub></a><br /><a href="#content-tajo48" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://anishchhetri.com.np"><img src="https://avatars.githubusercontent.com/u/98446102?v=4?s=100" width="100px;" alt="Anish"/><br /><sub><b>Anish</b></sub></a><br /><a href="#content-novanish" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/vnprc"><img src="https://avatars.githubusercontent.com/u/9425366?v=4?s=100" width="100px;" alt="vnprc"/><br /><sub><b>vnprc</b></sub></a><br /><a href="#content-vnprc" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="http://androecia.net"><img src="https://avatars.githubusercontent.com/u/61999256?v=4?s=100" width="100px;" alt="Joshua Carlson"/><br /><sub><b>Joshua Carlson</b></sub></a><br /><a href="#content-jrcarl624" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://johndesilencio.me"><img src="https://avatars.githubusercontent.com/u/20136554?v=4?s=100" width="100px;" alt="Nicholas R. Smith"/><br /><sub><b>Nicholas R. Smith</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=johnDeSilencio" title="Code">💻</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://alexfertel.me"><img src="https://avatars.githubusercontent.com/u/22298999?v=4?s=100" width="100px;" alt="Alexander González"/><br /><sub><b>Alexander González</b></sub></a><br /><a href="#content-alexfertel" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/softarn"><img src="https://avatars.githubusercontent.com/u/517619?v=4?s=100" width="100px;" alt="Marcus Höjvall"/><br /><sub><b>Marcus Höjvall</b></sub></a><br /><a href="#content-softarn" title="Content">🖋</a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/barlevalon"><img src="https://avatars.githubusercontent.com/u/3397911?v=4?s=100" width="100px;" alt="Alon Hearter"/><br /><sub><b>Alon Hearter</b></sub></a><br /><a href="#content-barlevalon" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/shirts"><img src="https://avatars.githubusercontent.com/u/4952151?v=4?s=100" width="100px;" alt="shirts"/><br /><sub><b>shirts</b></sub></a><br /><a href="#content-shirts" title="Content">🖋</a></td>
+    </tr>
   </tbody>
 </table>
 
