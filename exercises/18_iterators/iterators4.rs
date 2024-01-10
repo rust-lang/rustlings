@@ -3,7 +3,7 @@
 // Execute `rustlings hint iterators4` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
+// NOTE: 難
 
 pub fn factorial(num: u64) -> u64 {
     // Complete this function to return the factorial of num
@@ -15,6 +15,34 @@ pub fn factorial(num: u64) -> u64 {
     // For an extra challenge, don't use:
     // - recursion
     // Execute `rustlings hint iterators4` for hints.
+
+    struct Num {
+        current: u64,
+        end: u64
+    }
+
+    impl Iterator for Num {
+        type Item = u64;
+        fn next(&mut self) -> Option<Self::Item>{
+            if self.current > self.end {
+                return None;
+            }
+
+            let num = self.current;
+            self.current += 1;
+            
+            Some(num)
+        }
+    }
+
+    let num_iter = Num {
+        current: 1,
+        end: num
+    };
+
+    let total = num_iter.fold(1, |acc, x| acc * x);
+
+    total
 }
 
 #[cfg(test)]
