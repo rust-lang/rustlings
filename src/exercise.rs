@@ -168,7 +168,7 @@ path = "{}.rs""#,
                     .output()
             }
         }
-            .expect("Failed to run 'compile' command.");
+        .expect("Failed to run 'compile' command.");
 
         if cmd.status.success() {
             Ok(CompiledExercise {
