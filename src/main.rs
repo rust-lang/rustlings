@@ -9,7 +9,7 @@ use notify_debouncer_mini::{new_debouncer, DebouncedEventKind};
 use std::ffi::OsStr;
 use std::fs;
 use std::io::{self, prelude::*};
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::mpsc::{channel, RecvTimeoutError};
@@ -108,8 +108,10 @@ fn main() {
     }
 
     let toml_str = &fs::read_to_string("info.toml").unwrap();
-    let exercises = toml::from_str::<ExerciseList>(toml_str).unwrap().exercises;
+    let mut exercises = toml::from_str::<ExerciseList>(toml_str).unwrap().exercises;
     let verbose = args.nocapture;
+
+    edit_exercises(&mut exercises);
 
     let command = args.command.unwrap_or_else(|| {
         println!("{DEFAULT_OUT}\n");
@@ -242,6 +244,20 @@ fn main() {
                 println!("If you want to continue working on the exercises at a later point, you can simply run `rustlings watch` again");
             }
         },
+    }
+}
+
+fn edit_exercises(exercises: &mut Vec<Exercise>){
+    let siz = exercises.len();
+    for i in 0.. siz {
+        if i == siz - 1 {
+            exercises[i].next_path = None;
+            break;
+        }
+        let next_path = &exercises[i + 1].path;
+        let mut x = PathBuf::new();
+        x.push(next_path);
+        exercises[i].next_path = Some(x);
     }
 }
 

@@ -54,6 +54,8 @@ pub struct Exercise {
     pub mode: Mode,
     // The hint text associated with the exercise
     pub hint: String,
+    // The path of the next exercise
+    pub next_path: Option<PathBuf>
 }
 
 // An enum to track of the state of an Exercise.
