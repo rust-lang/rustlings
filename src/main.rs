@@ -247,9 +247,9 @@ fn main() {
     }
 }
 
-fn edit_exercises(exercises: &mut Vec<Exercise>){
+fn edit_exercises(exercises: &mut Vec<Exercise>) {
     let siz = exercises.len();
-    for i in 0.. siz {
+    for i in 0..siz {
         if i == siz - 1 {
             exercises[i].next_path = None;
             break;
