@@ -168,7 +168,7 @@ path = "{}.rs""#,
                     .output()
             }
         }
-        .expect("Failed to run 'compile' command.");
+            .expect("Failed to run 'compile' command.");
 
         if cmd.status.success() {
             Ok(CompiledExercise {
@@ -308,6 +308,7 @@ mod test {
                     path: PathBuf::from("tests/fixture/state/pending_exercise.rs"),
                     mode: *mode,
                     hint: String::from(""),
+                    next_path: None,
                 };
                 let _ = exercise.compile().unwrap();
                 assert!(!Path::new(&format!("{}.pdb", temp_file())).exists());
