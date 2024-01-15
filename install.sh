@@ -1,5 +1,19 @@
 #!/usr/bin/env bash
 set -euo pipefail
+NoClone=false
+
+while getopts :n-: OPT; do
+    if [ "$OPT" = "-" ]; then
+        OPT="${OPTARG%%=*}"
+    fi
+    
+    case "$OPT" in
+        n | no-clone ) NoClone=true ;;
+        ??* ) echo "Invalid option --$OPT" >&2; exit 1;;
+        \? ) echo "Invalid option -$OPTARG" >&2; exit 1;;
+    esac
+done
+shift $((OPTIND - 1))
 
 echo -e "\nLet's get you set up with Rustlings!"
 
@@ -135,11 +149,27 @@ else
     echo "SUCCESS: Rust is up to date"
 fi
 
-Path=${1:-rustlings/}
-echo "Cloning Rustlings at $Path..."
-git clone -q https://github.com/rust-lang/rustlings "$Path"
+if [[ "$NoClone" = true ]]
+then
+    echo "Checking if already inside Rustlings directory..."
+    if ! [[ -e info.toml ]]
+    then 
+        echo "ERROR: Not inside the Rustlings base directory, no 'info.toml' found"
+        echo "Please navigate inside the Rustlings base directory"
+    fi
+    GitRepository=$(git rev-parse --is-inside-work-tree)
+    if ! [[ "$GitRepository" = true ]]
+    then
+        echo "ERROR: Directory is not a Git repository"
+        echo "Please clone the Rustlings repository or run the installer wihtout the '--no-clone' option"
+    fi
+else 
+    Path=${1:-rustlings/}
+    echo "Cloning Rustlings at $Path..."
+    git clone -q https://github.com/rust-lang/rustlings "$Path"
 
-cd "$Path"
+    cd "$Path"
+fi
 
 Version=$(curl -s https://api.github.com/repos/rust-lang/rustlings/releases/latest | ${PY} -c "import json,sys;obj=json.load(sys.stdin);print(obj['tag_name']) if 'tag_name' in obj else sys.exit(f\"Error: {obj['message']}\");")
 CargoBin="${CARGO_HOME:-$HOME/.cargo}/bin"
@@ -158,7 +188,16 @@ then
         Version="tags/${Version}"
     fi
 else
-    Version="tags/${Version}"
+    if [[ -e ".git/refs/tags/${Version}" ]]
+    then 
+        Version="tags/${Version}"
+    else 
+        echo "ERROR: The latest tag from remote is not present in the local repository"
+        echo "You can fetch the repository information by running `git fetch --tags https://github.com/rust-lang/rustlings.git`"
+        echo "After that you can finish the installation by running `./install.sh --no-clone` again"
+        exit 1
+    fi
+    
 fi
 
 echo "Checking out version $Version..."
