@@ -360,6 +360,9 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/neuschaefer"><img src="https://avatars.githubusercontent.com/u/1021512?v=4?s=100" width="100px;" alt="J. Neuschäfer"/><br /><sub><b>J. Neuschäfer</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=neuschaefer" title="Code">💻</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://scooterhacking.org"><img src="https://avatars.githubusercontent.com/u/58905488?v=4?s=100" width="100px;" alt="Bastian Pedersen"/><br /><sub><b>Bastian Pedersen</b></sub></a><br /><a href="#content-bastianpedersen" title="Content">🖋</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/gerases"><img src="https://avatars.githubusercontent.com/u/8953623?v=4?s=100" width="100px;" alt="gerases"/><br /><sub><b>gerases</b></sub></a><br /><a href="#content-gerases" title="Content">🖋</a></td>
+    </tr>
   </tbody>
 </table>
 
