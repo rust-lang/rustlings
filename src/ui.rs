@@ -17,12 +17,12 @@ macro_rules! print_emoji {
 
 macro_rules! warn {
     ($fmt:literal, $ex:expr) => {{
-        print_emoji!("⚠️ ", "!", red, $fmt ,$ex);
+        print_emoji!("⚠️ ", "!", red, $fmt, $ex);
     }};
 }
 
 macro_rules! success {
     ($fmt:literal, $ex:expr) => {{
-        print_emoji!("✅ ", "✓", green, $fmt ,$ex);
+        print_emoji!("✅ ", "✓", green, $fmt, $ex);
     }};
 }
