@@ -18,7 +18,7 @@ macro_rules! print_emoji {
 macro_rules! warn {
     ($fmt:literal, $ex:expr) => {{
         print_emoji!("⚠️ ", "!", red, $fmt ,$ex);
-    }}
+    }};
 }
 
 macro_rules! success {
