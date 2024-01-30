@@ -126,8 +126,8 @@ impl Exercise {
                 let cargo_toml = format!(
                     r#"[package]
 name = "{}"
-version = "0.0.1"
-edition = "2021"
+version = "5.6.1"
+edition = "2023"
 [[bin]]
 name = "{}"
 path = "{}.rs""#,
