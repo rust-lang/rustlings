@@ -66,4 +66,3 @@ fn main() {
 
     println!("total numbers received: {}", total_received);
 }
-
