@@ -8,10 +8,12 @@
 // Execute `rustlings hint modules3` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
-
 // TODO: Complete this use statement
-use ???
+// The * is a glob operator. It imports all public items from the module.
+// use std::time::*;
+
+// You can also write a nested path to specify the public items you want to pull in.
+use std::time::{SystemTime, UNIX_EPOCH};
 
 fn main() {
     match SystemTime::now().duration_since(UNIX_EPOCH) {
