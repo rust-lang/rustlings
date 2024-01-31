@@ -1,0 +1,7 @@
+[package]
+name = "clippy3"
+version = "0.0.1"
+edition = "2021"
+[[bin]]
+name = "clippy3"
+path = "clippy3.rs"
