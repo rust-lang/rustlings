@@ -5,13 +5,18 @@
 //
 // Execute `rustlings hint if2` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
-
 pub fn foo_if_fizz(fizzish: &str) -> &str {
+    // &str is a string slice - 
+    // Let's say the full string is a ribbon
+    // A string slice is a piece of the ribbon
+    // It's just a reference to the ribbon so doing things to the piece won't change the original ribbon.
+
     if fizzish == "fizz" {
         "foo"
+    } else if fizzish == "fuzz" {
+        "bar"
     } else {
-        1
+        "baz"
     }
 }
 
