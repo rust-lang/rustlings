@@ -5,10 +5,12 @@
 // Execute `rustlings hint enums3` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
-
 enum Message {
     // TODO: implement the message variant types based on their usage below
+    Move (Point),
+    Echo (String),
+    ChangeColor (u8, u8, u8),
+    Quit
 }
 
 struct Point {
@@ -45,6 +47,12 @@ impl State {
         // variants
         // Remember: When passing a tuple as a function argument, you'll need
         // extra parentheses: fn function((t, u, p, l, e))
+        match message {
+            Message::ChangeColor(r,g,b) => self.change_color((r,g,b)),
+            Message::Echo(x) => self.echo(x),
+            Message::Move(x) => self.move_position(x),
+            Message::Quit => self.quit()
+        }
     }
 }
 
