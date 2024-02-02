@@ -7,11 +7,17 @@
 // Execute `rustlings hint errors3` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
-
 use std::num::ParseIntError;
+use std::error;
 
-fn main() {
+// I could have just returned the ParseIntError from the total_cost function
+// because we know the exact error that's being returned.
+
+fn main() -> Result<(), Box<dyn error::Error>>{
+    // Box <dyn error::Error> is a trait object.
+    // Meaning, you would use this when you know an error can be returned but 
+    // not necessarily what kind 
+    
     let mut tokens = 100;
     let pretend_user_input = "8";
 
@@ -23,6 +29,8 @@ fn main() {
         tokens -= cost;
         println!("You now have {} tokens.", tokens);
     }
+
+    Ok(())
 }
 
 pub fn total_cost(item_quantity: &str) -> Result<i32, ParseIntError> {
