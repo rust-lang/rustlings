@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "Let's get you set up with Rustlings!"
+echo -e "\nLet's get you set up with Rustlings!"
 
 echo "Checking requirements..."
 if [ -x "$(command -v git)" ]
@@ -124,7 +124,7 @@ function vercomp() {
 }
 
 RustVersion=$(rustc --version | cut -d " " -f 2)
-MinRustVersion=1.58
+MinRustVersion=1.70
 vercomp "$RustVersion" $MinRustVersion || ec=$?
 if [ ${ec:-0} -eq 2 ]
 then

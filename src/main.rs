@@ -4,8 +4,8 @@ use crate::run::{reset, run};
 use crate::verify::verify;
 use clap::{Parser, Subcommand};
 use console::Emoji;
-use notify::DebouncedEvent;
-use notify::{RecommendedWatcher, RecursiveMode, Watcher};
+use notify_debouncer_mini::notify::{self, RecursiveMode};
+use notify_debouncer_mini::{new_debouncer, DebouncedEventKind};
 use std::ffi::OsStr;
 use std::fs;
 use std::io::{self, prelude::*};
@@ -331,8 +331,10 @@ fn watch(
     let (tx, rx) = channel();
     let should_quit = Arc::new(AtomicBool::new(false));
 
-    let mut watcher: RecommendedWatcher = Watcher::new(tx, Duration::from_secs(1))?;
-    watcher.watch(Path::new("./exercises"), RecursiveMode::Recursive)?;
+    let mut debouncer = new_debouncer(Duration::from_secs(1), tx)?;
+    debouncer
+        .watcher()
+        .watch(Path::new("./exercises"), RecursiveMode::Recursive)?;
 
     clear_screen();
 
@@ -350,35 +352,44 @@ fn watch(
     loop {
         match rx.recv_timeout(Duration::from_secs(1)) {
             Ok(event) => match event {
-                DebouncedEvent::Create(b) | DebouncedEvent::Chmod(b) | DebouncedEvent::Write(b) => {
-                    if b.extension() == Some(OsStr::new("rs")) && b.exists() {
-                        let filepath = b.as_path().canonicalize().unwrap();
-                        let pending_exercises = exercises
-                            .iter()
-                            .find(|e| filepath.ends_with(&e.path))
-                            .into_iter()
-                            .chain(
+                Ok(events) => {
+                    for event in events {
+                        let event_path = event.path;
+                        if event.kind == DebouncedEventKind::Any
+                            && event_path.extension() == Some(OsStr::new("rs"))
+                            && event_path.exists()
+                        {
+                            let filepath = event_path.as_path().canonicalize().unwrap();
+                            let pending_exercises =
                                 exercises
                                     .iter()
-                                    .filter(|e| !e.looks_done() && !filepath.ends_with(&e.path)),
-                            );
-                        let num_done = exercises.iter().filter(|e| e.looks_done()).count();
-                        clear_screen();
-                        match verify(
-                            pending_exercises,
-                            (num_done, exercises.len()),
-                            verbose,
-                            success_hints,
-                        ) {
-                            Ok(_) => return Ok(WatchStatus::Finished),
-                            Err(exercise) => {
-                                let mut failed_exercise_hint = failed_exercise_hint.lock().unwrap();
-                                *failed_exercise_hint = Some(to_owned_hint(exercise));
+                                    .find(|e| filepath.ends_with(&e.path))
+                                    .into_iter()
+                                    .chain(exercises.iter().filter(|e| {
+                                        !e.looks_done() && !filepath.ends_with(&e.path)
+                                    }));
+                            let num_done = exercises
+                                .iter()
+                                .filter(|e| e.looks_done() && !filepath.ends_with(&e.path))
+                                .count();
+                            clear_screen();
+                            match verify(
+                                pending_exercises,
+                                (num_done, exercises.len()),
+                                verbose,
+                                success_hints,
+                            ) {
+                                Ok(_) => return Ok(WatchStatus::Finished),
+                                Err(exercise) => {
+                                    let mut failed_exercise_hint =
+                                        failed_exercise_hint.lock().unwrap();
+                                    *failed_exercise_hint = Some(to_owned_hint(exercise));
+                                }
                             }
                         }
                     }
                 }
-                _ => {}
+                Err(e) => println!("watch error: {e:?}"),
             },
             Err(RecvTimeoutError::Timeout) => {
                 // the timeout expired, just check the `should_quit` variable below then loop again
@@ -396,6 +407,8 @@ fn rustc_exists() -> bool {
     Command::new("rustc")
         .args(["--version"])
         .stdout(Stdio::null())
+        .stderr(Stdio::null())
+        .stdin(Stdio::null())
         .spawn()
         .and_then(|mut child| child.wait())
         .map(|status| status.success())
@@ -430,10 +443,10 @@ started, here's a couple of notes about how Rustlings operates:
 Got all that? Great! To get started, run `rustlings watch` in order to get the first
 exercise. Make sure to have your editor open!"#;
 
-const FENISH_LINE: &str = r"+----------------------------------------------------+
+const FENISH_LINE: &str = "+----------------------------------------------------+
 |          You made it to the Fe-nish line!          |
 +--------------------------  ------------------------+
-                          \\/
+                           \\/\x1b[31m
      ▒▒          ▒▒▒▒▒▒▒▒      ▒▒▒▒▒▒▒▒          ▒▒
    ▒▒▒▒  ▒▒    ▒▒        ▒▒  ▒▒        ▒▒    ▒▒  ▒▒▒▒
    ▒▒▒▒  ▒▒  ▒▒            ▒▒            ▒▒  ▒▒  ▒▒▒▒
@@ -448,7 +461,7 @@ const FENISH_LINE: &str = r"+---------------------------------------------------
          ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒
        ▒▒    ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒    ▒▒
        ▒▒  ▒▒    ▒▒                  ▒▒    ▒▒  ▒▒
-           ▒▒  ▒▒                      ▒▒  ▒▒
+           ▒▒  ▒▒                      ▒▒  ▒▒\x1b[0m
 
 We hope you enjoyed learning about the various aspects of Rust!
 If you noticed any issues, please don't hesitate to report them to our repo.
