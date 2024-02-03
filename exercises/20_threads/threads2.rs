@@ -7,9 +7,7 @@
 // Execute `rustlings hint threads2` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
-
-use std::sync::Arc;
+use std::sync::{ Arc, Mutex };
 use std::thread;
 use std::time::Duration;
 
@@ -18,14 +16,19 @@ struct JobStatus {
 }
 
 fn main() {
-    let status = Arc::new(JobStatus { jobs_completed: 0 });
+    let status = Arc::new(Mutex::new(JobStatus { jobs_completed: 0 }));
     let mut handles = vec![];
     for _ in 0..10 {
         let status_shared = Arc::clone(&status);
         let handle = thread::spawn(move || {
             thread::sleep(Duration::from_millis(250));
             // TODO: You must take an action before you update a shared value
-            status_shared.jobs_completed += 1;
+            // status_shared.jobs_completed += 1;
+
+            // * The action taken was to lock and unrwap the status_shared var
+            // * When multiple threads want to access or modify shared data that's
+            // * protected by a Mutex, they must first lock the mutex
+            status_shared.lock().unwrap().jobs_completed += 1;
         });
         handles.push(handle);
     }
@@ -34,6 +37,25 @@ fn main() {
         // TODO: Print the value of the JobStatus.jobs_completed. Did you notice
         // anything interesting in the output? Do you have to 'join' on all the
         // handles?
-        println!("jobs completed {}", ???);
+
+        // * If you simply try to print status.jobs_completed, you'll get an
+        // * unknown field error.
+        // * You also have to lock and unwrap here:
+
+        // println!("jobs completed {}", status.lock().unwrap().jobs_completed)
+
+        // * After the change above, you get multiple printouts with the same
+        // * value for the status
+
+        // * And here's an example where we properly deal with errors instead
+        // * of using unwrap()
+        match status.lock() {
+            Ok(status_locked) => {
+                println!("jobs completed: {}", status_locked.jobs_completed);
+            }
+            Err(e) => {
+                eprintln!("Error while locking the Mutex: {:?}", e);
+            }
+        }
     }
 }

@@ -31,8 +31,6 @@ enum ParsePersonError {
     ParseInt(ParseIntError),
 }
 
-// I AM NOT DONE
-
 // Steps:
 // 1. If the length of the provided string is 0, an error should be returned
 // 2. Split the given string on the commas present in it
@@ -52,6 +50,28 @@ enum ParsePersonError {
 impl FromStr for Person {
     type Err = ParsePersonError;
     fn from_str(s: &str) -> Result<Person, Self::Err> {
+        if s.is_empty() {
+            return Err(ParsePersonError::Empty);
+        }
+
+        let parts: Vec<&str> = s.split(',').collect();
+        if parts.len() != 2 {
+            return Err(ParsePersonError::BadLen);
+        }
+
+        if let [name, age] = parts.as_slice() {
+            if name.is_empty() {
+                return Err(ParsePersonError::NoName);
+            }
+            let age_parsed = age.parse::<usize>().map_err(|e| ParsePersonError::ParseInt(e))?;
+
+            return Ok(Person {
+                name: name.to_string(),
+                age: age_parsed,
+            });
+        } else {
+            return Err(ParsePersonError::BadLen);
+        };
     }
 }
 
@@ -78,18 +98,12 @@ mod tests {
     }
     #[test]
     fn missing_age() {
-        assert!(matches!(
-            "John,".parse::<Person>(),
-            Err(ParsePersonError::ParseInt(_))
-        ));
+        assert!(matches!("John,".parse::<Person>(), Err(ParsePersonError::ParseInt(_))));
     }
 
     #[test]
     fn invalid_age() {
-        assert!(matches!(
-            "John,twenty".parse::<Person>(),
-            Err(ParsePersonError::ParseInt(_))
-        ));
+        assert!(matches!("John,twenty".parse::<Person>(), Err(ParsePersonError::ParseInt(_))));
     }
 
     #[test]
@@ -104,18 +118,22 @@ mod tests {
 
     #[test]
     fn missing_name_and_age() {
-        assert!(matches!(
-            ",".parse::<Person>(),
-            Err(ParsePersonError::NoName | ParsePersonError::ParseInt(_))
-        ));
+        assert!(
+            matches!(
+                ",".parse::<Person>(),
+                Err(ParsePersonError::NoName | ParsePersonError::ParseInt(_))
+            )
+        );
     }
 
     #[test]
     fn missing_name_and_invalid_age() {
-        assert!(matches!(
-            ",one".parse::<Person>(),
-            Err(ParsePersonError::NoName | ParsePersonError::ParseInt(_))
-        ));
+        assert!(
+            matches!(
+                ",one".parse::<Person>(),
+                Err(ParsePersonError::NoName | ParsePersonError::ParseInt(_))
+            )
+        );
     }
 
     #[test]
@@ -125,9 +143,6 @@ mod tests {
 
     #[test]
     fn trailing_comma_and_some_string() {
-        assert_eq!(
-            "John,32,man".parse::<Person>(),
-            Err(ParsePersonError::BadLen)
-        );
+        assert_eq!("John,32,man".parse::<Person>(), Err(ParsePersonError::BadLen));
     }
 }

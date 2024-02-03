@@ -11,8 +11,6 @@
 // Execute `rustlings hint iterators5` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
-
 use std::collections::HashMap;
 
 #[derive(Clone, Copy, PartialEq, Eq)]
@@ -35,7 +33,12 @@ fn count_for(map: &HashMap<String, Progress>, value: Progress) -> usize {
 fn count_iterator(map: &HashMap<String, Progress>, value: Progress) -> usize {
     // map is a hashmap with String keys and Progress values.
     // map = { "variables1": Complete, "from_str": None, ... }
-    todo!();
+    // * Iterate over the k,v pairs in the collection
+    // * filter those with progress == value
+    // * return the count of those items
+    map.iter()
+        .filter(|(_, &v)| v == value)
+        .count()
 }
 
 fn count_collection_for(collection: &[HashMap<String, Progress>], value: Progress) -> usize {
@@ -54,7 +57,15 @@ fn count_collection_iterator(collection: &[HashMap<String, Progress>], value: Pr
     // collection is a slice of hashmaps.
     // collection = [{ "variables1": Complete, "from_str": None, ... },
     //     { "variables2": Complete, ... }, ... ]
-    todo!();
+
+    // * Iterate over the maps in the collection
+    // * for each map, apply the count_iterator function defined above (no need to redo it)
+    // * (pass the value that was used as an argument for the parent function)
+    // * each iteration will return a number , so we use sum() to return the totals for all iterations
+    collection
+        .iter()
+        .map(|map| count_iterator(map, value))
+        .sum()
 }
 
 #[cfg(test)]
@@ -84,20 +95,14 @@ mod tests {
         let map = get_map();
         let progress_states = vec![Progress::Complete, Progress::Some, Progress::None];
         for progress_state in progress_states {
-            assert_eq!(
-                count_for(&map, progress_state),
-                count_iterator(&map, progress_state)
-            );
+            assert_eq!(count_for(&map, progress_state), count_iterator(&map, progress_state));
         }
     }
 
     #[test]
     fn count_collection_complete() {
         let collection = get_vec_map();
-        assert_eq!(
-            6,
-            count_collection_iterator(&collection, Progress::Complete)
-        );
+        assert_eq!(6, count_collection_iterator(&collection, Progress::Complete));
     }
 
     #[test]
