@@ -25,5 +25,3 @@
 | macros                 | §19.6               |
 | clippy                 | §21.4               |
 | conversions            | n/a                 |
-
-Son nguyen thanh
