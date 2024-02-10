@@ -1,12 +1,10 @@
 // lifetimes2.rs
 //
-// So if the compiler is just validating the references passed to the annotated
+// QN: So if the compiler is just validating the references passed to the annotated
 // parameters and the return type, what do we need to change?
 //
 // Execute `rustlings hint lifetimes2` or use the `hint` watch subcommand for a
 // hint.
-
-// I AM NOT DONE
 
 fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
     if x.len() > y.len() {
@@ -22,6 +20,6 @@ fn main() {
     {
         let string2 = String::from("xyz");
         result = longest(string1.as_str(), string2.as_str());
+        println!("The longest string is '{}'", result);
     }
-    println!("The longest string is '{}'", result);
 }

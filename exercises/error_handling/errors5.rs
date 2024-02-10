@@ -2,34 +2,33 @@
 //
 // This program uses an altered version of the code from errors4.
 //
-// This exercise uses some concepts that we won't get to until later in the
+// INFO: This exercise uses some concepts that we won't get to until later in the
 // course, like `Box` and the `From` trait. It's not important to understand
 // them in detail right now, but you can read ahead if you like. For now, think
 // of the `Box<dyn ???>` type as an "I want anything that does ???" type, which,
 // given Rust's usual standards for runtime safety, should strike you as
 // somewhat lenient!
 //
-// In short, this particular use case for boxes is for when you want to own a
+// INFO: In short, this particular use case for boxes is for when you want to own a
 // value and you care only that it is a type which implements a particular
 // trait. To do so, The Box is declared as of type Box<dyn Trait> where Trait is
 // the trait the compiler looks for on any value used in that context. For this
 // exercise, that context is the potential errors which can be returned in a
 // Result.
 //
-// What can we use to describe both errors? In other words, is there a trait
+// QN: What can we use to describe both errors? In other words, is there a trait
 // which both errors implement?
 //
 // Execute `rustlings hint errors5` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
-
 use std::error;
+use std::error::Error;
 use std::fmt;
 use std::num::ParseIntError;
 
 // TODO: update the return type of `main()` to make this compile.
-fn main() -> Result<(), Box<dyn ???>> {
+fn main() -> Result<(), Box<dyn Error>> {
     let pretend_user_input = "42";
     let x: i64 = pretend_user_input.parse()?;
     println!("output={:?}", PositiveNonzeroInteger::new(x)?);

@@ -1,13 +1,11 @@
 // errors3.rs
 //
-// This is a program that is trying to use a completed version of the
+// QN: This is a program that is trying to use a completed version of the
 // `total_cost` function from the previous exercise. It's not working though!
 // Why not? What should we do to fix it?
 //
 // Execute `rustlings hint errors3` or use the `hint` watch subcommand for a
 // hint.
-
-// I AM NOT DONE
 
 use std::num::ParseIntError;
 
@@ -15,13 +13,18 @@ fn main() {
     let mut tokens = 100;
     let pretend_user_input = "8";
 
-    let cost = total_cost(pretend_user_input)?;
+    let cost = total_cost(pretend_user_input);
 
-    if cost > tokens {
-        println!("You can't afford that many!");
-    } else {
-        tokens -= cost;
-        println!("You now have {} tokens.", tokens);
+    match cost {
+        Ok(c) => {
+            if c > tokens {
+                println!("You can't afford that many!");
+            } else {
+                tokens -= c;
+                println!("You now have {} tokens.", tokens);
+            }
+        }
+        Err(e) => (),
     }
 }
 
