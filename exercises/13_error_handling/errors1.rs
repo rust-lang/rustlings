@@ -10,13 +10,18 @@
 // hint.
 
 // I AM NOT DONE
+use std::error::Error;
+use std::result::Result;
 
-pub fn generate_nametag_text(name: String) -> Option<String> {
+
+
+
+pub fn generate_nametag_text(name: String) -> Result<String, Box<dyn Error>> {
     if name.is_empty() {
         // Empty names aren't allowed.
-        None
+        Err("`name` was empty; it must be nonempty.".into())
     } else {
-        Some(format!("Hi! My name is {}", name))
+        Ok(format!("Hi! My name is {}", name))
     }
 }
 
@@ -29,7 +34,7 @@ mod tests {
         assert_eq!(
             generate_nametag_text("Beyoncé".into()),
             Ok("Hi! My name is Beyoncé".into())
-        );
+        )
     }
 
     #[test]
@@ -38,6 +43,6 @@ mod tests {
             generate_nametag_text("".into()),
             // Don't change this line
             Err("`name` was empty; it must be nonempty.".into())
-        );
+        )
     }
 }
