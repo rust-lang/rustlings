@@ -31,11 +31,11 @@ impl Package {
         }
     }
 
-    fn is_international(&self) -> ??? {
+    fn is_international(&self) -> u32 {
         // Something goes here...
     }
 
-    fn get_fees(&self, cents_per_gram: u32) -> ??? {
+    fn get_fees(&self, cents_per_gram: u32) -> u32 {
         // Something goes here...
     }
 }
