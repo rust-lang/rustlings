@@ -3,10 +3,9 @@
 // Execute `rustlings hint errors4` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
 
 #[derive(PartialEq, Debug)]
-struct PositiveNonzeroInteger(u64);
+struct PositiveNonzeroInteger(u64);// used to store a positive non-zero integer , better for checking the error handling and better code readability.
 
 #[derive(PartialEq, Debug)]
 enum CreationError {
@@ -17,7 +16,14 @@ enum CreationError {
 impl PositiveNonzeroInteger {
     fn new(value: i64) -> Result<PositiveNonzeroInteger, CreationError> {
         // Hmm... Why is this always returning an Ok value?
-        Ok(PositiveNonzeroInteger(value as u64))
+        // The value is always returning an Ok value because the value is always being converted to a positive integer.
+        if value > 0 {
+            Ok(PositiveNonzeroInteger(value as u64))
+        } else if value == 0 {
+            Err(CreationError::Zero)
+        } else {
+            Err(CreationError::Negative)
+        }
     }
 }
 

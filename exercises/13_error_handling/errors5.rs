@@ -22,14 +22,14 @@
 // Execute `rustlings hint errors5` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
 
 use std::error;
 use std::fmt;
 use std::num::ParseIntError;
 
+
 // TODO: update the return type of `main()` to make this compile.
-fn main() -> Result<(), Box<dyn ???>> {
+fn main() -> Result<(), Box<dyn error::Error>> {
     let pretend_user_input = "42";
     let x: i64 = pretend_user_input.parse()?;
     println!("output={:?}", PositiveNonzeroInteger::new(x)?);
@@ -67,5 +67,7 @@ impl fmt::Display for CreationError {
         f.write_str(description)
     }
 }
+
+//Implementing fmt::Display for CreationError allows us to customize the formatting of the error message when it is displayed to the user. While error::Error provides a default implementation for displaying errors, it may not always provide the desired format or level of detail. By implementing fmt::Display, we have more control over how the error message is presented.
 
 impl error::Error for CreationError {}

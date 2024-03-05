@@ -3,7 +3,6 @@
 // Execute `rustlings hint threads3` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
 
 use std::sync::mpsc;
 use std::sync::Arc;
@@ -30,11 +29,11 @@ fn send_tx(q: Queue, tx: mpsc::Sender<u32>) -> () {
     let qc = Arc::new(q);
     let qc1 = Arc::clone(&qc);
     let qc2 = Arc::clone(&qc);
-
+ let tx1 = tx.clone();
     thread::spawn(move || {
         for val in &qc1.first_half {
             println!("sending {:?}", val);
-            tx.send(*val).unwrap();
+            tx1.send(*val).unwrap();
             thread::sleep(Duration::from_secs(1));
         }
     });
@@ -46,6 +45,15 @@ fn send_tx(q: Queue, tx: mpsc::Sender<u32>) -> () {
             thread::sleep(Duration::from_secs(1));
         }
     });
+
+
+    //In the given code, you have used the Arc (Atomic Reference Counting) to share ownership of the Queue struct between multiple threads. This allows you to have multiple producers by cloning the Arc reference.
+
+// By using Arc::clone(&qc), you create a new reference to the Arc that can be moved into a new thread. This ensures that each thread has its own reference to the shared Queue struct.
+
+// In this case, you have two threads, each with its own cloned reference to the Queue struct. Each thread then iterates over a different half of the queue and sends the values through the mpsc::Sender.
+
+// This way, you achieve multiple producers by sharing ownership of the Queue struct using Arc and cloning the reference for each thread.
 }
 
 #[test]
