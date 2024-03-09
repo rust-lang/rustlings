@@ -1,6 +1,7 @@
 {
   "image": "mcr.microsoft.com/devcontainers/rust:1",
-  "updateContentCommand": "cargo build",
+  "updateContentCommand": ["cargo", "build"],
+  "postAttachCommand": ["rustlings", "watch"],
   "remoteEnv": {
     "PATH": "${containerEnv:PATH}:${containerWorkspaceFolder}/target/debug"
   }
