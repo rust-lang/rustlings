@@ -1,12 +1,6 @@
 {
-  "image": "mcr.microsoft.com/devcontainers/universal:2-linux",
-  "waitFor": "onCreateCommand",
-  "onCreateCommand": ".devcontainer/setup.sh",
+  "image": "mcr.microsoft.com/devcontainers/rust:1",
   "updateContentCommand": "cargo build",
-  "postCreateCommand": "",
-  "postAttachCommand": {
-    "server": "rustlings watch"
-  },
   "customizations": {
     "vscode": {
       "extensions": [
