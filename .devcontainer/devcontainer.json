@@ -3,12 +3,5 @@
   "updateContentCommand": "cargo build",
   "remoteEnv": {
     "PATH": "${containerEnv:PATH}:${containerWorkspaceFolder}/target/debug"
-  },
-  "customizations": {
-    "vscode": {
-      "extensions": [
-        "rust-lang.rust-analyzer"
-      ]
-    }
   }
 }
