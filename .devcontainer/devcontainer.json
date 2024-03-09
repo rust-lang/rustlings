@@ -1,6 +1,9 @@
 {
   "image": "mcr.microsoft.com/devcontainers/rust:1",
   "updateContentCommand": "cargo build",
+  "remoteEnv": {
+    "PATH": "${containerEnv:PATH}:${containerWorkspaceFolder}/target/debug"
+  },
   "customizations": {
     "vscode": {
       "extensions": [
