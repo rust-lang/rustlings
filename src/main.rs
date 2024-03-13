@@ -1,6 +1,6 @@
 use crate::exercise::{Exercise, ExerciseList};
 use crate::project::RustAnalyzerProject;
-use crate::run::{reset, run};
+use crate::run::{reset, run, reset_all};
 use crate::verify::verify;
 use clap::{Parser, Subcommand};
 use console::Emoji;
@@ -55,6 +55,9 @@ enum Subcommands {
     Reset {
         /// The name of the exercise
         name: String,
+    },
+    ResetAll {
+
     },
     /// Return a hint for the given exercise
     Hint {
@@ -183,6 +186,9 @@ fn main() {
             let exercise = find_exercise(&name, &exercises);
 
             run(exercise, verbose).unwrap_or_else(|_| std::process::exit(1));
+        }
+        Subcommands::ResetAll {} => {
+            reset_all(&exercises).unwrap_or_else(|_| std::process::exit(1));
         }
 
         Subcommands::Reset { name } => {

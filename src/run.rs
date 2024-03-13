@@ -31,6 +31,21 @@ pub fn reset(exercise: &Exercise) -> Result<(), ()> {
     }
 }
 
+//Resets all exercises by stashing the changes
+pub fn reset_all(exercises: &[Exercise]) -> Result<(), ()> {
+    for exercise in exercises {
+        let command = Command::new("git")
+            .args(["stash", "push", "--"])
+            .arg (&exercise.path)
+            .spawn();
+
+        if command.is_err() {
+            return Err(());
+        }
+    }
+    Ok(())
+}
+
 // Invoke the rust compiler on the path of the given exercise
 // and run the ensuing binary.
 // This is strictly for non-test binaries, so output is displayed
