@@ -1,6 +1,6 @@
 use crate::exercise::{Exercise, ExerciseList};
 use crate::project::RustAnalyzerProject;
-use crate::run::{reset, run, reset_all};
+use crate::run::{reset, reset_all, run};
 use crate::verify::verify;
 use clap::{Parser, Subcommand};
 use console::Emoji;
@@ -56,9 +56,7 @@ enum Subcommands {
         /// The name of the exercise
         name: String,
     },
-    ResetAll {
-
-    },
+    ResetAll {},
     /// Return a hint for the given exercise
     Hint {
         /// The name of the exercise

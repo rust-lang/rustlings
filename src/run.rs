@@ -36,7 +36,7 @@ pub fn reset_all(exercises: &[Exercise]) -> Result<(), ()> {
     for exercise in exercises {
         let command = Command::new("git")
             .args(["stash", "push", "--"])
-            .arg (&exercise.path)
+            .arg(&exercise.path)
             .spawn();
 
         if command.is_err() {
