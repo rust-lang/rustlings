@@ -364,6 +364,7 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/gerases"><img src="https://avatars.githubusercontent.com/u/8953623?v=4?s=100" width="100px;" alt="gerases"/><br /><sub><b>gerases</b></sub></a><br /><a href="#content-gerases" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/AnonimAnonim2245"><img src="https://avatars.githubusercontent.com/u/98339220?v=4?s=100" width="100px;" alt="Luca Plian"/><br /><sub><b>Luca Plian</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=AnonimAnonim2245" title="Code">💻</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://reifenrath.dev/"><img src="https://avatars.githubusercontent.com/u/18126097?v=4?s=100" width="100px;" alt="René Reifenrath"/><br /><sub><b>René Reifenrath</b></sub></a><br /><a href="#content-reifenrath-dev" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/peterneave"><img src="https://avatars.githubusercontent.com/u/7982708?v=4?s=100" width="100px;" alt="Peter Neave"/><br /><sub><b>Peter Neave</b></sub></a><br /><a href="#infra-peterneave" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
     </tr>
   </tbody>
 </table>
