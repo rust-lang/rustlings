@@ -2568,6 +2568,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "reifenrath-dev",
+      "name": "René Reifenrath",
+      "avatar_url": "https://avatars.githubusercontent.com/u/18126097?v=4",
+      "profile": "https://reifenrath.dev/",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
