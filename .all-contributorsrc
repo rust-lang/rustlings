@@ -2622,6 +2622,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "evanmiller2112",
+      "name": "Evan Miller",
+      "avatar_url": "https://avatars.githubusercontent.com/u/28488957?v=4",
+      "profile": "https://github.com/evanmiller2112",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
