@@ -2604,6 +2604,15 @@
       "contributions": [
         "infra"
       ]
+    },
+    {
+      "login": "pavedroad",
+      "name": "pavedroad",
+      "avatar_url": "https://avatars.githubusercontent.com/u/138004431?v=4",
+      "profile": "https://github.com/pavedroad",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
