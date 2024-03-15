@@ -24,7 +24,7 @@ impl Default for Person {
     }
 }
 
-// Your task is to complete this implementation in order for the line `let p =
+// Your task is to complete this implementation in order for the line `let p1 =
 // Person::from("Mark,20")` to compile Please note that you'll need to parse the
 // age component into a `usize` with something like `"4".parse::<usize>()`. The
 // outcome of this needs to be handled appropriately.
