@@ -362,6 +362,17 @@ authors.
     </tr>
     <tr>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/gerases"><img src="https://avatars.githubusercontent.com/u/8953623?v=4?s=100" width="100px;" alt="gerases"/><br /><sub><b>gerases</b></sub></a><br /><a href="#content-gerases" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/AnonimAnonim2245"><img src="https://avatars.githubusercontent.com/u/98339220?v=4?s=100" width="100px;" alt="Luca Plian"/><br /><sub><b>Luca Plian</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=AnonimAnonim2245" title="Code">💻</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://reifenrath.dev/"><img src="https://avatars.githubusercontent.com/u/18126097?v=4?s=100" width="100px;" alt="René Reifenrath"/><br /><sub><b>René Reifenrath</b></sub></a><br /><a href="#content-reifenrath-dev" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/peterneave"><img src="https://avatars.githubusercontent.com/u/7982708?v=4?s=100" width="100px;" alt="Peter Neave"/><br /><sub><b>Peter Neave</b></sub></a><br /><a href="#infra-peterneave" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="http://www.janb1.com"><img src="https://avatars.githubusercontent.com/u/5552248?v=4?s=100" width="100px;" alt="Jan"/><br /><sub><b>Jan</b></sub></a><br /><a href="#content-JanB1" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="http://www.kylev.com/"><img src="https://avatars.githubusercontent.com/u/46888?v=4?s=100" width="100px;" alt="Kyle VanderBeek"/><br /><sub><b>Kyle VanderBeek</b></sub></a><br /><a href="#infra-kylev" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/pavedroad"><img src="https://avatars.githubusercontent.com/u/138004431?v=4?s=100" width="100px;" alt="pavedroad"/><br /><sub><b>pavedroad</b></sub></a><br /><a href="#content-pavedroad" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/hyphena"><img src="https://avatars.githubusercontent.com/u/26529488?v=4?s=100" width="100px;" alt="luna"/><br /><sub><b>luna</b></sub></a><br /><a href="#content-hyphena" title="Content">🖋</a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/evanmiller2112"><img src="https://avatars.githubusercontent.com/u/28488957?v=4?s=100" width="100px;" alt="Evan Miller"/><br /><sub><b>Evan Miller</b></sub></a><br /><a href="#content-evanmiller2112" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/luvchurchill"><img src="https://avatars.githubusercontent.com/u/46406654?v=4?s=100" width="100px;" alt="luvchurchill"/><br /><sub><b>luvchurchill</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=luvchurchill" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>

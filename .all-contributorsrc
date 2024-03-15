@@ -2559,6 +2559,87 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "AnonimAnonim2245",
+      "name": "Luca Plian",
+      "avatar_url": "https://avatars.githubusercontent.com/u/98339220?v=4",
+      "profile": "https://github.com/AnonimAnonim2245",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "reifenrath-dev",
+      "name": "René Reifenrath",
+      "avatar_url": "https://avatars.githubusercontent.com/u/18126097?v=4",
+      "profile": "https://reifenrath.dev/",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "peterneave",
+      "name": "Peter Neave",
+      "avatar_url": "https://avatars.githubusercontent.com/u/7982708?v=4",
+      "profile": "https://github.com/peterneave",
+      "contributions": [
+        "infra"
+      ]
+    },
+    {
+      "login": "JanB1",
+      "name": "Jan",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5552248?v=4",
+      "profile": "http://www.janb1.com",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "kylev",
+      "name": "Kyle VanderBeek",
+      "avatar_url": "https://avatars.githubusercontent.com/u/46888?v=4",
+      "profile": "http://www.kylev.com/",
+      "contributions": [
+        "infra"
+      ]
+    },
+    {
+      "login": "pavedroad",
+      "name": "pavedroad",
+      "avatar_url": "https://avatars.githubusercontent.com/u/138004431?v=4",
+      "profile": "https://github.com/pavedroad",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "hyphena",
+      "name": "luna",
+      "avatar_url": "https://avatars.githubusercontent.com/u/26529488?v=4",
+      "profile": "https://github.com/hyphena",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "evanmiller2112",
+      "name": "Evan Miller",
+      "avatar_url": "https://avatars.githubusercontent.com/u/28488957?v=4",
+      "profile": "https://github.com/evanmiller2112",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "luvchurchill",
+      "name": "luvchurchill",
+      "avatar_url": "https://avatars.githubusercontent.com/u/46406654?v=4",
+      "profile": "https://github.com/luvchurchill",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
