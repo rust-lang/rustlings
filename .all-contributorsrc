@@ -2559,6 +2559,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "AnonimAnonim2245",
+      "name": "Luca Plian",
+      "avatar_url": "https://avatars.githubusercontent.com/u/98339220?v=4",
+      "profile": "https://github.com/AnonimAnonim2245",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
