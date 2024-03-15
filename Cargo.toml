@@ -9,22 +9,22 @@ authors = [
 edition = "2021"
 
 [dependencies]
-indicatif = "0.17.6"
-console = "0.15"
-notify-debouncer-mini = "0.4.1"
-toml = "0.7.6"
-regex = "1.5"
-serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0.81"
-home = "0.5.3"
+clap = { version = "4.5.2", features = ["derive"] }
+console = "0.15.8"
 glob = "0.3.0"
-clap = { version = "4.4.0", features = ["derive"] }
+home = "0.5.9"
+indicatif = "0.17.8"
+notify-debouncer-mini = "0.4.1"
+regex = "1.10.3"
+serde_json = "1.0.114"
+serde = { version = "1.0.197", features = ["derive"] }
+toml = "0.8.10"
 
 [[bin]]
 name = "rustlings"
 path = "src/main.rs"
 
 [dev-dependencies]
-assert_cmd = "2.0.12"
-predicates = "3.0.3"
+assert_cmd = "2.0.14"
 glob = "0.3.0"
+predicates = "3.1.0"
