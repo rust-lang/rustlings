@@ -372,6 +372,7 @@ authors.
     </tr>
     <tr>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/evanmiller2112"><img src="https://avatars.githubusercontent.com/u/28488957?v=4?s=100" width="100px;" alt="Evan Miller"/><br /><sub><b>Evan Miller</b></sub></a><br /><a href="#content-evanmiller2112" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/luvchurchill"><img src="https://avatars.githubusercontent.com/u/46406654?v=4?s=100" width="100px;" alt="luvchurchill"/><br /><sub><b>luvchurchill</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=luvchurchill" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
