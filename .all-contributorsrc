@@ -2631,6 +2631,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "luvchurchill",
+      "name": "luvchurchill",
+      "avatar_url": "https://avatars.githubusercontent.com/u/46406654?v=4",
+      "profile": "https://github.com/luvchurchill",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
