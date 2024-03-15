@@ -2586,6 +2586,15 @@
       "contributions": [
         "infra"
       ]
+    },
+    {
+      "login": "JanB1",
+      "name": "Jan",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5552248?v=4",
+      "profile": "http://www.janb1.com",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 8,
