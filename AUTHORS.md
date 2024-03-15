@@ -370,6 +370,9 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/pavedroad"><img src="https://avatars.githubusercontent.com/u/138004431?v=4?s=100" width="100px;" alt="pavedroad"/><br /><sub><b>pavedroad</b></sub></a><br /><a href="#content-pavedroad" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/hyphena"><img src="https://avatars.githubusercontent.com/u/26529488?v=4?s=100" width="100px;" alt="luna"/><br /><sub><b>luna</b></sub></a><br /><a href="#content-hyphena" title="Content">🖋</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/evanmiller2112"><img src="https://avatars.githubusercontent.com/u/28488957?v=4?s=100" width="100px;" alt="Evan Miller"/><br /><sub><b>Evan Miller</b></sub></a><br /><a href="#content-evanmiller2112" title="Content">🖋</a></td>
+    </tr>
   </tbody>
 </table>
 
