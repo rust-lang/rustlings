@@ -2595,6 +2595,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "kylev",
+      "name": "Kyle VanderBeek",
+      "avatar_url": "https://avatars.githubusercontent.com/u/46888?v=4",
+      "profile": "http://www.kylev.com/",
+      "contributions": [
+        "infra"
+      ]
     }
   ],
   "contributorsPerLine": 8,
