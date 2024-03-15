@@ -367,6 +367,7 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/peterneave"><img src="https://avatars.githubusercontent.com/u/7982708?v=4?s=100" width="100px;" alt="Peter Neave"/><br /><sub><b>Peter Neave</b></sub></a><br /><a href="#infra-peterneave" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
       <td align="center" valign="top" width="12.5%"><a href="http://www.janb1.com"><img src="https://avatars.githubusercontent.com/u/5552248?v=4?s=100" width="100px;" alt="Jan"/><br /><sub><b>Jan</b></sub></a><br /><a href="#content-JanB1" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="http://www.kylev.com/"><img src="https://avatars.githubusercontent.com/u/46888?v=4?s=100" width="100px;" alt="Kyle VanderBeek"/><br /><sub><b>Kyle VanderBeek</b></sub></a><br /><a href="#infra-kylev" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/pavedroad"><img src="https://avatars.githubusercontent.com/u/138004431?v=4?s=100" width="100px;" alt="pavedroad"/><br /><sub><b>pavedroad</b></sub></a><br /><a href="#content-pavedroad" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
