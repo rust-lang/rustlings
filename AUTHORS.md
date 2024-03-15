@@ -376,6 +376,7 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="https://leverimmy.top/"><img src="https://avatars.githubusercontent.com/u/47663913?v=4?s=100" width="100px;" alt="Ze-en Xiong"/><br /><sub><b>Ze-en Xiong</b></sub></a><br /><a href="#content-LeverImmy" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/parnavh"><img src="https://avatars.githubusercontent.com/u/45985534?v=4?s=100" width="100px;" alt="Parnav Harinathan"/><br /><sub><b>Parnav Harinathan</b></sub></a><br /><a href="#content-parnavh" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/0Ahmed-0"><img src="https://avatars.githubusercontent.com/u/111569638?v=4?s=100" width="100px;" alt="0Ahmed-0"/><br /><sub><b>0Ahmed-0</b></sub></a><br /><a href="#content-0Ahmed-0" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/guizo792"><img src="https://avatars.githubusercontent.com/u/95940388?v=4?s=100" width="100px;" alt="guizo792"/><br /><sub><b>guizo792</b></sub></a><br /><a href="#content-guizo792" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
