@@ -38,6 +38,15 @@ pub fn verify<'a>(
         percentage += 100.0 / total as f32;
         bar.inc(1);
         bar.set_message(format!("({:.1} %)", percentage));
+        if bar.position() == total as u64 {
+            println!(
+                "Progress: You completed {} / {} exercises ({:.1} %).",
+                bar.position(),
+                total,
+                percentage
+            );
+            bar.finish();
+        }
     }
     Ok(())
 }
