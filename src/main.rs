@@ -25,6 +25,9 @@ mod project;
 mod run;
 mod verify;
 
+#[path = "../exercises/exercises.rs"]
+mod exercises;
+
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
 #[derive(Parser)]
 #[command(version)]
