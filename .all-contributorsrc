@@ -2676,6 +2676,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "kazu728",
+      "name": "Kazuki Matsuo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/34614358?v=4",
+      "profile": "https://github.com/kazu728",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
