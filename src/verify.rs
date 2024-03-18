@@ -195,7 +195,7 @@ fn prompt_for_completion(
     if no_emoji {
         println!("~*~ {success_msg} ~*~")
     } else {
-        println!("🎉 🎉  {success_msg} 🎉 🎉")
+        println!("🎉 🎉 {success_msg} 🎉 🎉")
     }
     println!();
 
