@@ -1319,3 +1319,10 @@ path = "exercises/23_conversions/as_ref_mut.rs"
 mode = "test"
 hint = """
 Add `AsRef<str>` or `AsMut<u32>` as a trait bound to the functions."""
+
+[[exercises]]
+name = "mocks1"
+path = "exercises/crates/mockall/mocks1/Cargo.toml"
+mode = "cratetest"
+hint = """
+x.foo() needs to be called in the if conditional to get the tests to pass."""

@@ -1,0 +1,11 @@
+[package]
+name = "mocks1"
+version = "0.0.1"
+edition = "2021"
+
+[dependencies]
+mockall = "0.11.4"
+
+[[bin]]
+name = "mocks1"
+path = "mocks1.rs"
