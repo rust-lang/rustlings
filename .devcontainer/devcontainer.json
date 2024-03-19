@@ -1,17 +1,8 @@
 {
-  "image": "mcr.microsoft.com/devcontainers/universal:2-linux",
-  "waitFor": "onCreateCommand",
-  "onCreateCommand": ".devcontainer/setup.sh",
-  "updateContentCommand": "cargo build",
-  "postCreateCommand": "",
-  "postAttachCommand": {
-    "server": "rustlings watch"
-  },
-  "customizations": {
-    "vscode": {
-      "extensions": [
-        "rust-lang.rust-analyzer"
-      ]
-    }
+  "image": "mcr.microsoft.com/devcontainers/rust:1",
+  "updateContentCommand": ["cargo", "build"],
+  "postAttachCommand": ["rustlings", "watch"],
+  "remoteEnv": {
+    "PATH": "${containerEnv:PATH}:${containerWorkspaceFolder}/target/debug"
   }
 }

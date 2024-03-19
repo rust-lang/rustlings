@@ -167,7 +167,7 @@
 - **structs3**: Clarifed the hint
 - **quiz2, as_ref_mut, options1, traits1, traits2**: Clarified hints
 - **traits1, traits2, cli**: Tidied up unmatching backticks
-- **enums2**: Removed unneccessary indirection of self
+- **enums2**: Removed unnecessary indirection of self
 - **enums3**: Added an extra tuple comment
 
 #### Housekeeping
