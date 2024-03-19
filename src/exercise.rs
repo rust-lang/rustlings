@@ -54,6 +54,8 @@ pub struct Exercise {
     pub mode: Mode,
     // The hint text associated with the exercise
     pub hint: String,
+    // The path of the next exercise
+    pub next_path: Option<PathBuf>,
 }
 
 // An enum to track of the state of an Exercise.
@@ -287,6 +289,7 @@ mod test {
             path: PathBuf::from("tests/fixture/state/pending_exercise.rs"),
             mode: Mode::Compile,
             hint: String::from(""),
+            next_path: None,
         };
         let compiled = exercise.compile().unwrap();
         drop(compiled);
@@ -305,6 +308,7 @@ mod test {
                     path: PathBuf::from("tests/fixture/state/pending_exercise.rs"),
                     mode: *mode,
                     hint: String::from(""),
+                    next_path: None,
                 };
                 let _ = exercise.compile().unwrap();
                 assert!(!Path::new(&format!("{}.pdb", temp_file())).exists());
@@ -318,6 +322,7 @@ mod test {
             path: PathBuf::from("tests/fixture/state/pending_exercise.rs"),
             mode: Mode::Compile,
             hint: String::new(),
+            next_path: None,
         };
 
         let state = exercise.state();
@@ -359,6 +364,7 @@ mod test {
             path: PathBuf::from("tests/fixture/state/finished_exercise.rs"),
             mode: Mode::Compile,
             hint: String::new(),
+            next_path: None,
         };
 
         assert_eq!(exercise.state(), State::Done);
@@ -371,6 +377,7 @@ mod test {
             path: PathBuf::from("tests/fixture/success/testSuccess.rs"),
             mode: Mode::Test,
             hint: String::new(),
+            next_path: None,
         };
         let out = exercise.compile().unwrap().run().unwrap();
         assert!(out.stdout.contains("THIS TEST TOO SHALL PASS"));

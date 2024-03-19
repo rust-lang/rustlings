@@ -180,6 +180,13 @@ fn prompt_for_completion(
 
     let no_emoji = env::var("NO_EMOJI").is_ok();
 
+    match &exercise.next_path {
+        Some(path) => {
+            println!("Next up: {:?}", path);
+        }
+        None => {}
+    }
+
     let clippy_success_msg = if no_emoji {
         "The code is compiling, and Clippy is happy!"
     } else {
