@@ -1,11 +1,11 @@
-use crate::exercise::{Exercise, ExerciseList};
-use crate::project::RustAnalyzerProject;
-use crate::run::{reset, run};
-use crate::verify::verify;
 use clap::{Parser, Subcommand};
 use console::Emoji;
 use notify_debouncer_mini::notify::{self, RecursiveMode};
 use notify_debouncer_mini::{new_debouncer, DebouncedEventKind};
+use rustlings::exercise::{Exercise, ExerciseList};
+use rustlings::project::RustAnalyzerProject;
+use rustlings::run::{reset, run};
+use rustlings::verify::verify;
 use std::ffi::OsStr;
 use std::fs;
 use std::io::{self, prelude::*};
@@ -16,14 +16,6 @@ use std::sync::mpsc::{channel, RecvTimeoutError};
 use std::sync::{Arc, Mutex};
 use std::thread;
 use std::time::Duration;
-
-#[macro_use]
-mod ui;
-
-mod exercise;
-mod project;
-mod run;
-mod verify;
 
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
 #[derive(Parser)]
