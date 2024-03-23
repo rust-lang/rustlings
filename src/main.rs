@@ -263,7 +263,7 @@ fn spawn_watch_shell(
     println!("Welcome to watch mode! You can type 'help' to get an overview of the commands you can use here.");
 
     thread::spawn(move || {
-        let mut input = String::new();
+        let mut input = String::with_capacity(32);
         let mut stdin = io::stdin().lock();
 
         loop {
