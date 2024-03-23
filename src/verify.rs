@@ -224,7 +224,7 @@ fn prompt_for_completion(
         let formatted_line = if context_line.important {
             format!("{}", style(context_line.line).bold())
         } else {
-            context_line.line.to_string()
+            context_line.line
         };
 
         println!(
