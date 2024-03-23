@@ -26,16 +26,6 @@ mod project;
 mod run;
 mod verify;
 
-const WATCH_MODE_HELP_MESSAGE: &str = "Commands available to you in watch mode:
-  hint   - prints the current exercise's hint
-  clear  - clears the screen
-  quit   - quits watch mode
-  !<cmd> - executes a command, like `!rustc --explain E0381`
-  help   - displays this help message
-
-Watch mode automatically re-evaluates the current exercise
-when you edit a file's contents.";
-
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
 #[derive(Parser)]
 #[command(version)]
@@ -490,3 +480,13 @@ const WELCOME: &str = r"       welcome to...
  | |  | |_| \__ \ |_| | | | | | (_| \__ \
  |_|   \__,_|___/\__|_|_|_| |_|\__, |___/
                                |___/";
+
+const WATCH_MODE_HELP_MESSAGE: &str = "Commands available to you in watch mode:
+  hint   - prints the current exercise's hint
+  clear  - clears the screen
+  quit   - quits watch mode
+  !<cmd> - executes a command, like `!rustc --explain E0381`
+  help   - displays this help message
+
+Watch mode automatically re-evaluates the current exercise
+when you edit a file's contents.";
