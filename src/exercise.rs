@@ -5,7 +5,7 @@ use std::io::{self, BufRead, BufReader};
 use std::path::PathBuf;
 use std::process::{self, Command};
 use std::{array, env, mem};
-use winnow::ascii::{space0, space1};
+use winnow::ascii::{space0, Caseless};
 use winnow::combinator::opt;
 use winnow::Parser;
 
@@ -21,13 +21,7 @@ fn not_done(input: &str) -> bool {
         "//",
         opt('/'),
         space0,
-        'I',
-        space1,
-        "AM",
-        space1,
-        "NOT",
-        space1,
-        "DONE",
+        Caseless("I AM NOT DONE"),
     )
         .parse_next(&mut &*input)
         .is_ok()
@@ -438,15 +432,13 @@ mod test {
         assert!(not_done("/// I AM NOT DONE"));
         assert!(not_done("//  I AM NOT DONE"));
         assert!(not_done("///  I AM NOT DONE"));
-        assert!(not_done("// I  AM NOT DONE"));
-        assert!(not_done("// I AM  NOT DONE"));
-        assert!(not_done("// I AM NOT  DONE"));
         assert!(not_done("// I AM NOT DONE "));
         assert!(not_done("// I AM NOT DONE!"));
+        assert!(not_done("// I am not done"));
+        assert!(not_done("// i am NOT done"));
 
         assert!(!not_done("I AM NOT DONE"));
         assert!(!not_done("// NOT DONE"));
         assert!(!not_done("DONE"));
-        assert!(!not_done("// i am not done"));
     }
 }
