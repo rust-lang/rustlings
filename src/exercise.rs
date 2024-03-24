@@ -1,16 +1,16 @@
 use regex::Regex;
 use serde::Deserialize;
-use std::env;
 use std::fmt::{self, Display, Formatter};
 use std::fs::{self, remove_file, File};
-use std::io::Read;
+use std::io::{self, BufRead, BufReader};
 use std::path::PathBuf;
 use std::process::{self, Command};
+use std::{array, env, mem};
 
 const RUSTC_COLOR_ARGS: &[&str] = &["--color", "always"];
 const RUSTC_EDITION_ARGS: &[&str] = &["--edition", "2021"];
 const RUSTC_NO_DEBUG_ARGS: &[&str] = &["-C", "strip=debuginfo"];
-const I_AM_DONE_REGEX: &str = r"(?m)^\s*///?\s*I\s+AM\s+NOT\s+DONE";
+const I_AM_DONE_REGEX: &str = r"^\s*///?\s*I\s+AM\s+NOT\s+DONE";
 const CONTEXT: usize = 2;
 const CLIPPY_CARGO_TOML_PATH: &str = "./exercises/22_clippy/Cargo.toml";
 
@@ -205,51 +205,89 @@ path = "{}.rs""#,
     }
 
     pub fn state(&self) -> State {
-        let mut source_file = File::open(&self.path).unwrap_or_else(|e| {
+        let source_file = File::open(&self.path).unwrap_or_else(|e| {
             panic!(
                 "We were unable to open the exercise file {}! {e}",
                 self.path.display()
             )
         });
-
-        let source = {
-            let mut s = String::new();
-            source_file.read_to_string(&mut s).unwrap_or_else(|e| {
-                panic!(
-                    "We were unable to read the exercise file {}! {e}",
-                    self.path.display()
-                )
-            });
-            s
+        let mut source_reader = BufReader::new(source_file);
+        let mut read_line = |buf: &mut String| -> io::Result<_> {
+            let n = source_reader.read_line(buf)?;
+            if buf.ends_with('\n') {
+                buf.pop();
+                if buf.ends_with('\r') {
+                    buf.pop();
+                }
+            }
+            Ok(n)
         };
 
         let re = Regex::new(I_AM_DONE_REGEX).unwrap();
+        let mut matched_line_ind: usize = 0;
+        let mut prev_lines: [_; CONTEXT] = array::from_fn(|_| String::with_capacity(256));
+        let mut line = String::with_capacity(256);
 
-        if !re.is_match(&source) {
-            return State::Done;
+        loop {
+            match read_line(&mut line) {
+                Ok(0) => break,
+                Ok(_) => {
+                    if re.is_match(&line) {
+                        let mut context = Vec::with_capacity(2 * CONTEXT + 1);
+                        for (ind, prev_line) in prev_lines
+                            .into_iter()
+                            .rev()
+                            .take(matched_line_ind)
+                            .enumerate()
+                        {
+                            context.push(ContextLine {
+                                line: prev_line,
+                                // TODO
+                                number: matched_line_ind - CONTEXT + ind + 1,
+                                important: false,
+                            });
+                        }
+
+                        context.push(ContextLine {
+                            line,
+                            number: matched_line_ind + 1,
+                            important: true,
+                        });
+
+                        for ind in 0..CONTEXT {
+                            let mut next_line = String::with_capacity(256);
+                            let Ok(n) = read_line(&mut next_line) else {
+                                break;
+                            };
+
+                            if n == 0 {
+                                break;
+                            }
+
+                            context.push(ContextLine {
+                                line: next_line,
+                                number: matched_line_ind + ind + 2,
+                                important: false,
+                            });
+                        }
+
+                        return State::Pending(context);
+                    }
+
+                    matched_line_ind += 1;
+                    for prev_line in &mut prev_lines {
+                        mem::swap(&mut line, prev_line);
+                    }
+                    line.clear();
+                }
+                Err(e) => panic!(
+                    "We were unable to read the exercise file {}! {e}",
+                    self.path.display()
+                ),
+            }
         }
 
-        let matched_line_index = source
-            .lines()
-            .enumerate()
-            .find_map(|(i, line)| if re.is_match(line) { Some(i) } else { None })
-            .expect("This should not happen at all");
-
-        let min_line = ((matched_line_index as i32) - (CONTEXT as i32)).max(0) as usize;
-        let max_line = matched_line_index + CONTEXT;
-
-        let context = source
-            .lines()
-            .enumerate()
-            .filter(|&(i, _)| i >= min_line && i <= max_line)
-            .map(|(i, line)| ContextLine {
-                line: line.to_string(),
-                number: i + 1,
-                important: i == matched_line_index,
-            })
-            .collect();
-
-        State::Pending(context)
+        State::Done
     }
 
     // Check that the exercise looks to be solved using self.state()
