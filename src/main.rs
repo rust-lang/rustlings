@@ -149,17 +149,15 @@ fn main() {
                 let filter_cond = filters
                     .iter()
                     .any(|f| exercise.name.contains(f) || fname.contains(f));
-                let status = if exercise.looks_done() {
+                let looks_done = exercise.looks_done();
+                let status = if looks_done {
                     exercises_done += 1;
                     "Done"
                 } else {
                     "Pending"
                 };
-                let solve_cond = {
-                    (exercise.looks_done() && solved)
-                        || (!exercise.looks_done() && unsolved)
-                        || (!solved && !unsolved)
-                };
+                let solve_cond =
+                    (looks_done && solved) || (!looks_done && unsolved) || (!solved && !unsolved);
                 if solve_cond && (filter_cond || filter.is_none()) {
                     let line = if paths {
                         format!("{fname}\n")
