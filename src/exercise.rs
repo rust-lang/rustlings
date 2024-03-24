@@ -1,4 +1,3 @@
-use regex::Regex;
 use serde::Deserialize;
 use std::fmt::{self, Display, Formatter};
 use std::fs::{self, remove_file, File};
@@ -6,13 +5,33 @@ use std::io::{self, BufRead, BufReader};
 use std::path::PathBuf;
 use std::process::{self, Command};
 use std::{array, env, mem};
+use winnow::ascii::{space0, space1};
+use winnow::combinator::opt;
+use winnow::Parser;
 
 const RUSTC_COLOR_ARGS: &[&str] = &["--color", "always"];
 const RUSTC_EDITION_ARGS: &[&str] = &["--edition", "2021"];
 const RUSTC_NO_DEBUG_ARGS: &[&str] = &["-C", "strip=debuginfo"];
-const I_AM_DONE_REGEX: &str = r"^\s*///?\s*I\s+AM\s+NOT\s+DONE";
 const CONTEXT: usize = 2;
 const CLIPPY_CARGO_TOML_PATH: &str = "./exercises/22_clippy/Cargo.toml";
+
+fn not_done(input: &str) -> bool {
+    (
+        space0::<_, ()>,
+        "//",
+        opt('/'),
+        space0,
+        'I',
+        space1,
+        "AM",
+        space1,
+        "NOT",
+        space1,
+        "DONE",
+    )
+        .parse_next(&mut &*input)
+        .is_ok()
+}
 
 // Get a temporary file name that is hopefully unique
 #[inline]
@@ -223,7 +242,6 @@ path = "{}.rs""#,
             Ok(n)
         };
 
-        let re = Regex::new(I_AM_DONE_REGEX).unwrap();
         let mut matched_line_ind: usize = 0;
         let mut prev_lines: [_; CONTEXT] = array::from_fn(|_| String::with_capacity(256));
         let mut line = String::with_capacity(256);
@@ -232,7 +250,7 @@ path = "{}.rs""#,
             match read_line(&mut line) {
                 Ok(0) => break,
                 Ok(_) => {
-                    if re.is_match(&line) {
+                    if not_done(&line) {
                         let mut context = Vec::with_capacity(2 * CONTEXT + 1);
                         for (ind, prev_line) in prev_lines
                             .into_iter()
@@ -412,5 +430,23 @@ mod test {
         };
         let out = exercise.compile().unwrap().run().unwrap();
         assert!(out.stdout.contains("THIS TEST TOO SHALL PASS"));
+    }
+
+    #[test]
+    fn test_not_done() {
+        assert!(not_done("// I AM NOT DONE"));
+        assert!(not_done("/// I AM NOT DONE"));
+        assert!(not_done("//  I AM NOT DONE"));
+        assert!(not_done("///  I AM NOT DONE"));
+        assert!(not_done("// I  AM NOT DONE"));
+        assert!(not_done("// I AM  NOT DONE"));
+        assert!(not_done("// I AM NOT  DONE"));
+        assert!(not_done("// I AM NOT DONE "));
+        assert!(not_done("// I AM NOT DONE!"));
+
+        assert!(!not_done("I AM NOT DONE"));
+        assert!(!not_done("// NOT DONE"));
+        assert!(!not_done("DONE"));
+        assert!(!not_done("// i am not done"));
     }
 }

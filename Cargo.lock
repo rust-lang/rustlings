@@ -533,10 +533,10 @@ dependencies = [
  "indicatif",
  "notify-debouncer-mini",
  "predicates",
- "regex",
  "serde",
  "serde_json",
  "toml",
+ "winnow",
 ]
 
 [[package]]
