@@ -31,10 +31,12 @@ impl RustAnalyzerProject {
 
     /// Write rust-project.json to disk
     pub fn write_to_disk(&self) -> Result<(), std::io::Error> {
-        std::fs::write(
-            "./rust-project.json",
-            serde_json::to_vec(&self).expect("Failed to serialize to JSON"),
-        )?;
+        // Using the capacity 2^14 = 16384 since the file length in bytes is higher than 2^13.
+        // The final length is not known exactly because it depends on the user's sysroot path,
+        // the current number of exercises etc.
+        let mut buf = Vec::with_capacity(16384);
+        serde_json::to_writer(&mut buf, &self).expect("Failed to serialize to JSON");
+        std::fs::write("rust-project.json", buf)?;
         Ok(())
     }
 
