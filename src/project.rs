@@ -20,6 +20,8 @@ struct Crate {
     edition: &'static str,
     // Not used, but required in the JSON file.
     deps: Vec<()>,
+    // Only `test` is used for all crates.
+    // Therefore, an array is used instead of a `Vec`.
     cfg: [&'static str; 1],
 }
 
@@ -31,7 +33,7 @@ impl RustAnalyzerProject {
                 root_module: exercise.path,
                 edition: "2021",
                 deps: Vec::new(),
-                // This allows rust_analyzer to work inside #[test] blocks
+                // This allows rust_analyzer to work inside `#[test]` blocks
                 cfg: ["test"],
             })
             .collect();
@@ -54,7 +56,6 @@ impl RustAnalyzerProject {
         let toolchain =
             String::from_utf8(toolchain).context("The toolchain path is invalid UTF8")?;
         let toolchain = toolchain.trim_end();
-
         println!("Determined toolchain: {toolchain}\n");
 
         let mut sysroot_src = PathBuf::with_capacity(256);
