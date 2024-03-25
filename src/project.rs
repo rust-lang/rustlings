@@ -1,7 +1,6 @@
 use anyhow::{Context, Result};
 use serde::Serialize;
 use std::env;
-use std::error::Error;
 use std::path::PathBuf;
 use std::process::{Command, Stdio};
 
@@ -10,7 +9,7 @@ use crate::exercise::Exercise;
 /// Contains the structure of resulting rust-project.json file
 /// and functions to build the data required to create the file
 #[derive(Serialize)]
-pub struct RustAnalyzerProject {
+struct RustAnalyzerProject {
     sysroot_src: PathBuf,
     crates: Vec<Crate>,
 }
@@ -25,12 +24,22 @@ struct Crate {
 }
 
 impl RustAnalyzerProject {
-    pub fn build() -> Result<Self> {
-        // check if RUST_SRC_PATH is set
+    fn build(exercises: Vec<Exercise>) -> Result<Self> {
+        let crates = exercises
+            .into_iter()
+            .map(|exercise| Crate {
+                root_module: exercise.path,
+                edition: "2021",
+                deps: Vec::new(),
+                // This allows rust_analyzer to work inside #[test] blocks
+                cfg: ["test"],
+            })
+            .collect();
+
         if let Some(path) = env::var_os("RUST_SRC_PATH") {
             return Ok(Self {
                 sysroot_src: PathBuf::from(path),
-                crates: Vec::new(),
+                crates,
             });
         }
 
@@ -53,35 +62,21 @@ impl RustAnalyzerProject {
 
         Ok(Self {
             sysroot_src,
-            crates: Vec::new(),
+            crates,
         })
     }
+}
 
-    /// Write rust-project.json to disk
-    pub fn write_to_disk(&self) -> Result<(), std::io::Error> {
-        // Using the capacity 2^14 = 16384 since the file length in bytes is higher than 2^13.
-        // The final length is not known exactly because it depends on the user's sysroot path,
-        // the current number of exercises etc.
-        let mut buf = Vec::with_capacity(16384);
-        serde_json::to_writer(&mut buf, &self).expect("Failed to serialize to JSON");
-        std::fs::write("rust-project.json", buf)?;
-        Ok(())
-    }
+/// Write `rust-project.json` to disk.
+pub fn write_project_json(exercises: Vec<Exercise>) -> Result<()> {
+    let content = RustAnalyzerProject::build(exercises)?;
 
-    /// Parse the exercises folder for .rs files, any matches will create
-    /// a new `crate` in rust-project.json which allows rust-analyzer to
-    /// treat it like a normal binary
-    pub fn exercises_to_json(&mut self, exercises: Vec<Exercise>) -> Result<(), Box<dyn Error>> {
-        self.crates = exercises
-            .into_iter()
-            .map(|exercise| Crate {
-                root_module: exercise.path,
-                edition: "2021",
-                deps: Vec::new(),
-                // This allows rust_analyzer to work inside #[test] blocks
-                cfg: ["test"],
-            })
-            .collect();
-        Ok(())
-    }
+    // Using the capacity 2^14 since the file length in bytes is higher than 2^13.
+    // The final length is not known exactly because it depends on the user's sysroot path,
+    // the current number of exercises etc.
+    let mut buf = Vec::with_capacity(1 << 14);
+    serde_json::to_writer(&mut buf, &content)?;
+    std::fs::write("rust-project.json", buf)?;
+
+    Ok(())
 }

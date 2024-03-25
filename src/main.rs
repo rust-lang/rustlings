@@ -1,5 +1,5 @@
 use crate::exercise::{Exercise, ExerciseList};
-use crate::project::RustAnalyzerProject;
+use crate::project::write_project_json;
 use crate::run::{reset, run};
 use crate::verify::verify;
 use anyhow::Result;
@@ -204,13 +204,8 @@ fn main() -> Result<()> {
         }
 
         Subcommands::Lsp => {
-            let mut project = RustAnalyzerProject::build()?;
-            project
-                .exercises_to_json(exercises)
-                .expect("Couldn't parse rustlings exercises files");
-
-            if project.write_to_disk().is_err() {
-                println!("Failed to write rust-project.json to disk for rust-analyzer");
+            if let Err(e) = write_project_json(exercises) {
+                println!("Failed to write rust-project.json to disk for rust-analyzer: {e}");
             } else {
                 println!("Successfully generated rust-project.json");
                 println!("rust-analyzer will now parse exercises, restart your language server or editor")
