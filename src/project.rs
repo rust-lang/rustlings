@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 use std::env;
 use std::error::Error;
 use std::path::PathBuf;
-use std::process::Command;
+use std::process::{Command, Stdio};
 
 /// Contains the structure of resulting rust-project.json file
 /// and functions to build the data required to create the file
@@ -35,6 +35,7 @@ impl RustAnalyzerProject {
         let toolchain = Command::new("rustc")
             .arg("--print")
             .arg("sysroot")
+            .stderr(Stdio::inherit())
             .output()
             .context("Failed to get the sysroot from `rustc`. Do you have `rustc` installed?")?
             .stdout;
