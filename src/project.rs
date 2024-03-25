@@ -1,5 +1,5 @@
 use anyhow::{bail, Context, Result};
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 use std::env;
 use std::error::Error;
 use std::path::PathBuf;
@@ -9,13 +9,13 @@ use crate::exercise::Exercise;
 
 /// Contains the structure of resulting rust-project.json file
 /// and functions to build the data required to create the file
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize)]
 pub struct RustAnalyzerProject {
     sysroot_src: String,
     crates: Vec<Crate>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize)]
 pub struct Crate {
     root_module: String,
     edition: String,
