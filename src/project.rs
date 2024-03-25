@@ -12,7 +12,7 @@ use crate::exercise::Exercise;
 #[derive(Serialize, Deserialize)]
 pub struct RustAnalyzerProject {
     sysroot_src: String,
-    pub crates: Vec<Crate>,
+    crates: Vec<Crate>,
 }
 
 #[derive(Serialize, Deserialize)]

@@ -209,9 +209,7 @@ fn main() -> Result<()> {
                 .exercises_to_json(exercises)
                 .expect("Couldn't parse rustlings exercises files");
 
-            if project.crates.is_empty() {
-                println!("Failed find any exercises, make sure you're in the `rustlings` folder");
-            } else if project.write_to_disk().is_err() {
+            if project.write_to_disk().is_err() {
                 println!("Failed to write rust-project.json to disk for rust-analyzer");
             } else {
                 println!("Successfully generated rust-project.json");
