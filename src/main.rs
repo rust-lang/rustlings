@@ -107,8 +107,10 @@ fn main() {
         std::process::exit(1);
     }
 
-    let toml_str = &fs::read_to_string("info.toml").unwrap();
-    let exercises = toml::from_str::<ExerciseList>(toml_str).unwrap().exercises;
+    let info_file = fs::read_to_string("info.toml").unwrap();
+    let exercises = toml_edit::de::from_str::<ExerciseList>(&info_file)
+        .unwrap()
+        .exercises;
     let verbose = args.nocapture;
 
     let command = args.command.unwrap_or_else(|| {
