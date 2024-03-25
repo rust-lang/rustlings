@@ -204,10 +204,7 @@ fn main() -> Result<()> {
         }
 
         Subcommands::Lsp => {
-            let mut project = RustAnalyzerProject::new();
-            project
-                .get_sysroot_src()
-                .expect("Couldn't find toolchain path, do you have `rustc` installed?");
+            let mut project = RustAnalyzerProject::build()?;
             project
                 .exercises_to_json()
                 .expect("Couldn't parse rustlings exercises files");
