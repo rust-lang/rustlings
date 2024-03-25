@@ -2,6 +2,7 @@ use crate::exercise::{Exercise, ExerciseList};
 use crate::project::RustAnalyzerProject;
 use crate::run::{reset, run};
 use crate::verify::verify;
+use anyhow::Result;
 use clap::{Parser, Subcommand};
 use console::Emoji;
 use notify_debouncer_mini::notify::{self, RecursiveMode};
@@ -84,7 +85,7 @@ enum Subcommands {
     Lsp,
 }
 
-fn main() {
+fn main() -> Result<()> {
     let args = Args::parse();
 
     if args.command.is_none() {
@@ -243,6 +244,8 @@ fn main() {
             }
         },
     }
+
+    Ok(())
 }
 
 fn spawn_watch_shell(
