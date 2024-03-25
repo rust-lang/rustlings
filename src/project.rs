@@ -1,4 +1,4 @@
-use anyhow::{bail, Context, Result};
+use anyhow::{Context, Result};
 use serde::Serialize;
 use std::env;
 use std::error::Error;
@@ -11,24 +11,25 @@ use crate::exercise::Exercise;
 /// and functions to build the data required to create the file
 #[derive(Serialize)]
 pub struct RustAnalyzerProject {
-    sysroot_src: String,
+    sysroot_src: PathBuf,
     crates: Vec<Crate>,
 }
 
 #[derive(Serialize)]
-pub struct Crate {
-    root_module: String,
-    edition: String,
-    deps: Vec<String>,
-    cfg: Vec<String>,
+struct Crate {
+    root_module: PathBuf,
+    edition: &'static str,
+    // Not used, but required in the JSON file.
+    deps: Vec<()>,
+    cfg: [&'static str; 1],
 }
 
 impl RustAnalyzerProject {
     pub fn build() -> Result<Self> {
         // check if RUST_SRC_PATH is set
-        if let Ok(sysroot_src) = env::var("RUST_SRC_PATH") {
+        if let Some(path) = env::var_os("RUST_SRC_PATH") {
             return Ok(Self {
-                sysroot_src,
+                sysroot_src: PathBuf::from(path),
                 crates: Vec::new(),
             });
         }
@@ -49,9 +50,6 @@ impl RustAnalyzerProject {
 
         let mut sysroot_src = PathBuf::with_capacity(256);
         sysroot_src.extend([toolchain, "lib", "rustlib", "src", "rust", "library"]);
-        let Ok(sysroot_src) = sysroot_src.into_os_string().into_string() else {
-            bail!("The sysroot path is invalid UTF8");
-        };
 
         Ok(Self {
             sysroot_src,
@@ -77,11 +75,11 @@ impl RustAnalyzerProject {
         self.crates = exercises
             .into_iter()
             .map(|exercise| Crate {
-                root_module: exercise.path.display().to_string(),
-                edition: "2021".to_string(),
+                root_module: exercise.path,
+                edition: "2021",
                 deps: Vec::new(),
                 // This allows rust_analyzer to work inside #[test] blocks
-                cfg: vec!["test".to_string()],
+                cfg: ["test"],
             })
             .collect();
         Ok(())
