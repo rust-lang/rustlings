@@ -1,10 +1,11 @@
 use anyhow::{bail, Context, Result};
-use glob::glob;
 use serde::{Deserialize, Serialize};
 use std::env;
 use std::error::Error;
 use std::path::PathBuf;
 use std::process::{Command, Stdio};
+
+use crate::exercise::Exercise;
 
 /// Contains the structure of resulting rust-project.json file
 /// and functions to build the data required to create the file
@@ -69,30 +70,20 @@ impl RustAnalyzerProject {
         Ok(())
     }
 
-    /// If path contains .rs extension, add a crate to `rust-project.json`
-    fn path_to_json(&mut self, path: PathBuf) -> Result<(), Box<dyn Error>> {
-        if let Some(ext) = path.extension() {
-            if ext == "rs" {
-                self.crates.push(Crate {
-                    root_module: path.display().to_string(),
-                    edition: "2021".to_string(),
-                    deps: Vec::new(),
-                    // This allows rust_analyzer to work inside #[test] blocks
-                    cfg: vec!["test".to_string()],
-                })
-            }
-        }
-
-        Ok(())
-    }
-
     /// Parse the exercises folder for .rs files, any matches will create
     /// a new `crate` in rust-project.json which allows rust-analyzer to
     /// treat it like a normal binary
-    pub fn exercises_to_json(&mut self) -> Result<(), Box<dyn Error>> {
-        for path in glob("./exercises/**/*")? {
-            self.path_to_json(path?)?;
-        }
+    pub fn exercises_to_json(&mut self, exercises: Vec<Exercise>) -> Result<(), Box<dyn Error>> {
+        self.crates = exercises
+            .into_iter()
+            .map(|exercise| Crate {
+                root_module: exercise.path.display().to_string(),
+                edition: "2021".to_string(),
+                deps: Vec::new(),
+                // This allows rust_analyzer to work inside #[test] blocks
+                cfg: vec!["test".to_string()],
+            })
+            .collect();
         Ok(())
     }
 }

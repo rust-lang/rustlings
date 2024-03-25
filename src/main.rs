@@ -206,7 +206,7 @@ fn main() -> Result<()> {
         Subcommands::Lsp => {
             let mut project = RustAnalyzerProject::build()?;
             project
-                .exercises_to_json()
+                .exercises_to_json(exercises)
                 .expect("Couldn't parse rustlings exercises files");
 
             if project.crates.is_empty() {
