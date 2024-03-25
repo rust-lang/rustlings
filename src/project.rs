@@ -3,7 +3,7 @@ use glob::glob;
 use serde::{Deserialize, Serialize};
 use std::env;
 use std::error::Error;
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 use std::process::Command;
 
 /// Contains the structure of resulting rust-project.json file
@@ -45,15 +45,9 @@ impl RustAnalyzerProject {
 
         println!("Determined toolchain: {toolchain}\n");
 
-        let Ok(sysroot_src) = Path::new(toolchain)
-            .join("lib")
-            .join("rustlib")
-            .join("src")
-            .join("rust")
-            .join("library")
-            .into_os_string()
-            .into_string()
-        else {
+        let mut sysroot_src = PathBuf::with_capacity(256);
+        sysroot_src.extend([toolchain, "lib", "rustlib", "src", "rust", "library"]);
+        let Ok(sysroot_src) = sysroot_src.into_os_string().into_string() else {
             bail!("The sysroot path is invalid UTF8");
         };
 
