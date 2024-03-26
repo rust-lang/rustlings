@@ -217,7 +217,7 @@ fn main() {
                 println!("Failed to write rust-project.json to disk for rust-analyzer");
             } else {
                 println!("Successfully generated rust-project.json");
-                println!("rust-analyzer will now parse exercises, restart your language server or editor")
+                println!("rust-analyzer will now parse exercises, restart your language server or editor");
             }
         }
 
