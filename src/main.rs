@@ -289,7 +289,7 @@ fn spawn_watch_shell(
 }
 
 fn find_exercise<'a>(name: &str, exercises: &'a [Exercise]) -> &'a Exercise {
-    if name.eq("next") {
+    if name == "next" {
         exercises
             .iter()
             .find(|e| !e.looks_done())
