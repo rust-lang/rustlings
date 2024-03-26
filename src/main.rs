@@ -223,10 +223,7 @@ fn main() {
 
         Subcommands::Watch { success_hints } => match watch(&exercises, verbose, success_hints) {
             Err(e) => {
-                println!(
-                    "Error: Could not watch your progress. Error message was {:?}.",
-                    e
-                );
+                println!("Error: Could not watch your progress. Error message was {e:?}.");
                 println!("Most likely you've run out of disk space or your 'inotify limit' has been reached.");
                 std::process::exit(1);
             }
@@ -280,7 +277,7 @@ fn spawn_watch_shell(
                     if parts.is_empty() {
                         println!("no command provided");
                     } else if let Err(e) = Command::new(parts[0]).args(&parts[1..]).status() {
-                        println!("failed to execute command `{}`: {}", cmd, e);
+                        println!("failed to execute command `{cmd}`: {e}");
                     }
                 } else {
                     println!("unknown command: {input}");
