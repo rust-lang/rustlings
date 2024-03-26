@@ -241,6 +241,7 @@ path = "{}.rs""#,
         };
 
         let mut current_line_number: usize = 1;
+        // Keep the last `CONTEXT` lines while iterating over the file lines.
         let mut prev_lines: [_; CONTEXT] = array::from_fn(|_| String::with_capacity(256));
         let mut line = String::with_capacity(256);
 
@@ -260,6 +261,7 @@ path = "{}.rs""#,
 
             if contains_not_done_comment(&line) {
                 let mut context = Vec::with_capacity(2 * CONTEXT + 1);
+                // Previous lines.
                 for (ind, prev_line) in prev_lines
                     .into_iter()
                     .take(current_line_number - 1)
@@ -273,18 +275,22 @@ path = "{}.rs""#,
                     });
                 }
 
+                // Current line.
                 context.push(ContextLine {
                     line,
                     number: current_line_number,
                     important: true,
                 });
 
+                // Next lines.
                 for ind in 0..CONTEXT {
                     let mut next_line = String::with_capacity(256);
                     let Ok(n) = read_line(&mut next_line) else {
+                        // If an error occurs, just ignore the next lines.
                         break;
                     };
 
+                    // Reached the end of the file.
                     if n == 0 {
                         break;
                     }
@@ -300,10 +306,12 @@ path = "{}.rs""#,
             }
 
             current_line_number += 1;
-            // Recycle the buffers.
+            // Add the current line as a previous line and shift the older lines by one.
             for prev_line in &mut prev_lines {
                 mem::swap(&mut line, prev_line);
             }
+            // The current line now contains the oldest previous line.
+            // Recycle it for reading the next line.
             line.clear();
         }
     }
