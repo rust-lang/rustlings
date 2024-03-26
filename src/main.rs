@@ -335,7 +335,6 @@ fn watch(
 
     clear_screen();
 
-    let to_owned_hint = |t: &Exercise| t.hint.to_owned();
     let failed_exercise_hint = match verify(
         exercises.iter(),
         (0, exercises.len()),
@@ -343,7 +342,7 @@ fn watch(
         success_hints,
     ) {
         Ok(_) => return Ok(WatchStatus::Finished),
-        Err(exercise) => Arc::new(Mutex::new(Some(to_owned_hint(exercise)))),
+        Err(exercise) => Arc::new(Mutex::new(Some(exercise.hint.clone()))),
     };
     spawn_watch_shell(&failed_exercise_hint, Arc::clone(&should_quit));
     loop {
@@ -380,7 +379,7 @@ fn watch(
                                 Err(exercise) => {
                                     let mut failed_exercise_hint =
                                         failed_exercise_hint.lock().unwrap();
-                                    *failed_exercise_hint = Some(to_owned_hint(exercise));
+                                    *failed_exercise_hint = Some(exercise.hint.clone());
                                 }
                             }
                         }
