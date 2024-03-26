@@ -411,7 +411,7 @@ fn rustc_exists() -> bool {
         .unwrap_or(false)
 }
 
-const DEFAULT_OUT: &str = r#"Thanks for installing Rustlings!
+const DEFAULT_OUT: &str = "Thanks for installing Rustlings!
 
 Is this your first time? Don't worry, Rustlings was made for beginners! We are
 going to teach you a lot of things about Rust, but before we can get
@@ -437,7 +437,7 @@ started, here's a couple of notes about how Rustlings operates:
    autocompletion, run the command `rustlings lsp`.
 
 Got all that? Great! To get started, run `rustlings watch` in order to get the first
-exercise. Make sure to have your editor open!"#;
+exercise. Make sure to have your editor open!";
 
 const FENISH_LINE: &str = "+----------------------------------------------------+
 |          You made it to the Fe-nish line!          |
