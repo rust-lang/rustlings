@@ -51,6 +51,7 @@ pub fn verify<'a>(
     Ok(())
 }
 
+#[derive(PartialEq, Eq)]
 enum RunMode {
     Interactive,
     NonInteractive,
@@ -124,7 +125,7 @@ fn compile_and_test(
             if verbose {
                 println!("{}", output.stdout);
             }
-            if let RunMode::Interactive = run_mode {
+            if run_mode == RunMode::Interactive {
                 Ok(prompt_for_completion(exercise, None, success_hints))
             } else {
                 Ok(true)
