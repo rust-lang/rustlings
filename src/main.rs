@@ -91,15 +91,6 @@ fn main() {
         println!("\n{WELCOME}\n");
     }
 
-    if !Path::new("info.toml").exists() {
-        println!(
-            "{} must be run from the rustlings directory",
-            std::env::current_exe().unwrap().to_str().unwrap()
-        );
-        println!("Try `cd rustlings/`!");
-        std::process::exit(1);
-    }
-
     if which::which("rustc").is_err() {
         println!("We cannot find `rustc`.");
         println!("Try running `rustc --version` to diagnose your problem.");
@@ -107,8 +98,18 @@ fn main() {
         std::process::exit(1);
     }
 
-    let toml_str = &fs::read_to_string("info.toml").unwrap();
-    let exercises = toml::from_str::<ExerciseList>(toml_str).unwrap().exercises;
+    let info_file = fs::read_to_string("info.toml").unwrap_or_else(|e| {
+        match e.kind() {
+            io::ErrorKind::NotFound => println!(
+                "The program must be run from the rustlings directory\nTry `cd rustlings/`!",
+            ),
+            _ => println!("Failed to read the info.toml file: {e}"),
+        }
+        std::process::exit(1);
+    });
+    let exercises = toml_edit::de::from_str::<ExerciseList>(&info_file)
+        .unwrap()
+        .exercises;
     let verbose = args.nocapture;
 
     let command = args.command.unwrap_or_else(|| {
