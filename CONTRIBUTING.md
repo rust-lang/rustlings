@@ -21,7 +21,6 @@ _implement a new feature! ➡️ [open an Issue to discuss it first, then a Pull
 
 `rustlings` is basically a glorified `rustc` wrapper. Therefore the source code
 isn't really that complicated since the bulk of the work is done by `rustc`.
-`src/main.rs` contains a simple `argh` CLI that connects to most of the other source files.
 
 <a name="addex"></a>
 ### Adding an exercise
