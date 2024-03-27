@@ -65,7 +65,7 @@ changes. There's a couple of things to watch out for:
 
 #### Write correct commit messages
 
-We follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0-beta.4/)
+We follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
 specification.
 This means that you have to format your commit messages in a specific way. Say
 you're working on adding a new exercise called `foobar1.rs`. You could write
