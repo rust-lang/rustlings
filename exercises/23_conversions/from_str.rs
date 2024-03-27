@@ -44,10 +44,6 @@ enum ParsePersonError {
 // 6. If while extracting the name and the age something goes wrong, an error
 //    should be returned
 // If everything goes well, then return a Result of a Person object
-//
-// As an aside: `Box<dyn Error>` implements `From<&'_ str>`. This means that if
-// you want to return a string error message, you can do so via just using
-// return `Err("my error message".into())`.
 
 impl FromStr for Person {
     type Err = ParsePersonError;
