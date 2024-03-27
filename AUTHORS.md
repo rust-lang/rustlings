@@ -380,6 +380,9 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/kazu728"><img src="https://avatars.githubusercontent.com/u/34614358?v=4?s=100" width="100px;" alt="Kazuki Matsuo"/><br /><sub><b>Kazuki Matsuo</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=kazu728" title="Code">💻</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/paul-leydier"><img src="https://avatars.githubusercontent.com/u/75126792?v=4?s=100" width="100px;" alt="Paul Leydier"/><br /><sub><b>Paul Leydier</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=paul-leydier" title="Documentation">📖</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="12.5%"><a href="http://wznmickey.com"><img src="https://avatars.githubusercontent.com/u/44784663?v=4?s=100" width="100px;" alt="wznmickey"/><br /><sub><b>wznmickey</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=wznmickey" title="Documentation">📖</a></td>
+    </tr>
   </tbody>
 </table>
 
