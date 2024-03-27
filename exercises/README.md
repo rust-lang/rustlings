@@ -22,6 +22,6 @@
 | iterators              | §13.2-4             |
 | threads                | §16.1-3             |
 | smart_pointers         | §15, §16.3          |
-| macros                 | §19.6               |
+| macros                 | §19.5               |
 | clippy                 | §21.4               |
 | conversions            | n/a                 |
