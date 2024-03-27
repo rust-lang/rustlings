@@ -10,7 +10,7 @@ use std::ffi::OsStr;
 use std::fs;
 use std::io::{self, prelude::*};
 use std::path::Path;
-use std::process::{Command, Stdio};
+use std::process::Command;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::mpsc::{channel, RecvTimeoutError};
 use std::sync::{Arc, Mutex};
@@ -91,7 +91,7 @@ fn main() {
         println!("\n{WELCOME}\n");
     }
 
-    if !rustc_exists() {
+    if which::which("rustc").is_err() {
         println!("We cannot find `rustc`.");
         println!("Try running `rustc --version` to diagnose your problem.");
         println!("For instructions on how to install Rust, check the README.");
@@ -218,16 +218,13 @@ fn main() {
                 println!("Failed to write rust-project.json to disk for rust-analyzer");
             } else {
                 println!("Successfully generated rust-project.json");
-                println!("rust-analyzer will now parse exercises, restart your language server or editor")
+                println!("rust-analyzer will now parse exercises, restart your language server or editor");
             }
         }
 
         Subcommands::Watch { success_hints } => match watch(&exercises, verbose, success_hints) {
             Err(e) => {
-                println!(
-                    "Error: Could not watch your progress. Error message was {:?}.",
-                    e
-                );
+                println!("Error: Could not watch your progress. Error message was {e:?}.");
                 println!("Most likely you've run out of disk space or your 'inotify limit' has been reached.");
                 std::process::exit(1);
             }
@@ -281,7 +278,7 @@ fn spawn_watch_shell(
                     if parts.is_empty() {
                         println!("no command provided");
                     } else if let Err(e) = Command::new(parts[0]).args(&parts[1..]).status() {
-                        println!("failed to execute command `{}`: {}", cmd, e);
+                        println!("failed to execute command `{cmd}`: {e}");
                     }
                 } else {
                     println!("unknown command: {input}");
@@ -293,7 +290,7 @@ fn spawn_watch_shell(
 }
 
 fn find_exercise<'a>(name: &str, exercises: &'a [Exercise]) -> &'a Exercise {
-    if name.eq("next") {
+    if name == "next" {
         exercises
             .iter()
             .find(|e| !e.looks_done())
@@ -339,7 +336,6 @@ fn watch(
 
     clear_screen();
 
-    let to_owned_hint = |t: &Exercise| t.hint.to_owned();
     let failed_exercise_hint = match verify(
         exercises.iter(),
         (0, exercises.len()),
@@ -347,7 +343,7 @@ fn watch(
         success_hints,
     ) {
         Ok(_) => return Ok(WatchStatus::Finished),
-        Err(exercise) => Arc::new(Mutex::new(Some(to_owned_hint(exercise)))),
+        Err(exercise) => Arc::new(Mutex::new(Some(exercise.hint.clone()))),
     };
     spawn_watch_shell(&failed_exercise_hint, Arc::clone(&should_quit));
     loop {
@@ -384,7 +380,7 @@ fn watch(
                                 Err(exercise) => {
                                     let mut failed_exercise_hint =
                                         failed_exercise_hint.lock().unwrap();
-                                    *failed_exercise_hint = Some(to_owned_hint(exercise));
+                                    *failed_exercise_hint = Some(exercise.hint.clone());
                                 }
                             }
                         }
@@ -404,19 +400,7 @@ fn watch(
     }
 }
 
-fn rustc_exists() -> bool {
-    Command::new("rustc")
-        .args(["--version"])
-        .stdout(Stdio::null())
-        .stderr(Stdio::null())
-        .stdin(Stdio::null())
-        .spawn()
-        .and_then(|mut child| child.wait())
-        .map(|status| status.success())
-        .unwrap_or(false)
-}
-
-const DEFAULT_OUT: &str = r#"Thanks for installing Rustlings!
+const DEFAULT_OUT: &str = "Thanks for installing Rustlings!
 
 Is this your first time? Don't worry, Rustlings was made for beginners! We are
 going to teach you a lot of things about Rust, but before we can get
@@ -442,7 +426,7 @@ started, here's a couple of notes about how Rustlings operates:
    autocompletion, run the command `rustlings lsp`.
 
 Got all that? Great! To get started, run `rustlings watch` in order to get the first
-exercise. Make sure to have your editor open!"#;
+exercise. Make sure to have your editor open!";
 
 const FENISH_LINE: &str = "+----------------------------------------------------+
 |          You made it to the Fe-nish line!          |

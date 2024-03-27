@@ -12,13 +12,13 @@ edition = "2021"
 clap = { version = "4.5.2", features = ["derive"] }
 console = "0.15.8"
 glob = "0.3.0"
-home = "0.5.9"
 indicatif = "0.17.8"
 notify-debouncer-mini = "0.4.1"
 regex = "1.10.3"
 serde_json = "1.0.114"
 serde = { version = "1.0.197", features = ["derive"] }
 toml_edit = { version = "0.22.9", default-features = false, features = ["parse", "serde"] }
+which = "6.0.1"
 
 [[bin]]
 name = "rustlings"
