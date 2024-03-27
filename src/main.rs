@@ -1,7 +1,8 @@
 use crate::exercise::{Exercise, ExerciseList};
-use crate::project::RustAnalyzerProject;
+use crate::project::write_project_json;
 use crate::run::{reset, run};
 use crate::verify::verify;
+use anyhow::Result;
 use clap::{Parser, Subcommand};
 use console::Emoji;
 use notify_debouncer_mini::notify::{self, RecursiveMode};
@@ -85,7 +86,7 @@ enum Subcommands {
     Lsp,
 }
 
-fn main() {
+fn main() -> Result<()> {
     let args = Args::parse();
 
     if args.command.is_none() {
@@ -218,18 +219,8 @@ fn main() {
         }
 
         Subcommands::Lsp => {
-            let mut project = RustAnalyzerProject::new();
-            project
-                .get_sysroot_src()
-                .expect("Couldn't find toolchain path, do you have `rustc` installed?");
-            project
-                .exercises_to_json()
-                .expect("Couldn't parse rustlings exercises files");
-
-            if project.crates.is_empty() {
-                println!("Failed find any exercises, make sure you're in the `rustlings` folder");
-            } else if project.write_to_disk().is_err() {
-                println!("Failed to write rust-project.json to disk for rust-analyzer");
+            if let Err(e) = write_project_json(exercises) {
+                println!("Failed to write rust-project.json to disk for rust-analyzer: {e}");
             } else {
                 println!("Successfully generated rust-project.json");
                 println!("rust-analyzer will now parse exercises, restart your language server or editor");
@@ -255,6 +246,8 @@ fn main() {
             }
         },
     }
+
+    Ok(())
 }
 
 fn spawn_watch_shell(
