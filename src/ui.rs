@@ -1,33 +1,28 @@
-macro_rules! warn {
-    ($fmt:literal, $ex:expr) => {{
+macro_rules! print_emoji {
+    ($emoji:expr, $sign:expr, $color: ident, $fmt:literal, $ex:expr) => {{
         use console::{style, Emoji};
         use std::env;
         let formatstr = format!($fmt, $ex);
         if env::var("NO_EMOJI").is_ok() {
-            println!("{} {}", style("!").red(), style(formatstr).red());
+            println!("{} {}", style($sign).$color(), style(formatstr).$color());
         } else {
             println!(
                 "{} {}",
-                style(Emoji("⚠️ ", "!")).red(),
-                style(formatstr).red()
+                style(Emoji($emoji, $sign)).$color(),
+                style(formatstr).$color()
             );
         }
     }};
 }
 
+macro_rules! warn {
+    ($fmt:literal, $ex:expr) => {{
+        print_emoji!("⚠️ ", "!", red, $fmt, $ex);
+    }};
+}
+
 macro_rules! success {
     ($fmt:literal, $ex:expr) => {{
-        use console::{style, Emoji};
-        use std::env;
-        let formatstr = format!($fmt, $ex);
-        if env::var("NO_EMOJI").is_ok() {
-            println!("{} {}", style("✓").green(), style(formatstr).green());
-        } else {
-            println!(
-                "{} {}",
-                style(Emoji("✅", "✓")).green(),
-                style(formatstr).green()
-            );
-        }
+        print_emoji!("✅ ", "✓", green, $fmt, $ex);
     }};
 }
