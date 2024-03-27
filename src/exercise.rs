@@ -3,7 +3,7 @@ use std::fmt::{self, Display, Formatter};
 use std::fs::{self, remove_file, File};
 use std::io::{self, BufRead, BufReader};
 use std::path::PathBuf;
-use std::process::{self, exit, Command};
+use std::process::{self, exit, Command, Stdio};
 use std::{array, env, mem};
 use winnow::ascii::{space0, Caseless};
 use winnow::combinator::opt;
@@ -72,7 +72,7 @@ pub struct Exercise {
 
 // An enum to track of the state of an Exercise.
 // An Exercise can be either Done or Pending
-#[derive(PartialEq, Debug)]
+#[derive(PartialEq, Eq, Debug)]
 pub enum State {
     // The state of the exercise once it's been completed
     Done,
@@ -81,7 +81,7 @@ pub enum State {
 }
 
 // The context information of a pending exercise
-#[derive(PartialEq, Debug)]
+#[derive(PartialEq, Eq, Debug)]
 pub struct ContextLine {
     // The source code that is still pending completion
     pub line: String,
@@ -162,7 +162,10 @@ path = "{}.rs""#,
                     .args(RUSTC_COLOR_ARGS)
                     .args(RUSTC_EDITION_ARGS)
                     .args(RUSTC_NO_DEBUG_ARGS)
-                    .output()
+                    .stdin(Stdio::null())
+                    .stdout(Stdio::null())
+                    .stderr(Stdio::null())
+                    .status()
                     .expect("Failed to compile!");
                 // Due to an issue with Clippy, a cargo clean is required to catch all lints.
                 // See https://github.com/rust-lang/rust-clippy/issues/2604
@@ -171,7 +174,10 @@ path = "{}.rs""#,
                 Command::new("cargo")
                     .args(["clean", "--manifest-path", CLIPPY_CARGO_TOML_PATH])
                     .args(RUSTC_COLOR_ARGS)
-                    .output()
+                    .stdin(Stdio::null())
+                    .stdout(Stdio::null())
+                    .stderr(Stdio::null())
+                    .status()
                     .expect("Failed to run 'cargo clean'");
                 Command::new("cargo")
                     .args(["clippy", "--manifest-path", CLIPPY_CARGO_TOML_PATH])
