@@ -6,6 +6,7 @@ use clap::{Parser, Subcommand};
 use console::Emoji;
 use notify_debouncer_mini::notify::{self, RecursiveMode};
 use notify_debouncer_mini::{new_debouncer, DebouncedEventKind};
+use shlex::Shlex;
 use std::ffi::OsStr;
 use std::fs;
 use std::io::{self, prelude::*};
@@ -244,47 +245,49 @@ fn main() {
 }
 
 fn spawn_watch_shell(
-    failed_exercise_hint: &Arc<Mutex<Option<String>>>,
+    failed_exercise_hint: Arc<Mutex<Option<String>>>,
     should_quit: Arc<AtomicBool>,
 ) {
-    let failed_exercise_hint = Arc::clone(failed_exercise_hint);
     println!("Welcome to watch mode! You can type 'help' to get an overview of the commands you can use here.");
-    thread::spawn(move || loop {
-        let mut input = String::new();
-        match io::stdin().read_line(&mut input) {
-            Ok(_) => {
-                let input = input.trim();
-                if input == "hint" {
-                    if let Some(hint) = &*failed_exercise_hint.lock().unwrap() {
-                        println!("{hint}");
-                    }
-                } else if input == "clear" {
-                    println!("\x1B[2J\x1B[1;1H");
-                } else if input.eq("quit") {
-                    should_quit.store(true, Ordering::SeqCst);
-                    println!("Bye!");
-                } else if input.eq("help") {
-                    println!("Commands available to you in watch mode:");
-                    println!("  hint   - prints the current exercise's hint");
-                    println!("  clear  - clears the screen");
-                    println!("  quit   - quits watch mode");
-                    println!("  !<cmd> - executes a command, like `!rustc --explain E0381`");
-                    println!("  help   - displays this help message");
-                    println!();
-                    println!("Watch mode automatically re-evaluates the current exercise");
-                    println!("when you edit a file's contents.")
-                } else if let Some(cmd) = input.strip_prefix('!') {
-                    let parts: Vec<&str> = cmd.split_whitespace().collect();
-                    if parts.is_empty() {
-                        println!("no command provided");
-                    } else if let Err(e) = Command::new(parts[0]).args(&parts[1..]).status() {
-                        println!("failed to execute command `{cmd}`: {e}");
-                    }
-                } else {
-                    println!("unknown command: {input}");
-                }
+
+    thread::spawn(move || {
+        let mut input = String::with_capacity(32);
+        let mut stdin = io::stdin().lock();
+
+        loop {
+            // Recycle input buffer.
+            input.clear();
+
+            if let Err(e) = stdin.read_line(&mut input) {
+                println!("error reading command: {e}");
             }
-            Err(error) => println!("error reading command: {error}"),
+
+            let input = input.trim();
+            if input == "hint" {
+                if let Some(hint) = &*failed_exercise_hint.lock().unwrap() {
+                    println!("{hint}");
+                }
+            } else if input == "clear" {
+                println!("\x1B[2J\x1B[1;1H");
+            } else if input == "quit" {
+                should_quit.store(true, Ordering::SeqCst);
+                println!("Bye!");
+            } else if input == "help" {
+                println!("{WATCH_MODE_HELP_MESSAGE}");
+            } else if let Some(cmd) = input.strip_prefix('!') {
+                let mut parts = Shlex::new(cmd);
+
+                let Some(program) = parts.next() else {
+                    println!("no command provided");
+                    continue;
+                };
+
+                if let Err(e) = Command::new(program).args(parts).status() {
+                    println!("failed to execute command `{cmd}`: {e}");
+                }
+            } else {
+                println!("unknown command: {input}\n{WATCH_MODE_HELP_MESSAGE}");
+            }
         }
     });
 }
@@ -345,7 +348,7 @@ fn watch(
         Ok(_) => return Ok(WatchStatus::Finished),
         Err(exercise) => Arc::new(Mutex::new(Some(exercise.hint.clone()))),
     };
-    spawn_watch_shell(&failed_exercise_hint, Arc::clone(&should_quit));
+    spawn_watch_shell(Arc::clone(&failed_exercise_hint), Arc::clone(&should_quit));
     loop {
         match rx.recv_timeout(Duration::from_secs(1)) {
             Ok(event) => match event {
@@ -462,3 +465,13 @@ const WELCOME: &str = r"       welcome to...
  | |  | |_| \__ \ |_| | | | | | (_| \__ \
  |_|   \__,_|___/\__|_|_|_| |_|\__, |___/
                                |___/";
+
+const WATCH_MODE_HELP_MESSAGE: &str = "Commands available to you in watch mode:
+  hint   - prints the current exercise's hint
+  clear  - clears the screen
+  quit   - quits watch mode
+  !<cmd> - executes a command, like `!rustc --explain E0381`
+  help   - displays this help message
+
+Watch mode automatically re-evaluates the current exercise
+when you edit a file's contents.";
