@@ -58,7 +58,7 @@ pub struct Exercise {
 
 // An enum to track of the state of an Exercise.
 // An Exercise can be either Done or Pending
-#[derive(PartialEq, Debug)]
+#[derive(PartialEq, Eq, Debug)]
 pub enum State {
     // The state of the exercise once it's been completed
     Done,
@@ -67,7 +67,7 @@ pub enum State {
 }
 
 // The context information of a pending exercise
-#[derive(PartialEq, Debug)]
+#[derive(PartialEq, Eq, Debug)]
 pub struct ContextLine {
     // The source code that is still pending completion
     pub line: String,
