@@ -2685,6 +2685,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "paul-leydier",
+      "name": "Paul Leydier",
+      "avatar_url": "https://avatars.githubusercontent.com/u/75126792?v=4",
+      "profile": "https://github.com/paul-leydier",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 8,
