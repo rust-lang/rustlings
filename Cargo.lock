@@ -567,12 +567,12 @@ dependencies = [
  "indicatif",
  "notify-debouncer-mini",
  "predicates",
- "regex",
  "serde",
  "serde_json",
  "shlex",
  "toml_edit",
  "which",
+ "winnow",
 ]
 
 [[package]]

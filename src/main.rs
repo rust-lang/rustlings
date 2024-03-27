@@ -130,31 +130,43 @@ fn main() {
                 println!("{:<17}\t{:<46}\t{:<7}", "Name", "Path", "Status");
             }
             let mut exercises_done: u16 = 0;
-            let filters = filter.clone().unwrap_or_default().to_lowercase();
-            exercises.iter().for_each(|e| {
-                let fname = format!("{}", e.path.display());
+            let lowercase_filter = filter
+                .as_ref()
+                .map(|s| s.to_lowercase())
+                .unwrap_or_default();
+            let filters = lowercase_filter
+                .split(',')
+                .filter_map(|f| {
+                    let f = f.trim();
+                    if f.is_empty() {
+                        None
+                    } else {
+                        Some(f)
+                    }
+                })
+                .collect::<Vec<_>>();
+
+            for exercise in &exercises {
+                let fname = exercise.path.to_string_lossy();
                 let filter_cond = filters
-                    .split(',')
-                    .filter(|f| !f.trim().is_empty())
-                    .any(|f| e.name.contains(f) || fname.contains(f));
-                let status = if e.looks_done() {
+                    .iter()
+                    .any(|f| exercise.name.contains(f) || fname.contains(f));
+                let looks_done = exercise.looks_done();
+                let status = if looks_done {
                     exercises_done += 1;
                     "Done"
                 } else {
                     "Pending"
                 };
-                let solve_cond = {
-                    (e.looks_done() && solved)
-                        || (!e.looks_done() && unsolved)
-                        || (!solved && !unsolved)
-                };
+                let solve_cond =
+                    (looks_done && solved) || (!looks_done && unsolved) || (!solved && !unsolved);
                 if solve_cond && (filter_cond || filter.is_none()) {
                     let line = if paths {
                         format!("{fname}\n")
                     } else if names {
-                        format!("{}\n", e.name)
+                        format!("{}\n", exercise.name)
                     } else {
-                        format!("{:<17}\t{fname:<46}\t{status:<7}\n", e.name)
+                        format!("{:<17}\t{fname:<46}\t{status:<7}\n", exercise.name)
                     };
                     // Somehow using println! leads to the binary panicking
                     // when its output is piped.
@@ -170,7 +182,8 @@ fn main() {
                         });
                     }
                 }
-            });
+            }
+
             let percentage_progress = exercises_done as f32 / exercises.len() as f32 * 100.0;
             println!(
                 "Progress: You completed {} / {} exercises ({:.1} %).",
