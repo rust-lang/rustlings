@@ -27,14 +27,6 @@ enum Fruit {
     Pineapple,
 }
 
-const FRUIT_KINDS: [Fruit; 5] = [
-    Fruit::Apple,
-    Fruit::Banana,
-    Fruit::Mango,
-    Fruit::Lychee,
-    Fruit::Pineapple,
-];
-
 fn fruit_basket(basket: &mut HashMap<Fruit, u32>) {
     let fruit_kinds = vec![
         Fruit::Apple,
@@ -92,9 +84,17 @@ mod tests {
 
     #[test]
     fn all_fruit_types_in_basket() {
+        let fruit_kinds = vec![
+            Fruit::Apple,
+            Fruit::Banana,
+            Fruit::Mango,
+            Fruit::Lychee,
+            Fruit::Pineapple,
+        ];
+
         let mut basket = get_fruit_basket();
         fruit_basket(&mut basket);
-        for fruit_kind in FRUIT_KINDS {
+        for fruit_kind in fruit_kinds {
             let amount = basket
                 .get(&fruit_kind)
                 .expect(format!("Fruit kind {:?} was not found in basket", fruit_kind).as_str());
