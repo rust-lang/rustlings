@@ -60,13 +60,13 @@ pub fn include_files(_: TokenStream) -> TokenStream {
             EmbeddedFlatDir {
                 path: #dir_path,
                 readme: EmbeddedFile {
-                    path: concat!(#dir_path, "/README.md"),
-                    content: ::std::include_bytes!(concat!("../", #dir_path, "/README.md")),
+                    path: ::std::concat!(#dir_path, "/README.md"),
+                    content: ::std::include_bytes!(::std::concat!("../", #dir_path, "/README.md")),
                 },
                 content: &[
                     #(EmbeddedFile {
                         path: #dir_files,
-                        content: ::std::include_bytes!(concat!("../", #dir_files)),
+                        content: ::std::include_bytes!(::std::concat!("../", #dir_files)),
                     }),*
                 ],
             }
@@ -84,7 +84,7 @@ pub fn include_files(_: TokenStream) -> TokenStream {
                 files: &[#(
                      EmbeddedFile {
                         path: #files,
-                        content: ::std::include_bytes!(concat!("../", #files)),
+                        content: ::std::include_bytes!(::std::concat!("../", #files)),
                     }
                 ),*],
                 dirs: &[#(#dirs),*],
