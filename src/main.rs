@@ -27,6 +27,28 @@ mod project;
 mod run;
 mod verify;
 
+struct EmbeddedFile {
+    path: &'static str,
+    content: &'static [u8],
+}
+
+struct EmbeddedFlatDir {
+    path: &'static str,
+    readme: EmbeddedFile,
+    content: Vec<EmbeddedFile>,
+}
+
+struct ExercisesDir {
+    readme: EmbeddedFile,
+    files: Vec<EmbeddedFile>,
+    dirs: Vec<EmbeddedFlatDir>,
+}
+
+struct EmbeddedFiles {
+    info_toml_content: &'static str,
+    exercises_dir: ExercisesDir,
+}
+
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
 #[derive(Parser)]
 #[command(version)]
@@ -87,6 +109,7 @@ enum Subcommands {
 }
 
 fn main() -> Result<()> {
+    let embedded_files = rustlings_macros::include_files!();
     let args = Args::parse();
 
     if args.command.is_none() {

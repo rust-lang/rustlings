@@ -574,12 +574,20 @@ dependencies = [
  "indicatif",
  "notify-debouncer-mini",
  "predicates",
+ "rustlings-macros",
  "serde",
  "serde_json",
  "shlex",
  "toml_edit",
  "which",
  "winnow",
+]
+
+[[package]]
+name = "rustlings-macros"
+version = "5.6.1"
+dependencies = [
+ "quote",
 ]
 
 [[package]]
