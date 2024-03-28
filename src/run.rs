@@ -1,6 +1,7 @@
-use std::process::Command;
+use std::io;
 use std::time::Duration;
 
+use crate::embedded::{WriteStrategy, EMBEDDED_FILES};
 use crate::exercise::{Exercise, Mode};
 use crate::verify::test;
 use indicatif::ProgressBar;
@@ -19,17 +20,8 @@ pub fn run(exercise: &Exercise, verbose: bool) -> Result<(), ()> {
 }
 
 // Resets the exercise by stashing the changes.
-pub fn reset(exercise: &Exercise) -> Result<(), ()> {
-    let command = Command::new("git")
-        .arg("stash")
-        .arg("--")
-        .arg(&exercise.path)
-        .spawn();
-
-    match command {
-        Ok(_) => Ok(()),
-        Err(_) => Err(()),
-    }
+pub fn reset(exercise: &Exercise) -> io::Result<()> {
+    EMBEDDED_FILES.write_exercise_to_disk(&exercise.path, WriteStrategy::Overwrite)
 }
 
 // Invoke the rust compiler on the path of the given exercise

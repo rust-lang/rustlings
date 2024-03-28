@@ -1,7 +1,7 @@
 use anyhow::{Context, Result};
 use serde::Serialize;
 use std::env;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 
 use crate::exercise::Exercise;
@@ -9,14 +9,14 @@ use crate::exercise::Exercise;
 /// Contains the structure of resulting rust-project.json file
 /// and functions to build the data required to create the file
 #[derive(Serialize)]
-struct RustAnalyzerProject {
+struct RustAnalyzerProject<'a> {
     sysroot_src: PathBuf,
-    crates: Vec<Crate>,
+    crates: Vec<Crate<'a>>,
 }
 
 #[derive(Serialize)]
-struct Crate {
-    root_module: PathBuf,
+struct Crate<'a> {
+    root_module: &'a Path,
     edition: &'static str,
     // Not used, but required in the JSON file.
     deps: Vec<()>,
@@ -25,12 +25,12 @@ struct Crate {
     cfg: [&'static str; 1],
 }
 
-impl RustAnalyzerProject {
-    fn build(exercises: Vec<Exercise>) -> Result<Self> {
+impl<'a> RustAnalyzerProject<'a> {
+    fn build(exercises: &'a [Exercise]) -> Result<Self> {
         let crates = exercises
-            .into_iter()
+            .iter()
             .map(|exercise| Crate {
-                root_module: exercise.path,
+                root_module: &exercise.path,
                 edition: "2021",
                 deps: Vec::new(),
                 // This allows rust_analyzer to work inside `#[test]` blocks
@@ -69,7 +69,7 @@ impl RustAnalyzerProject {
 }
 
 /// Write `rust-project.json` to disk.
-pub fn write_project_json(exercises: Vec<Exercise>) -> Result<()> {
+pub fn write_project_json(exercises: &[Exercise]) -> Result<()> {
     let content = RustAnalyzerProject::build(exercises)?;
 
     // Using the capacity 2^14 since the file length in bytes is higher than 2^13.

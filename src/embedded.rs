@@ -52,7 +52,9 @@ impl EmbeddedFlatDir {
             }
         }
 
-        self.readme.write_to_disk(WriteStrategy::Overwrite)
+        self.readme.write_to_disk(WriteStrategy::Overwrite)?;
+
+        Ok(())
     }
 }
 
@@ -63,16 +65,31 @@ struct ExercisesDir {
 }
 
 pub struct EmbeddedFiles {
-    info_toml_content: &'static str,
+    pub info_toml_content: &'static str,
     exercises_dir: ExercisesDir,
 }
 
 impl EmbeddedFiles {
     pub fn init_exercises_dir(&self) -> io::Result<()> {
         create_dir("exercises")?;
+
         self.exercises_dir
             .readme
-            .write_to_disk(WriteStrategy::Overwrite)
+            .write_to_disk(WriteStrategy::IfNotExists)?;
+
+        for file in self.exercises_dir.files {
+            file.write_to_disk(WriteStrategy::IfNotExists)?;
+        }
+
+        for dir in self.exercises_dir.dirs {
+            dir.init_on_disk()?;
+
+            for file in dir.content {
+                file.write_to_disk(WriteStrategy::IfNotExists)?;
+            }
+        }
+
+        Ok(())
     }
 
     pub fn write_exercise_to_disk(&self, path: &Path, strategy: WriteStrategy) -> io::Result<()> {

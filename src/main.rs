@@ -5,14 +5,14 @@ use crate::verify::verify;
 use anyhow::Result;
 use clap::{Parser, Subcommand};
 use console::Emoji;
+use embedded::EMBEDDED_FILES;
 use notify_debouncer_mini::notify::{self, RecursiveMode};
 use notify_debouncer_mini::{new_debouncer, DebouncedEventKind};
 use shlex::Shlex;
 use std::ffi::OsStr;
-use std::fs;
-use std::io::{self, prelude::*};
+use std::io::{self, prelude::*, stdin, stdout};
 use std::path::Path;
-use std::process::Command;
+use std::process::{exit, Command};
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::mpsc::{channel, RecvTimeoutError};
 use std::sync::{Arc, Mutex};
@@ -54,7 +54,7 @@ enum Subcommands {
         /// The name of the exercise
         name: String,
     },
-    /// Reset a single exercise using "git stash -- <filename>"
+    /// Reset a single exercise
     Reset {
         /// The name of the exercise
         name: String,
@@ -83,12 +83,44 @@ enum Subcommands {
         #[arg(short, long)]
         solved: bool,
     },
-    /// Enable rust-analyzer for exercises
-    Lsp,
 }
 
 fn main() -> Result<()> {
     let args = Args::parse();
+
+    let exercises = toml_edit::de::from_str::<ExerciseList>(EMBEDDED_FILES.info_toml_content)
+        .unwrap()
+        .exercises;
+
+    if !Path::new("exercises").is_dir() {
+        let mut stdout = stdout().lock();
+        write!(
+            stdout,
+            "The `exercises` directory wasn't found in the current directory.
+Do you want to initialize Rustlings in the current directory (y/n)? "
+        )?;
+        stdout.flush()?;
+        let mut answer = String::new();
+        stdin().read_line(&mut answer)?;
+        answer.make_ascii_lowercase();
+        if answer.trim() != "y" {
+            exit(1);
+        }
+
+        EMBEDDED_FILES.init_exercises_dir()?;
+        if let Err(e) = write_project_json(&exercises) {
+            writeln!(
+                stdout,
+                "Failed to write rust-project.json to disk for rust-analyzer: {e}"
+            )?;
+        } else {
+            writeln!(stdout, "Successfully generated rust-project.json")?;
+            writeln!(
+                stdout,
+                "rust-analyzer will now parse exercises, restart your language server or editor"
+            )?;
+        }
+    }
 
     if args.command.is_none() {
         println!("\n{WELCOME}\n");
@@ -101,18 +133,6 @@ fn main() -> Result<()> {
         std::process::exit(1);
     }
 
-    let info_file = fs::read_to_string("info.toml").unwrap_or_else(|e| {
-        match e.kind() {
-            io::ErrorKind::NotFound => println!(
-                "The program must be run from the rustlings directory\nTry `cd rustlings/`!",
-            ),
-            _ => println!("Failed to read the info.toml file: {e}"),
-        }
-        std::process::exit(1);
-    });
-    let exercises = toml_edit::de::from_str::<ExerciseList>(&info_file)
-        .unwrap()
-        .exercises;
     let verbose = args.nocapture;
 
     let command = args.command.unwrap_or_else(|| {
@@ -205,7 +225,7 @@ fn main() -> Result<()> {
         Subcommands::Reset { name } => {
             let exercise = find_exercise(&name, &exercises);
 
-            reset(exercise).unwrap_or_else(|_| std::process::exit(1));
+            reset(exercise)?;
         }
 
         Subcommands::Hint { name } => {
@@ -217,15 +237,6 @@ fn main() -> Result<()> {
         Subcommands::Verify => {
             verify(&exercises, (0, exercises.len()), verbose, false)
                 .unwrap_or_else(|_| std::process::exit(1));
-        }
-
-        Subcommands::Lsp => {
-            if let Err(e) = write_project_json(exercises) {
-                println!("Failed to write rust-project.json to disk for rust-analyzer: {e}");
-            } else {
-                println!("Successfully generated rust-project.json");
-                println!("rust-analyzer will now parse exercises, restart your language server or editor");
-            }
         }
 
         Subcommands::Watch { success_hints } => match watch(&exercises, verbose, success_hints) {
