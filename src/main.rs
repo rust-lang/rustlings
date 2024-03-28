@@ -22,34 +22,11 @@ use std::time::Duration;
 #[macro_use]
 mod ui;
 
+mod embedded;
 mod exercise;
 mod project;
 mod run;
 mod verify;
-
-struct EmbeddedFile {
-    path: &'static str,
-    content: &'static [u8],
-}
-
-struct EmbeddedFlatDir {
-    path: &'static str,
-    readme: EmbeddedFile,
-    content: &'static [EmbeddedFile],
-}
-
-struct ExercisesDir {
-    readme: EmbeddedFile,
-    files: &'static [EmbeddedFile],
-    dirs: &'static [EmbeddedFlatDir],
-}
-
-struct EmbeddedFiles {
-    info_toml_content: &'static str,
-    exercises_dir: ExercisesDir,
-}
-
-static EMBEDDED_FILES: EmbeddedFiles = rustlings_macros::include_files!();
 
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
 #[derive(Parser)]
