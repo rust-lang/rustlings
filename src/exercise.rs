@@ -13,7 +13,7 @@ const RUSTC_COLOR_ARGS: &[&str] = &["--color", "always"];
 const RUSTC_EDITION_ARGS: &[&str] = &["--edition", "2021"];
 const RUSTC_NO_DEBUG_ARGS: &[&str] = &["-C", "strip=debuginfo"];
 const CONTEXT: usize = 2;
-const CLIPPY_CARGO_TOML_PATH: &str = "./exercises/22_clippy/Cargo.toml";
+const CLIPPY_CARGO_TOML_PATH: &str = "exercises/22_clippy/Cargo.toml";
 
 // Checks if the line contains the "I AM NOT DONE" comment.
 fn contains_not_done_comment(input: &str) -> bool {
@@ -36,7 +36,7 @@ fn temp_file() -> String {
         .filter(|c| c.is_alphanumeric())
         .collect();
 
-    format!("./temp_{}_{thread_id}", process::id())
+    format!("temp_{}_{thread_id}", process::id())
 }
 
 // The mode of the exercise.

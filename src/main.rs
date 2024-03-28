@@ -342,7 +342,7 @@ fn watch(
     let mut debouncer = new_debouncer(Duration::from_secs(1), tx)?;
     debouncer
         .watcher()
-        .watch(Path::new("./exercises"), RecursiveMode::Recursive)?;
+        .watch(Path::new("exercises"), RecursiveMode::Recursive)?;
 
     clear_screen();
 
