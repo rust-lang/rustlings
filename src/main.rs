@@ -35,19 +35,21 @@ struct EmbeddedFile {
 struct EmbeddedFlatDir {
     path: &'static str,
     readme: EmbeddedFile,
-    content: Vec<EmbeddedFile>,
+    content: &'static [EmbeddedFile],
 }
 
 struct ExercisesDir {
     readme: EmbeddedFile,
-    files: Vec<EmbeddedFile>,
-    dirs: Vec<EmbeddedFlatDir>,
+    files: &'static [EmbeddedFile],
+    dirs: &'static [EmbeddedFlatDir],
 }
 
 struct EmbeddedFiles {
     info_toml_content: &'static str,
     exercises_dir: ExercisesDir,
 }
+
+static EMBEDDED_FILES: EmbeddedFiles = rustlings_macros::include_files!();
 
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
 #[derive(Parser)]
@@ -109,7 +111,6 @@ enum Subcommands {
 }
 
 fn main() -> Result<()> {
-    let embedded_files = rustlings_macros::include_files!();
     let args = Args::parse();
 
     if args.command.is_none() {

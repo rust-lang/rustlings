@@ -63,7 +63,7 @@ pub fn include_files(_: TokenStream) -> TokenStream {
                     path: concat!(#dir_path, "/README.md"),
                     content: ::std::include_bytes!(concat!("../", #dir_path, "/README.md")),
                 },
-                content: vec![
+                content: &[
                     #(EmbeddedFile {
                         path: #dir_files,
                         content: ::std::include_bytes!(concat!("../", #dir_files)),
@@ -81,13 +81,13 @@ pub fn include_files(_: TokenStream) -> TokenStream {
                     path: "exercises/README.md",
                     content: ::std::include_bytes!("../exercises/README.md"),
                 },
-                files: vec![#(
+                files: &[#(
                      EmbeddedFile {
                         path: #files,
                         content: ::std::include_bytes!(concat!("../", #files)),
                     }
                 ),*],
-                dirs: vec![#(#dirs),*],
+                dirs: &[#(#dirs),*],
             },
         }
     }
