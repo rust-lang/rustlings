@@ -1,8 +1,7 @@
 use crate::exercise::{Exercise, ExerciseList};
-use crate::project::write_project_json;
 use crate::run::{reset, run};
 use crate::verify::verify;
-use anyhow::Result;
+use anyhow::{Context, Result};
 use clap::{Parser, Subcommand};
 use console::Emoji;
 use embedded::EMBEDDED_FILES;
@@ -10,7 +9,7 @@ use notify_debouncer_mini::notify::{self, RecursiveMode};
 use notify_debouncer_mini::{new_debouncer, DebouncedEventKind};
 use shlex::Shlex;
 use std::ffi::OsStr;
-use std::io::{self, prelude::*, stdin, stdout};
+use std::io::{self, prelude::*};
 use std::path::Path;
 use std::process::{exit, Command};
 use std::sync::atomic::{AtomicBool, Ordering};
@@ -24,7 +23,7 @@ mod ui;
 
 mod embedded;
 mod exercise;
-mod project;
+mod init;
 mod run;
 mod verify;
 
@@ -41,6 +40,8 @@ struct Args {
 
 #[derive(Subcommand)]
 enum Subcommands {
+    /// Initialize Rustlings
+    Init,
     /// Verify all exercises according to the recommended order
     Verify,
     /// Rerun `verify` when files were edited
@@ -88,40 +89,6 @@ enum Subcommands {
 fn main() -> Result<()> {
     let args = Args::parse();
 
-    let exercises = toml_edit::de::from_str::<ExerciseList>(EMBEDDED_FILES.info_toml_content)
-        .unwrap()
-        .exercises;
-
-    if !Path::new("exercises").is_dir() {
-        let mut stdout = stdout().lock();
-        write!(
-            stdout,
-            "The `exercises` directory wasn't found in the current directory.
-Do you want to initialize Rustlings in the current directory (y/n)? "
-        )?;
-        stdout.flush()?;
-        let mut answer = String::new();
-        stdin().read_line(&mut answer)?;
-        answer.make_ascii_lowercase();
-        if answer.trim() != "y" {
-            exit(1);
-        }
-
-        EMBEDDED_FILES.init_exercises_dir()?;
-        if let Err(e) = write_project_json(&exercises) {
-            writeln!(
-                stdout,
-                "Failed to write rust-project.json to disk for rust-analyzer: {e}"
-            )?;
-        } else {
-            writeln!(stdout, "Successfully generated rust-project.json")?;
-            writeln!(
-                stdout,
-                "rust-analyzer will now parse exercises, restart your language server or editor"
-            )?;
-        }
-    }
-
     if args.command.is_none() {
         println!("\n{WELCOME}\n");
     }
@@ -133,14 +100,32 @@ Do you want to initialize Rustlings in the current directory (y/n)? "
         std::process::exit(1);
     }
 
-    let verbose = args.nocapture;
+    let exercises = toml_edit::de::from_str::<ExerciseList>(EMBEDDED_FILES.info_toml_content)
+        .unwrap()
+        .exercises;
 
+    if matches!(args.command, Some(Subcommands::Init)) {
+        init::init_rustlings(&exercises).context("Initialization failed")?;
+        println!("{DEFAULT_OUT}\n");
+        return Ok(());
+    } else if !Path::new("exercises").is_dir() {
+        println!(
+            "\nThe `exercises` directory wasn't found in the current directory.
+If you are just starting with Rustlings and want to initialize it,
+run the command `rustlings init`"
+        );
+        exit(1);
+    }
+
+    let verbose = args.nocapture;
     let command = args.command.unwrap_or_else(|| {
         println!("{DEFAULT_OUT}\n");
         std::process::exit(0);
     });
 
     match command {
+        // `Init` is handled above.
+        Subcommands::Init => (),
         Subcommands::List {
             paths,
             names,
@@ -421,9 +406,16 @@ fn watch(
     }
 }
 
-const DEFAULT_OUT: &str = "Thanks for installing Rustlings!
+const WELCOME: &str = r"       welcome to...
+                 _   _ _
+  _ __ _   _ ___| |_| (_)_ __   __ _ ___
+ | '__| | | / __| __| | | '_ \ / _` / __|
+ | |  | |_| \__ \ |_| | | | | | (_| \__ \
+ |_|   \__,_|___/\__|_|_|_| |_|\__, |___/
+                               |___/";
 
-Is this your first time? Don't worry, Rustlings was made for beginners! We are
+const DEFAULT_OUT: &str =
+    "Is this your first time? Don't worry, Rustlings was made for beginners! We are
 going to teach you a lot of things about Rust, but before we can get
 started, here's a couple of notes about how Rustlings operates:
 
@@ -446,8 +438,20 @@ started, here's a couple of notes about how Rustlings operates:
 5. If you want to use `rust-analyzer` with exercises, which provides features like
    autocompletion, run the command `rustlings lsp`.
 
-Got all that? Great! To get started, run `rustlings watch` in order to get the first
-exercise. Make sure to have your editor open!";
+Got all that? Great! To get started, go into the new directory `rustlings` by
+running `cd rustlings`.
+Then, run `rustlings watch` in order to get the first exercise.
+Make sure to have your editor open in the new `rustlings` directory!";
+
+const WATCH_MODE_HELP_MESSAGE: &str = "Commands available to you in watch mode:
+  hint   - prints the current exercise's hint
+  clear  - clears the screen
+  quit   - quits watch mode
+  !<cmd> - executes a command, like `!rustc --explain E0381`
+  help   - displays this help message
+
+Watch mode automatically re-evaluates the current exercise
+when you edit a file's contents.";
 
 const FENISH_LINE: &str = "+----------------------------------------------------+
 |          You made it to the Fe-nish line!          |
@@ -475,21 +479,3 @@ You can also contribute your own exercises to help the greater community!
 
 Before reporting an issue or contributing, please read our guidelines:
 https://github.com/rust-lang/rustlings/blob/main/CONTRIBUTING.md";
-
-const WELCOME: &str = r"       welcome to...
-                 _   _ _
-  _ __ _   _ ___| |_| (_)_ __   __ _ ___
- | '__| | | / __| __| | | '_ \ / _` / __|
- | |  | |_| \__ \ |_| | | | | | (_| \__ \
- |_|   \__,_|___/\__|_|_|_| |_|\__, |___/
-                               |___/";
-
-const WATCH_MODE_HELP_MESSAGE: &str = "Commands available to you in watch mode:
-  hint   - prints the current exercise's hint
-  clear  - clears the screen
-  quit   - quits watch mode
-  !<cmd> - executes a command, like `!rustc --explain E0381`
-  help   - displays this help message
-
-Watch mode automatically re-evaluates the current exercise
-when you edit a file's contents.";
