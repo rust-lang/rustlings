@@ -36,3 +36,9 @@ winnow = "0.6.5"
 assert_cmd = "2.0.14"
 glob = "0.3.0"
 predicates = "3.1.0"
+
+[profile.release]
+panic = "abort"
+
+[profile.dev]
+panic = "abort"
