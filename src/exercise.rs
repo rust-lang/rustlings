@@ -1,18 +1,32 @@
-use regex::Regex;
 use serde::Deserialize;
-use std::env;
 use std::fmt::{self, Display, Formatter};
 use std::fs::{self, remove_file, File};
-use std::io::Read;
+use std::io::{self, BufRead, BufReader};
 use std::path::PathBuf;
-use std::process::{self, Command};
+use std::process::{self, exit, Command, Stdio};
+use std::{array, env, mem};
+use winnow::ascii::{space0, Caseless};
+use winnow::combinator::opt;
+use winnow::Parser;
 
 const RUSTC_COLOR_ARGS: &[&str] = &["--color", "always"];
 const RUSTC_EDITION_ARGS: &[&str] = &["--edition", "2021"];
 const RUSTC_NO_DEBUG_ARGS: &[&str] = &["-C", "strip=debuginfo"];
-const I_AM_DONE_REGEX: &str = r"(?m)^\s*///?\s*I\s+AM\s+NOT\s+DONE";
 const CONTEXT: usize = 2;
 const CLIPPY_CARGO_TOML_PATH: &str = "./exercises/22_clippy/Cargo.toml";
+
+// Checks if the line contains the "I AM NOT DONE" comment.
+fn contains_not_done_comment(input: &str) -> bool {
+    (
+        space0::<_, ()>,
+        "//",
+        opt('/'),
+        space0,
+        Caseless("I AM NOT DONE"),
+    )
+        .parse_next(&mut &*input)
+        .is_ok()
+}
 
 // Get a temporary file name that is hopefully unique
 #[inline]
@@ -58,7 +72,7 @@ pub struct Exercise {
 
 // An enum to track of the state of an Exercise.
 // An Exercise can be either Done or Pending
-#[derive(PartialEq, Debug)]
+#[derive(PartialEq, Eq, Debug)]
 pub enum State {
     // The state of the exercise once it's been completed
     Done,
@@ -67,7 +81,7 @@ pub enum State {
 }
 
 // The context information of a pending exercise
-#[derive(PartialEq, Debug)]
+#[derive(PartialEq, Eq, Debug)]
 pub struct ContextLine {
     // The source code that is still pending completion
     pub line: String,
@@ -148,7 +162,10 @@ path = "{}.rs""#,
                     .args(RUSTC_COLOR_ARGS)
                     .args(RUSTC_EDITION_ARGS)
                     .args(RUSTC_NO_DEBUG_ARGS)
-                    .output()
+                    .stdin(Stdio::null())
+                    .stdout(Stdio::null())
+                    .stderr(Stdio::null())
+                    .status()
                     .expect("Failed to compile!");
                 // Due to an issue with Clippy, a cargo clean is required to catch all lints.
                 // See https://github.com/rust-lang/rust-clippy/issues/2604
@@ -157,7 +174,10 @@ path = "{}.rs""#,
                 Command::new("cargo")
                     .args(["clean", "--manifest-path", CLIPPY_CARGO_TOML_PATH])
                     .args(RUSTC_COLOR_ARGS)
-                    .output()
+                    .stdin(Stdio::null())
+                    .stdout(Stdio::null())
+                    .stderr(Stdio::null())
+                    .status()
                     .expect("Failed to run 'cargo clean'");
                 Command::new("cargo")
                     .args(["clippy", "--manifest-path", CLIPPY_CARGO_TOML_PATH])
@@ -205,51 +225,101 @@ path = "{}.rs""#,
     }
 
     pub fn state(&self) -> State {
-        let mut source_file = File::open(&self.path).unwrap_or_else(|e| {
-            panic!(
-                "We were unable to open the exercise file {}! {e}",
-                self.path.display()
-            )
+        let source_file = File::open(&self.path).unwrap_or_else(|e| {
+            println!(
+                "Failed to open the exercise file {}: {e}",
+                self.path.display(),
+            );
+            exit(1);
         });
+        let mut source_reader = BufReader::new(source_file);
 
-        let source = {
-            let mut s = String::new();
-            source_file.read_to_string(&mut s).unwrap_or_else(|e| {
-                panic!(
-                    "We were unable to read the exercise file {}! {e}",
-                    self.path.display()
-                )
-            });
-            s
+        // Read the next line into `buf` without the newline at the end.
+        let mut read_line = |buf: &mut String| -> io::Result<_> {
+            let n = source_reader.read_line(buf)?;
+            if buf.ends_with('\n') {
+                buf.pop();
+                if buf.ends_with('\r') {
+                    buf.pop();
+                }
+            }
+            Ok(n)
         };
 
-        let re = Regex::new(I_AM_DONE_REGEX).unwrap();
+        let mut current_line_number: usize = 1;
+        // Keep the last `CONTEXT` lines while iterating over the file lines.
+        let mut prev_lines: [_; CONTEXT] = array::from_fn(|_| String::with_capacity(256));
+        let mut line = String::with_capacity(256);
 
-        if !re.is_match(&source) {
-            return State::Done;
+        loop {
+            let n = read_line(&mut line).unwrap_or_else(|e| {
+                println!(
+                    "Failed to read the exercise file {}: {e}",
+                    self.path.display(),
+                );
+                exit(1);
+            });
+
+            // Reached the end of the file and didn't find the comment.
+            if n == 0 {
+                return State::Done;
+            }
+
+            if contains_not_done_comment(&line) {
+                let mut context = Vec::with_capacity(2 * CONTEXT + 1);
+                // Previous lines.
+                for (ind, prev_line) in prev_lines
+                    .into_iter()
+                    .take(current_line_number - 1)
+                    .enumerate()
+                    .rev()
+                {
+                    context.push(ContextLine {
+                        line: prev_line,
+                        number: current_line_number - 1 - ind,
+                        important: false,
+                    });
+                }
+
+                // Current line.
+                context.push(ContextLine {
+                    line,
+                    number: current_line_number,
+                    important: true,
+                });
+
+                // Next lines.
+                for ind in 0..CONTEXT {
+                    let mut next_line = String::with_capacity(256);
+                    let Ok(n) = read_line(&mut next_line) else {
+                        // If an error occurs, just ignore the next lines.
+                        break;
+                    };
+
+                    // Reached the end of the file.
+                    if n == 0 {
+                        break;
+                    }
+
+                    context.push(ContextLine {
+                        line: next_line,
+                        number: current_line_number + 1 + ind,
+                        important: false,
+                    });
+                }
+
+                return State::Pending(context);
+            }
+
+            current_line_number += 1;
+            // Add the current line as a previous line and shift the older lines by one.
+            for prev_line in &mut prev_lines {
+                mem::swap(&mut line, prev_line);
+            }
+            // The current line now contains the oldest previous line.
+            // Recycle it for reading the next line.
+            line.clear();
         }
-
-        let matched_line_index = source
-            .lines()
-            .enumerate()
-            .find_map(|(i, line)| if re.is_match(line) { Some(i) } else { None })
-            .expect("This should not happen at all");
-
-        let min_line = ((matched_line_index as i32) - (CONTEXT as i32)).max(0) as usize;
-        let max_line = matched_line_index + CONTEXT;
-
-        let context = source
-            .lines()
-            .enumerate()
-            .filter(|&(i, _)| i >= min_line && i <= max_line)
-            .map(|(i, line)| ContextLine {
-                line: line.to_string(),
-                number: i + 1,
-                important: i == matched_line_index,
-            })
-            .collect();
-
-        State::Pending(context)
     }
 
     // Check that the exercise looks to be solved using self.state()
@@ -374,5 +444,21 @@ mod test {
         };
         let out = exercise.compile().unwrap().run().unwrap();
         assert!(out.stdout.contains("THIS TEST TOO SHALL PASS"));
+    }
+
+    #[test]
+    fn test_not_done() {
+        assert!(contains_not_done_comment("// I AM NOT DONE"));
+        assert!(contains_not_done_comment("/// I AM NOT DONE"));
+        assert!(contains_not_done_comment("//  I AM NOT DONE"));
+        assert!(contains_not_done_comment("///  I AM NOT DONE"));
+        assert!(contains_not_done_comment("// I AM NOT DONE "));
+        assert!(contains_not_done_comment("// I AM NOT DONE!"));
+        assert!(contains_not_done_comment("// I am not done"));
+        assert!(contains_not_done_comment("// i am NOT done"));
+
+        assert!(!contains_not_done_comment("I AM NOT DONE"));
+        assert!(!contains_not_done_comment("// NOT DONE"));
+        assert!(!contains_not_done_comment("DONE"));
     }
 }

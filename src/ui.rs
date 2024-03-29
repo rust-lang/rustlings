@@ -1,5 +1,5 @@
 macro_rules! print_emoji {
-    ($emoji:expr, $sign:expr, $color: ident ,$fmt:literal, $ex:expr) => {{
+    ($emoji:expr, $sign:expr, $color: ident, $fmt:literal, $ex:expr) => {{
         use console::{style, Emoji};
         use std::env;
         let formatstr = format!($fmt, $ex);

@@ -21,7 +21,6 @@ _implement a new feature! ➡️ [open an Issue to discuss it first, then a Pull
 
 `rustlings` is basically a glorified `rustc` wrapper. Therefore the source code
 isn't really that complicated since the bulk of the work is done by `rustc`.
-`src/main.rs` contains a simple `argh` CLI that connects to most of the other source files.
 
 <a name="addex"></a>
 ### Adding an exercise
@@ -66,7 +65,7 @@ changes. There's a couple of things to watch out for:
 
 #### Write correct commit messages
 
-We follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0-beta.4/)
+We follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
 specification.
 This means that you have to format your commit messages in a specific way. Say
 you're working on adding a new exercise called `foobar1.rs`. You could write

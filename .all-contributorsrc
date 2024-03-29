@@ -2685,6 +2685,42 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "paul-leydier",
+      "name": "Paul Leydier",
+      "avatar_url": "https://avatars.githubusercontent.com/u/75126792?v=4",
+      "profile": "https://github.com/paul-leydier",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "wznmickey",
+      "name": "wznmickey",
+      "avatar_url": "https://avatars.githubusercontent.com/u/44784663?v=4",
+      "profile": "http://wznmickey.com",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "NicolasRoelandt",
+      "name": "NicolasRoelandt",
+      "avatar_url": "https://avatars.githubusercontent.com/u/8594193?v=4",
+      "profile": "https://github.com/NicolasRoelandt",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "jbouganim-parallel",
+      "name": "Josh Bouganim",
+      "avatar_url": "https://avatars.githubusercontent.com/u/150748285?v=4",
+      "profile": "https://github.com/jbouganim-parallel",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,

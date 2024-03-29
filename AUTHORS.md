@@ -378,6 +378,12 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/0Ahmed-0"><img src="https://avatars.githubusercontent.com/u/111569638?v=4?s=100" width="100px;" alt="0Ahmed-0"/><br /><sub><b>0Ahmed-0</b></sub></a><br /><a href="#content-0Ahmed-0" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/guizo792"><img src="https://avatars.githubusercontent.com/u/95940388?v=4?s=100" width="100px;" alt="guizo792"/><br /><sub><b>guizo792</b></sub></a><br /><a href="#content-guizo792" title="Content">🖋</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/kazu728"><img src="https://avatars.githubusercontent.com/u/34614358?v=4?s=100" width="100px;" alt="Kazuki Matsuo"/><br /><sub><b>Kazuki Matsuo</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=kazu728" title="Code">💻</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/paul-leydier"><img src="https://avatars.githubusercontent.com/u/75126792?v=4?s=100" width="100px;" alt="Paul Leydier"/><br /><sub><b>Paul Leydier</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=paul-leydier" title="Documentation">📖</a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="12.5%"><a href="http://wznmickey.com"><img src="https://avatars.githubusercontent.com/u/44784663?v=4?s=100" width="100px;" alt="wznmickey"/><br /><sub><b>wznmickey</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=wznmickey" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/NicolasRoelandt"><img src="https://avatars.githubusercontent.com/u/8594193?v=4?s=100" width="100px;" alt="NicolasRoelandt"/><br /><sub><b>NicolasRoelandt</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=NicolasRoelandt" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://github.com/jbouganim-parallel"><img src="https://avatars.githubusercontent.com/u/150748285?v=4?s=100" width="100px;" alt="Josh Bouganim"/><br /><sub><b>Josh Bouganim</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=jbouganim-parallel" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
