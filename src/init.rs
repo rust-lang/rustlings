@@ -45,6 +45,16 @@ fn create_vscode_dir() -> Result<()> {
 }
 
 pub fn init_rustlings(exercises: &[Exercise]) -> Result<()> {
+    if Path::new("exercises").is_dir() && Path::new("Cargo.toml").is_file() {
+        bail!(
+            "A directory with the name `exercises` and a file with the name `Cargo.toml` already exist
+in the current directory. It looks like Rustlings was already initialized here.
+Run `rustlings` for instructions on getting started with the exercises.
+
+If you didn't already initialize Rustlings, please initialize it in another directory."
+        );
+    }
+
     let rustlings_path = Path::new("rustlings");
     if let Err(e) = create_dir(rustlings_path) {
         if e.kind() == ErrorKind::AlreadyExists {
