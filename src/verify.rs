@@ -196,7 +196,7 @@ fn prompt_for_completion(
     if no_emoji {
         println!("\n~*~ {success_msg} ~*~\n");
     } else {
-        println!("\n🎉 🎉  {success_msg} 🎉 🎉\n");
+        println!("\n🎉 🎉 {success_msg} 🎉 🎉\n");
     }
 
     if let Some(output) = prompt_output {
