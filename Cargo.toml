@@ -2,7 +2,7 @@
 resolver = "2"
 
 [workspace.package]
-version = "5.6.1"
+version = "6.0.0"
 authors = [
   "Liv <mokou@fastmail.com>",
   "Carol (Nichols || Goulding) <carol.nichols@gmail.com>",
