@@ -59,7 +59,7 @@ If you didn't already initialize Rustlings, please initialize it in another dire
     if let Err(e) = create_dir(rustlings_path) {
         if e.kind() == ErrorKind::AlreadyExists {
             bail!(
-                "A directory with the name `rustligs` already exists in the current directory.
+                "A directory with the name `rustlings` already exists in the current directory.
 You probably already initialized Rustlings.
 Run `cd rustlings`
 Then run `rustlings` again"
