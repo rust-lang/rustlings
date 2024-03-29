@@ -106,13 +106,16 @@ fn main() -> Result<()> {
 
     if matches!(args.command, Some(Subcommands::Init)) {
         init::init_rustlings(&exercises).context("Initialization failed")?;
-        println!("{DEFAULT_OUT}\n");
+        println!(
+            "\nDone initialization!\n
+Run `cd rustlings` to go into the generated directory.
+Then run `rustlings` for further instructions on getting started."
+        );
         return Ok(());
     } else if !Path::new("exercises").is_dir() {
         println!(
             "\nThe `exercises` directory wasn't found in the current directory.
-If you are just starting with Rustlings and want to initialize it,
-run the command `rustlings init`"
+If you are just starting with Rustlings, run the command `rustlings init` to initialize it."
         );
         exit(1);
     }
@@ -435,13 +438,9 @@ started, here's a couple of notes about how Rustlings operates:
 4. If an exercise doesn't make sense to you, feel free to open an issue on GitHub!
    (https://github.com/rust-lang/rustlings/issues/new). We look at every issue,
    and sometimes, other learners do too so you can help each other out!
-5. If you want to use `rust-analyzer` with exercises, which provides features like
-   autocompletion, run the command `rustlings lsp`.
 
-Got all that? Great! To get started, go into the new directory `rustlings` by
-running `cd rustlings`.
-Then, run `rustlings watch` in order to get the first exercise.
-Make sure to have your editor open in the new `rustlings` directory!";
+Got all that? Great! To get started, run `rustlings watch` in order to get the first exercise.
+Make sure to have your editor open in the `rustlings` directory!";
 
 const WATCH_MODE_HELP_MESSAGE: &str = "Commands available to you in watch mode:
   hint   - prints the current exercise's hint

@@ -79,7 +79,5 @@ Then run `rustlings` again"
 
     create_vscode_dir().context("Failed to create the file `rustlings/.vscode/extensions.json`")?;
 
-    println!("\nDone initialization!\n");
-
     Ok(())
 }
