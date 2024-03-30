@@ -97,17 +97,13 @@ impl EmbeddedFiles {
             .exercises_dir
             .files
             .iter()
-            .find(|file| file.path == path.as_os_str())
+            .find(|file| Path::new(file.path) == path)
         {
             return file.write_to_disk(strategy);
         }
 
         for dir in self.exercises_dir.dirs {
-            if let Some(file) = dir
-                .content
-                .iter()
-                .find(|file| file.path == path.as_os_str())
-            {
+            if let Some(file) = dir.content.iter().find(|file| Path::new(file.path) == path) {
                 dir.init_on_disk()?;
                 return file.write_to_disk(strategy);
             }
