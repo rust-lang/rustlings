@@ -113,6 +113,9 @@ impl EmbeddedFiles {
             }
         }
 
-        Err(io::Error::from(io::ErrorKind::NotFound))
+        Err(io::Error::new(
+            io::ErrorKind::NotFound,
+            format!("{} not found in the embedded files", path.display()),
+        ))
     }
 }
