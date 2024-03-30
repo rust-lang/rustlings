@@ -212,19 +212,17 @@ If you are just starting with Rustlings, run the command `rustlings init` to ini
 
         Subcommands::Run { name } => {
             let exercise = find_exercise(&name, &exercises);
-
             run(exercise, verbose).unwrap_or_else(|_| std::process::exit(1));
         }
 
         Subcommands::Reset { name } => {
             let exercise = find_exercise(&name, &exercises);
-
             reset(exercise)?;
+            println!("The file {} has been reset!", exercise.path.display());
         }
 
         Subcommands::Hint { name } => {
             let exercise = find_exercise(&name, &exercises);
-
             println!("{}", exercise.hint);
         }
 
