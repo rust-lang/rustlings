@@ -1,18 +1,17 @@
 [[exercises]]
 name = "pending_exercise"
-path = "pending_exercise.rs"
+path = "exercises/pending_exercise.rs"
 mode = "compile"
 hint = """"""
 
 [[exercises]]
 name = "pending_test_exercise"
-path = "pending_test_exercise.rs"
+path = "exercises/pending_test_exercise.rs"
 mode = "test"
 hint = """"""
 
 [[exercises]]
 name = "finished_exercise"
-path = "finished_exercise.rs"
+path = "exercises/finished_exercise.rs"
 mode = "compile"
 hint = """"""
-

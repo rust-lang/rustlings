@@ -9,6 +9,7 @@ use notify_debouncer_mini::notify::{self, RecursiveMode};
 use notify_debouncer_mini::{new_debouncer, DebouncedEventKind};
 use shlex::Shlex;
 use std::ffi::OsStr;
+use std::fs;
 use std::io::{self, prelude::*};
 use std::path::Path;
 use std::process::{exit, Command};
@@ -100,9 +101,14 @@ fn main() -> Result<()> {
         std::process::exit(1);
     }
 
-    let exercises = toml_edit::de::from_str::<ExerciseList>(EMBEDDED_FILES.info_toml_content)
-        .unwrap()
-        .exercises;
+    // Read a local `info.toml` if it exists. Mainly to let the tests work for now.
+    let exercises = if let Ok(file_content) = fs::read_to_string("info.toml") {
+        toml_edit::de::from_str::<ExerciseList>(&file_content)
+    } else {
+        toml_edit::de::from_str::<ExerciseList>(EMBEDDED_FILES.info_toml_content)
+    }
+    .context("Failed to parse `info.toml`")?
+    .exercises;
 
     if matches!(args.command, Some(Subcommands::Init)) {
         init::init_rustlings(&exercises).context("Initialization failed")?;

@@ -354,7 +354,7 @@ mod test {
         File::create(temp_file()).unwrap();
         let exercise = Exercise {
             name: String::from("example"),
-            path: PathBuf::from("tests/fixture/state/pending_exercise.rs"),
+            path: PathBuf::from("tests/fixture/state/exercises/pending_exercise.rs"),
             mode: Mode::Compile,
             hint: String::from(""),
         };
@@ -372,7 +372,7 @@ mod test {
                 let exercise = Exercise {
                     name: String::from("example"),
                     // We want a file that does actually compile
-                    path: PathBuf::from("tests/fixture/state/pending_exercise.rs"),
+                    path: PathBuf::from("tests/fixture/state/exercises/pending_exercise.rs"),
                     mode: *mode,
                     hint: String::from(""),
                 };
@@ -385,7 +385,7 @@ mod test {
     fn test_pending_state() {
         let exercise = Exercise {
             name: "pending_exercise".into(),
-            path: PathBuf::from("tests/fixture/state/pending_exercise.rs"),
+            path: PathBuf::from("tests/fixture/state/exercises/pending_exercise.rs"),
             mode: Mode::Compile,
             hint: String::new(),
         };
@@ -426,7 +426,7 @@ mod test {
     fn test_finished_exercise() {
         let exercise = Exercise {
             name: "finished_exercise".into(),
-            path: PathBuf::from("tests/fixture/state/finished_exercise.rs"),
+            path: PathBuf::from("tests/fixture/state/exercises/finished_exercise.rs"),
             mode: Mode::Compile,
             hint: String::new(),
         };
@@ -438,7 +438,7 @@ mod test {
     fn test_exercise_with_output() {
         let exercise = Exercise {
             name: "exercise_with_output".into(),
-            path: PathBuf::from("tests/fixture/success/testSuccess.rs"),
+            path: PathBuf::from("tests/fixture/success/exercises/testSuccess.rs"),
             mode: Mode::Test,
             hint: String::new(),
         };
