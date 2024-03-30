@@ -482,11 +482,43 @@ And then create a match expression in `process()`.
 Note that you need to deconstruct some message variants in the match expression
 to get value in the variant."""
 
+# MODULES
+
+[[exercises]]
+name = "modules1"
+path = "exercises/09_modules/modules1.rs"
+mode = "compile"
+hint = """
+Everything is private in Rust by default-- but there's a keyword we can use
+to make something public! The compiler error should point to the thing that
+needs to be public."""
+
+[[exercises]]
+name = "modules2"
+path = "exercises/09_modules/modules2.rs"
+mode = "compile"
+hint = """
+The delicious_snacks module is trying to present an external interface that is
+different than its internal structure (the `fruits` and `veggies` modules and
+associated constants). Complete the `use` statements to fit the uses in main and
+find the one keyword missing for both constants.
+
+Learn more at https://doc.rust-lang.org/book/ch07-04-bringing-paths-into-scope-with-the-use-keyword.html#re-exporting-names-with-pub-use"""
+
+[[exercises]]
+name = "modules3"
+path = "exercises/09_modules/modules3.rs"
+mode = "compile"
+hint = """
+`UNIX_EPOCH` and `SystemTime` are declared in the `std::time` module. Add a
+`use` statement for these two to bring them into scope. You can use nested
+paths or the glob operator to bring these two in using only one line."""
+
 # STRINGS
 
 [[exercises]]
 name = "strings1"
-path = "exercises/09_strings/strings1.rs"
+path = "exercises/10_strings/strings1.rs"
 mode = "compile"
 hint = """
 The `current_favorite_color` function is currently returning a string slice
@@ -500,7 +532,7 @@ another way that uses the `From` trait."""
 
 [[exercises]]
 name = "strings2"
-path = "exercises/09_strings/strings2.rs"
+path = "exercises/10_strings/strings2.rs"
 mode = "compile"
 hint = """
 Yes, it would be really easy to fix this by just changing the value bound to
@@ -515,7 +547,7 @@ https://doc.rust-lang.org/stable/book/ch15-02-deref.html#implicit-deref-coercion
 
 [[exercises]]
 name = "strings3"
-path = "exercises/09_strings/strings3.rs"
+path = "exercises/10_strings/strings3.rs"
 mode = "test"
 hint = """
 There's tons of useful standard library functions for strings. Let's try and use some of them:
@@ -526,41 +558,9 @@ the string slice into an owned string, which you can then freely extend."""
 
 [[exercises]]
 name = "strings4"
-path = "exercises/09_strings/strings4.rs"
+path = "exercises/10_strings/strings4.rs"
 mode = "compile"
 hint = "No hints this time ;)"
-
-# MODULES
-
-[[exercises]]
-name = "modules1"
-path = "exercises/10_modules/modules1.rs"
-mode = "compile"
-hint = """
-Everything is private in Rust by default-- but there's a keyword we can use
-to make something public! The compiler error should point to the thing that
-needs to be public."""
-
-[[exercises]]
-name = "modules2"
-path = "exercises/10_modules/modules2.rs"
-mode = "compile"
-hint = """
-The delicious_snacks module is trying to present an external interface that is
-different than its internal structure (the `fruits` and `veggies` modules and
-associated constants). Complete the `use` statements to fit the uses in main and
-find the one keyword missing for both constants.
-
-Learn more at https://doc.rust-lang.org/book/ch07-04-bringing-paths-into-scope-with-the-use-keyword.html#re-exporting-names-with-pub-use"""
-
-[[exercises]]
-name = "modules3"
-path = "exercises/10_modules/modules3.rs"
-mode = "compile"
-hint = """
-`UNIX_EPOCH` and `SystemTime` are declared in the `std::time` module. Add a
-`use` statement for these two to bring them into scope. You can use nested
-paths or the glob operator to bring these two in using only one line."""
 
 # HASHMAPS
 
