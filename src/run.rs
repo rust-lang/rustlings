@@ -1,4 +1,5 @@
-use std::io;
+use anyhow::{bail, Result};
+use std::io::{self, stdout, Write};
 use std::time::Duration;
 
 use crate::embedded::{WriteStrategy, EMBEDDED_FILES};
@@ -10,13 +11,11 @@ use indicatif::ProgressBar;
 // and run the ensuing binary.
 // The verbose argument helps determine whether or not to show
 // the output from the test harnesses (if the mode of the exercise is test)
-pub fn run(exercise: &Exercise, verbose: bool) -> Result<(), ()> {
+pub fn run(exercise: &Exercise, verbose: bool) -> Result<()> {
     match exercise.mode {
-        Mode::Test => test(exercise, verbose)?,
-        Mode::Compile => compile_and_run(exercise)?,
-        Mode::Clippy => compile_and_run(exercise)?,
+        Mode::Test => test(exercise, verbose),
+        Mode::Compile | Mode::Clippy => compile_and_run(exercise),
     }
-    Ok(())
 }
 
 // Resets the exercise by stashing the changes.
@@ -27,41 +26,21 @@ pub fn reset(exercise: &Exercise) -> io::Result<()> {
 // Invoke the rust compiler on the path of the given exercise
 // and run the ensuing binary.
 // This is strictly for non-test binaries, so output is displayed
-fn compile_and_run(exercise: &Exercise) -> Result<(), ()> {
+fn compile_and_run(exercise: &Exercise) -> Result<()> {
     let progress_bar = ProgressBar::new_spinner();
-    progress_bar.set_message(format!("Compiling {exercise}..."));
+    progress_bar.set_message(format!("Running {exercise}..."));
     progress_bar.enable_steady_tick(Duration::from_millis(100));
 
-    let compilation_result = exercise.compile();
-    let compilation = match compilation_result {
-        Ok(compilation) => compilation,
-        Err(output) => {
-            progress_bar.finish_and_clear();
-            warn!(
-                "Compilation of {} failed!, Compiler error message:\n",
-                exercise
-            );
-            println!("{}", output.stderr);
-            return Err(());
-        }
-    };
-
-    progress_bar.set_message(format!("Running {exercise}..."));
-    let result = compilation.run();
+    let output = exercise.run()?;
     progress_bar.finish_and_clear();
 
-    match result {
-        Ok(output) => {
-            println!("{}", output.stdout);
-            success!("Successfully ran {}", exercise);
-            Ok(())
-        }
-        Err(output) => {
-            println!("{}", output.stdout);
-            println!("{}", output.stderr);
-
-            warn!("Ran {} with errors", exercise);
-            Err(())
-        }
+    stdout().write_all(&output.stdout)?;
+    if !output.status.success() {
+        stdout().write_all(&output.stderr)?;
+        warn!("Ran {} with errors", exercise);
+        bail!("TODO");
     }
+
+    success!("Successfully ran {}", exercise);
+    Ok(())
 }

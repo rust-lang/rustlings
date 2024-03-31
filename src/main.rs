@@ -4,20 +4,18 @@ use crate::verify::verify;
 use anyhow::{Context, Result};
 use clap::{Parser, Subcommand};
 use console::Emoji;
-use embedded::EMBEDDED_FILES;
 use notify_debouncer_mini::notify::{self, RecursiveMode};
 use notify_debouncer_mini::{new_debouncer, DebouncedEventKind};
 use shlex::Shlex;
 use std::ffi::OsStr;
-use std::fs;
-use std::io::{self, prelude::*};
+use std::io::{BufRead, Write};
 use std::path::Path;
 use std::process::{exit, Command};
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::mpsc::{channel, RecvTimeoutError};
 use std::sync::{Arc, Mutex};
-use std::thread;
 use std::time::Duration;
+use std::{io, thread};
 
 #[macro_use]
 mod ui;
@@ -94,21 +92,16 @@ fn main() -> Result<()> {
         println!("\n{WELCOME}\n");
     }
 
-    if which::which("rustc").is_err() {
-        println!("We cannot find `rustc`.");
-        println!("Try running `rustc --version` to diagnose your problem.");
-        println!("For instructions on how to install Rust, check the README.");
+    if which::which("cargo").is_err() {
+        println!(
+            "Failed to find `cargo`.
+Did you already install Rust?
+Try running `cargo --version` to diagnose the problem."
+        );
         std::process::exit(1);
     }
 
-    // Read a local `info.toml` if it exists. Mainly to let the tests work for now.
-    let exercises = if let Ok(file_content) = fs::read_to_string("info.toml") {
-        toml_edit::de::from_str::<ExerciseList>(&file_content)
-    } else {
-        toml_edit::de::from_str::<ExerciseList>(EMBEDDED_FILES.info_toml_content)
-    }
-    .context("Failed to parse `info.toml`")?
-    .exercises;
+    let exercises = ExerciseList::parse()?.exercises;
 
     if matches!(args.command, Some(Subcommands::Init)) {
         init::init_rustlings(&exercises).context("Initialization failed")?;
