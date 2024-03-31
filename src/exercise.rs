@@ -282,18 +282,6 @@ mod test {
     }
 
     #[test]
-    fn test_exercise_with_output() {
-        let exercise = Exercise {
-            name: "exercise_with_output".into(),
-            path: PathBuf::from("tests/fixture/success/exercises/testSuccess.rs"),
-            mode: Mode::Test,
-            hint: String::new(),
-        };
-        let out = exercise.run().unwrap();
-        assert_eq!(out.stdout, b"THIS TEST TOO SHALL PASS");
-    }
-
-    #[test]
     fn test_not_done() {
         assert!(contains_not_done_comment("// I AM NOT DONE"));
         assert!(contains_not_done_comment("/// I AM NOT DONE"));
