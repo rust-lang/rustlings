@@ -32,6 +32,15 @@ publish = false
         .write_all(&cargo_toml)
 }
 
+fn create_gitignore() -> io::Result<()> {
+    let gitignore = b"/target";
+    OpenOptions::new()
+        .create_new(true)
+        .write(true)
+        .open(".gitignore")?
+        .write_all(gitignore)
+}
+
 fn create_vscode_dir() -> Result<()> {
     create_dir(".vscode").context("Failed to create the directory `.vscode`")?;
     let vs_code_extensions_json = br#"{"recommendations":["rust-lang.rust-analyzer"]}"#;
@@ -76,6 +85,8 @@ Then run `rustlings` again"
         .context("Failed to initialize the `rustlings/exercises` directory")?;
 
     create_cargo_toml(exercises).context("Failed to create the file `rustlings/Cargo.toml`")?;
+
+    create_gitignore().context("Failed to create the file `rustlings/.gitignore`")?;
 
     create_vscode_dir().context("Failed to create the file `rustlings/.vscode/extensions.json`")?;
 
