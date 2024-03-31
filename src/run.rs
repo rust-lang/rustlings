@@ -1,8 +1,7 @@
 use anyhow::{bail, Result};
-use std::io::{self, stdout, Write};
+use std::io::{stdout, Write};
 use std::time::Duration;
 
-use crate::embedded::{WriteStrategy, EMBEDDED_FILES};
 use crate::exercise::{Exercise, Mode};
 use crate::verify::test;
 use indicatif::ProgressBar;
@@ -18,13 +17,7 @@ pub fn run(exercise: &Exercise, verbose: bool) -> Result<()> {
     }
 }
 
-// Resets the exercise by stashing the changes.
-pub fn reset(exercise: &Exercise) -> io::Result<()> {
-    EMBEDDED_FILES.write_exercise_to_disk(&exercise.path, WriteStrategy::Overwrite)
-}
-
-// Invoke the rust compiler on the path of the given exercise
-// and run the ensuing binary.
+// Compile and run an exercise.
 // This is strictly for non-test binaries, so output is displayed
 fn compile_and_run(exercise: &Exercise) -> Result<()> {
     let progress_bar = ProgressBar::new_spinner();

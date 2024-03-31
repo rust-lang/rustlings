@@ -1,5 +1,6 @@
+use crate::embedded::{WriteStrategy, EMBEDDED_FILES};
 use crate::exercise::{Exercise, ExerciseList};
-use crate::run::{reset, run};
+use crate::run::run;
 use crate::verify::verify;
 use anyhow::{Context, Result};
 use clap::{Parser, Subcommand};
@@ -207,7 +208,9 @@ If you are just starting with Rustlings, run the command `rustlings init` to ini
 
         Subcommands::Reset { name } => {
             let exercise = find_exercise(&name, &exercises)?;
-            reset(exercise)?;
+            EMBEDDED_FILES
+                .write_exercise_to_disk(&exercise.path, WriteStrategy::Overwrite)
+                .with_context(|| format!("Failed to reset the exercise {exercise}"))?;
             println!("The file {} has been reset!", exercise.path.display());
         }
 
