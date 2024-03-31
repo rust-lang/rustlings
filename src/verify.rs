@@ -79,7 +79,7 @@ fn compile_only(exercise: &Exercise, success_hints: bool) -> Result<bool> {
     let _ = exercise.run()?;
     progress_bar.finish_and_clear();
 
-    Ok(prompt_for_completion(exercise, None, success_hints))
+    prompt_for_completion(exercise, None, success_hints)
 }
 
 // Compile the given Exercise and run the resulting binary in an interactive mode
@@ -102,7 +102,7 @@ fn compile_and_run_interactively(exercise: &Exercise, success_hints: bool) -> Re
         bail!("TODO");
     }
 
-    Ok(prompt_for_completion(exercise, Some(output), success_hints))
+    prompt_for_completion(exercise, Some(output), success_hints)
 }
 
 // Compile the given Exercise as a test harness and display
@@ -139,7 +139,7 @@ fn compile_and_test(
     }
 
     if run_mode == RunMode::Interactive {
-        Ok(prompt_for_completion(exercise, None, success_hints))
+        prompt_for_completion(exercise, None, success_hints)
     } else {
         Ok(true)
     }
@@ -149,9 +149,9 @@ fn prompt_for_completion(
     exercise: &Exercise,
     prompt_output: Option<Output>,
     success_hints: bool,
-) -> bool {
-    let context = match exercise.state() {
-        State::Done => return true,
+) -> Result<bool> {
+    let context = match exercise.state()? {
+        State::Done => return Ok(true),
         State::Pending(context) => context,
     };
     match exercise.mode {
@@ -215,7 +215,7 @@ fn prompt_for_completion(
         );
     }
 
-    false
+    Ok(false)
 }
 
 fn separator() -> console::StyledObject<&'static str> {

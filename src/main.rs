@@ -92,14 +92,11 @@ fn main() -> Result<()> {
         println!("\n{WELCOME}\n");
     }
 
-    if which::which("cargo").is_err() {
-        println!(
-            "Failed to find `cargo`.
+    which::which("cargo").context(
+        "Failed to find `cargo`.
 Did you already install Rust?
-Try running `cargo --version` to diagnose the problem."
-        );
-        std::process::exit(1);
-    }
+Try running `cargo --version` to diagnose the problem.",
+    )?;
 
     let exercises = ExerciseList::parse()?.exercises;
 
@@ -122,7 +119,7 @@ If you are just starting with Rustlings, run the command `rustlings init` to ini
     let verbose = args.nocapture;
     let command = args.command.unwrap_or_else(|| {
         println!("{DEFAULT_OUT}\n");
-        std::process::exit(0);
+        exit(0);
     });
 
     match command {
@@ -160,7 +157,7 @@ If you are just starting with Rustlings, run the command `rustlings init` to ini
                 let filter_cond = filters
                     .iter()
                     .any(|f| exercise.name.contains(f) || fname.contains(f));
-                let looks_done = exercise.looks_done();
+                let looks_done = exercise.looks_done()?;
                 let status = if looks_done {
                     exercises_done += 1;
                     "Done"
@@ -185,8 +182,8 @@ If you are just starting with Rustlings, run the command `rustlings init` to ini
                         let mut handle = stdout.lock();
                         handle.write_all(line.as_bytes()).unwrap_or_else(|e| {
                             match e.kind() {
-                                std::io::ErrorKind::BrokenPipe => std::process::exit(0),
-                                _ => std::process::exit(1),
+                                std::io::ErrorKind::BrokenPipe => exit(0),
+                                _ => exit(1),
                             };
                         });
                     }
@@ -200,35 +197,34 @@ If you are just starting with Rustlings, run the command `rustlings init` to ini
                 exercises.len(),
                 percentage_progress
             );
-            std::process::exit(0);
+            exit(0);
         }
 
         Subcommands::Run { name } => {
-            let exercise = find_exercise(&name, &exercises);
-            run(exercise, verbose).unwrap_or_else(|_| std::process::exit(1));
+            let exercise = find_exercise(&name, &exercises)?;
+            run(exercise, verbose).unwrap_or_else(|_| exit(1));
         }
 
         Subcommands::Reset { name } => {
-            let exercise = find_exercise(&name, &exercises);
+            let exercise = find_exercise(&name, &exercises)?;
             reset(exercise)?;
             println!("The file {} has been reset!", exercise.path.display());
         }
 
         Subcommands::Hint { name } => {
-            let exercise = find_exercise(&name, &exercises);
+            let exercise = find_exercise(&name, &exercises)?;
             println!("{}", exercise.hint);
         }
 
         Subcommands::Verify => {
-            verify(&exercises, (0, exercises.len()), verbose, false)
-                .unwrap_or_else(|_| std::process::exit(1));
+            verify(&exercises, (0, exercises.len()), verbose, false).unwrap_or_else(|_| exit(1));
         }
 
         Subcommands::Watch { success_hints } => match watch(&exercises, verbose, success_hints) {
             Err(e) => {
                 println!("Error: Could not watch your progress. Error message was {e:?}.");
                 println!("Most likely you've run out of disk space or your 'inotify limit' has been reached.");
-                std::process::exit(1);
+                exit(1);
             }
             Ok(WatchStatus::Finished) => {
                 println!(
@@ -295,25 +291,23 @@ fn spawn_watch_shell(
     });
 }
 
-fn find_exercise<'a>(name: &str, exercises: &'a [Exercise]) -> &'a Exercise {
+fn find_exercise<'a>(name: &str, exercises: &'a [Exercise]) -> Result<&'a Exercise> {
     if name == "next" {
-        exercises
-            .iter()
-            .find(|e| !e.looks_done())
-            .unwrap_or_else(|| {
-                println!("🎉 Congratulations! You have done all the exercises!");
-                println!("🔚 There are no more exercises to do next!");
-                std::process::exit(1)
-            })
-    } else {
-        exercises
-            .iter()
-            .find(|e| e.name == name)
-            .unwrap_or_else(|| {
-                println!("No exercise found for '{name}'!");
-                std::process::exit(1)
-            })
+        for exercise in exercises {
+            if !exercise.looks_done()? {
+                return Ok(exercise);
+            }
+        }
+
+        println!("🎉 Congratulations! You have done all the exercises!");
+        println!("🔚 There are no more exercises to do next!");
+        exit(0);
     }
+
+    exercises
+        .iter()
+        .find(|e| e.name == name)
+        .with_context(|| format!("No exercise found for '{name}'!"))
 }
 
 enum WatchStatus {
@@ -363,17 +357,17 @@ fn watch(
                             && event_path.exists()
                         {
                             let filepath = event_path.as_path().canonicalize().unwrap();
-                            let pending_exercises =
-                                exercises
-                                    .iter()
-                                    .find(|e| filepath.ends_with(&e.path))
-                                    .into_iter()
-                                    .chain(exercises.iter().filter(|e| {
-                                        !e.looks_done() && !filepath.ends_with(&e.path)
-                                    }));
+                            // TODO: Remove unwrap
+                            let pending_exercises = exercises
+                                .iter()
+                                .find(|e| filepath.ends_with(&e.path))
+                                .into_iter()
+                                .chain(exercises.iter().filter(|e| {
+                                    !e.looks_done().unwrap() && !filepath.ends_with(&e.path)
+                                }));
                             let num_done = exercises
                                 .iter()
-                                .filter(|e| e.looks_done() && !filepath.ends_with(&e.path))
+                                .filter(|e| e.looks_done().unwrap() && !filepath.ends_with(&e.path))
                                 .count();
                             clear_screen();
                             match verify(

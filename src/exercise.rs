@@ -114,14 +114,9 @@ impl Exercise {
         }
     }
 
-    pub fn state(&self) -> State {
-        let source_file = File::open(&self.path).unwrap_or_else(|e| {
-            println!(
-                "Failed to open the exercise file {}: {e}",
-                self.path.display(),
-            );
-            exit(1);
-        });
+    pub fn state(&self) -> Result<State> {
+        let source_file = File::open(&self.path)
+            .with_context(|| format!("Failed to open the exercise file {}", self.path.display()))?;
         let mut source_reader = BufReader::new(source_file);
 
         // Read the next line into `buf` without the newline at the end.
@@ -152,7 +147,7 @@ impl Exercise {
 
             // Reached the end of the file and didn't find the comment.
             if n == 0 {
-                return State::Done;
+                return Ok(State::Done);
             }
 
             if contains_not_done_comment(&line) {
@@ -198,7 +193,7 @@ impl Exercise {
                     });
                 }
 
-                return State::Pending(context);
+                return Ok(State::Pending(context));
             }
 
             current_line_number += 1;
@@ -218,8 +213,8 @@ impl Exercise {
     // without actually having solved anything.
     // The only other way to truly check this would to compile and run
     // the exercise; which would be both costly and counterintuitive
-    pub fn looks_done(&self) -> bool {
-        self.state() == State::Done
+    pub fn looks_done(&self) -> Result<bool> {
+        self.state().map(|state| state == State::Done)
     }
 }
 
@@ -271,7 +266,7 @@ mod test {
             },
         ];
 
-        assert_eq!(state, State::Pending(expected));
+        assert_eq!(state.unwrap(), State::Pending(expected));
     }
 
     #[test]
@@ -283,7 +278,7 @@ mod test {
             hint: String::new(),
         };
 
-        assert_eq!(exercise.state(), State::Done);
+        assert_eq!(exercise.state().unwrap(), State::Done);
     }
 
     #[test]
