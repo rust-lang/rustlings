@@ -1,5 +1,10 @@
 [workspace]
 resolver = "2"
+exclude = [
+  "tests/fixture/failure",
+  "tests/fixture/state",
+  "tests/fixture/success",
+]
 
 [workspace.package]
 version = "6.0.0"

@@ -1,0 +1,13 @@
+[package]
+name = "tests"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[[bin]]
+name = "compSuccess"
+path = "exercises/compSuccess.rs"
+
+[[bin]]
+name = "testSuccess"
+path = "exercises/testSuccess.rs"
