@@ -3,7 +3,7 @@ macro_rules! print_emoji {
         use console::{style, Emoji};
         use std::env;
         let formatstr = format!($fmt, $ex);
-        if env::var("NO_EMOJI").is_ok() {
+        if env::var_os("NO_EMOJI").is_some() {
             println!("{} {}", style($sign).$color(), style(formatstr).$color());
         } else {
             println!(
