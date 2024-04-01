@@ -2,10 +2,10 @@ use crate::embedded::{WriteStrategy, EMBEDDED_FILES};
 use crate::exercise::{Exercise, ExerciseList};
 use crate::run::run;
 use crate::verify::verify;
-use anyhow::{Context, Result};
+use anyhow::{bail, Context, Result};
 use clap::{Parser, Subcommand};
 use console::Emoji;
-use notify_debouncer_mini::notify::{self, RecursiveMode};
+use notify_debouncer_mini::notify::RecursiveMode;
 use notify_debouncer_mini::{new_debouncer, DebouncedEventKind};
 use shlex::Shlex;
 use std::io::{BufRead, Write};
@@ -16,6 +16,7 @@ use std::sync::mpsc::{channel, RecvTimeoutError};
 use std::sync::{Arc, Mutex};
 use std::time::Duration;
 use std::{io, thread};
+use verify::VerifyState;
 
 #[macro_use]
 mod ui;
@@ -218,9 +219,10 @@ If you are just starting with Rustlings, run the command `rustlings init` to ini
             println!("{}", exercise.hint);
         }
 
-        Subcommands::Verify => {
-            verify(&exercises, (0, exercises.len()), verbose, false).unwrap_or_else(|_| exit(1));
-        }
+        Subcommands::Verify => match verify(&exercises, (0, exercises.len()), verbose, false)? {
+            VerifyState::AllExercisesDone => println!("All exercises done!"),
+            VerifyState::Failed(exercise) => bail!("Exercise {exercise} failed"),
+        },
 
         Subcommands::Watch { success_hints } => match watch(&exercises, verbose, success_hints) {
             Err(e) => {
@@ -317,11 +319,7 @@ enum WatchStatus {
     Unfinished,
 }
 
-fn watch(
-    exercises: &[Exercise],
-    verbose: bool,
-    success_hints: bool,
-) -> notify::Result<WatchStatus> {
+fn watch(exercises: &[Exercise], verbose: bool, success_hints: bool) -> Result<WatchStatus> {
     /* Clears the terminal with an ANSI escape code.
     Works in UNIX and newer Windows terminals. */
     fn clear_screen() {
@@ -338,11 +336,11 @@ fn watch(
 
     clear_screen();
 
-    let failed_exercise_hint = match verify(exercises, (0, exercises.len()), verbose, success_hints)
-    {
-        Ok(_) => return Ok(WatchStatus::Finished),
-        Err(exercise) => Arc::new(Mutex::new(Some(exercise.hint.clone()))),
-    };
+    let failed_exercise_hint =
+        match verify(exercises, (0, exercises.len()), verbose, success_hints)? {
+            VerifyState::AllExercisesDone => return Ok(WatchStatus::Finished),
+            VerifyState::Failed(exercise) => Arc::new(Mutex::new(Some(exercise.hint.clone()))),
+        };
 
     spawn_watch_shell(Arc::clone(&failed_exercise_hint), Arc::clone(&should_quit));
 
@@ -368,9 +366,9 @@ fn watch(
                                 (num_done, exercises.len()),
                                 verbose,
                                 success_hints,
-                            ) {
-                                Ok(_) => return Ok(WatchStatus::Finished),
-                                Err(exercise) => {
+                            )? {
+                                VerifyState::AllExercisesDone => return Ok(WatchStatus::Finished),
+                                VerifyState::Failed(exercise) => {
                                     let hint = exercise.hint.clone();
                                     *failed_exercise_hint.lock().unwrap() = Some(hint);
                                 }

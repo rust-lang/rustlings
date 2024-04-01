@@ -10,6 +10,11 @@ use std::{
 
 use crate::exercise::{Exercise, Mode, State};
 
+pub enum VerifyState<'a> {
+    AllExercisesDone,
+    Failed(&'a Exercise),
+}
+
 // Verify that the provided container of Exercise objects
 // can be compiled and run without any failures.
 // Any such failures will be reported to the end user.
@@ -20,7 +25,7 @@ pub fn verify<'a>(
     progress: (usize, usize),
     verbose: bool,
     success_hints: bool,
-) -> Result<(), &'a Exercise> {
+) -> Result<VerifyState<'a>> {
     let (num_done, total) = progress;
     let bar = ProgressBar::new(total as u64);
     let mut percentage = num_done as f32 / total as f32 * 100.0;
@@ -35,12 +40,12 @@ pub fn verify<'a>(
 
     for exercise in pending_exercises {
         let compile_result = match exercise.mode {
-            Mode::Test => compile_and_test(exercise, RunMode::Interactive, verbose, success_hints),
-            Mode::Compile => compile_and_run_interactively(exercise, success_hints),
-            Mode::Clippy => compile_only(exercise, success_hints),
+            Mode::Test => compile_and_test(exercise, RunMode::Interactive, verbose, success_hints)?,
+            Mode::Compile => compile_and_run_interactively(exercise, success_hints)?,
+            Mode::Clippy => compile_only(exercise, success_hints)?,
         };
-        if !compile_result.unwrap_or(false) {
-            return Err(exercise);
+        if !compile_result {
+            return Ok(VerifyState::Failed(exercise));
         }
         percentage += 100.0 / total as f32;
         bar.inc(1);
@@ -50,7 +55,7 @@ pub fn verify<'a>(
     bar.finish();
     println!("You completed all exercises!");
 
-    Ok(())
+    Ok(VerifyState::AllExercisesDone)
 }
 
 #[derive(PartialEq, Eq)]
