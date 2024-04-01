@@ -1,3 +1,7 @@
+// Generates `dev/Cargo.toml` such that it is synced with `info.toml`.
+// `dev/Cargo.toml` is a hack to allow using `cargo r` to test `rustlings`
+// during development.
+
 use anyhow::{bail, Context, Result};
 use serde::Deserialize;
 use std::{
@@ -25,7 +29,12 @@ fn main() -> Result<()> {
 
     let mut buf = Vec::with_capacity(1 << 14);
 
-    buf.extend_from_slice(b"bin = [\n");
+    buf.extend_from_slice(
+        b"# This file is a hack to allow using `cargo r` to test `rustlings` during development.
+# You shouldn't edit it manually. It is created and updated by running `cargo run --bin gen-dev-cargo-toml`.
+
+bin = [\n",
+    );
 
     for exercise in exercises {
         buf.extend_from_slice(b"  { name = \"");
