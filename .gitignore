@@ -1,5 +1,6 @@
 target/
-tests/fixture/*/Cargo.lock
+/tests/fixture/*/Cargo.lock
+/dev/Cargo.lock
 
 *.swp
 **/*.rs.bk

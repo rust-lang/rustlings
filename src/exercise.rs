@@ -91,9 +91,17 @@ pub struct ContextLine {
 
 impl Exercise {
     fn cargo_cmd(&self, command: &str, args: &[&str]) -> Result<Output> {
-        Command::new("cargo")
-            .arg(command)
-            .arg("--color")
+        let mut cmd = Command::new("cargo");
+        cmd.arg(command);
+
+        // A hack to make `cargo run` work when developing Rustlings.
+        // Use `dev/Cargo.toml` when in the directory of the repository.
+        #[cfg(debug_assertions)]
+        if std::path::Path::new("tests").exists() {
+            cmd.arg("--manifest-path").arg("dev/Cargo.toml");
+        }
+
+        cmd.arg("--color")
             .arg("always")
             .arg("-q")
             .arg("--bin")

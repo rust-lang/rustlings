@@ -4,6 +4,7 @@ exclude = [
   "tests/fixture/failure",
   "tests/fixture/state",
   "tests/fixture/success",
+  "dev",
 ]
 
 [workspace.package]
@@ -18,6 +19,7 @@ edition = "2021"
 [package]
 name = "rustlings"
 description = "Small exercises to get you used to reading and writing Rust code!"
+default-run = "rustlings"
 version.workspace = true
 authors.workspace = true
 license.workspace = true
