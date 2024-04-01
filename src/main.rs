@@ -8,7 +8,6 @@ use console::Emoji;
 use notify_debouncer_mini::notify::{self, RecursiveMode};
 use notify_debouncer_mini::{new_debouncer, DebouncedEventKind};
 use shlex::Shlex;
-use std::ffi::OsStr;
 use std::io::{BufRead, Write};
 use std::path::Path;
 use std::process::{exit, Command};
@@ -344,44 +343,40 @@ fn watch(
         Ok(_) => return Ok(WatchStatus::Finished),
         Err(exercise) => Arc::new(Mutex::new(Some(exercise.hint.clone()))),
     };
+
     spawn_watch_shell(Arc::clone(&failed_exercise_hint), Arc::clone(&should_quit));
+
+    let mut pending_exercises = Vec::with_capacity(exercises.len());
     loop {
         match rx.recv_timeout(Duration::from_secs(1)) {
             Ok(event) => match event {
                 Ok(events) => {
                     for event in events {
-                        let event_path = event.path;
                         if event.kind == DebouncedEventKind::Any
-                            && event_path.extension() == Some(OsStr::new("rs"))
-                            && event_path.exists()
+                            && event.path.extension().is_some_and(|ext| ext == "rs")
                         {
-                            let filepath = event_path.as_path().canonicalize().unwrap();
-                            // TODO: Remove unwrap
-                            let pending_exercises = exercises
-                                .iter()
-                                .find(|e| filepath.ends_with(&e.path))
-                                .into_iter()
-                                .chain(exercises.iter().filter(|e| {
-                                    !e.looks_done().unwrap() && !filepath.ends_with(&e.path)
-                                }));
-                            let num_done = exercises
-                                .iter()
-                                .filter(|e| e.looks_done().unwrap() && !filepath.ends_with(&e.path))
-                                .count();
+                            pending_exercises.extend(exercises.iter().filter(|exercise| {
+                                !exercise.looks_done().unwrap_or(false)
+                                    || event.path.ends_with(&exercise.path)
+                            }));
+                            let num_done = exercises.len() - pending_exercises.len();
+
                             clear_screen();
+
                             match verify(
-                                pending_exercises,
+                                pending_exercises.iter().copied(),
                                 (num_done, exercises.len()),
                                 verbose,
                                 success_hints,
                             ) {
                                 Ok(_) => return Ok(WatchStatus::Finished),
                                 Err(exercise) => {
-                                    let mut failed_exercise_hint =
-                                        failed_exercise_hint.lock().unwrap();
-                                    *failed_exercise_hint = Some(exercise.hint.clone());
+                                    let hint = exercise.hint.clone();
+                                    *failed_exercise_hint.lock().unwrap() = Some(hint);
                                 }
                             }
+
+                            pending_exercises.clear();
                         }
                     }
                 }

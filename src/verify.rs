@@ -16,7 +16,7 @@ use crate::exercise::{Exercise, Mode, State};
 // If the Exercise being verified is a test, the verbose boolean
 // determines whether or not the test harness outputs are displayed.
 pub fn verify<'a>(
-    exercises: impl IntoIterator<Item = &'a Exercise>,
+    pending_exercises: impl IntoIterator<Item = &'a Exercise>,
     progress: (usize, usize),
     verbose: bool,
     success_hints: bool,
@@ -33,7 +33,7 @@ pub fn verify<'a>(
     bar.set_position(num_done as u64);
     bar.set_message(format!("({percentage:.1} %)"));
 
-    for exercise in exercises {
+    for exercise in pending_exercises {
         let compile_result = match exercise.mode {
             Mode::Test => compile_and_test(exercise, RunMode::Interactive, verbose, success_hints),
             Mode::Compile => compile_and_run_interactively(exercise, success_hints),
@@ -45,16 +45,11 @@ pub fn verify<'a>(
         percentage += 100.0 / total as f32;
         bar.inc(1);
         bar.set_message(format!("({percentage:.1} %)"));
-        if bar.position() == total as u64 {
-            println!(
-                "Progress: You completed {} / {} exercises ({:.1} %).",
-                bar.position(),
-                total,
-                percentage
-            );
-            bar.finish();
-        }
     }
+
+    bar.finish();
+    println!("You completed all exercises!");
+
     Ok(())
 }
 
