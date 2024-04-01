@@ -339,12 +339,8 @@ fn watch(
 
     clear_screen();
 
-    let failed_exercise_hint = match verify(
-        exercises.iter(),
-        (0, exercises.len()),
-        verbose,
-        success_hints,
-    ) {
+    let failed_exercise_hint = match verify(exercises, (0, exercises.len()), verbose, success_hints)
+    {
         Ok(_) => return Ok(WatchStatus::Finished),
         Err(exercise) => Arc::new(Mutex::new(Some(exercise.hint.clone()))),
     };
