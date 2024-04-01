@@ -3,8 +3,8 @@ target/
 **/*.rs.bk
 .DS_Store
 *.pdb
-exercises/clippy/Cargo.toml
-exercises/clippy/Cargo.lock
+exercises/22_clippy/Cargo.toml
+exercises/22_clippy/Cargo.lock
 rust-project.json
 .idea
 .vscode/*
