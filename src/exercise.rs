@@ -114,7 +114,7 @@ impl Exercise {
     pub fn run(&self) -> Result<Output> {
         match self.mode {
             Mode::Compile => self.cargo_cmd("run", &[]),
-            Mode::Test => self.cargo_cmd("test", &["--", "--nocapture"]),
+            Mode::Test => self.cargo_cmd("test", &["--", "--nocapture", "--format", "pretty"]),
             Mode::Clippy => self.cargo_cmd(
                 "clippy",
                 &["--", "-D", "warnings", "-D", "clippy::float_cmp"],
