@@ -2721,6 +2721,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "loshz",
+      "name": "Dan",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3449337?v=4",
+      "profile": "https://loshz.com",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 8,
