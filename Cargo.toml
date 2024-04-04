@@ -6,6 +6,9 @@ exclude = [
   "tests/fixture/success",
   "dev",
 ]
+members = [
+  "gen-dev-cargo-toml",
+]
 
 [workspace.package]
 version = "6.0.0"
@@ -15,6 +18,11 @@ authors = [
 ]
 license = "MIT"
 edition = "2021"
+
+[workspace.dependencies]
+anyhow = "1.0.81"
+serde = { version = "1.0.197", features = ["derive"] }
+toml_edit = { version = "0.22.9", default-features = false, features = ["parse", "serde"] }
 
 [package]
 name = "rustlings"
@@ -26,7 +34,7 @@ license.workspace = true
 edition.workspace = true
 
 [dependencies]
-anyhow = "1.0.81"
+anyhow.workspace = true
 clap = { version = "4.5.4", features = ["derive"] }
 console = "0.15.8"
 crossterm = "0.27.0"
@@ -34,8 +42,8 @@ notify-debouncer-mini = "0.4.1"
 ratatui = "0.26.1"
 rustlings-macros = { path = "rustlings-macros" }
 serde_json = "1.0.115"
-serde = { version = "1.0.197", features = ["derive"] }
-toml_edit = { version = "0.22.9", default-features = false, features = ["parse", "serde"] }
+serde.workspace = true
+toml_edit.workspace = true
 which = "6.0.1"
 winnow = "0.6.5"
 

@@ -1,5 +1,5 @@
 // Makes sure that `dev/Cargo.toml` is synced with `info.toml`.
-// When this test fails, you just need to run `cargo run --bin gen-dev-cargo-toml`.
+// When this test fails, you just need to run `cargo run -p gen-dev-cargo-toml`.
 
 use serde::Deserialize;
 use std::fs;

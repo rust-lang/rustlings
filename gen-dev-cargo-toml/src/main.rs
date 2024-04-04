@@ -1,5 +1,5 @@
 // Generates `dev/Cargo.toml` such that it is synced with `info.toml`.
-// `dev/Cargo.toml` is a hack to allow using `cargo r` to test `rustlings`
+// `dev/Cargo.toml` is a hack to allow using `cargo run` to test `rustlings`
 // during development.
 
 use anyhow::{bail, Context, Result};
@@ -30,8 +30,8 @@ fn main() -> Result<()> {
     let mut buf = Vec::with_capacity(1 << 14);
 
     buf.extend_from_slice(
-        b"# This file is a hack to allow using `cargo r` to test `rustlings` during development.
-# You shouldn't edit it manually. It is created and updated by running `cargo run --bin gen-dev-cargo-toml`.
+        b"# This file is a hack to allow using `cargo run` to test `rustlings` during development.
+# You shouldn't edit it manually. It is created and updated by running `cargo run -p gen-dev-cargo-toml`.
 
 bin = [\n",
     );

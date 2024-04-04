@@ -331,6 +331,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "gen-dev-cargo-toml"
+version = "0.0.0"
+dependencies = [
+ "anyhow",
+ "serde",
+ "toml_edit",
+]
+
+[[package]]
 name = "glob"
 version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
