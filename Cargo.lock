@@ -564,7 +564,7 @@ dependencies = [
 
 [[package]]
 name = "rustlings"
-version = "5.6.1"
+version = "6.0.0"
 dependencies = [
  "anyhow",
  "assert_cmd",
@@ -574,12 +574,20 @@ dependencies = [
  "indicatif",
  "notify-debouncer-mini",
  "predicates",
+ "rustlings-macros",
  "serde",
  "serde_json",
  "shlex",
  "toml_edit",
  "which",
  "winnow",
+]
+
+[[package]]
+name = "rustlings-macros"
+version = "6.0.0"
+dependencies = [
+ "quote",
 ]
 
 [[package]]

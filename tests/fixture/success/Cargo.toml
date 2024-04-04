@@ -1,11 +1,12 @@
-[[exercises]]
+[package]
+name = "tests"
+edition = "2021"
+publish = false
+
+[[bin]]
 name = "compSuccess"
 path = "exercises/compSuccess.rs"
-mode = "compile"
-hint = """"""
 
-[[exercises]]
+[[bin]]
 name = "testSuccess"
 path = "exercises/testSuccess.rs"
-mode = "test"
-hint = """"""

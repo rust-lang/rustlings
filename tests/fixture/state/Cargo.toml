@@ -1,17 +1,16 @@
-[[exercises]]
+[package]
+name = "tests"
+edition = "2021"
+publish = false
+
+[[bin]]
 name = "pending_exercise"
 path = "exercises/pending_exercise.rs"
-mode = "compile"
-hint = """"""
 
-[[exercises]]
+[[bin]]
 name = "pending_test_exercise"
 path = "exercises/pending_test_exercise.rs"
-mode = "test"
-hint = """"""
 
-[[exercises]]
+[[bin]]
 name = "finished_exercise"
 path = "exercises/finished_exercise.rs"
-mode = "compile"
-hint = """"""

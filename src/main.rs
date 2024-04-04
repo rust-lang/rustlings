@@ -1,29 +1,29 @@
+use crate::embedded::{WriteStrategy, EMBEDDED_FILES};
 use crate::exercise::{Exercise, ExerciseList};
-use crate::project::write_project_json;
-use crate::run::{reset, run};
+use crate::run::run;
 use crate::verify::verify;
-use anyhow::Result;
+use anyhow::{bail, Context, Result};
 use clap::{Parser, Subcommand};
 use console::Emoji;
-use notify_debouncer_mini::notify::{self, RecursiveMode};
+use notify_debouncer_mini::notify::RecursiveMode;
 use notify_debouncer_mini::{new_debouncer, DebouncedEventKind};
 use shlex::Shlex;
-use std::ffi::OsStr;
-use std::fs;
-use std::io::{self, prelude::*};
+use std::io::{BufRead, Write};
 use std::path::Path;
-use std::process::Command;
+use std::process::{exit, Command};
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::mpsc::{channel, RecvTimeoutError};
 use std::sync::{Arc, Mutex};
-use std::thread;
 use std::time::Duration;
+use std::{io, thread};
+use verify::VerifyState;
 
 #[macro_use]
 mod ui;
 
+mod embedded;
 mod exercise;
-mod project;
+mod init;
 mod run;
 mod verify;
 
@@ -40,6 +40,8 @@ struct Args {
 
 #[derive(Subcommand)]
 enum Subcommands {
+    /// Initialize Rustlings
+    Init,
     /// Verify all exercises according to the recommended order
     Verify,
     /// Rerun `verify` when files were edited
@@ -53,7 +55,7 @@ enum Subcommands {
         /// The name of the exercise
         name: String,
     },
-    /// Reset a single exercise using "git stash -- <filename>"
+    /// Reset a single exercise
     Reset {
         /// The name of the exercise
         name: String,
@@ -82,8 +84,6 @@ enum Subcommands {
         #[arg(short, long)]
         solved: bool,
     },
-    /// Enable rust-analyzer for exercises
-    Lsp,
 }
 
 fn main() -> Result<()> {
@@ -93,33 +93,39 @@ fn main() -> Result<()> {
         println!("\n{WELCOME}\n");
     }
 
-    if which::which("rustc").is_err() {
-        println!("We cannot find `rustc`.");
-        println!("Try running `rustc --version` to diagnose your problem.");
-        println!("For instructions on how to install Rust, check the README.");
-        std::process::exit(1);
+    which::which("cargo").context(
+        "Failed to find `cargo`.
+Did you already install Rust?
+Try running `cargo --version` to diagnose the problem.",
+    )?;
+
+    let exercises = ExerciseList::parse()?.exercises;
+
+    if matches!(args.command, Some(Subcommands::Init)) {
+        init::init_rustlings(&exercises).context("Initialization failed")?;
+        println!(
+            "\nDone initialization!\n
+Run `cd rustlings` to go into the generated directory.
+Then run `rustlings` for further instructions on getting started."
+        );
+        return Ok(());
+    } else if !Path::new("exercises").is_dir() {
+        println!(
+            "\nThe `exercises` directory wasn't found in the current directory.
+If you are just starting with Rustlings, run the command `rustlings init` to initialize it."
+        );
+        exit(1);
     }
 
-    let info_file = fs::read_to_string("info.toml").unwrap_or_else(|e| {
-        match e.kind() {
-            io::ErrorKind::NotFound => println!(
-                "The program must be run from the rustlings directory\nTry `cd rustlings/`!",
-            ),
-            _ => println!("Failed to read the info.toml file: {e}"),
-        }
-        std::process::exit(1);
-    });
-    let exercises = toml_edit::de::from_str::<ExerciseList>(&info_file)
-        .unwrap()
-        .exercises;
     let verbose = args.nocapture;
-
     let command = args.command.unwrap_or_else(|| {
         println!("{DEFAULT_OUT}\n");
-        std::process::exit(0);
+        exit(0);
     });
 
     match command {
+        // `Init` is handled above.
+        Subcommands::Init => (),
         Subcommands::List {
             paths,
             names,
@@ -152,7 +158,7 @@ fn main() -> Result<()> {
                 let filter_cond = filters
                     .iter()
                     .any(|f| exercise.name.contains(f) || fname.contains(f));
-                let looks_done = exercise.looks_done();
+                let looks_done = exercise.looks_done()?;
                 let status = if looks_done {
                     exercises_done += 1;
                     "Done"
@@ -177,8 +183,8 @@ fn main() -> Result<()> {
                         let mut handle = stdout.lock();
                         handle.write_all(line.as_bytes()).unwrap_or_else(|e| {
                             match e.kind() {
-                                std::io::ErrorKind::BrokenPipe => std::process::exit(0),
-                                _ => std::process::exit(1),
+                                std::io::ErrorKind::BrokenPipe => exit(0),
+                                _ => exit(1),
                             };
                         });
                     }
@@ -192,46 +198,37 @@ fn main() -> Result<()> {
                 exercises.len(),
                 percentage_progress
             );
-            std::process::exit(0);
+            exit(0);
         }
 
         Subcommands::Run { name } => {
-            let exercise = find_exercise(&name, &exercises);
-
-            run(exercise, verbose).unwrap_or_else(|_| std::process::exit(1));
+            let exercise = find_exercise(&name, &exercises)?;
+            run(exercise, verbose).unwrap_or_else(|_| exit(1));
         }
 
         Subcommands::Reset { name } => {
-            let exercise = find_exercise(&name, &exercises);
-
-            reset(exercise).unwrap_or_else(|_| std::process::exit(1));
+            let exercise = find_exercise(&name, &exercises)?;
+            EMBEDDED_FILES
+                .write_exercise_to_disk(&exercise.path, WriteStrategy::Overwrite)
+                .with_context(|| format!("Failed to reset the exercise {exercise}"))?;
+            println!("The file {} has been reset!", exercise.path.display());
         }
 
         Subcommands::Hint { name } => {
-            let exercise = find_exercise(&name, &exercises);
-
+            let exercise = find_exercise(&name, &exercises)?;
             println!("{}", exercise.hint);
         }
 
-        Subcommands::Verify => {
-            verify(&exercises, (0, exercises.len()), verbose, false)
-                .unwrap_or_else(|_| std::process::exit(1));
-        }
-
-        Subcommands::Lsp => {
-            if let Err(e) = write_project_json(exercises) {
-                println!("Failed to write rust-project.json to disk for rust-analyzer: {e}");
-            } else {
-                println!("Successfully generated rust-project.json");
-                println!("rust-analyzer will now parse exercises, restart your language server or editor");
-            }
-        }
+        Subcommands::Verify => match verify(&exercises, (0, exercises.len()), verbose, false)? {
+            VerifyState::AllExercisesDone => println!("All exercises done!"),
+            VerifyState::Failed(exercise) => bail!("Exercise {exercise} failed"),
+        },
 
         Subcommands::Watch { success_hints } => match watch(&exercises, verbose, success_hints) {
             Err(e) => {
                 println!("Error: Could not watch your progress. Error message was {e:?}.");
                 println!("Most likely you've run out of disk space or your 'inotify limit' has been reached.");
-                std::process::exit(1);
+                exit(1);
             }
             Ok(WatchStatus::Finished) => {
                 println!(
@@ -298,25 +295,23 @@ fn spawn_watch_shell(
     });
 }
 
-fn find_exercise<'a>(name: &str, exercises: &'a [Exercise]) -> &'a Exercise {
+fn find_exercise<'a>(name: &str, exercises: &'a [Exercise]) -> Result<&'a Exercise> {
     if name == "next" {
-        exercises
-            .iter()
-            .find(|e| !e.looks_done())
-            .unwrap_or_else(|| {
-                println!("🎉 Congratulations! You have done all the exercises!");
-                println!("🔚 There are no more exercises to do next!");
-                std::process::exit(1)
-            })
-    } else {
-        exercises
-            .iter()
-            .find(|e| e.name == name)
-            .unwrap_or_else(|| {
-                println!("No exercise found for '{name}'!");
-                std::process::exit(1)
-            })
+        for exercise in exercises {
+            if !exercise.looks_done()? {
+                return Ok(exercise);
+            }
+        }
+
+        println!("🎉 Congratulations! You have done all the exercises!");
+        println!("🔚 There are no more exercises to do next!");
+        exit(0);
     }
+
+    exercises
+        .iter()
+        .find(|e| e.name == name)
+        .with_context(|| format!("No exercise found for '{name}'!"))
 }
 
 enum WatchStatus {
@@ -324,11 +319,7 @@ enum WatchStatus {
     Unfinished,
 }
 
-fn watch(
-    exercises: &[Exercise],
-    verbose: bool,
-    success_hints: bool,
-) -> notify::Result<WatchStatus> {
+fn watch(exercises: &[Exercise], verbose: bool, success_hints: bool) -> Result<WatchStatus> {
     /* Clears the terminal with an ANSI escape code.
     Works in UNIX and newer Windows terminals. */
     fn clear_screen() {
@@ -341,57 +332,49 @@ fn watch(
     let mut debouncer = new_debouncer(Duration::from_secs(1), tx)?;
     debouncer
         .watcher()
-        .watch(Path::new("./exercises"), RecursiveMode::Recursive)?;
+        .watch(Path::new("exercises"), RecursiveMode::Recursive)?;
 
     clear_screen();
 
-    let failed_exercise_hint = match verify(
-        exercises.iter(),
-        (0, exercises.len()),
-        verbose,
-        success_hints,
-    ) {
-        Ok(_) => return Ok(WatchStatus::Finished),
-        Err(exercise) => Arc::new(Mutex::new(Some(exercise.hint.clone()))),
-    };
+    let failed_exercise_hint =
+        match verify(exercises, (0, exercises.len()), verbose, success_hints)? {
+            VerifyState::AllExercisesDone => return Ok(WatchStatus::Finished),
+            VerifyState::Failed(exercise) => Arc::new(Mutex::new(Some(exercise.hint.clone()))),
+        };
+
     spawn_watch_shell(Arc::clone(&failed_exercise_hint), Arc::clone(&should_quit));
+
+    let mut pending_exercises = Vec::with_capacity(exercises.len());
     loop {
         match rx.recv_timeout(Duration::from_secs(1)) {
             Ok(event) => match event {
                 Ok(events) => {
                     for event in events {
-                        let event_path = event.path;
                         if event.kind == DebouncedEventKind::Any
-                            && event_path.extension() == Some(OsStr::new("rs"))
-                            && event_path.exists()
+                            && event.path.extension().is_some_and(|ext| ext == "rs")
                         {
-                            let filepath = event_path.as_path().canonicalize().unwrap();
-                            let pending_exercises =
-                                exercises
-                                    .iter()
-                                    .find(|e| filepath.ends_with(&e.path))
-                                    .into_iter()
-                                    .chain(exercises.iter().filter(|e| {
-                                        !e.looks_done() && !filepath.ends_with(&e.path)
-                                    }));
-                            let num_done = exercises
-                                .iter()
-                                .filter(|e| e.looks_done() && !filepath.ends_with(&e.path))
-                                .count();
+                            pending_exercises.extend(exercises.iter().filter(|exercise| {
+                                !exercise.looks_done().unwrap_or(false)
+                                    || event.path.ends_with(&exercise.path)
+                            }));
+                            let num_done = exercises.len() - pending_exercises.len();
+
                             clear_screen();
+
                             match verify(
-                                pending_exercises,
+                                pending_exercises.iter().copied(),
                                 (num_done, exercises.len()),
                                 verbose,
                                 success_hints,
-                            ) {
-                                Ok(_) => return Ok(WatchStatus::Finished),
-                                Err(exercise) => {
-                                    let mut failed_exercise_hint =
-                                        failed_exercise_hint.lock().unwrap();
-                                    *failed_exercise_hint = Some(exercise.hint.clone());
+                            )? {
+                                VerifyState::AllExercisesDone => return Ok(WatchStatus::Finished),
+                                VerifyState::Failed(exercise) => {
+                                    let hint = exercise.hint.clone();
+                                    *failed_exercise_hint.lock().unwrap() = Some(hint);
                                 }
                             }
+
+                            pending_exercises.clear();
                         }
                     }
                 }
@@ -409,9 +392,16 @@ fn watch(
     }
 }
 
-const DEFAULT_OUT: &str = "Thanks for installing Rustlings!
+const WELCOME: &str = r"       welcome to...
+                 _   _ _
+  _ __ _   _ ___| |_| (_)_ __   __ _ ___
+ | '__| | | / __| __| | | '_ \ / _` / __|
+ | |  | |_| \__ \ |_| | | | | | (_| \__ \
+ |_|   \__,_|___/\__|_|_|_| |_|\__, |___/
+                               |___/";
 
-Is this your first time? Don't worry, Rustlings was made for beginners! We are
+const DEFAULT_OUT: &str =
+    "Is this your first time? Don't worry, Rustlings was made for beginners! We are
 going to teach you a lot of things about Rust, but before we can get
 started, here's a couple of notes about how Rustlings operates:
 
@@ -431,11 +421,19 @@ started, here's a couple of notes about how Rustlings operates:
 4. If an exercise doesn't make sense to you, feel free to open an issue on GitHub!
    (https://github.com/rust-lang/rustlings/issues/new). We look at every issue,
    and sometimes, other learners do too so you can help each other out!
-5. If you want to use `rust-analyzer` with exercises, which provides features like
-   autocompletion, run the command `rustlings lsp`.
 
-Got all that? Great! To get started, run `rustlings watch` in order to get the first
-exercise. Make sure to have your editor open!";
+Got all that? Great! To get started, run `rustlings watch` in order to get the first exercise.
+Make sure to have your editor open in the `rustlings` directory!";
+
+const WATCH_MODE_HELP_MESSAGE: &str = "Commands available to you in watch mode:
+  hint   - prints the current exercise's hint
+  clear  - clears the screen
+  quit   - quits watch mode
+  !<cmd> - executes a command, like `!rustc --explain E0381`
+  help   - displays this help message
+
+Watch mode automatically re-evaluates the current exercise
+when you edit a file's contents.";
 
 const FENISH_LINE: &str = "+----------------------------------------------------+
 |          You made it to the Fe-nish line!          |
@@ -463,21 +461,3 @@ You can also contribute your own exercises to help the greater community!
 
 Before reporting an issue or contributing, please read our guidelines:
 https://github.com/rust-lang/rustlings/blob/main/CONTRIBUTING.md";
-
-const WELCOME: &str = r"       welcome to...
-                 _   _ _
-  _ __ _   _ ___| |_| (_)_ __   __ _ ___
- | '__| | | / __| __| | | '_ \ / _` / __|
- | |  | |_| \__ \ |_| | | | | | (_| \__ \
- |_|   \__,_|___/\__|_|_|_| |_|\__, |___/
-                               |___/";
-
-const WATCH_MODE_HELP_MESSAGE: &str = "Commands available to you in watch mode:
-  hint   - prints the current exercise's hint
-  clear  - clears the screen
-  quit   - quits watch mode
-  !<cmd> - executes a command, like `!rustc --explain E0381`
-  help   - displays this help message
-
-Watch mode automatically re-evaluates the current exercise
-when you edit a file's contents.";

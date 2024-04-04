@@ -1,11 +1,11 @@
-*.swp
 target/
+/tests/fixture/*/Cargo.lock
+/dev/Cargo.lock
+
+*.swp
 **/*.rs.bk
 .DS_Store
 *.pdb
-exercises/22_clippy/Cargo.toml
-exercises/22_clippy/Cargo.lock
-rust-project.json
 .idea
 .vscode/*
 !.vscode/extensions.json
