@@ -13,6 +13,7 @@ target/
 *.o
 public/
 .direnv/
+.ignore
 
 # Local Netlify folder
 .netlify
