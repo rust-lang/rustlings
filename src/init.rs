@@ -24,7 +24,6 @@ fn create_cargo_toml(exercises: &[Exercise]) -> io::Result<()> {
 
 [package]
 name = "rustlings"
-version = "0.0.0"
 edition = "2021"
 publish = false
 "#,

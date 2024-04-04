@@ -49,7 +49,6 @@ bin = [\n",
 
 [package]
 name = "rustlings"
-version = "0.0.0"
 edition = "2021"
 publish = false
 "#,
