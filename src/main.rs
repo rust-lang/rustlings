@@ -17,9 +17,6 @@ use std::time::Duration;
 use std::{io, thread};
 use verify::VerifyState;
 
-#[macro_use]
-mod ui;
-
 mod embedded;
 mod exercise;
 mod init;

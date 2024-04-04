@@ -21,7 +21,8 @@ pub fn run(exercise: &Exercise) -> Result<()> {
         bail!("Ran {exercise} with errors");
     }
 
-    success!("Successfully ran {}", exercise);
+    // TODO: Color
+    println!("Successfully ran {exercise}");
 
     Ok(())
 }

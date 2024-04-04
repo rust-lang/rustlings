@@ -39,10 +39,11 @@ pub fn verify<'a>(
         }
 
         println!();
+        // TODO: Color
         match exercise.mode {
-            Mode::Compile => success!("Successfully ran {}!", exercise),
-            Mode::Test => success!("Successfully tested {}!", exercise),
-            Mode::Clippy => success!("Successfully checked {}!", exercise),
+            Mode::Compile => println!("Successfully ran {exercise}!"),
+            Mode::Test => println!("Successfully tested {exercise}!"),
+            Mode::Clippy => println!("Successfully checked {exercise}!"),
         }
 
         if let State::Pending(context) = exercise.state()? {
