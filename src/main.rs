@@ -7,10 +7,9 @@ use clap::{Parser, Subcommand};
 use console::Emoji;
 use notify_debouncer_mini::notify::RecursiveMode;
 use notify_debouncer_mini::{new_debouncer, DebouncedEventKind};
-use shlex::Shlex;
 use std::io::{BufRead, Write};
 use std::path::Path;
-use std::process::{exit, Command};
+use std::process::exit;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::mpsc::{channel, RecvTimeoutError};
 use std::sync::{Arc, Mutex};
@@ -31,9 +30,6 @@ mod verify;
 #[derive(Parser)]
 #[command(version)]
 struct Args {
-    /// Show outputs from the test exercises
-    #[arg(long)]
-    nocapture: bool,
     #[command(subcommand)]
     command: Option<Subcommands>,
 }
@@ -45,11 +41,7 @@ enum Subcommands {
     /// Verify all exercises according to the recommended order
     Verify,
     /// Rerun `verify` when files were edited
-    Watch {
-        /// Show hints on success
-        #[arg(long)]
-        success_hints: bool,
-    },
+    Watch,
     /// Run/Test a single exercise
     Run {
         /// The name of the exercise
@@ -117,7 +109,6 @@ If you are just starting with Rustlings, run the command `rustlings init` to ini
         exit(1);
     }
 
-    let verbose = args.nocapture;
     let command = args.command.unwrap_or_else(|| {
         println!("{DEFAULT_OUT}\n");
         exit(0);
@@ -203,7 +194,7 @@ If you are just starting with Rustlings, run the command `rustlings init` to ini
 
         Subcommands::Run { name } => {
             let exercise = find_exercise(&name, &exercises)?;
-            run(exercise, verbose).unwrap_or_else(|_| exit(1));
+            run(exercise).unwrap_or_else(|_| exit(1));
         }
 
         Subcommands::Reset { name } => {
@@ -219,12 +210,12 @@ If you are just starting with Rustlings, run the command `rustlings init` to ini
             println!("{}", exercise.hint);
         }
 
-        Subcommands::Verify => match verify(&exercises, (0, exercises.len()), verbose, false)? {
+        Subcommands::Verify => match verify(&exercises, (0, exercises.len()))? {
             VerifyState::AllExercisesDone => println!("All exercises done!"),
             VerifyState::Failed(exercise) => bail!("Exercise {exercise} failed"),
         },
 
-        Subcommands::Watch { success_hints } => match watch(&exercises, verbose, success_hints) {
+        Subcommands::Watch => match watch(&exercises) {
             Err(e) => {
                 println!("Error: Could not watch your progress. Error message was {e:?}.");
                 println!("Most likely you've run out of disk space or your 'inotify limit' has been reached.");
@@ -277,17 +268,6 @@ fn spawn_watch_shell(
                 println!("Bye!");
             } else if input == "help" {
                 println!("{WATCH_MODE_HELP_MESSAGE}");
-            } else if let Some(cmd) = input.strip_prefix('!') {
-                let mut parts = Shlex::new(cmd);
-
-                let Some(program) = parts.next() else {
-                    println!("no command provided");
-                    continue;
-                };
-
-                if let Err(e) = Command::new(program).args(parts).status() {
-                    println!("failed to execute command `{cmd}`: {e}");
-                }
             } else {
                 println!("unknown command: {input}\n{WATCH_MODE_HELP_MESSAGE}");
             }
@@ -319,7 +299,7 @@ enum WatchStatus {
     Unfinished,
 }
 
-fn watch(exercises: &[Exercise], verbose: bool, success_hints: bool) -> Result<WatchStatus> {
+fn watch(exercises: &[Exercise]) -> Result<WatchStatus> {
     /* Clears the terminal with an ANSI escape code.
     Works in UNIX and newer Windows terminals. */
     fn clear_screen() {
@@ -336,11 +316,10 @@ fn watch(exercises: &[Exercise], verbose: bool, success_hints: bool) -> Result<W
 
     clear_screen();
 
-    let failed_exercise_hint =
-        match verify(exercises, (0, exercises.len()), verbose, success_hints)? {
-            VerifyState::AllExercisesDone => return Ok(WatchStatus::Finished),
-            VerifyState::Failed(exercise) => Arc::new(Mutex::new(Some(exercise.hint.clone()))),
-        };
+    let failed_exercise_hint = match verify(exercises, (0, exercises.len()))? {
+        VerifyState::AllExercisesDone => return Ok(WatchStatus::Finished),
+        VerifyState::Failed(exercise) => Arc::new(Mutex::new(Some(exercise.hint.clone()))),
+    };
 
     spawn_watch_shell(Arc::clone(&failed_exercise_hint), Arc::clone(&should_quit));
 
@@ -364,8 +343,6 @@ fn watch(exercises: &[Exercise], verbose: bool, success_hints: bool) -> Result<W
                             match verify(
                                 pending_exercises.iter().copied(),
                                 (num_done, exercises.len()),
-                                verbose,
-                                success_hints,
                             )? {
                                 VerifyState::AllExercisesDone => return Ok(WatchStatus::Finished),
                                 VerifyState::Failed(exercise) => {
@@ -429,7 +406,6 @@ const WATCH_MODE_HELP_MESSAGE: &str = "Commands available to you in watch mode:
   hint   - prints the current exercise's hint
   clear  - clears the screen
   quit   - quits watch mode
-  !<cmd> - executes a command, like `!rustc --explain E0381`
   help   - displays this help message
 
 Watch mode automatically re-evaluates the current exercise
