@@ -17,7 +17,7 @@ struct InfoToml {
 
 #[test]
 fn dev_cargo_bins() {
-    let content = fs::read_to_string("exercises/Cargo.toml").unwrap();
+    let content = fs::read_to_string("dev/Cargo.toml").unwrap();
 
     let exercises = toml_edit::de::from_str::<InfoToml>(&fs::read_to_string("info.toml").unwrap())
         .unwrap()

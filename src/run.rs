@@ -1,4 +1,4 @@
-use anyhow::Result;
+use anyhow::{bail, Result};
 use std::io::{stdout, Write};
 
 use crate::exercise::Exercise;
@@ -17,11 +17,11 @@ pub fn run(exercise: &Exercise) -> Result<()> {
         stdout.flush()?;
     }
 
-    if output.status.success() {
-        success!("Successfully ran {}", exercise);
-    } else {
-        warn!("Ran {} with errors", exercise);
+    if !output.status.success() {
+        bail!("Ran {exercise} with errors");
     }
+
+    success!("Successfully ran {}", exercise);
 
     Ok(())
 }

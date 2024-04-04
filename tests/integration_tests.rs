@@ -196,22 +196,11 @@ fn run_test_exercise_does_not_prompt() {
 fn run_single_test_success_with_output() {
     Command::cargo_bin("rustlings")
         .unwrap()
-        .args(["--nocapture", "run", "testSuccess"])
-        .current_dir("tests/fixture/success/")
-        .assert()
-        .code(0)
-        .stdout(predicates::str::contains("THIS TEST TOO SHALL PASS"));
-}
-
-#[test]
-fn run_single_test_success_without_output() {
-    Command::cargo_bin("rustlings")
-        .unwrap()
         .args(["run", "testSuccess"])
         .current_dir("tests/fixture/success/")
         .assert()
         .code(0)
-        .stdout(predicates::str::contains("THIS TEST TOO SHALL PASS").not());
+        .stdout(predicates::str::contains("THIS TEST TOO SHALL PASS"));
 }
 
 #[test]
