@@ -29,8 +29,10 @@ edition.workspace = true
 anyhow = "1.0.81"
 clap = { version = "4.5.4", features = ["derive"] }
 console = "0.15.8"
+crossterm = "0.27.0"
 indicatif = "0.17.8"
 notify-debouncer-mini = "0.4.1"
+ratatui = "0.26.1"
 rustlings-macros = { path = "rustlings-macros" }
 serde_json = "1.0.115"
 serde = { version = "1.0.197", features = ["derive"] }
