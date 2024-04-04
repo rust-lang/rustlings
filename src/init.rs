@@ -10,21 +10,25 @@ use crate::{embedded::EMBEDDED_FILES, exercise::Exercise};
 
 fn create_cargo_toml(exercises: &[Exercise]) -> io::Result<()> {
     let mut cargo_toml = Vec::with_capacity(1 << 13);
+    cargo_toml.extend_from_slice(b"bin = [\n");
+    for exercise in exercises {
+        cargo_toml.extend_from_slice(b"  { name = \"");
+        cargo_toml.extend_from_slice(exercise.name.as_bytes());
+        cargo_toml.extend_from_slice(b"\", path = \"");
+        cargo_toml.extend_from_slice(exercise.path.to_str().unwrap().as_bytes());
+        cargo_toml.extend_from_slice(b"\" },\n");
+    }
+
     cargo_toml.extend_from_slice(
-        br#"[package]
+        br#"]
+
+[package]
 name = "rustlings"
 version = "0.0.0"
 edition = "2021"
 publish = false
 "#,
     );
-    for exercise in exercises {
-        cargo_toml.extend_from_slice(b"\n[[bin]]\nname = \"");
-        cargo_toml.extend_from_slice(exercise.name.as_bytes());
-        cargo_toml.extend_from_slice(b"\"\npath = \"");
-        cargo_toml.extend_from_slice(exercise.path.to_str().unwrap().as_bytes());
-        cargo_toml.extend_from_slice(b"\"\n");
-    }
     OpenOptions::new()
         .create_new(true)
         .write(true)
