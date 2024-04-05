@@ -7,8 +7,7 @@ use std::process::Command;
 
 #[test]
 fn runs_without_arguments() {
-    let mut cmd = Command::cargo_bin("rustlings").unwrap();
-    cmd.assert().success();
+    Command::cargo_bin("rustlings").unwrap().assert().success();
 }
 
 #[test]
