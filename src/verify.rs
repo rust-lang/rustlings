@@ -1,5 +1,5 @@
 use anyhow::Result;
-use console::style;
+use crossterm::style::{Attribute, ContentStyle, Stylize};
 use std::io::{stdout, Write};
 
 use crate::exercise::{Exercise, Mode, State};
@@ -50,20 +50,26 @@ pub fn verify<'a>(
             println!(
                 "\nYou can keep working on this exercise,
 or jump into the next one by removing the {} comment:\n",
-                style("`I AM NOT DONE`").bold()
+                "`I AM NOT DONE`".bold()
             );
 
             for context_line in context {
                 let formatted_line = if context_line.important {
-                    format!("{}", style(context_line.line).bold())
+                    format!("{}", context_line.line.bold())
                 } else {
                     context_line.line
                 };
 
                 println!(
                     "{:>2} {}  {}",
-                    style(context_line.number).blue().bold(),
-                    style("|").blue(),
+                    ContentStyle {
+                        foreground_color: Some(crossterm::style::Color::Blue),
+                        background_color: None,
+                        underline_color: None,
+                        attributes: Attribute::Bold.into()
+                    }
+                    .apply(context_line.number),
+                    "|".blue(),
                     formatted_line,
                 );
             }
