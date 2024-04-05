@@ -48,7 +48,7 @@ bin = [\n",
         br#"]
 
 [package]
-name = "rustlings"
+name = "rustlings-dev"
 edition = "2021"
 publish = false
 "#,

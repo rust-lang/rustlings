@@ -1,5 +1,5 @@
 [package]
-name = "tests"
+name = "failure"
 edition = "2021"
 publish = false
 
