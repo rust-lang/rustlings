@@ -16,6 +16,7 @@ mod embedded;
 mod exercise;
 mod init;
 mod run;
+mod state;
 mod tui;
 mod verify;
 
