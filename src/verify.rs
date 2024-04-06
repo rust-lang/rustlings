@@ -14,17 +14,16 @@ pub enum VerifyState<'a> {
 // Any such failures will be reported to the end user.
 // If the Exercise being verified is a test, the verbose boolean
 // determines whether or not the test harness outputs are displayed.
-pub fn verify<'a>(
-    pending_exercises: impl IntoIterator<Item = &'a Exercise>,
-    progress: (usize, usize),
-) -> Result<VerifyState<'a>> {
-    let (mut num_done, total) = progress;
-    println!(
-        "Progress: {num_done}/{total} ({:.1}%)\n",
-        num_done as f32 / total as f32 * 100.0,
-    );
+pub fn verify(exercises: &[Exercise], mut current_exercise_ind: usize) -> Result<VerifyState<'_>> {
+    while current_exercise_ind < exercises.len() {
+        let exercise = &exercises[current_exercise_ind];
 
-    for exercise in pending_exercises {
+        println!(
+            "Progress: {current_exercise_ind}/{} ({:.1}%)\n",
+            exercises.len(),
+            current_exercise_ind as f32 / exercises.len() as f32 * 100.0,
+        );
+
         let output = exercise.run()?;
 
         {
@@ -76,11 +75,7 @@ or jump into the next one by removing the {} comment:\n",
             return Ok(VerifyState::Failed(exercise));
         }
 
-        num_done += 1;
-        println!(
-            "Progress: {num_done}/{total} ({:.1}%)\n",
-            num_done as f32 / total as f32 * 100.0,
-        );
+        current_exercise_ind += 1;
     }
 
     Ok(VerifyState::AllExercisesDone)
