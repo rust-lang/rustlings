@@ -1,11 +1,11 @@
-use crate::consts::{DEFAULT_OUT, WELCOME};
+use crate::consts::WELCOME;
 use crate::embedded::{WriteStrategy, EMBEDDED_FILES};
 use crate::exercise::{Exercise, ExerciseList};
 use crate::run::run;
-use crate::tui::tui;
 use crate::verify::verify;
 use anyhow::{bail, Context, Result};
 use clap::{Parser, Subcommand};
+use state::State;
 use std::io::Write;
 use std::path::Path;
 use std::process::exit;
@@ -17,8 +17,8 @@ mod exercise;
 mod init;
 mod run;
 mod state;
-mod tui;
 mod verify;
+mod watch;
 
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
 #[derive(Parser)]
@@ -75,10 +75,6 @@ enum Subcommands {
 fn main() -> Result<()> {
     let args = Args::parse();
 
-    if args.command.is_none() {
-        println!("\n{WELCOME}\n");
-    }
-
     which::which("cargo").context(
         "Failed to find `cargo`.
 Did you already install Rust?
@@ -97,16 +93,20 @@ Then run `rustlings` for further instructions on getting started."
         return Ok(());
     } else if !Path::new("exercises").is_dir() {
         println!(
-            "\nThe `exercises` directory wasn't found in the current directory.
+            "
+{WELCOME}
+
+The `exercises` directory wasn't found in the current directory.
 If you are just starting with Rustlings, run the command `rustlings init` to initialize it."
         );
         exit(1);
     }
 
+    let state = State::read_or_default(&exercises);
+
     match args.command {
         None | Some(Subcommands::Watch) => {
-            println!("{DEFAULT_OUT}\n");
-            tui(&exercises)?;
+            watch::watch(&state, &exercises)?;
         }
         // `Init` is handled above.
         Some(Subcommands::Init) => (),
@@ -199,7 +199,7 @@ If you are just starting with Rustlings, run the command `rustlings init` to ini
             let exercise = find_exercise(&name, &exercises)?;
             println!("{}", exercise.hint);
         }
-        Some(Subcommands::Verify) => match verify(&exercises, (0, exercises.len()))? {
+        Some(Subcommands::Verify) => match verify(&exercises, 0)? {
             VerifyState::AllExercisesDone => println!("All exercises done!"),
             VerifyState::Failed(exercise) => bail!("Exercise {exercise} failed"),
         },
