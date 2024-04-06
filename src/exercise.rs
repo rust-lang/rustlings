@@ -4,7 +4,7 @@ use std::fmt::{self, Debug, Display, Formatter};
 use std::fs::{self, File};
 use std::io::{self, BufRead, BufReader};
 use std::path::PathBuf;
-use std::process::{exit, Command, Output};
+use std::process::{Command, Output};
 use std::{array, mem};
 use winnow::ascii::{space0, Caseless};
 use winnow::combinator::opt;
@@ -145,13 +145,9 @@ impl Exercise {
         let mut line = String::with_capacity(256);
 
         loop {
-            let n = read_line(&mut line).unwrap_or_else(|e| {
-                println!(
-                    "Failed to read the exercise file {}: {e}",
-                    self.path.display(),
-                );
-                exit(1);
-            });
+            let n = read_line(&mut line).with_context(|| {
+                format!("Failed to read the exercise file {}", self.path.display())
+            })?;
 
             // Reached the end of the file and didn't find the comment.
             if n == 0 {
