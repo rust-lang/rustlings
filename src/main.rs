@@ -6,7 +6,6 @@ use crate::verify::verify;
 use anyhow::{bail, Context, Result};
 use clap::{Parser, Subcommand};
 use state::State;
-use std::io::Write;
 use std::path::Path;
 use std::process::exit;
 use verify::VerifyState;
@@ -15,6 +14,7 @@ mod consts;
 mod embedded;
 mod exercise;
 mod init;
+mod list;
 mod run;
 mod state;
 mod verify;
@@ -52,24 +52,7 @@ enum Subcommands {
         name: String,
     },
     /// List the exercises available in Rustlings
-    List {
-        /// Show only the paths of the exercises
-        #[arg(short, long)]
-        paths: bool,
-        /// Show only the names of the exercises
-        #[arg(short, long)]
-        names: bool,
-        /// Provide a string to match exercise names.
-        /// Comma separated patterns are accepted
-        #[arg(short, long)]
-        filter: Option<String>,
-        /// Display only exercises not yet solved
-        #[arg(short, long)]
-        unsolved: bool,
-        /// Display only exercises that have been solved
-        #[arg(short, long)]
-        solved: bool,
-    },
+    List,
 }
 
 fn main() -> Result<()> {
@@ -110,79 +93,8 @@ If you are just starting with Rustlings, run the command `rustlings init` to ini
         }
         // `Init` is handled above.
         Some(Subcommands::Init) => (),
-        Some(Subcommands::List {
-            paths,
-            names,
-            filter,
-            unsolved,
-            solved,
-        }) => {
-            if !paths && !names {
-                println!("{:<17}\t{:<46}\t{:<7}", "Name", "Path", "Status");
-            }
-            let mut exercises_done: u16 = 0;
-            let lowercase_filter = filter
-                .as_ref()
-                .map(|s| s.to_lowercase())
-                .unwrap_or_default();
-            let filters = lowercase_filter
-                .split(',')
-                .filter_map(|f| {
-                    let f = f.trim();
-                    if f.is_empty() {
-                        None
-                    } else {
-                        Some(f)
-                    }
-                })
-                .collect::<Vec<_>>();
-
-            for exercise in &exercises {
-                let fname = exercise.path.to_string_lossy();
-                let filter_cond = filters
-                    .iter()
-                    .any(|f| exercise.name.contains(f) || fname.contains(f));
-                let looks_done = exercise.looks_done()?;
-                let status = if looks_done {
-                    exercises_done += 1;
-                    "Done"
-                } else {
-                    "Pending"
-                };
-                let solve_cond =
-                    (looks_done && solved) || (!looks_done && unsolved) || (!solved && !unsolved);
-                if solve_cond && (filter_cond || filter.is_none()) {
-                    let line = if paths {
-                        format!("{fname}\n")
-                    } else if names {
-                        format!("{}\n", exercise.name)
-                    } else {
-                        format!("{:<17}\t{fname:<46}\t{status:<7}\n", exercise.name)
-                    };
-                    // Somehow using println! leads to the binary panicking
-                    // when its output is piped.
-                    // So, we're handling a Broken Pipe error and exiting with 0 anyway
-                    let stdout = std::io::stdout();
-                    {
-                        let mut handle = stdout.lock();
-                        handle.write_all(line.as_bytes()).unwrap_or_else(|e| {
-                            match e.kind() {
-                                std::io::ErrorKind::BrokenPipe => exit(0),
-                                _ => exit(1),
-                            };
-                        });
-                    }
-                }
-            }
-
-            let percentage_progress = exercises_done as f32 / exercises.len() as f32 * 100.0;
-            println!(
-                "Progress: You completed {} / {} exercises ({:.1} %).",
-                exercises_done,
-                exercises.len(),
-                percentage_progress
-            );
-            exit(0);
+        Some(Subcommands::List) => {
+            list::list(&state, &exercises)?;
         }
         Some(Subcommands::Run { name }) => {
             let exercise = find_exercise(&name, &exercises)?;
