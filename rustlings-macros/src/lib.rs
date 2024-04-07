@@ -75,7 +75,6 @@ pub fn include_files(_: TokenStream) -> TokenStream {
 
     quote! {
         EmbeddedFiles {
-            info_toml_content: ::std::include_str!("../info.toml"),
             exercises_dir: ExercisesDir {
                 readme: EmbeddedFile {
                     path: "exercises/README.md",

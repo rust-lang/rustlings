@@ -65,7 +65,6 @@ struct ExercisesDir {
 }
 
 pub struct EmbeddedFiles {
-    pub info_toml_content: &'static str,
     exercises_dir: ExercisesDir,
 }
 

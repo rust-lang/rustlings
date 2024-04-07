@@ -52,7 +52,7 @@ impl InfoFile {
         if let Ok(file_content) = fs::read_to_string("info.toml") {
             toml_edit::de::from_str(&file_content)
         } else {
-            toml_edit::de::from_str(EMBEDDED_FILES.info_toml_content)
+            toml_edit::de::from_str(include_str!("../info.toml"))
         }
         .context("Failed to parse `info.toml`")
     }
