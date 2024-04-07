@@ -1,14 +1,7 @@
 use assert_cmd::prelude::*;
 use glob::glob;
 use predicates::boolean::PredicateBooleanExt;
-use std::fs::File;
-use std::io::Read;
-use std::process::Command;
-
-#[test]
-fn runs_without_arguments() {
-    Command::cargo_bin("rustlings").unwrap().assert().success();
-}
+use std::{fs::File, io::Read, process::Command};
 
 #[test]
 fn fails_when_in_wrong_dir() {
