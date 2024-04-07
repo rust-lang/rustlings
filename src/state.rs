@@ -1,4 +1,4 @@
-use anyhow::{Context, Result};
+use anyhow::{bail, Context, Result};
 use serde::{Deserialize, Serialize};
 use std::fs;
 
@@ -6,8 +6,8 @@ use crate::exercise::Exercise;
 
 #[derive(Serialize, Deserialize)]
 pub struct State {
-    pub next_exercise_ind: usize,
-    pub progress: Vec<bool>,
+    next_exercise_ind: usize,
+    progress: Vec<bool>,
 }
 
 impl State {
@@ -30,11 +30,30 @@ impl State {
         })
     }
 
-    pub fn write(&self) -> Result<()> {
+    fn write(&self) -> Result<()> {
         // TODO: Capacity
-        let mut buf = Vec::with_capacity(1 << 12);
+        let mut buf = Vec::with_capacity(1024);
         serde_json::ser::to_writer(&mut buf, self).context("Failed to serialize the state")?;
-        dbg!(buf.len());
+
         Ok(())
+    }
+
+    #[inline]
+    pub fn next_exercise_ind(&self) -> usize {
+        self.next_exercise_ind
+    }
+
+    pub fn set_next_exercise_ind(&mut self, ind: usize) -> Result<()> {
+        if ind >= self.progress.len() {
+            bail!("The next exercise index is higher than the number of exercises");
+        }
+
+        self.next_exercise_ind = ind;
+        self.write()
+    }
+
+    #[inline]
+    pub fn progress(&self) -> &[bool] {
+        &self.progress
     }
 }

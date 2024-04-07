@@ -85,7 +85,7 @@ If you are just starting with Rustlings, run the command `rustlings init` to ini
         exit(1);
     }
 
-    let state = State::read_or_default(&exercises);
+    let mut state = State::read_or_default(&exercises);
 
     match args.command {
         None | Some(Subcommands::Watch) => {
@@ -94,7 +94,7 @@ If you are just starting with Rustlings, run the command `rustlings init` to ini
         // `Init` is handled above.
         Some(Subcommands::Init) => (),
         Some(Subcommands::List) => {
-            list::list(&state, &exercises)?;
+            list::list(&mut state, &exercises)?;
         }
         Some(Subcommands::Run { name }) => {
             let exercise = find_exercise(&name, &exercises)?;

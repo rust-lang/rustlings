@@ -16,6 +16,36 @@ use std::io;
 
 use crate::{exercise::Exercise, state::State};
 
+fn rows<'s, 'e>(state: &'s State, exercises: &'e [Exercise]) -> impl Iterator<Item = Row<'e>> + 's
+where
+    'e: 's,
+{
+    exercises
+        .iter()
+        .zip(state.progress())
+        .enumerate()
+        .map(|(ind, (exercise, done))| {
+            let exercise_state = if *done {
+                "DONE".green()
+            } else {
+                "PENDING".yellow()
+            };
+
+            let next = if ind == state.next_exercise_ind() {
+                ">>>>".bold().red()
+            } else {
+                Span::default()
+            };
+
+            Row::new([
+                next,
+                exercise_state,
+                Span::raw(&exercise.name),
+                Span::raw(exercise.path.to_string_lossy()),
+            ])
+        })
+}
+
 fn table<'a>(state: &State, exercises: &'a [Exercise]) -> Table<'a> {
     let header = Row::new(["Next", "State", "Name", "Path"]);
 
@@ -32,33 +62,7 @@ fn table<'a>(state: &State, exercises: &'a [Exercise]) -> Table<'a> {
         Constraint::Fill(1),
     ];
 
-    let rows = exercises
-        .iter()
-        .zip(&state.progress)
-        .enumerate()
-        .map(|(ind, (exercise, done))| {
-            let exercise_state = if *done {
-                "DONE".green()
-            } else {
-                "PENDING".yellow()
-            };
-
-            let next = if ind == state.next_exercise_ind {
-                ">>>>".bold().red()
-            } else {
-                Span::default()
-            };
-
-            Row::new([
-                next,
-                exercise_state,
-                Span::raw(&exercise.name),
-                Span::raw(exercise.path.to_string_lossy()),
-            ])
-        })
-        .collect::<Vec<_>>();
-
-    Table::new(rows, widths)
+    Table::new(rows(state, exercises), widths)
         .header(header)
         .column_spacing(2)
         .highlight_spacing(HighlightSpacing::Always)
@@ -67,7 +71,7 @@ fn table<'a>(state: &State, exercises: &'a [Exercise]) -> Table<'a> {
         .block(Block::default().borders(Borders::BOTTOM))
 }
 
-pub fn list(state: &State, exercises: &[Exercise]) -> Result<()> {
+pub fn list(state: &mut State, exercises: &[Exercise]) -> Result<()> {
     let mut stdout = io::stdout().lock();
 
     stdout.execute(EnterAlternateScreen)?;
@@ -76,7 +80,7 @@ pub fn list(state: &State, exercises: &[Exercise]) -> Result<()> {
     let mut terminal = Terminal::new(CrosstermBackend::new(&mut stdout))?;
     terminal.clear()?;
 
-    let table = table(state, exercises);
+    let mut table = table(state, exercises);
 
     let last_ind = exercises.len() - 1;
     let mut selected = 0;
@@ -142,6 +146,10 @@ pub fn list(state: &State, exercises: &[Exercise]) -> Result<()> {
             KeyCode::End | KeyCode::Char('G') => {
                 selected = last_ind;
                 table_state.select(Some(selected));
+            }
+            KeyCode::Char('c') => {
+                state.set_next_exercise_ind(selected)?;
+                table = table.rows(rows(state, exercises));
             }
             _ => (),
         }

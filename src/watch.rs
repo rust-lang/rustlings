@@ -158,7 +158,7 @@ pub fn watch(state: &State, exercises: &[Exercise]) -> Result<()> {
         .watcher()
         .watch(Path::new("exercises"), RecursiveMode::Recursive)?;
 
-    let current_exercise_ind = state.progress.iter().position(|done| *done).unwrap_or(0);
+    let current_exercise_ind = state.next_exercise_ind();
 
     let exercise = &exercises[current_exercise_ind];
 
