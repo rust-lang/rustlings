@@ -14,7 +14,7 @@ use ratatui::{
 };
 use std::io;
 
-use crate::{exercise::Exercise, state::State};
+use crate::{exercise::Exercise, state_file::StateFile};
 
 struct UiState<'a> {
     pub table: Table<'a>,
@@ -25,7 +25,7 @@ struct UiState<'a> {
 
 impl<'a> UiState<'a> {
     pub fn rows<'s, 'i>(
-        state: &'s State,
+        state_file: &'s StateFile,
         exercises: &'a [Exercise],
     ) -> impl Iterator<Item = Row<'a>> + 'i
     where
@@ -34,10 +34,10 @@ impl<'a> UiState<'a> {
     {
         exercises
             .iter()
-            .zip(state.progress())
+            .zip(state_file.progress())
             .enumerate()
             .map(|(ind, (exercise, done))| {
-                let next = if ind == state.next_exercise_ind() {
+                let next = if ind == state_file.next_exercise_ind() {
                     ">>>>".bold().red()
                 } else {
                     Span::default()
@@ -58,7 +58,7 @@ impl<'a> UiState<'a> {
             })
     }
 
-    pub fn new(state: &State, exercises: &'a [Exercise]) -> Self {
+    pub fn new(state_file: &StateFile, exercises: &'a [Exercise]) -> Self {
         let header = Row::new(["Next", "State", "Name", "Path"]);
 
         let max_name_len = exercises
@@ -74,7 +74,7 @@ impl<'a> UiState<'a> {
             Constraint::Fill(1),
         ];
 
-        let rows = Self::rows(state, exercises);
+        let rows = Self::rows(state_file, exercises);
 
         let table = Table::new(rows, widths)
             .header(header)
@@ -147,7 +147,7 @@ impl<'a> UiState<'a> {
     }
 }
 
-pub fn list(state: &mut State, exercises: &[Exercise]) -> Result<()> {
+pub fn list(state_file: &mut StateFile, exercises: &[Exercise]) -> Result<()> {
     let mut stdout = io::stdout().lock();
     stdout.execute(EnterAlternateScreen)?;
     enable_raw_mode()?;
@@ -155,7 +155,7 @@ pub fn list(state: &mut State, exercises: &[Exercise]) -> Result<()> {
     let mut terminal = Terminal::new(CrosstermBackend::new(&mut stdout))?;
     terminal.clear()?;
 
-    let mut ui_state = UiState::new(state, exercises);
+    let mut ui_state = UiState::new(state_file, exercises);
 
     'outer: loop {
         terminal.draw(|frame| ui_state.draw(frame))?;
@@ -183,8 +183,8 @@ pub fn list(state: &mut State, exercises: &[Exercise]) -> Result<()> {
             KeyCode::Home | KeyCode::Char('g') => ui_state.select_first(),
             KeyCode::End | KeyCode::Char('G') => ui_state.select_last(),
             KeyCode::Char('c') => {
-                state.set_next_exercise_ind(ui_state.selected)?;
-                ui_state.table = ui_state.table.rows(UiState::rows(state, exercises));
+                state_file.set_next_exercise_ind(ui_state.selected)?;
+                ui_state.table = ui_state.table.rows(UiState::rows(state_file, exercises));
             }
             _ => (),
         }

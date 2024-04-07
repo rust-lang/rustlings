@@ -1,11 +1,6 @@
-use crate::consts::WELCOME;
-use crate::embedded::{WriteStrategy, EMBEDDED_FILES};
-use crate::exercise::{Exercise, ExerciseList};
-use crate::run::run;
-use crate::verify::verify;
 use anyhow::{bail, Context, Result};
 use clap::{Parser, Subcommand};
-use state::State;
+use state_file::StateFile;
 use std::path::Path;
 use std::process::exit;
 use verify::VerifyState;
@@ -16,9 +11,15 @@ mod exercise;
 mod init;
 mod list;
 mod run;
-mod state;
+mod state_file;
 mod verify;
 mod watch;
+
+use crate::consts::WELCOME;
+use crate::embedded::{WriteStrategy, EMBEDDED_FILES};
+use crate::exercise::{Exercise, ExerciseList};
+use crate::run::run;
+use crate::verify::verify;
 
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
 #[derive(Parser)]
@@ -85,7 +86,7 @@ If you are just starting with Rustlings, run the command `rustlings init` to ini
         exit(1);
     }
 
-    let mut state = State::read_or_default(&exercises);
+    let mut state = StateFile::read_or_default(&exercises);
 
     match args.command {
         None | Some(Subcommands::Watch) => {

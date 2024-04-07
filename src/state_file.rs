@@ -5,12 +5,12 @@ use std::fs;
 use crate::exercise::Exercise;
 
 #[derive(Serialize, Deserialize)]
-pub struct State {
+pub struct StateFile {
     next_exercise_ind: usize,
     progress: Vec<bool>,
 }
 
-impl State {
+impl StateFile {
     fn read(exercises: &[Exercise]) -> Option<Self> {
         let file_content = fs::read(".rustlings.json").ok()?;
 

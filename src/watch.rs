@@ -18,7 +18,7 @@ use std::{
 
 use crate::{
     exercise::{self, Exercise},
-    state::State,
+    state_file::StateFile,
 };
 
 enum Event {
@@ -151,14 +151,14 @@ You can keep working on this exercise or jump into the next one by removing the 
     }
 }
 
-pub fn watch(state: &State, exercises: &[Exercise]) -> Result<()> {
+pub fn watch(state_file: &StateFile, exercises: &[Exercise]) -> Result<()> {
     let (tx, rx) = channel();
     let mut debouncer = new_debouncer(Duration::from_secs(1), tx)?;
     debouncer
         .watcher()
         .watch(Path::new("exercises"), RecursiveMode::Recursive)?;
 
-    let current_exercise_ind = state.next_exercise_ind();
+    let current_exercise_ind = state_file.next_exercise_ind();
 
     let exercise = &exercises[current_exercise_ind];
 
