@@ -77,12 +77,15 @@ impl<'a> UiState<'a> {
             .highlight_symbol("🦀")
             .block(Block::default().borders(Borders::BOTTOM));
 
-        let selected = 0;
+        let selected = state_file.next_exercise_ind();
+        let table_state = TableState::default()
+            .with_offset(selected.saturating_sub(3))
+            .with_selected(Some(selected));
 
         Self {
             table,
             selected,
-            table_state: TableState::default().with_selected(Some(selected)),
+            table_state,
             last_ind: exercises.len() - 1,
             message: String::with_capacity(128),
         }
