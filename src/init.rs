@@ -56,7 +56,7 @@ fn create_vscode_dir() -> Result<()> {
     Ok(())
 }
 
-pub fn init_rustlings(exercises: &[Exercise]) -> Result<()> {
+pub fn init(exercises: &[Exercise]) -> Result<()> {
     if Path::new("exercises").is_dir() && Path::new("Cargo.toml").is_file() {
         bail!(
             "A directory with the name `exercises` and a file with the name `Cargo.toml` already exist

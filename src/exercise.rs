@@ -41,11 +41,11 @@ pub enum Mode {
 }
 
 #[derive(Deserialize)]
-pub struct ExerciseList {
+pub struct InfoFile {
     pub exercises: Vec<Exercise>,
 }
 
-impl ExerciseList {
+impl InfoFile {
     pub fn parse() -> Result<Self> {
         // Read a local `info.toml` if it exists.
         // Mainly to let the tests work for now.

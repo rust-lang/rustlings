@@ -16,7 +16,7 @@ mod verify;
 mod watch;
 
 use crate::consts::WELCOME;
-use crate::exercise::{Exercise, ExerciseList};
+use crate::exercise::{Exercise, InfoFile};
 use crate::run::run;
 use crate::verify::verify;
 
@@ -84,10 +84,10 @@ Did you already install Rust?
 Try running `cargo --version` to diagnose the problem.",
     )?;
 
-    let exercises = ExerciseList::parse()?.exercises;
+    let exercises = InfoFile::parse()?.exercises;
 
     if matches!(args.command, Some(Subcommands::Init)) {
-        init::init_rustlings(&exercises).context("Initialization failed")?;
+        init::init(&exercises).context("Initialization failed")?;
         println!(
             "\nDone initialization!\n
 Run `cd rustlings` to go into the generated directory.
