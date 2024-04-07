@@ -10,6 +10,7 @@ use crate::{exercise::Exercise, state_file::StateFile};
 
 pub struct UiState<'a> {
     pub table: Table<'a>,
+    pub message: String,
     selected: usize,
     table_state: TableState,
     last_ind: usize,
@@ -77,14 +78,13 @@ impl<'a> UiState<'a> {
             .block(Block::default().borders(Borders::BOTTOM));
 
         let selected = 0;
-        let table_state = TableState::default().with_selected(Some(selected));
-        let last_ind = exercises.len() - 1;
 
         Self {
             table,
             selected,
-            table_state,
-            last_ind,
+            table_state: TableState::default().with_selected(Some(selected)),
+            last_ind: exercises.len() - 1,
+            message: String::with_capacity(128),
         }
     }
 
@@ -130,10 +130,14 @@ impl<'a> UiState<'a> {
             &mut self.table_state,
         );
 
-        let help_footer =
-            "↓/j ↑/k home/g end/G │ Filter <d>one/<p>ending │ <r>eset │ <c>ontinue at │ <q>uit";
+        let message = if self.message.is_empty() {
+            // Help footer.
+            "↓/j ↑/k home/g end/G │ Filter <d>one/<p>ending │ <r>eset │ <c>ontinue at │ <q>uit"
+        } else {
+            &self.message
+        };
         frame.render_widget(
-            Span::raw(help_footer),
+            Span::raw(message),
             Rect {
                 x: 0,
                 y: area.height - 1,

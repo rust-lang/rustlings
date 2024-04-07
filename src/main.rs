@@ -124,7 +124,7 @@ If you are just starting with Rustlings, run the command `rustlings init` to ini
             let (ind, exercise) = find_exercise(&name, &exercises)?;
             exercise.reset()?;
             state_file.reset(ind)?;
-            println!("The file {} has been reset!", exercise.path.display());
+            println!("The exercise {exercise} has been reset!");
         }
         Some(Subcommands::Hint { name }) => {
             let (_, exercise) = find_exercise(&name, &exercises)?;

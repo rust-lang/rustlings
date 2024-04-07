@@ -5,7 +5,7 @@ use crossterm::{
     ExecutableCommand,
 };
 use ratatui::{backend::CrosstermBackend, Terminal};
-use std::io;
+use std::{fmt::Write, io};
 
 mod state;
 
@@ -42,6 +42,8 @@ pub fn list(state_file: &mut StateFile, exercises: &[Exercise]) -> Result<()> {
             }
         };
 
+        ui_state.message.clear();
+
         match key.code {
             KeyCode::Char('q') => break,
             KeyCode::Down | KeyCode::Char('j') => ui_state.select_next(),
@@ -50,9 +52,14 @@ pub fn list(state_file: &mut StateFile, exercises: &[Exercise]) -> Result<()> {
             KeyCode::End | KeyCode::Char('G') => ui_state.select_last(),
             KeyCode::Char('r') => {
                 let selected = ui_state.selected();
-                exercises[selected].reset()?;
+                let exercise = &exercises[selected];
+                exercise.reset()?;
                 state_file.reset(selected)?;
+
                 ui_state.table = ui_state.table.rows(UiState::rows(state_file, exercises));
+                ui_state
+                    .message
+                    .write_fmt(format_args!("The exercise {exercise} has been reset!"))?;
             }
             KeyCode::Char('c') => {
                 state_file.set_next_exercise_ind(ui_state.selected())?;
