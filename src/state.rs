@@ -6,6 +6,7 @@ use crate::exercise::Exercise;
 
 #[derive(Serialize, Deserialize)]
 pub struct State {
+    pub next_exercise_ind: usize,
     pub progress: Vec<bool>,
 }
 
@@ -15,7 +16,7 @@ impl State {
 
         let slf: Self = serde_json::de::from_slice(&file_content).ok()?;
 
-        if slf.progress.len() != exercises.len() {
+        if slf.progress.len() != exercises.len() || slf.next_exercise_ind >= exercises.len() {
             return None;
         }
 
@@ -24,6 +25,7 @@ impl State {
 
     pub fn read_or_default(exercises: &[Exercise]) -> Self {
         Self::read(exercises).unwrap_or_else(|| Self {
+            next_exercise_ind: 0,
             progress: vec![false; exercises.len()],
         })
     }

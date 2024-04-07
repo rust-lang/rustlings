@@ -8,7 +8,7 @@ use ratatui::{
     backend::CrosstermBackend,
     layout::{Constraint, Rect},
     style::{Style, Stylize},
-    text::{Line, Span},
+    text::Span,
     widgets::{Block, Borders, HighlightSpacing, Row, Table, TableState},
     Terminal,
 };
@@ -17,7 +17,7 @@ use std::io;
 use crate::{exercise::Exercise, state::State};
 
 fn table<'a>(state: &State, exercises: &'a [Exercise]) -> Table<'a> {
-    let header = Row::new(["State", "Name", "Path"]);
+    let header = Row::new(["Next", "State", "Name", "Path"]);
 
     let max_name_len = exercises
         .iter()
@@ -26,6 +26,7 @@ fn table<'a>(state: &State, exercises: &'a [Exercise]) -> Table<'a> {
         .unwrap_or(4) as u16;
 
     let widths = [
+        Constraint::Length(4),
         Constraint::Length(7),
         Constraint::Length(max_name_len),
         Constraint::Fill(1),
@@ -34,14 +35,23 @@ fn table<'a>(state: &State, exercises: &'a [Exercise]) -> Table<'a> {
     let rows = exercises
         .iter()
         .zip(&state.progress)
-        .map(|(exercise, done)| {
-            let state = if *done {
+        .enumerate()
+        .map(|(ind, (exercise, done))| {
+            let exercise_state = if *done {
                 "DONE".green()
             } else {
                 "PENDING".yellow()
             };
+
+            let next = if ind == state.next_exercise_ind {
+                ">>>>".bold().red()
+            } else {
+                Span::default()
+            };
+
             Row::new([
-                state,
+                next,
+                exercise_state,
                 Span::raw(&exercise.name),
                 Span::raw(exercise.path.to_string_lossy()),
             ])
