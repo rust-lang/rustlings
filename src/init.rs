@@ -36,7 +36,8 @@ publish = false
 }
 
 fn create_gitignore() -> io::Result<()> {
-    let gitignore = b"/target";
+    let gitignore = b"/target
+/.rustlings-state.json";
     OpenOptions::new()
         .create_new(true)
         .write(true)
