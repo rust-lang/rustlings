@@ -16,25 +16,29 @@ use std::io;
 
 use crate::{exercise::Exercise, state::State};
 
-fn rows<'s, 'e>(state: &'s State, exercises: &'e [Exercise]) -> impl Iterator<Item = Row<'e>> + 's
+fn rows<'s, 'e, 'i>(
+    state: &'s State,
+    exercises: &'e [Exercise],
+) -> impl Iterator<Item = Row<'e>> + 'i
 where
-    'e: 's,
+    's: 'i,
+    'e: 'i,
 {
     exercises
         .iter()
         .zip(state.progress())
         .enumerate()
         .map(|(ind, (exercise, done))| {
-            let exercise_state = if *done {
-                "DONE".green()
-            } else {
-                "PENDING".yellow()
-            };
-
             let next = if ind == state.next_exercise_ind() {
                 ">>>>".bold().red()
             } else {
                 Span::default()
+            };
+
+            let exercise_state = if *done {
+                "DONE".green()
+            } else {
+                "PENDING".yellow()
             };
 
             Row::new([
