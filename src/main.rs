@@ -1,9 +1,6 @@
 use anyhow::{bail, Context, Result};
 use clap::{Parser, Subcommand};
-use state_file::StateFile;
-use std::path::Path;
-use std::process::exit;
-use verify::VerifyState;
+use std::{path::Path, process::exit};
 
 mod consts;
 mod embedded;
@@ -15,10 +12,13 @@ mod state_file;
 mod verify;
 mod watch;
 
-use crate::consts::WELCOME;
-use crate::exercise::{Exercise, InfoFile};
-use crate::run::run;
-use crate::verify::verify;
+use self::{
+    consts::WELCOME,
+    exercise::{Exercise, InfoFile},
+    run::run,
+    state_file::StateFile,
+    verify::{verify, VerifyState},
+};
 
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
 #[derive(Parser)]

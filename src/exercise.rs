@@ -1,14 +1,19 @@
 use anyhow::{Context, Result};
 use serde::Deserialize;
-use std::fmt::{self, Debug, Display, Formatter};
-use std::fs::{self, File};
-use std::io::{self, BufRead, BufReader};
-use std::path::PathBuf;
-use std::process::{Command, Output};
-use std::{array, mem};
-use winnow::ascii::{space0, Caseless};
-use winnow::combinator::opt;
-use winnow::Parser;
+use std::{
+    array,
+    fmt::{self, Debug, Display, Formatter},
+    fs::{self, File},
+    io::{self, BufRead, BufReader},
+    mem,
+    path::PathBuf,
+    process::{Command, Output},
+};
+use winnow::{
+    ascii::{space0, Caseless},
+    combinator::opt,
+    Parser,
+};
 
 use crate::embedded::{WriteStrategy, EMBEDDED_FILES};
 
