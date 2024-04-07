@@ -6,10 +6,10 @@ use crossterm::{
 };
 use ratatui::{
     backend::CrosstermBackend,
-    layout::Constraint,
+    layout::{Constraint, Rect},
     style::{Style, Stylize},
-    text::Span,
-    widgets::{HighlightSpacing, Row, Table, TableState},
+    text::{Line, Span},
+    widgets::{Block, Borders, HighlightSpacing, Row, Table, TableState},
     Terminal,
 };
 use std::io;
@@ -54,6 +54,7 @@ fn table<'a>(state: &State, exercises: &'a [Exercise]) -> Table<'a> {
         .highlight_spacing(HighlightSpacing::Always)
         .highlight_style(Style::new().bg(ratatui::style::Color::Rgb(50, 50, 50)))
         .highlight_symbol("🦀")
+        .block(Block::default().borders(Borders::BOTTOM))
 }
 
 pub fn list(state: &State, exercises: &[Exercise]) -> Result<()> {
@@ -75,7 +76,25 @@ pub fn list(state: &State, exercises: &[Exercise]) -> Result<()> {
         terminal.draw(|frame| {
             let area = frame.size();
 
-            frame.render_stateful_widget(&table, area, &mut table_state);
+            frame.render_stateful_widget(
+                &table,
+                Rect {
+                    x: 0,
+                    y: 0,
+                    width: area.width,
+                    height: area.height - 1,
+                },
+                &mut table_state,
+            );
+            frame.render_widget(
+                Span::raw("Navi: ↓/j ↑/k home/g end/G │ Filter done/pending: d/p │ Reset: r │ Continue at: c │ Quit: q"),
+                Rect {
+                    x: 0,
+                    y: area.height - 1,
+                    width: area.width,
+                    height: 1,
+                },
+            );
         })?;
 
         let key = loop {
