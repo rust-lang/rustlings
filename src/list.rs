@@ -80,17 +80,19 @@ pub fn list(state: &State, exercises: &[Exercise]) -> Result<()> {
 
         let key = loop {
             match event::read()? {
-                Event::Key(key) => break key,
+                Event::Key(key) => {
+                    if key.kind != KeyEventKind::Press {
+                        continue;
+                    }
+
+                    break key;
+                }
                 // Redraw
                 Event::Resize(_, _) => continue 'outer,
                 // Ignore
                 Event::FocusGained | Event::FocusLost | Event::Mouse(_) | Event::Paste(_) => (),
             }
         };
-
-        if key.kind != KeyEventKind::Press {
-            continue;
-        }
 
         match key.code {
             KeyCode::Char('q') => break,
