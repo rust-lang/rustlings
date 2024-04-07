@@ -16,7 +16,6 @@ mod verify;
 mod watch;
 
 use crate::consts::WELCOME;
-use crate::embedded::{WriteStrategy, EMBEDDED_FILES};
 use crate::exercise::{Exercise, ExerciseList};
 use crate::run::run;
 use crate::verify::verify;
@@ -56,6 +55,26 @@ enum Subcommands {
     List,
 }
 
+fn find_exercise<'a>(name: &str, exercises: &'a [Exercise]) -> Result<(usize, &'a Exercise)> {
+    if name == "next" {
+        for (ind, exercise) in exercises.iter().enumerate() {
+            if !exercise.looks_done()? {
+                return Ok((ind, exercise));
+            }
+        }
+
+        println!("🎉 Congratulations! You have done all the exercises!");
+        println!("🔚 There are no more exercises to do next!");
+        exit(0);
+    }
+
+    exercises
+        .iter()
+        .enumerate()
+        .find(|(_, exercise)| exercise.name == name)
+        .with_context(|| format!("No exercise found for '{name}'!"))
+}
+
 fn main() -> Result<()> {
     let args = Args::parse();
 
@@ -86,30 +105,29 @@ If you are just starting with Rustlings, run the command `rustlings init` to ini
         exit(1);
     }
 
-    let mut state = StateFile::read_or_default(&exercises);
+    let mut state_file = StateFile::read_or_default(&exercises);
 
     match args.command {
         None | Some(Subcommands::Watch) => {
-            watch::watch(&state, &exercises)?;
+            watch::watch(&state_file, &exercises)?;
         }
         // `Init` is handled above.
         Some(Subcommands::Init) => (),
         Some(Subcommands::List) => {
-            list::list(&mut state, &exercises)?;
+            list::list(&mut state_file, &exercises)?;
         }
         Some(Subcommands::Run { name }) => {
-            let exercise = find_exercise(&name, &exercises)?;
+            let (_, exercise) = find_exercise(&name, &exercises)?;
             run(exercise).unwrap_or_else(|_| exit(1));
         }
         Some(Subcommands::Reset { name }) => {
-            let exercise = find_exercise(&name, &exercises)?;
-            EMBEDDED_FILES
-                .write_exercise_to_disk(&exercise.path, WriteStrategy::Overwrite)
-                .with_context(|| format!("Failed to reset the exercise {exercise}"))?;
+            let (ind, exercise) = find_exercise(&name, &exercises)?;
+            exercise.reset()?;
+            state_file.reset(ind)?;
             println!("The file {} has been reset!", exercise.path.display());
         }
         Some(Subcommands::Hint { name }) => {
-            let exercise = find_exercise(&name, &exercises)?;
+            let (_, exercise) = find_exercise(&name, &exercises)?;
             println!("{}", exercise.hint);
         }
         Some(Subcommands::Verify) => match verify(&exercises, 0)? {
@@ -119,23 +137,4 @@ If you are just starting with Rustlings, run the command `rustlings init` to ini
     }
 
     Ok(())
-}
-
-fn find_exercise<'a>(name: &str, exercises: &'a [Exercise]) -> Result<&'a Exercise> {
-    if name == "next" {
-        for exercise in exercises {
-            if !exercise.looks_done()? {
-                return Ok(exercise);
-            }
-        }
-
-        println!("🎉 Congratulations! You have done all the exercises!");
-        println!("🔚 There are no more exercises to do next!");
-        exit(0);
-    }
-
-    exercises
-        .iter()
-        .find(|e| e.name == name)
-        .with_context(|| format!("No exercise found for '{name}'!"))
 }

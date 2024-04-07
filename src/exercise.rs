@@ -10,7 +10,7 @@ use winnow::ascii::{space0, Caseless};
 use winnow::combinator::opt;
 use winnow::Parser;
 
-use crate::embedded::EMBEDDED_FILES;
+use crate::embedded::{WriteStrategy, EMBEDDED_FILES};
 
 // The number of context lines above and below a highlighted line.
 const CONTEXT: usize = 2;
@@ -219,6 +219,12 @@ impl Exercise {
     // the exercise; which would be both costly and counterintuitive
     pub fn looks_done(&self) -> Result<bool> {
         self.state().map(|state| state == State::Done)
+    }
+
+    pub fn reset(&self) -> Result<()> {
+        EMBEDDED_FILES
+            .write_exercise_to_disk(&self.path, WriteStrategy::Overwrite)
+            .with_context(|| format!("Failed to reset the exercise {self}"))
     }
 }
 

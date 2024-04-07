@@ -48,6 +48,12 @@ pub fn list(state_file: &mut StateFile, exercises: &[Exercise]) -> Result<()> {
             KeyCode::Up | KeyCode::Char('k') => ui_state.select_previous(),
             KeyCode::Home | KeyCode::Char('g') => ui_state.select_first(),
             KeyCode::End | KeyCode::Char('G') => ui_state.select_last(),
+            KeyCode::Char('r') => {
+                let selected = ui_state.selected();
+                exercises[selected].reset()?;
+                state_file.reset(selected)?;
+                ui_state.table = ui_state.table.rows(UiState::rows(state_file, exercises));
+            }
             KeyCode::Char('c') => {
                 state_file.set_next_exercise_ind(ui_state.selected())?;
                 ui_state.table = ui_state.table.rows(UiState::rows(state_file, exercises));

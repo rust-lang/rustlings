@@ -10,9 +10,11 @@ pub struct StateFile {
     progress: Vec<bool>,
 }
 
+const BAD_INDEX_ERR: &str = "The next exercise index is higher than the number of exercises";
+
 impl StateFile {
     fn read(exercises: &[Exercise]) -> Option<Self> {
-        let file_content = fs::read(".rustlings.json").ok()?;
+        let file_content = fs::read(".rustlings-state.json").ok()?;
 
         let slf: Self = serde_json::de::from_slice(&file_content).ok()?;
 
@@ -34,6 +36,8 @@ impl StateFile {
         // TODO: Capacity
         let mut buf = Vec::with_capacity(1024);
         serde_json::ser::to_writer(&mut buf, self).context("Failed to serialize the state")?;
+        fs::write(".rustlings-state.json", buf)
+            .context("Failed to write the state file `.rustlings-state.json`")?;
 
         Ok(())
     }
@@ -45,9 +49,8 @@ impl StateFile {
 
     pub fn set_next_exercise_ind(&mut self, ind: usize) -> Result<()> {
         if ind >= self.progress.len() {
-            bail!("The next exercise index is higher than the number of exercises");
+            bail!(BAD_INDEX_ERR);
         }
-
         self.next_exercise_ind = ind;
         self.write()
     }
@@ -55,5 +58,11 @@ impl StateFile {
     #[inline]
     pub fn progress(&self) -> &[bool] {
         &self.progress
+    }
+
+    pub fn reset(&mut self, ind: usize) -> Result<()> {
+        let done = self.progress.get_mut(ind).context(BAD_INDEX_ERR)?;
+        *done = false;
+        self.write()
     }
 }
