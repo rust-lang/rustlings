@@ -96,8 +96,10 @@ pub fn list(state: &State, exercises: &[Exercise]) -> Result<()> {
                 },
                 &mut table_state,
             );
+
+            // Help footer
             frame.render_widget(
-                Span::raw("Navi: ↓/j ↑/k home/g end/G │ Filter done/pending: d/p │ Reset: r │ Continue at: c │ Quit: q"),
+                Span::raw("↓/j ↑/k home/g end/G │ Filter <d>one/<p>ending │ <r>eset │ <c>ontinue at │ <q>uit"),
                 Rect {
                     x: 0,
                     y: area.height - 1,
