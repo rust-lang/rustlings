@@ -132,7 +132,7 @@ impl<'a> UiState<'a> {
 
         let message = if self.message.is_empty() {
             // Help footer.
-            "↓/j ↑/k home/g end/G │ Filter <d>one/<p>ending │ <r>eset │ <c>ontinue at │ <q>uit"
+            "↓/j ↑/k home/g end/G │ filter <d>one/<p>ending │ <r>eset │ <c>ontinue at │ <q>uit"
         } else {
             &self.message
         };
