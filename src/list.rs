@@ -133,11 +133,10 @@ impl<'a> UiState<'a> {
             &mut self.table_state,
         );
 
-        // Help footer
-        let footer =
+        let help_footer =
             "↓/j ↑/k home/g end/G │ Filter <d>one/<p>ending │ <r>eset │ <c>ontinue at │ <q>uit";
         frame.render_widget(
-            Span::raw(footer),
+            Span::raw(help_footer),
             Rect {
                 x: 0,
                 y: area.height - 1,
