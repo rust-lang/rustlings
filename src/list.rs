@@ -1,34 +1,22 @@
-use std::{io, time::Duration};
-
 use anyhow::Result;
 use crossterm::{
-    event::{self, KeyCode, KeyEventKind},
+    event::{self, Event, KeyCode, KeyEventKind},
     terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
     ExecutableCommand,
 };
 use ratatui::{
     backend::CrosstermBackend,
     layout::Constraint,
-    style::{Modifier, Style, Stylize},
+    style::{Style, Stylize},
     text::Span,
-    widgets::{Block, Borders, HighlightSpacing, Row, Table, TableState},
+    widgets::{HighlightSpacing, Row, Table, TableState},
     Terminal,
 };
+use std::io;
 
 use crate::{exercise::Exercise, state::State};
 
-// 40 FPS.
-const UPDATE_INTERVAL: Duration = Duration::from_millis(25);
-
-pub fn list(state: &State, exercises: &[Exercise]) -> Result<()> {
-    let mut stdout = io::stdout().lock();
-
-    stdout.execute(EnterAlternateScreen)?;
-    enable_raw_mode()?;
-
-    let mut terminal = Terminal::new(CrosstermBackend::new(&mut stdout))?;
-    terminal.clear()?;
-
+fn table<'a>(state: &State, exercises: &'a [Exercise]) -> Table<'a> {
     let header = Row::new(["State", "Name", "Path"]);
 
     let max_name_len = exercises
@@ -60,28 +48,69 @@ pub fn list(state: &State, exercises: &[Exercise]) -> Result<()> {
         })
         .collect::<Vec<_>>();
 
-    let table = Table::new(rows, widths)
+    Table::new(rows, widths)
         .header(header)
         .column_spacing(2)
         .highlight_spacing(HighlightSpacing::Always)
-        .highlight_style(Style::new().add_modifier(Modifier::REVERSED))
-        .highlight_symbol("🦀");
+        .highlight_style(Style::new().bg(ratatui::style::Color::Rgb(50, 50, 50)))
+        .highlight_symbol("🦀")
+}
 
-    let mut table_state = TableState::default().with_selected(Some(0));
+pub fn list(state: &State, exercises: &[Exercise]) -> Result<()> {
+    let mut stdout = io::stdout().lock();
 
-    loop {
+    stdout.execute(EnterAlternateScreen)?;
+    enable_raw_mode()?;
+
+    let mut terminal = Terminal::new(CrosstermBackend::new(&mut stdout))?;
+    terminal.clear()?;
+
+    let table = table(state, exercises);
+
+    let last_ind = exercises.len() - 1;
+    let mut selected = 0;
+    let mut table_state = TableState::default().with_selected(Some(selected));
+
+    'outer: loop {
         terminal.draw(|frame| {
             let area = frame.size();
 
             frame.render_stateful_widget(&table, area, &mut table_state);
         })?;
 
-        if event::poll(UPDATE_INTERVAL)? {
-            if let event::Event::Key(key) = event::read()? {
-                if key.kind == KeyEventKind::Press && key.code == KeyCode::Char('q') {
-                    break;
-                }
+        let key = loop {
+            match event::read()? {
+                Event::Key(key) => break key,
+                // Redraw
+                Event::Resize(_, _) => continue 'outer,
+                // Ignore
+                Event::FocusGained | Event::FocusLost | Event::Mouse(_) | Event::Paste(_) => (),
             }
+        };
+
+        if key.kind != KeyEventKind::Press {
+            continue;
+        }
+
+        match key.code {
+            KeyCode::Char('q') => break,
+            KeyCode::Down | KeyCode::Char('j') => {
+                selected = selected.saturating_add(1).min(last_ind);
+                table_state.select(Some(selected));
+            }
+            KeyCode::Up | KeyCode::Char('k') => {
+                selected = selected.saturating_sub(1).max(0);
+                table_state.select(Some(selected));
+            }
+            KeyCode::Home | KeyCode::Char('g') => {
+                selected = 0;
+                table_state.select(Some(selected));
+            }
+            KeyCode::End | KeyCode::Char('G') => {
+                selected = last_ind;
+                table_state.select(Some(selected));
+            }
+            _ => (),
         }
     }
 
