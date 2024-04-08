@@ -8,18 +8,28 @@ use ratatui::{
 
 use crate::{exercise::Exercise, state_file::StateFile};
 
+#[derive(Copy, Clone, PartialEq, Eq)]
+pub enum Filter {
+    Done,
+    Pending,
+    None,
+}
+
 pub struct UiState<'a> {
     pub table: Table<'a>,
     pub message: String,
+    pub filter: Filter,
+    exercises: &'a [Exercise],
     selected: usize,
     table_state: TableState,
     last_ind: usize,
 }
 
 impl<'a> UiState<'a> {
-    pub fn rows<'s, 'i>(
+    fn rows<'s, 'i>(
         state_file: &'s StateFile,
         exercises: &'a [Exercise],
+        filter: Filter,
     ) -> impl Iterator<Item = Row<'a>> + 'i
     where
         's: 'i,
@@ -27,28 +37,39 @@ impl<'a> UiState<'a> {
     {
         exercises
             .iter()
-            .zip(state_file.progress())
+            .zip(state_file.progress().iter().copied())
             .enumerate()
-            .map(|(ind, (exercise, done))| {
+            .filter_map(move |(ind, (exercise, done))| {
+                match (filter, done) {
+                    (Filter::Done, false) | (Filter::Pending, true) => return None,
+                    _ => (),
+                }
+
                 let next = if ind == state_file.next_exercise_ind() {
                     ">>>>".bold().red()
                 } else {
                     Span::default()
                 };
 
-                let exercise_state = if *done {
+                let exercise_state = if done {
                     "DONE".green()
                 } else {
                     "PENDING".yellow()
                 };
 
-                Row::new([
+                Some(Row::new([
                     next,
                     exercise_state,
                     Span::raw(&exercise.name),
                     Span::raw(exercise.path.to_string_lossy()),
-                ])
+                ]))
             })
+    }
+
+    pub fn with_updated_rows(mut self, state_file: &StateFile) -> Self {
+        let rows = Self::rows(state_file, self.exercises, self.filter);
+        self.table = self.table.rows(rows);
+        self
     }
 
     pub fn new(state_file: &StateFile, exercises: &'a [Exercise]) -> Self {
@@ -67,7 +88,8 @@ impl<'a> UiState<'a> {
             Constraint::Fill(1),
         ];
 
-        let rows = Self::rows(state_file, exercises);
+        let filter = Filter::None;
+        let rows = Self::rows(state_file, exercises, filter);
 
         let table = Table::new(rows, widths)
             .header(header)
@@ -84,10 +106,12 @@ impl<'a> UiState<'a> {
 
         Self {
             table,
+            message: String::with_capacity(128),
+            filter,
+            exercises,
             selected,
             table_state,
             last_ind: exercises.len() - 1,
-            message: String::with_capacity(128),
         }
     }
 

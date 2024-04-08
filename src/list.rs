@@ -11,7 +11,7 @@ mod state;
 
 use crate::{exercise::Exercise, state_file::StateFile};
 
-use self::state::UiState;
+use self::state::{Filter, UiState};
 
 pub fn list(state_file: &mut StateFile, exercises: &[Exercise]) -> Result<()> {
     let mut stdout = io::stdout().lock();
@@ -50,20 +50,44 @@ pub fn list(state_file: &mut StateFile, exercises: &[Exercise]) -> Result<()> {
             KeyCode::Up | KeyCode::Char('k') => ui_state.select_previous(),
             KeyCode::Home | KeyCode::Char('g') => ui_state.select_first(),
             KeyCode::End | KeyCode::Char('G') => ui_state.select_last(),
+            KeyCode::Char('d') => {
+                let message = if ui_state.filter == Filter::Done {
+                    ui_state.filter = Filter::None;
+                    "Disabled filter DONE"
+                } else {
+                    ui_state.filter = Filter::Done;
+                    "Enabled filter DONE │ Press d again to disable the filter"
+                };
+
+                ui_state = ui_state.with_updated_rows(state_file);
+                ui_state.message.push_str(message);
+            }
+            KeyCode::Char('p') => {
+                let message = if ui_state.filter == Filter::Pending {
+                    ui_state.filter = Filter::None;
+                    "Disabled filter PENDING"
+                } else {
+                    ui_state.filter = Filter::Pending;
+                    "Enabled filter PENDING │ Press p again to disable the filter"
+                };
+
+                ui_state = ui_state.with_updated_rows(state_file);
+                ui_state.message.push_str(message);
+            }
             KeyCode::Char('r') => {
                 let selected = ui_state.selected();
                 let exercise = &exercises[selected];
                 exercise.reset()?;
                 state_file.reset(selected)?;
 
-                ui_state.table = ui_state.table.rows(UiState::rows(state_file, exercises));
+                ui_state = ui_state.with_updated_rows(state_file);
                 ui_state
                     .message
                     .write_fmt(format_args!("The exercise {exercise} has been reset!"))?;
             }
             KeyCode::Char('c') => {
                 state_file.set_next_exercise_ind(ui_state.selected())?;
-                ui_state.table = ui_state.table.rows(UiState::rows(state_file, exercises));
+                ui_state = ui_state.with_updated_rows(state_file);
             }
             _ => (),
         }
