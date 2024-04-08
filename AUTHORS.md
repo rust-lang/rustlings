@@ -385,6 +385,7 @@ authors.
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/NicolasRoelandt"><img src="https://avatars.githubusercontent.com/u/8594193?v=4?s=100" width="100px;" alt="NicolasRoelandt"/><br /><sub><b>NicolasRoelandt</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=NicolasRoelandt" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://github.com/jbouganim-parallel"><img src="https://avatars.githubusercontent.com/u/150748285?v=4?s=100" width="100px;" alt="Josh Bouganim"/><br /><sub><b>Josh Bouganim</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=jbouganim-parallel" title="Code">💻</a></td>
       <td align="center" valign="top" width="12.5%"><a href="https://loshz.com"><img src="https://avatars.githubusercontent.com/u/3449337?v=4?s=100" width="100px;" alt="Dan"/><br /><sub><b>Dan</b></sub></a><br /><a href="https://github.com/rust-lang/rustlings/commits?author=loshz" title="Code">💻</a></td>
+      <td align="center" valign="top" width="12.5%"><a href="https://yunshu.site"><img src="https://avatars.githubusercontent.com/u/53544726?v=4?s=100" width="100px;" alt="YunShu"/><br /><sub><b>YunShu</b></sub></a><br /><a href="#content-Selflocking" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
