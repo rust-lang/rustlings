@@ -156,12 +156,14 @@ impl<'a> UiState<'a> {
 
         let message = if self.message.is_empty() {
             // Help footer.
-            "↓/j ↑/k home/g end/G │ filter <d>one/<p>ending │ <r>eset │ <c>ontinue at │ <q>uit"
+            Span::raw(
+                "↓/j ↑/k home/g end/G │ filter <d>one/<p>ending │ <r>eset │ <c>ontinue at │ <q>uit",
+            )
         } else {
-            &self.message
+            self.message.as_str().blue()
         };
         frame.render_widget(
-            Span::raw(message),
+            message,
             Rect {
                 x: 0,
                 y: area.height - 1,
