@@ -26,28 +26,20 @@ pub struct UiState<'a> {
 }
 
 impl<'a> UiState<'a> {
-    fn rows<'s, 'c, 'i>(
-        state_file: &'s StateFile,
-        exercises: &'a [Exercise],
-        rows_counter: &'c mut usize,
-        filter: Filter,
-    ) -> impl Iterator<Item = Row<'a>> + 'i
-    where
-        's: 'i,
-        'a: 'i,
-        'c: 'i,
-    {
-        exercises
+    pub fn with_updated_rows(mut self, state_file: &StateFile) -> Self {
+        let mut rows_counter: usize = 0;
+        let rows = self
+            .exercises
             .iter()
             .zip(state_file.progress().iter().copied())
             .enumerate()
-            .filter_map(move |(ind, (exercise, done))| {
-                match (filter, done) {
+            .filter_map(|(ind, (exercise, done))| {
+                match (self.filter, done) {
                     (Filter::Done, false) | (Filter::Pending, true) => return None,
                     _ => (),
                 }
 
-                *rows_counter += 1;
+                rows_counter += 1;
 
                 let next = if ind == state_file.next_exercise_ind() {
                     ">>>>".bold().red()
@@ -67,12 +59,8 @@ impl<'a> UiState<'a> {
                     Span::raw(&exercise.name),
                     Span::raw(exercise.path.to_string_lossy()),
                 ]))
-            })
-    }
+            });
 
-    pub fn with_updated_rows(mut self, state_file: &StateFile) -> Self {
-        let mut rows_counter = 0;
-        let rows = Self::rows(state_file, self.exercises, &mut rows_counter, self.filter);
         self.table = self.table.rows(rows);
 
         self.last_ind = rows_counter.saturating_sub(1);
@@ -97,11 +85,8 @@ impl<'a> UiState<'a> {
             Constraint::Fill(1),
         ];
 
-        let filter = Filter::None;
-        let mut rows_counter = 0;
-        let rows = Self::rows(state_file, exercises, &mut rows_counter, filter);
-
-        let table = Table::new(rows, widths)
+        let table = Table::default()
+            .widths(widths)
             .header(header)
             .column_spacing(2)
             .highlight_spacing(HighlightSpacing::Always)
@@ -114,15 +99,17 @@ impl<'a> UiState<'a> {
             .with_offset(selected.saturating_sub(10))
             .with_selected(Some(selected));
 
-        Self {
+        let slf = Self {
             table,
             message: String::with_capacity(128),
-            filter,
+            filter: Filter::None,
             exercises,
             selected,
             table_state,
-            last_ind: rows_counter.saturating_sub(1),
-        }
+            last_ind: 0,
+        };
+
+        slf.with_updated_rows(state_file)
     }
 
     #[inline]
