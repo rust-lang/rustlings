@@ -101,7 +101,7 @@ impl<'a> UiState<'a> {
 
         let selected = state_file.next_exercise_ind();
         let table_state = TableState::default()
-            .with_offset(selected.saturating_sub(3))
+            .with_offset(selected.saturating_sub(10))
             .with_selected(Some(selected));
 
         Self {
