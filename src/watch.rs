@@ -1,4 +1,4 @@
-use anyhow::{bail, Context, Result};
+use anyhow::Result;
 use notify_debouncer_mini::{
     new_debouncer,
     notify::{self, RecursiveMode},
@@ -29,6 +29,7 @@ enum WatchEvent {
     Input(InputEvent),
     FileChange { exercise_ind: usize },
     NotifyErr(notify::Error),
+    StdinErr(io::Error),
     TerminalResize,
 }
 
@@ -64,18 +65,23 @@ impl notify_debouncer_mini::DebounceEventHandler for DebouceEventHandler {
             Err(e) => WatchEvent::NotifyErr(e),
         };
 
+        // An error occurs when the receiver is dropped.
+        // After dropping the receiver, the debouncer guard should also be dropped.
         let _ = self.tx.send(event);
     }
 }
 
-fn input_handler(tx: Sender<WatchEvent>) -> Result<()> {
+fn input_handler(tx: Sender<WatchEvent>) {
     let mut stdin = io::stdin().lock();
     let mut stdin_buf = String::with_capacity(8);
 
     loop {
-        stdin
-            .read_line(&mut stdin_buf)
-            .context("Failed to read the user's input from stdin")?;
+        if let Err(e) = stdin.read_line(&mut stdin_buf) {
+            // If `send` returns an error, then the receiver is dropped and
+            // a shutdown has been already initialized.
+            let _ = tx.send(WatchEvent::StdinErr(e));
+            return;
+        }
 
         let event = match stdin_buf.trim() {
             "h" | "hint" => InputEvent::Hint,
@@ -87,7 +93,8 @@ fn input_handler(tx: Sender<WatchEvent>) -> Result<()> {
         stdin_buf.clear();
 
         if tx.send(WatchEvent::Input(event)).is_err() {
-            return Ok(());
+            // The receiver was dropped.
+            return;
         }
     }
 }
@@ -111,7 +118,7 @@ pub fn watch(state_file: &StateFile, exercises: &'static [Exercise]) -> Result<(
     watch_state.run_exercise()?;
     watch_state.render()?;
 
-    let input_thread = thread::spawn(move || input_handler(tx));
+    thread::spawn(move || input_handler(tx));
 
     while let Ok(event) = rx.recv() {
         match event {
@@ -131,21 +138,14 @@ pub fn watch(state_file: &StateFile, exercises: &'static [Exercise]) -> Result<(
                 watch_state.render()?;
             }
             WatchEvent::NotifyErr(e) => return Err(e.into()),
+            WatchEvent::StdinErr(e) => return Err(e.into()),
         }
     }
-
-    // Drop the receiver for the sender threads to exit.
-    drop(rx);
 
     watch_state.into_writer().write_all(b"
 We hope you're enjoying learning Rust!
 If you want to continue working on the exercises at a later point, you can simply run `rustlings` again.
 ")?;
-
-    match input_thread.join() {
-        Ok(res) => res?,
-        Err(_) => bail!("The input thread panicked"),
-    }
 
     Ok(())
 }
