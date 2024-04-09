@@ -60,12 +60,14 @@ impl<'a> WatchState<'a> {
 
     pub fn run_exercise(&mut self) -> Result<bool> {
         let output = self.exercise.run()?;
+        self.stdout = Some(output.stdout);
 
         if !output.status.success() {
-            self.stdout = Some(output.stdout);
             self.stderr = Some(output.stderr);
             return Ok(false);
         }
+
+        self.stderr = None;
 
         if let State::Pending(context) = self.exercise.state()? {
             let mut message = format!(
@@ -98,7 +100,6 @@ You can keep working on this exercise or jump into the next one by removing the 
                 )?;
             }
 
-            self.stdout = Some(output.stdout);
             self.message = Some(message);
             return Ok(false);
         }
