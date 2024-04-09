@@ -136,6 +136,7 @@ You can keep working on this exercise or jump into the next one by removing the 
             self.writer.write_all(message.as_bytes())?;
         }
 
+        self.writer.write_all(b"\n")?;
         let line_width = size()?.0;
         let progress_bar = progress_bar(
             self.current_exercise_ind as u16,
