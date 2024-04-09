@@ -16,18 +16,18 @@ pub enum Filter {
     None,
 }
 
-pub struct UiState<'a> {
-    pub table: Table<'a>,
+pub struct UiState {
+    pub table: Table<'static>,
     pub message: String,
     pub filter: Filter,
-    exercises: &'a [Exercise],
+    exercises: &'static [Exercise],
     progress: u16,
     selected: usize,
     table_state: TableState,
     last_ind: usize,
 }
 
-impl<'a> UiState<'a> {
+impl UiState {
     pub fn with_updated_rows(mut self, state_file: &StateFile) -> Self {
         let mut rows_counter: usize = 0;
         let mut progress: u16 = 0;
@@ -79,7 +79,7 @@ impl<'a> UiState<'a> {
         self
     }
 
-    pub fn new(state_file: &StateFile, exercises: &'a [Exercise]) -> Self {
+    pub fn new(state_file: &StateFile, exercises: &'static [Exercise]) -> Self {
         let header = Row::new(["Next", "State", "Name", "Path"]);
 
         let max_name_len = exercises

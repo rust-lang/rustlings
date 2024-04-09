@@ -18,7 +18,7 @@ use crate::{
 pub struct WatchState<'a> {
     writer: StdoutLock<'a>,
     exercises: &'static [Exercise],
-    exercise: &'a Exercise,
+    exercise: &'static Exercise,
     current_exercise_ind: usize,
     stdout: Option<Vec<u8>>,
     stderr: Option<Vec<u8>>,

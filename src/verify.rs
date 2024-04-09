@@ -4,9 +4,9 @@ use std::io::{stdout, Write};
 
 use crate::exercise::{Exercise, Mode, State};
 
-pub enum VerifyState<'a> {
+pub enum VerifyState {
     AllExercisesDone,
-    Failed(&'a Exercise),
+    Failed(&'static Exercise),
 }
 
 // Verify that the provided container of Exercise objects
@@ -14,7 +14,10 @@ pub enum VerifyState<'a> {
 // Any such failures will be reported to the end user.
 // If the Exercise being verified is a test, the verbose boolean
 // determines whether or not the test harness outputs are displayed.
-pub fn verify(exercises: &[Exercise], mut current_exercise_ind: usize) -> Result<VerifyState<'_>> {
+pub fn verify(
+    exercises: &'static [Exercise],
+    mut current_exercise_ind: usize,
+) -> Result<VerifyState> {
     while current_exercise_ind < exercises.len() {
         let exercise = &exercises[current_exercise_ind];
 

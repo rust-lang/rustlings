@@ -56,7 +56,7 @@ enum Subcommands {
     List,
 }
 
-fn find_exercise<'a>(name: &str, exercises: &'a [Exercise]) -> Result<(usize, &'a Exercise)> {
+fn find_exercise(name: &str, exercises: &'static [Exercise]) -> Result<(usize, &'static Exercise)> {
     if name == "next" {
         for (ind, exercise) in exercises.iter().enumerate() {
             if !exercise.looks_done()? {
@@ -89,7 +89,7 @@ Try running `cargo --version` to diagnose the problem.",
     let exercises = InfoFile::parse()?.exercises.leak();
 
     if matches!(args.command, Some(Subcommands::Init)) {
-        init::init(&exercises).context("Initialization failed")?;
+        init::init(exercises).context("Initialization failed")?;
         println!(
             "\nDone initialization!\n
 Run `cd rustlings` to go into the generated directory.
@@ -107,7 +107,7 @@ If you are just starting with Rustlings, run the command `rustlings init` to ini
         exit(1);
     }
 
-    let mut state_file = StateFile::read_or_default(&exercises);
+    let mut state_file = StateFile::read_or_default(exercises);
 
     match args.command {
         None | Some(Subcommands::Watch) => {
@@ -116,23 +116,23 @@ If you are just starting with Rustlings, run the command `rustlings init` to ini
         // `Init` is handled above.
         Some(Subcommands::Init) => (),
         Some(Subcommands::List) => {
-            list::list(&mut state_file, &exercises)?;
+            list::list(&mut state_file, exercises)?;
         }
         Some(Subcommands::Run { name }) => {
-            let (_, exercise) = find_exercise(&name, &exercises)?;
+            let (_, exercise) = find_exercise(&name, exercises)?;
             run(exercise).unwrap_or_else(|_| exit(1));
         }
         Some(Subcommands::Reset { name }) => {
-            let (ind, exercise) = find_exercise(&name, &exercises)?;
+            let (ind, exercise) = find_exercise(&name, exercises)?;
             exercise.reset()?;
             state_file.reset(ind)?;
             println!("The exercise {exercise} has been reset!");
         }
         Some(Subcommands::Hint { name }) => {
-            let (_, exercise) = find_exercise(&name, &exercises)?;
+            let (_, exercise) = find_exercise(&name, exercises)?;
             println!("{}", exercise.hint);
         }
-        Some(Subcommands::Verify) => match verify(&exercises, 0)? {
+        Some(Subcommands::Verify) => match verify(exercises, 0)? {
             VerifyState::AllExercisesDone => println!("All exercises done!"),
             VerifyState::Failed(exercise) => bail!("Exercise {exercise} failed"),
         },

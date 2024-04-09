@@ -13,7 +13,7 @@ use crate::{exercise::Exercise, state_file::StateFile};
 
 use self::state::{Filter, UiState};
 
-pub fn list(state_file: &mut StateFile, exercises: &[Exercise]) -> Result<()> {
+pub fn list(state_file: &mut StateFile, exercises: &'static [Exercise]) -> Result<()> {
     let mut stdout = io::stdout().lock();
     stdout.execute(EnterAlternateScreen)?;
     enable_raw_mode()?;
