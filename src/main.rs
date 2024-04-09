@@ -85,7 +85,8 @@ Did you already install Rust?
 Try running `cargo --version` to diagnose the problem.",
     )?;
 
-    let exercises = InfoFile::parse()?.exercises;
+    // Leaking is not a problem since the exercises are used until the end of the program.
+    let exercises = InfoFile::parse()?.exercises.leak();
 
     if matches!(args.command, Some(Subcommands::Init)) {
         init::init(&exercises).context("Initialization failed")?;
@@ -110,7 +111,7 @@ If you are just starting with Rustlings, run the command `rustlings init` to ini
 
     match args.command {
         None | Some(Subcommands::Watch) => {
-            watch::watch(&state_file, &exercises)?;
+            watch::watch(&state_file, exercises)?;
         }
         // `Init` is handled above.
         Some(Subcommands::Init) => (),

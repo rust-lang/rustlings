@@ -1,26 +1,23 @@
-use anyhow::Result;
+use anyhow::{Context, Result};
 use crossterm::{
     style::{Attribute, ContentStyle, Stylize},
-    terminal::{Clear, ClearType},
+    terminal::{size, Clear, ClearType},
     ExecutableCommand,
 };
-use notify_debouncer_mini::{DebounceEventResult, DebouncedEventKind};
 use std::{
     fmt::Write as _,
     io::{self, StdoutLock, Write as _},
-    sync::mpsc::Receiver,
-    time::Duration,
 };
 
 use crate::{
     exercise::{Exercise, State},
+    progress_bar::progress_bar,
     state_file::StateFile,
 };
 
 pub struct WatchState<'a> {
     writer: StdoutLock<'a>,
-    rx: Receiver<DebounceEventResult>,
-    exercises: &'a [Exercise],
+    exercises: &'static [Exercise],
     exercise: &'a Exercise,
     current_exercise_ind: usize,
     stdout: Option<Vec<u8>>,
@@ -30,11 +27,7 @@ pub struct WatchState<'a> {
 }
 
 impl<'a> WatchState<'a> {
-    pub fn new(
-        state_file: &StateFile,
-        exercises: &'a [Exercise],
-        rx: Receiver<DebounceEventResult>,
-    ) -> Self {
+    pub fn new(state_file: &StateFile, exercises: &'static [Exercise]) -> Self {
         let current_exercise_ind = state_file.next_exercise_ind();
         let exercise = &exercises[current_exercise_ind];
 
@@ -50,7 +43,6 @@ impl<'a> WatchState<'a> {
 
         Self {
             writer,
-            rx,
             exercises,
             exercise,
             current_exercise_ind,
@@ -114,41 +106,14 @@ You can keep working on this exercise or jump into the next one by removing the 
         Ok(true)
     }
 
-    pub fn try_recv_event(&mut self) -> Result<()> {
-        let Ok(events) = self.rx.recv_timeout(Duration::from_millis(100)) else {
-            return Ok(());
-        };
+    pub fn run_exercise_with_ind(&mut self, exercise_ind: usize) -> Result<bool> {
+        self.exercise = self
+            .exercises
+            .get(exercise_ind)
+            .context("Invalid exercise index")?;
+        self.current_exercise_ind = exercise_ind;
 
-        if let Some(current_exercise_ind) = events?
-            .iter()
-            .filter_map(|event| {
-                if event.kind != DebouncedEventKind::Any
-                    || !event.path.extension().is_some_and(|ext| ext == "rs")
-                {
-                    return None;
-                }
-
-                self.exercises
-                    .iter()
-                    .position(|exercise| event.path.ends_with(&exercise.path))
-            })
-            .min()
-        {
-            self.current_exercise_ind = current_exercise_ind;
-        } else {
-            return Ok(());
-        };
-
-        while self.current_exercise_ind < self.exercises.len() {
-            self.exercise = &self.exercises[self.current_exercise_ind];
-            if !self.run_exercise()? {
-                break;
-            }
-
-            self.current_exercise_ind += 1;
-        }
-
-        Ok(())
+        self.run_exercise()
     }
 
     pub fn show_prompt(&mut self) -> io::Result<()> {
@@ -156,7 +121,7 @@ You can keep working on this exercise or jump into the next one by removing the 
         self.writer.flush()
     }
 
-    pub fn render(&mut self) -> io::Result<()> {
+    pub fn render(&mut self) -> Result<()> {
         self.writer.execute(Clear(ClearType::All))?;
 
         if let Some(stdout) = &self.stdout {
@@ -171,7 +136,17 @@ You can keep working on this exercise or jump into the next one by removing the 
             self.writer.write_all(message.as_bytes())?;
         }
 
-        self.show_prompt()
+        let line_width = size()?.0;
+        let progress_bar = progress_bar(
+            self.current_exercise_ind as u16,
+            self.exercises.len() as u16,
+            line_width,
+        )?;
+        self.writer.write_all(progress_bar.as_bytes())?;
+
+        self.show_prompt()?;
+
+        Ok(())
     }
 
     pub fn show_hint(&mut self) -> io::Result<()> {
