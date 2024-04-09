@@ -7,6 +7,7 @@ mod embedded;
 mod exercise;
 mod init;
 mod list;
+mod progress_bar;
 mod run;
 mod state_file;
 mod verify;

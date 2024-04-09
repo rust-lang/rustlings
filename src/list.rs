@@ -24,7 +24,7 @@ pub fn list(state_file: &mut StateFile, exercises: &[Exercise]) -> Result<()> {
     let mut ui_state = UiState::new(state_file, exercises);
 
     'outer: loop {
-        terminal.draw(|frame| ui_state.draw(frame))?;
+        terminal.draw(|frame| ui_state.draw(frame).unwrap())?;
 
         let key = loop {
             match event::read()? {

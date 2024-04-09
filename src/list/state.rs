@@ -1,12 +1,13 @@
+use anyhow::Result;
 use ratatui::{
     layout::{Constraint, Rect},
     style::{Style, Stylize},
     text::Span,
-    widgets::{Block, Borders, HighlightSpacing, Row, Table, TableState},
+    widgets::{Block, Borders, HighlightSpacing, Paragraph, Row, Table, TableState},
     Frame,
 };
 
-use crate::{exercise::Exercise, state_file::StateFile};
+use crate::{exercise::Exercise, progress_bar::progress_bar, state_file::StateFile};
 
 #[derive(Copy, Clone, PartialEq, Eq)]
 pub enum Filter {
@@ -20,6 +21,7 @@ pub struct UiState<'a> {
     pub message: String,
     pub filter: Filter,
     exercises: &'a [Exercise],
+    progress: u16,
     selected: usize,
     table_state: TableState,
     last_ind: usize,
@@ -28,16 +30,28 @@ pub struct UiState<'a> {
 impl<'a> UiState<'a> {
     pub fn with_updated_rows(mut self, state_file: &StateFile) -> Self {
         let mut rows_counter: usize = 0;
+        let mut progress: u16 = 0;
         let rows = self
             .exercises
             .iter()
             .zip(state_file.progress().iter().copied())
             .enumerate()
             .filter_map(|(ind, (exercise, done))| {
-                match (self.filter, done) {
-                    (Filter::Done, false) | (Filter::Pending, true) => return None,
-                    _ => (),
-                }
+                let exercise_state = if done {
+                    progress += 1;
+
+                    if self.filter == Filter::Pending {
+                        return None;
+                    }
+
+                    "DONE".green()
+                } else {
+                    if self.filter == Filter::Done {
+                        return None;
+                    }
+
+                    "PENDING".yellow()
+                };
 
                 rows_counter += 1;
 
@@ -45,12 +59,6 @@ impl<'a> UiState<'a> {
                     ">>>>".bold().red()
                 } else {
                     Span::default()
-                };
-
-                let exercise_state = if done {
-                    "DONE".green()
-                } else {
-                    "PENDING".yellow()
                 };
 
                 Some(Row::new([
@@ -65,6 +73,8 @@ impl<'a> UiState<'a> {
 
         self.last_ind = rows_counter.saturating_sub(1);
         self.select(self.selected.min(self.last_ind));
+
+        self.progress = progress;
 
         self
     }
@@ -104,6 +114,7 @@ impl<'a> UiState<'a> {
             message: String::with_capacity(128),
             filter: Filter::None,
             exercises,
+            progress: 0,
             selected,
             table_state,
             last_ind: 0,
@@ -140,7 +151,7 @@ impl<'a> UiState<'a> {
         self.select(self.last_ind);
     }
 
-    pub fn draw(&mut self, frame: &mut Frame) {
+    pub fn draw(&mut self, frame: &mut Frame) -> Result<()> {
         let area = frame.size();
 
         frame.render_stateful_widget(
@@ -149,9 +160,24 @@ impl<'a> UiState<'a> {
                 x: 0,
                 y: 0,
                 width: area.width,
-                height: area.height - 1,
+                height: area.height - 3,
             },
             &mut self.table_state,
+        );
+
+        frame.render_widget(
+            Paragraph::new(Span::raw(progress_bar(
+                self.progress,
+                self.exercises.len() as u16,
+                area.width,
+            )?))
+            .block(Block::default().borders(Borders::BOTTOM)),
+            Rect {
+                x: 0,
+                y: area.height - 3,
+                width: area.width,
+                height: 2,
+            },
         );
 
         let message = if self.message.is_empty() {
@@ -171,5 +197,7 @@ impl<'a> UiState<'a> {
                 height: 1,
             },
         );
+
+        Ok(())
     }
 }
