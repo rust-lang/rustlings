@@ -85,8 +85,10 @@ Did you already install Rust?
 Try running `cargo --version` to diagnose the problem.",
     )?;
 
-    // Leaking is not a problem since the exercises are used until the end of the program.
-    let exercises = InfoFile::parse()?.exercises.leak();
+    let mut info_file = InfoFile::parse()?;
+    info_file.exercises.shrink_to_fit();
+    // Leaking is not a problem since the exercises' slice is used until the end of the program.
+    let exercises = info_file.exercises.leak();
 
     if matches!(args.command, Some(Subcommands::Init)) {
         init::init(exercises).context("Initialization failed")?;
