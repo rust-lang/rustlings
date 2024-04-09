@@ -20,6 +20,7 @@ pub struct WatchState<'a> {
     exercises: &'static [Exercise],
     exercise: &'static Exercise,
     current_exercise_ind: usize,
+    progress: u16,
     stdout: Option<Vec<u8>>,
     stderr: Option<Vec<u8>>,
     message: Option<String>,
@@ -29,6 +30,7 @@ pub struct WatchState<'a> {
 impl<'a> WatchState<'a> {
     pub fn new(state_file: &StateFile, exercises: &'static [Exercise]) -> Self {
         let current_exercise_ind = state_file.next_exercise_ind();
+        let progress = state_file.progress().iter().filter(|done| **done).count() as u16;
         let exercise = &exercises[current_exercise_ind];
 
         let writer = io::stdout().lock();
@@ -46,6 +48,7 @@ impl<'a> WatchState<'a> {
             exercises,
             exercise,
             current_exercise_ind,
+            progress,
             stdout: None,
             stderr: None,
             message: None,
@@ -139,11 +142,7 @@ You can keep working on this exercise or jump into the next one by removing the 
 
         self.writer.write_all(b"\n")?;
         let line_width = size()?.0;
-        let progress_bar = progress_bar(
-            self.current_exercise_ind as u16,
-            self.exercises.len() as u16,
-            line_width,
-        )?;
+        let progress_bar = progress_bar(self.progress, self.exercises.len() as u16, line_width)?;
         self.writer.write_all(progress_bar.as_bytes())?;
 
         self.show_prompt()?;
