@@ -7,13 +7,13 @@ pub fn progress_bar(progress: u16, total: u16, line_width: u16) -> Result<String
     }
 
     // "Progress: [".len() == 11
-    // "] xxx/xxx".len() == 9
-    // 11 + 9 = 20
-    let wrapper_width = 20;
+    // "] xxx/xx exercises_".len() == 19 (leaving the last char empty for `total` > 99)
+    // 11 + 19 = 30
+    let wrapper_width = 30;
 
     // If the line width is too low for a progress bar, just show the ratio.
     if line_width < wrapper_width + 4 {
-        return Ok(format!("Progress: {progress}/{total}"));
+        return Ok(format!("Progress: {progress}/{total} exercises"));
     }
 
     let mut line = String::with_capacity(usize::from(line_width));
@@ -34,7 +34,7 @@ pub fn progress_bar(progress: u16, total: u16, line_width: u16) -> Result<String
         line.push(' ');
     }
 
-    line.write_fmt(format_args!("] {progress:>3}/{total:<3}"))
+    line.write_fmt(format_args!("] {progress:>3}/{total} exercises"))
         .unwrap();
 
     Ok(line)
