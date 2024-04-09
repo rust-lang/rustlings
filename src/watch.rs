@@ -1,6 +1,8 @@
 use anyhow::{bail, Context, Result};
 use notify_debouncer_mini::{
-    new_debouncer, notify::RecursiveMode, DebounceEventResult, DebouncedEventKind,
+    new_debouncer,
+    notify::{self, RecursiveMode},
+    DebounceEventResult, DebouncedEventKind,
 };
 use std::{
     io::{self, BufRead, Write},
@@ -26,6 +28,7 @@ enum InputEvent {
 enum WatchEvent {
     Input(InputEvent),
     FileChange { exercise_ind: usize },
+    NotifyErr(notify::Error),
     TerminalResize,
 }
 
@@ -36,30 +39,32 @@ struct DebouceEventHandler {
 
 impl notify_debouncer_mini::DebounceEventHandler for DebouceEventHandler {
     fn handle_event(&mut self, event: DebounceEventResult) {
-        let Ok(event) = event else {
-            // TODO
-            return;
-        };
-
-        let Some(exercise_ind) = event
-            .iter()
-            .filter_map(|event| {
-                if event.kind != DebouncedEventKind::Any
-                    || !event.path.extension().is_some_and(|ext| ext == "rs")
-                {
-                    return None;
-                }
-
-                self.exercises
+        let event = match event {
+            Ok(event) => {
+                let Some(exercise_ind) = event
                     .iter()
-                    .position(|exercise| event.path.ends_with(&exercise.path))
-            })
-            .min()
-        else {
-            return;
+                    .filter_map(|event| {
+                        if event.kind != DebouncedEventKind::Any
+                            || !event.path.extension().is_some_and(|ext| ext == "rs")
+                        {
+                            return None;
+                        }
+
+                        self.exercises
+                            .iter()
+                            .position(|exercise| event.path.ends_with(&exercise.path))
+                    })
+                    .min()
+                else {
+                    return;
+                };
+
+                WatchEvent::FileChange { exercise_ind }
+            }
+            Err(e) => WatchEvent::NotifyErr(e),
         };
 
-        self.tx.send(WatchEvent::FileChange { exercise_ind });
+        let _ = self.tx.send(event);
     }
 }
 
@@ -125,6 +130,7 @@ pub fn watch(state_file: &StateFile, exercises: &'static [Exercise]) -> Result<(
                 watch_state.run_exercise_with_ind(exercise_ind)?;
                 watch_state.render()?;
             }
+            WatchEvent::NotifyErr(e) => return Err(e.into()),
         }
     }
 
