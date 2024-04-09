@@ -7,7 +7,7 @@ use ratatui::{
     Frame,
 };
 
-use crate::{exercise::Exercise, progress_bar::progress_bar, state_file::StateFile};
+use crate::{exercise::Exercise, progress_bar::progress_bar_ratatui, state_file::StateFile};
 
 #[derive(Copy, Clone, PartialEq, Eq)]
 pub enum Filter {
@@ -166,11 +166,11 @@ impl UiState {
         );
 
         frame.render_widget(
-            Paragraph::new(Span::raw(progress_bar(
+            Paragraph::new(progress_bar_ratatui(
                 self.progress,
                 self.exercises.len() as u16,
                 area.width,
-            )?))
+            )?)
             .block(Block::default().borders(Borders::BOTTOM)),
             Rect {
                 x: 0,

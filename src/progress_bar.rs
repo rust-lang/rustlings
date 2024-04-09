@@ -1,41 +1,97 @@
 use anyhow::{bail, Result};
+use ratatui::text::{Line, Span};
 use std::fmt::Write;
 
+const PREFIX: &str = "Progress: [";
+const PREFIX_WIDTH: u16 = PREFIX.len() as u16;
+// Leaving the last char empty (_) for `total` > 99.
+const POSTFIX_WIDTH: u16 = "] xxx/xx exercises_".len() as u16;
+const WRAPPER_WIDTH: u16 = PREFIX_WIDTH + POSTFIX_WIDTH;
+const MIN_LINE_WIDTH: u16 = WRAPPER_WIDTH + 4;
+
+const PROGRESS_EXCEEDS_MAX_ERR: &str =
+    "The progress of the progress bar is higher than the maximum";
+
 pub fn progress_bar(progress: u16, total: u16, line_width: u16) -> Result<String> {
+    use crossterm::style::Stylize;
+
     if progress > total {
-        bail!("The progress of the progress bar is higher than the maximum");
+        bail!(PROGRESS_EXCEEDS_MAX_ERR);
     }
 
-    // "Progress: [".len() == 11
-    // "] xxx/xx exercises_".len() == 19 (leaving the last char empty for `total` > 99)
-    // 11 + 19 = 30
-    let wrapper_width = 30;
-
-    // If the line width is too low for a progress bar, just show the ratio.
-    if line_width < wrapper_width + 4 {
+    if line_width < MIN_LINE_WIDTH {
         return Ok(format!("Progress: {progress}/{total} exercises"));
     }
 
     let mut line = String::with_capacity(usize::from(line_width));
-    line.push_str("Progress: [");
+    line.push_str(PREFIX);
 
-    let remaining_width = line_width.saturating_sub(wrapper_width);
-    let filled = (remaining_width * progress) / total;
+    let width = line_width - WRAPPER_WIDTH;
+    let filled = (width * progress) / total;
 
+    let mut green_part = String::with_capacity(usize::from(filled + 1));
     for _ in 0..filled {
-        line.push('=');
+        green_part.push('#');
     }
 
-    if filled < remaining_width {
-        line.push('>');
+    if filled < width {
+        green_part.push('>');
+    }
+    write!(line, "{}", green_part.green()).unwrap();
+
+    let width_minus_filled = width - filled;
+    if width_minus_filled > 1 {
+        let red_part_width = width_minus_filled - 1;
+        let mut red_part = String::with_capacity(usize::from(red_part_width));
+        for _ in 0..red_part_width {
+            red_part.push('-');
+        }
+        write!(line, "{}", red_part.red()).unwrap();
     }
 
-    for _ in 0..(remaining_width - filled).saturating_sub(1) {
-        line.push(' ');
-    }
-
-    line.write_fmt(format_args!("] {progress:>3}/{total} exercises"))
-        .unwrap();
+    write!(line, "] {progress:>3}/{total} exercises").unwrap();
 
     Ok(line)
+}
+
+pub fn progress_bar_ratatui(progress: u16, total: u16, line_width: u16) -> Result<Line<'static>> {
+    use ratatui::style::Stylize;
+
+    if progress > total {
+        bail!(PROGRESS_EXCEEDS_MAX_ERR);
+    }
+
+    if line_width < MIN_LINE_WIDTH {
+        return Ok(Line::raw(format!("Progress: {progress}/{total} exercises")));
+    }
+
+    let mut spans = Vec::with_capacity(4);
+    spans.push(Span::raw(PREFIX));
+
+    let width = line_width - WRAPPER_WIDTH;
+    let filled = (width * progress) / total;
+
+    let mut green_part = String::with_capacity(usize::from(filled + 1));
+    for _ in 0..filled {
+        green_part.push('#');
+    }
+
+    if filled < width {
+        green_part.push('>');
+    }
+    spans.push(green_part.green());
+
+    let width_minus_filled = width - filled;
+    if width_minus_filled > 1 {
+        let red_part_width = width_minus_filled - 1;
+        let mut red_part = String::with_capacity(usize::from(red_part_width));
+        for _ in 0..red_part_width {
+            red_part.push('-');
+        }
+        spans.push(red_part.red());
+    }
+
+    spans.push(Span::raw(format!("] {progress:>3}/{total} exercises")));
+
+    Ok(Line::from(spans))
 }
