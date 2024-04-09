@@ -1,4 +1,5 @@
 use anyhow::{bail, Result};
+use crossterm::style::Stylize;
 use std::io::{stdout, Write};
 
 use crate::exercise::Exercise;
@@ -21,8 +22,7 @@ pub fn run(exercise: &Exercise) -> Result<()> {
         bail!("Ran {exercise} with errors");
     }
 
-    // TODO: Color
-    println!("Successfully ran {exercise}");
+    println!("{}", "✓ Successfully ran {exercise}".green());
 
     Ok(())
 }
