@@ -127,6 +127,9 @@ You can keep working on this exercise or jump into the next one by removing the 
     }
 
     pub fn render(&mut self) -> Result<()> {
+        // Prevent having the first line shifted after clearing because of the prompt.
+        self.writer.write_all(b"\n")?;
+
         self.writer.execute(Clear(ClearType::All))?;
 
         if let Some(stdout) = &self.stdout {
