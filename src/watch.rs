@@ -29,7 +29,6 @@ pub enum WatchExit {
 
 enum InputEvent {
     Hint,
-    Clear,
     List,
     Quit,
     Unrecognized(String),
@@ -106,7 +105,6 @@ fn terminal_event_handler(tx: Sender<WatchEvent>) {
                     KeyCode::Enter => {
                         let input_event = match input.trim() {
                             "h" | "hint" => InputEvent::Hint,
-                            "c" | "clear" => InputEvent::Clear,
                             "l" | "list" => break InputEvent::List,
                             "q" | "quit" => break InputEvent::Quit,
                             _ => InputEvent::Unrecognized(input.clone()),
@@ -165,7 +163,7 @@ pub fn watch(state_file: &mut StateFile, exercises: &'static [Exercise]) -> Resu
             WatchEvent::Input(InputEvent::List) => {
                 return Ok(WatchExit::List);
             }
-            WatchEvent::Input(InputEvent::Clear) | WatchEvent::TerminalResize => {
+            WatchEvent::TerminalResize => {
                 watch_state.render()?;
             }
             WatchEvent::Input(InputEvent::Quit) => break,

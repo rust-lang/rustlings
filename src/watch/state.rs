@@ -6,7 +6,7 @@ use crossterm::{
 };
 use std::{
     fmt::Write as _,
-    io::{self, StdoutLock, Write as _},
+    io::{self, StdoutLock, Write},
 };
 
 use crate::{
@@ -24,7 +24,7 @@ pub struct WatchState<'a> {
     stdout: Option<Vec<u8>>,
     stderr: Option<Vec<u8>>,
     message: Option<String>,
-    prompt: Vec<u8>,
+    hint_displayed: bool,
 }
 
 impl<'a> WatchState<'a> {
@@ -35,15 +35,6 @@ impl<'a> WatchState<'a> {
 
         let writer = io::stdout().lock();
 
-        let prompt = format!(
-            "\n\n{}int/{}lear/{}ist/{}uit? ",
-            "h".bold(),
-            "c".bold(),
-            "l".bold(),
-            "q".bold(),
-        )
-        .into_bytes();
-
         Self {
             writer,
             exercises,
@@ -53,7 +44,7 @@ impl<'a> WatchState<'a> {
             stdout: None,
             stderr: None,
             message: None,
-            prompt,
+            hint_displayed: false,
         }
     }
 
@@ -122,7 +113,15 @@ You can keep working on this exercise or jump into the next one by removing the 
     }
 
     pub fn show_prompt(&mut self) -> io::Result<()> {
-        self.writer.write_all(&self.prompt)?;
+        self.writer.write_all(b"\n\n")?;
+
+        if !self.hint_displayed {
+            self.writer.write_fmt(format_args!("{}int/", 'h'.bold()))?;
+        }
+
+        self.writer
+            .write_fmt(format_args!("{}ist/{}uit? ", 'l'.bold(), 'q'.bold()))?;
+
         self.writer.flush()
     }
 
@@ -134,10 +133,12 @@ You can keep working on this exercise or jump into the next one by removing the 
 
         if let Some(stdout) = &self.stdout {
             self.writer.write_all(stdout)?;
+            self.writer.write_all(b"\n")?;
         }
 
         if let Some(stderr) = &self.stderr {
             self.writer.write_all(stderr)?;
+            self.writer.write_all(b"\n")?;
         }
 
         if let Some(message) = &self.message {
@@ -145,6 +146,14 @@ You can keep working on this exercise or jump into the next one by removing the 
         }
 
         self.writer.write_all(b"\n")?;
+
+        if self.hint_displayed {
+            self.writer
+                .write_fmt(format_args!("\n{}\n", "Hint".bold().cyan().underlined()))?;
+            self.writer.write_all(self.exercise.hint.as_bytes())?;
+            self.writer.write_all(b"\n\n")?;
+        }
+
         let line_width = size()?.0;
         let progress_bar = progress_bar(self.progress, self.exercises.len() as u16, line_width)?;
         self.writer.write_all(progress_bar.as_bytes())?;
@@ -160,9 +169,9 @@ You can keep working on this exercise or jump into the next one by removing the 
         Ok(())
     }
 
-    pub fn show_hint(&mut self) -> io::Result<()> {
-        self.writer.write_all(self.exercise.hint.as_bytes())?;
-        self.show_prompt()
+    pub fn show_hint(&mut self) -> Result<()> {
+        self.hint_displayed = true;
+        self.render()
     }
 
     pub fn handle_invalid_cmd(&mut self, cmd: &str) -> io::Result<()> {
