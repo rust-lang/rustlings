@@ -27,13 +27,12 @@ pub enum WatchExit {
     List,
 }
 
-#[derive(Copy, Clone)]
 enum InputEvent {
     Hint,
     Clear,
     List,
     Quit,
-    Unrecognized,
+    Unrecognized(String),
 }
 
 enum WatchEvent {
@@ -85,7 +84,7 @@ impl notify_debouncer_mini::DebounceEventHandler for DebouceEventHandler {
 fn terminal_event_handler(tx: Sender<WatchEvent>) {
     let mut input = String::with_capacity(8);
 
-    loop {
+    let last_input_event = loop {
         let terminal_event = match event::read() {
             Ok(v) => v,
             Err(e) => {
@@ -108,18 +107,13 @@ fn terminal_event_handler(tx: Sender<WatchEvent>) {
                         let input_event = match input.trim() {
                             "h" | "hint" => InputEvent::Hint,
                             "c" | "clear" => InputEvent::Clear,
-                            "l" | "list" => InputEvent::List,
-                            "q" | "quit" => InputEvent::Quit,
-                            _ => InputEvent::Unrecognized,
+                            "l" | "list" => break InputEvent::List,
+                            "q" | "quit" => break InputEvent::Quit,
+                            _ => InputEvent::Unrecognized(input.clone()),
                         };
 
                         if tx.send(WatchEvent::Input(input_event)).is_err() {
                             return;
-                        }
-
-                        match input_event {
-                            InputEvent::List | InputEvent::Quit => return,
-                            _ => (),
                         }
 
                         input.clear();
@@ -137,7 +131,9 @@ fn terminal_event_handler(tx: Sender<WatchEvent>) {
             }
             Event::FocusGained | Event::FocusLost | Event::Mouse(_) | Event::Paste(_) => continue,
         }
-    }
+    };
+
+    let _ = tx.send(WatchEvent::Input(last_input_event));
 }
 
 pub fn watch(state_file: &mut StateFile, exercises: &'static [Exercise]) -> Result<WatchExit> {
@@ -173,8 +169,8 @@ pub fn watch(state_file: &mut StateFile, exercises: &'static [Exercise]) -> Resu
                 watch_state.render()?;
             }
             WatchEvent::Input(InputEvent::Quit) => break,
-            WatchEvent::Input(InputEvent::Unrecognized) => {
-                watch_state.handle_invalid_cmd()?;
+            WatchEvent::Input(InputEvent::Unrecognized(cmd)) => {
+                watch_state.handle_invalid_cmd(&cmd)?;
             }
             WatchEvent::FileChange { exercise_ind } => {
                 // TODO: bool

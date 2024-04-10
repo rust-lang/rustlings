@@ -159,8 +159,13 @@ You can keep working on this exercise or jump into the next one by removing the 
         self.show_prompt()
     }
 
-    pub fn handle_invalid_cmd(&mut self) -> io::Result<()> {
-        self.writer.write_all(b"Invalid command")?;
+    pub fn handle_invalid_cmd(&mut self, cmd: &str) -> io::Result<()> {
+        self.writer.write_all(b"Invalid command: ")?;
+        self.writer.write_all(cmd.as_bytes())?;
+        if cmd.len() > 1 {
+            self.writer
+                .write_all(b" (confusing input can occur after resizing the terminal)")?;
+        }
         self.show_prompt()
     }
 }
