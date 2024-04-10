@@ -1,38 +1,27 @@
 use anyhow::{Error, Result};
-use crossterm::event::{self, Event, KeyCode, KeyEventKind};
 use notify_debouncer_mini::{
     new_debouncer,
     notify::{self, RecursiveMode},
-    DebounceEventResult, DebouncedEventKind,
 };
 use std::{
     io::{self, Write},
     path::Path,
-    sync::mpsc::{channel, Sender},
+    sync::mpsc::channel,
     thread,
     time::Duration,
 };
 
+mod debounce_event;
 mod state;
+mod terminal_event;
 
 use crate::{exercise::Exercise, state_file::StateFile};
 
-use self::state::WatchState;
-
-/// Returned by the watch mode to indicate what to do afterwards.
-pub enum WatchExit {
-    /// Exit the program.
-    Shutdown,
-    /// Enter the list mode and restart the watch mode afterwards.
-    List,
-}
-
-enum InputEvent {
-    Hint,
-    List,
-    Quit,
-    Unrecognized(String),
-}
+use self::{
+    debounce_event::DebounceEventHandler,
+    state::WatchState,
+    terminal_event::{terminal_event_handler, InputEvent},
+};
 
 enum WatchEvent {
     Input(InputEvent),
@@ -42,96 +31,12 @@ enum WatchEvent {
     TerminalResize,
 }
 
-struct DebounceEventHandler {
-    tx: Sender<WatchEvent>,
-    exercises: &'static [Exercise],
-}
-
-impl notify_debouncer_mini::DebounceEventHandler for DebounceEventHandler {
-    fn handle_event(&mut self, event: DebounceEventResult) {
-        let event = match event {
-            Ok(event) => {
-                let Some(exercise_ind) = event
-                    .iter()
-                    .filter_map(|event| {
-                        if event.kind != DebouncedEventKind::Any
-                            || !event.path.extension().is_some_and(|ext| ext == "rs")
-                        {
-                            return None;
-                        }
-
-                        self.exercises
-                            .iter()
-                            .position(|exercise| event.path.ends_with(&exercise.path))
-                    })
-                    .min()
-                else {
-                    return;
-                };
-
-                WatchEvent::FileChange { exercise_ind }
-            }
-            Err(e) => WatchEvent::NotifyErr(e),
-        };
-
-        // An error occurs when the receiver is dropped.
-        // After dropping the receiver, the debouncer guard should also be dropped.
-        let _ = self.tx.send(event);
-    }
-}
-
-fn terminal_event_handler(tx: Sender<WatchEvent>) {
-    let mut input = String::with_capacity(8);
-
-    let last_input_event = loop {
-        let terminal_event = match event::read() {
-            Ok(v) => v,
-            Err(e) => {
-                // If `send` returns an error, then the receiver is dropped and
-                // a shutdown has been already initialized.
-                let _ = tx.send(WatchEvent::TerminalEventErr(e));
-                return;
-            }
-        };
-
-        match terminal_event {
-            Event::Key(key) => {
-                match key.kind {
-                    KeyEventKind::Release => continue,
-                    KeyEventKind::Press | KeyEventKind::Repeat => (),
-                }
-
-                match key.code {
-                    KeyCode::Enter => {
-                        let input_event = match input.trim() {
-                            "h" | "hint" => InputEvent::Hint,
-                            "l" | "list" => break InputEvent::List,
-                            "q" | "quit" => break InputEvent::Quit,
-                            _ => InputEvent::Unrecognized(input.clone()),
-                        };
-
-                        if tx.send(WatchEvent::Input(input_event)).is_err() {
-                            return;
-                        }
-
-                        input.clear();
-                    }
-                    KeyCode::Char(c) => {
-                        input.push(c);
-                    }
-                    _ => (),
-                }
-            }
-            Event::Resize(_, _) => {
-                if tx.send(WatchEvent::TerminalResize).is_err() {
-                    return;
-                }
-            }
-            Event::FocusGained | Event::FocusLost | Event::Mouse(_) | Event::Paste(_) => continue,
-        }
-    };
-
-    let _ = tx.send(WatchEvent::Input(last_input_event));
+/// Returned by the watch mode to indicate what to do afterwards.
+pub enum WatchExit {
+    /// Exit the program.
+    Shutdown,
+    /// Enter the list mode and restart the watch mode afterwards.
+    List,
 }
 
 pub fn watch(state_file: &mut StateFile, exercises: &'static [Exercise]) -> Result<WatchExit> {
