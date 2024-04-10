@@ -46,6 +46,7 @@ pub enum Mode {
 }
 
 #[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct InfoFile {
     pub exercises: Vec<Exercise>,
 }
@@ -65,6 +66,7 @@ impl InfoFile {
 
 // Deserialized from the `info.toml` file.
 #[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct Exercise {
     // Name of the exercise
     pub name: String,

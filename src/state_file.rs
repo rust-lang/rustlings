@@ -5,6 +5,7 @@ use std::fs;
 use crate::exercise::Exercise;
 
 #[derive(Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct StateFile {
     next_exercise_ind: usize,
     progress: Vec<bool>,
