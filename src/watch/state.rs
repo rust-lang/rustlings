@@ -36,10 +36,11 @@ impl<'a> WatchState<'a> {
         let writer = io::stdout().lock();
 
         let prompt = format!(
-            "\n\n{}int/{}lear/{}uit? ",
+            "\n\n{}int/{}lear/{}ist/{}uit? ",
             "h".bold(),
             "c".bold(),
-            "q".bold()
+            "l".bold(),
+            "q".bold(),
         )
         .into_bytes();
 

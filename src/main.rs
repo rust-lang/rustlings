@@ -16,9 +16,11 @@ mod watch;
 use self::{
     consts::WELCOME,
     exercise::{Exercise, InfoFile},
+    list::list,
     run::run,
     state_file::StateFile,
     verify::{verify, VerifyState},
+    watch::{watch, WatchExit},
 };
 
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
@@ -52,8 +54,6 @@ enum Subcommands {
         /// The name of the exercise
         name: String,
     },
-    /// List the exercises available in Rustlings
-    List,
 }
 
 fn find_exercise(name: &str, exercises: &'static [Exercise]) -> Result<(usize, &'static Exercise)> {
@@ -112,14 +112,17 @@ If you are just starting with Rustlings, run the command `rustlings init` to ini
     let mut state_file = StateFile::read_or_default(exercises);
 
     match args.command {
-        None | Some(Subcommands::Watch) => {
-            watch::watch(&state_file, exercises)?;
-        }
+        None | Some(Subcommands::Watch) => loop {
+            match watch(&mut state_file, exercises)? {
+                WatchExit::Shutdown => break,
+                // It is much easier to exit the watch mode, launch the list mode and then restart
+                // the watch mode instead of trying to pause the watch threads and correct the
+                // watch state.
+                WatchExit::List => list(&mut state_file, exercises)?,
+            }
+        },
         // `Init` is handled above.
         Some(Subcommands::Init) => (),
-        Some(Subcommands::List) => {
-            list::list(&mut state_file, exercises)?;
-        }
         Some(Subcommands::Run { name }) => {
             let (_, exercise) = find_exercise(&name, exercises)?;
             run(exercise).unwrap_or_else(|_| exit(1));

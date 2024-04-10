@@ -18,9 +18,19 @@ use crate::{exercise::Exercise, state_file::StateFile};
 
 use self::state::WatchState;
 
+/// Returned by the watch mode to indicate what to do afterwards.
+pub enum WatchExit {
+    /// Exit the program.
+    Shutdown,
+    /// Enter the list mode and restart the watch mode afterwards.
+    List,
+}
+
+#[derive(Copy, Clone)]
 enum InputEvent {
     Hint,
     Clear,
+    List,
     Quit,
     Unrecognized,
 }
@@ -86,20 +96,26 @@ fn input_handler(tx: Sender<WatchEvent>) {
         let event = match stdin_buf.trim() {
             "h" | "hint" => InputEvent::Hint,
             "c" | "clear" => InputEvent::Clear,
+            "l" | "list" => InputEvent::List,
             "q" | "quit" => InputEvent::Quit,
             _ => InputEvent::Unrecognized,
         };
-
-        stdin_buf.clear();
 
         if tx.send(WatchEvent::Input(event)).is_err() {
             // The receiver was dropped.
             return;
         }
+
+        match event {
+            InputEvent::List | InputEvent::Quit => return,
+            _ => (),
+        }
+
+        stdin_buf.clear();
     }
 }
 
-pub fn watch(state_file: &StateFile, exercises: &'static [Exercise]) -> Result<()> {
+pub fn watch(state_file: &mut StateFile, exercises: &'static [Exercise]) -> Result<WatchExit> {
     let (tx, rx) = channel();
     let mut debouncer = new_debouncer(
         Duration::from_secs(1),
@@ -125,6 +141,9 @@ pub fn watch(state_file: &StateFile, exercises: &'static [Exercise]) -> Result<(
             WatchEvent::Input(InputEvent::Hint) => {
                 watch_state.show_hint()?;
             }
+            WatchEvent::Input(InputEvent::List) => {
+                return Ok(WatchExit::List);
+            }
             WatchEvent::Input(InputEvent::Clear) | WatchEvent::TerminalResize => {
                 watch_state.render()?;
             }
@@ -147,5 +166,5 @@ We hope you're enjoying learning Rust!
 If you want to continue working on the exercises at a later point, you can simply run `rustlings` again.
 ")?;
 
-    Ok(())
+    Ok(WatchExit::Shutdown)
 }
