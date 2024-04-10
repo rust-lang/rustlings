@@ -1,11 +1,12 @@
-use anyhow::Result;
+use anyhow::{Error, Result};
+use crossterm::event::{self, Event, KeyCode, KeyEventKind};
 use notify_debouncer_mini::{
     new_debouncer,
     notify::{self, RecursiveMode},
     DebounceEventResult, DebouncedEventKind,
 };
 use std::{
-    io::{self, BufRead, Write},
+    io::{self, Write},
     path::Path,
     sync::mpsc::{channel, Sender},
     thread,
@@ -39,7 +40,7 @@ enum WatchEvent {
     Input(InputEvent),
     FileChange { exercise_ind: usize },
     NotifyErr(notify::Error),
-    StdinErr(io::Error),
+    TerminalEventErr(io::Error),
     TerminalResize,
 }
 
@@ -81,37 +82,61 @@ impl notify_debouncer_mini::DebounceEventHandler for DebouceEventHandler {
     }
 }
 
-fn input_handler(tx: Sender<WatchEvent>) {
-    let mut stdin = io::stdin().lock();
-    let mut stdin_buf = String::with_capacity(8);
+fn terminal_event_handler(tx: Sender<WatchEvent>) {
+    let mut input = String::with_capacity(8);
 
     loop {
-        if let Err(e) = stdin.read_line(&mut stdin_buf) {
-            // If `send` returns an error, then the receiver is dropped and
-            // a shutdown has been already initialized.
-            let _ = tx.send(WatchEvent::StdinErr(e));
-            return;
-        }
-
-        let event = match stdin_buf.trim() {
-            "h" | "hint" => InputEvent::Hint,
-            "c" | "clear" => InputEvent::Clear,
-            "l" | "list" => InputEvent::List,
-            "q" | "quit" => InputEvent::Quit,
-            _ => InputEvent::Unrecognized,
+        let terminal_event = match event::read() {
+            Ok(v) => v,
+            Err(e) => {
+                // If `send` returns an error, then the receiver is dropped and
+                // a shutdown has been already initialized.
+                let _ = tx.send(WatchEvent::TerminalEventErr(e));
+                return;
+            }
         };
 
-        if tx.send(WatchEvent::Input(event)).is_err() {
-            // The receiver was dropped.
-            return;
-        }
+        match terminal_event {
+            Event::Key(key) => {
+                match key.kind {
+                    KeyEventKind::Release => continue,
+                    KeyEventKind::Press | KeyEventKind::Repeat => (),
+                }
 
-        match event {
-            InputEvent::List | InputEvent::Quit => return,
-            _ => (),
-        }
+                match key.code {
+                    KeyCode::Enter => {
+                        let input_event = match input.trim() {
+                            "h" | "hint" => InputEvent::Hint,
+                            "c" | "clear" => InputEvent::Clear,
+                            "l" | "list" => InputEvent::List,
+                            "q" | "quit" => InputEvent::Quit,
+                            _ => InputEvent::Unrecognized,
+                        };
 
-        stdin_buf.clear();
+                        if tx.send(WatchEvent::Input(input_event)).is_err() {
+                            return;
+                        }
+
+                        match input_event {
+                            InputEvent::List | InputEvent::Quit => return,
+                            _ => (),
+                        }
+
+                        input.clear();
+                    }
+                    KeyCode::Char(c) => {
+                        input.push(c);
+                    }
+                    _ => (),
+                }
+            }
+            Event::Resize(_, _) => {
+                if tx.send(WatchEvent::TerminalResize).is_err() {
+                    return;
+                }
+            }
+            Event::FocusGained | Event::FocusLost | Event::Mouse(_) | Event::Paste(_) => continue,
+        }
     }
 }
 
@@ -134,7 +159,7 @@ pub fn watch(state_file: &mut StateFile, exercises: &'static [Exercise]) -> Resu
     watch_state.run_exercise()?;
     watch_state.render()?;
 
-    thread::spawn(move || input_handler(tx));
+    thread::spawn(move || terminal_event_handler(tx));
 
     while let Ok(event) = rx.recv() {
         match event {
@@ -156,8 +181,12 @@ pub fn watch(state_file: &mut StateFile, exercises: &'static [Exercise]) -> Resu
                 watch_state.run_exercise_with_ind(exercise_ind)?;
                 watch_state.render()?;
             }
-            WatchEvent::NotifyErr(e) => return Err(e.into()),
-            WatchEvent::StdinErr(e) => return Err(e.into()),
+            WatchEvent::NotifyErr(e) => {
+                return Err(Error::from(e).context("Exercise file watcher failed"))
+            }
+            WatchEvent::TerminalEventErr(e) => {
+                return Err(Error::from(e).context("Terminal event listener failed"))
+            }
         }
     }
 
