@@ -43,12 +43,12 @@ enum WatchEvent {
     TerminalResize,
 }
 
-struct DebouceEventHandler {
+struct DebounceEventHandler {
     tx: Sender<WatchEvent>,
     exercises: &'static [Exercise],
 }
 
-impl notify_debouncer_mini::DebounceEventHandler for DebouceEventHandler {
+impl notify_debouncer_mini::DebounceEventHandler for DebounceEventHandler {
     fn handle_event(&mut self, event: DebounceEventResult) {
         let event = match event {
             Ok(event) => {
@@ -140,7 +140,7 @@ pub fn watch(state_file: &mut StateFile, exercises: &'static [Exercise]) -> Resu
     let (tx, rx) = channel();
     let mut debouncer = new_debouncer(
         Duration::from_secs(1),
-        DebouceEventHandler {
+        DebounceEventHandler {
             tx: tx.clone(),
             exercises,
         },
