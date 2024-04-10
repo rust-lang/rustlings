@@ -186,7 +186,7 @@ impl UiState {
                 "↓/j ↑/k home/g end/G │ filter <d>one/<p>ending │ <r>eset │ <c>ontinue at │ <q>uit",
             )
         } else {
-            self.message.as_str().blue()
+            self.message.as_str().light_blue()
         };
         frame.render_widget(
             message,
