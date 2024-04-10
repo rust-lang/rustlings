@@ -28,13 +28,10 @@ pub fn list(state_file: &mut StateFile, exercises: &'static [Exercise]) -> Resul
 
         let key = loop {
             match event::read()? {
-                Event::Key(key) => {
-                    if key.kind != KeyEventKind::Press {
-                        continue;
-                    }
-
-                    break key;
-                }
+                Event::Key(key) => match key.kind {
+                    KeyEventKind::Press | KeyEventKind::Repeat => break key,
+                    KeyEventKind::Release => (),
+                },
                 // Redraw
                 Event::Resize(_, _) => continue 'outer,
                 // Ignore
