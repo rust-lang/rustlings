@@ -33,7 +33,6 @@ impl StateFile {
     }
 
     fn write(&self) -> Result<()> {
-        // TODO: Capacity
         let mut buf = Vec::with_capacity(1024);
         serde_json::ser::to_writer(&mut buf, self).context("Failed to serialize the state")?;
         fs::write(".rustlings-state.json", buf)
