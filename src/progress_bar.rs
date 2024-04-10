@@ -49,7 +49,7 @@ pub fn progress_bar(progress: u16, total: u16, line_width: u16) -> Result<String
         write!(line, "{}", red_part.red()).unwrap();
     }
 
-    write!(line, "] {progress:>3}/{total} exercises").unwrap();
+    writeln!(line, "] {progress:>3}/{total} exercises").unwrap();
 
     Ok(line)
 }

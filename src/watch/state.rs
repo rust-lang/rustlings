@@ -149,6 +149,12 @@ You can keep working on this exercise or jump into the next one by removing the 
         let progress_bar = progress_bar(self.progress, self.exercises.len() as u16, line_width)?;
         self.writer.write_all(progress_bar.as_bytes())?;
 
+        self.writer.write_all(b"Current exercise: ")?;
+        self.writer.write_fmt(format_args!(
+            "{}",
+            self.exercise.path.to_string_lossy().bold()
+        ))?;
+
         self.show_prompt()?;
 
         Ok(())
