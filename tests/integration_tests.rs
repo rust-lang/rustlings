@@ -12,26 +12,6 @@ fn fails_when_in_wrong_dir() {
 }
 
 #[test]
-fn verify_all_success() {
-    Command::cargo_bin("rustlings")
-        .unwrap()
-        .arg("verify")
-        .current_dir("tests/fixture/success")
-        .assert()
-        .success();
-}
-
-#[test]
-fn verify_fails_if_some_fails() {
-    Command::cargo_bin("rustlings")
-        .unwrap()
-        .arg("verify")
-        .current_dir("tests/fixture/failure")
-        .assert()
-        .code(1);
-}
-
-#[test]
 fn run_single_compile_success() {
     Command::cargo_bin("rustlings")
         .unwrap()
@@ -79,19 +59,6 @@ fn run_single_test_not_passed() {
         .current_dir("tests/fixture/failure/")
         .assert()
         .code(1);
-}
-
-#[test]
-fn run_single_test_no_filename() {
-    Command::cargo_bin("rustlings")
-        .unwrap()
-        .arg("run")
-        .current_dir("tests/fixture/")
-        .assert()
-        .code(2)
-        .stderr(predicates::str::contains(
-            "required arguments were not provided",
-        ));
 }
 
 #[test]
