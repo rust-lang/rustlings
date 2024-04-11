@@ -31,12 +31,21 @@ impl InfoFile {
     pub fn parse() -> Result<Self> {
         // Read a local `info.toml` if it exists.
         // Mainly to let the tests work for now.
-        if let Ok(file_content) = fs::read_to_string("info.toml") {
+        let slf: Self = if let Ok(file_content) = fs::read_to_string("info.toml") {
             toml_edit::de::from_str(&file_content)
         } else {
             toml_edit::de::from_str(include_str!("../info.toml"))
         }
-        .context("Failed to parse `info.toml`")
+        .context("Failed to parse `info.toml`")?;
+
+        if slf.exercises.is_empty() {
+            panic!(
+                "There are no exercises yet!
+If you are developing third-party exercises, add at least one exercise before testing."
+            );
+        }
+
+        Ok(slf)
     }
 }
 
