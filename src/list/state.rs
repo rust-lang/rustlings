@@ -1,4 +1,4 @@
-use anyhow::Result;
+use anyhow::{Context, Result};
 use ratatui::{
     layout::{Constraint, Rect},
     style::{Style, Stylize},
@@ -217,21 +217,44 @@ impl<'a> UiState<'a> {
             return Ok(None);
         };
 
-        self.app_state.set_pending(selected)?;
-        // TODO: Take care of filters!
-        let exercise = &self.app_state.exercises()[selected];
+        let (ind, exercise) = self
+            .app_state
+            .exercises()
+            .iter()
+            .zip(self.app_state.progress())
+            .enumerate()
+            .filter_map(|(ind, (exercise, done))| match self.filter {
+                Filter::Done => done.then_some((ind, exercise)),
+                Filter::Pending => (!done).then_some((ind, exercise)),
+                Filter::None => Some((ind, exercise)),
+            })
+            .nth(selected)
+            .context("Invalid selection index")?;
+
+        self.app_state.set_pending(ind)?;
         exercise.reset()?;
 
         Ok(Some(exercise))
     }
 
-    #[inline]
     pub fn selected_to_current_exercise(&mut self) -> Result<()> {
         let Some(selected) = self.table_state.selected() else {
             return Ok(());
         };
 
-        // TODO: Take care of filters!
-        self.app_state.set_current_exercise_ind(selected)
+        let ind = self
+            .app_state
+            .progress()
+            .iter()
+            .enumerate()
+            .filter_map(|(ind, done)| match self.filter {
+                Filter::Done => done.then_some(ind),
+                Filter::Pending => (!done).then_some(ind),
+                Filter::None => Some(ind),
+            })
+            .nth(selected)
+            .context("Invalid selection index")?;
+
+        self.app_state.set_current_exercise_ind(ind)
     }
 }
