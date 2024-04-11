@@ -1,6 +1,6 @@
 // intro1.rs
 //
-// About this `I AM NOT DONE` thing:
+// TODO: Update comment
 // We sometimes encourage you to keep trying things on a given exercise, even
 // after you already figured it out. If you got everything working and feel
 // ready for the next exercise, remove the `I AM NOT DONE` comment below.
@@ -12,8 +12,6 @@
 //
 // Execute `rustlings hint intro1` or use the `hint` watch subcommand for a
 // hint.
-
-// I AM NOT DONE
 
 fn main() {
     println!("Hello and");

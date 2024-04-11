@@ -699,7 +699,6 @@ dependencies = [
  "serde_json",
  "toml_edit",
  "which",
- "winnow",
 ]
 
 [[package]]

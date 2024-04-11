@@ -101,13 +101,7 @@ The task is simple. Most exercises contain an error that keeps them from compili
 rustlings watch
 ```
 
-This will try to verify the completion of every exercise in a predetermined order (what we think is best for newcomers). It will also rerun automatically every time you change a file in the `exercises/` directory. If you want to only run it once, you can use:
-
-```bash
-rustlings verify
-```
-
-This will do the same as watch, but it'll quit after running.
+This will try to verify the completion of every exercise in a predetermined order (what we think is best for newcomers). It will also rerun automatically every time you change a file in the `exercises/` directory.
 
 In case you want to go by your own order, or want to only verify a single exercise, you can run:
 

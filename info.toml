@@ -4,6 +4,7 @@
 name = "intro1"
 path = "exercises/00_intro/intro1.rs"
 mode = "compile"
+# TODO: Fix hint
 hint = """
 Remove the `I AM NOT DONE` comment in the `exercises/intro00/intro1.rs` file
 to move on to the next exercise."""
@@ -129,11 +130,7 @@ path = "exercises/02_functions/functions3.rs"
 mode = "compile"
 hint = """
 This time, the function *declaration* is okay, but there's something wrong
-with the place where we're calling the function.
-
-As a reminder, you can freely play around with different solutions in Rustlings!
-Watch mode will only jump to the next exercise if you remove the `I AM NOT
-DONE` comment."""
+with the place where we're calling the function."""
 
 [[exercises]]
 name = "functions4"

@@ -3,8 +3,6 @@
 // Execute `rustlings hint options3` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
-
 struct Point {
     x: i32,
     y: i32,

@@ -15,7 +15,7 @@ mod debounce_event;
 mod state;
 mod terminal_event;
 
-use crate::{exercise::Exercise, state_file::StateFile};
+use crate::app_state::AppState;
 
 use self::{
     debounce_event::DebounceEventHandler,
@@ -39,23 +39,23 @@ pub enum WatchExit {
     List,
 }
 
-pub fn watch(state_file: &mut StateFile, exercises: &'static [Exercise]) -> Result<WatchExit> {
+pub fn watch(app_state: &mut AppState) -> Result<WatchExit> {
     let (tx, rx) = channel();
     let mut debouncer = new_debouncer(
         Duration::from_secs(1),
         DebounceEventHandler {
             tx: tx.clone(),
-            exercises,
+            exercises: app_state.exercises(),
         },
     )?;
     debouncer
         .watcher()
         .watch(Path::new("exercises"), RecursiveMode::Recursive)?;
 
-    let mut watch_state = WatchState::new(state_file, exercises);
+    let mut watch_state = WatchState::new(app_state);
 
     // TODO: bool
-    watch_state.run_exercise()?;
+    watch_state.run_current_exercise()?;
     watch_state.render()?;
 
     thread::spawn(move || terminal_event_handler(tx));

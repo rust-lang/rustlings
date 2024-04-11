@@ -1,26 +1,16 @@
-use anyhow::{Context, Result};
+use anyhow::Result;
 use crossterm::{
-    style::{Attribute, ContentStyle, Stylize},
+    style::Stylize,
     terminal::{size, Clear, ClearType},
     ExecutableCommand,
 };
-use std::{
-    fmt::Write as _,
-    io::{self, StdoutLock, Write},
-};
+use std::io::{self, StdoutLock, Write};
 
-use crate::{
-    exercise::{Exercise, State},
-    progress_bar::progress_bar,
-    state_file::StateFile,
-};
+use crate::{app_state::AppState, progress_bar::progress_bar};
 
 pub struct WatchState<'a> {
     writer: StdoutLock<'a>,
-    exercises: &'static [Exercise],
-    exercise: &'static Exercise,
-    current_exercise_ind: usize,
-    progress: u16,
+    app_state: &'a mut AppState,
     stdout: Option<Vec<u8>>,
     stderr: Option<Vec<u8>>,
     message: Option<String>,
@@ -28,19 +18,12 @@ pub struct WatchState<'a> {
 }
 
 impl<'a> WatchState<'a> {
-    pub fn new(state_file: &StateFile, exercises: &'static [Exercise]) -> Self {
-        let current_exercise_ind = state_file.next_exercise_ind();
-        let progress = state_file.progress().iter().filter(|done| **done).count() as u16;
-        let exercise = &exercises[current_exercise_ind];
-
+    pub fn new(app_state: &'a mut AppState) -> Self {
         let writer = io::stdout().lock();
 
         Self {
             writer,
-            exercises,
-            exercise,
-            current_exercise_ind,
-            progress,
+            app_state,
             stdout: None,
             stderr: None,
             message: None,
@@ -53,8 +36,8 @@ impl<'a> WatchState<'a> {
         self.writer
     }
 
-    pub fn run_exercise(&mut self) -> Result<bool> {
-        let output = self.exercise.run()?;
+    pub fn run_current_exercise(&mut self) -> Result<bool> {
+        let output = self.app_state.current_exercise().run()?;
         self.stdout = Some(output.stdout);
 
         if !output.status.success() {
@@ -64,55 +47,15 @@ impl<'a> WatchState<'a> {
 
         self.stderr = None;
 
-        if let State::Pending(context) = self.exercise.state()? {
-            let mut message = format!(
-                "
-You can keep working on this exercise or jump into the next one by removing the {} comment:
-
-",
-                "`I AM NOT DONE`".bold(),
-            );
-
-            for context_line in context {
-                let formatted_line = if context_line.important {
-                    context_line.line.bold()
-                } else {
-                    context_line.line.stylize()
-                };
-
-                writeln!(
-                    message,
-                    "{:>2} {}  {}",
-                    ContentStyle {
-                        foreground_color: Some(crossterm::style::Color::Blue),
-                        background_color: None,
-                        underline_color: None,
-                        attributes: Attribute::Bold.into()
-                    }
-                    .apply(context_line.number),
-                    "|".blue(),
-                    formatted_line,
-                )?;
-            }
-
-            self.message = Some(message);
-            return Ok(false);
-        }
-
         Ok(true)
     }
 
     pub fn run_exercise_with_ind(&mut self, exercise_ind: usize) -> Result<bool> {
-        self.exercise = self
-            .exercises
-            .get(exercise_ind)
-            .context("Invalid exercise index")?;
-        self.current_exercise_ind = exercise_ind;
-
-        self.run_exercise()
+        self.app_state.set_current_exercise_ind(exercise_ind)?;
+        self.run_current_exercise()
     }
 
-    pub fn show_prompt(&mut self) -> io::Result<()> {
+    fn show_prompt(&mut self) -> io::Result<()> {
         self.writer.write_all(b"\n\n")?;
 
         if !self.hint_displayed {
@@ -150,18 +93,27 @@ You can keep working on this exercise or jump into the next one by removing the 
         if self.hint_displayed {
             self.writer
                 .write_fmt(format_args!("\n{}\n", "Hint".bold().cyan().underlined()))?;
-            self.writer.write_all(self.exercise.hint.as_bytes())?;
+            self.writer
+                .write_all(self.app_state.current_exercise().hint.as_bytes())?;
             self.writer.write_all(b"\n\n")?;
         }
 
         let line_width = size()?.0;
-        let progress_bar = progress_bar(self.progress, self.exercises.len() as u16, line_width)?;
+        let progress_bar = progress_bar(
+            self.app_state.n_done(),
+            self.app_state.exercises().len() as u16,
+            line_width,
+        )?;
         self.writer.write_all(progress_bar.as_bytes())?;
 
         self.writer.write_all(b"Current exercise: ")?;
         self.writer.write_fmt(format_args!(
             "{}",
-            self.exercise.path.to_string_lossy().bold()
+            self.app_state
+                .current_exercise()
+                .path
+                .to_string_lossy()
+                .bold(),
         ))?;
 
         self.show_prompt()?;

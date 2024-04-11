@@ -1,7 +1,8 @@
-use anyhow::{bail, Context, Result};
+use anyhow::{Context, Result};
 use clap::{Parser, Subcommand};
 use std::{path::Path, process::exit};
 
+mod app_state;
 mod consts;
 mod embedded;
 mod exercise;
@@ -9,17 +10,15 @@ mod init;
 mod list;
 mod progress_bar;
 mod run;
-mod state_file;
-mod verify;
 mod watch;
 
 use self::{
+    app_state::AppState,
     consts::WELCOME,
-    exercise::{Exercise, InfoFile},
+    exercise::InfoFile,
+    init::init,
     list::list,
     run::run,
-    state_file::StateFile,
-    verify::{verify, VerifyState},
     watch::{watch, WatchExit},
 };
 
@@ -35,14 +34,12 @@ struct Args {
 enum Subcommands {
     /// Initialize Rustlings
     Init,
-    /// Verify all exercises according to the recommended order
-    Verify,
     /// Same as just running `rustlings` without a subcommand.
     Watch,
-    /// Run/Test a single exercise
+    /// Run a single exercise. Runs the next pending exercise if the exercise name is not specified.
     Run {
         /// The name of the exercise
-        name: String,
+        name: Option<String>,
     },
     /// Reset a single exercise
     Reset {
@@ -56,26 +53,6 @@ enum Subcommands {
     },
 }
 
-fn find_exercise(name: &str, exercises: &'static [Exercise]) -> Result<(usize, &'static Exercise)> {
-    if name == "next" {
-        for (ind, exercise) in exercises.iter().enumerate() {
-            if !exercise.looks_done()? {
-                return Ok((ind, exercise));
-            }
-        }
-
-        println!("🎉 Congratulations! You have done all the exercises!");
-        println!("🔚 There are no more exercises to do next!");
-        exit(0);
-    }
-
-    exercises
-        .iter()
-        .enumerate()
-        .find(|(_, exercise)| exercise.name == name)
-        .with_context(|| format!("No exercise found for '{name}'!"))
-}
-
 fn main() -> Result<()> {
     let args = Args::parse();
 
@@ -87,11 +64,10 @@ Try running `cargo --version` to diagnose the problem.",
 
     let mut info_file = InfoFile::parse()?;
     info_file.exercises.shrink_to_fit();
-    // Leaking is not a problem since the exercises' slice is used until the end of the program.
-    let exercises = info_file.exercises.leak();
+    let exercises = info_file.exercises;
 
     if matches!(args.command, Some(Subcommands::Init)) {
-        init::init(exercises).context("Initialization failed")?;
+        init(&exercises).context("Initialization failed")?;
         println!(
             "\nDone initialization!\n
 Run `cd rustlings` to go into the generated directory.
@@ -109,38 +85,37 @@ If you are just starting with Rustlings, run the command `rustlings init` to ini
         exit(1);
     }
 
-    let mut state_file = StateFile::read_or_default(exercises);
+    let mut app_state = AppState::new(exercises);
 
     match args.command {
         None | Some(Subcommands::Watch) => loop {
-            match watch(&mut state_file, exercises)? {
+            match watch(&mut app_state)? {
                 WatchExit::Shutdown => break,
                 // It is much easier to exit the watch mode, launch the list mode and then restart
                 // the watch mode instead of trying to pause the watch threads and correct the
                 // watch state.
-                WatchExit::List => list(&mut state_file, exercises)?,
+                WatchExit::List => list(&mut app_state)?,
             }
         },
         // `Init` is handled above.
         Some(Subcommands::Init) => (),
         Some(Subcommands::Run { name }) => {
-            let (_, exercise) = find_exercise(&name, exercises)?;
-            run(exercise).unwrap_or_else(|_| exit(1));
+            if let Some(name) = name {
+                app_state.set_current_exercise_by_name(&name)?;
+            }
+            run(&mut app_state)?;
         }
         Some(Subcommands::Reset { name }) => {
-            let (ind, exercise) = find_exercise(&name, exercises)?;
+            app_state.set_current_exercise_by_name(&name)?;
+            app_state.set_pending(app_state.current_exercise_ind())?;
+            let exercise = app_state.current_exercise();
             exercise.reset()?;
-            state_file.reset(ind)?;
             println!("The exercise {exercise} has been reset!");
         }
         Some(Subcommands::Hint { name }) => {
-            let (_, exercise) = find_exercise(&name, exercises)?;
-            println!("{}", exercise.hint);
+            app_state.set_current_exercise_by_name(&name)?;
+            println!("{}", app_state.current_exercise().hint);
         }
-        Some(Subcommands::Verify) => match verify(exercises, 0)? {
-            VerifyState::AllExercisesDone => println!("All exercises done!"),
-            VerifyState::Failed(exercise) => bail!("Exercise {exercise} failed"),
-        },
     }
 
     Ok(())

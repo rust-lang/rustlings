@@ -2,13 +2,10 @@ use anyhow::{bail, Result};
 use crossterm::style::Stylize;
 use std::io::{stdout, Write};
 
-use crate::exercise::Exercise;
+use crate::app_state::{AppState, ExercisesProgress};
 
-// Invoke the rust compiler on the path of the given exercise,
-// and run the ensuing binary.
-// The verbose argument helps determine whether or not to show
-// the output from the test harnesses (if the mode of the exercise is test)
-pub fn run(exercise: &Exercise) -> Result<()> {
+pub fn run(app_state: &mut AppState) -> Result<()> {
+    let exercise = app_state.current_exercise();
     let output = exercise.run()?;
 
     {
@@ -22,7 +19,19 @@ pub fn run(exercise: &Exercise) -> Result<()> {
         bail!("Ran {exercise} with errors");
     }
 
-    println!("{}", "✓ Successfully ran {exercise}".green());
+    println!(
+        "{}{}",
+        "✓ Successfully ran ".green(),
+        exercise.path.to_string_lossy().green(),
+    );
+
+    match app_state.done_current_exercise()? {
+        ExercisesProgress::AllDone => println!(
+            "🎉 Congratulations! You have done all the exercises!
+🔚 There are no more exercises to do next!"
+        ),
+        ExercisesProgress::Pending => println!("Next exercise: {}", app_state.current_exercise()),
+    }
 
     Ok(())
 }

@@ -7,7 +7,7 @@ use ratatui::{
     Frame,
 };
 
-use crate::{exercise::Exercise, progress_bar::progress_bar_ratatui, state_file::StateFile};
+use crate::{app_state::AppState, exercise::Exercise, progress_bar::progress_bar_ratatui};
 
 #[derive(Copy, Clone, PartialEq, Eq)]
 pub enum Filter {
@@ -16,30 +16,29 @@ pub enum Filter {
     None,
 }
 
-pub struct UiState {
+pub struct UiState<'a> {
     pub table: Table<'static>,
     pub message: String,
     pub filter: Filter,
-    exercises: &'static [Exercise],
-    progress: u16,
-    selected: usize,
+    app_state: &'a mut AppState,
     table_state: TableState,
+    selected: usize,
     last_ind: usize,
 }
 
-impl UiState {
-    pub fn with_updated_rows(mut self, state_file: &StateFile) -> Self {
+impl<'a> UiState<'a> {
+    pub fn with_updated_rows(mut self) -> Self {
+        let current_exercise_ind = self.app_state.current_exercise_ind();
+
         let mut rows_counter: usize = 0;
-        let mut progress: u16 = 0;
         let rows = self
-            .exercises
+            .app_state
+            .exercises()
             .iter()
-            .zip(state_file.progress().iter().copied())
+            .zip(self.app_state.progress().iter().copied())
             .enumerate()
             .filter_map(|(ind, (exercise, done))| {
                 let exercise_state = if done {
-                    progress += 1;
-
                     if self.filter == Filter::Pending {
                         return None;
                     }
@@ -55,7 +54,7 @@ impl UiState {
 
                 rows_counter += 1;
 
-                let next = if ind == state_file.next_exercise_ind() {
+                let next = if ind == current_exercise_ind {
                     ">>>>".bold().red()
                 } else {
                     Span::default()
@@ -74,15 +73,14 @@ impl UiState {
         self.last_ind = rows_counter.saturating_sub(1);
         self.select(self.selected.min(self.last_ind));
 
-        self.progress = progress;
-
         self
     }
 
-    pub fn new(state_file: &StateFile, exercises: &'static [Exercise]) -> Self {
+    pub fn new(app_state: &'a mut AppState) -> Self {
         let header = Row::new(["Next", "State", "Name", "Path"]);
 
-        let max_name_len = exercises
+        let max_name_len = app_state
+            .exercises()
             .iter()
             .map(|exercise| exercise.name.len())
             .max()
@@ -104,7 +102,7 @@ impl UiState {
             .highlight_symbol("🦀")
             .block(Block::default().borders(Borders::BOTTOM));
 
-        let selected = state_file.next_exercise_ind();
+        let selected = app_state.current_exercise_ind();
         let table_state = TableState::default()
             .with_offset(selected.saturating_sub(10))
             .with_selected(Some(selected));
@@ -113,19 +111,13 @@ impl UiState {
             table,
             message: String::with_capacity(128),
             filter: Filter::None,
-            exercises,
-            progress: 0,
-            selected,
+            app_state,
             table_state,
+            selected,
             last_ind: 0,
         };
 
-        slf.with_updated_rows(state_file)
-    }
-
-    #[inline]
-    pub fn selected(&self) -> usize {
-        self.selected
+        slf.with_updated_rows()
     }
 
     fn select(&mut self, ind: usize) {
@@ -134,11 +126,13 @@ impl UiState {
     }
 
     pub fn select_next(&mut self) {
-        self.select(self.selected.saturating_add(1).min(self.last_ind));
+        let next = (self.selected + 1).min(self.last_ind);
+        self.select(next);
     }
 
     pub fn select_previous(&mut self) {
-        self.select(self.selected.saturating_sub(1));
+        let previous = self.selected.saturating_sub(1);
+        self.select(previous);
     }
 
     #[inline]
@@ -167,8 +161,8 @@ impl UiState {
 
         frame.render_widget(
             Paragraph::new(progress_bar_ratatui(
-                self.progress,
-                self.exercises.len() as u16,
+                self.app_state.n_done(),
+                self.app_state.exercises().len() as u16,
                 area.width,
             )?)
             .block(Block::default().borders(Borders::BOTTOM)),
@@ -199,5 +193,20 @@ impl UiState {
         );
 
         Ok(())
+    }
+
+    pub fn reset_selected(&mut self) -> Result<&'static Exercise> {
+        self.app_state.set_pending(self.selected)?;
+        // TODO: Take care of filters!
+        let exercise = &self.app_state.exercises()[self.selected];
+        exercise.reset()?;
+
+        Ok(exercise)
+    }
+
+    #[inline]
+    pub fn selected_to_current_exercise(&mut self) -> Result<()> {
+        // TODO: Take care of filters!
+        self.app_state.set_current_exercise_ind(self.selected)
     }
 }
