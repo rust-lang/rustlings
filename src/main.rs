@@ -34,8 +34,6 @@ struct Args {
 enum Subcommands {
     /// Initialize Rustlings
     Init,
-    /// Same as just running `rustlings` without a subcommand.
-    Watch,
     /// Run a single exercise. Runs the next pending exercise if the exercise name is not specified.
     Run {
         /// The name of the exercise
@@ -88,7 +86,7 @@ If you are just starting with Rustlings, run the command `rustlings init` to ini
     let mut app_state = AppState::new(exercises);
 
     match args.command {
-        None | Some(Subcommands::Watch) => loop {
+        None => loop {
             match watch(&mut app_state)? {
                 WatchExit::Shutdown => break,
                 // It is much easier to exit the watch mode, launch the list mode and then restart
