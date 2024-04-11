@@ -22,15 +22,14 @@ pub struct UiState<'a> {
     pub filter: Filter,
     app_state: &'a mut AppState,
     table_state: TableState,
-    selected: usize,
-    last_ind: usize,
+    n_rows: usize,
 }
 
 impl<'a> UiState<'a> {
     pub fn with_updated_rows(mut self) -> Self {
         let current_exercise_ind = self.app_state.current_exercise_ind();
 
-        let mut rows_counter: usize = 0;
+        self.n_rows = 0;
         let rows = self
             .app_state
             .exercises()
@@ -52,7 +51,7 @@ impl<'a> UiState<'a> {
                     "PENDING".yellow()
                 };
 
-                rows_counter += 1;
+                self.n_rows += 1;
 
                 let next = if ind == current_exercise_ind {
                     ">>>>".bold().red()
@@ -70,8 +69,15 @@ impl<'a> UiState<'a> {
 
         self.table = self.table.rows(rows);
 
-        self.last_ind = rows_counter.saturating_sub(1);
-        self.select(self.selected.min(self.last_ind));
+        if self.n_rows == 0 {
+            self.table_state.select(None);
+        } else {
+            self.table_state.select(Some(
+                self.table_state
+                    .selected()
+                    .map_or(0, |selected| selected.min(self.n_rows - 1)),
+            ));
+        }
 
         self
     }
@@ -107,42 +113,53 @@ impl<'a> UiState<'a> {
             .with_offset(selected.saturating_sub(10))
             .with_selected(Some(selected));
 
+        let filter = Filter::None;
+        let n_rows = app_state.exercises().len();
+
         let slf = Self {
             table,
             message: String::with_capacity(128),
-            filter: Filter::None,
+            filter,
             app_state,
             table_state,
-            selected,
-            last_ind: 0,
+            n_rows,
         };
 
         slf.with_updated_rows()
     }
 
-    fn select(&mut self, ind: usize) {
-        self.selected = ind;
-        self.table_state.select(Some(ind));
-    }
-
     pub fn select_next(&mut self) {
-        let next = (self.selected + 1).min(self.last_ind);
-        self.select(next);
+        if self.n_rows > 0 {
+            let next = self
+                .table_state
+                .selected()
+                .map_or(0, |selected| (selected + 1).min(self.n_rows - 1));
+            self.table_state.select(Some(next));
+        }
     }
 
     pub fn select_previous(&mut self) {
-        let previous = self.selected.saturating_sub(1);
-        self.select(previous);
+        if self.n_rows > 0 {
+            let previous = self
+                .table_state
+                .selected()
+                .map_or(0, |selected| selected.saturating_sub(1));
+            self.table_state.select(Some(previous));
+        }
     }
 
     #[inline]
     pub fn select_first(&mut self) {
-        self.select(0);
+        if self.n_rows > 0 {
+            self.table_state.select(Some(0));
+        }
     }
 
     #[inline]
     pub fn select_last(&mut self) {
-        self.select(self.last_ind);
+        if self.n_rows > 0 {
+            self.table_state.select(Some(self.n_rows - 1));
+        }
     }
 
     pub fn draw(&mut self, frame: &mut Frame) -> Result<()> {
@@ -195,18 +212,26 @@ impl<'a> UiState<'a> {
         Ok(())
     }
 
-    pub fn reset_selected(&mut self) -> Result<&'static Exercise> {
-        self.app_state.set_pending(self.selected)?;
+    pub fn reset_selected(&mut self) -> Result<Option<&'static Exercise>> {
+        let Some(selected) = self.table_state.selected() else {
+            return Ok(None);
+        };
+
+        self.app_state.set_pending(selected)?;
         // TODO: Take care of filters!
-        let exercise = &self.app_state.exercises()[self.selected];
+        let exercise = &self.app_state.exercises()[selected];
         exercise.reset()?;
 
-        Ok(exercise)
+        Ok(Some(exercise))
     }
 
     #[inline]
     pub fn selected_to_current_exercise(&mut self) -> Result<()> {
+        let Some(selected) = self.table_state.selected() else {
+            return Ok(());
+        };
+
         // TODO: Take care of filters!
-        self.app_state.set_current_exercise_ind(self.selected)
+        self.app_state.set_current_exercise_ind(selected)
     }
 }

@@ -72,7 +72,9 @@ pub fn list(app_state: &mut AppState) -> Result<()> {
                 ui_state.message.push_str(message);
             }
             KeyCode::Char('r') => {
-                let exercise = ui_state.reset_selected()?;
+                let Some(exercise) = ui_state.reset_selected()? else {
+                    continue;
+                };
 
                 ui_state = ui_state.with_updated_rows();
                 ui_state
