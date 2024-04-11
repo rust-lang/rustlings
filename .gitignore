@@ -19,9 +19,5 @@ public/
 .idea
 *.iml
 
-# VS Code extension recommendations
-.vscode/*
-!.vscode/extensions.json
-
 # Ignore file for editors like Helix
 .ignore
