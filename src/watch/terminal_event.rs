@@ -1,4 +1,4 @@
-use crossterm::event::{self, Event, KeyCode, KeyEventKind};
+use crossterm::event::{self, Event, KeyCode, KeyEventKind, KeyModifiers};
 use std::sync::mpsc::Sender;
 
 use super::WatchEvent;
@@ -26,6 +26,10 @@ pub fn terminal_event_handler(tx: Sender<WatchEvent>) {
 
         match terminal_event {
             Event::Key(key) => {
+                if key.modifiers != KeyModifiers::NONE {
+                    continue;
+                }
+
                 match key.kind {
                     KeyEventKind::Release => continue,
                     KeyEventKind::Press | KeyEventKind::Repeat => (),
