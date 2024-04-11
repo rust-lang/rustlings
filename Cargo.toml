@@ -20,7 +20,7 @@ license = "MIT"
 edition = "2021"
 
 [workspace.dependencies]
-anyhow = "1.0.81"
+anyhow = "1.0.82"
 serde = { version = "1.0.197", features = ["derive"] }
 toml_edit = { version = "0.22.9", default-features = false, features = ["parse", "serde"] }
 

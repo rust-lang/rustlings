@@ -9,4 +9,4 @@ edition.workspace = true
 proc-macro = true
 
 [dependencies]
-quote = "1.0.35"
+quote = "1.0.36"
