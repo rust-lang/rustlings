@@ -36,47 +36,33 @@ publish = false
 }
 
 fn create_gitignore() -> io::Result<()> {
-    let gitignore = b"/target
-/.rustlings-state.json";
     OpenOptions::new()
         .create_new(true)
         .write(true)
         .open(".gitignore")?
-        .write_all(gitignore)
+        .write_all(GITIGNORE)
 }
 
 fn create_vscode_dir() -> Result<()> {
     create_dir(".vscode").context("Failed to create the directory `.vscode`")?;
-    let vs_code_extensions_json = br#"{"recommendations":["rust-lang.rust-analyzer"]}"#;
     OpenOptions::new()
         .create_new(true)
         .write(true)
         .open(".vscode/extensions.json")?
-        .write_all(vs_code_extensions_json)?;
+        .write_all(VS_CODE_EXTENSIONS_JSON)?;
 
     Ok(())
 }
 
 pub fn init(exercises: &[Exercise]) -> Result<()> {
     if Path::new("exercises").is_dir() && Path::new("Cargo.toml").is_file() {
-        bail!(
-            "A directory with the name `exercises` and a file with the name `Cargo.toml` already exist
-in the current directory. It looks like Rustlings was already initialized here.
-Run `rustlings` for instructions on getting started with the exercises.
-
-If you didn't already initialize Rustlings, please initialize it in another directory."
-        );
+        bail!(PROBABLY_IN_RUSTLINGS_DIR_ERR);
     }
 
     let rustlings_path = Path::new("rustlings");
     if let Err(e) = create_dir(rustlings_path) {
         if e.kind() == ErrorKind::AlreadyExists {
-            bail!(
-                "A directory with the name `rustlings` already exists in the current directory.
-You probably already initialized Rustlings.
-Run `cd rustlings`
-Then run `rustlings` again"
-            );
+            bail!(RUSTLINGS_DIR_ALREADY_EXISTS_ERR);
         }
         return Err(e.into());
     }
@@ -96,3 +82,21 @@ Then run `rustlings` again"
 
     Ok(())
 }
+
+const GITIGNORE: &[u8] = b"/target
+/.rustlings-state.json";
+
+const VS_CODE_EXTENSIONS_JSON: &[u8] = br#"{"recommendations":["rust-lang.rust-analyzer"]}"#;
+
+const PROBABLY_IN_RUSTLINGS_DIR_ERR: &str =
+    "A directory with the name `exercises` and a file with the name `Cargo.toml` already exist
+in the current directory. It looks like Rustlings was already initialized here.
+Run `rustlings` for instructions on getting started with the exercises.
+
+If you didn't already initialize Rustlings, please initialize it in another directory.";
+
+const RUSTLINGS_DIR_ALREADY_EXISTS_ERR: &str =
+    "A directory with the name `rustlings` already exists in the current directory.
+You probably already initialized Rustlings.
+Run `cd rustlings`
+Then run `rustlings` again";

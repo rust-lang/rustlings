@@ -24,6 +24,10 @@ pub enum Mode {
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct InfoFile {
+    // TODO
+    pub welcome_message: Option<String>,
+    // TODO
+    pub final_message: Option<String>,
     pub exercises: Vec<Exercise>,
 }
 
@@ -39,10 +43,7 @@ impl InfoFile {
         .context("Failed to parse `info.toml`")?;
 
         if slf.exercises.is_empty() {
-            panic!(
-                "There are no exercises yet!
-If you are developing third-party exercises, add at least one exercise before testing."
-            );
+            panic!("{NO_EXERCISES_ERR}");
         }
 
         Ok(slf)
@@ -119,3 +120,6 @@ impl Display for Exercise {
         self.path.fmt(f)
     }
 }
+
+const NO_EXERCISES_ERR: &str = "There are no exercises yet!
+If you are developing third-party exercises, add at least one exercise before testing.";

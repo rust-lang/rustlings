@@ -89,10 +89,12 @@ pub fn watch(app_state: &mut AppState) -> Result<WatchExit> {
         }
     }
 
-    watch_state.into_writer().write_all(b"
-We hope you're enjoying learning Rust!
-If you want to continue working on the exercises at a later point, you can simply run `rustlings` again.
-")?;
+    watch_state.into_writer().write_all(QUIT_MSG)?;
 
     Ok(WatchExit::Shutdown)
 }
+
+const QUIT_MSG: &[u8] = b"
+We hope you're enjoying learning Rust!
+If you want to continue working on the exercises at a later point, you can simply run `rustlings` again.
+";

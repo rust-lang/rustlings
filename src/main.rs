@@ -3,7 +3,6 @@ use clap::{Parser, Subcommand};
 use std::{path::Path, process::exit};
 
 mod app_state;
-mod consts;
 mod embedded;
 mod exercise;
 mod init;
@@ -14,7 +13,6 @@ mod watch;
 
 use self::{
     app_state::AppState,
-    consts::WELCOME,
     exercise::InfoFile,
     init::init,
     list::list,
@@ -54,11 +52,7 @@ enum Subcommands {
 fn main() -> Result<()> {
     let args = Args::parse();
 
-    which::which("cargo").context(
-        "Failed to find `cargo`.
-Did you already install Rust?
-Try running `cargo --version` to diagnose the problem.",
-    )?;
+    which::which("cargo").context(CARGO_NOT_FOUND_ERR)?;
 
     let mut info_file = InfoFile::parse()?;
     info_file.exercises.shrink_to_fit();
@@ -66,20 +60,11 @@ Try running `cargo --version` to diagnose the problem.",
 
     if matches!(args.command, Some(Subcommands::Init)) {
         init(&exercises).context("Initialization failed")?;
-        println!(
-            "\nDone initialization!\n
-Run `cd rustlings` to go into the generated directory.
-Then run `rustlings` for further instructions on getting started."
-        );
+
+        println!("{POST_INIT_MSG}");
         return Ok(());
     } else if !Path::new("exercises").is_dir() {
-        println!(
-            "
-{WELCOME}
-
-The `exercises` directory wasn't found in the current directory.
-If you are just starting with Rustlings, run the command `rustlings init` to initialize it."
-        );
+        println!("{PRE_INIT_MSG}");
         exit(1);
     }
 
@@ -118,3 +103,45 @@ If you are just starting with Rustlings, run the command `rustlings init` to ini
 
     Ok(())
 }
+
+const CARGO_NOT_FOUND_ERR: &str = "Failed to find `cargo`.
+Did you already install Rust?
+Try running `cargo --version` to diagnose the problem.";
+
+const PRE_INIT_MSG: &str = r"
+       welcome to...
+                 _   _ _
+  _ __ _   _ ___| |_| (_)_ __   __ _ ___
+ | '__| | | / __| __| | | '_ \ / _` / __|
+ | |  | |_| \__ \ |_| | | | | | (_| \__ \
+ |_|   \__,_|___/\__|_|_|_| |_|\__, |___/
+                               |___/
+
+The `exercises` directory wasn't found in the current directory.
+If you are just starting with Rustlings, run the command `rustlings init` to initialize it.";
+
+const POST_INIT_MSG: &str = "
+Done initialization!
+
+Run `cd rustlings` to go into the generated directory.
+Then run `rustlings` for further instructions on getting started.";
+
+const FENISH_LINE: &str = "+----------------------------------------------------+
+|          You made it to the Fe-nish line!          |
++--------------------------  ------------------------+
+                           \\/\x1b[31m
+     ▒▒          ▒▒▒▒▒▒▒▒      ▒▒▒▒▒▒▒▒          ▒▒
+   ▒▒▒▒  ▒▒    ▒▒        ▒▒  ▒▒        ▒▒    ▒▒  ▒▒▒▒
+   ▒▒▒▒  ▒▒  ▒▒            ▒▒            ▒▒  ▒▒  ▒▒▒▒
+ ░░▒▒▒▒░░▒▒  ▒▒            ▒▒            ▒▒  ▒▒░░▒▒▒▒
+   ▓▓▓▓▓▓▓▓  ▓▓      ▓▓██  ▓▓  ▓▓██      ▓▓  ▓▓▓▓▓▓▓▓
+     ▒▒▒▒    ▒▒      ████  ▒▒  ████      ▒▒░░  ▒▒▒▒
+       ▒▒  ▒▒▒▒▒▒        ▒▒▒▒▒▒        ▒▒▒▒▒▒  ▒▒
+         ▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▒▒▒▒▒▒▒▒▓▓▓▓▓▓▒▒▒▒▒▒▒▒
+           ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+             ▒▒▒▒▒▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒▒▒▒▒▒
+           ▒▒  ▒▒▒▒▒▒▒▒▒▒██████▒▒▒▒▒▒▒▒▒▒  ▒▒
+         ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒
+       ▒▒    ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒    ▒▒
+       ▒▒  ▒▒    ▒▒                  ▒▒    ▒▒  ▒▒
+           ▒▒  ▒▒                      ▒▒  ▒▒\x1b[0m";
