@@ -47,7 +47,6 @@ which = "6.0.1"
 
 [dev-dependencies]
 assert_cmd = "2.0.14"
-glob = "0.3.0"
 predicates = "3.1.0"
 
 [profile.release]
