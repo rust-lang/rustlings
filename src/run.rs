@@ -21,7 +21,7 @@ pub fn run(app_state: &mut AppState) -> Result<()> {
     }
 
     stdout.write_fmt(format_args!(
-        "{}{}",
+        "{}{}\n",
         "✓ Successfully ran ".green(),
         exercise.path.to_string_lossy().green(),
     ))?;
