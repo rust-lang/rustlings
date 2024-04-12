@@ -15,6 +15,8 @@ pub fn run(app_state: &mut AppState) -> Result<()> {
     stdout.flush()?;
 
     if !output.status.success() {
+        app_state.set_pending(app_state.current_exercise_ind())?;
+
         bail!("Ran {exercise} with errors");
     }
 
