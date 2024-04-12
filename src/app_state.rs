@@ -51,24 +51,29 @@ impl StateFile {
     }
 }
 
-pub struct AppState {
-    state_file: StateFile,
-    exercises: &'static [Exercise],
-    n_done: u16,
-    current_exercise: &'static Exercise,
-}
-
 #[must_use]
 pub enum ExercisesProgress {
     AllDone,
     Pending,
 }
 
+pub struct AppState {
+    state_file: StateFile,
+    exercises: &'static [Exercise],
+    n_done: u16,
+    current_exercise: &'static Exercise,
+    final_message: &'static str,
+}
+
 impl AppState {
-    pub fn new(exercises: Vec<Exercise>) -> Self {
-        // Leaking for sending the exercises to the debounce event handler.
-        // Leaking is not a problem since the exercises' slice is used until the end of the program.
+    pub fn new(mut exercises: Vec<Exercise>, mut final_message: String) -> Self {
+        // Leaking especially for sending the exercises to the debounce event handler.
+        // Leaking is not a problem because the `AppState` instance lives until
+        // the end of the program.
+        exercises.shrink_to_fit();
         let exercises = exercises.leak();
+        final_message.shrink_to_fit();
+        let final_message = final_message.leak();
 
         let state_file = StateFile::read_or_default(exercises);
         let n_done = state_file
@@ -82,6 +87,7 @@ impl AppState {
             exercises,
             n_done,
             current_exercise,
+            final_message,
         }
     }
 
@@ -210,7 +216,8 @@ impl AppState {
 
             writer.execute(Clear(ClearType::All))?;
             writer.write_all(FENISH_LINE.as_bytes())?;
-            // TODO: Show final message.
+            writer.write_all(self.final_message.as_bytes())?;
+            writer.write_all(b"\n")?;
 
             return Ok(ExercisesProgress::AllDone);
         };

@@ -20,7 +20,8 @@ started, here's a couple of notes about how Rustlings operates:
    and sometimes, other learners do too so you can help each other out!
 
 Got all that? Great! To get started, run `rustlings watch` in order to get the first exercise.
-Make sure to have your editor open in the `rustlings` directory!"""
+Make sure to have your editor open in the `rustlings` directory!
+"""
 
 final_message = """We hope you enjoyed learning about the various aspects of Rust!
 If you noticed any issues, please don't hesitate to report them to our repo.

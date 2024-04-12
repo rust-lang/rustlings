@@ -26,7 +26,6 @@ pub enum Mode {
 pub struct InfoFile {
     // TODO
     pub welcome_message: Option<String>,
-    // TODO
     pub final_message: Option<String>,
     pub exercises: Vec<Exercise>,
 }

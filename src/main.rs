@@ -68,7 +68,7 @@ fn main() -> Result<()> {
         exit(1);
     }
 
-    let mut app_state = AppState::new(exercises);
+    let mut app_state = AppState::new(exercises, info_file.final_message.unwrap_or_default());
 
     match args.command {
         None => loop {
@@ -144,4 +144,6 @@ const FENISH_LINE: &str = "+----------------------------------------------------
          ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒
        ▒▒    ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒    ▒▒
        ▒▒  ▒▒    ▒▒                  ▒▒    ▒▒  ▒▒
-           ▒▒  ▒▒                      ▒▒  ▒▒\x1b[0m";
+           ▒▒  ▒▒                      ▒▒  ▒▒\x1b[0m
+
+";
