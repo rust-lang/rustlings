@@ -117,7 +117,7 @@ impl Exercise {
 
 impl Display for Exercise {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
-        self.path.fmt(f)
+        Display::fmt(&self.path.display(), f)
     }
 }
 
