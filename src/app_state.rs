@@ -222,6 +222,5 @@ impl AppState {
 const RERUNNING_ALL_EXERCISES_MSG: &[u8] = b"
 All exercises seem to be done.
 Recompiling and running all exercises to make sure that all of them are actually done.
-This might take some minutes.
 
 ";
