@@ -1,6 +1,6 @@
 use anyhow::Result;
 use crossterm::{
-    event::{self, Event, KeyCode, KeyEventKind, KeyModifiers},
+    event::{self, Event, KeyCode, KeyEventKind},
     terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
     ExecutableCommand,
 };
@@ -28,16 +28,10 @@ pub fn list(app_state: &mut AppState) -> Result<()> {
 
         let key = loop {
             match event::read()? {
-                Event::Key(key) => {
-                    if key.modifiers != KeyModifiers::NONE {
-                        continue;
-                    }
-
-                    match key.kind {
-                        KeyEventKind::Press | KeyEventKind::Repeat => break key,
-                        KeyEventKind::Release => (),
-                    }
-                }
+                Event::Key(key) => match key.kind {
+                    KeyEventKind::Press | KeyEventKind::Repeat => break key,
+                    KeyEventKind::Release => (),
+                },
                 // Redraw
                 Event::Resize(_, _) => continue 'outer,
                 // Ignore
