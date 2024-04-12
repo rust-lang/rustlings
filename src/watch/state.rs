@@ -13,8 +13,8 @@ pub struct WatchState<'a> {
     app_state: &'a mut AppState,
     stdout: Option<Vec<u8>>,
     stderr: Option<Vec<u8>>,
-    message: Option<String>,
-    hint_displayed: bool,
+    show_hint: bool,
+    show_done: bool,
 }
 
 impl<'a> WatchState<'a> {
@@ -26,8 +26,8 @@ impl<'a> WatchState<'a> {
             app_state,
             stdout: None,
             stderr: None,
-            message: None,
-            hint_displayed: false,
+            show_hint: false,
+            show_done: false,
         }
     }
 
@@ -36,29 +36,32 @@ impl<'a> WatchState<'a> {
         self.writer
     }
 
-    pub fn run_current_exercise(&mut self) -> Result<bool> {
+    pub fn run_current_exercise(&mut self) -> Result<()> {
+        self.show_hint = false;
+
         let output = self.app_state.current_exercise().run()?;
         self.stdout = Some(output.stdout);
 
-        if !output.status.success() {
+        if output.status.success() {
+            self.stderr = None;
+            self.show_done = true;
+        } else {
             self.stderr = Some(output.stderr);
-            return Ok(false);
+            self.show_done = false;
         }
 
-        self.stderr = None;
-
-        Ok(true)
+        self.render()
     }
 
-    pub fn run_exercise_with_ind(&mut self, exercise_ind: usize) -> Result<bool> {
+    pub fn run_exercise_with_ind(&mut self, exercise_ind: usize) -> Result<()> {
         self.app_state.set_current_exercise_ind(exercise_ind)?;
         self.run_current_exercise()
     }
 
     fn show_prompt(&mut self) -> io::Result<()> {
-        self.writer.write_all(b"\n\n")?;
+        self.writer.write_all(b"\n")?;
 
-        if !self.hint_displayed {
+        if !self.show_hint {
             self.writer.write_fmt(format_args!("{}int/", 'h'.bold()))?;
         }
 
@@ -84,18 +87,24 @@ impl<'a> WatchState<'a> {
             self.writer.write_all(b"\n")?;
         }
 
-        if let Some(message) = &self.message {
-            self.writer.write_all(message.as_bytes())?;
-        }
-
         self.writer.write_all(b"\n")?;
 
-        if self.hint_displayed {
+        if self.show_hint {
             self.writer
-                .write_fmt(format_args!("\n{}\n", "Hint".bold().cyan().underlined()))?;
+                .write_fmt(format_args!("{}\n", "Hint".bold().cyan().underlined()))?;
             self.writer
                 .write_all(self.app_state.current_exercise().hint.as_bytes())?;
             self.writer.write_all(b"\n\n")?;
+        }
+
+        if self.show_done {
+            self.writer.write_fmt(format_args!(
+                "{}\n\n",
+                "Exercise done ✓
+When you are done experimenting, enter `n` or `next` to go to the next exercise 🦀"
+                    .bold()
+                    .green(),
+            ))?;
         }
 
         let line_width = size()?.0;
@@ -108,7 +117,7 @@ impl<'a> WatchState<'a> {
 
         self.writer.write_all(b"Current exercise: ")?;
         self.writer.write_fmt(format_args!(
-            "{}",
+            "{}\n",
             self.app_state
                 .current_exercise()
                 .path
@@ -122,7 +131,7 @@ impl<'a> WatchState<'a> {
     }
 
     pub fn show_hint(&mut self) -> Result<()> {
-        self.hint_displayed = true;
+        self.show_hint = true;
         self.render()
     }
 
@@ -133,6 +142,7 @@ impl<'a> WatchState<'a> {
             self.writer
                 .write_all(b" (confusing input can occur after resizing the terminal)")?;
         }
+        self.writer.write_all(b"\n")?;
         self.show_prompt()
     }
 }

@@ -54,9 +54,7 @@ pub fn watch(app_state: &mut AppState) -> Result<WatchExit> {
 
     let mut watch_state = WatchState::new(app_state);
 
-    // TODO: bool
     watch_state.run_current_exercise()?;
-    watch_state.render()?;
 
     thread::spawn(move || terminal_event_handler(tx));
 
@@ -76,9 +74,7 @@ pub fn watch(app_state: &mut AppState) -> Result<WatchExit> {
                 watch_state.handle_invalid_cmd(&cmd)?;
             }
             WatchEvent::FileChange { exercise_ind } => {
-                // TODO: bool
                 watch_state.run_exercise_with_ind(exercise_ind)?;
-                watch_state.render()?;
             }
             WatchEvent::NotifyErr(e) => {
                 return Err(Error::from(e).context("Exercise file watcher failed"))
