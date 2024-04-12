@@ -190,6 +190,8 @@ impl AppState {
                 writer.flush()?;
 
                 if !exercise.run()?.status.success() {
+                    writer.write_fmt(format_args!("{}\n\n", "FAILED".red()))?;
+
                     self.state_file.current_exercise_ind = exercise_ind;
                     self.current_exercise = exercise;
 
