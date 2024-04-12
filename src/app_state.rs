@@ -1,8 +1,16 @@
 use anyhow::{bail, Context, Result};
+use crossterm::{
+    style::Stylize,
+    terminal::{Clear, ClearType},
+    ExecutableCommand,
+};
 use serde::{Deserialize, Serialize};
-use std::fs;
+use std::{
+    fs,
+    io::{StdoutLock, Write},
+};
 
-use crate::exercise::Exercise;
+use crate::{exercise::Exercise, FENISH_LINE};
 
 const BAD_INDEX_ERR: &str = "The current exercise index is higher than the number of exercises";
 
@@ -143,7 +151,7 @@ impl AppState {
         Ok(())
     }
 
-    fn next_exercise_ind(&self) -> Option<usize> {
+    fn next_pending_exercise_ind(&self) -> Option<usize> {
         let current_ind = self.state_file.current_exercise_ind;
 
         if current_ind == self.state_file.progress.len() - 1 {
@@ -167,14 +175,41 @@ impl AppState {
         }
     }
 
-    pub fn done_current_exercise(&mut self) -> Result<ExercisesProgress> {
+    pub fn done_current_exercise(&mut self, writer: &mut StdoutLock) -> Result<ExercisesProgress> {
         let done = &mut self.state_file.progress[self.state_file.current_exercise_ind];
         if !*done {
             *done = true;
             self.n_done += 1;
         }
 
-        let Some(ind) = self.next_exercise_ind() else {
+        let Some(ind) = self.next_pending_exercise_ind() else {
+            writer.write_all(RERUNNING_ALL_EXERCISES_MSG)?;
+
+            for (exercise_ind, exercise) in self.exercises().iter().enumerate() {
+                writer.write_fmt(format_args!("Running {exercise} ... "))?;
+                writer.flush()?;
+
+                if !exercise.run()?.status.success() {
+                    self.state_file.current_exercise_ind = exercise_ind;
+                    self.current_exercise = exercise;
+
+                    // No check if the exercise is done before setting it to pending
+                    // because no pending exercise was found.
+                    self.state_file.progress[exercise_ind] = false;
+                    self.n_done -= 1;
+
+                    self.state_file.write()?;
+
+                    return Ok(ExercisesProgress::Pending);
+                }
+
+                writer.write_fmt(format_args!("{}\n", "ok".green()))?;
+            }
+
+            writer.execute(Clear(ClearType::All))?;
+            writer.write_all(FENISH_LINE.as_bytes())?;
+            // TODO: Show final message.
+
             return Ok(ExercisesProgress::AllDone);
         };
 
@@ -183,3 +218,10 @@ impl AppState {
         Ok(ExercisesProgress::Pending)
     }
 }
+
+const RERUNNING_ALL_EXERCISES_MSG: &[u8] = b"
+All exercises seem to be done.
+Recompiling and running all exercises to make sure that all of them are actually done.
+This might take some minutes.
+
+";

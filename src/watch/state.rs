@@ -4,7 +4,10 @@ use crossterm::{
     terminal::{size, Clear, ClearType},
     ExecutableCommand,
 };
-use std::io::{self, StdoutLock, Write};
+use std::{
+    io::{self, StdoutLock, Write},
+    process::Output,
+};
 
 use crate::{
     app_state::{AppState, ExercisesProgress},
@@ -49,6 +52,9 @@ impl<'a> WatchState<'a> {
             self.stderr = None;
             self.show_done = true;
         } else {
+            self.app_state
+                .set_pending(self.app_state.current_exercise_ind())?;
+
             self.stderr = Some(output.stderr);
             self.show_done = false;
         }
@@ -61,18 +67,15 @@ impl<'a> WatchState<'a> {
         self.run_current_exercise()
     }
 
-    pub fn next_exercise(&mut self) -> Result<()> {
+    pub fn next_exercise(&mut self) -> Result<ExercisesProgress> {
         if !self.show_done {
             self.writer
                 .write_all(b"The current exercise isn't done yet\n")?;
             self.show_prompt()?;
-            return Ok(());
+            return Ok(ExercisesProgress::Pending);
         }
 
-        match self.app_state.done_current_exercise()? {
-            ExercisesProgress::AllDone => todo!(),
-            ExercisesProgress::Pending => self.run_current_exercise(),
-        }
+        self.app_state.done_current_exercise(&mut self.writer)
     }
 
     fn show_prompt(&mut self) -> io::Result<()> {
@@ -93,7 +96,7 @@ impl<'a> WatchState<'a> {
     }
 
     pub fn render(&mut self) -> Result<()> {
-        // Prevent having the first line shifted after clearing because of the prompt.
+        // Prevent having the first line shifted.
         self.writer.write_all(b"\n")?;
 
         self.writer.execute(Clear(ClearType::All))?;
@@ -111,11 +114,11 @@ impl<'a> WatchState<'a> {
         self.writer.write_all(b"\n")?;
 
         if self.show_hint {
-            self.writer
-                .write_fmt(format_args!("{}\n", "Hint".bold().cyan().underlined()))?;
-            self.writer
-                .write_all(self.app_state.current_exercise().hint.as_bytes())?;
-            self.writer.write_all(b"\n\n")?;
+            self.writer.write_fmt(format_args!(
+                "{}\n{}\n\n",
+                "Hint".bold().cyan().underlined(),
+                self.app_state.current_exercise().hint,
+            ))?;
         }
 
         if self.show_done {
@@ -134,11 +137,8 @@ When you are done experimenting, enter `n` or `next` to go to the next exercise 
             self.app_state.exercises().len() as u16,
             line_width,
         )?;
-        self.writer.write_all(progress_bar.as_bytes())?;
-
-        self.writer.write_all(b"Current exercise: ")?;
         self.writer.write_fmt(format_args!(
-            "{}\n",
+            "{progress_bar}Current exercise: {}\n",
             self.app_state
                 .current_exercise()
                 .path

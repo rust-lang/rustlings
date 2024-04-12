@@ -15,7 +15,7 @@ mod debounce_event;
 mod state;
 mod terminal_event;
 
-use crate::app_state::AppState;
+use crate::app_state::{AppState, ExercisesProgress};
 
 use self::{
     debounce_event::DebounceEventHandler,
@@ -32,6 +32,7 @@ enum WatchEvent {
 }
 
 /// Returned by the watch mode to indicate what to do afterwards.
+#[must_use]
 pub enum WatchExit {
     /// Exit the program.
     Shutdown,
@@ -60,16 +61,20 @@ pub fn watch(app_state: &mut AppState) -> Result<WatchExit> {
 
     while let Ok(event) = rx.recv() {
         match event {
-            WatchEvent::Input(InputEvent::Next) => {
-                watch_state.next_exercise()?;
-            }
+            WatchEvent::Input(InputEvent::Next) => match watch_state.next_exercise()? {
+                ExercisesProgress::AllDone => break,
+                ExercisesProgress::Pending => watch_state.run_current_exercise()?,
+            },
             WatchEvent::Input(InputEvent::Hint) => {
                 watch_state.show_hint()?;
             }
             WatchEvent::Input(InputEvent::List) => {
                 return Ok(WatchExit::List);
             }
-            WatchEvent::Input(InputEvent::Quit) => break,
+            WatchEvent::Input(InputEvent::Quit) => {
+                watch_state.into_writer().write_all(QUIT_MSG)?;
+                break;
+            }
             WatchEvent::Input(InputEvent::Unrecognized(cmd)) => {
                 watch_state.handle_invalid_cmd(&cmd)?;
             }
@@ -87,8 +92,6 @@ pub fn watch(app_state: &mut AppState) -> Result<WatchExit> {
             }
         }
     }
-
-    watch_state.into_writer().write_all(QUIT_MSG)?;
 
     Ok(WatchExit::Shutdown)
 }
