@@ -4,6 +4,7 @@ use std::sync::mpsc::Sender;
 use super::WatchEvent;
 
 pub enum InputEvent {
+    Next,
     Hint,
     List,
     Quit,
@@ -38,6 +39,7 @@ pub fn terminal_event_handler(tx: Sender<WatchEvent>) {
                 match key.code {
                     KeyCode::Enter => {
                         let input_event = match input.trim() {
+                            "n" | "next" => InputEvent::Next,
                             "h" | "hint" => InputEvent::Hint,
                             "l" | "list" => break InputEvent::List,
                             "q" | "quit" => break InputEvent::Quit,

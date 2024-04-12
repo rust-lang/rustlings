@@ -6,7 +6,10 @@ use crossterm::{
 };
 use std::io::{self, StdoutLock, Write};
 
-use crate::{app_state::AppState, progress_bar::progress_bar};
+use crate::{
+    app_state::{AppState, ExercisesProgress},
+    progress_bar::progress_bar,
+};
 
 pub struct WatchState<'a> {
     writer: StdoutLock<'a>,
@@ -58,8 +61,26 @@ impl<'a> WatchState<'a> {
         self.run_current_exercise()
     }
 
+    pub fn next_exercise(&mut self) -> Result<()> {
+        if !self.show_done {
+            self.writer
+                .write_all(b"The current exercise isn't done yet\n")?;
+            self.show_prompt()?;
+            return Ok(());
+        }
+
+        match self.app_state.done_current_exercise()? {
+            ExercisesProgress::AllDone => todo!(),
+            ExercisesProgress::Pending => self.run_current_exercise(),
+        }
+    }
+
     fn show_prompt(&mut self) -> io::Result<()> {
         self.writer.write_all(b"\n")?;
+
+        if self.show_done {
+            self.writer.write_fmt(format_args!("{}ext/", 'n'.bold()))?;
+        }
 
         if !self.show_hint {
             self.writer.write_fmt(format_args!("{}int/", 'h'.bold()))?;

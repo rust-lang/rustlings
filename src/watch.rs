@@ -26,9 +26,9 @@ use self::{
 enum WatchEvent {
     Input(InputEvent),
     FileChange { exercise_ind: usize },
+    TerminalResize,
     NotifyErr(notify::Error),
     TerminalEventErr(io::Error),
-    TerminalResize,
 }
 
 /// Returned by the watch mode to indicate what to do afterwards.
@@ -60,14 +60,14 @@ pub fn watch(app_state: &mut AppState) -> Result<WatchExit> {
 
     while let Ok(event) = rx.recv() {
         match event {
+            WatchEvent::Input(InputEvent::Next) => {
+                watch_state.next_exercise()?;
+            }
             WatchEvent::Input(InputEvent::Hint) => {
                 watch_state.show_hint()?;
             }
             WatchEvent::Input(InputEvent::List) => {
                 return Ok(WatchExit::List);
-            }
-            WatchEvent::TerminalResize => {
-                watch_state.render()?;
             }
             WatchEvent::Input(InputEvent::Quit) => break,
             WatchEvent::Input(InputEvent::Unrecognized(cmd)) => {
@@ -75,6 +75,9 @@ pub fn watch(app_state: &mut AppState) -> Result<WatchExit> {
             }
             WatchEvent::FileChange { exercise_ind } => {
                 watch_state.run_exercise_with_ind(exercise_ind)?;
+            }
+            WatchEvent::TerminalResize => {
+                watch_state.render()?;
             }
             WatchEvent::NotifyErr(e) => {
                 return Err(Error::from(e).context("Exercise file watcher failed"))
