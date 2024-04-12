@@ -84,7 +84,8 @@ pub fn init(exercises: &[Exercise]) -> Result<()> {
 }
 
 const GITIGNORE: &[u8] = b"/target
-/.rustlings-state.json";
+/.rustlings-state.json
+";
 
 const VS_CODE_EXTENSIONS_JSON: &[u8] = br#"{"recommendations":["rust-lang.rust-analyzer"]}"#;
 
