@@ -4,10 +4,7 @@ use crossterm::{
     terminal::{size, Clear, ClearType},
     ExecutableCommand,
 };
-use std::{
-    io::{self, StdoutLock, Write},
-    process::Output,
-};
+use std::io::{self, StdoutLock, Write};
 
 use crate::{
     app_state::{AppState, ExercisesProgress},
