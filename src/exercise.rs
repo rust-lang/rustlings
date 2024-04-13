@@ -63,17 +63,6 @@ pub struct Exercise {
     pub hint: String,
 }
 
-// The context information of a pending exercise.
-#[derive(PartialEq, Eq, Debug)]
-pub struct ContextLine {
-    // The source code line
-    pub line: String,
-    // The line number
-    pub number: usize,
-    // Whether this is important and should be highlighted
-    pub important: bool,
-}
-
 impl Exercise {
     fn cargo_cmd(&self, command: &str, args: &[&str]) -> Result<Output> {
         let mut cmd = Command::new("cargo");
