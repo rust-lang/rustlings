@@ -6,8 +6,9 @@ use ratatui::{
     widgets::{Block, Borders, HighlightSpacing, Paragraph, Row, Table, TableState},
     Frame,
 };
+use std::fmt::Write;
 
-use crate::{app_state::AppState, exercise::Exercise, progress_bar::progress_bar_ratatui};
+use crate::{app_state::AppState, progress_bar::progress_bar_ratatui};
 
 #[derive(Copy, Clone, PartialEq, Eq)]
 pub enum Filter {
@@ -34,10 +35,9 @@ impl<'a> UiState<'a> {
             .app_state
             .exercises()
             .iter()
-            .zip(self.app_state.progress().iter().copied())
             .enumerate()
-            .filter_map(|(ind, (exercise, done))| {
-                let exercise_state = if done {
+            .filter_map(|(ind, exercise)| {
+                let exercise_state = if exercise.done {
                     if self.filter == Filter::Pending {
                         return None;
                     }
@@ -62,7 +62,7 @@ impl<'a> UiState<'a> {
                 Some(Row::new([
                     next,
                     exercise_state,
-                    Span::raw(&exercise.name),
+                    Span::raw(exercise.name),
                     Span::raw(exercise.path.to_string_lossy()),
                 ]))
             });
@@ -212,29 +212,30 @@ impl<'a> UiState<'a> {
         Ok(())
     }
 
-    pub fn reset_selected(&mut self) -> Result<Option<&'static Exercise>> {
+    pub fn with_reset_selected(mut self) -> Result<Self> {
         let Some(selected) = self.table_state.selected() else {
-            return Ok(None);
+            return Ok(self);
         };
 
         let (ind, exercise) = self
             .app_state
             .exercises()
             .iter()
-            .zip(self.app_state.progress())
             .enumerate()
-            .filter_map(|(ind, (exercise, done))| match self.filter {
-                Filter::Done => done.then_some((ind, exercise)),
-                Filter::Pending => (!done).then_some((ind, exercise)),
+            .filter_map(|(ind, exercise)| match self.filter {
+                Filter::Done => exercise.done.then_some((ind, exercise)),
+                Filter::Pending => (!exercise.done).then_some((ind, exercise)),
                 Filter::None => Some((ind, exercise)),
             })
             .nth(selected)
             .context("Invalid selection index")?;
 
-        self.app_state.set_pending(ind)?;
         exercise.reset()?;
+        self.message
+            .write_fmt(format_args!("The exercise {exercise} has been reset!"))?;
+        self.app_state.set_pending(ind)?;
 
-        Ok(Some(exercise))
+        Ok(self.with_updated_rows())
     }
 
     pub fn selected_to_current_exercise(&mut self) -> Result<()> {
@@ -244,12 +245,12 @@ impl<'a> UiState<'a> {
 
         let ind = self
             .app_state
-            .progress()
+            .exercises()
             .iter()
             .enumerate()
-            .filter_map(|(ind, done)| match self.filter {
-                Filter::Done => done.then_some(ind),
-                Filter::Pending => (!done).then_some(ind),
+            .filter_map(|(ind, exercise)| match self.filter {
+                Filter::Done => exercise.done.then_some(ind),
+                Filter::Pending => (!exercise.done).then_some(ind),
                 Filter::None => Some(ind),
             })
             .nth(selected)

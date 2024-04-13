@@ -6,17 +6,21 @@ use std::{
     path::Path,
 };
 
-use crate::{embedded::EMBEDDED_FILES, exercise::Exercise};
+use crate::{embedded::EMBEDDED_FILES, info_file::ExerciseInfo};
 
-fn create_cargo_toml(exercises: &[Exercise]) -> io::Result<()> {
+fn create_cargo_toml(exercise_infos: &[ExerciseInfo]) -> io::Result<()> {
     let mut cargo_toml = Vec::with_capacity(1 << 13);
     cargo_toml.extend_from_slice(b"bin = [\n");
-    for exercise in exercises {
+    for exercise_info in exercise_infos {
         cargo_toml.extend_from_slice(b"  { name = \"");
-        cargo_toml.extend_from_slice(exercise.name.as_bytes());
-        cargo_toml.extend_from_slice(b"\", path = \"");
-        cargo_toml.extend_from_slice(exercise.path.to_str().unwrap().as_bytes());
-        cargo_toml.extend_from_slice(b"\" },\n");
+        cargo_toml.extend_from_slice(exercise_info.name.as_bytes());
+        cargo_toml.extend_from_slice(b"\", path = \"exercises/");
+        if let Some(dir) = &exercise_info.dir {
+            cargo_toml.extend_from_slice(dir.as_bytes());
+            cargo_toml.extend_from_slice(b"/");
+        }
+        cargo_toml.extend_from_slice(exercise_info.name.as_bytes());
+        cargo_toml.extend_from_slice(b".rs\" },\n");
     }
 
     cargo_toml.extend_from_slice(
@@ -54,7 +58,7 @@ fn create_vscode_dir() -> Result<()> {
     Ok(())
 }
 
-pub fn init(exercises: &[Exercise]) -> Result<()> {
+pub fn init(exercise_infos: &[ExerciseInfo]) -> Result<()> {
     if Path::new("exercises").is_dir() && Path::new("Cargo.toml").is_file() {
         bail!(PROBABLY_IN_RUSTLINGS_DIR_ERR);
     }
@@ -74,7 +78,8 @@ pub fn init(exercises: &[Exercise]) -> Result<()> {
         .init_exercises_dir()
         .context("Failed to initialize the `rustlings/exercises` directory")?;
 
-    create_cargo_toml(exercises).context("Failed to create the file `rustlings/Cargo.toml`")?;
+    create_cargo_toml(exercise_infos)
+        .context("Failed to create the file `rustlings/Cargo.toml`")?;
 
     create_gitignore().context("Failed to create the file `rustlings/.gitignore`")?;
 

@@ -5,6 +5,7 @@ use std::{path::Path, process::exit};
 mod app_state;
 mod embedded;
 mod exercise;
+mod info_file;
 mod init;
 mod list;
 mod progress_bar;
@@ -13,7 +14,7 @@ mod watch;
 
 use self::{
     app_state::AppState,
-    exercise::InfoFile,
+    info_file::InfoFile,
     init::init,
     list::list,
     run::run,
@@ -54,12 +55,10 @@ fn main() -> Result<()> {
 
     which::which("cargo").context(CARGO_NOT_FOUND_ERR)?;
 
-    let mut info_file = InfoFile::parse()?;
-    info_file.exercises.shrink_to_fit();
-    let exercises = info_file.exercises;
+    let info_file = InfoFile::parse()?;
 
     if matches!(args.command, Some(Subcommands::Init)) {
-        init(&exercises).context("Initialization failed")?;
+        init(&info_file.exercises).context("Initialization failed")?;
 
         println!("{POST_INIT_MSG}");
         return Ok(());
@@ -68,18 +67,29 @@ fn main() -> Result<()> {
         exit(1);
     }
 
-    let mut app_state = AppState::new(exercises, info_file.final_message.unwrap_or_default());
+    let mut app_state = AppState::new(info_file);
 
     match args.command {
-        None => loop {
-            match watch(&mut app_state)? {
-                WatchExit::Shutdown => break,
-                // It is much easier to exit the watch mode, launch the list mode and then restart
-                // the watch mode instead of trying to pause the watch threads and correct the
-                // watch state.
-                WatchExit::List => list(&mut app_state)?,
+        None => {
+            // For the the notify event handler thread.
+            // Leaking is not a problem because the slice lives until the end of the program.
+            let exercise_paths = app_state
+                .exercises()
+                .iter()
+                .map(|exercise| exercise.path)
+                .collect::<Vec<_>>()
+                .leak();
+
+            loop {
+                match watch(&mut app_state, exercise_paths)? {
+                    WatchExit::Shutdown => break,
+                    // It is much easier to exit the watch mode, launch the list mode and then restart
+                    // the watch mode instead of trying to pause the watch threads and correct the
+                    // watch state.
+                    WatchExit::List => list(&mut app_state)?,
+                }
             }
-        },
+        }
         // `Init` is handled above.
         Some(Subcommands::Init) => (),
         Some(Subcommands::Run { name }) => {
@@ -90,10 +100,10 @@ fn main() -> Result<()> {
         }
         Some(Subcommands::Reset { name }) => {
             app_state.set_current_exercise_by_name(&name)?;
-            app_state.set_pending(app_state.current_exercise_ind())?;
             let exercise = app_state.current_exercise();
             exercise.reset()?;
             println!("The exercise {exercise} has been reset!");
+            app_state.set_pending(app_state.current_exercise_ind())?;
         }
         Some(Subcommands::Hint { name }) => {
             app_state.set_current_exercise_by_name(&name)?;

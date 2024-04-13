@@ -1,66 +1,25 @@
 use anyhow::{Context, Result};
-use serde::Deserialize;
 use std::{
-    fmt::{self, Debug, Display, Formatter},
-    fs::{self},
-    path::PathBuf,
+    fmt::{self, Display, Formatter},
+    path::Path,
     process::{Command, Output},
 };
 
-use crate::embedded::{WriteStrategy, EMBEDDED_FILES};
+use crate::{
+    embedded::{WriteStrategy, EMBEDDED_FILES},
+    info_file::Mode,
+};
 
-// The mode of the exercise.
-#[derive(Deserialize, Copy, Clone)]
-#[serde(rename_all = "lowercase")]
-pub enum Mode {
-    // The exercise should be compiled as a binary
-    Compile,
-    // The exercise should be compiled as a test harness
-    Test,
-    // The exercise should be linted with clippy
-    Clippy,
-}
-
-#[derive(Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct InfoFile {
-    // TODO
-    pub welcome_message: Option<String>,
-    pub final_message: Option<String>,
-    pub exercises: Vec<Exercise>,
-}
-
-impl InfoFile {
-    pub fn parse() -> Result<Self> {
-        // Read a local `info.toml` if it exists.
-        // Mainly to let the tests work for now.
-        let slf: Self = if let Ok(file_content) = fs::read_to_string("info.toml") {
-            toml_edit::de::from_str(&file_content)
-        } else {
-            toml_edit::de::from_str(include_str!("../info.toml"))
-        }
-        .context("Failed to parse `info.toml`")?;
-
-        if slf.exercises.is_empty() {
-            panic!("{NO_EXERCISES_ERR}");
-        }
-
-        Ok(slf)
-    }
-}
-
-// Deserialized from the `info.toml` file.
-#[derive(Deserialize)]
-#[serde(deny_unknown_fields)]
 pub struct Exercise {
-    // Name of the exercise
-    pub name: String,
-    // The path to the file containing the exercise's source code
-    pub path: PathBuf,
+    // Exercise's unique name
+    pub name: &'static str,
+    // Exercise's path
+    pub path: &'static Path,
     // The mode of the exercise
     pub mode: Mode,
     // The hint text associated with the exercise
     pub hint: String,
+    pub done: bool,
 }
 
 impl Exercise {
@@ -79,7 +38,7 @@ impl Exercise {
             .arg("always")
             .arg("-q")
             .arg("--bin")
-            .arg(&self.name)
+            .arg(self.name)
             .args(args)
             .output()
             .context("Failed to run Cargo")
@@ -87,7 +46,7 @@ impl Exercise {
 
     pub fn run(&self) -> Result<Output> {
         match self.mode {
-            Mode::Compile => self.cargo_cmd("run", &[]),
+            Mode::Run => self.cargo_cmd("run", &[]),
             Mode::Test => self.cargo_cmd("test", &["--", "--nocapture", "--format", "pretty"]),
             Mode::Clippy => self.cargo_cmd(
                 "clippy",
@@ -98,7 +57,7 @@ impl Exercise {
 
     pub fn reset(&self) -> Result<()> {
         EMBEDDED_FILES
-            .write_exercise_to_disk(&self.path, WriteStrategy::Overwrite)
+            .write_exercise_to_disk(self.path, WriteStrategy::Overwrite)
             .with_context(|| format!("Failed to reset the exercise {self}"))
     }
 }
@@ -108,6 +67,3 @@ impl Display for Exercise {
         Display::fmt(&self.path.display(), f)
     }
 }
-
-const NO_EXERCISES_ERR: &str = "There are no exercises yet!
-If you are developing third-party exercises, add at least one exercise before testing.";

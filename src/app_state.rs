@@ -4,52 +4,16 @@ use crossterm::{
     terminal::{Clear, ClearType},
     ExecutableCommand,
 };
-use serde::{Deserialize, Serialize};
-use std::{
-    fs,
-    io::{StdoutLock, Write},
-};
+use std::io::{StdoutLock, Write};
 
-use crate::{exercise::Exercise, FENISH_LINE};
+mod state_file;
 
+use crate::{exercise::Exercise, info_file::InfoFile, FENISH_LINE};
+
+use self::state_file::{write, StateFileDeser};
+
+const STATE_FILE_NAME: &str = ".rustlings-state.json";
 const BAD_INDEX_ERR: &str = "The current exercise index is higher than the number of exercises";
-
-#[derive(Serialize, Deserialize)]
-#[serde(deny_unknown_fields)]
-struct StateFile {
-    current_exercise_ind: usize,
-    progress: Vec<bool>,
-}
-
-impl StateFile {
-    fn read(exercises: &[Exercise]) -> Option<Self> {
-        let file_content = fs::read(".rustlings-state.json").ok()?;
-
-        let slf: Self = serde_json::de::from_slice(&file_content).ok()?;
-
-        if slf.progress.len() != exercises.len() || slf.current_exercise_ind >= exercises.len() {
-            return None;
-        }
-
-        Some(slf)
-    }
-
-    fn read_or_default(exercises: &[Exercise]) -> Self {
-        Self::read(exercises).unwrap_or_else(|| Self {
-            current_exercise_ind: 0,
-            progress: vec![false; exercises.len()],
-        })
-    }
-
-    fn write(&self) -> Result<()> {
-        let mut buf = Vec::with_capacity(1024);
-        serde_json::ser::to_writer(&mut buf, self).context("Failed to serialize the state")?;
-        fs::write(".rustlings-state.json", buf)
-            .context("Failed to write the state file `.rustlings-state.json`")?;
-
-        Ok(())
-    }
-}
 
 #[must_use]
 pub enum ExercisesProgress {
@@ -58,52 +22,85 @@ pub enum ExercisesProgress {
 }
 
 pub struct AppState {
-    state_file: StateFile,
-    exercises: &'static [Exercise],
+    current_exercise_ind: usize,
+    exercises: Vec<Exercise>,
     n_done: u16,
-    current_exercise: &'static Exercise,
-    final_message: &'static str,
+    welcome_message: String,
+    final_message: String,
 }
 
 impl AppState {
-    pub fn new(mut exercises: Vec<Exercise>, mut final_message: String) -> Self {
-        // Leaking especially for sending the exercises to the debounce event handler.
-        // Leaking is not a problem because the `AppState` instance lives until
-        // the end of the program.
-        exercises.shrink_to_fit();
-        let exercises = exercises.leak();
-        final_message.shrink_to_fit();
-        let final_message = final_message.leak();
+    pub fn new(info_file: InfoFile) -> Self {
+        let mut exercises = info_file
+            .exercises
+            .into_iter()
+            .map(|mut exercise_info| {
+                // Leaking to be able to borrow in the watch mode `Table`.
+                // Leaking is not a problem because the `AppState` instance lives until
+                // the end of the program.
+                let path = Box::leak(exercise_info.path().into_boxed_path());
 
-        let state_file = StateFile::read_or_default(exercises);
-        let n_done = state_file
-            .progress
-            .iter()
-            .fold(0, |acc, done| acc + u16::from(*done));
-        let current_exercise = &exercises[state_file.current_exercise_ind];
+                exercise_info.name.shrink_to_fit();
+                let name = exercise_info.name.leak();
+
+                let hint = exercise_info.hint.trim().to_owned();
+
+                Exercise {
+                    name,
+                    path,
+                    mode: exercise_info.mode,
+                    hint,
+                    done: false,
+                }
+            })
+            .collect::<Vec<_>>();
+
+        let (current_exercise_ind, n_done) = StateFileDeser::read().map_or((0, 0), |state_file| {
+            let mut state_file_exercises =
+                hashbrown::HashMap::with_capacity(state_file.exercises.len());
+
+            for (ind, exercise_state) in state_file.exercises.into_iter().enumerate() {
+                state_file_exercises.insert(
+                    exercise_state.name,
+                    (ind == state_file.current_exercise_ind, exercise_state.done),
+                );
+            }
+
+            let mut current_exercise_ind = 0;
+            let mut n_done = 0;
+            for (ind, exercise) in exercises.iter_mut().enumerate() {
+                if let Some((current, done)) = state_file_exercises.get(exercise.name) {
+                    if *done {
+                        exercise.done = true;
+                        n_done += 1;
+                    }
+
+                    if *current {
+                        current_exercise_ind = ind;
+                    }
+                }
+            }
+
+            (current_exercise_ind, n_done)
+        });
 
         Self {
-            state_file,
+            current_exercise_ind,
             exercises,
             n_done,
-            current_exercise,
-            final_message,
+            welcome_message: info_file.welcome_message.unwrap_or_default(),
+            final_message: info_file.final_message.unwrap_or_default(),
         }
     }
 
     #[inline]
     pub fn current_exercise_ind(&self) -> usize {
-        self.state_file.current_exercise_ind
+        self.current_exercise_ind
     }
 
     #[inline]
-    pub fn progress(&self) -> &[bool] {
-        &self.state_file.progress
-    }
-
-    #[inline]
-    pub fn exercises(&self) -> &'static [Exercise] {
-        self.exercises
+    pub fn exercises(&self) -> &[Exercise] {
+        &self.exercises
     }
 
     #[inline]
@@ -112,8 +109,8 @@ impl AppState {
     }
 
     #[inline]
-    pub fn current_exercise(&self) -> &'static Exercise {
-        self.current_exercise
+    pub fn current_exercise(&self) -> &Exercise {
+        &self.exercises[self.current_exercise_ind]
     }
 
     pub fn set_current_exercise_ind(&mut self, ind: usize) -> Result<()> {
@@ -121,70 +118,61 @@ impl AppState {
             bail!(BAD_INDEX_ERR);
         }
 
-        self.state_file.current_exercise_ind = ind;
-        self.current_exercise = &self.exercises[ind];
+        self.current_exercise_ind = ind;
 
-        self.state_file.write()
+        write(self)
     }
 
     pub fn set_current_exercise_by_name(&mut self, name: &str) -> Result<()> {
-        let (ind, exercise) = self
+        // O(N) is fine since this method is used only once until the program exits.
+        // Building a hashmap would have more overhead.
+        self.current_exercise_ind = self
             .exercises
             .iter()
-            .enumerate()
-            .find(|(_, exercise)| exercise.name == name)
+            .position(|exercise| exercise.name == name)
             .with_context(|| format!("No exercise found for '{name}'!"))?;
 
-        self.state_file.current_exercise_ind = ind;
-        self.current_exercise = exercise;
-
-        self.state_file.write()
+        write(self)
     }
 
     pub fn set_pending(&mut self, ind: usize) -> Result<()> {
-        let done = self
-            .state_file
-            .progress
-            .get_mut(ind)
-            .context(BAD_INDEX_ERR)?;
+        let exercise = self.exercises.get_mut(ind).context(BAD_INDEX_ERR)?;
 
-        if *done {
-            *done = false;
+        if exercise.done {
+            exercise.done = false;
             self.n_done -= 1;
-            self.state_file.write()?;
+            write(self)?;
         }
 
         Ok(())
     }
 
     fn next_pending_exercise_ind(&self) -> Option<usize> {
-        let current_ind = self.state_file.current_exercise_ind;
-
-        if current_ind == self.state_file.progress.len() - 1 {
+        if self.current_exercise_ind == self.exercises.len() - 1 {
             // The last exercise is done.
             // Search for exercises not done from the start.
-            return self.state_file.progress[..current_ind]
+            return self.exercises[..self.current_exercise_ind]
                 .iter()
-                .position(|done| !done);
+                .position(|exercise| !exercise.done);
         }
 
         // The done exercise isn't the last one.
         // Search for a pending exercise after the current one and then from the start.
-        match self.state_file.progress[current_ind + 1..]
+        match self.exercises[self.current_exercise_ind + 1..]
             .iter()
-            .position(|done| !done)
+            .position(|exercise| !exercise.done)
         {
-            Some(ind) => Some(current_ind + 1 + ind),
-            None => self.state_file.progress[..current_ind]
+            Some(ind) => Some(self.current_exercise_ind + 1 + ind),
+            None => self.exercises[..self.current_exercise_ind]
                 .iter()
-                .position(|done| !done),
+                .position(|exercise| !exercise.done),
         }
     }
 
     pub fn done_current_exercise(&mut self, writer: &mut StdoutLock) -> Result<ExercisesProgress> {
-        let done = &mut self.state_file.progress[self.state_file.current_exercise_ind];
-        if !*done {
-            *done = true;
+        let exercise = &mut self.exercises[self.current_exercise_ind];
+        if !exercise.done {
+            exercise.done = true;
             self.n_done += 1;
         }
 
@@ -198,15 +186,14 @@ impl AppState {
                 if !exercise.run()?.status.success() {
                     writer.write_fmt(format_args!("{}\n\n", "FAILED".red()))?;
 
-                    self.state_file.current_exercise_ind = exercise_ind;
-                    self.current_exercise = exercise;
+                    self.current_exercise_ind = exercise_ind;
 
                     // No check if the exercise is done before setting it to pending
                     // because no pending exercise was found.
-                    self.state_file.progress[exercise_ind] = false;
+                    self.exercises[exercise_ind].done = false;
                     self.n_done -= 1;
 
-                    self.state_file.write()?;
+                    write(self)?;
 
                     return Ok(ExercisesProgress::Pending);
                 }

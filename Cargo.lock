@@ -684,6 +684,7 @@ dependencies = [
  "assert_cmd",
  "clap",
  "crossterm",
+ "hashbrown",
  "notify-debouncer-mini",
  "predicates",
  "ratatui",

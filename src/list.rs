@@ -5,7 +5,7 @@ use crossterm::{
     ExecutableCommand,
 };
 use ratatui::{backend::CrosstermBackend, Terminal};
-use std::{fmt::Write, io};
+use std::io;
 
 mod state;
 
@@ -72,14 +72,7 @@ pub fn list(app_state: &mut AppState) -> Result<()> {
                 ui_state.message.push_str(message);
             }
             KeyCode::Char('r') => {
-                let Some(exercise) = ui_state.reset_selected()? else {
-                    continue;
-                };
-
-                ui_state = ui_state.with_updated_rows();
-                ui_state
-                    .message
-                    .write_fmt(format_args!("The exercise {exercise} has been reset!"))?;
+                ui_state = ui_state.with_reset_selected()?;
             }
             KeyCode::Char('c') => {
                 ui_state.selected_to_current_exercise()?;

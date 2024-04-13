@@ -11,14 +11,14 @@ use std::{
     time::Duration,
 };
 
-mod debounce_event;
+mod notify_event;
 mod state;
 mod terminal_event;
 
 use crate::app_state::{AppState, ExercisesProgress};
 
 use self::{
-    debounce_event::DebounceEventHandler,
+    notify_event::DebounceEventHandler,
     state::WatchState,
     terminal_event::{terminal_event_handler, InputEvent},
 };
@@ -40,13 +40,16 @@ pub enum WatchExit {
     List,
 }
 
-pub fn watch(app_state: &mut AppState) -> Result<WatchExit> {
+pub fn watch(
+    app_state: &mut AppState,
+    exercise_paths: &'static [&'static Path],
+) -> Result<WatchExit> {
     let (tx, rx) = channel();
     let mut debouncer = new_debouncer(
         Duration::from_secs(1),
         DebounceEventHandler {
             tx: tx.clone(),
-            exercises: app_state.exercises(),
+            exercise_paths,
         },
     )?;
     debouncer
@@ -85,10 +88,10 @@ pub fn watch(app_state: &mut AppState) -> Result<WatchExit> {
                 watch_state.render()?;
             }
             WatchEvent::NotifyErr(e) => {
-                return Err(Error::from(e).context("Exercise file watcher failed"))
+                return Err(Error::from(e).context("Exercise file watcher failed"));
             }
             WatchEvent::TerminalEventErr(e) => {
-                return Err(Error::from(e).context("Terminal event listener failed"))
+                return Err(Error::from(e).context("Terminal event listener failed"));
             }
         }
     }

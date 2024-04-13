@@ -1,13 +1,11 @@
 use notify_debouncer_mini::{DebounceEventResult, DebouncedEventKind};
-use std::sync::mpsc::Sender;
-
-use crate::exercise::Exercise;
+use std::{path::Path, sync::mpsc::Sender};
 
 use super::WatchEvent;
 
 pub struct DebounceEventHandler {
     pub tx: Sender<WatchEvent>,
-    pub exercises: &'static [Exercise],
+    pub exercise_paths: &'static [&'static Path],
 }
 
 impl notify_debouncer_mini::DebounceEventHandler for DebounceEventHandler {
@@ -23,9 +21,9 @@ impl notify_debouncer_mini::DebounceEventHandler for DebounceEventHandler {
                             return None;
                         }
 
-                        self.exercises
+                        self.exercise_paths
                             .iter()
-                            .position(|exercise| event.path.ends_with(&exercise.path))
+                            .position(|path| event.path.ends_with(path))
                     })
                     .min()
                 else {
