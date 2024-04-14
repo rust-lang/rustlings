@@ -1,6 +1,15 @@
 use anyhow::{Context, Result};
+use app_state::StateFileStatus;
 use clap::{Parser, Subcommand};
-use std::{path::Path, process::exit};
+use crossterm::{
+    terminal::{Clear, ClearType},
+    ExecutableCommand,
+};
+use std::{
+    io::{self, BufRead, Write},
+    path::Path,
+    process::exit,
+};
 
 mod app_state;
 mod embedded;
@@ -67,7 +76,26 @@ fn main() -> Result<()> {
         exit(1);
     }
 
-    let mut app_state = AppState::new(info_file);
+    let (mut app_state, state_file_status) = AppState::new(
+        info_file.exercises,
+        info_file.final_message.unwrap_or_default(),
+    );
+
+    if let Some(welcome_message) = info_file.welcome_message {
+        match state_file_status {
+            StateFileStatus::NotRead => {
+                let mut stdout = io::stdout().lock();
+                stdout.execute(Clear(ClearType::All))?;
+
+                let welcome_message = welcome_message.trim();
+                write!(stdout, "{welcome_message}\n\nPress ENTER to continue ")?;
+                stdout.flush()?;
+
+                io::stdin().lock().read_until(b'\n', &mut Vec::new())?;
+            }
+            StateFileStatus::Read => (),
+        }
+    }
 
     match args.command {
         None => {

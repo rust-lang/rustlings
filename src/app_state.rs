@@ -9,7 +9,7 @@ use std::{
     io::{Read, StdoutLock, Write},
 };
 
-use crate::{exercise::Exercise, info_file::InfoFile, FENISH_LINE};
+use crate::{exercise::Exercise, info_file::ExerciseInfo, FENISH_LINE};
 
 const STATE_FILE_NAME: &str = ".rustlings-state.txt";
 const BAD_INDEX_ERR: &str = "The current exercise index is higher than the number of exercises";
@@ -20,58 +20,69 @@ pub enum ExercisesProgress {
     Pending,
 }
 
+pub enum StateFileStatus {
+    Read,
+    NotRead,
+}
+
 pub struct AppState {
     current_exercise_ind: usize,
     exercises: Vec<Exercise>,
     n_done: u16,
-    welcome_message: String,
     final_message: String,
     file_buf: Vec<u8>,
 }
 
 impl AppState {
-    fn update_from_file(&mut self) {
+    fn update_from_file(&mut self) -> StateFileStatus {
         self.file_buf.clear();
         self.n_done = 0;
 
         if File::open(STATE_FILE_NAME)
             .and_then(|mut file| file.read_to_end(&mut self.file_buf))
-            .is_ok()
+            .is_err()
         {
-            let mut lines = self.file_buf.split(|c| *c == b'\n');
-            let Some(current_exercise_name) = lines.next() else {
-                return;
-            };
+            return StateFileStatus::NotRead;
+        }
 
-            if lines.next().is_none() {
-                return;
+        // See `Self::write` for more information about the file format.
+        let mut lines = self.file_buf.split(|c| *c == b'\n');
+        let Some(current_exercise_name) = lines.next() else {
+            return StateFileStatus::NotRead;
+        };
+
+        if current_exercise_name.is_empty() || lines.next().is_none() {
+            return StateFileStatus::NotRead;
+        }
+
+        let mut done_exercises = hashbrown::HashSet::with_capacity(self.exercises.len());
+
+        for done_exerise_name in lines {
+            if done_exerise_name.is_empty() {
+                break;
+            }
+            done_exercises.insert(done_exerise_name);
+        }
+
+        for (ind, exercise) in self.exercises.iter_mut().enumerate() {
+            if done_exercises.contains(exercise.name.as_bytes()) {
+                exercise.done = true;
+                self.n_done += 1;
             }
 
-            let mut done_exercises = hashbrown::HashSet::with_capacity(self.exercises.len());
-
-            for done_exerise_name in lines {
-                if done_exerise_name.is_empty() {
-                    break;
-                }
-                done_exercises.insert(done_exerise_name);
-            }
-
-            for (ind, exercise) in self.exercises.iter_mut().enumerate() {
-                if done_exercises.contains(exercise.name.as_bytes()) {
-                    exercise.done = true;
-                    self.n_done += 1;
-                }
-
-                if exercise.name.as_bytes() == current_exercise_name {
-                    self.current_exercise_ind = ind;
-                }
+            if exercise.name.as_bytes() == current_exercise_name {
+                self.current_exercise_ind = ind;
             }
         }
+
+        StateFileStatus::Read
     }
 
-    pub fn new(info_file: InfoFile) -> Self {
-        let exercises = info_file
-            .exercises
+    pub fn new(
+        exercise_infos: Vec<ExerciseInfo>,
+        final_message: String,
+    ) -> (Self, StateFileStatus) {
+        let exercises = exercise_infos
             .into_iter()
             .map(|mut exercise_info| {
                 // Leaking to be able to borrow in the watch mode `Table`.
@@ -98,14 +109,13 @@ impl AppState {
             current_exercise_ind: 0,
             exercises,
             n_done: 0,
-            welcome_message: info_file.welcome_message.unwrap_or_default(),
-            final_message: info_file.final_message.unwrap_or_default(),
+            final_message,
             file_buf: Vec::with_capacity(2048),
         };
 
-        slf.update_from_file();
+        let state_file_status = slf.update_from_file();
 
-        slf
+        (slf, state_file_status)
     }
 
     #[inline]
@@ -231,7 +241,8 @@ impl AppState {
 
     // Write the state file.
     // The file's format is very simple:
-    // - The first line is the name of the current exercise.
+    // - The first line is the name of the current exercise. It must end with `\n` even if there
+    // are no done exercises.
     // - The second line is an empty line.
     // - All remaining lines are the names of done exercises.
     fn write(&mut self) -> Result<()> {
@@ -239,12 +250,12 @@ impl AppState {
 
         self.file_buf
             .extend_from_slice(self.current_exercise().name.as_bytes());
-        self.file_buf.extend_from_slice(b"\n\n");
+        self.file_buf.push(b'\n');
 
         for exercise in &self.exercises {
             if exercise.done {
-                self.file_buf.extend_from_slice(exercise.name.as_bytes());
                 self.file_buf.push(b'\n');
+                self.file_buf.extend_from_slice(exercise.name.as_bytes());
             }
         }
 
