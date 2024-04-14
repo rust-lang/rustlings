@@ -231,7 +231,7 @@ impl AppState {
 
             let final_message = self.final_message.trim();
             if !final_message.is_empty() {
-                writer.write_all(self.final_message.as_bytes())?;
+                writer.write_all(final_message.as_bytes())?;
                 writer.write_all(b"\n")?;
             }
 
