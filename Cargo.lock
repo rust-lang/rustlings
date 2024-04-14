@@ -690,7 +690,6 @@ dependencies = [
  "ratatui",
  "rustlings-macros",
  "serde",
- "serde_json",
  "toml_edit",
  "which",
 ]
@@ -747,17 +746,6 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn 2.0.58",
-]
-
-[[package]]
-name = "serde_json"
-version = "1.0.115"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "12dc5c46daa8e9fdf4f5e71b6cf9a53f2487da0e86e55808e2d35539666497dd"
-dependencies = [
- "itoa",
- "ryu",
- "serde",
 ]
 
 [[package]]

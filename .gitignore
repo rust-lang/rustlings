@@ -4,7 +4,7 @@ target/
 /dev/Cargo.lock
 
 # State file
-.rustlings-state.json
+.rustlings-state.txt
 
 # oranda
 public/
