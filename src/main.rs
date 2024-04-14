@@ -92,6 +92,8 @@ fn main() -> Result<()> {
                 stdout.flush()?;
 
                 io::stdin().lock().read_until(b'\n', &mut Vec::new())?;
+
+                stdout.execute(Clear(ClearType::All))?;
             }
             StateFileStatus::Read => (),
         }
