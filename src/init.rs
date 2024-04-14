@@ -17,7 +17,7 @@ fn create_cargo_toml(exercise_infos: &[ExerciseInfo]) -> io::Result<()> {
         cargo_toml.extend_from_slice(b"\", path = \"exercises/");
         if let Some(dir) = &exercise_info.dir {
             cargo_toml.extend_from_slice(dir.as_bytes());
-            cargo_toml.extend_from_slice(b"/");
+            cargo_toml.push(b'/');
         }
         cargo_toml.extend_from_slice(exercise_info.name.as_bytes());
         cargo_toml.extend_from_slice(b".rs\" },\n");

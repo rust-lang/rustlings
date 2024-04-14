@@ -42,7 +42,7 @@ bin = [\n",
         buf.extend_from_slice(b"\", path = \"../exercises/");
         if let Some(dir) = &exercise_info.dir {
             buf.extend_from_slice(dir.as_bytes());
-            buf.extend_from_slice(b"/");
+            buf.push(b'/');
         }
         buf.extend_from_slice(exercise_info.name.as_bytes());
         buf.extend_from_slice(b".rs\" },\n");

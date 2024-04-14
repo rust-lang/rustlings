@@ -244,7 +244,7 @@ impl AppState {
         for exercise in &self.exercises {
             if exercise.done {
                 self.file_buf.extend_from_slice(exercise.name.as_bytes());
-                self.file_buf.extend_from_slice(b"\n");
+                self.file_buf.push(b'\n');
             }
         }
 
