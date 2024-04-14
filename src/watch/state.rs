@@ -18,10 +18,11 @@ pub struct WatchState<'a> {
     stderr: Option<Vec<u8>>,
     show_hint: bool,
     show_done: bool,
+    manual_run: bool,
 }
 
 impl<'a> WatchState<'a> {
-    pub fn new(app_state: &'a mut AppState) -> Self {
+    pub fn new(app_state: &'a mut AppState, manual_run: bool) -> Self {
         let writer = io::stdout().lock();
 
         Self {
@@ -31,6 +32,7 @@ impl<'a> WatchState<'a> {
             stderr: None,
             show_hint: false,
             show_done: false,
+            manual_run,
         }
     }
 
@@ -77,6 +79,10 @@ impl<'a> WatchState<'a> {
 
     fn show_prompt(&mut self) -> io::Result<()> {
         self.writer.write_all(b"\n")?;
+
+        if self.manual_run {
+            self.writer.write_fmt(format_args!("{}un/", 'r'.bold()))?;
+        }
 
         if self.show_done {
             self.writer.write_fmt(format_args!("{}ext/", 'n'.bold()))?;

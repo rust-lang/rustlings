@@ -36,6 +36,10 @@ use self::{
 struct Args {
     #[command(subcommand)]
     command: Option<Subcommands>,
+    /// Manually run the current exercise using `r` or `run` in the watch mode.
+    /// Only use this if Rustlings fails to detect exercise file changes.
+    #[arg(long)]
+    manual_run: bool,
 }
 
 #[derive(Subcommand)]
@@ -101,17 +105,23 @@ fn main() -> Result<()> {
 
     match args.command {
         None => {
-            // For the the notify event handler thread.
-            // Leaking is not a problem because the slice lives until the end of the program.
-            let exercise_paths = app_state
-                .exercises()
-                .iter()
-                .map(|exercise| exercise.path)
-                .collect::<Vec<_>>()
-                .leak();
+            let notify_exercise_paths: Option<&'static [&'static str]> = if args.manual_run {
+                None
+            } else {
+                // For the the notify event handler thread.
+                // Leaking is not a problem because the slice lives until the end of the program.
+                Some(
+                    app_state
+                        .exercises()
+                        .iter()
+                        .map(|exercise| exercise.path)
+                        .collect::<Vec<_>>()
+                        .leak(),
+                )
+            };
 
             loop {
-                match watch(&mut app_state, exercise_paths)? {
+                match watch(&mut app_state, notify_exercise_paths)? {
                     WatchExit::Shutdown => break,
                     // It is much easier to exit the watch mode, launch the list mode and then restart
                     // the watch mode instead of trying to pause the watch threads and correct the

@@ -42,25 +42,38 @@ pub enum WatchExit {
 
 pub fn watch(
     app_state: &mut AppState,
-    exercise_paths: &'static [&'static str],
+    notify_exercise_paths: Option<&'static [&'static str]>,
 ) -> Result<WatchExit> {
     let (tx, rx) = channel();
-    let mut debouncer = new_debouncer(
-        Duration::from_secs(1),
-        DebounceEventHandler {
-            tx: tx.clone(),
-            exercise_paths,
-        },
-    )?;
-    debouncer
-        .watcher()
-        .watch(Path::new("exercises"), RecursiveMode::Recursive)?;
 
-    let mut watch_state = WatchState::new(app_state);
+    let mut manual_run = false;
+    // Prevent dropping the guard until the end of the function.
+    // Otherwise, the file watcher exits.
+    let _debouncer_guard = if let Some(exercise_paths) = notify_exercise_paths {
+        let mut debouncer = new_debouncer(
+            Duration::from_secs(1),
+            DebounceEventHandler {
+                tx: tx.clone(),
+                exercise_paths,
+            },
+        )
+        .inspect_err(|_| eprintln!("{NOTIFY_ERR}"))?;
+        debouncer
+            .watcher()
+            .watch(Path::new("exercises"), RecursiveMode::Recursive)
+            .inspect_err(|_| eprintln!("{NOTIFY_ERR}"))?;
+
+        Some(debouncer)
+    } else {
+        manual_run = true;
+        None
+    };
+
+    let mut watch_state = WatchState::new(app_state, manual_run);
 
     watch_state.run_current_exercise()?;
 
-    thread::spawn(move || terminal_event_handler(tx));
+    thread::spawn(move || terminal_event_handler(tx, manual_run));
 
     while let Ok(event) = rx.recv() {
         match event {
@@ -78,6 +91,7 @@ pub fn watch(
                 watch_state.into_writer().write_all(QUIT_MSG)?;
                 break;
             }
+            WatchEvent::Input(InputEvent::Run) => watch_state.run_current_exercise()?,
             WatchEvent::Input(InputEvent::Unrecognized(cmd)) => {
                 watch_state.handle_invalid_cmd(&cmd)?;
             }
@@ -88,7 +102,8 @@ pub fn watch(
                 watch_state.render()?;
             }
             WatchEvent::NotifyErr(e) => {
-                return Err(Error::from(e).context("Exercise file watcher failed"));
+                watch_state.into_writer().write_all(NOTIFY_ERR.as_bytes())?;
+                return Err(Error::from(e));
             }
             WatchEvent::TerminalEventErr(e) => {
                 return Err(Error::from(e).context("Terminal event listener failed"));
@@ -102,4 +117,12 @@ pub fn watch(
 const QUIT_MSG: &[u8] = b"
 We hope you're enjoying learning Rust!
 If you want to continue working on the exercises at a later point, you can simply run `rustlings` again.
+";
+
+const NOTIFY_ERR: &str = "
+The automatic detection of exercise file changes failed :(
+Please try running `rustlings` again.
+
+If you keep getting this error, run `rustlings --manual-run` to deactivate the file watcher.
+You need to manually trigger running the current exercise using `r` or `run` then.
 ";

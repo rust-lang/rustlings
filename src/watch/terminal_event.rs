@@ -4,6 +4,7 @@ use std::sync::mpsc::Sender;
 use super::WatchEvent;
 
 pub enum InputEvent {
+    Run,
     Next,
     Hint,
     List,
@@ -11,7 +12,7 @@ pub enum InputEvent {
     Unrecognized(String),
 }
 
-pub fn terminal_event_handler(tx: Sender<WatchEvent>) {
+pub fn terminal_event_handler(tx: Sender<WatchEvent>, manual_run: bool) {
     let mut input = String::with_capacity(8);
 
     let last_input_event = loop {
@@ -43,6 +44,7 @@ pub fn terminal_event_handler(tx: Sender<WatchEvent>) {
                             "h" | "hint" => InputEvent::Hint,
                             "l" | "list" => break InputEvent::List,
                             "q" | "quit" => break InputEvent::Quit,
+                            "r" | "run" if manual_run => InputEvent::Run,
                             _ => InputEvent::Unrecognized(input.clone()),
                         };
 
