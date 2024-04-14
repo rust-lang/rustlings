@@ -10,18 +10,18 @@ use std::{
 };
 
 #[derive(Deserialize)]
-struct Exercise {
+struct ExerciseInfo {
     name: String,
-    path: String,
+    dir: Option<String>,
 }
 
 #[derive(Deserialize)]
-struct InfoToml {
-    exercises: Vec<Exercise>,
+struct InfoFile {
+    exercises: Vec<ExerciseInfo>,
 }
 
 fn main() -> Result<()> {
-    let exercises = toml_edit::de::from_str::<InfoToml>(
+    let exercise_infos = toml_edit::de::from_str::<InfoFile>(
         &fs::read_to_string("info.toml").context("Failed to read `info.toml`")?,
     )
     .context("Failed to deserialize `info.toml`")?
@@ -36,12 +36,16 @@ fn main() -> Result<()> {
 bin = [\n",
     );
 
-    for exercise in exercises {
+    for exercise_info in exercise_infos {
         buf.extend_from_slice(b"  { name = \"");
-        buf.extend_from_slice(exercise.name.as_bytes());
-        buf.extend_from_slice(b"\", path = \"../");
-        buf.extend_from_slice(exercise.path.as_bytes());
-        buf.extend_from_slice(b"\" },\n");
+        buf.extend_from_slice(exercise_info.name.as_bytes());
+        buf.extend_from_slice(b"\", path = \"../exercises/");
+        if let Some(dir) = &exercise_info.dir {
+            buf.extend_from_slice(dir.as_bytes());
+            buf.extend_from_slice(b"/");
+        }
+        buf.extend_from_slice(exercise_info.name.as_bytes());
+        buf.extend_from_slice(b".rs\" },\n");
     }
 
     buf.extend_from_slice(
