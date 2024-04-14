@@ -174,7 +174,7 @@ const POST_INIT_MSG: &str = "
 Done initialization!
 
 Run `cd rustlings` to go into the generated directory.
-Then run `rustlings` for further instructions on getting started.";
+Then run `rustlings` to get started.";
 
 const FENISH_LINE: &str = "+----------------------------------------------------+
 |          You made it to the Fe-nish line!          |
