@@ -1,6 +1,6 @@
 use anyhow::{bail, Context, Error, Result};
 use serde::Deserialize;
-use std::{fs, path::PathBuf};
+use std::fs;
 
 // The mode of the exercise.
 #[derive(Deserialize, Copy, Clone)]
@@ -28,14 +28,12 @@ pub struct ExerciseInfo {
 }
 
 impl ExerciseInfo {
-    pub fn path(&self) -> PathBuf {
-        let path = if let Some(dir) = &self.dir {
+    pub fn path(&self) -> String {
+        if let Some(dir) = &self.dir {
             format!("exercises/{dir}/{}.rs", self.name)
         } else {
             format!("exercises/{}.rs", self.name)
-        };
-
-        PathBuf::from(path)
+        }
     }
 }
 

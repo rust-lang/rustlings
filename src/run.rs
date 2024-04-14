@@ -17,18 +17,24 @@ pub fn run(app_state: &mut AppState) -> Result<()> {
     if !output.status.success() {
         app_state.set_pending(app_state.current_exercise_ind())?;
 
-        bail!("Ran {} with errors", app_state.current_exercise());
+        bail!(
+            "Ran {} with errors",
+            app_state.current_exercise().terminal_link(),
+        );
     }
 
     stdout.write_fmt(format_args!(
         "{}{}\n",
         "✓ Successfully ran ".green(),
-        exercise.path.to_string_lossy().green(),
+        exercise.path.green(),
     ))?;
 
     match app_state.done_current_exercise(&mut stdout)? {
         ExercisesProgress::AllDone => (),
-        ExercisesProgress::Pending => println!("Next exercise: {}", app_state.current_exercise()),
+        ExercisesProgress::Pending => println!(
+            "Next exercise: {}",
+            app_state.current_exercise().terminal_link(),
+        ),
     }
 
     Ok(())

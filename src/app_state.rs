@@ -38,7 +38,7 @@ impl AppState {
                 // Leaking to be able to borrow in the watch mode `Table`.
                 // Leaking is not a problem because the `AppState` instance lives until
                 // the end of the program.
-                let path = Box::leak(exercise_info.path().into_boxed_path());
+                let path = exercise_info.path().leak();
 
                 exercise_info.name.shrink_to_fit();
                 let name = exercise_info.name.leak();

@@ -42,7 +42,7 @@ pub enum WatchExit {
 
 pub fn watch(
     app_state: &mut AppState,
-    exercise_paths: &'static [&'static Path],
+    exercise_paths: &'static [&'static str],
 ) -> Result<WatchExit> {
     let (tx, rx) = channel();
     let mut debouncer = new_debouncer(

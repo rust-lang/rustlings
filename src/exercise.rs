@@ -1,7 +1,8 @@
 use anyhow::{Context, Result};
+use crossterm::style::{style, StyledContent, Stylize};
 use std::{
     fmt::{self, Display, Formatter},
-    path::Path,
+    fs,
     process::{Command, Output},
 };
 
@@ -10,11 +11,32 @@ use crate::{
     info_file::Mode,
 };
 
+pub struct TerminalFileLink<'a> {
+    path: &'a str,
+}
+
+impl<'a> Display for TerminalFileLink<'a> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        if let Ok(Some(canonical_path)) = fs::canonicalize(self.path)
+            .as_deref()
+            .map(|path| path.to_str())
+        {
+            write!(
+                f,
+                "\x1b]8;;file://{}\x1b\\{}\x1b]8;;\x1b\\",
+                canonical_path, self.path,
+            )
+        } else {
+            write!(f, "{}", self.path,)
+        }
+    }
+}
+
 pub struct Exercise {
     // Exercise's unique name
     pub name: &'static str,
     // Exercise's path
-    pub path: &'static Path,
+    pub path: &'static str,
     // The mode of the exercise
     pub mode: Mode,
     // The hint text associated with the exercise
@@ -60,10 +82,16 @@ impl Exercise {
             .write_exercise_to_disk(self.path, WriteStrategy::Overwrite)
             .with_context(|| format!("Failed to reset the exercise {self}"))
     }
+
+    pub fn terminal_link(&self) -> StyledContent<TerminalFileLink<'_>> {
+        style(TerminalFileLink { path: self.path })
+            .underlined()
+            .blue()
+    }
 }
 
 impl Display for Exercise {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
-        Display::fmt(&self.path.display(), f)
+        self.path.fmt(f)
     }
 }

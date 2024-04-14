@@ -63,7 +63,7 @@ impl<'a> UiState<'a> {
                     next,
                     exercise_state,
                     Span::raw(exercise.name),
-                    Span::raw(exercise.path.to_string_lossy()),
+                    Span::raw(exercise.path),
                 ]))
             });
 

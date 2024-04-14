@@ -136,11 +136,7 @@ When you are done experimenting, enter `n` or `next` to go to the next exercise 
         )?;
         self.writer.write_fmt(format_args!(
             "{progress_bar}Current exercise: {}\n",
-            self.app_state
-                .current_exercise()
-                .path
-                .to_string_lossy()
-                .bold(),
+            self.app_state.current_exercise().terminal_link(),
         ))?;
 
         self.show_prompt()?;

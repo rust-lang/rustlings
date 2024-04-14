@@ -59,7 +59,7 @@ pub fn write(app_state: &AppState) -> Result<()> {
         exercises: ExercisesStateSerializer(&app_state.exercises),
     };
 
-    let mut buf = Vec::with_capacity(1024);
+    let mut buf = Vec::with_capacity(4096);
     serde_json::ser::to_writer(&mut buf, &content).context("Failed to serialize the state")?;
     fs::write(STATE_FILE_NAME, buf)
         .with_context(|| format!("Failed to write the state file `{STATE_FILE_NAME}`"))?;
@@ -69,8 +69,6 @@ pub fn write(app_state: &AppState) -> Result<()> {
 
 #[cfg(test)]
 mod tests {
-    use std::path::Path;
-
     use crate::info_file::Mode;
 
     use super::*;
@@ -81,14 +79,14 @@ mod tests {
         let exercises = [
             Exercise {
                 name: "1",
-                path: Path::new("exercises/1.rs"),
+                path: "exercises/1.rs",
                 mode: Mode::Run,
                 hint: String::new(),
                 done: true,
             },
             Exercise {
                 name: "2",
-                path: Path::new("exercises/2.rs"),
+                path: "exercises/2.rs",
                 mode: Mode::Test,
                 hint: String::new(),
                 done: false,
