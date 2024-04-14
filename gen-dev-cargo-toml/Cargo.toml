@@ -1,0 +1,10 @@
+[package]
+name = "gen-dev-cargo-toml"
+publish = false
+license.workspace = true
+edition.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+serde.workspace = true
+toml_edit.workspace = true

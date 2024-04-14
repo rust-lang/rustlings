@@ -1,39 +1,41 @@
 use anyhow::{bail, Result};
-use std::io::{stdout, Write};
-use std::time::Duration;
+use crossterm::style::Stylize;
+use std::io::{self, Write};
 
-use crate::exercise::{Exercise, Mode};
-use crate::verify::test;
-use indicatif::ProgressBar;
+use crate::app_state::{AppState, ExercisesProgress};
 
-// Invoke the rust compiler on the path of the given exercise,
-// and run the ensuing binary.
-// The verbose argument helps determine whether or not to show
-// the output from the test harnesses (if the mode of the exercise is test)
-pub fn run(exercise: &Exercise, verbose: bool) -> Result<()> {
-    match exercise.mode {
-        Mode::Test => test(exercise, verbose),
-        Mode::Compile | Mode::Clippy => compile_and_run(exercise),
-    }
-}
-
-// Compile and run an exercise.
-// This is strictly for non-test binaries, so output is displayed
-fn compile_and_run(exercise: &Exercise) -> Result<()> {
-    let progress_bar = ProgressBar::new_spinner();
-    progress_bar.set_message(format!("Running {exercise}..."));
-    progress_bar.enable_steady_tick(Duration::from_millis(100));
-
+pub fn run(app_state: &mut AppState) -> Result<()> {
+    let exercise = app_state.current_exercise();
     let output = exercise.run()?;
-    progress_bar.finish_and_clear();
 
-    stdout().write_all(&output.stdout)?;
+    let mut stdout = io::stdout().lock();
+    stdout.write_all(&output.stdout)?;
+    stdout.write_all(b"\n")?;
+    stdout.write_all(&output.stderr)?;
+    stdout.flush()?;
+
     if !output.status.success() {
-        stdout().write_all(&output.stderr)?;
-        warn!("Ran {} with errors", exercise);
-        bail!("TODO");
+        app_state.set_pending(app_state.current_exercise_ind())?;
+
+        bail!(
+            "Ran {} with errors",
+            app_state.current_exercise().terminal_link(),
+        );
     }
 
-    success!("Successfully ran {}", exercise);
+    stdout.write_fmt(format_args!(
+        "{}{}\n",
+        "✓ Successfully ran ".green(),
+        exercise.path.green(),
+    ))?;
+
+    match app_state.done_current_exercise(&mut stdout)? {
+        ExercisesProgress::AllDone => (),
+        ExercisesProgress::Pending => println!(
+            "Next exercise: {}",
+            app_state.current_exercise().terminal_link(),
+        ),
+    }
+
     Ok(())
 }

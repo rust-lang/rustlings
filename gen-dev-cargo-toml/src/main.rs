@@ -1,5 +1,5 @@
 // Generates `dev/Cargo.toml` such that it is synced with `info.toml`.
-// `dev/Cargo.toml` is a hack to allow using `cargo r` to test `rustlings`
+// `dev/Cargo.toml` is a hack to allow using `cargo run` to test `rustlings`
 // during development.
 
 use anyhow::{bail, Context, Result};
@@ -10,18 +10,18 @@ use std::{
 };
 
 #[derive(Deserialize)]
-struct Exercise {
+struct ExerciseInfo {
     name: String,
-    path: String,
+    dir: Option<String>,
 }
 
 #[derive(Deserialize)]
-struct InfoToml {
-    exercises: Vec<Exercise>,
+struct InfoFile {
+    exercises: Vec<ExerciseInfo>,
 }
 
 fn main() -> Result<()> {
-    let exercises = toml_edit::de::from_str::<InfoToml>(
+    let exercise_infos = toml_edit::de::from_str::<InfoFile>(
         &fs::read_to_string("info.toml").context("Failed to read `info.toml`")?,
     )
     .context("Failed to deserialize `info.toml`")?
@@ -30,25 +30,29 @@ fn main() -> Result<()> {
     let mut buf = Vec::with_capacity(1 << 14);
 
     buf.extend_from_slice(
-        b"# This file is a hack to allow using `cargo r` to test `rustlings` during development.
-# You shouldn't edit it manually. It is created and updated by running `cargo run --bin gen-dev-cargo-toml`.
+        b"# This file is a hack to allow using `cargo run` to test `rustlings` during development.
+# You shouldn't edit it manually. It is created and updated by running `cargo run -p gen-dev-cargo-toml`.
 
 bin = [\n",
     );
 
-    for exercise in exercises {
+    for exercise_info in exercise_infos {
         buf.extend_from_slice(b"  { name = \"");
-        buf.extend_from_slice(exercise.name.as_bytes());
-        buf.extend_from_slice(b"\", path = \"../");
-        buf.extend_from_slice(exercise.path.as_bytes());
-        buf.extend_from_slice(b"\" },\n");
+        buf.extend_from_slice(exercise_info.name.as_bytes());
+        buf.extend_from_slice(b"\", path = \"../exercises/");
+        if let Some(dir) = &exercise_info.dir {
+            buf.extend_from_slice(dir.as_bytes());
+            buf.push(b'/');
+        }
+        buf.extend_from_slice(exercise_info.name.as_bytes());
+        buf.extend_from_slice(b".rs\" },\n");
     }
 
     buf.extend_from_slice(
         br#"]
 
 [package]
-name = "rustlings"
+name = "rustlings-dev"
 edition = "2021"
 publish = false
 "#,

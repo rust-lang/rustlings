@@ -65,7 +65,6 @@ struct ExercisesDir {
 }
 
 pub struct EmbeddedFiles {
-    pub info_toml_content: &'static str,
     exercises_dir: ExercisesDir,
 }
 
@@ -92,7 +91,12 @@ impl EmbeddedFiles {
         Ok(())
     }
 
-    pub fn write_exercise_to_disk(&self, path: &Path, strategy: WriteStrategy) -> io::Result<()> {
+    pub fn write_exercise_to_disk<P>(&self, path: P, strategy: WriteStrategy) -> io::Result<()>
+    where
+        P: AsRef<Path>,
+    {
+        let path = path.as_ref();
+
         if let Some(file) = self
             .exercises_dir
             .files

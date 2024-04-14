@@ -1,5 +1,5 @@
-# This file is a hack to allow using `cargo r` to test `rustlings` during development.
-# You shouldn't edit it manually. It is created and updated by running `cargo run --bin gen-dev-cargo-toml`.
+# This file is a hack to allow using `cargo run` to test `rustlings` during development.
+# You shouldn't edit it manually. It is created and updated by running `cargo run -p gen-dev-cargo-toml`.
 
 bin = [
   { name = "intro1", path = "../exercises/00_intro/intro1.rs" },
@@ -101,6 +101,6 @@ bin = [
 ]
 
 [package]
-name = "rustlings"
+name = "rustlings-dev"
 edition = "2021"
 publish = false
