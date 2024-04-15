@@ -12,6 +12,7 @@ use std::{
 };
 
 mod app_state;
+mod dev;
 mod embedded;
 mod exercise;
 mod info_file;
@@ -21,14 +22,7 @@ mod progress_bar;
 mod run;
 mod watch;
 
-use self::{
-    app_state::AppState,
-    info_file::InfoFile,
-    init::init,
-    list::list,
-    run::run,
-    watch::{watch, WatchExit},
-};
+use self::{app_state::AppState, dev::DevCommands, info_file::InfoFile, watch::WatchExit};
 
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
 #[derive(Parser)]
@@ -61,6 +55,8 @@ enum Subcommands {
         /// The name of the exercise
         name: String,
     },
+    #[command(subcommand)]
+    Dev(DevCommands),
 }
 
 fn main() -> Result<()> {
@@ -71,7 +67,7 @@ fn main() -> Result<()> {
     let info_file = InfoFile::parse()?;
 
     if matches!(args.command, Some(Subcommands::Init)) {
-        init(&info_file.exercises).context("Initialization failed")?;
+        init::init(&info_file.exercises).context("Initialization failed")?;
         println!("{POST_INIT_MSG}");
         return Ok(());
     }
@@ -122,12 +118,12 @@ fn main() -> Result<()> {
             };
 
             loop {
-                match watch(&mut app_state, notify_exercise_paths)? {
+                match watch::watch(&mut app_state, notify_exercise_paths)? {
                     WatchExit::Shutdown => break,
                     // It is much easier to exit the watch mode, launch the list mode and then restart
                     // the watch mode instead of trying to pause the watch threads and correct the
                     // watch state.
-                    WatchExit::List => list(&mut app_state)?,
+                    WatchExit::List => list::list(&mut app_state)?,
                 }
             }
         }
@@ -137,7 +133,7 @@ fn main() -> Result<()> {
             if let Some(name) = name {
                 app_state.set_current_exercise_by_name(&name)?;
             }
-            run(&mut app_state)?;
+            run::run(&mut app_state)?;
         }
         Some(Subcommands::Reset { name }) => {
             app_state.set_current_exercise_by_name(&name)?;
@@ -150,6 +146,7 @@ fn main() -> Result<()> {
             app_state.set_current_exercise_by_name(&name)?;
             println!("{}", app_state.current_exercise().hint);
         }
+        Some(Subcommands::Dev(dev_command)) => dev_command.run()?,
     }
 
     Ok(())
