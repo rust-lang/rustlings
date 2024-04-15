@@ -1,4 +1,5 @@
 use anyhow::{Context, Result};
+use app_state::StateFileStatus;
 use clap::{Parser, Subcommand};
 use crossterm::{
     terminal::{Clear, ClearType},
@@ -18,16 +19,14 @@ mod init;
 mod list;
 mod progress_bar;
 mod run;
-mod trust;
 mod watch;
 
 use self::{
-    app_state::{AppState, StateFileStatus},
+    app_state::AppState,
     info_file::InfoFile,
     init::init,
     list::list,
     run::run,
-    trust::{current_dir_is_trusted, trust_current_dir},
     watch::{watch, WatchExit},
 };
 
@@ -62,11 +61,6 @@ enum Subcommands {
         /// The name of the exercise
         name: String,
     },
-    /// Trust the current directory with its exercises.
-    ///
-    /// You only need to run this if you want to work on third-party exercises or after you moved
-    /// the official exercises that were initialized with `rustlings init`.
-    Trust,
 }
 
 fn main() -> Result<()> {
@@ -84,17 +78,6 @@ fn main() -> Result<()> {
 
     if !Path::new("exercises").is_dir() {
         println!("{PRE_INIT_MSG}");
-        exit(1);
-    }
-
-    if matches!(args.command, Some(Subcommands::Trust)) {
-        trust_current_dir()?;
-        println!("{POST_TRUST_MSG}");
-        return Ok(());
-    }
-
-    if !current_dir_is_trusted()? {
-        println!("{NOT_TRUSTED_MSG}");
         exit(1);
     }
 
@@ -148,6 +131,8 @@ fn main() -> Result<()> {
                 }
             }
         }
+        // `Init` is handled above.
+        Some(Subcommands::Init) => (),
         Some(Subcommands::Run { name }) => {
             if let Some(name) = name {
                 app_state.set_current_exercise_by_name(&name)?;
@@ -165,8 +150,6 @@ fn main() -> Result<()> {
             app_state.set_current_exercise_by_name(&name)?;
             println!("{}", app_state.current_exercise().hint);
         }
-        // `Init` and `Trust` are handled above.
-        Some(Subcommands::Init | Subcommands::Trust) => (),
     }
 
     Ok(())
@@ -192,20 +175,6 @@ const PRE_INIT_MSG: &str = r"
 
 The `exercises` directory wasn't found in the current directory.
 If you are just starting with Rustlings, run the command `rustlings init` to initialize it.";
-
-const POST_TRUST_MSG: &str = "You now trust the exercises in the current directory.
-Run `rustlings` to start working on them.";
-
-const NOT_TRUSTED_MSG: &str = "It looks like you are trying to work on third-party exercises.
-Rustlings supports third-party exercises. But because Rustlings runs the code inside an exercise,
-we need to warn you about the possibility of malicious code.
-We recommend that you read all the exercise files in the `exercises` directory and check the
-dependencies in the `Cargo.toml` file.
-If everything looks fine and you want to trust this directory, run `rustlings trust`.
-
-If you you are trying to work on the official exercises that were generated using `rustlings init`,
-then you probably moved the directory containing them. In that case, you can run `rustlings trust`
-without a problem.";
 
 const FENISH_LINE: &str = "+----------------------------------------------------+
 |          You made it to the Fe-nish line!          |

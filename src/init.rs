@@ -6,7 +6,7 @@ use std::{
     path::Path,
 };
 
-use crate::{embedded::EMBEDDED_FILES, info_file::ExerciseInfo, trust::trust_current_dir};
+use crate::{embedded::EMBEDDED_FILES, info_file::ExerciseInfo};
 
 fn create_cargo_toml(exercise_infos: &[ExerciseInfo]) -> io::Result<()> {
     let mut cargo_toml = Vec::with_capacity(1 << 13);
@@ -84,8 +84,6 @@ pub fn init(exercise_infos: &[ExerciseInfo]) -> Result<()> {
     create_gitignore().context("Failed to create the file `rustlings/.gitignore`")?;
 
     create_vscode_dir().context("Failed to create the file `rustlings/.vscode/extensions.json`")?;
-
-    trust_current_dir()?;
 
     Ok(())
 }

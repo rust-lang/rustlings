@@ -37,7 +37,6 @@ edition.workspace = true
 anyhow.workspace = true
 clap = { version = "4.5.4", features = ["derive"] }
 crossterm = "0.27.0"
-dirs = "5.0.1"
 hashbrown = "0.14.3"
 notify-debouncer-mini = "0.4.1"
 ratatui = "0.26.1"
