@@ -39,7 +39,7 @@ clap = { version = "4.5.4", features = ["derive"] }
 crossterm = "0.27.0"
 hashbrown = "0.14.3"
 notify-debouncer-mini = "0.4.1"
-ratatui = "0.26.1"
+ratatui = "0.26.2"
 rustlings-macros = { path = "rustlings-macros" }
 serde.workspace = true
 toml_edit.workspace = true
