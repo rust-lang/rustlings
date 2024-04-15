@@ -1,3 +1,5 @@
+format_version = 1
+
 welcome_message = """Is this your first time? Don't worry, Rustlings was made for beginners! We are
 going to teach you a lot of things about Rust, but before we can get
 started, here's a couple of notes about how Rustlings operates:

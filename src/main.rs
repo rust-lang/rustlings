@@ -1,4 +1,4 @@
-use anyhow::{Context, Result};
+use anyhow::{bail, Context, Result};
 use app_state::StateFileStatus;
 use clap::{Parser, Subcommand};
 use crossterm::{
@@ -23,6 +23,8 @@ mod run;
 mod watch;
 
 use self::{app_state::AppState, dev::DevCommands, info_file::InfoFile, watch::WatchExit};
+
+const CURRENT_FORMAT_VERSION: u8 = 1;
 
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
 #[derive(Parser)]
@@ -65,6 +67,10 @@ fn main() -> Result<()> {
     which::which("cargo").context(CARGO_NOT_FOUND_ERR)?;
 
     let info_file = InfoFile::parse()?;
+
+    if info_file.format_version > CURRENT_FORMAT_VERSION {
+        bail!(FORMAT_VERSION_HIGHER_ERR);
+    }
 
     if matches!(args.command, Some(Subcommands::Init)) {
         init::init(&info_file.exercises).context("Initialization failed")?;
@@ -155,6 +161,11 @@ fn main() -> Result<()> {
 const CARGO_NOT_FOUND_ERR: &str = "Failed to find `cargo`.
 Did you already install Rust?
 Try running `cargo --version` to diagnose the problem.";
+
+const FORMAT_VERSION_HIGHER_ERR: &str =
+    "The format version specified in the `info.toml` file is higher than the last one supported.
+It is possible that you have an outdated version of Rustlings.
+Try to install the latest Rustlings version first.";
 
 const POST_INIT_MSG: &str = "Done initialization!
 

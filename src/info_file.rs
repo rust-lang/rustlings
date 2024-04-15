@@ -39,6 +39,7 @@ impl ExerciseInfo {
 
 #[derive(Deserialize)]
 pub struct InfoFile {
+    pub format_version: u8,
     pub welcome_message: Option<String>,
     pub final_message: Option<String>,
     pub exercises: Vec<ExerciseInfo>,
