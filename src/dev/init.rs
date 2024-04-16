@@ -71,6 +71,11 @@ name = "???"
 # Otherwise, the path is `exercises/NAME.rs`
 # dir = "???"
 
+# The mode to run the exercise in.
+# The mode "test" (preferred) runs the exercise's tests.
+# The mode "run" only checks if the exercise compiles and runs it.
+mode = "test"
+
 # A mutli-line hint to be shown to users on request.
 hint = """???"""
 "#;
