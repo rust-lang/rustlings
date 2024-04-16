@@ -142,10 +142,7 @@ mode = "compile"
 hint = """
 The error message points to the function `sale_price` and says it expects a type
 after the `->`. This is where the function's return type should be -- take a
-look at the `is_even` function for an example!
-
-Also: Did you figure out that, technically, `u32` would be the more fitting type
-for the inputs of the functions here, since the original prices shouldn't be negative? If so, kudos!"""
+look at the `is_even` function for an example!"""
 
 [[exercises]]
 name = "functions5"
