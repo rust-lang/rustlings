@@ -20,7 +20,7 @@ pub fn init() -> Result<()> {
     .context("Failed to create the file `rustlings/info.toml`")?;
 
     fs::write(
-        "rustligns/Cargo.toml",
+        "rustlings/Cargo.toml",
         format!("{CARGO_TOML_COMMENT}{}", crate::init::CARGO_TOML_PACKAGE),
     )
     .context("Failed to create the file `rustlings/Cargo.toml`")?;
@@ -32,7 +32,7 @@ pub fn init() -> Result<()> {
         .context("Failed to create the file `rustlings/README.md`")?;
 
     create_dir("rustlings/.vscode")
-        .context("Failed to create the directory `rustligns/.vscode`")?;
+        .context("Failed to create the directory `rustlings/.vscode`")?;
     fs::write(
         "rustlings/.vscode/extensions.json",
         crate::init::VS_CODE_EXTENSIONS_JSON,
