@@ -15,6 +15,7 @@ version = "6.0.0-alpha.0"
 authors = [
   "Liv <mokou@fastmail.com>",
   "Carol (Nichols || Goulding) <carol.nichols@gmail.com>",
+  "Mo <mo8it@proton.me>",
 ]
 license = "MIT"
 edition = "2021"
