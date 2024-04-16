@@ -59,6 +59,8 @@ pub fn init(exercise_infos: &[ExerciseInfo]) -> Result<()> {
     fs::write(".vscode/extensions.json", VS_CODE_EXTENSIONS_JSON)
         .context("Failed to create the file `rustlings/.vscode/extensions.json`")?;
 
+    println!("{POST_INIT_MSG}");
+
     Ok(())
 }
 
@@ -87,3 +89,8 @@ const RUSTLINGS_DIR_ALREADY_EXISTS_ERR: &str =
 You probably already initialized Rustlings.
 Run `cd rustlings`
 Then run `rustlings` again";
+
+const POST_INIT_MSG: &str = "Done initialization!
+
+Run `cd rustlings` to go into the generated directory.
+Then run `rustlings` to get started.";

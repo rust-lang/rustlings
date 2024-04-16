@@ -72,10 +72,12 @@ fn main() -> Result<()> {
         bail!(FORMAT_VERSION_HIGHER_ERR);
     }
 
-    if matches!(args.command, Some(Subcommands::Init)) {
-        init::init(&info_file.exercises).context("Initialization failed")?;
-        println!("{POST_INIT_MSG}");
-        return Ok(());
+    match args.command {
+        Some(Subcommands::Init) => {
+            return init::init(&info_file.exercises).context("Initialization failed");
+        }
+        Some(Subcommands::Dev(dev_command)) => return dev_command.run(),
+        _ => (),
     }
 
     if !Path::new("exercises").is_dir() {
@@ -133,8 +135,6 @@ fn main() -> Result<()> {
                 }
             }
         }
-        // `Init` is handled above.
-        Some(Subcommands::Init) => (),
         Some(Subcommands::Run { name }) => {
             if let Some(name) = name {
                 app_state.set_current_exercise_by_name(&name)?;
@@ -152,7 +152,8 @@ fn main() -> Result<()> {
             app_state.set_current_exercise_by_name(&name)?;
             println!("{}", app_state.current_exercise().hint);
         }
-        Some(Subcommands::Dev(dev_command)) => dev_command.run()?,
+        // Handled in an earlier match.
+        Some(Subcommands::Init | Subcommands::Dev(_)) => (),
     }
 
     Ok(())
@@ -166,11 +167,6 @@ const FORMAT_VERSION_HIGHER_ERR: &str =
     "The format version specified in the `info.toml` file is higher than the last one supported.
 It is possible that you have an outdated version of Rustlings.
 Try to install the latest Rustlings version first.";
-
-const POST_INIT_MSG: &str = "Done initialization!
-
-Run `cd rustlings` to go into the generated directory.
-Then run `rustlings` to get started.";
 
 const PRE_INIT_MSG: &str = r"
        Welcome to...
