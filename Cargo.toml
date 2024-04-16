@@ -11,7 +11,7 @@ members = [
 ]
 
 [workspace.package]
-version = "6.0.0"
+version = "6.0.0-alpha.0"
 authors = [
   "Liv <mokou@fastmail.com>",
   "Carol (Nichols || Goulding) <carol.nichols@gmail.com>",
@@ -40,7 +40,7 @@ crossterm = "0.27.0"
 hashbrown = "0.14.3"
 notify-debouncer-mini = "0.4.1"
 ratatui = "0.26.2"
-rustlings-macros = { path = "rustlings-macros" }
+rustlings-macros = "6.0.0-alpha.0"
 serde.workspace = true
 toml_edit.workspace = true
 which = "6.0.1"
