@@ -1,5 +1,6 @@
 [package]
 name = "rustlings-macros"
+description = "A macros crate intended to be only used by rustlings"
 version.workspace = true
 authors.workspace = true
 license.workspace = true
