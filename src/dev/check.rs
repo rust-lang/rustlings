@@ -9,8 +9,9 @@ pub fn check(info_file: InfoFile) -> Result<()> {
 
     fs::write("Cargo.toml", cargo_toml(&info_file.exercises))
         .context("Failed to update the file `Cargo.toml`")?;
+    println!("Updated `Cargo.toml`");
 
-    println!("Everything looks fine!");
+    println!("\nEverything looks fine!");
 
     Ok(())
 }
