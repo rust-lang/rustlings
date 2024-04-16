@@ -76,7 +76,7 @@ name = "???"
 # The mode "run" only checks if the exercise compiles and runs it.
 mode = "test"
 
-# A mutli-line hint to be shown to users on request.
+# A multi-line hint to be shown to users on request.
 hint = """???"""
 "#;
 
