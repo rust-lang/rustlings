@@ -1,6 +1,8 @@
 use anyhow::{Context, Result};
 use clap::Subcommand;
 
+use crate::info_file::InfoFile;
+
 mod check;
 mod init;
 
@@ -11,10 +13,10 @@ pub enum DevCommands {
 }
 
 impl DevCommands {
-    pub fn run(self) -> Result<()> {
+    pub fn run(self, info_file: InfoFile) -> Result<()> {
         match self {
             DevCommands::Init => init::init().context(INIT_ERR),
-            DevCommands::Check => check::check(),
+            DevCommands::Check => check::check(info_file),
         }
     }
 }

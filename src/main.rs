@@ -76,7 +76,7 @@ fn main() -> Result<()> {
         Some(Subcommands::Init) => {
             return init::init(&info_file.exercises).context("Initialization failed");
         }
-        Some(Subcommands::Dev(dev_command)) => return dev_command.run(),
+        Some(Subcommands::Dev(dev_command)) => return dev_command.run(info_file),
         _ => (),
     }
 

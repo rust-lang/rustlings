@@ -8,7 +8,7 @@ use std::{
 
 use crate::{embedded::EMBEDDED_FILES, info_file::ExerciseInfo};
 
-fn cargo_toml(exercise_infos: &[ExerciseInfo]) -> Vec<u8> {
+pub fn cargo_toml(exercise_infos: &[ExerciseInfo]) -> Vec<u8> {
     let mut cargo_toml = Vec::with_capacity(1 << 13);
     cargo_toml.extend_from_slice(b"bin = [\n");
     for exercise_info in exercise_infos {
