@@ -1,14 +1,14 @@
 use anyhow::{bail, Context, Result};
 use std::{
     env::set_current_dir,
-    fs::{create_dir, OpenOptions},
-    io::{self, ErrorKind, Write},
+    fs::{self, create_dir},
+    io::ErrorKind,
     path::Path,
 };
 
 use crate::{embedded::EMBEDDED_FILES, info_file::ExerciseInfo};
 
-fn create_cargo_toml(exercise_infos: &[ExerciseInfo]) -> io::Result<()> {
+fn cargo_toml(exercise_infos: &[ExerciseInfo]) -> Vec<u8> {
     let mut cargo_toml = Vec::with_capacity(1 << 13);
     cargo_toml.extend_from_slice(b"bin = [\n");
     for exercise_info in exercise_infos {
@@ -23,39 +23,10 @@ fn create_cargo_toml(exercise_infos: &[ExerciseInfo]) -> io::Result<()> {
         cargo_toml.extend_from_slice(b".rs\" },\n");
     }
 
-    cargo_toml.extend_from_slice(
-        br#"]
+    cargo_toml.extend_from_slice(b"]\n\n");
+    cargo_toml.extend_from_slice(CARGO_TOML_PACKAGE.as_bytes());
 
-[package]
-name = "rustlings"
-edition = "2021"
-publish = false
-"#,
-    );
-    OpenOptions::new()
-        .create_new(true)
-        .write(true)
-        .open("Cargo.toml")?
-        .write_all(&cargo_toml)
-}
-
-fn create_gitignore() -> io::Result<()> {
-    OpenOptions::new()
-        .create_new(true)
-        .write(true)
-        .open(".gitignore")?
-        .write_all(GITIGNORE)
-}
-
-fn create_vscode_dir() -> Result<()> {
-    create_dir(".vscode").context("Failed to create the directory `.vscode`")?;
-    OpenOptions::new()
-        .create_new(true)
-        .write(true)
-        .open(".vscode/extensions.json")?
-        .write_all(VS_CODE_EXTENSIONS_JSON)?;
-
-    Ok(())
+    cargo_toml
 }
 
 pub fn init(exercise_infos: &[ExerciseInfo]) -> Result<()> {
@@ -78,21 +49,31 @@ pub fn init(exercise_infos: &[ExerciseInfo]) -> Result<()> {
         .init_exercises_dir()
         .context("Failed to initialize the `rustlings/exercises` directory")?;
 
-    create_cargo_toml(exercise_infos)
+    fs::write("Cargo.toml", cargo_toml(exercise_infos))
         .context("Failed to create the file `rustlings/Cargo.toml`")?;
 
-    create_gitignore().context("Failed to create the file `rustlings/.gitignore`")?;
+    fs::write(".gitignore", GITIGNORE)
+        .context("Failed to create the file `rustlings/.gitignore`")?;
 
-    create_vscode_dir().context("Failed to create the file `rustlings/.vscode/extensions.json`")?;
+    create_dir(".vscode").context("Failed to create the directory `rustlings/.vscode`")?;
+    fs::write(".vscode/extensions.json", VS_CODE_EXTENSIONS_JSON)
+        .context("Failed to create the file `rustlings/.vscode/extensions.json`")?;
 
     Ok(())
 }
 
-const GITIGNORE: &[u8] = b"/target
-/.rustlings-state.txt
+pub const CARGO_TOML_PACKAGE: &str = r#"[package]
+name = "rustlings"
+edition = "2021"
+publish = false
+"#;
+
+pub const GITIGNORE: &[u8] = b"Cargo.lock
+.rustlings-state.txt
+target
 ";
 
-const VS_CODE_EXTENSIONS_JSON: &[u8] = br#"{"recommendations":["rust-lang.rust-analyzer"]}"#;
+pub const VS_CODE_EXTENSIONS_JSON: &[u8] = br#"{"recommendations":["rust-lang.rust-analyzer"]}"#;
 
 const PROBABLY_IN_RUSTLINGS_DIR_ERR: &str =
     "A directory with the name `exercises` and a file with the name `Cargo.toml` already exist
