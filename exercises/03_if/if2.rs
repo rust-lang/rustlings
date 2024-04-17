@@ -13,6 +13,10 @@ pub fn foo_if_fizz(fizzish: &str) -> &str {
     }
 }
 
+fn main() {
+    // You can optionally experiment here.
+}
+
 // No test changes needed!
 #[cfg(test)]
 mod tests {

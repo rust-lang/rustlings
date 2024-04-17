@@ -16,6 +16,10 @@
 // Put your function here!
 // fn calculate_price_of_apples {
 
+fn main() {
+    // You can optionally experiment here.
+}
+
 // Don't modify this function!
 #[test]
 fn verify_test() {

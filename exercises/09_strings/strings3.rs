@@ -18,6 +18,10 @@ fn replace_me(input: &str) -> String {
     ???
 }
 
+fn main() {
+    // You can optionally experiment here.
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

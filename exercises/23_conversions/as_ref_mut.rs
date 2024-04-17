@@ -26,6 +26,10 @@ fn num_sq<T>(arg: &mut T) {
     ???
 }
 
+fn main() {
+    // You can optionally experiment here.
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

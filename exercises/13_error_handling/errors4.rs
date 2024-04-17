@@ -19,6 +19,10 @@ impl PositiveNonzeroInteger {
     }
 }
 
+fn main() {
+    // You can optionally experiment here.
+}
+
 #[test]
 fn test_creation() {
     assert!(PositiveNonzeroInteger::new(10).is_ok());

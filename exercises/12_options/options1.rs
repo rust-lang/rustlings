@@ -14,6 +14,10 @@ fn maybe_icecream(time_of_day: u16) -> Option<u16> {
     ???
 }
 
+fn main() {
+    // You can optionally experiment here.
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

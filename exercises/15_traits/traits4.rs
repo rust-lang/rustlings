@@ -25,6 +25,10 @@ fn compare_license_types(software: ??, software_two: ??) -> bool {
     software.licensing_info() == software_two.licensing_info()
 }
 
+fn main() {
+    // You can optionally experiment here.
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

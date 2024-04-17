@@ -15,6 +15,10 @@ pub fn factorial(num: u64) -> u64 {
     // Execute `rustlings hint iterators4` for hints.
 }
 
+fn main() {
+    // You can optionally experiment here.
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

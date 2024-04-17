@@ -54,6 +54,10 @@ impl PositiveNonzeroInteger {
     }
 }
 
+fn main() {
+    // You can optionally experiment here.
+}
+
 #[cfg(test)]
 mod test {
     use super::*;

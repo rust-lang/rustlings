@@ -43,6 +43,10 @@ fn list_of_results() -> () {
     let division_results = numbers.into_iter().map(|n| divide(n, 27));
 }
 
+fn main() {
+    // You can optionally experiment here.
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

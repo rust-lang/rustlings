@@ -28,6 +28,10 @@ fn create_order_template() -> Order {
     }
 }
 
+fn main() {
+    // You can optionally experiment here.
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

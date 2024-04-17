@@ -33,6 +33,10 @@ pub fn capitalize_words_string(words: &[&str]) -> String {
     String::new()
 }
 
+fn main() {
+    // You can optionally experiment here.
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

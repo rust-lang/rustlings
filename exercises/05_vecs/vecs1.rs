@@ -14,6 +14,10 @@ fn array_and_vec() -> ([i32; 4], Vec<i32>) {
     (a, v)
 }
 
+fn main() {
+    // You can optionally experiment here.
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

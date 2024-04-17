@@ -24,6 +24,10 @@ fn fruit_basket() -> HashMap<String, u32> {
     basket
 }
 
+fn main() {
+    // You can optionally experiment here.
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

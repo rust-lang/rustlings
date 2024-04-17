@@ -11,6 +11,10 @@ pub fn is_even(num: i32) -> bool {
     num % 2 == 0
 }
 
+fn main() {
+    // You can optionally experiment here.
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

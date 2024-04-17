@@ -40,6 +40,10 @@ mod my_module {
     }
 }
 
+fn main() {
+    // You can optionally experiment here.
+}
+
 #[cfg(test)]
 mod tests {
     // TODO: What do we need to import to have `transformer` in scope?

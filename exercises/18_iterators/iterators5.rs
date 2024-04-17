@@ -55,6 +55,10 @@ fn count_collection_iterator(collection: &[HashMap<String, Progress>], value: Pr
     todo!();
 }
 
+fn main() {
+    // You can optionally experiment here.
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
