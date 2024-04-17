@@ -1,5 +1,3 @@
-// cow1.rs
-//
 // This exercise explores the Cow, or Clone-On-Write type. Cow is a
 // clone-on-write smart pointer. It can enclose and provide immutable access to
 // borrowed data, and clone the data lazily when mutation or ownership is
@@ -9,8 +7,6 @@
 // This exercise is meant to show you what to expect when passing data to Cow.
 // Fix the unit tests by checking for Cow::Owned(_) and Cow::Borrowed(_) at the
 // TODO markers.
-//
-// Execute `rustlings hint cow1` or use the `hint` watch subcommand for a hint.
 
 use std::borrow::Cow;
 

@@ -1,5 +1,3 @@
-// quiz2.rs
-//
 // This is a quiz for the following sections:
 // - Strings
 // - Vecs
@@ -17,8 +15,6 @@
 // - The input is going to be a Vector of a 2-length tuple,
 //   the first element is the string, the second one is the command.
 // - The output element is going to be a Vector of strings.
-//
-// No hints this time!
 
 pub enum Command {
     Uppercase,

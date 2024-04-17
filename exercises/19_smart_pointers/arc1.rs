@@ -1,5 +1,3 @@
-// arc1.rs
-//
 // In this exercise, we are given a Vec of u32 called "numbers" with values
 // ranging from 0 to 99 -- [ 0, 1, 2, ..., 98, 99 ] We would like to use this
 // set of numbers within 8 different threads simultaneously. Each thread is
@@ -18,8 +16,6 @@
 // first TODO comment is, and create an initial binding for `child_numbers`
 // where the second TODO comment is. Try not to create any copies of the
 // `numbers` Vec!
-//
-// Execute `rustlings hint arc1` or use the `hint` watch subcommand for a hint.
 
 #![forbid(unused_imports)] // Do not change this, (or the next) line.
 use std::sync::Arc;

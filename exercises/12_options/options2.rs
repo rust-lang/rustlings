@@ -1,8 +1,3 @@
-// options2.rs
-//
-// Execute `rustlings hint options2` or use the `hint` watch subcommand for a
-// hint.
-
 fn main() {
     // You can optionally experiment here.
 }
