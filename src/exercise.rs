@@ -3,6 +3,7 @@ use crossterm::style::{style, StyledContent, Stylize};
 use std::{
     fmt::{self, Display, Formatter},
     fs,
+    path::Path,
     process::{Command, Output},
 };
 
@@ -51,7 +52,7 @@ impl Exercise {
         cmd.arg(command);
 
         // A hack to make `cargo run` work when developing Rustlings.
-        if DEVELOPING_OFFICIAL_RUSTLINGS {
+        if DEVELOPING_OFFICIAL_RUSTLINGS && Path::new("tests").exists() {
             cmd.arg("--manifest-path").arg("dev/Cargo.toml");
         }
 
