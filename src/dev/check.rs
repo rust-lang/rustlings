@@ -19,6 +19,9 @@ fn check_info_file_exercises(info_file: &InfoFile) -> Result<hashbrown::HashSet<
     let mut paths = hashbrown::HashSet::with_capacity(info_file.exercises.len());
 
     for exercise_info in &info_file.exercises {
+        if exercise_info.name.is_empty() {
+            bail!("Found an empty exercise name in `info.toml`");
+        }
         if let Some(c) = forbidden_char(&exercise_info.name) {
             bail!(
                 "Char `{c}` in the exercise name `{}` is not allowed",
@@ -27,9 +30,16 @@ fn check_info_file_exercises(info_file: &InfoFile) -> Result<hashbrown::HashSet<
         }
 
         if let Some(dir) = &exercise_info.dir {
+            if dir.is_empty() {
+                bail!("Found an empty dir name in `info.toml`");
+            }
             if let Some(c) = forbidden_char(dir) {
                 bail!("Char `{c}` in the exercise dir `{dir}` is not allowed");
             }
+        }
+
+        if exercise_info.hint.is_empty() {
+            bail!("The exercise `{}` has an empty hint. Please provide a hint or at least tell the user why a hint isn't needed for this exercise", exercise_info.name);
         }
 
         if !names.insert(exercise_info.name.as_str()) {
