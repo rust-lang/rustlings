@@ -25,7 +25,7 @@ mod watch;
 use self::{app_state::AppState, dev::DevCommands, info_file::InfoFile, watch::WatchExit};
 
 const CURRENT_FORMAT_VERSION: u8 = 1;
-const DEVELOPING_OFFIFICAL_RUSTLINGS: bool = {
+const DEVELOPING_OFFICIAL_RUSTLINGS: bool = {
     #[allow(unused_assignments, unused_mut)]
     let mut debug_profile = false;
 

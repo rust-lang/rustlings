@@ -3,7 +3,7 @@ use std::{cmp::Ordering, fs};
 
 use crate::{
     info_file::{ExerciseInfo, InfoFile},
-    CURRENT_FORMAT_VERSION, DEVELOPING_OFFIFICAL_RUSTLINGS,
+    CURRENT_FORMAT_VERSION, DEVELOPING_OFFICIAL_RUSTLINGS,
 };
 
 pub fn bins_start_end_ind(cargo_toml: &str) -> Result<(usize, usize)> {
@@ -68,7 +68,7 @@ pub fn check() -> Result<()> {
         Ordering::Equal => (),
     }
 
-    if DEVELOPING_OFFIFICAL_RUSTLINGS {
+    if DEVELOPING_OFFICIAL_RUSTLINGS {
         check_cargo_toml(
             &info_file.exercises,
             include_str!("../../dev/Cargo.toml"),
