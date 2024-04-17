@@ -9,6 +9,7 @@ use std::{
 use crate::{
     embedded::{WriteStrategy, EMBEDDED_FILES},
     info_file::Mode,
+    DEVELOPING_OFFIFICAL_RUSTLINGS,
 };
 
 pub struct TerminalFileLink<'a> {
@@ -50,9 +51,7 @@ impl Exercise {
         cmd.arg(command);
 
         // A hack to make `cargo run` work when developing Rustlings.
-        // Use `dev/Cargo.toml` when in the directory of the repository.
-        #[cfg(debug_assertions)]
-        if std::path::Path::new("tests").exists() {
+        if DEVELOPING_OFFIFICAL_RUSTLINGS {
             cmd.arg("--manifest-path").arg("dev/Cargo.toml");
         }
 

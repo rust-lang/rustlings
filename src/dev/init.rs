@@ -1,6 +1,5 @@
-use std::fs::{self, create_dir};
-
 use anyhow::{Context, Result};
+use std::fs::{self, create_dir};
 
 use crate::CURRENT_FORMAT_VERSION;
 
@@ -19,11 +18,8 @@ pub fn init() -> Result<()> {
     )
     .context("Failed to create the file `rustlings/info.toml`")?;
 
-    fs::write(
-        "rustlings/Cargo.toml",
-        format!("{CARGO_TOML_COMMENT}{}", crate::init::CARGO_TOML_PACKAGE),
-    )
-    .context("Failed to create the file `rustlings/Cargo.toml`")?;
+    fs::write("rustlings/Cargo.toml", CARGO_TOML)
+        .context("Failed to create the file `rustlings/Cargo.toml`")?;
 
     fs::write("rustlings/.gitignore", crate::init::GITIGNORE)
         .context("Failed to create the file `rustlings/.gitignore`")?;
@@ -80,10 +76,17 @@ mode = "test"
 hint = """???"""
 "#;
 
-const CARGO_TOML_COMMENT: &str =
-    "# You shouldn't edit this file manually! It is updated by `rustlings dev check`
+const CARGO_TOML: &[u8] =
+    br#"# Don't edit the `bin` list manually! It is updated by `rustlings dev update`
+bin = []
 
-";
+[package]
+name = "rustlings"
+edition = "2021"
+publish = false
+
+[dependencies]
+"#;
 
 const README: &str = "# Rustlings 🦀
 

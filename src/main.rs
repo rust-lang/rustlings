@@ -25,6 +25,17 @@ mod watch;
 use self::{app_state::AppState, dev::DevCommands, info_file::InfoFile, watch::WatchExit};
 
 const CURRENT_FORMAT_VERSION: u8 = 1;
+const DEVELOPING_OFFIFICAL_RUSTLINGS: bool = {
+    #[allow(unused_assignments, unused_mut)]
+    let mut debug_profile = false;
+
+    #[cfg(debug_assertions)]
+    {
+        debug_profile = true;
+    }
+
+    debug_profile
+};
 
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
 #[derive(Parser)]
@@ -66,23 +77,23 @@ fn main() -> Result<()> {
 
     which::which("cargo").context(CARGO_NOT_FOUND_ERR)?;
 
-    let info_file = InfoFile::parse()?;
-
-    if info_file.format_version > CURRENT_FORMAT_VERSION {
-        bail!(FORMAT_VERSION_HIGHER_ERR);
-    }
-
     match args.command {
         Some(Subcommands::Init) => {
-            return init::init(&info_file.exercises).context("Initialization failed");
+            return init::init().context("Initialization failed");
         }
-        Some(Subcommands::Dev(dev_command)) => return dev_command.run(info_file),
+        Some(Subcommands::Dev(dev_command)) => return dev_command.run(),
         _ => (),
     }
 
     if !Path::new("exercises").is_dir() {
         println!("{PRE_INIT_MSG}");
         exit(1);
+    }
+
+    let info_file = InfoFile::parse()?;
+
+    if info_file.format_version > CURRENT_FORMAT_VERSION {
+        bail!(FORMAT_VERSION_HIGHER_ERR);
     }
 
     let (mut app_state, state_file_status) = AppState::new(

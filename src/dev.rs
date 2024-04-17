@@ -1,22 +1,23 @@
 use anyhow::{Context, Result};
 use clap::Subcommand;
 
-use crate::info_file::InfoFile;
-
 mod check;
 mod init;
+mod update;
 
 #[derive(Subcommand)]
 pub enum DevCommands {
     Init,
     Check,
+    Update,
 }
 
 impl DevCommands {
-    pub fn run(self, info_file: InfoFile) -> Result<()> {
+    pub fn run(self) -> Result<()> {
         match self {
             DevCommands::Init => init::init().context(INIT_ERR),
-            DevCommands::Check => check::check(info_file),
+            DevCommands::Check => check::check(),
+            DevCommands::Update => update::update(),
         }
     }
 }

@@ -312,15 +312,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "gen-dev-cargo-toml"
-version = "0.0.0"
-dependencies = [
- "anyhow",
- "serde",
- "toml_edit",
-]
-
-[[package]]
 name = "hashbrown"
 version = "0.14.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"

@@ -6,30 +6,19 @@ use std::{
     path::Path,
 };
 
-use crate::{embedded::EMBEDDED_FILES, info_file::ExerciseInfo};
+use crate::embedded::EMBEDDED_FILES;
 
-pub fn cargo_toml(exercise_infos: &[ExerciseInfo]) -> Vec<u8> {
-    let mut cargo_toml = Vec::with_capacity(1 << 13);
-    cargo_toml.extend_from_slice(b"bin = [\n");
-    for exercise_info in exercise_infos {
-        cargo_toml.extend_from_slice(b"  { name = \"");
-        cargo_toml.extend_from_slice(exercise_info.name.as_bytes());
-        cargo_toml.extend_from_slice(b"\", path = \"exercises/");
-        if let Some(dir) = &exercise_info.dir {
-            cargo_toml.extend_from_slice(dir.as_bytes());
-            cargo_toml.push(b'/');
-        }
-        cargo_toml.extend_from_slice(exercise_info.name.as_bytes());
-        cargo_toml.extend_from_slice(b".rs\" },\n");
+const CARGO_TOML: &[u8] = {
+    let cargo_toml = include_bytes!("../dev/Cargo.toml");
+    // Skip the first line (comment).
+    let mut start_ind = 0;
+    while cargo_toml[start_ind] != b'\n' {
+        start_ind += 1;
     }
+    cargo_toml.split_at(start_ind + 1).1
+};
 
-    cargo_toml.extend_from_slice(b"]\n\n");
-    cargo_toml.extend_from_slice(CARGO_TOML_PACKAGE.as_bytes());
-
-    cargo_toml
-}
-
-pub fn init(exercise_infos: &[ExerciseInfo]) -> Result<()> {
+pub fn init() -> Result<()> {
     if Path::new("exercises").is_dir() && Path::new("Cargo.toml").is_file() {
         bail!(PROBABLY_IN_RUSTLINGS_DIR_ERR);
     }
@@ -49,7 +38,7 @@ pub fn init(exercise_infos: &[ExerciseInfo]) -> Result<()> {
         .init_exercises_dir()
         .context("Failed to initialize the `rustlings/exercises` directory")?;
 
-    fs::write("Cargo.toml", cargo_toml(exercise_infos))
+    fs::write("Cargo.toml", CARGO_TOML)
         .context("Failed to create the file `rustlings/Cargo.toml`")?;
 
     fs::write(".gitignore", GITIGNORE)
@@ -63,12 +52,6 @@ pub fn init(exercise_infos: &[ExerciseInfo]) -> Result<()> {
 
     Ok(())
 }
-
-pub const CARGO_TOML_PACKAGE: &str = r#"[package]
-name = "rustlings"
-edition = "2021"
-publish = false
-"#;
 
 pub const GITIGNORE: &[u8] = b"Cargo.lock
 .rustlings-state.txt
