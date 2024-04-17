@@ -47,14 +47,12 @@ impl EmbeddedFlatDir {
         let path = Path::new(self.path);
 
         if let Err(e) = create_dir(path) {
-            if !path.is_dir() {
+            if e.kind() != io::ErrorKind::AlreadyExists {
                 return Err(e);
             }
         }
 
-        self.readme.write_to_disk(WriteStrategy::Overwrite)?;
-
-        Ok(())
+        self.readme.write_to_disk(WriteStrategy::Overwrite)
     }
 }
 
