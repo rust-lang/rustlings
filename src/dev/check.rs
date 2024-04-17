@@ -17,6 +17,7 @@ fn forbidden_char(input: &str) -> Option<char> {
 fn check_info_file_exercises(info_file: &InfoFile) -> Result<hashbrown::HashSet<PathBuf>> {
     let mut names = hashbrown::HashSet::with_capacity(info_file.exercises.len());
     let mut paths = hashbrown::HashSet::with_capacity(info_file.exercises.len());
+
     for exercise_info in &info_file.exercises {
         if let Some(c) = forbidden_char(&exercise_info.name) {
             bail!(
@@ -49,6 +50,7 @@ fn check_exercise_dir_files(
     info_file_paths: hashbrown::HashSet<PathBuf>,
 ) -> Result<hashbrown::HashSet<String>> {
     let mut names = hashbrown::HashSet::with_capacity(info_file.exercises.len());
+
     for entry in read_dir("exercises").context("Failed to open the `exercises` directory")? {
         let entry = entry.context("Failed to read the `exercises` directory")?;
 
@@ -89,8 +91,11 @@ fn check_exercise_dir_files(
                 bail!("`{}` is expected to be an exercise file corresponding to some exercise in `info.toml`", path.display());
             }
 
+            // The file name must be valid Unicode with the `.rs` extension
+            // because it is part of the info file paths.
             let file_name = file_name.to_string_lossy();
-            names.insert(file_name[..file_name.len() - 3].to_string());
+            let file_name_without_rs_extension = file_name[..file_name.len() - 3].to_string();
+            names.insert(file_name_without_rs_extension);
         }
     }
 
@@ -112,10 +117,7 @@ fn check_info_file(info_file: &InfoFile) -> Result<()> {
     if names_in_exercises_dir.len() != info_file.exercises.len() {
         for exercise_info in &info_file.exercises {
             if !names_in_exercises_dir.contains(&exercise_info.name) {
-                bail!(
-                    "No exercise file found for the exercise `{}`",
-                    exercise_info.name,
-                );
+                bail!("The file `{}` is missing", exercise_info.path());
             }
         }
     }
@@ -178,7 +180,6 @@ fn check_cargo_toml(
 
 pub fn check() -> Result<()> {
     let info_file = InfoFile::parse()?;
-
     check_info_file(&info_file)?;
 
     if DEVELOPING_OFFICIAL_RUSTLINGS {
