@@ -15,8 +15,8 @@ pub fn include_files(_: TokenStream) -> TokenStream {
     let mut files = Vec::with_capacity(8);
     let mut dirs = Vec::with_capacity(128);
 
-    for entry in read_dir("exercises").expect("Failed to open the exercises directory") {
-        let entry = entry.expect("Failed to read the exercises directory");
+    for entry in read_dir("exercises").expect("Failed to open the `exercises` directory") {
+        let entry = entry.expect("Failed to read the `exercises` directory");
 
         if entry.file_type().unwrap().is_file() {
             let path = entry.path();
@@ -44,13 +44,6 @@ pub fn include_files(_: TokenStream) -> TokenStream {
 
             if path.file_name().unwrap() == "README.md" {
                 return None;
-            }
-
-            if path.extension() != Some("rs".as_ref()) {
-                panic!(
-                    "Found {} but expected only README.md and .rs files",
-                    path.display(),
-                );
             }
 
             Some(path_to_string(path))

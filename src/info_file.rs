@@ -64,14 +64,6 @@ impl InfoFile {
             bail!("{NO_EXERCISES_ERR}");
         }
 
-        let mut names_set = hashbrown::HashSet::with_capacity(slf.exercises.len());
-        for exercise in &slf.exercises {
-            if !names_set.insert(exercise.name.as_str()) {
-                bail!("Exercise names must all be unique!")
-            }
-        }
-        drop(names_set);
-
         Ok(slf)
     }
 }
