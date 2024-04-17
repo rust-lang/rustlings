@@ -1,9 +1,9 @@
 use anyhow::{bail, Context, Result};
-use std::fs;
+use std::{cmp::Ordering, fs};
 
 use crate::{
     info_file::{ExerciseInfo, InfoFile},
-    DEVELOPING_OFFIFICAL_RUSTLINGS,
+    CURRENT_FORMAT_VERSION, DEVELOPING_OFFIFICAL_RUSTLINGS,
 };
 
 pub fn bins_start_end_ind(cargo_toml: &str) -> Result<(usize, usize)> {
@@ -62,7 +62,11 @@ fn check_cargo_toml(
 pub fn check() -> Result<()> {
     let info_file = InfoFile::parse()?;
 
-    // TODO: Add checks
+    match info_file.format_version.cmp(&CURRENT_FORMAT_VERSION) {
+        Ordering::Less => bail!("`format_version` < {CURRENT_FORMAT_VERSION} (supported version)\nPlease migrate to the latest format version"),
+        Ordering::Greater => bail!("`format_version` > {CURRENT_FORMAT_VERSION} (supported version)\nTry updating the Rustlings program"),
+        Ordering::Equal => (),
+    }
 
     if DEVELOPING_OFFIFICAL_RUSTLINGS {
         check_cargo_toml(
