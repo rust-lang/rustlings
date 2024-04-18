@@ -11,6 +11,8 @@ use std::{
     process::exit,
 };
 
+use self::{app_state::AppState, dev::DevCommands, info_file::InfoFile, watch::WatchExit};
+
 mod app_state;
 mod dev;
 mod embedded;
@@ -21,8 +23,6 @@ mod list;
 mod progress_bar;
 mod run;
 mod watch;
-
-use self::{app_state::AppState, dev::DevCommands, info_file::InfoFile, watch::WatchExit};
 
 const CURRENT_FORMAT_VERSION: u8 = 1;
 const DEVELOPING_OFFICIAL_RUSTLINGS: bool = {

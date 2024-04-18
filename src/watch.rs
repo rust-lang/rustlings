@@ -11,10 +11,6 @@ use std::{
     time::Duration,
 };
 
-mod notify_event;
-mod state;
-mod terminal_event;
-
 use crate::app_state::{AppState, ExercisesProgress};
 
 use self::{
@@ -22,6 +18,10 @@ use self::{
     state::WatchState,
     terminal_event::{terminal_event_handler, InputEvent},
 };
+
+mod notify_event;
+mod state;
+mod terminal_event;
 
 enum WatchEvent {
     Input(InputEvent),

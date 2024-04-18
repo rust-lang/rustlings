@@ -7,11 +7,11 @@ use crossterm::{
 use ratatui::{backend::CrosstermBackend, Terminal};
 use std::io;
 
-mod state;
-
 use crate::app_state::AppState;
 
 use self::state::{Filter, UiState};
+
+mod state;
 
 pub fn list(app_state: &mut AppState) -> Result<()> {
     let mut stdout = io::stdout().lock();
