@@ -79,6 +79,10 @@ fn main() -> Result<()> {
 
     match args.command {
         Some(Subcommands::Init) => {
+            if DEVELOPING_OFFICIAL_RUSTLINGS {
+                bail!("Disabled while developing the official Rustlings");
+            }
+
             return init::init().context("Initialization failed");
         }
         Some(Subcommands::Dev(dev_command)) => return dev_command.run(),

@@ -1,5 +1,7 @@
-use anyhow::{Context, Result};
+use anyhow::{bail, Context, Result};
 use clap::Subcommand;
+
+use crate::DEVELOPING_OFFICIAL_RUSTLINGS;
 
 mod check;
 mod init;
@@ -15,7 +17,13 @@ pub enum DevCommands {
 impl DevCommands {
     pub fn run(self) -> Result<()> {
         match self {
-            DevCommands::Init => init::init().context(INIT_ERR),
+            DevCommands::Init => {
+                if DEVELOPING_OFFICIAL_RUSTLINGS {
+                    bail!("Disabled while developing the official Rustlings");
+                }
+
+                init::init().context(INIT_ERR)
+            }
             DevCommands::Check => check::check(),
             DevCommands::Update => update::update(),
         }
