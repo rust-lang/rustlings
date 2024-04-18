@@ -1,5 +1,3 @@
-// box1.rs
-//
 // At compile time, Rust needs to know how much space a type takes up. This
 // becomes problematic for recursive types, where a value can have as part of
 // itself another value of the same type. To get around the issue, we can use a
@@ -15,8 +13,6 @@
 // Step 2: create both empty and non-empty cons lists by replacing `todo!()`
 //
 // Note: the tests should not be changed
-//
-// Execute `rustlings hint box1` or use the `hint` watch subcommand for a hint.
 
 #[derive(PartialEq, Debug)]
 pub enum List {

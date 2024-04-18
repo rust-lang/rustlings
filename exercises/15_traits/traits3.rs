@@ -1,12 +1,7 @@
-// traits3.rs
-//
 // Your task is to implement the Licensed trait for both structures and have
 // them return the same information without writing the same function twice.
 //
 // Consider what you can add to the Licensed trait.
-//
-// Execute `rustlings hint traits3` or use the `hint` watch subcommand for a
-// hint.
 
 pub trait Licensed {
     fn licensing_info(&self) -> String;
@@ -22,6 +17,10 @@ struct OtherSoftware {
 
 impl Licensed for SomeSoftware {} // Don't edit this line
 impl Licensed for OtherSoftware {} // Don't edit this line
+
+fn main() {
+    // You can optionally experiment here.
+}
 
 #[cfg(test)]
 mod tests {

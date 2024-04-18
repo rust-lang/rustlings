@@ -1,9 +1,4 @@
-// structs2.rs
-//
 // Address all the TODOs to make the tests pass!
-//
-// Execute `rustlings hint structs2` or use the `hint` watch subcommand for a
-// hint.
 
 #[derive(Debug)]
 struct Order {
@@ -26,6 +21,10 @@ fn create_order_template() -> Order {
         item_number: 123,
         count: 0,
     }
+}
+
+fn main() {
+    // You can optionally experiment here.
 }
 
 #[cfg(test)]

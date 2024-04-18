@@ -217,23 +217,22 @@ impl<'a> UiState<'a> {
             return Ok(self);
         };
 
-        let (ind, exercise) = self
+        let ind = self
             .app_state
             .exercises()
             .iter()
             .enumerate()
             .filter_map(|(ind, exercise)| match self.filter {
-                Filter::Done => exercise.done.then_some((ind, exercise)),
-                Filter::Pending => (!exercise.done).then_some((ind, exercise)),
-                Filter::None => Some((ind, exercise)),
+                Filter::Done => exercise.done.then_some(ind),
+                Filter::Pending => (!exercise.done).then_some(ind),
+                Filter::None => Some(ind),
             })
             .nth(selected)
             .context("Invalid selection index")?;
 
-        exercise.reset()?;
+        let exercise_path = self.app_state.reset_exercise_by_ind(ind)?;
         self.message
-            .write_fmt(format_args!("The exercise {exercise} has been reset!"))?;
-        self.app_state.set_pending(ind)?;
+            .write_fmt(format_args!("The exercise {exercise_path} has been reset"))?;
 
         Ok(self.with_updated_rows())
     }

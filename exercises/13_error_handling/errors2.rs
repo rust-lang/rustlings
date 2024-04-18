@@ -1,5 +1,3 @@
-// errors2.rs
-//
 // Say we're writing a game where you can buy items with tokens. All items cost
 // 5 tokens, and whenever you purchase items there is a processing fee of 1
 // token. A player of the game will type in how many items they want to buy, and
@@ -15,9 +13,6 @@
 //
 // There are at least two ways to implement this that are both correct-- but one
 // is a lot shorter!
-//
-// Execute `rustlings hint errors2` or use the `hint` watch subcommand for a
-// hint.
 
 use std::num::ParseIntError;
 
@@ -27,6 +22,10 @@ pub fn total_cost(item_quantity: &str) -> Result<i32, ParseIntError> {
     let qty = item_quantity.parse::<i32>();
 
     Ok(qty * cost_per_item + processing_fee)
+}
+
+fn main() {
+    // You can optionally experiment here.
 }
 
 #[cfg(test)]

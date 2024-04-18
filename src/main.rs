@@ -1,4 +1,4 @@
-use anyhow::{Context, Result};
+use anyhow::{bail, Context, Result};
 use app_state::StateFileStatus;
 use clap::{Parser, Subcommand};
 use crossterm::{
@@ -11,7 +11,10 @@ use std::{
     process::exit,
 };
 
+use self::{app_state::AppState, dev::DevCommands, info_file::InfoFile, watch::WatchExit};
+
 mod app_state;
+mod dev;
 mod embedded;
 mod exercise;
 mod info_file;
@@ -21,13 +24,17 @@ mod progress_bar;
 mod run;
 mod watch;
 
-use self::{
-    app_state::AppState,
-    info_file::InfoFile,
-    init::init,
-    list::list,
-    run::run,
-    watch::{watch, WatchExit},
+const CURRENT_FORMAT_VERSION: u8 = 1;
+const DEVELOPING_OFFICIAL_RUSTLINGS: bool = {
+    #[allow(unused_assignments, unused_mut)]
+    let mut debug_profile = false;
+
+    #[cfg(debug_assertions)]
+    {
+        debug_profile = true;
+    }
+
+    debug_profile
 };
 
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
@@ -61,6 +68,8 @@ enum Subcommands {
         /// The name of the exercise
         name: String,
     },
+    #[command(subcommand)]
+    Dev(DevCommands),
 }
 
 fn main() -> Result<()> {
@@ -68,16 +77,27 @@ fn main() -> Result<()> {
 
     which::which("cargo").context(CARGO_NOT_FOUND_ERR)?;
 
-    let info_file = InfoFile::parse()?;
+    match args.command {
+        Some(Subcommands::Init) => {
+            if DEVELOPING_OFFICIAL_RUSTLINGS {
+                bail!("Disabled while developing the official Rustlings");
+            }
 
-    if matches!(args.command, Some(Subcommands::Init)) {
-        init(&info_file.exercises).context("Initialization failed")?;
+            return init::init().context("Initialization failed");
+        }
+        Some(Subcommands::Dev(dev_command)) => return dev_command.run(),
+        _ => (),
+    }
 
-        println!("{POST_INIT_MSG}");
-        return Ok(());
-    } else if !Path::new("exercises").is_dir() {
+    if !Path::new("exercises").is_dir() {
         println!("{PRE_INIT_MSG}");
         exit(1);
+    }
+
+    let info_file = InfoFile::parse()?;
+
+    if info_file.format_version > CURRENT_FORMAT_VERSION {
+        bail!(FORMAT_VERSION_HIGHER_ERR);
     }
 
     let (mut app_state, state_file_status) = AppState::new(
@@ -121,34 +141,32 @@ fn main() -> Result<()> {
             };
 
             loop {
-                match watch(&mut app_state, notify_exercise_paths)? {
+                match watch::watch(&mut app_state, notify_exercise_paths)? {
                     WatchExit::Shutdown => break,
                     // It is much easier to exit the watch mode, launch the list mode and then restart
                     // the watch mode instead of trying to pause the watch threads and correct the
                     // watch state.
-                    WatchExit::List => list(&mut app_state)?,
+                    WatchExit::List => list::list(&mut app_state)?,
                 }
             }
         }
-        // `Init` is handled above.
-        Some(Subcommands::Init) => (),
         Some(Subcommands::Run { name }) => {
             if let Some(name) = name {
                 app_state.set_current_exercise_by_name(&name)?;
             }
-            run(&mut app_state)?;
+            run::run(&mut app_state)?;
         }
         Some(Subcommands::Reset { name }) => {
             app_state.set_current_exercise_by_name(&name)?;
-            let exercise = app_state.current_exercise();
-            exercise.reset()?;
-            println!("The exercise {exercise} has been reset!");
-            app_state.set_pending(app_state.current_exercise_ind())?;
+            let exercise_path = app_state.reset_current_exercise()?;
+            println!("The exercise {exercise_path} has been reset");
         }
         Some(Subcommands::Hint { name }) => {
             app_state.set_current_exercise_by_name(&name)?;
             println!("{}", app_state.current_exercise().hint);
         }
+        // Handled in an earlier match.
+        Some(Subcommands::Init | Subcommands::Dev(_)) => (),
     }
 
     Ok(())
@@ -158,8 +176,13 @@ const CARGO_NOT_FOUND_ERR: &str = "Failed to find `cargo`.
 Did you already install Rust?
 Try running `cargo --version` to diagnose the problem.";
 
+const FORMAT_VERSION_HIGHER_ERR: &str =
+    "The format version specified in the `info.toml` file is higher than the last one supported.
+It is possible that you have an outdated version of Rustlings.
+Try to install the latest Rustlings version first.";
+
 const PRE_INIT_MSG: &str = r"
-       welcome to...
+       Welcome to...
                  _   _ _
   _ __ _   _ ___| |_| (_)_ __   __ _ ___
  | '__| | | / __| __| | | '_ \ / _` / __|
@@ -169,31 +192,3 @@ const PRE_INIT_MSG: &str = r"
 
 The `exercises` directory wasn't found in the current directory.
 If you are just starting with Rustlings, run the command `rustlings init` to initialize it.";
-
-const POST_INIT_MSG: &str = "
-Done initialization!
-
-Run `cd rustlings` to go into the generated directory.
-Then run `rustlings` to get started.";
-
-const FENISH_LINE: &str = "+----------------------------------------------------+
-|          You made it to the Fe-nish line!          |
-+--------------------------  ------------------------+
-                           \\/\x1b[31m
-     ▒▒          ▒▒▒▒▒▒▒▒      ▒▒▒▒▒▒▒▒          ▒▒
-   ▒▒▒▒  ▒▒    ▒▒        ▒▒  ▒▒        ▒▒    ▒▒  ▒▒▒▒
-   ▒▒▒▒  ▒▒  ▒▒            ▒▒            ▒▒  ▒▒  ▒▒▒▒
- ░░▒▒▒▒░░▒▒  ▒▒            ▒▒            ▒▒  ▒▒░░▒▒▒▒
-   ▓▓▓▓▓▓▓▓  ▓▓      ▓▓██  ▓▓  ▓▓██      ▓▓  ▓▓▓▓▓▓▓▓
-     ▒▒▒▒    ▒▒      ████  ▒▒  ████      ▒▒░░  ▒▒▒▒
-       ▒▒  ▒▒▒▒▒▒        ▒▒▒▒▒▒        ▒▒▒▒▒▒  ▒▒
-         ▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▒▒▒▒▒▒▒▒▓▓▓▓▓▓▒▒▒▒▒▒▒▒
-           ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-             ▒▒▒▒▒▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒▒▒▒▒▒
-           ▒▒  ▒▒▒▒▒▒▒▒▒▒██████▒▒▒▒▒▒▒▒▒▒  ▒▒
-         ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒
-       ▒▒    ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒    ▒▒
-       ▒▒  ▒▒    ▒▒                  ▒▒    ▒▒  ▒▒
-           ▒▒  ▒▒                      ▒▒  ▒▒\x1b[0m
-
-";

@@ -1,18 +1,18 @@
-// traits2.rs
-//
 // Your task is to implement the trait `AppendBar` for a vector of strings. To
 // implement this trait, consider for a moment what it means to 'append "Bar"'
 // to a vector of strings.
 //
 // No boiler plate code this time, you can do this!
-//
-// Execute `rustlings hint traits2` or use the `hint` watch subcommand for a hint.
 
 trait AppendBar {
     fn append_bar(self) -> Self;
 }
 
 // TODO: Implement trait `AppendBar` for a vector of strings.
+
+fn main() {
+    // You can optionally experiment here.
+}
 
 #[cfg(test)]
 mod tests {

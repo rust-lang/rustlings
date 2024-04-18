@@ -1,3 +1,5 @@
+format_version = 1
+
 [[exercises]]
 name = "compFailure"
 mode = "run"

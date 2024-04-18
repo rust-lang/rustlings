@@ -1,8 +1,3 @@
-// threads3.rs
-//
-// Execute `rustlings hint threads3` or use the `hint` watch subcommand for a
-// hint.
-
 use std::sync::mpsc;
 use std::sync::Arc;
 use std::thread;
@@ -42,20 +37,29 @@ fn send_tx(q: Queue, tx: mpsc::Sender<u32>) -> () {
     });
 }
 
-#[test]
 fn main() {
-    let (tx, rx) = mpsc::channel();
-    let queue = Queue::new();
-    let queue_length = queue.length;
+    // You can optionally experiment here.
+}
 
-    send_tx(queue, tx);
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-    let mut total_received: u32 = 0;
-    for received in rx {
-        println!("Got: {}", received);
-        total_received += 1;
+    #[test]
+    fn threads3() {
+        let (tx, rx) = mpsc::channel();
+        let queue = Queue::new();
+        let queue_length = queue.length;
+
+        send_tx(queue, tx);
+
+        let mut total_received: u32 = 0;
+        for received in rx {
+            println!("Got: {}", received);
+            total_received += 1;
+        }
+
+        println!("total numbers received: {}", total_received);
+        assert_eq!(total_received, queue_length)
     }
-
-    println!("total numbers received: {}", total_received);
-    assert_eq!(total_received, queue_length)
 }

@@ -3,13 +3,11 @@ use crossterm::style::{style, StyledContent, Stylize};
 use std::{
     fmt::{self, Display, Formatter},
     fs,
+    path::Path,
     process::{Command, Output},
 };
 
-use crate::{
-    embedded::{WriteStrategy, EMBEDDED_FILES},
-    info_file::Mode,
-};
+use crate::{info_file::Mode, DEVELOPING_OFFICIAL_RUSTLINGS};
 
 pub struct TerminalFileLink<'a> {
     path: &'a str,
@@ -50,9 +48,7 @@ impl Exercise {
         cmd.arg(command);
 
         // A hack to make `cargo run` work when developing Rustlings.
-        // Use `dev/Cargo.toml` when in the directory of the repository.
-        #[cfg(debug_assertions)]
-        if std::path::Path::new("tests").exists() {
+        if DEVELOPING_OFFICIAL_RUSTLINGS && Path::new("tests").exists() {
             cmd.arg("--manifest-path").arg("dev/Cargo.toml");
         }
 
@@ -69,18 +65,22 @@ impl Exercise {
     pub fn run(&self) -> Result<Output> {
         match self.mode {
             Mode::Run => self.cargo_cmd("run", &[]),
-            Mode::Test => self.cargo_cmd("test", &["--", "--nocapture", "--format", "pretty"]),
+            Mode::Test => self.cargo_cmd(
+                "test",
+                &[
+                    "--",
+                    "--color",
+                    "always",
+                    "--nocapture",
+                    "--format",
+                    "pretty",
+                ],
+            ),
             Mode::Clippy => self.cargo_cmd(
                 "clippy",
                 &["--", "-D", "warnings", "-D", "clippy::float_cmp"],
             ),
         }
-    }
-
-    pub fn reset(&self) -> Result<()> {
-        EMBEDDED_FILES
-            .write_exercise_to_disk(self.path, WriteStrategy::Overwrite)
-            .with_context(|| format!("Failed to reset the exercise {self}"))
     }
 
     pub fn terminal_link(&self) -> StyledContent<TerminalFileLink<'_>> {

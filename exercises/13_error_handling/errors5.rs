@@ -1,5 +1,3 @@
-// errors5.rs
-//
 // This program uses an altered version of the code from errors4.
 //
 // This exercise uses some concepts that we won't get to until later in the
@@ -18,9 +16,6 @@
 //
 // What can we use to describe both errors? In other words, is there a trait
 // which both errors implement?
-//
-// Execute `rustlings hint errors5` or use the `hint` watch subcommand for a
-// hint.
 
 use std::error;
 use std::fmt;

@@ -1,5 +1,3 @@
-// quiz3.rs
-//
 // This quiz tests:
 // - Generics
 // - Traits
@@ -13,8 +11,6 @@
 // Make the necessary code changes in the struct ReportCard and the impl block
 // to support alphabetical report cards. Change the Grade in the second test to
 // "A+" to show that your changes allow alphabetical grades.
-//
-// Execute `rustlings hint quiz3` or use the `hint` watch subcommand for a hint.
 
 pub struct ReportCard {
     pub grade: f32,
@@ -24,9 +20,15 @@ pub struct ReportCard {
 
 impl ReportCard {
     pub fn print(&self) -> String {
-        format!("{} ({}) - achieved a grade of {}",
-            &self.student_name, &self.student_age, &self.grade)
+        format!(
+            "{} ({}) - achieved a grade of {}",
+            &self.student_name, &self.student_age, &self.grade
+        )
     }
+}
+
+fn main() {
+    // You can optionally experiment here.
 }
 
 #[cfg(test)]

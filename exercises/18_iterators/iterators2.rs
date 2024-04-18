@@ -1,10 +1,5 @@
-// iterators2.rs
-//
 // In this exercise, you'll learn some of the unique advantages that iterators
 // can offer. Follow the steps to complete the exercise.
-//
-// Execute `rustlings hint iterators2` or use the `hint` watch subcommand for a
-// hint.
 
 // Step 1.
 // Complete the `capitalize_first` function.
@@ -31,6 +26,10 @@ pub fn capitalize_words_vector(words: &[&str]) -> Vec<String> {
 // ["hello", " ", "world"] -> "Hello World"
 pub fn capitalize_words_string(words: &[&str]) -> String {
     String::new()
+}
+
+fn main() {
+    // You can optionally experiment here.
 }
 
 #[cfg(test)]

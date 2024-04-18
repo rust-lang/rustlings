@@ -6,23 +6,16 @@ exclude = [
   "tests/fixture/success",
   "dev",
 ]
-members = [
-  "gen-dev-cargo-toml",
-]
 
 [workspace.package]
-version = "6.0.0"
+version = "6.0.0-alpha.0"
 authors = [
   "Liv <mokou@fastmail.com>",
   "Carol (Nichols || Goulding) <carol.nichols@gmail.com>",
+  "Mo <mo8it@proton.me>",
 ]
 license = "MIT"
 edition = "2021"
-
-[workspace.dependencies]
-anyhow = "1.0.82"
-serde = { version = "1.0.197", features = ["derive"] }
-toml_edit = { version = "0.22.9", default-features = false, features = ["parse", "serde"] }
 
 [package]
 name = "rustlings"
@@ -32,17 +25,24 @@ version.workspace = true
 authors.workspace = true
 license.workspace = true
 edition.workspace = true
+include = [
+  "/exercises/",
+  "/info.toml",
+  "/LICENSE",
+  "/README.md",
+  "/src/",
+]
 
 [dependencies]
-anyhow.workspace = true
+anyhow = "1.0.82"
 clap = { version = "4.5.4", features = ["derive"] }
 crossterm = "0.27.0"
 hashbrown = "0.14.3"
 notify-debouncer-mini = "0.4.1"
-ratatui = "0.26.1"
-rustlings-macros = { path = "rustlings-macros" }
-serde.workspace = true
-toml_edit.workspace = true
+ratatui = "0.26.2"
+rustlings-macros = { path = "rustlings-macros", version = "6.0.0-alpha.0" }
+serde = { version = "1.0.198", features = ["derive"] }
+toml_edit = { version = "0.22.9", default-features = false, features = ["parse", "serde"] }
 which = "6.0.1"
 
 [dev-dependencies]

@@ -39,6 +39,7 @@ impl ExerciseInfo {
 
 #[derive(Deserialize)]
 pub struct InfoFile {
+    pub format_version: u8,
     pub welcome_message: Option<String>,
     pub final_message: Option<String>,
     pub exercises: Vec<ExerciseInfo>,
@@ -62,14 +63,6 @@ impl InfoFile {
         if slf.exercises.is_empty() {
             bail!("{NO_EXERCISES_ERR}");
         }
-
-        let mut names_set = hashbrown::HashSet::with_capacity(slf.exercises.len());
-        for exercise in &slf.exercises {
-            if !names_set.insert(exercise.name.as_str()) {
-                bail!("Exercise names must all be unique!")
-            }
-        }
-        drop(names_set);
 
         Ok(slf)
     }
