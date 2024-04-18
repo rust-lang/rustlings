@@ -63,10 +63,10 @@ enum Subcommands {
         /// The name of the exercise
         name: String,
     },
-    /// Return a hint for the given exercise
+    /// Show a hint. Shows the hint of the next pending exercise if the exercise name is not specified.
     Hint {
         /// The name of the exercise
-        name: String,
+        name: Option<String>,
     },
     #[command(subcommand)]
     Dev(DevCommands),
@@ -162,7 +162,9 @@ fn main() -> Result<()> {
             println!("The exercise {exercise_path} has been reset");
         }
         Some(Subcommands::Hint { name }) => {
-            app_state.set_current_exercise_by_name(&name)?;
+            if let Some(name) = name {
+                app_state.set_current_exercise_by_name(&name)?;
+            }
             println!("{}", app_state.current_exercise().hint);
         }
         // Handled in an earlier match.
