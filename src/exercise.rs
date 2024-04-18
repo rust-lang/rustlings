@@ -1,10 +1,10 @@
-use anyhow::{Context, Result};
+use anyhow::{bail, Context, Result};
 use crossterm::style::{style, StyledContent, Stylize};
 use std::{
     fmt::{self, Display, Formatter},
     fs,
     path::Path,
-    process::{Command, Output},
+    process::{Command, Output, Stdio},
 };
 
 use crate::{
@@ -88,9 +88,31 @@ impl Exercise {
     }
 
     pub fn reset(&self) -> Result<()> {
-        EMBEDDED_FILES
-            .write_exercise_to_disk(self.path, WriteStrategy::Overwrite)
-            .with_context(|| format!("Failed to reset the exercise {self}"))
+        if Path::new("info.toml").exists() {
+            let output = Command::new("git")
+                .arg("stash")
+                .arg("push")
+                .arg("--")
+                .arg(self.path)
+                .stdin(Stdio::null())
+                .stdout(Stdio::null())
+                .output()
+                .with_context(|| format!("Failed to run `git stash push -- {}`", self.path))?;
+
+            if !output.status.success() {
+                bail!(
+                    "`git stash push -- {}` didn't run successfully: {}",
+                    self.path,
+                    String::from_utf8_lossy(&output.stderr),
+                );
+            }
+        } else {
+            EMBEDDED_FILES
+                .write_exercise_to_disk(self.path, WriteStrategy::Overwrite)
+                .with_context(|| format!("Failed to reset the exercise {self}"))?;
+        }
+
+        Ok(())
     }
 
     pub fn terminal_link(&self) -> StyledContent<TerminalFileLink<'_>> {
