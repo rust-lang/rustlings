@@ -79,7 +79,7 @@ fn unexpected_file(path: &Path) -> Error {
     anyhow!("Found the file `{}`. Only `README.md` and Rust files related to an exercise in `info.toml` are allowed in the `exercises` directory", path.display())
 }
 
-fn check_exercise_dir_files(info_file_paths: hashbrown::HashSet<PathBuf>) -> Result<()> {
+fn check_exercise_dir_files(info_file_paths: &hashbrown::HashSet<PathBuf>) -> Result<()> {
     for entry in read_dir("exercises").context("Failed to open the `exercises` directory")? {
         let entry = entry.context("Failed to read the `exercises` directory")?;
 
@@ -131,7 +131,7 @@ fn check_exercises(info_file: &InfoFile) -> Result<()> {
     }
 
     let info_file_paths = check_info_file_exercises(info_file)?;
-    check_exercise_dir_files(info_file_paths)?;
+    check_exercise_dir_files(&info_file_paths)?;
 
     Ok(())
 }
