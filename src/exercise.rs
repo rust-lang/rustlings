@@ -1,17 +1,13 @@
-use anyhow::{bail, Context, Result};
+use anyhow::{Context, Result};
 use crossterm::style::{style, StyledContent, Stylize};
 use std::{
     fmt::{self, Display, Formatter},
     fs,
     path::Path,
-    process::{Command, Output, Stdio},
+    process::{Command, Output},
 };
 
-use crate::{
-    embedded::{WriteStrategy, EMBEDDED_FILES},
-    info_file::Mode,
-    DEVELOPING_OFFICIAL_RUSTLINGS,
-};
+use crate::{info_file::Mode, DEVELOPING_OFFICIAL_RUSTLINGS};
 
 pub struct TerminalFileLink<'a> {
     path: &'a str,
@@ -85,34 +81,6 @@ impl Exercise {
                 &["--", "-D", "warnings", "-D", "clippy::float_cmp"],
             ),
         }
-    }
-
-    pub fn reset(&self) -> Result<()> {
-        if Path::new("info.toml").exists() {
-            let output = Command::new("git")
-                .arg("stash")
-                .arg("push")
-                .arg("--")
-                .arg(self.path)
-                .stdin(Stdio::null())
-                .stdout(Stdio::null())
-                .output()
-                .with_context(|| format!("Failed to run `git stash push -- {}`", self.path))?;
-
-            if !output.status.success() {
-                bail!(
-                    "`git stash push -- {}` didn't run successfully: {}",
-                    self.path,
-                    String::from_utf8_lossy(&output.stderr),
-                );
-            }
-        } else {
-            EMBEDDED_FILES
-                .write_exercise_to_disk(self.path, WriteStrategy::Overwrite)
-                .with_context(|| format!("Failed to reset the exercise {self}"))?;
-        }
-
-        Ok(())
     }
 
     pub fn terminal_link(&self) -> StyledContent<TerminalFileLink<'_>> {

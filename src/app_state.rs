@@ -7,9 +7,15 @@ use crossterm::{
 use std::{
     fs::{self, File},
     io::{Read, StdoutLock, Write},
+    path::Path,
+    process::{Command, Stdio},
 };
 
-use crate::{exercise::Exercise, info_file::ExerciseInfo};
+use crate::{
+    embedded::{WriteStrategy, EMBEDDED_FILES},
+    exercise::Exercise,
+    info_file::ExerciseInfo,
+};
 
 const STATE_FILE_NAME: &str = ".rustlings-state.txt";
 const BAD_INDEX_ERR: &str = "The current exercise index is higher than the number of exercises";
@@ -31,6 +37,7 @@ pub struct AppState {
     n_done: u16,
     final_message: String,
     file_buf: Vec<u8>,
+    official_exercises: bool,
 }
 
 impl AppState {
@@ -111,6 +118,7 @@ impl AppState {
             n_done: 0,
             final_message,
             file_buf: Vec::with_capacity(2048),
+            official_exercises: !Path::new("info.toml").exists(),
         };
 
         let state_file_status = slf.update_from_file();
@@ -170,6 +178,53 @@ impl AppState {
         }
 
         Ok(())
+    }
+
+    fn reset_path(&self, path: &str) -> Result<()> {
+        if self.official_exercises {
+            return EMBEDDED_FILES
+                .write_exercise_to_disk(path, WriteStrategy::Overwrite)
+                .with_context(|| format!("Failed to reset the exercise {path}"));
+        }
+
+        let output = Command::new("git")
+            .arg("stash")
+            .arg("push")
+            .arg("--")
+            .arg(path)
+            .stdin(Stdio::null())
+            .stdout(Stdio::null())
+            .output()
+            .with_context(|| format!("Failed to run `git stash push -- {path}`"))?;
+
+        if !output.status.success() {
+            bail!(
+                "`git stash push -- {path}` didn't run successfully: {}",
+                String::from_utf8_lossy(&output.stderr),
+            );
+        }
+
+        Ok(())
+    }
+
+    pub fn reset_current_exercise(&mut self) -> Result<&'static str> {
+        let path = self.current_exercise().path;
+        self.set_pending(self.current_exercise_ind)?;
+        self.reset_path(path)?;
+
+        Ok(path)
+    }
+
+    pub fn reset_exercise_by_ind(&mut self, exercise_ind: usize) -> Result<&'static str> {
+        if exercise_ind >= self.exercises.len() {
+            bail!(BAD_INDEX_ERR);
+        }
+
+        let path = self.exercises[exercise_ind].path;
+        self.set_pending(exercise_ind)?;
+        self.reset_path(path)?;
+
+        Ok(path)
     }
 
     fn next_pending_exercise_ind(&self) -> Option<usize> {

@@ -158,10 +158,8 @@ fn main() -> Result<()> {
         }
         Some(Subcommands::Reset { name }) => {
             app_state.set_current_exercise_by_name(&name)?;
-            let exercise = app_state.current_exercise();
-            exercise.reset()?;
-            println!("The exercise {exercise} has been reset!");
-            app_state.set_pending(app_state.current_exercise_ind())?;
+            let exercise_path = app_state.reset_current_exercise()?;
+            println!("The exercise {exercise_path} has been reset");
         }
         Some(Subcommands::Hint { name }) => {
             app_state.set_current_exercise_by_name(&name)?;
