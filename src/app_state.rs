@@ -9,7 +9,7 @@ use std::{
     io::{Read, StdoutLock, Write},
 };
 
-use crate::{exercise::Exercise, info_file::ExerciseInfo, FENISH_LINE};
+use crate::{exercise::Exercise, info_file::ExerciseInfo};
 
 const STATE_FILE_NAME: &str = ".rustlings-state.txt";
 const BAD_INDEX_ERR: &str = "The current exercise index is higher than the number of exercises";
@@ -273,5 +273,27 @@ impl AppState {
 const RERUNNING_ALL_EXERCISES_MSG: &[u8] = b"
 All exercises seem to be done.
 Recompiling and running all exercises to make sure that all of them are actually done.
+
+";
+
+const FENISH_LINE: &str = "+----------------------------------------------------+
+|          You made it to the Fe-nish line!          |
++--------------------------  ------------------------+
+                           \\/\x1b[31m
+     ▒▒          ▒▒▒▒▒▒▒▒      ▒▒▒▒▒▒▒▒          ▒▒
+   ▒▒▒▒  ▒▒    ▒▒        ▒▒  ▒▒        ▒▒    ▒▒  ▒▒▒▒
+   ▒▒▒▒  ▒▒  ▒▒            ▒▒            ▒▒  ▒▒  ▒▒▒▒
+ ░░▒▒▒▒░░▒▒  ▒▒            ▒▒            ▒▒  ▒▒░░▒▒▒▒
+   ▓▓▓▓▓▓▓▓  ▓▓      ▓▓██  ▓▓  ▓▓██      ▓▓  ▓▓▓▓▓▓▓▓
+     ▒▒▒▒    ▒▒      ████  ▒▒  ████      ▒▒░░  ▒▒▒▒
+       ▒▒  ▒▒▒▒▒▒        ▒▒▒▒▒▒        ▒▒▒▒▒▒  ▒▒
+         ▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▒▒▒▒▒▒▒▒▓▓▓▓▓▓▒▒▒▒▒▒▒▒
+           ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+             ▒▒▒▒▒▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒▒▒▒▒▒
+           ▒▒  ▒▒▒▒▒▒▒▒▒▒██████▒▒▒▒▒▒▒▒▒▒  ▒▒
+         ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒
+       ▒▒    ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒    ▒▒
+       ▒▒  ▒▒    ▒▒                  ▒▒    ▒▒  ▒▒
+           ▒▒  ▒▒                      ▒▒  ▒▒\x1b[0m
 
 ";
