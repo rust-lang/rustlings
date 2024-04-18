@@ -91,3 +91,7 @@ Now you should be done!
 ## Contributing
 
 See [CONTRIBUTING.md](https://github.com/rust-lang/rustlings/blob/main/CONTRIBUTING.md).
+
+## Contributors ✨
+
+Thanks to [all the wonderful contributors](https://github.com/rust-lang/rustlings/graphs/contributors) 🎉❤️
