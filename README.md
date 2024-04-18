@@ -91,7 +91,3 @@ Now you should be done!
 ## Contributing
 
 See [CONTRIBUTING.md](https://github.com/rust-lang/rustlings/blob/main/CONTRIBUTING.md).
-
-## Contributors ✨
-
-Thanks goes to the wonderful people listed in [AUTHORS.md](https://github.com/rust-lang/rustlings/blob/main/AUTHORS.md) 🎉
