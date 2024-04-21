@@ -1,7 +1,7 @@
 # Cargo
 target/
-/tests/fixture/*/Cargo.lock
-/dev/Cargo.lock
+Cargo.lock
+!/Cargo.lock
 
 # State file
 .rustlings-state.txt
