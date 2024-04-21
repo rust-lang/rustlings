@@ -1,3 +1,5 @@
+use std::path::PathBuf;
+
 use anyhow::{bail, Context, Result};
 use clap::Subcommand;
 
@@ -9,7 +11,7 @@ mod update;
 
 #[derive(Subcommand)]
 pub enum DevCommands {
-    New { path: String },
+    New { path: PathBuf },
     Check,
     Update,
 }
@@ -22,7 +24,7 @@ impl DevCommands {
                     bail!("Disabled in the debug build");
                 }
 
-                new::init().context(INIT_ERR)
+                new::new(&path).context(INIT_ERR)
             }
             DevCommands::Check => check::check(),
             DevCommands::Update => update::update(),

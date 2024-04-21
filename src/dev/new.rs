@@ -1,41 +1,72 @@
-use anyhow::{Context, Result};
-use std::fs::{self, create_dir};
+use anyhow::{bail, Context, Result};
+use std::{
+    env::set_current_dir,
+    fs::{self, create_dir},
+    path::Path,
+    process::Command,
+};
 
 use crate::CURRENT_FORMAT_VERSION;
 
-pub fn init() -> Result<()> {
-    create_dir("rustlings").context("Failed to create the directory `rustlings`")?;
+fn create_rel_dir(dir_name: &str, current_dir: &str) -> Result<()> {
+    create_dir(dir_name)
+        .with_context(|| format!("Failed to create the directory {current_dir}/{dir_name}"))?;
+    println!("Created the directory {current_dir}/{dir_name}");
+    Ok(())
+}
 
-    create_dir("rustlings/exercises")
-        .context("Failed to create the directory `rustlings/exercises`")?;
+fn write_rel_file<C>(file_name: &str, current_dir: &str, content: C) -> Result<()>
+where
+    C: AsRef<[u8]>,
+{
+    fs::write(file_name, content)
+        .with_context(|| format!("Failed to create the file {current_dir}/{file_name}"))?;
+    // Space to align with `create_rel_dir`.
+    println!("Created the file      {current_dir}/{file_name}");
+    Ok(())
+}
 
-    create_dir("rustlings/solutions")
-        .context("Failed to create the directory `rustlings/solutions`")?;
+pub fn new(path: &Path) -> Result<()> {
+    let dir_name = path.to_string_lossy();
 
-    fs::write(
-        "rustlings/info.toml",
+    create_dir(path).with_context(|| format!("Failed to create the directory {dir_name}"))?;
+    println!("Created the directory {dir_name}");
+
+    set_current_dir(path)
+        .with_context(|| format!("Failed to set {dir_name} as the current directory"))?;
+
+    if !Command::new("git")
+        .arg("init")
+        .status()
+        .context("Failed to run `git init`")?
+        .success()
+    {
+        bail!("`git init` didn't run successfully. See the error message above");
+    }
+
+    write_rel_file(".gitignore", &dir_name, crate::init::GITIGNORE)?;
+
+    create_rel_dir("exercises", &dir_name)?;
+    create_rel_dir("solutions", &dir_name)?;
+
+    write_rel_file(
+        "info.toml",
+        &dir_name,
         format!("{INFO_FILE_BEFORE_FORMAT_VERSION}{CURRENT_FORMAT_VERSION}{INFO_FILE_AFTER_FORMAT_VERSION}"),
-    )
-    .context("Failed to create the file `rustlings/info.toml`")?;
+    )?;
 
-    fs::write("rustlings/Cargo.toml", CARGO_TOML)
-        .context("Failed to create the file `rustlings/Cargo.toml`")?;
+    write_rel_file("Cargo.toml", &dir_name, CARGO_TOML)?;
 
-    fs::write("rustlings/.gitignore", crate::init::GITIGNORE)
-        .context("Failed to create the file `rustlings/.gitignore`")?;
+    write_rel_file("README.md", &dir_name, README)?;
 
-    fs::write("rustlings/README.md", README)
-        .context("Failed to create the file `rustlings/README.md`")?;
-
-    create_dir("rustlings/.vscode")
-        .context("Failed to create the directory `rustlings/.vscode`")?;
-    fs::write(
-        "rustlings/.vscode/extensions.json",
+    create_rel_dir(".vscode", &dir_name)?;
+    write_rel_file(
+        ".vscode/extensions.json",
+        &dir_name,
         crate::init::VS_CODE_EXTENSIONS_JSON,
-    )
-    .context("Failed to create the file `rustlings/.vscode/extensions.json`")?;
+    )?;
 
-    println!("{INIT_DONE}");
+    println!("\nInitialization done ✓");
 
     Ok(())
 }
@@ -97,13 +128,3 @@ First,
 
 Then, open your terminal in this directory and run `rustlings` to get started with the exercises 🚀
 ";
-
-const INIT_DONE: &str = r#"Initialization done!
-You can start developing third-party Rustlings exercises in the `rustlings` directory :D
-
-If the initialization was done in a Rust project which is a Cargo workspace, you need to add the
-path to the `rustlings` directory to the `workspace.exclude` list in the project's `Cargo.toml`
-file. For example:
-
-[workspace]
-exclude = ["rustlings"]"#;
