@@ -11,12 +11,17 @@ mod update;
 
 #[derive(Subcommand)]
 pub enum DevCommands {
+    /// Create a new project for third-party Rustlings exercises
     New {
+        /// The path to create the project in
         path: PathBuf,
+        /// Don't initialize a Git repository in the project directory
         #[arg(long)]
         no_git: bool,
     },
+    /// Run checks on the exercises
     Check,
+    /// Update the `Cargo.toml` file for the exercises
     Update,
 }
 

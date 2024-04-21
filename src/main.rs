@@ -54,7 +54,7 @@ struct Args {
 enum Subcommands {
     /// Initialize Rustlings
     Init,
-    /// Run a single exercise. Runs the next pending exercise if the exercise name is not specified.
+    /// Run a single exercise. Runs the next pending exercise if the exercise name is not specified
     Run {
         /// The name of the exercise
         name: Option<String>,
@@ -64,11 +64,12 @@ enum Subcommands {
         /// The name of the exercise
         name: String,
     },
-    /// Show a hint. Shows the hint of the next pending exercise if the exercise name is not specified.
+    /// Show a hint. Shows the hint of the next pending exercise if the exercise name is not specified
     Hint {
         /// The name of the exercise
         name: Option<String>,
     },
+    /// Commands for developing (third-party) Rustlings exercises
     #[command(subcommand)]
     Dev(DevCommands),
 }
