@@ -6,17 +6,7 @@ use std::{
     path::Path,
 };
 
-use crate::embedded::EMBEDDED_FILES;
-
-const CARGO_TOML: &[u8] = {
-    let cargo_toml = include_bytes!("../dev/Cargo.toml");
-    // Skip the first line (comment).
-    let mut start_ind = 0;
-    while cargo_toml[start_ind] != b'\n' {
-        start_ind += 1;
-    }
-    cargo_toml.split_at(start_ind + 1).1
-};
+use crate::{cargo_toml::updated_cargo_toml, embedded::EMBEDDED_FILES, info_file::InfoFile};
 
 pub fn init() -> Result<()> {
     if Path::new("exercises").is_dir() && Path::new("Cargo.toml").is_file() {
@@ -38,7 +28,19 @@ pub fn init() -> Result<()> {
         .init_exercises_dir()
         .context("Failed to initialize the `rustlings/exercises` directory")?;
 
-    fs::write("Cargo.toml", CARGO_TOML)
+    let info_file = InfoFile::parse()?;
+    let current_cargo_toml = include_str!("../dev/Cargo.toml");
+    // Skip the first line (comment).
+    let newline_ind = current_cargo_toml
+        .as_bytes()
+        .iter()
+        .position(|c| *c == b'\n')
+        .context("The embedded `Cargo.toml` is empty or contains only one line.")?;
+    let current_cargo_toml =
+        &current_cargo_toml[(newline_ind + 1).min(current_cargo_toml.len() - 1)..];
+    let updated_cargo_toml = updated_cargo_toml(&info_file.exercises, current_cargo_toml, b"")
+        .context("Failed to generate `Cargo.toml`")?;
+    fs::write("Cargo.toml", updated_cargo_toml)
         .context("Failed to create the file `rustlings/Cargo.toml`")?;
 
     fs::write(".gitignore", GITIGNORE)

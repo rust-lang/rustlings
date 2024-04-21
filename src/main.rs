@@ -14,6 +14,7 @@ use std::{
 use self::{app_state::AppState, dev::DevCommands, info_file::InfoFile, watch::WatchExit};
 
 mod app_state;
+mod cargo_toml;
 mod dev;
 mod embedded;
 mod exercise;
