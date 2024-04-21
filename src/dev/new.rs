@@ -26,7 +26,7 @@ where
     Ok(())
 }
 
-pub fn new(path: &Path) -> Result<()> {
+pub fn new(path: &Path, no_git: bool) -> Result<()> {
     let dir_name = path.to_string_lossy();
 
     create_dir(path).with_context(|| format!("Failed to create the directory {dir_name}"))?;
@@ -35,11 +35,12 @@ pub fn new(path: &Path) -> Result<()> {
     set_current_dir(path)
         .with_context(|| format!("Failed to set {dir_name} as the current directory"))?;
 
-    if !Command::new("git")
-        .arg("init")
-        .status()
-        .context("Failed to run `git init`")?
-        .success()
+    if !no_git
+        && !Command::new("git")
+            .arg("init")
+            .status()
+            .context("Failed to run `git init`")?
+            .success()
     {
         bail!("`git init` didn't run successfully. See the error message above");
     }

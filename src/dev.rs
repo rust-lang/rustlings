@@ -11,7 +11,11 @@ mod update;
 
 #[derive(Subcommand)]
 pub enum DevCommands {
-    New { path: PathBuf },
+    New {
+        path: PathBuf,
+        #[arg(long)]
+        no_git: bool,
+    },
     Check,
     Update,
 }
@@ -19,12 +23,12 @@ pub enum DevCommands {
 impl DevCommands {
     pub fn run(self) -> Result<()> {
         match self {
-            DevCommands::New { path } => {
+            DevCommands::New { path, no_git } => {
                 if DEBUG_PROFILE {
                     bail!("Disabled in the debug build");
                 }
 
-                new::new(&path).context(INIT_ERR)
+                new::new(&path, no_git).context(INIT_ERR)
             }
             DevCommands::Check => check::check(),
             DevCommands::Update => update::update(),
