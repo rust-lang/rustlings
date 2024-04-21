@@ -4,12 +4,12 @@ use clap::Subcommand;
 use crate::DEBUG_PROFILE;
 
 mod check;
-mod init;
+mod new;
 mod update;
 
 #[derive(Subcommand)]
 pub enum DevCommands {
-    Init,
+    New { path: String },
     Check,
     Update,
 }
@@ -17,12 +17,12 @@ pub enum DevCommands {
 impl DevCommands {
     pub fn run(self) -> Result<()> {
         match self {
-            DevCommands::Init => {
+            DevCommands::New { path } => {
                 if DEBUG_PROFILE {
                     bail!("Disabled in the debug build");
                 }
 
-                init::init().context(INIT_ERR)
+                new::init().context(INIT_ERR)
             }
             DevCommands::Check => check::check(),
             DevCommands::Update => update::update(),
