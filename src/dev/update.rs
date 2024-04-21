@@ -4,7 +4,7 @@ use anyhow::{Context, Result};
 
 use crate::{
     info_file::{ExerciseInfo, InfoFile},
-    DEVELOPING_OFFICIAL_RUSTLINGS,
+    DEBUG_PROFILE,
 };
 
 use super::check::{append_bins, bins_start_end_ind};
@@ -30,7 +30,7 @@ fn update_cargo_toml(
 pub fn update() -> Result<()> {
     let info_file = InfoFile::parse()?;
 
-    if DEVELOPING_OFFICIAL_RUSTLINGS {
+    if DEBUG_PROFILE {
         update_cargo_toml(
             &info_file.exercises,
             include_str!("../../dev/Cargo.toml"),

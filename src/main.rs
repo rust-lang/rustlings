@@ -25,7 +25,7 @@ mod run;
 mod watch;
 
 const CURRENT_FORMAT_VERSION: u8 = 1;
-const DEVELOPING_OFFICIAL_RUSTLINGS: bool = {
+const DEBUG_PROFILE: bool = {
     #[allow(unused_assignments, unused_mut)]
     let mut debug_profile = false;
 
@@ -79,8 +79,8 @@ fn main() -> Result<()> {
 
     match args.command {
         Some(Subcommands::Init) => {
-            if DEVELOPING_OFFICIAL_RUSTLINGS {
-                bail!("Disabled while developing the official Rustlings");
+            if DEBUG_PROFILE {
+                bail!("Disabled in the debug build");
             }
 
             return init::init().context("Initialization failed");

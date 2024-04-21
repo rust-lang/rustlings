@@ -7,7 +7,7 @@ use std::{
     process::{Command, Output},
 };
 
-use crate::{info_file::Mode, DEVELOPING_OFFICIAL_RUSTLINGS};
+use crate::{info_file::Mode, DEBUG_PROFILE};
 
 pub struct TerminalFileLink<'a> {
     path: &'a str,
@@ -48,7 +48,7 @@ impl Exercise {
         cmd.arg(command);
 
         // A hack to make `cargo run` work when developing Rustlings.
-        if DEVELOPING_OFFICIAL_RUSTLINGS && Path::new("tests").exists() {
+        if DEBUG_PROFILE && Path::new("tests").exists() {
             cmd.arg("--manifest-path").arg("dev/Cargo.toml");
         }
 

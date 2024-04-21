@@ -1,7 +1,7 @@
 use anyhow::{bail, Context, Result};
 use clap::Subcommand;
 
-use crate::DEVELOPING_OFFICIAL_RUSTLINGS;
+use crate::DEBUG_PROFILE;
 
 mod check;
 mod init;
@@ -18,8 +18,8 @@ impl DevCommands {
     pub fn run(self) -> Result<()> {
         match self {
             DevCommands::Init => {
-                if DEVELOPING_OFFICIAL_RUSTLINGS {
-                    bail!("Disabled while developing the official Rustlings");
+                if DEBUG_PROFILE {
+                    bail!("Disabled in the debug build");
                 }
 
                 init::init().context(INIT_ERR)

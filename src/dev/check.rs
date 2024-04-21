@@ -8,7 +8,7 @@ use std::{
 
 use crate::{
     info_file::{ExerciseInfo, InfoFile},
-    CURRENT_FORMAT_VERSION, DEVELOPING_OFFICIAL_RUSTLINGS,
+    CURRENT_FORMAT_VERSION, DEBUG_PROFILE,
 };
 
 fn forbidden_char(input: &str) -> Option<char> {
@@ -193,7 +193,7 @@ pub fn check() -> Result<()> {
     let info_file = InfoFile::parse()?;
     check_exercises(&info_file)?;
 
-    if DEVELOPING_OFFICIAL_RUSTLINGS {
+    if DEBUG_PROFILE {
         check_cargo_toml(
             &info_file.exercises,
             include_str!("../../dev/Cargo.toml"),
