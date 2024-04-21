@@ -88,6 +88,14 @@ fn main() -> Result<()> {
                 bail!("Disabled in the debug build");
             }
 
+            {
+                let mut stdout = io::stdout().lock();
+                stdout.write_all(b"This command will create the directory `rustlings/` which will contain the exercises.\nPress ENTER to continue ")?;
+                stdout.flush()?;
+                io::stdin().lock().read_until(b'\n', &mut Vec::new())?;
+                stdout.write_all(b"\n")?;
+            }
+
             return init::init().context("Initialization failed");
         }
         Some(Subcommands::Dev(dev_command)) => return dev_command.run(),
