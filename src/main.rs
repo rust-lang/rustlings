@@ -75,6 +75,10 @@ enum Subcommands {
 fn main() -> Result<()> {
     let args = Args::parse();
 
+    if !DEBUG_PROFILE && Path::new("dev/rustlings-repo.txt").exists() {
+        bail!("{OLD_METHOD_ERR}");
+    }
+
     which::which("cargo").context(CARGO_NOT_FOUND_ERR)?;
 
     match args.command {
@@ -173,6 +177,11 @@ fn main() -> Result<()> {
 
     Ok(())
 }
+
+const OLD_METHOD_ERR: &str = "You are trying to run Rustlings using the old method before v6.
+The new method doesn't include cloning the Rustlings' repository.
+Please follow the instructions in the README:
+https://github.com/rust-lang/rustlings#getting-started";
 
 const CARGO_NOT_FOUND_ERR: &str = "Failed to find `cargo`.
 Did you already install Rust?
