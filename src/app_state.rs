@@ -53,7 +53,8 @@ impl AppState {
         }
 
         // See `Self::write` for more information about the file format.
-        let mut lines = self.file_buf.split(|c| *c == b'\n');
+        let mut lines = self.file_buf.split(|c| *c == b'\n').skip(2);
+
         let Some(current_exercise_name) = lines.next() else {
             return StateFileStatus::NotRead;
         };
@@ -300,13 +301,17 @@ impl AppState {
 
     // Write the state file.
     // The file's format is very simple:
-    // - The first line is the name of the current exercise. It must end with `\n` even if there
-    // are no done exercises.
+    // - The first line is a comment.
     // - The second line is an empty line.
+    // - The third line is the name of the current exercise. It must end with `\n` even if there
+    // are no done exercises.
+    // - The fourth line is an empty line.
     // - All remaining lines are the names of done exercises.
     fn write(&mut self) -> Result<()> {
         self.file_buf.clear();
 
+        self.file_buf
+            .extend_from_slice(b"DON'T EDIT THIS FILE!\n\n");
         self.file_buf
             .extend_from_slice(self.current_exercise().name.as_bytes());
         self.file_buf.push(b'\n');
