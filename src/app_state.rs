@@ -11,7 +11,7 @@ use std::{
     process::{Command, Stdio},
 };
 
-use crate::{embedded::EMBEDDED_FILES, exercise::Exercise, info_file::ExerciseInfo};
+use crate::{embedded::EMBEDDED_FILES, exercise::Exercise, info_file::ExerciseInfo, DEBUG_PROFILE};
 
 const STATE_FILE_NAME: &str = ".rustlings-state.txt";
 const BAD_INDEX_ERR: &str = "The current exercise index is higher than the number of exercises";
@@ -264,7 +264,7 @@ impl AppState {
             self.n_done += 1;
         }
 
-        if self.official_exercises {
+        if self.official_exercises && !DEBUG_PROFILE {
             EMBEDDED_FILES.write_solution_to_disk(
                 self.current_exercise_ind,
                 exercise
