@@ -43,7 +43,13 @@ struct ExerciseDir {
 
 impl ExerciseDir {
     fn init_on_disk(&self) -> Result<()> {
-        let dir_path = format!("exercises/{}", self.name);
+        let path_prefix = "exercises/";
+        let readme_path_postfix = "/README.md";
+        let mut dir_path =
+            String::with_capacity(path_prefix.len() + self.name.len() + readme_path_postfix.len());
+        dir_path.push_str(path_prefix);
+        dir_path.push_str(self.name);
+
         if let Err(e) = create_dir(&dir_path) {
             if e.kind() == io::ErrorKind::AlreadyExists {
                 return Ok(());
@@ -54,8 +60,11 @@ impl ExerciseDir {
             );
         }
 
-        WriteStrategy::Overwrite
-            .write(&format!("exercises/{}/README.md", self.name), self.readme)?;
+        let readme_path = {
+            dir_path.push_str(readme_path_postfix);
+            dir_path
+        };
+        WriteStrategy::Overwrite.write(&readme_path, self.readme)?;
 
         Ok(())
     }
