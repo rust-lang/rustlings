@@ -264,6 +264,16 @@ impl AppState {
             self.n_done += 1;
         }
 
+        if self.official_exercises {
+            EMBEDDED_FILES.write_solution_to_disk(
+                self.current_exercise_ind,
+                exercise
+                    .dir
+                    .context("Official exercises must be nested in the `exercises` directory")?,
+                exercise.name,
+            )?;
+        }
+
         let Some(ind) = self.next_pending_exercise_ind() else {
             writer.write_all(RERUNNING_ALL_EXERCISES_MSG)?;
 
