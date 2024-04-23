@@ -90,11 +90,6 @@ You can also get the hint for the next pending exercise with the following comma
 rustlings hint
 ```
 
-## Quizzes
-
-After every couple of sections, there will be a quiz that'll test your knowledge on a bunch of sections at once.
-These quizzes are found in `exercises/quizzes`.
-
 ## Continuing On
 
 <!-- TODO: Mention third-party exercises -->
