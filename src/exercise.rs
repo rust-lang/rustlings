@@ -31,6 +31,7 @@ impl<'a> Display for TerminalFileLink<'a> {
 }
 
 pub struct Exercise {
+    pub dir: Option<&'static str>,
     // Exercise's unique name
     pub name: &'static str,
     // Exercise's path

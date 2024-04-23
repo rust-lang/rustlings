@@ -690,6 +690,8 @@ name = "rustlings-macros"
 version = "6.0.0-alpha.0"
 dependencies = [
  "quote",
+ "serde",
+ "toml_edit",
 ]
 
 [[package]]

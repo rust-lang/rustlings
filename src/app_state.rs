@@ -11,11 +11,7 @@ use std::{
     process::{Command, Stdio},
 };
 
-use crate::{
-    embedded::{WriteStrategy, EMBEDDED_FILES},
-    exercise::Exercise,
-    info_file::ExerciseInfo,
-};
+use crate::{embedded::EMBEDDED_FILES, exercise::Exercise, info_file::ExerciseInfo};
 
 const STATE_FILE_NAME: &str = ".rustlings-state.txt";
 const BAD_INDEX_ERR: &str = "The current exercise index is higher than the number of exercises";
@@ -100,10 +96,15 @@ impl AppState {
 
                 exercise_info.name.shrink_to_fit();
                 let name = exercise_info.name.leak();
+                let dir = exercise_info.dir.map(|mut dir| {
+                    dir.shrink_to_fit();
+                    &*dir.leak()
+                });
 
                 let hint = exercise_info.hint.trim().to_owned();
 
                 Exercise {
+                    dir,
                     name,
                     path,
                     mode: exercise_info.mode,
@@ -181,10 +182,16 @@ impl AppState {
         Ok(())
     }
 
-    fn reset_path(&self, path: &str) -> Result<()> {
+    fn reset(&self, ind: usize, dir_name: Option<&str>, path: &str) -> Result<()> {
         if self.official_exercises {
             return EMBEDDED_FILES
-                .write_exercise_to_disk(path, WriteStrategy::Overwrite)
+                .write_exercise_to_disk(
+                    ind,
+                    dir_name.context(
+                        "Official exercises must be nested in the `exercises` directory",
+                    )?,
+                    path,
+                )
                 .with_context(|| format!("Failed to reset the exercise {path}"));
         }
 
@@ -209,11 +216,11 @@ impl AppState {
     }
 
     pub fn reset_current_exercise(&mut self) -> Result<&'static str> {
-        let path = self.current_exercise().path;
         self.set_pending(self.current_exercise_ind)?;
-        self.reset_path(path)?;
+        let exercise = self.current_exercise();
+        self.reset(self.current_exercise_ind, exercise.dir, exercise.path)?;
 
-        Ok(path)
+        Ok(exercise.path)
     }
 
     pub fn reset_exercise_by_ind(&mut self, exercise_ind: usize) -> Result<&'static str> {
@@ -221,11 +228,11 @@ impl AppState {
             bail!(BAD_INDEX_ERR);
         }
 
-        let path = self.exercises[exercise_ind].path;
         self.set_pending(exercise_ind)?;
-        self.reset_path(path)?;
+        let exercise = &self.exercises[exercise_ind];
+        self.reset(exercise_ind, exercise.dir, exercise.path)?;
 
-        Ok(path)
+        Ok(exercise.path)
     }
 
     fn next_pending_exercise_ind(&self) -> Option<usize> {

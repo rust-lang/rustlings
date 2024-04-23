@@ -24,11 +24,11 @@ pub fn init() -> Result<()> {
     set_current_dir("rustlings")
         .context("Failed to change the current directory to `rustlings`")?;
 
+    let info_file = InfoFile::parse()?;
     EMBEDDED_FILES
-        .init_exercises_dir()
+        .init_exercises_dir(&info_file.exercises)
         .context("Failed to initialize the `rustlings/exercises` directory")?;
 
-    let info_file = InfoFile::parse()?;
     let current_cargo_toml = include_str!("../dev/Cargo.toml");
     // Skip the first line (comment).
     let newline_ind = current_cargo_toml
