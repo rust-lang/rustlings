@@ -2,8 +2,6 @@ use anyhow::{bail, Context, Error, Result};
 use serde::Deserialize;
 use std::{fs, io::ErrorKind};
 
-use crate::DEBUG_PROFILE;
-
 // The mode of the exercise.
 #[derive(Deserialize, Copy, Clone)]
 #[serde(rename_all = "lowercase")]
@@ -48,23 +46,15 @@ pub struct InfoFile {
 }
 
 impl InfoFile {
-    fn from_embedded() -> Result<Self> {
-        toml_edit::de::from_str(include_str!("../info.toml"))
-            .context("Failed to parse the embedded `info.toml` file")
-    }
-
     pub fn parse() -> Result<Self> {
-        if DEBUG_PROFILE {
-            return Self::from_embedded();
-        }
-
         // Read a local `info.toml` if it exists.
         let slf = match fs::read_to_string("info.toml") {
             Ok(file_content) => toml_edit::de::from_str::<Self>(&file_content)
                 .context("Failed to parse the `info.toml` file")?,
             Err(e) => {
                 if e.kind() == ErrorKind::NotFound {
-                    return Self::from_embedded();
+                    return toml_edit::de::from_str(include_str!("../info.toml"))
+                        .context("Failed to parse the embedded `info.toml` file");
                 }
 
                 return Err(Error::from(e).context("Failed to read the `info.toml` file"));
