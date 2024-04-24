@@ -23,6 +23,7 @@ mod init;
 mod list;
 mod progress_bar;
 mod run;
+mod terminal_link;
 mod watch;
 
 const CURRENT_FORMAT_VERSION: u8 = 1;

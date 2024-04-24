@@ -1,86 +1,39 @@
 use proc_macro::TokenStream;
 use quote::quote;
-use std::{fs::read_dir, panic, path::PathBuf};
+use serde::Deserialize;
 
-fn path_to_string(path: PathBuf) -> String {
-    path.into_os_string()
-        .into_string()
-        .unwrap_or_else(|original| {
-            panic!("The path {} is invalid UTF8", original.to_string_lossy());
-        })
+#[derive(Deserialize)]
+struct ExerciseInfo {
+    name: String,
+    dir: String,
+}
+
+#[derive(Deserialize)]
+struct InfoFile {
+    exercises: Vec<ExerciseInfo>,
 }
 
 #[proc_macro]
 pub fn include_files(_: TokenStream) -> TokenStream {
-    let mut files = Vec::with_capacity(8);
-    let mut dirs = Vec::with_capacity(128);
+    let exercises = toml_edit::de::from_str::<InfoFile>(include_str!("../../info.toml"))
+        .expect("Failed to parse `info.toml`")
+        .exercises;
 
-    for entry in read_dir("exercises").expect("Failed to open the `exercises` directory") {
-        let entry = entry.expect("Failed to read the `exercises` directory");
-
-        if entry.file_type().unwrap().is_file() {
-            let path = entry.path();
-            if path.file_name().unwrap() != "README.md" {
-                files.push(path_to_string(path));
-            }
-
-            continue;
-        }
-
-        let dir_path = entry.path();
-        let dir_files = read_dir(&dir_path).unwrap_or_else(|e| {
-            panic!("Failed to open the directory {}: {e}", dir_path.display());
-        });
-        let dir_path = path_to_string(dir_path);
-        let dir_files = dir_files.filter_map(|entry| {
-            let entry = entry.unwrap_or_else(|e| {
-                panic!("Failed to read the directory {dir_path}: {e}");
-            });
-            let path = entry.path();
-
-            if !entry.file_type().unwrap().is_file() {
-                panic!("Found {} but expected only files", path.display());
-            }
-
-            if path.file_name().unwrap() == "README.md" {
-                return None;
-            }
-
-            Some(path_to_string(path))
-        });
-
-        dirs.push(quote! {
-            EmbeddedFlatDir {
-                path: #dir_path,
-                readme: EmbeddedFile {
-                    path: ::std::concat!(#dir_path, "/README.md"),
-                    content: ::std::include_bytes!(::std::concat!("../", #dir_path, "/README.md")),
-                },
-                content: &[
-                    #(EmbeddedFile {
-                        path: #dir_files,
-                        content: ::std::include_bytes!(::std::concat!("../", #dir_files)),
-                    }),*
-                ],
-            }
-        });
-    }
+    let exercise_files = exercises
+        .iter()
+        .map(|exercise| format!("../exercises/{}/{}.rs", exercise.dir, exercise.name));
+    let solution_files = exercises
+        .iter()
+        .map(|exercise| format!("../solutions/{}/{}.rs", exercise.dir, exercise.name));
+    let dirs = exercises.iter().map(|exercise| &exercise.dir);
+    let readmes = exercises
+        .iter()
+        .map(|exercise| format!("../exercises/{}/README.md", exercise.dir));
 
     quote! {
         EmbeddedFiles {
-            exercises_dir: ExercisesDir {
-                readme: EmbeddedFile {
-                    path: "exercises/README.md",
-                    content: ::std::include_bytes!("../exercises/README.md"),
-                },
-                files: &[#(
-                     EmbeddedFile {
-                        path: #files,
-                        content: ::std::include_bytes!(::std::concat!("../", #files)),
-                    }
-                ),*],
-                dirs: &[#(#dirs),*],
-            },
+            exercise_files: &[#(ExerciseFiles { exercise: include_bytes!(#exercise_files), solution: include_bytes!(#solution_files) }),*],
+            exercise_dirs: &[#(ExerciseDir { name: #dirs, readme: include_bytes!(#readmes) }),*]
         }
     }
     .into()

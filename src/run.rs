@@ -1,8 +1,11 @@
 use anyhow::{bail, Result};
-use crossterm::style::Stylize;
+use crossterm::style::{style, Stylize};
 use std::io::{self, Write};
 
-use crate::app_state::{AppState, ExercisesProgress};
+use crate::{
+    app_state::{AppState, ExercisesProgress},
+    terminal_link::TerminalFileLink,
+};
 
 pub fn run(app_state: &mut AppState) -> Result<()> {
     let exercise = app_state.current_exercise();
@@ -28,6 +31,13 @@ pub fn run(app_state: &mut AppState) -> Result<()> {
         "✓ Successfully ran ".green(),
         exercise.path.green(),
     ))?;
+
+    if let Some(solution_path) = app_state.current_solution_path()? {
+        println!(
+            "\nA solution file can be found at {}\n",
+            style(TerminalFileLink(&solution_path)).underlined().green(),
+        );
+    }
 
     match app_state.done_current_exercise(&mut stdout)? {
         ExercisesProgress::AllDone => (),

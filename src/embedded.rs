@@ -1,8 +1,10 @@
+use anyhow::{bail, Context, Error, Result};
 use std::{
-    fs::{create_dir, File, OpenOptions},
+    fs::{create_dir, create_dir_all, OpenOptions},
     io::{self, Write},
-    path::Path,
 };
+
+use crate::info_file::ExerciseInfo;
 
 pub static EMBEDDED_FILES: EmbeddedFiles = rustlings_macros::include_files!();
 
@@ -13,107 +15,110 @@ pub enum WriteStrategy {
 }
 
 impl WriteStrategy {
-    fn open<P: AsRef<Path>>(self, path: P) -> io::Result<File> {
-        match self {
+    fn write(self, path: &str, content: &[u8]) -> Result<()> {
+        let file = match self {
             Self::IfNotExists => OpenOptions::new().create_new(true).write(true).open(path),
             Self::Overwrite => OpenOptions::new()
                 .create(true)
                 .write(true)
                 .truncate(true)
                 .open(path),
-        }
+        };
+
+        file.context("Failed to open the file `{path}` in write mode")?
+            .write_all(content)
+            .context("Failed to write the file {path}")
     }
 }
 
-struct EmbeddedFile {
-    path: &'static str,
-    content: &'static [u8],
+struct ExerciseFiles {
+    exercise: &'static [u8],
+    solution: &'static [u8],
 }
 
-impl EmbeddedFile {
-    fn write_to_disk(&self, strategy: WriteStrategy) -> io::Result<()> {
-        strategy.open(self.path)?.write_all(self.content)
-    }
+struct ExerciseDir {
+    name: &'static str,
+    readme: &'static [u8],
 }
 
-struct EmbeddedFlatDir {
-    path: &'static str,
-    readme: EmbeddedFile,
-    content: &'static [EmbeddedFile],
-}
+impl ExerciseDir {
+    fn init_on_disk(&self) -> Result<()> {
+        let path_prefix = "exercises/";
+        let readme_path_postfix = "/README.md";
+        let mut dir_path =
+            String::with_capacity(path_prefix.len() + self.name.len() + readme_path_postfix.len());
+        dir_path.push_str(path_prefix);
+        dir_path.push_str(self.name);
 
-impl EmbeddedFlatDir {
-    fn init_on_disk(&self) -> io::Result<()> {
-        let path = Path::new(self.path);
-
-        if let Err(e) = create_dir(path) {
-            if e.kind() != io::ErrorKind::AlreadyExists {
-                return Err(e);
+        if let Err(e) = create_dir(&dir_path) {
+            if e.kind() == io::ErrorKind::AlreadyExists {
+                return Ok(());
             }
+
+            return Err(
+                Error::from(e).context(format!("Failed to create the directory {dir_path}"))
+            );
         }
 
-        self.readme.write_to_disk(WriteStrategy::Overwrite)
-    }
-}
+        let readme_path = {
+            dir_path.push_str(readme_path_postfix);
+            dir_path
+        };
+        WriteStrategy::Overwrite.write(&readme_path, self.readme)?;
 
-struct ExercisesDir {
-    readme: EmbeddedFile,
-    files: &'static [EmbeddedFile],
-    dirs: &'static [EmbeddedFlatDir],
+        Ok(())
+    }
 }
 
 pub struct EmbeddedFiles {
-    exercises_dir: ExercisesDir,
+    exercise_files: &'static [ExerciseFiles],
+    exercise_dirs: &'static [ExerciseDir],
 }
 
 impl EmbeddedFiles {
-    pub fn init_exercises_dir(&self) -> io::Result<()> {
-        create_dir("exercises")?;
+    pub fn init_exercises_dir(&self, exercise_infos: &[ExerciseInfo]) -> Result<()> {
+        create_dir("exercises").context("Failed to create the directory `exercises`")?;
 
-        self.exercises_dir
-            .readme
-            .write_to_disk(WriteStrategy::IfNotExists)?;
+        WriteStrategy::IfNotExists.write(
+            "exercises/README.md",
+            include_bytes!("../exercises/README.md"),
+        )?;
 
-        for file in self.exercises_dir.files {
-            file.write_to_disk(WriteStrategy::IfNotExists)?;
+        for dir in self.exercise_dirs {
+            dir.init_on_disk()?;
         }
 
-        for dir in self.exercises_dir.dirs {
-            dir.init_on_disk()?;
-
-            for file in dir.content {
-                file.write_to_disk(WriteStrategy::IfNotExists)?;
-            }
+        for (exercise_info, exercise_files) in exercise_infos.iter().zip(self.exercise_files) {
+            WriteStrategy::IfNotExists.write(&exercise_info.path(), exercise_files.exercise)?;
         }
 
         Ok(())
     }
 
-    pub fn write_exercise_to_disk<P>(&self, path: P, strategy: WriteStrategy) -> io::Result<()>
-    where
-        P: AsRef<Path>,
-    {
-        let path = path.as_ref();
+    pub fn write_exercise_to_disk(
+        &self,
+        exercise_ind: usize,
+        dir_name: &str,
+        path: &str,
+    ) -> Result<()> {
+        let Some(dir) = self.exercise_dirs.iter().find(|dir| dir.name == dir_name) else {
+            bail!("`{dir_name}` not found in the embedded directories");
+        };
 
-        if let Some(file) = self
-            .exercises_dir
-            .files
-            .iter()
-            .find(|file| Path::new(file.path) == path)
-        {
-            return file.write_to_disk(strategy);
-        }
+        dir.init_on_disk()?;
+        WriteStrategy::Overwrite.write(path, self.exercise_files[exercise_ind].exercise)
+    }
 
-        for dir in self.exercises_dir.dirs {
-            if let Some(file) = dir.content.iter().find(|file| Path::new(file.path) == path) {
-                dir.init_on_disk()?;
-                return file.write_to_disk(strategy);
-            }
-        }
+    pub fn write_solution_to_disk(
+        &self,
+        exercise_ind: usize,
+        dir_name: &str,
+        path: &str,
+    ) -> Result<()> {
+        let dir_path = format!("solutions/{dir_name}");
+        create_dir_all(&dir_path)
+            .with_context(|| format!("Failed to create the directory {dir_path}"))?;
 
-        Err(io::Error::new(
-            io::ErrorKind::NotFound,
-            format!("{} not found in the embedded files", path.display()),
-        ))
+        WriteStrategy::Overwrite.write(path, self.exercise_files[exercise_ind].solution)
     }
 }

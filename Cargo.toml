@@ -17,6 +17,10 @@ authors = [
 license = "MIT"
 edition = "2021"
 
+[workspace.dependencies]
+serde = { version = "1.0.198", features = ["derive"] }
+toml_edit = { version = "0.22.12", default-features = false, features = ["parse", "serde"] }
+
 [package]
 name = "rustlings"
 description = "Small exercises to get you used to reading and writing Rust code!"
@@ -41,8 +45,8 @@ hashbrown = "0.14.3"
 notify-debouncer-mini = "0.4.1"
 ratatui = "0.26.2"
 rustlings-macros = { path = "rustlings-macros", version = "6.0.0-alpha.0" }
-serde = { version = "1.0.198", features = ["derive"] }
-toml_edit = { version = "0.22.12", default-features = false, features = ["parse", "serde"] }
+serde.workspace = true
+toml_edit.workspace = true
 which = "6.0.1"
 
 [dev-dependencies]

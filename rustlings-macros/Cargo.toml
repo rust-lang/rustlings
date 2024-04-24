@@ -11,3 +11,5 @@ proc-macro = true
 
 [dependencies]
 quote = "1.0.36"
+serde.workspace = true
+toml_edit.workspace = true

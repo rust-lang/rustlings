@@ -236,6 +236,7 @@ Make sure the type is consistent across all arms."""
 
 [[exercises]]
 name = "quiz1"
+dir = "quizzes"
 mode = "test"
 hint = "No hints this time ;)"
 
@@ -637,6 +638,7 @@ Learn more at https://doc.rust-lang.org/book/ch08-03-hash-maps.html#updating-a-v
 
 [[exercises]]
 name = "quiz2"
+dir = "quizzes"
 mode = "test"
 hint = "No hints this time ;)"
 
@@ -870,6 +872,7 @@ See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#spe
 
 [[exercises]]
 name = "quiz3"
+dir = "quizzes"
 mode = "test"
 hint = """
 To find the best solution to this challenge you're going to need to think back

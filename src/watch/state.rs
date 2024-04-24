@@ -1,6 +1,6 @@
 use anyhow::Result;
 use crossterm::{
-    style::Stylize,
+    style::{style, Stylize},
     terminal::{size, Clear, ClearType},
     ExecutableCommand,
 };
@@ -9,7 +9,14 @@ use std::io::{self, StdoutLock, Write};
 use crate::{
     app_state::{AppState, ExercisesProgress},
     progress_bar::progress_bar,
+    terminal_link::TerminalFileLink,
 };
+
+enum DoneStatus {
+    DoneWithSolution(String),
+    DoneWithoutSolution,
+    Pending,
+}
 
 pub struct WatchState<'a> {
     writer: StdoutLock<'a>,
@@ -17,7 +24,7 @@ pub struct WatchState<'a> {
     stdout: Option<Vec<u8>>,
     stderr: Option<Vec<u8>>,
     show_hint: bool,
-    show_done: bool,
+    done_status: DoneStatus,
     manual_run: bool,
 }
 
@@ -31,7 +38,7 @@ impl<'a> WatchState<'a> {
             stdout: None,
             stderr: None,
             show_hint: false,
-            show_done: false,
+            done_status: DoneStatus::Pending,
             manual_run,
         }
     }
@@ -49,13 +56,18 @@ impl<'a> WatchState<'a> {
 
         if output.status.success() {
             self.stderr = None;
-            self.show_done = true;
+            self.done_status =
+                if let Some(solution_path) = self.app_state.current_solution_path()? {
+                    DoneStatus::DoneWithSolution(solution_path)
+                } else {
+                    DoneStatus::DoneWithoutSolution
+                };
         } else {
             self.app_state
                 .set_pending(self.app_state.current_exercise_ind())?;
 
             self.stderr = Some(output.stderr);
-            self.show_done = false;
+            self.done_status = DoneStatus::Pending;
         }
 
         self.render()
@@ -67,7 +79,7 @@ impl<'a> WatchState<'a> {
     }
 
     pub fn next_exercise(&mut self) -> Result<ExercisesProgress> {
-        if !self.show_done {
+        if matches!(self.done_status, DoneStatus::Pending) {
             self.writer
                 .write_all(b"The current exercise isn't done yet\n")?;
             self.show_prompt()?;
@@ -84,7 +96,7 @@ impl<'a> WatchState<'a> {
             self.writer.write_fmt(format_args!("{}un/", 'r'.bold()))?;
         }
 
-        if self.show_done {
+        if !matches!(self.done_status, DoneStatus::Pending) {
             self.writer.write_fmt(format_args!("{}ext/", 'n'.bold()))?;
         }
 
@@ -124,13 +136,20 @@ impl<'a> WatchState<'a> {
             ))?;
         }
 
-        if self.show_done {
+        if !matches!(self.done_status, DoneStatus::Pending) {
             self.writer.write_fmt(format_args!(
                 "{}\n\n",
                 "Exercise done ✓
 When you are done experimenting, enter `n` or `next` to go to the next exercise 🦀"
                     .bold()
                     .green(),
+            ))?;
+        }
+
+        if let DoneStatus::DoneWithSolution(solution_path) = &self.done_status {
+            self.writer.write_fmt(format_args!(
+                "A solution file can be found at {}\n\n",
+                style(TerminalFileLink(solution_path)).underlined().green()
             ))?;
         }
 
