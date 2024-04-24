@@ -78,7 +78,7 @@ Set-Location $path
 git checkout -q tags/$version
 
 Write-Host "Installing the 'rustlings' executable..."
-cargo install --force --path .
+cargo install --locked --force --path .
 if (!(Get-Command rustlings -ErrorAction SilentlyContinue)) {
     Write-Host "WARNING: Please check that you have '~/.cargo/bin' in your PATH environment variable!"
 }
