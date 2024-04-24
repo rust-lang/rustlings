@@ -75,10 +75,14 @@ enum Subcommands {
     Dev(DevCommands),
 }
 
+fn in_official_repo() -> bool {
+    Path::new("dev/rustlings-repo.txt").exists()
+}
+
 fn main() -> Result<()> {
     let args = Args::parse();
 
-    if !DEBUG_PROFILE && Path::new("dev/rustlings-repo.txt").exists() {
+    if !DEBUG_PROFILE && in_official_repo() {
         bail!("{OLD_METHOD_ERR}");
     }
 

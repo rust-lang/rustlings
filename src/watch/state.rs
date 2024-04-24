@@ -8,6 +8,7 @@ use std::io::{self, StdoutLock, Write};
 
 use crate::{
     app_state::{AppState, ExercisesProgress},
+    exercise::OUTPUT_CAPACITY,
     progress_bar::progress_bar,
     terminal_link::TerminalFileLink,
 };
@@ -21,8 +22,7 @@ enum DoneStatus {
 pub struct WatchState<'a> {
     writer: StdoutLock<'a>,
     app_state: &'a mut AppState,
-    stdout: Option<Vec<u8>>,
-    stderr: Option<Vec<u8>>,
+    output: Vec<u8>,
     show_hint: bool,
     done_status: DoneStatus,
     manual_run: bool,
@@ -35,8 +35,7 @@ impl<'a> WatchState<'a> {
         Self {
             writer,
             app_state,
-            stdout: None,
-            stderr: None,
+            output: Vec::with_capacity(OUTPUT_CAPACITY),
             show_hint: false,
             done_status: DoneStatus::Pending,
             manual_run,
@@ -51,11 +50,8 @@ impl<'a> WatchState<'a> {
     pub fn run_current_exercise(&mut self) -> Result<()> {
         self.show_hint = false;
 
-        let output = self.app_state.current_exercise().run()?;
-        self.stdout = Some(output.stdout);
-
-        if output.status.success() {
-            self.stderr = None;
+        let success = self.app_state.current_exercise().run(&mut self.output)?;
+        if success {
             self.done_status =
                 if let Some(solution_path) = self.app_state.current_solution_path()? {
                     DoneStatus::DoneWithSolution(solution_path)
@@ -66,7 +62,6 @@ impl<'a> WatchState<'a> {
             self.app_state
                 .set_pending(self.app_state.current_exercise_ind())?;
 
-            self.stderr = Some(output.stderr);
             self.done_status = DoneStatus::Pending;
         }
 
@@ -116,16 +111,7 @@ impl<'a> WatchState<'a> {
 
         self.writer.execute(Clear(ClearType::All))?;
 
-        if let Some(stdout) = &self.stdout {
-            self.writer.write_all(stdout)?;
-            self.writer.write_all(b"\n")?;
-        }
-
-        if let Some(stderr) = &self.stderr {
-            self.writer.write_all(stderr)?;
-            self.writer.write_all(b"\n")?;
-        }
-
+        self.writer.write_all(&self.output)?;
         self.writer.write_all(b"\n")?;
 
         if self.show_hint {

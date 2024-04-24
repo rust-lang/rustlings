@@ -4,20 +4,19 @@ use std::io::{self, Write};
 
 use crate::{
     app_state::{AppState, ExercisesProgress},
+    exercise::OUTPUT_CAPACITY,
     terminal_link::TerminalFileLink,
 };
 
 pub fn run(app_state: &mut AppState) -> Result<()> {
     let exercise = app_state.current_exercise();
-    let output = exercise.run()?;
+    let mut output = Vec::with_capacity(OUTPUT_CAPACITY);
+    let success = exercise.run(&mut output)?;
 
     let mut stdout = io::stdout().lock();
-    stdout.write_all(&output.stdout)?;
-    stdout.write_all(b"\n")?;
-    stdout.write_all(&output.stderr)?;
-    stdout.flush()?;
+    stdout.write_all(&output)?;
 
-    if !output.status.success() {
+    if !success {
         app_state.set_pending(app_state.current_exercise_ind())?;
 
         bail!(
