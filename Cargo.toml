@@ -8,12 +8,14 @@ exclude = [
 ]
 
 [workspace.package]
-version = "6.0.0-alpha.0"
+version = "6.0.0-beta.0"
 authors = [
   "Liv <mokou@fastmail.com>",
+  "Mo Bitar <mo8it@proton.me>",
+  # Alumni
   "Carol (Nichols || Goulding) <carol.nichols@gmail.com>",
-  "Mo <mo8it@proton.me>",
 ]
+repository = "https://github.com/rust-lang/rustlings"
 license = "MIT"
 edition = "2021"
 
@@ -27,8 +29,13 @@ description = "Small exercises to get you used to reading and writing Rust code!
 default-run = "rustlings"
 version.workspace = true
 authors.workspace = true
+repository.workspace = true
 license.workspace = true
 edition.workspace = true
+keywords = [
+  "exercise",
+  "learning",
+]
 include = [
   "/exercises/",
   "/info.toml",
@@ -44,7 +51,7 @@ crossterm = "0.27.0"
 hashbrown = "0.14.3"
 notify-debouncer-mini = "0.4.1"
 ratatui = "0.26.2"
-rustlings-macros = { path = "rustlings-macros", version = "6.0.0-alpha.0" }
+rustlings-macros = { path = "rustlings-macros", version = "6.0.0-beta.0" }
 serde.workspace = true
 toml_edit.workspace = true
 which = "6.0.1"
