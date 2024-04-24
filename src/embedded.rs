@@ -113,14 +113,12 @@ impl EmbeddedFiles {
         &self,
         exercise_ind: usize,
         dir_name: &str,
-        exercise_name: &str,
+        path: &str,
     ) -> Result<()> {
         let dir_path = format!("solutions/{dir_name}");
-        create_dir_all(&dir_path).context("Failed to create the directory {dir_path}")?;
+        create_dir_all(&dir_path)
+            .with_context(|| format!("Failed to create the directory {dir_path}"))?;
 
-        WriteStrategy::Overwrite.write(
-            &format!("{dir_path}/{exercise_name}.rs"),
-            self.exercise_files[exercise_ind].solution,
-        )
+        WriteStrategy::Overwrite.write(path, self.exercise_files[exercise_ind].solution)
     }
 }

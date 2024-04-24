@@ -257,21 +257,46 @@ impl AppState {
         }
     }
 
+    pub fn current_solution_path(&self) -> Result<Option<String>> {
+        if DEBUG_PROFILE {
+            return Ok(None);
+        }
+
+        let current_exercise = self.current_exercise();
+
+        if self.official_exercises {
+            let dir_name = current_exercise
+                .dir
+                .context("Official exercises must be nested in the `exercises` directory")?;
+            let solution_path = format!("solutions/{dir_name}/{}.rs", current_exercise.name);
+
+            EMBEDDED_FILES.write_solution_to_disk(
+                self.current_exercise_ind,
+                dir_name,
+                &solution_path,
+            )?;
+
+            Ok(Some(solution_path))
+        } else {
+            let solution_path = if let Some(dir) = current_exercise.dir {
+                format!("solutions/{dir}/{}.rs", current_exercise.name)
+            } else {
+                format!("solutions/{}.rs", current_exercise.name)
+            };
+
+            if Path::new(&solution_path).exists() {
+                return Ok(Some(solution_path));
+            }
+
+            Ok(None)
+        }
+    }
+
     pub fn done_current_exercise(&mut self, writer: &mut StdoutLock) -> Result<ExercisesProgress> {
         let exercise = &mut self.exercises[self.current_exercise_ind];
         if !exercise.done {
             exercise.done = true;
             self.n_done += 1;
-        }
-
-        if self.official_exercises && !DEBUG_PROFILE {
-            EMBEDDED_FILES.write_solution_to_disk(
-                self.current_exercise_ind,
-                exercise
-                    .dir
-                    .context("Official exercises must be nested in the `exercises` directory")?,
-                exercise.name,
-            )?;
         }
 
         let Some(ind) = self.next_pending_exercise_ind() else {
