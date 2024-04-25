@@ -1,4 +1,5 @@
 use anyhow::{bail, Context, Result};
+use crossterm::style::Stylize;
 use std::{
     env::set_current_dir,
     fs::{self, create_dir},
@@ -58,7 +59,11 @@ pub fn init() -> Result<()> {
         .stderr(Stdio::null())
         .status();
 
-    println!("{POST_INIT_MSG}");
+    println!(
+        "\n{}\n\n{}",
+        "Initialization done ✓".green(),
+        POST_INIT_MSG.bold(),
+    );
 
     Ok(())
 }
@@ -84,8 +89,5 @@ You probably already initialized Rustlings.
 Run `cd rustlings`
 Then run `rustlings` again";
 
-const POST_INIT_MSG: &str = "
-Done initialization!
-
-Run `cd rustlings` to go into the generated directory.
+const POST_INIT_MSG: &str = "Run `cd rustlings` to go into the generated directory.
 Then run `rustlings` to get started.";
