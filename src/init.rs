@@ -55,9 +55,10 @@ pub fn init() -> Result<()> {
     Ok(())
 }
 
-pub const GITIGNORE: &[u8] = b"Cargo.lock
-.rustlings-state.txt
+pub const GITIGNORE: &[u8] = b".rustlings-state.txt
+Cargo.lock
 target
+.vscode
 ";
 
 pub const VS_CODE_EXTENSIONS_JSON: &[u8] = br#"{"recommendations":["rust-lang.rust-analyzer"]}"#;
