@@ -679,7 +679,7 @@ dependencies = [
 
 [[package]]
 name = "rustlings"
-version = "6.0.0-beta.1"
+version = "6.0.0-beta.2"
 dependencies = [
  "anyhow",
  "assert_cmd",
@@ -698,7 +698,7 @@ dependencies = [
 
 [[package]]
 name = "rustlings-macros"
-version = "6.0.0-beta.1"
+version = "6.0.0-beta.2"
 dependencies = [
  "quote",
  "serde",
