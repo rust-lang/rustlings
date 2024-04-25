@@ -99,10 +99,15 @@ name = "???"
 # Otherwise, the path is `exercises/NAME.rs`
 # dir = "???"
 
-# The mode to run the exercise in.
-# The mode "test" (preferred) runs the exercise's tests.
-# The mode "run" only checks if the exercise compiles and runs it.
-mode = "test"
+# Rustlings expects the exercise to contain tests and run them.
+# You can optionally disable testing by setting `test` to `false` (the default is `true`).
+# In that case, the exercise will be considered done when it just successfully compiles.
+# test = true
+
+# Rustlings will always run Clippy on exercises.
+# You can optionally set `strict_clippy` to `true` (the default is `false`) to only consider
+# the exercise as done when there are no warnings left.
+# strict_clippy = false
 
 # A multi-line hint to be shown to users on request.
 hint = """???"""

@@ -3,24 +3,38 @@ use crossterm::style::{style, StyledContent, Stylize};
 use std::{
     fmt::{self, Display, Formatter},
     io::{Read, Write},
-    process::Command,
+    process::{Command, Stdio},
 };
 
-use crate::{in_official_repo, info_file::Mode, terminal_link::TerminalFileLink, DEBUG_PROFILE};
+use crate::{in_official_repo, terminal_link::TerminalFileLink, DEBUG_PROFILE};
 
 // TODO
 pub const OUTPUT_CAPACITY: usize = 1 << 12;
 
-fn run_command(mut cmd: Command, cmd_description: &str, output: &mut Vec<u8>) -> Result<bool> {
+fn run_command(
+    mut cmd: Command,
+    cmd_description: &str,
+    output: &mut Vec<u8>,
+    stderr: bool,
+) -> Result<bool> {
     let (mut reader, writer) = os_pipe::pipe().with_context(|| {
         format!("Failed to create a pipe to run the command `{cmd_description}``")
     })?;
 
+    let (stdout, stderr) = if stderr {
+        (
+            Stdio::from(writer.try_clone().with_context(|| {
+                format!("Failed to clone the pipe writer for the command `{cmd_description}`")
+            })?),
+            Stdio::from(writer),
+        )
+    } else {
+        (Stdio::from(writer), Stdio::null())
+    };
+
     let mut handle = cmd
-        .stdout(writer.try_clone().with_context(|| {
-            format!("Failed to clone the pipe writer for the command `{cmd_description}`")
-        })?)
-        .stderr(writer)
+        .stdout(stdout)
+        .stderr(stderr)
         .spawn()
         .with_context(|| format!("Failed to run the command `{cmd_description}`"))?;
 
@@ -45,8 +59,8 @@ pub struct Exercise {
     pub name: &'static str,
     // Exercise's path
     pub path: &'static str,
-    // The mode of the exercise
-    pub mode: Mode,
+    pub test: bool,
+    pub strict_clippy: bool,
     // The hint text associated with the exercise
     pub hint: String,
     pub done: bool,
@@ -54,10 +68,22 @@ pub struct Exercise {
 
 impl Exercise {
     fn run_bin(&self, output: &mut Vec<u8>) -> Result<bool> {
-        writeln!(output, "{}", "Output".bold().magenta().underlined())?;
+        writeln!(output, "{}", "Output".underlined())?;
 
         let bin_path = format!("target/debug/{}", self.name);
-        run_command(Command::new(&bin_path), &bin_path, output)
+        let success = run_command(Command::new(&bin_path), &bin_path, output, true)?;
+
+        if !success {
+            writeln!(
+                output,
+                "{}",
+                "The exercise didn't run successfully (nonzero exit code)"
+                    .bold()
+                    .red()
+            )?;
+        }
+
+        Ok(success)
     }
 
     fn cargo_cmd(
@@ -67,6 +93,7 @@ impl Exercise {
         cmd_description: &str,
         output: &mut Vec<u8>,
         dev: bool,
+        stderr: bool,
     ) -> Result<bool> {
         let mut cmd = Command::new("cargo");
         cmd.arg(command);
@@ -86,25 +113,7 @@ impl Exercise {
             .arg(self.name)
             .args(args);
 
-        run_command(cmd, cmd_description, output)
-    }
-
-    fn cargo_cmd_with_bin_output(
-        &self,
-        command: &str,
-        args: &[&str],
-        cmd_description: &str,
-        output: &mut Vec<u8>,
-        dev: bool,
-    ) -> Result<bool> {
-        // Discard the output of `cargo build` because it will be shown again by the Cargo command.
-        output.clear();
-
-        let cargo_cmd_success = self.cargo_cmd(command, args, cmd_description, output, dev)?;
-
-        let run_success = self.run_bin(output)?;
-
-        Ok(cargo_cmd_success && run_success)
+        run_command(cmd, cmd_description, output, stderr)
     }
 
     pub fn run(&self, output: &mut Vec<u8>) -> Result<bool> {
@@ -113,35 +122,49 @@ impl Exercise {
         // Developing the official Rustlings.
         let dev = DEBUG_PROFILE && in_official_repo();
 
-        let build_success = self.cargo_cmd("build", &[], "cargo build …", output, dev)?;
+        let build_success = self.cargo_cmd("build", &[], "cargo build …", output, dev, true)?;
         if !build_success {
             return Ok(false);
         }
 
-        match self.mode {
-            Mode::Run => self.run_bin(output),
-            Mode::Test => self.cargo_cmd_with_bin_output(
-                "test",
-                &[
-                    "--",
-                    "--color",
-                    "always",
-                    "--nocapture",
-                    "--format",
-                    "pretty",
-                ],
-                "cargo test …",
-                output,
-                dev,
-            ),
-            Mode::Clippy => self.cargo_cmd_with_bin_output(
-                "clippy",
-                &["--", "-D", "warnings"],
-                "cargo clippy …",
-                output,
-                dev,
-            ),
+        // Discard the output of `cargo build` because it will be shown again by the Cargo command.
+        output.clear();
+
+        let clippy_args: &[&str] = if self.strict_clippy {
+            &["--", "-D", "warnings"]
+        } else {
+            &[]
+        };
+        let clippy_success =
+            self.cargo_cmd("clippy", clippy_args, "cargo clippy …", output, dev, true)?;
+        if !clippy_success {
+            return Ok(false);
         }
+
+        if !self.test {
+            return self.run_bin(output);
+        }
+
+        let test_success = self.cargo_cmd(
+            "test",
+            &[
+                "--",
+                "--color",
+                "always",
+                "--nocapture",
+                "--format",
+                "pretty",
+            ],
+            "cargo test …",
+            output,
+            dev,
+            // Hide warnings because they are shown by Clippy.
+            false,
+        )?;
+
+        let run_success = self.run_bin(output)?;
+
+        Ok(test_success && run_success)
     }
 
     pub fn terminal_link(&self) -> StyledContent<TerminalFileLink<'_>> {

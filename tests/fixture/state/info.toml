@@ -2,15 +2,14 @@ format_version = 1
 
 [[exercises]]
 name = "pending_exercise"
-mode = "run"
+test = false
 hint = """"""
 
 [[exercises]]
 name = "pending_test_exercise"
-mode = "test"
 hint = """"""
 
 [[exercises]]
 name = "finished_exercise"
-mode = "run"
+test = false
 hint = """"""

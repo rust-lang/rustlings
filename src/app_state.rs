@@ -112,7 +112,8 @@ impl AppState {
                     dir,
                     name,
                     path,
-                    mode: exercise_info.mode,
+                    test: exercise_info.test,
+                    strict_clippy: exercise_info.strict_clippy,
                     hint,
                     done: false,
                 }
@@ -329,8 +330,6 @@ impl AppState {
                 }
 
                 writeln!(writer, "{}", "ok".green())?;
-
-                output.clear();
             }
 
             writer.execute(Clear(ClearType::All))?;

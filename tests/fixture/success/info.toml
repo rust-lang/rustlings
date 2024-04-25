@@ -2,10 +2,9 @@ format_version = 1
 
 [[exercises]]
 name = "compSuccess"
-mode = "run"
+test = false
 hint = """"""
 
 [[exercises]]
 name = "testSuccess"
-mode = "test"
 hint = """"""
