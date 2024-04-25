@@ -29,8 +29,10 @@ This'll also install _Cargo_, Rust's package/project manager.
 
 The following command will download and compile Rustlings:
 
+<!-- TODO: Remove @6.0.0-beta.x -->
+
 ```bash
-cargo install rustlings --locked
+cargo install rustlings@6.0.0-beta.2 --locked
 ```
 
 ### Initialization

@@ -70,4 +70,3 @@ panic = "abort"
 
 [package.metadata.release]
 pre-release-hook = ["./release-hook.sh"]
-verify = false
