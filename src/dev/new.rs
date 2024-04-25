@@ -45,7 +45,7 @@ pub fn new(path: &Path, no_git: bool) -> Result<()> {
         bail!("`git init` didn't run successfully. See the error message above");
     }
 
-    write_rel_file(".gitignore", &dir_name, crate::init::GITIGNORE)?;
+    write_rel_file(".gitignore", &dir_name, GITIGNORE)?;
 
     create_rel_dir("exercises", &dir_name)?;
     create_rel_dir("solutions", &dir_name)?;
@@ -71,6 +71,13 @@ pub fn new(path: &Path, no_git: bool) -> Result<()> {
 
     Ok(())
 }
+
+pub const GITIGNORE: &[u8] = b".rustlings-state.txt
+Cargo.lock
+target
+.vscode
+!.vscode/extensions.json
+";
 
 const INFO_FILE_BEFORE_FORMAT_VERSION: &str =
     "# The format version is an indicator of the compatibility of third-party exercises with the

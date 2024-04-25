@@ -55,7 +55,7 @@ pub fn init() -> Result<()> {
     Ok(())
 }
 
-pub const GITIGNORE: &[u8] = b".rustlings-state.txt
+const GITIGNORE: &[u8] = b".rustlings-state.txt
 Cargo.lock
 target
 .vscode
