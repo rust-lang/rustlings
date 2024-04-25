@@ -309,12 +309,12 @@ impl AppState {
 
             let mut output = Vec::with_capacity(OUTPUT_CAPACITY);
             for (exercise_ind, exercise) in self.exercises().iter().enumerate() {
-                writer.write_fmt(format_args!("Running {exercise} ... "))?;
+                write!(writer, "Running {exercise} ... ")?;
                 writer.flush()?;
 
                 let success = exercise.run(&mut output)?;
                 if !success {
-                    writer.write_fmt(format_args!("{}\n\n", "FAILED".red()))?;
+                    writeln!(writer, "{}\n", "FAILED".red())?;
 
                     self.current_exercise_ind = exercise_ind;
 
@@ -328,7 +328,7 @@ impl AppState {
                     return Ok(ExercisesProgress::Pending);
                 }
 
-                writer.write_fmt(format_args!("{}\n", "ok".green()))?;
+                writeln!(writer, "{}", "ok".green())?;
 
                 output.clear();
             }

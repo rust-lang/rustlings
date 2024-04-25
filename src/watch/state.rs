@@ -88,19 +88,18 @@ impl<'a> WatchState<'a> {
         self.writer.write_all(b"\n")?;
 
         if self.manual_run {
-            self.writer.write_fmt(format_args!("{}un/", 'r'.bold()))?;
+            write!(self.writer, "{}un/", 'r'.bold())?;
         }
 
         if !matches!(self.done_status, DoneStatus::Pending) {
-            self.writer.write_fmt(format_args!("{}ext/", 'n'.bold()))?;
+            write!(self.writer, "{}ext/", 'n'.bold())?;
         }
 
         if !self.show_hint {
-            self.writer.write_fmt(format_args!("{}int/", 'h'.bold()))?;
+            write!(self.writer, "{}int/", 'h'.bold())?;
         }
 
-        self.writer
-            .write_fmt(format_args!("{}ist/{}uit? ", 'l'.bold(), 'q'.bold()))?;
+        write!(self.writer, "{}ist/{}uit? ", 'l'.bold(), 'q'.bold())?;
 
         self.writer.flush()
     }
@@ -115,28 +114,31 @@ impl<'a> WatchState<'a> {
         self.writer.write_all(b"\n")?;
 
         if self.show_hint {
-            self.writer.write_fmt(format_args!(
-                "{}\n{}\n\n",
+            writeln!(
+                self.writer,
+                "{}\n{}\n",
                 "Hint".bold().cyan().underlined(),
                 self.app_state.current_exercise().hint,
-            ))?;
+            )?;
         }
 
         if !matches!(self.done_status, DoneStatus::Pending) {
-            self.writer.write_fmt(format_args!(
-                "{}\n\n",
+            writeln!(
+                self.writer,
+                "{}\n",
                 "Exercise done ✓
 When you are done experimenting, enter `n` or `next` to go to the next exercise 🦀"
                     .bold()
                     .green(),
-            ))?;
+            )?;
         }
 
         if let DoneStatus::DoneWithSolution(solution_path) = &self.done_status {
-            self.writer.write_fmt(format_args!(
-                "A solution file can be found at {}\n\n",
+            writeln!(
+                self.writer,
+                "A solution file can be found at {}\n",
                 style(TerminalFileLink(solution_path)).underlined().green()
-            ))?;
+            )?;
         }
 
         let line_width = size()?.0;
@@ -145,10 +147,11 @@ When you are done experimenting, enter `n` or `next` to go to the next exercise 
             self.app_state.exercises().len() as u16,
             line_width,
         )?;
-        self.writer.write_fmt(format_args!(
-            "{progress_bar}Current exercise: {}\n",
+        writeln!(
+            self.writer,
+            "{progress_bar}Current exercise: {}",
             self.app_state.current_exercise().terminal_link(),
-        ))?;
+        )?;
 
         self.show_prompt()?;
 

@@ -231,8 +231,7 @@ impl<'a> UiState<'a> {
             .context("Invalid selection index")?;
 
         let exercise_path = self.app_state.reset_exercise_by_ind(ind)?;
-        self.message
-            .write_fmt(format_args!("The exercise {exercise_path} has been reset"))?;
+        write!(self.message, "The exercise {exercise_path} has been reset")?;
 
         Ok(self.with_updated_rows())
     }

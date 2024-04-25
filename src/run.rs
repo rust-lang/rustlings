@@ -25,11 +25,12 @@ pub fn run(app_state: &mut AppState) -> Result<()> {
         );
     }
 
-    stdout.write_fmt(format_args!(
-        "{}{}\n",
+    writeln!(
+        stdout,
+        "{}{}",
         "✓ Successfully ran ".green(),
         exercise.path.green(),
-    ))?;
+    )?;
 
     if let Some(solution_path) = app_state.current_solution_path()? {
         println!(
