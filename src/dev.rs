@@ -28,15 +28,15 @@ pub enum DevCommands {
 impl DevCommands {
     pub fn run(self) -> Result<()> {
         match self {
-            DevCommands::New { path, no_git } => {
+            Self::New { path, no_git } => {
                 if DEBUG_PROFILE {
                     bail!("Disabled in the debug build");
                 }
 
                 new::new(&path, no_git).context(INIT_ERR)
             }
-            DevCommands::Check => check::check(),
-            DevCommands::Update => update::update(),
+            Self::Check => check::check(),
+            Self::Update => update::update(),
         }
     }
 }
