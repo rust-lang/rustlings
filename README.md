@@ -35,6 +35,9 @@ The following command will download and compile Rustlings:
 cargo install rustlings@6.0.0-beta.3 --locked
 ```
 
+If the installation failes, make sure you have the latest Rust version by running `rustup update`.
+Otherwise, please [report an issue](https://github.com/rust-lang/rustlings/issues/new).
+
 ### Initialization
 
 After installing Rustlings, run the following command to initialize the `rustlings/` directory:
