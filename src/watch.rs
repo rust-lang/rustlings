@@ -51,7 +51,7 @@ pub fn watch(
     // Otherwise, the file watcher exits.
     let _debouncer_guard = if let Some(exercise_names) = notify_exercise_names {
         let mut debouncer = new_debouncer(
-            Duration::from_millis(500),
+            Duration::from_millis(200),
             DebounceEventHandler {
                 tx: tx.clone(),
                 exercise_names,
