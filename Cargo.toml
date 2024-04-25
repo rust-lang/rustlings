@@ -37,12 +37,14 @@ keywords = [
   "learning",
 ]
 include = [
-  "/exercises/",
-  "/info.toml",
-  "/LICENSE",
-  "/README.md",
-  "/solutions/",
   "/src/",
+  "/exercises/",
+  "/solutions/",
+  "/info.toml",
+  # A symlink to be able to include `dev/Cargo.toml` although `dev` is excluded.
+  "/dev-Cargo.toml",
+  "/README.md",
+  "/LICENSE",
 ]
 
 [dependencies]

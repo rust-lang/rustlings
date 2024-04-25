@@ -29,7 +29,7 @@ pub fn update() -> Result<()> {
     if DEBUG_PROFILE {
         update_cargo_toml(
             &info_file.exercises,
-            include_str!("../../dev/Cargo.toml"),
+            include_str!("../../dev-Cargo.toml"),
             b"../",
             "dev/Cargo.toml",
         )

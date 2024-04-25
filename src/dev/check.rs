@@ -166,7 +166,7 @@ pub fn check() -> Result<()> {
     if DEBUG_PROFILE {
         check_cargo_toml(
             &info_file.exercises,
-            include_str!("../../dev/Cargo.toml"),
+            include_str!("../../dev-Cargo.toml"),
             b"../",
         )?;
     } else {

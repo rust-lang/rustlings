@@ -31,7 +31,7 @@ pub fn init() -> Result<()> {
         .init_exercises_dir(&info_file.exercises)
         .context("Failed to initialize the `rustlings/exercises` directory")?;
 
-    let current_cargo_toml = include_str!("../dev/Cargo.toml");
+    let current_cargo_toml = include_str!("../dev-Cargo.toml");
     // Skip the first line (comment).
     let newline_ind = current_cargo_toml
         .as_bytes()
