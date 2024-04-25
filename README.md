@@ -32,7 +32,7 @@ The following command will download and compile Rustlings:
 <!-- TODO: Remove @6.0.0-beta.x -->
 
 ```bash
-cargo install rustlings@6.0.0-beta.2 --locked
+cargo install rustlings@6.0.0-beta.3 --locked
 ```
 
 ### Initialization
