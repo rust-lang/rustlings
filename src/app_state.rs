@@ -11,7 +11,12 @@ use std::{
     process::{Command, Stdio},
 };
 
-use crate::{embedded::EMBEDDED_FILES, exercise::Exercise, info_file::ExerciseInfo, DEBUG_PROFILE};
+use crate::{
+    embedded::EMBEDDED_FILES,
+    exercise::{Exercise, OUTPUT_CAPACITY},
+    info_file::ExerciseInfo,
+    DEBUG_PROFILE,
+};
 
 const STATE_FILE_NAME: &str = ".rustlings-state.txt";
 const BAD_INDEX_ERR: &str = "The current exercise index is higher than the number of exercises";
@@ -107,7 +112,8 @@ impl AppState {
                     dir,
                     name,
                     path,
-                    mode: exercise_info.mode,
+                    test: exercise_info.test,
+                    strict_clippy: exercise_info.strict_clippy,
                     hint,
                     done: false,
                 }
@@ -302,12 +308,14 @@ impl AppState {
         let Some(ind) = self.next_pending_exercise_ind() else {
             writer.write_all(RERUNNING_ALL_EXERCISES_MSG)?;
 
+            let mut output = Vec::with_capacity(OUTPUT_CAPACITY);
             for (exercise_ind, exercise) in self.exercises().iter().enumerate() {
-                writer.write_fmt(format_args!("Running {exercise} ... "))?;
+                write!(writer, "Running {exercise} ... ")?;
                 writer.flush()?;
 
-                if !exercise.run()?.status.success() {
-                    writer.write_fmt(format_args!("{}\n\n", "FAILED".red()))?;
+                let success = exercise.run(&mut output)?;
+                if !success {
+                    writeln!(writer, "{}\n", "FAILED".red())?;
 
                     self.current_exercise_ind = exercise_ind;
 
@@ -321,7 +329,7 @@ impl AppState {
                     return Ok(ExercisesProgress::Pending);
                 }
 
-                writer.write_fmt(format_args!("{}\n", "ok".green()))?;
+                writeln!(writer, "{}", "ok".green())?;
             }
 
             writer.execute(Clear(ClearType::All))?;

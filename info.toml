@@ -39,7 +39,7 @@ https://github.com/rust-lang/rustlings/blob/main/CONTRIBUTING.md
 [[exercises]]
 name = "intro1"
 dir = "00_intro"
-mode = "run"
+test = false
 # TODO: Fix hint
 hint = """
 Remove the `I AM NOT DONE` comment in the `exercises/intro00/intro1.rs` file
@@ -48,7 +48,7 @@ to move on to the next exercise."""
 [[exercises]]
 name = "intro2"
 dir = "00_intro"
-mode = "run"
+test = false
 hint = """
 The compiler is informing us that we've got the name of the print macro wrong, and has suggested an alternative."""
 
@@ -57,7 +57,7 @@ The compiler is informing us that we've got the name of the print macro wrong, a
 [[exercises]]
 name = "variables1"
 dir = "01_variables"
-mode = "run"
+test = false
 hint = """
 The declaration in the first line in the main function is missing a keyword
 that is needed in Rust to create a new variable binding."""
@@ -65,7 +65,7 @@ that is needed in Rust to create a new variable binding."""
 [[exercises]]
 name = "variables2"
 dir = "01_variables"
-mode = "run"
+test = false
 hint = """
 The compiler message is saying that Rust cannot infer the type that the
 variable binding `x` has with what is given here.
@@ -84,7 +84,7 @@ What if `x` is the same type as `10`? What if it's a different type?"""
 [[exercises]]
 name = "variables3"
 dir = "01_variables"
-mode = "run"
+test = false
 hint = """
 Oops! In this exercise, we have a variable binding that we've created on in the
 first line in the `main` function, and we're trying to use it in the next line,
@@ -98,7 +98,7 @@ programming language -- thankfully the Rust compiler has caught this for us!"""
 [[exercises]]
 name = "variables4"
 dir = "01_variables"
-mode = "run"
+test = false
 hint = """
 In Rust, variable bindings are immutable by default. But here we're trying
 to reassign a different value to `x`! There's a keyword we can use to make
@@ -107,7 +107,7 @@ a variable binding mutable instead."""
 [[exercises]]
 name = "variables5"
 dir = "01_variables"
-mode = "run"
+test = false
 hint = """
 In `variables4` we already learned how to make an immutable variable mutable
 using a special keyword. Unfortunately this doesn't help us much in this
@@ -125,7 +125,7 @@ Try to solve this exercise afterwards using this technique."""
 [[exercises]]
 name = "variables6"
 dir = "01_variables"
-mode = "run"
+test = false
 hint = """
 We know about variables and mutability, but there is another important type of
 variable available: constants.
@@ -145,7 +145,7 @@ https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html#constants
 [[exercises]]
 name = "functions1"
 dir = "02_functions"
-mode = "run"
+test = false
 hint = """
 This main function is calling a function that it expects to exist, but the
 function doesn't exist. It expects this function to have the name `call_me`.
@@ -155,7 +155,7 @@ Sounds a lot like `main`, doesn't it?"""
 [[exercises]]
 name = "functions2"
 dir = "02_functions"
-mode = "run"
+test = false
 hint = """
 Rust requires that all parts of a function's signature have type annotations,
 but `call_me` is missing the type annotation of `num`."""
@@ -163,7 +163,7 @@ but `call_me` is missing the type annotation of `num`."""
 [[exercises]]
 name = "functions3"
 dir = "02_functions"
-mode = "run"
+test = false
 hint = """
 This time, the function *declaration* is okay, but there's something wrong
 with the place where we're calling the function."""
@@ -171,7 +171,7 @@ with the place where we're calling the function."""
 [[exercises]]
 name = "functions4"
 dir = "02_functions"
-mode = "run"
+test = false
 hint = """
 The error message points to the function `sale_price` and says it expects a type
 after the `->`. This is where the function's return type should be -- take a
@@ -180,7 +180,7 @@ look at the `is_even` function for an example!"""
 [[exercises]]
 name = "functions5"
 dir = "02_functions"
-mode = "run"
+test = false
 hint = """
 This is a really common error that can be fixed by removing one character.
 It happens because Rust distinguishes between expressions and statements:
@@ -199,7 +199,6 @@ They are not the same. There are two solutions:
 [[exercises]]
 name = "if1"
 dir = "03_if"
-mode = "test"
 hint = """
 It's possible to do this in one line if you would like!
 
@@ -215,7 +214,6 @@ Remember in Rust that:
 [[exercises]]
 name = "if2"
 dir = "03_if"
-mode = "test"
 hint = """
 For that first compiler error, it's important in Rust that each conditional
 block returns the same type! To get the tests passing, you will need a couple
@@ -224,7 +222,6 @@ conditions checking different input values."""
 [[exercises]]
 name = "if3"
 dir = "03_if"
-mode = "test"
 hint = """
 In Rust, every arm of an `if` expression has to return the same type of value.
 Make sure the type is consistent across all arms."""
@@ -234,7 +231,6 @@ Make sure the type is consistent across all arms."""
 [[exercises]]
 name = "quiz1"
 dir = "quizzes"
-mode = "test"
 hint = "No hints this time ;)"
 
 # PRIMITIVE TYPES
@@ -242,19 +238,19 @@ hint = "No hints this time ;)"
 [[exercises]]
 name = "primitive_types1"
 dir = "04_primitive_types"
-mode = "run"
+test = false
 hint = "No hints this time ;)"
 
 [[exercises]]
 name = "primitive_types2"
 dir = "04_primitive_types"
-mode = "run"
+test = false
 hint = "No hints this time ;)"
 
 [[exercises]]
 name = "primitive_types3"
 dir = "04_primitive_types"
-mode = "run"
+test = false
 hint = """
 There's a shorthand to initialize Arrays with a certain size that does not
 require you to type in 100 items (but you certainly can if you want!).
@@ -270,7 +266,6 @@ for `a.len() >= 100`?"""
 [[exercises]]
 name = "primitive_types4"
 dir = "04_primitive_types"
-mode = "test"
 hint = """
 Take a look at the 'Understanding Ownership -> Slices -> Other Slices' section
 of the book: https://doc.rust-lang.org/book/ch04-03-slices.html and use the
@@ -285,7 +280,7 @@ https://doc.rust-lang.org/nomicon/coercions.html"""
 [[exercises]]
 name = "primitive_types5"
 dir = "04_primitive_types"
-mode = "run"
+test = false
 hint = """
 Take a look at the 'Data Types -> The Tuple Type' section of the book:
 https://doc.rust-lang.org/book/ch03-02-data-types.html#the-tuple-type
@@ -298,7 +293,6 @@ of the tuple. You can do it!!"""
 [[exercises]]
 name = "primitive_types6"
 dir = "04_primitive_types"
-mode = "test"
 hint = """
 While you could use a destructuring `let` for the tuple here, try
 indexing into it instead, as explained in the last example of the
@@ -311,7 +305,6 @@ Now you have another tool in your toolbox!"""
 [[exercises]]
 name = "vecs1"
 dir = "05_vecs"
-mode = "test"
 hint = """
 In Rust, there are two ways to define a Vector.
 1. One way is to use the `Vec::new()` function to create a new vector
@@ -326,7 +319,6 @@ of the Rust book to learn more.
 [[exercises]]
 name = "vecs2"
 dir = "05_vecs"
-mode = "test"
 hint = """
 In the first function we are looping over the Vector and getting a reference to
 one `element` at a time.
@@ -349,7 +341,6 @@ What do you think is the more commonly used pattern under Rust developers?
 [[exercises]]
 name = "move_semantics1"
 dir = "06_move_semantics"
-mode = "test"
 hint = """
 So you've got the "cannot borrow immutable local variable `vec` as mutable"
 error on the line where we push an element to the vector, right?
@@ -363,7 +354,6 @@ happens!"""
 [[exercises]]
 name = "move_semantics2"
 dir = "06_move_semantics"
-mode = "test"
 hint = """
 When running this exercise for the first time, you'll notice an error about
 "borrow of moved value". In Rust, when an argument is passed to a function and
@@ -384,7 +374,6 @@ try them all:
 [[exercises]]
 name = "move_semantics3"
 dir = "06_move_semantics"
-mode = "test"
 hint = """
 The difference between this one and the previous ones is that the first line
 of `fn fill_vec` that had `let mut vec = vec;` is no longer there. You can,
@@ -394,7 +383,6 @@ an existing binding to be a mutable binding instead of an immutable one :)"""
 [[exercises]]
 name = "move_semantics4"
 dir = "06_move_semantics"
-mode = "test"
 hint = """
 Stop reading whenever you feel like you have enough direction :) Or try
 doing one step and then fixing the compiler errors that result!
@@ -408,7 +396,6 @@ So the end goal is to:
 [[exercises]]
 name = "move_semantics5"
 dir = "06_move_semantics"
-mode = "test"
 hint = """
 Carefully reason about the range in which each mutable reference is in
 scope. Does it help to update the value of referent (`x`) immediately after
@@ -420,7 +407,7 @@ https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html#mutable-ref
 [[exercises]]
 name = "move_semantics6"
 dir = "06_move_semantics"
-mode = "run"
+test = false
 hint = """
 To find the answer, you can consult the book section "References and Borrowing":
 https://doc.rust-lang.org/stable/book/ch04-02-references-and-borrowing.html
@@ -441,7 +428,6 @@ Another hint: it has to do with the `&` character."""
 [[exercises]]
 name = "structs1"
 dir = "07_structs"
-mode = "test"
 hint = """
 Rust has more than one type of struct. Three actually, all variants are used to
 package related data together.
@@ -461,7 +447,6 @@ https://doc.rust-lang.org/book/ch05-01-defining-structs.html"""
 [[exercises]]
 name = "structs2"
 dir = "07_structs"
-mode = "test"
 hint = """
 Creating instances of structs is easy, all you need to do is assign some values
 to its fields.
@@ -473,7 +458,6 @@ https://doc.rust-lang.org/stable/book/ch05-01-defining-structs.html#creating-ins
 [[exercises]]
 name = "structs3"
 dir = "07_structs"
-mode = "test"
 hint = """
 For `is_international`: What makes a package international? Seems related to
 the places it goes through right?
@@ -489,13 +473,13 @@ https://doc.rust-lang.org/book/ch05-03-method-syntax.html"""
 [[exercises]]
 name = "enums1"
 dir = "08_enums"
-mode = "run"
+test = false
 hint = "No hints this time ;)"
 
 [[exercises]]
 name = "enums2"
 dir = "08_enums"
-mode = "run"
+test = false
 hint = """
 You can create enumerations that have different variants with different types
 such as no data, anonymous structs, a single string, tuples, ...etc"""
@@ -503,7 +487,6 @@ such as no data, anonymous structs, a single string, tuples, ...etc"""
 [[exercises]]
 name = "enums3"
 dir = "08_enums"
-mode = "test"
 hint = """
 As a first step, you can define enums to compile this code without errors.
 
@@ -517,7 +500,7 @@ to get value in the variant."""
 [[exercises]]
 name = "strings1"
 dir = "09_strings"
-mode = "run"
+test = false
 hint = """
 The `current_favorite_color` function is currently returning a string slice
 with the `'static` lifetime. We know this because the data of the string lives
@@ -531,7 +514,7 @@ another way that uses the `From` trait."""
 [[exercises]]
 name = "strings2"
 dir = "09_strings"
-mode = "run"
+test = false
 hint = """
 Yes, it would be really easy to fix this by just changing the value bound to
 `word` to be a string slice instead of a `String`, wouldn't it?? There is a way
@@ -546,7 +529,6 @@ https://doc.rust-lang.org/stable/book/ch15-02-deref.html#implicit-deref-coercion
 [[exercises]]
 name = "strings3"
 dir = "09_strings"
-mode = "test"
 hint = """
 There's tons of useful standard library functions for strings. Let's try and use some of them:
 https://doc.rust-lang.org/std/string/struct.String.html#method.trim
@@ -557,7 +539,7 @@ the string slice into an owned string, which you can then freely extend."""
 [[exercises]]
 name = "strings4"
 dir = "09_strings"
-mode = "run"
+test = false
 hint = "No hints this time ;)"
 
 # MODULES
@@ -565,7 +547,7 @@ hint = "No hints this time ;)"
 [[exercises]]
 name = "modules1"
 dir = "10_modules"
-mode = "run"
+test = false
 hint = """
 Everything is private in Rust by default-- but there's a keyword we can use
 to make something public! The compiler error should point to the thing that
@@ -574,7 +556,7 @@ needs to be public."""
 [[exercises]]
 name = "modules2"
 dir = "10_modules"
-mode = "run"
+test = false
 hint = """
 The delicious_snacks module is trying to present an external interface that is
 different than its internal structure (the `fruits` and `veggies` modules and
@@ -586,7 +568,7 @@ Learn more at https://doc.rust-lang.org/book/ch07-04-bringing-paths-into-scope-w
 [[exercises]]
 name = "modules3"
 dir = "10_modules"
-mode = "run"
+test = false
 hint = """
 `UNIX_EPOCH` and `SystemTime` are declared in the `std::time` module. Add a
 `use` statement for these two to bring them into scope. You can use nested
@@ -597,7 +579,6 @@ paths or the glob operator to bring these two in using only one line."""
 [[exercises]]
 name = "hashmaps1"
 dir = "11_hashmaps"
-mode = "test"
 hint = """
 Hint 1: Take a look at the return type of the function to figure out
         the type for the `basket`.
@@ -609,7 +590,6 @@ Hint 2: Number of fruits should be at least 5. And you have to put
 [[exercises]]
 name = "hashmaps2"
 dir = "11_hashmaps"
-mode = "test"
 hint = """
 Use the `entry()` and `or_insert()` methods of `HashMap` to achieve this.
 Learn more at https://doc.rust-lang.org/stable/book/ch08-03-hash-maps.html#only-inserting-a-value-if-the-key-has-no-value
@@ -618,7 +598,6 @@ Learn more at https://doc.rust-lang.org/stable/book/ch08-03-hash-maps.html#only-
 [[exercises]]
 name = "hashmaps3"
 dir = "11_hashmaps"
-mode = "test"
 hint = """
 Hint 1: Use the `entry()` and `or_insert()` methods of `HashMap` to insert
         entries corresponding to each team in the scores table.
@@ -636,7 +615,6 @@ Learn more at https://doc.rust-lang.org/book/ch08-03-hash-maps.html#updating-a-v
 [[exercises]]
 name = "quiz2"
 dir = "quizzes"
-mode = "test"
 hint = "No hints this time ;)"
 
 # OPTIONS
@@ -644,7 +622,6 @@ hint = "No hints this time ;)"
 [[exercises]]
 name = "options1"
 dir = "12_options"
-mode = "test"
 hint = """
 Options can have a `Some` value, with an inner value, or a `None` value,
 without an inner value.
@@ -656,7 +633,6 @@ it doesn't panic in your face later?"""
 [[exercises]]
 name = "options2"
 dir = "12_options"
-mode = "test"
 hint = """
 Check out:
 
@@ -673,7 +649,7 @@ Also see `Option::flatten`
 [[exercises]]
 name = "options3"
 dir = "12_options"
-mode = "run"
+test = false
 hint = """
 The compiler says a partial move happened in the `match` statement. How can
 this be avoided? The compiler shows the correction needed.
@@ -686,7 +662,6 @@ https://doc.rust-lang.org/std/keyword.ref.html"""
 [[exercises]]
 name = "errors1"
 dir = "13_error_handling"
-mode = "test"
 hint = """
 `Ok` and `Err` are the two variants of `Result`, so what the tests are saying
 is that `generate_nametag_text` should return a `Result` instead of an `Option`.
@@ -702,7 +677,6 @@ To make this change, you'll need to:
 [[exercises]]
 name = "errors2"
 dir = "13_error_handling"
-mode = "test"
 hint = """
 One way to handle this is using a `match` statement on
 `item_quantity.parse::<i32>()` where the cases are `Ok(something)` and
@@ -718,7 +692,7 @@ and give it a try!"""
 [[exercises]]
 name = "errors3"
 dir = "13_error_handling"
-mode = "run"
+test = false
 hint = """
 If other functions can return a `Result`, why shouldn't `main`? It's a fairly
 common convention to return something like `Result<(), ErrorType>` from your
@@ -730,7 +704,6 @@ positive results."""
 [[exercises]]
 name = "errors4"
 dir = "13_error_handling"
-mode = "test"
 hint = """
 `PositiveNonzeroInteger::new` is always creating a new instance and returning
 an `Ok` result.
@@ -742,7 +715,7 @@ everything is... okay :)"""
 [[exercises]]
 name = "errors5"
 dir = "13_error_handling"
-mode = "run"
+test = false
 hint = """
 There are two different possible `Result` types produced within `main()`, which
 are propagated using `?` operators. How do we declare a return type from
@@ -766,7 +739,6 @@ https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/reen
 [[exercises]]
 name = "errors6"
 dir = "13_error_handling"
-mode = "test"
 hint = """
 This exercise uses a completed version of `PositiveNonzeroInteger` from
 errors4.
@@ -788,7 +760,7 @@ https://doc.rust-lang.org/std/result/enum.Result.html#method.map_err"""
 [[exercises]]
 name = "generics1"
 dir = "14_generics"
-mode = "run"
+test = false
 hint = """
 Vectors in Rust make use of generics to create dynamically sized arrays of any
 type.
@@ -798,7 +770,6 @@ You need to tell the compiler what type we are pushing onto this vector."""
 [[exercises]]
 name = "generics2"
 dir = "14_generics"
-mode = "test"
 hint = """
 Currently we are wrapping only values of type `u32`.
 
@@ -812,7 +783,6 @@ If you are still stuck https://doc.rust-lang.org/stable/book/ch10-01-syntax.html
 [[exercises]]
 name = "traits1"
 dir = "15_traits"
-mode = "test"
 hint = """
 A discussion about Traits in Rust can be found at:
 https://doc.rust-lang.org/book/ch10-02-traits.html
@@ -821,7 +791,6 @@ https://doc.rust-lang.org/book/ch10-02-traits.html
 [[exercises]]
 name = "traits2"
 dir = "15_traits"
-mode = "test"
 hint = """
 Notice how the trait takes ownership of `self`, and returns `Self`.
 
@@ -834,7 +803,6 @@ the documentation at: https://doc.rust-lang.org/std/vec/struct.Vec.html"""
 [[exercises]]
 name = "traits3"
 dir = "15_traits"
-mode = "test"
 hint = """
 Traits can have a default implementation for functions. Structs that implement
 the trait can then use the default version of these functions if they choose not
@@ -846,7 +814,6 @@ See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#def
 [[exercises]]
 name = "traits4"
 dir = "15_traits"
-mode = "test"
 hint = """
 Instead of using concrete types as parameters you can use traits. Try replacing
 the '??' with 'impl <what goes here?>'
@@ -857,7 +824,7 @@ See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#tra
 [[exercises]]
 name = "traits5"
 dir = "15_traits"
-mode = "run"
+test = false
 hint = """
 To ensure a parameter implements multiple traits use the '+ syntax'. Try
 replacing the '??' with 'impl <> + <>'.
@@ -870,7 +837,6 @@ See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#spe
 [[exercises]]
 name = "quiz3"
 dir = "quizzes"
-mode = "test"
 hint = """
 To find the best solution to this challenge you're going to need to think back
 to your knowledge of traits, specifically 'Trait Bound Syntax'
@@ -882,7 +848,7 @@ You may also need this: `use std::fmt::Display;`."""
 [[exercises]]
 name = "lifetimes1"
 dir = "16_lifetimes"
-mode = "run"
+test = false
 hint = """
 Let the compiler guide you. Also take a look at the book if you need help:
 https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html"""
@@ -890,7 +856,7 @@ https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html"""
 [[exercises]]
 name = "lifetimes2"
 dir = "16_lifetimes"
-mode = "run"
+test = false
 hint = """
 Remember that the generic lifetime `'a` will get the concrete lifetime that is
 equal to the smaller of the lifetimes of `x` and `y`.
@@ -904,7 +870,7 @@ inner block:
 [[exercises]]
 name = "lifetimes3"
 dir = "16_lifetimes"
-mode = "run"
+test = false
 hint = """
 If you use a lifetime annotation in a struct's fields, where else does it need
 to be added?"""
@@ -914,7 +880,6 @@ to be added?"""
 [[exercises]]
 name = "tests1"
 dir = "17_tests"
-mode = "test"
 hint = """
 You don't even need to write any code to test -- you can just test values and
 run that, even though you wouldn't do that in real life. :)
@@ -929,7 +894,6 @@ ones pass, and which ones fail :)"""
 [[exercises]]
 name = "tests2"
 dir = "17_tests"
-mode = "test"
 hint = """
 Like the previous exercise, you don't need to write any code to get this test
 to compile and run.
@@ -942,7 +906,6 @@ argument comes first and which comes second!"""
 [[exercises]]
 name = "tests3"
 dir = "17_tests"
-mode = "test"
 hint = """
 You can call a function right where you're passing arguments to `assert!`. So
 you could do something like `assert!(having_fun())`.
@@ -953,7 +916,6 @@ what you're doing using `!`, like `assert!(!having_fun())`."""
 [[exercises]]
 name = "tests4"
 dir = "17_tests"
-mode = "test"
 hint = """
 We expect method `Rectangle::new()` to panic for negative values.
 
@@ -967,7 +929,6 @@ https://doc.rust-lang.org/stable/book/ch11-01-writing-tests.html#checking-for-pa
 [[exercises]]
 name = "iterators1"
 dir = "18_iterators"
-mode = "test"
 hint = """
 Step 1:
 
@@ -990,7 +951,6 @@ https://doc.rust-lang.org/std/iter/trait.Iterator.html for some ideas.
 [[exercises]]
 name = "iterators2"
 dir = "18_iterators"
-mode = "test"
 hint = """
 Step 1:
 
@@ -1016,7 +976,6 @@ powerful and very general. Rust just needs to know the desired type."""
 [[exercises]]
 name = "iterators3"
 dir = "18_iterators"
-mode = "test"
 hint = """
 The `divide` function needs to return the correct error when even division is
 not possible.
@@ -1035,7 +994,6 @@ powerful! It can make the solution to this exercise infinitely easier."""
 [[exercises]]
 name = "iterators4"
 dir = "18_iterators"
-mode = "test"
 hint = """
 In an imperative language, you might write a `for` loop that updates a mutable
 variable. Or, you might write code utilizing recursion and a match clause. In
@@ -1047,7 +1005,6 @@ Hint 2: Check out the `fold` and `rfold` methods!"""
 [[exercises]]
 name = "iterators5"
 dir = "18_iterators"
-mode = "test"
 hint = """
 The documentation for the `std::iter::Iterator` trait contains numerous methods
 that would be helpful here.
@@ -1066,7 +1023,6 @@ a different method that could make your code more compact than using `fold`."""
 [[exercises]]
 name = "box1"
 dir = "19_smart_pointers"
-mode = "test"
 hint = """
 Step 1:
 
@@ -1090,7 +1046,6 @@ definition and try other types!
 [[exercises]]
 name = "rc1"
 dir = "19_smart_pointers"
-mode = "test"
 hint = """
 This is a straightforward exercise to use the `Rc<T>` type. Each `Planet` has
 ownership of the `Sun`, and uses `Rc::clone()` to increment the reference count
@@ -1109,7 +1064,7 @@ See more at: https://doc.rust-lang.org/book/ch15-04-rc.html
 [[exercises]]
 name = "arc1"
 dir = "19_smart_pointers"
-mode = "run"
+test = false
 hint = """
 Make `shared_numbers` be an `Arc` from the numbers vector. Then, in order
 to avoid creating a copy of `numbers`, you'll need to create `child_numbers`
@@ -1127,7 +1082,6 @@ https://doc.rust-lang.org/stable/book/ch16-00-concurrency.html
 [[exercises]]
 name = "cow1"
 dir = "19_smart_pointers"
-mode = "test"
 hint = """
 If `Cow` already owns the data it doesn't need to clone it when `to_mut()` is
 called.
@@ -1141,7 +1095,7 @@ on the `Cow` type.
 [[exercises]]
 name = "threads1"
 dir = "20_threads"
-mode = "run"
+test = false
 hint = """
 `JoinHandle` is a struct that is returned from a spawned thread:
 https://doc.rust-lang.org/std/thread/fn.spawn.html
@@ -1159,7 +1113,7 @@ https://doc.rust-lang.org/std/thread/struct.JoinHandle.html
 [[exercises]]
 name = "threads2"
 dir = "20_threads"
-mode = "run"
+test = false
 hint = """
 `Arc` is an Atomic Reference Counted pointer that allows safe, shared access
 to **immutable** data. But we want to *change* the number of `jobs_completed`
@@ -1181,7 +1135,6 @@ https://doc.rust-lang.org/book/ch16-03-shared-state.html#sharing-a-mutext-betwee
 [[exercises]]
 name = "threads3"
 dir = "20_threads"
-mode = "test"
 hint = """
 An alternate way to handle concurrency between threads is to use an `mpsc`
 (multiple producer, single consumer) channel to communicate.
@@ -1200,7 +1153,7 @@ See https://doc.rust-lang.org/book/ch16-02-message-passing.html for more info.
 [[exercises]]
 name = "macros1"
 dir = "21_macros"
-mode = "run"
+test = false
 hint = """
 When you call a macro, you need to add something special compared to a
 regular function call. If you're stuck, take a look at what's inside
@@ -1209,7 +1162,7 @@ regular function call. If you're stuck, take a look at what's inside
 [[exercises]]
 name = "macros2"
 dir = "21_macros"
-mode = "run"
+test = false
 hint = """
 Macros don't quite play by the same rules as the rest of Rust, in terms of
 what's available where.
@@ -1220,7 +1173,7 @@ Unlike other things in Rust, the order of "where you define a macro" versus
 [[exercises]]
 name = "macros3"
 dir = "21_macros"
-mode = "run"
+test = false
 hint = """
 In order to use a macro outside of its module, you need to do something
 special to the module to lift the macro out into its parent.
@@ -1231,7 +1184,7 @@ exported macros, if you've seen any of those around."""
 [[exercises]]
 name = "macros4"
 dir = "21_macros"
-mode = "run"
+test = false
 hint = """
 You only need to add a single character to make this compile.
 
@@ -1248,7 +1201,8 @@ https://veykril.github.io/tlborm/"""
 [[exercises]]
 name = "clippy1"
 dir = "22_clippy"
-mode = "clippy"
+test = false
+strict_clippy = true
 hint = """
 Rust stores the highest precision version of any long or infinite precision
 mathematical constants in the Rust standard library:
@@ -1264,14 +1218,16 @@ appropriate replacement constant from `std::f32::consts`..."""
 [[exercises]]
 name = "clippy2"
 dir = "22_clippy"
-mode = "clippy"
+test = false
+strict_clippy = true
 hint = """
 `for` loops over `Option` values are more clearly expressed as an `if let`"""
 
 [[exercises]]
 name = "clippy3"
 dir = "22_clippy"
-mode = "clippy"
+test = false
+strict_clippy = true
 hint = "No hints this time!"
 
 # TYPE CONVERSIONS
@@ -1279,7 +1235,6 @@ hint = "No hints this time!"
 [[exercises]]
 name = "using_as"
 dir = "23_conversions"
-mode = "test"
 hint = """
 Use the `as` operator to cast one of the operands in the last line of the
 `average` function into the expected return type."""
@@ -1287,14 +1242,12 @@ Use the `as` operator to cast one of the operands in the last line of the
 [[exercises]]
 name = "from_into"
 dir = "23_conversions"
-mode = "test"
 hint = """
 Follow the steps provided right before the `From` implementation"""
 
 [[exercises]]
 name = "from_str"
 dir = "23_conversions"
-mode = "test"
 hint = """
 The implementation of `FromStr` should return an `Ok` with a `Person` object,
 or an `Err` with an error if the string is not valid.
@@ -1315,7 +1268,6 @@ https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/reen
 [[exercises]]
 name = "try_from_into"
 dir = "23_conversions"
-mode = "test"
 hint = """
 Follow the steps provided right before the `TryFrom` implementation.
 You can also use the example at
@@ -1338,6 +1290,5 @@ Challenge: Can you make the `TryFrom` implementations generic over many integer 
 [[exercises]]
 name = "as_ref_mut"
 dir = "23_conversions"
-mode = "test"
 hint = """
 Add `AsRef<str>` or `AsMut<u32>` as a trait bound to the functions."""

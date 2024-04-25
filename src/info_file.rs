@@ -2,18 +2,6 @@ use anyhow::{bail, Context, Error, Result};
 use serde::Deserialize;
 use std::{fs, io::ErrorKind};
 
-// The mode of the exercise.
-#[derive(Deserialize, Copy, Clone)]
-#[serde(rename_all = "lowercase")]
-pub enum Mode {
-    // The exercise should be compiled as a binary
-    Run,
-    // The exercise should be compiled as a test harness
-    Test,
-    // The exercise should be linted with clippy
-    Clippy,
-}
-
 // Deserialized from the `info.toml` file.
 #[derive(Deserialize)]
 pub struct ExerciseInfo {
@@ -21,10 +9,16 @@ pub struct ExerciseInfo {
     pub name: String,
     // The exercise's directory inside the `exercises` directory
     pub dir: Option<String>,
-    // The mode of the exercise
-    pub mode: Mode,
+    #[serde(default = "default_true")]
+    pub test: bool,
+    #[serde(default)]
+    pub strict_clippy: bool,
     // The hint text associated with the exercise
     pub hint: String,
+}
+#[inline]
+const fn default_true() -> bool {
+    true
 }
 
 impl ExerciseInfo {
