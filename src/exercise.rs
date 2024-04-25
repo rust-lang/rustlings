@@ -130,9 +130,9 @@ impl Exercise {
         output.clear();
 
         let clippy_args: &[&str] = if self.strict_clippy {
-            &["--", "-D", "warnings"]
+            &["--profile", "test", "--", "-D", "warnings"]
         } else {
-            &[]
+            &["--profile", "test"]
         };
         let clippy_success =
             self.cargo_cmd("clippy", clippy_args, "cargo clippy …", output, dev, true)?;
