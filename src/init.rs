@@ -4,6 +4,7 @@ use std::{
     fs::{self, create_dir},
     io::ErrorKind,
     path::Path,
+    process::{Command, Stdio},
 };
 
 use crate::{cargo_toml::updated_cargo_toml, embedded::EMBEDDED_FILES, info_file::InfoFile};
@@ -50,6 +51,13 @@ pub fn init() -> Result<()> {
     fs::write(".vscode/extensions.json", VS_CODE_EXTENSIONS_JSON)
         .context("Failed to create the file `rustlings/.vscode/extensions.json`")?;
 
+    // Ignore any Git error because Git initialization is not required.
+    let _ = Command::new("git")
+        .arg("init")
+        .stdin(Stdio::null())
+        .stderr(Stdio::null())
+        .status();
+
     println!("{POST_INIT_MSG}");
 
     Ok(())
@@ -76,7 +84,8 @@ You probably already initialized Rustlings.
 Run `cd rustlings`
 Then run `rustlings` again";
 
-const POST_INIT_MSG: &str = "Done initialization!
+const POST_INIT_MSG: &str = "
+Done initialization!
 
 Run `cd rustlings` to go into the generated directory.
 Then run `rustlings` to get started.";
