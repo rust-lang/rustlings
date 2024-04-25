@@ -8,8 +8,7 @@ use std::{
 
 use crate::{in_official_repo, terminal_link::TerminalFileLink, DEBUG_PROFILE};
 
-// TODO
-pub const OUTPUT_CAPACITY: usize = 1 << 12;
+pub const OUTPUT_CAPACITY: usize = 1 << 14;
 
 fn run_command(
     mut cmd: Command,
