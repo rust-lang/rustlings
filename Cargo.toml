@@ -8,7 +8,7 @@ exclude = [
 ]
 
 [workspace.package]
-version = "6.0.0-beta.0"
+version = "6.0.0-alpha.0"
 authors = [
   "Liv <mokou@fastmail.com>",
   "Mo Bitar <mo8it@proton.me>",
@@ -41,6 +41,7 @@ include = [
   "/info.toml",
   "/LICENSE",
   "/README.md",
+  "/solutions/",
   "/src/",
 ]
 
@@ -52,7 +53,7 @@ hashbrown = "0.14.3"
 notify-debouncer-mini = "0.4.1"
 os_pipe = "1.1.5"
 ratatui = "0.26.2"
-rustlings-macros = { path = "rustlings-macros", version = "6.0.0-beta.0" }
+rustlings-macros = { path = "rustlings-macros", version = "=6.0.0-alpha.0" }
 serde.workspace = true
 toml_edit.workspace = true
 which = "6.0.1"
@@ -66,3 +67,6 @@ panic = "abort"
 
 [profile.dev]
 panic = "abort"
+
+[package.metadata.release]
+pre-release-hook = ["./release-hook.sh"]
