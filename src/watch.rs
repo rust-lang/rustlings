@@ -42,19 +42,19 @@ pub enum WatchExit {
 
 pub fn watch(
     app_state: &mut AppState,
-    notify_exercise_paths: Option<&'static [&'static str]>,
+    notify_exercise_names: Option<&'static [&'static [u8]]>,
 ) -> Result<WatchExit> {
     let (tx, rx) = channel();
 
     let mut manual_run = false;
     // Prevent dropping the guard until the end of the function.
     // Otherwise, the file watcher exits.
-    let _debouncer_guard = if let Some(exercise_paths) = notify_exercise_paths {
+    let _debouncer_guard = if let Some(exercise_names) = notify_exercise_names {
         let mut debouncer = new_debouncer(
             Duration::from_millis(500),
             DebounceEventHandler {
                 tx: tx.clone(),
-                exercise_paths,
+                exercise_names,
             },
         )
         .inspect_err(|_| eprintln!("{NOTIFY_ERR}"))?;
