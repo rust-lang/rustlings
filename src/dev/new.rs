@@ -118,8 +118,9 @@ const CARGO_TOML: &[u8] =
 bin = []
 
 [package]
-name = "rustlings"
+name = "exercises"
 edition = "2021"
+# Don't publish the exercises on crates.io!
 publish = false
 
 [dependencies]
