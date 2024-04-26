@@ -36,7 +36,7 @@ cargo install rustlings@6.0.0-beta.3
 ```
 
 <details>
-<summary>🐛 If the installation fails…</summary>
+<summary>If the installation fails 🐛… (click to expand)</summary>
 
 <!-- TODO: Remove @6.0.0-beta.x -->
 
