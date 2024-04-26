@@ -21,9 +21,12 @@ Before installing Rustlings, you need to have _Rust installed_.
 Visit [www.rust-lang.org/tools/install](https://www.rust-lang.org/tools/install) for further instructions on installing Rust.
 This'll also install _Cargo_, Rust's package/project manager.
 
-🐧 If you're on Linux, make sure you've installed `gcc` (for a linker). Deb: `sudo apt install build-essential gcc`. Dnf: `sudo dnf install gcc`.
+> 🐧 If you're on Linux, make sure you've installed `gcc` (for a linker).
+>
+> Deb: `sudo apt install gcc`.
+> Dnf: `sudo dnf install gcc`.
 
-🍎 If you're on MacOS, make sure you've installed Xcode and its developer tools by typing `xcode-select --install`.
+> 🍎 If you're on MacOS, make sure you've installed Xcode and its developer tools by running `xcode-select --install`.
 
 ### Installing Rustlings
 
@@ -68,7 +71,7 @@ For every topic, there is an additional `README.md` file with some resources to 
 We highly recommend that you have a look at them before you start 📚️
 
 Most exercises contain an error that keeps them from compiling, and it's up to you to fix it!
-Some exercises contain tests that need to pass for the exercise to be done.
+Some exercises contain tests that need to pass for the exercise to be done ✅
 
 ### Watch Mode
 
