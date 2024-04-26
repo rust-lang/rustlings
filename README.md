@@ -36,11 +36,7 @@ cargo install rustlings@6.0.0-beta.3
 ```
 
 <details>
-<summary>
-
-**If the installation fails…** (_click to expand_)
-
-</summary>
+<summary><strong>If the installation fails…</strong> (<em>click to expand</em>)</summary>
 
 <!-- TODO: Remove @6.0.0-beta.x -->
 
@@ -86,11 +82,7 @@ This will start the _watch mode_ which walks you through the exercises in a pred
 It will rerun the current exercise automatically every time you change the exercise's file in the `exercises/` directory.
 
 <details>
-<summary>
-
-**If detecting file changes in the `exercises/` directory fails…** (_click to expand_)
-
-</summary>
+<summary><strong>If detecting file changes in the <code>exercises/</code> directory fails…</strong> (<em>click to expand</em>)</summary>
 
 You can add the `--manual-run` flag (`rustlings --manual-run`) to manually rerun the current exercise by entering `r` or `run` in the watch mode.
 
