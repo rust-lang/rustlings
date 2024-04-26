@@ -54,7 +54,7 @@ After installing Rustlings, run the following command to initialize the `rustlin
 rustlings init
 ```
 
-Now, go into the newly initialized directory and run Rustlings for further instructions on getting started with the exercises:
+Now, go into the newly initialized directory and launch Rustlings for further instructions on getting started with the exercises:
 
 ```bash
 cd rustlings/
@@ -72,11 +72,7 @@ Some exercises contain tests that need to pass for the exercise to be done.
 
 ### Watch Mode
 
-To run the exercises, launch Rustlings:
-
-```bash
-rustlings
-```
+After [initialization](#initialization), Rustlings can be launched by simply running the command `rustlings`.
 
 This will start the _watch mode_ which walks you through the exercises in a predefined order (what we think is best for newcomers).
 It will rerun the current exercise automatically every time you change the exercise's file in the `exercises/` directory.
