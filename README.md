@@ -40,9 +40,9 @@ cargo install rustlings@6.0.0-beta.3
 
 <!-- TODO: Remove @6.0.0-beta.x -->
 
-- Make sure you have the latest Rust version by running `rustup update`.
+- Make sure you have the latest Rust version by running `rustup update`
 - Try adding the `--locked` flag: `cargo install rustlings@6.0.0-beta.3 --locked`
-- Otherwise, please [report the issue](https://github.com/rust-lang/rustlings/issues/new).
+- Otherwise, please [report the issue](https://github.com/rust-lang/rustlings/issues/new)
 
 </details>
 
@@ -80,7 +80,7 @@ It will rerun the current exercise automatically every time you change the exerc
 <details>
 <summary><strong>If detecting file changes in the <code>exercises/</code> directory fails…</strong> (<em>click to expand</em>)</summary>
 
-> You can add the `--manual-run` flag (`rustlings --manual-run`) to manually rerun the current exercise by entering `r` or `run` in the watch mode.
+> You can add the **`--manual-run`** flag (`rustlings --manual-run`) to manually rerun the current exercise by entering `r` or `run` in the watch mode.
 >
 > Please [report the issue](https://github.com/rust-lang/rustlings/issues/new) with some information about your operating system and whether you run Rustlings in a container or virtual machine (e.g. WSL).
 
@@ -93,8 +93,8 @@ In the [watch mode](#watch-mode) (after launching `rustlings`), you can enter `l
 The list allows you to…
 
 - See the status of all exercises (done or pending)
-- `c`: Continue at another exercise (temporarelly skip some exercises or go back to a previous one)
-- `r`: Reset the status and file of an exercise (you need to reload/reopen its file in your editor afterwards)
+- `c`: Continue at another exercise (temporarily skip some exercises or go back to a previous one)
+- `r`: Reset status and file of an exercise (you need to _reload/reopen_ its file in your editor afterwards)
 
 See the footer of the list for all possible keys.
 
@@ -112,8 +112,6 @@ If you want to remove Rustlings from your system, run the following command:
 ```bash
 cargo uninstall rustlings
 ```
-
-That's it!
 
 ## Contributing
 
