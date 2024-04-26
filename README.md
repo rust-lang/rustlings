@@ -80,9 +80,9 @@ It will rerun the current exercise automatically every time you change the exerc
 <details>
 <summary><strong>If detecting file changes in the <code>exercises/</code> directory fails…</strong> (<em>click to expand</em>)</summary>
 
-You can add the `--manual-run` flag (`rustlings --manual-run`) to manually rerun the current exercise by entering `r` or `run` in the watch mode.
-
-Please [report the issue](https://github.com/rust-lang/rustlings/issues/new) with some information about your operating system and whether you run Rustlings in a container or virtual machine (e.g. WSL).
+> You can add the `--manual-run` flag (`rustlings --manual-run`) to manually rerun the current exercise by entering `r` or `run` in the watch mode.
+>
+> Please [report the issue](https://github.com/rust-lang/rustlings/issues/new) with some information about your operating system and whether you run Rustlings in a container or virtual machine (e.g. WSL).
 
 </details>
 
