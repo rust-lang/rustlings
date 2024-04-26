@@ -35,15 +35,16 @@ The following command will download and compile Rustlings:
 cargo install rustlings@6.0.0-beta.3
 ```
 
-#### Troubleshooting
-
-If the installation fails…
+<details>
+<summary>🐛 If the installation fails…</summary>
 
 <!-- TODO: Remove @6.0.0-beta.x -->
 
 - Make sure you have the latest Rust version by running `rustup update`.
 - Try adding the `--locked` flag: `cargo install rustlings --locked`
 - Otherwise, please [report an issue](https://github.com/rust-lang/rustlings/issues/new).
+
+</details>
 
 ### Initialization
 
