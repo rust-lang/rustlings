@@ -36,13 +36,17 @@ cargo install rustlings@6.0.0-beta.3
 ```
 
 <details>
-<summary>If the installation fails 🐛… (click to expand)</summary>
+<summary>
+
+**If the installation fails…** (_click to expand_)
+
+</summary>
 
 <!-- TODO: Remove @6.0.0-beta.x -->
 
 - Make sure you have the latest Rust version by running `rustup update`.
-- Try adding the `--locked` flag: `cargo install rustlings --locked`
-- Otherwise, please [report an issue](https://github.com/rust-lang/rustlings/issues/new).
+- Try adding the `--locked` flag: `cargo install rustlings@6.0.0-beta.3 --locked`
+- Otherwise, please [report the issue](https://github.com/rust-lang/rustlings/issues/new).
 
 </details>
 
@@ -63,45 +67,48 @@ rustlings
 
 ## Doing exercises
 
-The exercises are sorted by topic and can be found in the subdirectory `rustlings/exercises/<topic>`.
-For every topic there is an additional README file with some resources to get you started on the topic.
-We really recommend that you have a look at them before you start.
+The exercises are sorted by topic and can be found in the subdirectory `exercises/<topic>`.
+For every topic, there is an additional `README.md` file with some resources to get you started on the topic.
+We highly recommend that you have a look at them before you start 📚️
 
-The task is simple.
 Most exercises contain an error that keeps them from compiling, and it's up to you to fix it!
-Some exercises are also run as tests, but Rustlings handles them all the same.
-To run the exercises in the recommended order, execute:
+Some exercises contain tests that need to pass for the exercise to be done.
+
+### Watch Mode
+
+To run the exercises, launch Rustlings:
 
 ```bash
 rustlings
 ```
 
-This will try to verify the completion of every exercise in a predetermined order (what we think is best for newcomers).
-It will also rerun automatically every time you change a file in the `exercises/` directory.
+This will start the _watch mode_ which walks you through the exercises in a predefined order (what we think is best for newcomers).
+It will rerun the current exercise automatically every time you change the exercise's file in the `exercises/` directory.
 
-In case you want to go by your own order, or want to only verify a single exercise, you can run:
+<details>
+<summary>
 
-```bash
-rustlings run EXERCISE_NAME
-```
+**If detecting file changes in the `exercises/` directory fails…** (_click to expand_)
 
-Or simply use the following command to run the next pending exercise in the course:
+</summary>
 
-```bash
-rustlings run
-```
+You can add the `--manual-run` flag (`rustlings --manual-run`) to manually rerun the current exercise by entering `r` or `run` in the watch mode.
 
-In case you get stuck, you can run the following command to get a hint for your exercise:
+Please [report the issue](https://github.com/rust-lang/rustlings/issues/new) with some information about your operating system and whether you run Rustlings in a container or virtual machine (e.g. WSL).
 
-```bash
-rustlings hint EXERCISE_NAME
-```
+</details>
 
-You can also get the hint for the next pending exercise with the following command:
+### Exercise List
 
-```bash
-rustlings hint
-```
+In the [watch mode](#watch-mode) (after launching `rustlings`), you can enter `l` or `list` to open the interactive exercise list.
+
+The list allows you to…
+
+- See the status of all exercises (done or pending)
+- `c`: Continue at another exercise (temporarelly skip some exercises or go back to a previous one)
+- `r`: Reset the status and file of an exercise (you need to reload/reopen its file in your editor afterwards)
+
+See the footer of the list for all possible keys.
 
 ## Continuing On
 
@@ -112,15 +119,7 @@ Continue practicing your Rust skills by building your own projects, contributing
 
 ## Uninstalling Rustlings
 
-If you want to remove Rustlings from your system, there are two steps.
-
-1️⃣ Remove the `rustlings` directory that was created by `rustlings init`:
-
-```bash
-rm -r rustlings
-```
-
-2️⃣ Run `cargo uninstall` to remove the `rustlings` binary:
+If you want to remove Rustlings from your system, run the following command:
 
 ```bash
 cargo uninstall rustlings
@@ -130,7 +129,7 @@ That's it!
 
 ## Contributing
 
-See [CONTRIBUTING.md](https://github.com/rust-lang/rustlings/blob/main/CONTRIBUTING.md).
+See [CONTRIBUTING.md](https://github.com/rust-lang/rustlings/blob/main/CONTRIBUTING.md) 🔗
 
 ## Contributors ✨
 
