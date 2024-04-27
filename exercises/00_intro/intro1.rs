@@ -1,11 +1,10 @@
 // We sometimes encourage you to keep trying things on a given exercise, even
 // after you already figured it out. If you got everything working and feel
-// ready for the next exercise, remove the `I AM NOT DONE` comment below.
+// ready for the next exercise, enter `n` (or `next`) in the terminal.
 //
-// If you're running this using `rustlings watch`: The exercise file will be
-// reloaded when you change one of the lines below! Try adding a `println!`
-// line, or try changing what it outputs in your terminal. Try removing a
-// semicolon and see what happens!
+// The exercise file will be reloaded when you change one of the lines below!
+// Try adding a new `println!`.
+// Try removing a semicolon and see what happens in the terminal!
 
 fn main() {
     println!("Hello and");
@@ -22,5 +21,6 @@ fn main() {
     println!("solve the exercises. Good luck!");
     println!();
     println!("The file of this exercise is `exercises/00_intro/intro1.rs`. Have a look!");
-    println!("The current exercise path is shown under the progress bar in the watch mode.");
+    println!("The current exercise path will be always shown under the progress bar.");
+    println!("You can click on the path to open the exercise file in your editor.");
 }
