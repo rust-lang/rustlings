@@ -1,56 +1,20 @@
-use anyhow::{Context, Result};
+use anyhow::Result;
 use crossterm::style::{style, StyledContent, Stylize};
 use std::{
     fmt::{self, Display, Formatter},
-    io::{Read, Write},
-    process::{Command, Stdio},
+    io::Write,
+    path::{Path, PathBuf},
+    process::Command,
 };
 
-use crate::{in_official_repo, terminal_link::TerminalFileLink, DEBUG_PROFILE};
+use crate::{
+    cmd::{run_cmd, CargoCmd},
+    in_official_repo,
+    terminal_link::TerminalFileLink,
+    DEBUG_PROFILE,
+};
 
 pub const OUTPUT_CAPACITY: usize = 1 << 14;
-
-fn run_command(
-    mut cmd: Command,
-    cmd_description: &str,
-    output: &mut Vec<u8>,
-    stderr: bool,
-) -> Result<bool> {
-    let (mut reader, writer) = os_pipe::pipe().with_context(|| {
-        format!("Failed to create a pipe to run the command `{cmd_description}``")
-    })?;
-
-    let (stdout, stderr) = if stderr {
-        (
-            Stdio::from(writer.try_clone().with_context(|| {
-                format!("Failed to clone the pipe writer for the command `{cmd_description}`")
-            })?),
-            Stdio::from(writer),
-        )
-    } else {
-        (Stdio::from(writer), Stdio::null())
-    };
-
-    let mut handle = cmd
-        .stdout(stdout)
-        .stderr(stderr)
-        .spawn()
-        .with_context(|| format!("Failed to run the command `{cmd_description}`"))?;
-
-    // Prevent pipe deadlock.
-    drop(cmd);
-
-    reader
-        .read_to_end(output)
-        .with_context(|| format!("Failed to read the output of the command `{cmd_description}`"))?;
-
-    output.push(b'\n');
-
-    handle
-        .wait()
-        .with_context(|| format!("Failed to wait on the command `{cmd_description}` to exit"))
-        .map(|status| status.success())
-}
 
 pub struct Exercise {
     pub dir: Option<&'static str>,
@@ -66,11 +30,16 @@ pub struct Exercise {
 }
 
 impl Exercise {
-    fn run_bin(&self, output: &mut Vec<u8>) -> Result<bool> {
+    fn run_bin(&self, output: &mut Vec<u8>, target_dir: &Path) -> Result<bool> {
         writeln!(output, "{}", "Output".underlined())?;
 
-        let bin_path = format!("target/debug/{}", self.name);
-        let success = run_command(Command::new(&bin_path), &bin_path, output, true)?;
+        let mut bin_path =
+            PathBuf::with_capacity(target_dir.as_os_str().len() + 7 + self.name.len());
+        bin_path.push(target_dir);
+        bin_path.push("debug");
+        bin_path.push(self.name);
+
+        let success = run_cmd(Command::new(&bin_path), &bin_path.to_string_lossy(), output)?;
 
         if !success {
             writeln!(
@@ -85,43 +54,23 @@ impl Exercise {
         Ok(success)
     }
 
-    fn cargo_cmd(
-        &self,
-        command: &str,
-        args: &[&str],
-        cmd_description: &str,
-        output: &mut Vec<u8>,
-        dev: bool,
-        stderr: bool,
-    ) -> Result<bool> {
-        let mut cmd = Command::new("cargo");
-        cmd.arg(command);
-
-        // A hack to make `cargo run` work when developing Rustlings.
-        if dev {
-            cmd.arg("--manifest-path")
-                .arg("dev/Cargo.toml")
-                .arg("--target-dir")
-                .arg("target");
-        }
-
-        cmd.arg("--color")
-            .arg("always")
-            .arg("-q")
-            .arg("--bin")
-            .arg(self.name)
-            .args(args);
-
-        run_command(cmd, cmd_description, output, stderr)
-    }
-
-    pub fn run(&self, output: &mut Vec<u8>) -> Result<bool> {
+    pub fn run(&self, output: &mut Vec<u8>, target_dir: &Path) -> Result<bool> {
         output.clear();
 
         // Developing the official Rustlings.
         let dev = DEBUG_PROFILE && in_official_repo();
 
-        let build_success = self.cargo_cmd("build", &[], "cargo build …", output, dev, true)?;
+        let build_success = CargoCmd {
+            subcommand: "build",
+            args: &[],
+            exercise_name: self.name,
+            description: "cargo build …",
+            hide_warnings: false,
+            target_dir,
+            output,
+            dev,
+        }
+        .run()?;
         if !build_success {
             return Ok(false);
         }
@@ -134,19 +83,28 @@ impl Exercise {
         } else {
             &["--profile", "test"]
         };
-        let clippy_success =
-            self.cargo_cmd("clippy", clippy_args, "cargo clippy …", output, dev, true)?;
+        let clippy_success = CargoCmd {
+            subcommand: "clippy",
+            args: clippy_args,
+            exercise_name: self.name,
+            description: "cargo clippy …",
+            hide_warnings: false,
+            target_dir,
+            output,
+            dev,
+        }
+        .run()?;
         if !clippy_success {
             return Ok(false);
         }
 
         if !self.test {
-            return self.run_bin(output);
+            return self.run_bin(output, target_dir);
         }
 
-        let test_success = self.cargo_cmd(
-            "test",
-            &[
+        let test_success = CargoCmd {
+            subcommand: "test",
+            args: &[
                 "--",
                 "--color",
                 "always",
@@ -154,14 +112,17 @@ impl Exercise {
                 "--format",
                 "pretty",
             ],
-            "cargo test …",
+            exercise_name: self.name,
+            description: "cargo test …",
+            // Hide warnings because they are shown by Clippy.
+            hide_warnings: true,
+            target_dir,
             output,
             dev,
-            // Hide warnings because they are shown by Clippy.
-            false,
-        )?;
+        }
+        .run()?;
 
-        let run_success = self.run_bin(output)?;
+        let run_success = self.run_bin(output, target_dir)?;
 
         Ok(test_success && run_success)
     }

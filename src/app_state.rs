@@ -7,7 +7,7 @@ use crossterm::{
 use std::{
     fs::{self, File},
     io::{Read, StdoutLock, Write},
-    path::Path,
+    path::{Path, PathBuf},
     process::{Command, Stdio},
 };
 
@@ -39,6 +39,7 @@ pub struct AppState {
     final_message: String,
     file_buf: Vec<u8>,
     official_exercises: bool,
+    target_dir: PathBuf,
 }
 
 impl AppState {
@@ -90,6 +91,7 @@ impl AppState {
     pub fn new(
         exercise_infos: Vec<ExerciseInfo>,
         final_message: String,
+        target_dir: PathBuf,
     ) -> (Self, StateFileStatus) {
         let exercises = exercise_infos
             .into_iter()
@@ -127,6 +129,7 @@ impl AppState {
             final_message,
             file_buf: Vec::with_capacity(2048),
             official_exercises: !Path::new("info.toml").exists(),
+            target_dir,
         };
 
         let state_file_status = slf.update_from_file();
@@ -152,6 +155,11 @@ impl AppState {
     #[inline]
     pub fn current_exercise(&self) -> &Exercise {
         &self.exercises[self.current_exercise_ind]
+    }
+
+    #[inline]
+    pub fn target_dir(&self) -> &Path {
+        &self.target_dir
     }
 
     pub fn set_current_exercise_ind(&mut self, ind: usize) -> Result<()> {
@@ -313,7 +321,7 @@ impl AppState {
                 write!(writer, "Running {exercise} ... ")?;
                 writer.flush()?;
 
-                let success = exercise.run(&mut output)?;
+                let success = exercise.run(&mut output, &self.target_dir)?;
                 if !success {
                     writeln!(writer, "{}\n", "FAILED".red())?;
 
