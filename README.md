@@ -35,7 +35,7 @@ The following command will download and compile Rustlings:
 <!-- TODO: Remove @6.0.0-beta.x -->
 
 ```bash
-cargo install rustlings@6.0.0-beta.4
+cargo install rustlings@6.0.0-beta.5
 ```
 
 <details>
@@ -44,7 +44,7 @@ cargo install rustlings@6.0.0-beta.4
 <!-- TODO: Remove @6.0.0-beta.x -->
 
 - Make sure you have the latest Rust version by running `rustup update`
-- Try adding the `--locked` flag: `cargo install rustlings@6.0.0-beta.4 --locked`
+- Try adding the `--locked` flag: `cargo install rustlings@6.0.0-beta.5 --locked`
 - Otherwise, please [report the issue](https://github.com/rust-lang/rustlings/issues/new)
 
 </details>
