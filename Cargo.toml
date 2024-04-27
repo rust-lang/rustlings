@@ -26,7 +26,6 @@ toml_edit = { version = "0.22.12", default-features = false, features = ["parse"
 [package]
 name = "rustlings"
 description = "Small exercises to get you used to reading and writing Rust code!"
-default-run = "rustlings"
 version.workspace = true
 authors.workspace = true
 repository.workspace = true
@@ -52,9 +51,9 @@ anyhow = "1.0.82"
 clap = { version = "4.5.4", features = ["derive"] }
 crossterm = "0.27.0"
 hashbrown = "0.14.3"
-notify-debouncer-mini = "0.4.1"
+notify-debouncer-mini = { version = "0.4.1", default-features = false }
 os_pipe = "1.1.5"
-ratatui = "0.26.2"
+ratatui = { version = "0.26.2", default-features = false, features = ["crossterm"] }
 rustlings-macros = { path = "rustlings-macros", version = "=6.0.0-beta.4" }
 serde_json = "1.0.116"
 serde.workspace = true
