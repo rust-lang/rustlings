@@ -5,7 +5,7 @@ We are going to teach you a lot of things about Rust, but before we can
 get started, here are some notes about how Rustlings operates:
 
 1. The central concept behind Rustlings is that you solve exercises. These
-   exercises usually contain some syntax or logic errors which cause the
+   exercises usually contain some compiler or logic errors which cause the
    exercise to fail compilation or testing. It's your job to find all errors
    and fix them!
 2. Make sure to have your editor open in the `rustlings/` directory. Rustlings
@@ -13,8 +13,7 @@ get started, here are some notes about how Rustlings operates:
    the exercise file in your editor, fix errors and save the file. Rustlings will
    automatically detect the file change and rerun the exercise. If all errors are
    fixed, Rustlings will ask you to move on to the next exercise.
-3. If you're stuck on an exercise, you can request a hint by typing `h` or `hint`
-   followed by ENTER.
+3. If you're stuck on an exercise, enter `h` (or `hint`) to show a hint.
 4. If an exercise doesn't make sense to you, feel free to open an issue on GitHub!
    (https://github.com/rust-lang/rustlings). We look at every issue, and sometimes,
    other learners do too so you can help each other out!
@@ -36,9 +35,7 @@ name = "intro1"
 dir = "00_intro"
 test = false
 # TODO: Fix hint
-hint = """
-Remove the `I AM NOT DONE` comment in the `exercises/intro00/intro1.rs` file
-to move on to the next exercise."""
+hint = """Enter `n` (or `next`) followed by ENTER to move on to the next exercise"""
 
 [[exercises]]
 name = "intro2"
