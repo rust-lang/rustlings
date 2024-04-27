@@ -5,11 +5,10 @@ use crossterm::{
     terminal::{Clear, ClearType},
     ExecutableCommand,
 };
-use serde::Deserialize;
 use std::{
     io::{self, BufRead, Write},
-    path::{Path, PathBuf},
-    process::{exit, Command, Stdio},
+    path::Path,
+    process::exit,
 };
 
 use self::{app_state::AppState, dev::DevCommands, info_file::InfoFile, watch::WatchExit};
@@ -77,11 +76,6 @@ enum Subcommands {
     Dev(DevCommands),
 }
 
-#[derive(Deserialize)]
-struct CargoMetadata {
-    target_directory: PathBuf,
-}
-
 fn in_official_repo() -> bool {
     Path::new("dev/rustlings-repo.txt").exists()
 }
@@ -92,21 +86,6 @@ fn main() -> Result<()> {
     if !DEBUG_PROFILE && in_official_repo() {
         bail!("{OLD_METHOD_ERR}");
     }
-
-    let metadata_output = Command::new("cargo")
-        .arg("metadata")
-        .arg("-q")
-        .arg("--format-version")
-        .arg("1")
-        .arg("--no-deps")
-        .stdin(Stdio::null())
-        .stderr(Stdio::inherit())
-        .output()
-        .context(CARGO_METADATA_ERR)?
-        .stdout;
-    let target_dir = serde_json::de::from_slice::<CargoMetadata>(&metadata_output)
-        .context("Failed to read the field `target_directory` from the `cargo metadata` output")?
-        .target_directory;
 
     match args.command {
         Some(Subcommands::Init) => {
@@ -142,8 +121,7 @@ fn main() -> Result<()> {
     let (mut app_state, state_file_status) = AppState::new(
         info_file.exercises,
         info_file.final_message.unwrap_or_default(),
-        target_dir,
-    );
+    )?;
 
     if let Some(welcome_message) = info_file.welcome_message {
         match state_file_status {
@@ -218,10 +196,6 @@ const OLD_METHOD_ERR: &str = "You are trying to run Rustlings using the old meth
 The new method doesn't include cloning the Rustlings' repository.
 Please follow the instructions in the README:
 https://github.com/rust-lang/rustlings#getting-started";
-
-const CARGO_METADATA_ERR: &str = "Failed to run the command `cargo metadata …`
-Did you already install Rust?
-Try running `cargo --version` to diagnose the problem.";
 
 const FORMAT_VERSION_HIGHER_ERR: &str =
     "The format version specified in the `info.toml` file is higher than the last one supported.

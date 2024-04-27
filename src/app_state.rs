@@ -4,6 +4,7 @@ use crossterm::{
     terminal::{Clear, ClearType},
     ExecutableCommand,
 };
+use serde::Deserialize;
 use std::{
     fs::{self, File},
     io::{Read, StdoutLock, Write},
@@ -30,6 +31,11 @@ pub enum ExercisesProgress {
 pub enum StateFileStatus {
     Read,
     NotRead,
+}
+
+#[derive(Deserialize)]
+struct CargoMetadata {
+    target_directory: PathBuf,
 }
 
 pub struct AppState {
@@ -91,8 +97,24 @@ impl AppState {
     pub fn new(
         exercise_infos: Vec<ExerciseInfo>,
         final_message: String,
-        target_dir: PathBuf,
-    ) -> (Self, StateFileStatus) {
+    ) -> Result<(Self, StateFileStatus)> {
+        let metadata_output = Command::new("cargo")
+            .arg("metadata")
+            .arg("-q")
+            .arg("--format-version")
+            .arg("1")
+            .arg("--no-deps")
+            .stdin(Stdio::null())
+            .stderr(Stdio::inherit())
+            .output()
+            .context(CARGO_METADATA_ERR)?
+            .stdout;
+        let target_dir = serde_json::de::from_slice::<CargoMetadata>(&metadata_output)
+            .context(
+                "Failed to read the field `target_directory` from the `cargo metadata` output",
+            )?
+            .target_directory;
+
         let exercises = exercise_infos
             .into_iter()
             .map(|mut exercise_info| {
@@ -134,7 +156,7 @@ impl AppState {
 
         let state_file_status = slf.update_from_file();
 
-        (slf, state_file_status)
+        Ok((slf, state_file_status))
     }
 
     #[inline]
@@ -387,6 +409,10 @@ impl AppState {
         Ok(())
     }
 }
+
+const CARGO_METADATA_ERR: &str = "Failed to run the command `cargo metadata …`
+Did you already install Rust?
+Try running `cargo --version` to diagnose the problem.";
 
 const RERUNNING_ALL_EXERCISES_MSG: &[u8] = b"
 All exercises seem to be done.
