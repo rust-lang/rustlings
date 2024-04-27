@@ -194,7 +194,7 @@ impl<'a> UiState<'a> {
         let message = if self.message.is_empty() {
             // Help footer.
             Span::raw(
-                "↓/j ↑/k home/g end/G │ filter <d>one/<p>ending │ <r>eset │ <c>ontinue at │ <q>uit",
+                "↓/j ↑/k home/g end/G │ <c>ontinue at │ <r>eset │ filter <d>one/<p>ending │ <q>uit",
             )
         } else {
             self.message.as_str().light_blue()
