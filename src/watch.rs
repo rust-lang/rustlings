@@ -124,5 +124,5 @@ The automatic detection of exercise file changes failed :(
 Please try running `rustlings` again.
 
 If you keep getting this error, run `rustlings --manual-run` to deactivate the file watcher.
-You need to manually trigger running the current exercise using `r` or `run` then.
+You need to manually trigger running the current exercise using `r` (or `run`) then.
 ";

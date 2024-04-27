@@ -130,7 +130,7 @@ impl<'a> WatchState<'a> {
                 self.writer,
                 "{}\n",
                 "Exercise done ✓
-When you are done experimenting, enter `n` or `next` to go to the next exercise 🦀"
+When you are done experimenting, enter `n` (or `next`) to move on to the next exercise 🦀"
                     .bold()
                     .green(),
             )?;
