@@ -108,7 +108,7 @@ impl Exercise {
                 "--",
                 "--color",
                 "always",
-                "--nocapture",
+                "--show-output",
                 "--format",
                 "pretty",
             ],
