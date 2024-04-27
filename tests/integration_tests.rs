@@ -1,5 +1,4 @@
 use assert_cmd::prelude::*;
-use predicates::boolean::PredicateBooleanExt;
 use std::process::Command;
 
 #[test]
@@ -110,8 +109,7 @@ fn run_compile_exercise_does_not_prompt() {
         .args(["run", "pending_exercise"])
         .current_dir("tests/fixture/state")
         .assert()
-        .code(0)
-        .stdout(predicates::str::contains("I AM NOT DONE").not());
+        .code(0);
 }
 
 #[test]
@@ -121,8 +119,7 @@ fn run_test_exercise_does_not_prompt() {
         .args(["run", "pending_test_exercise"])
         .current_dir("tests/fixture/state")
         .assert()
-        .code(0)
-        .stdout(predicates::str::contains("I AM NOT DONE").not());
+        .code(0);
 }
 
 #[test]
