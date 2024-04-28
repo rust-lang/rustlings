@@ -69,6 +69,7 @@ pub fn init() -> Result<()> {
 }
 
 const GITIGNORE: &[u8] = b".rustlings-state.txt
+solutions
 Cargo.lock
 target
 .vscode
