@@ -42,7 +42,7 @@ pub fn list(app_state: &mut AppState) -> Result<()> {
         ui_state.message.clear();
 
         match key.code {
-            KeyCode::Esc | KeyCode::Char('q') => break,
+            KeyCode::Char('q') => break,
             KeyCode::Down | KeyCode::Char('j') => ui_state.select_next(),
             KeyCode::Up | KeyCode::Char('k') => ui_state.select_previous(),
             KeyCode::Home | KeyCode::Char('g') => ui_state.select_first(),
