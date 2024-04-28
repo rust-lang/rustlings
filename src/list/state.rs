@@ -2,7 +2,7 @@ use anyhow::{Context, Result};
 use ratatui::{
     layout::{Constraint, Rect},
     style::{Style, Stylize},
-    text::Span,
+    text::{Line, Span},
     widgets::{Block, Borders, HighlightSpacing, Paragraph, Row, Table, TableState},
     Frame,
 };
@@ -193,11 +193,25 @@ impl<'a> UiState<'a> {
 
         let message = if self.message.is_empty() {
             // Help footer.
-            Span::raw(
-                "↓/j ↑/k home/g end/G │ <c>ontinue at │ <r>eset │ filter <d>one/<p>ending │ <q>uit",
-            )
+            let mut spans = Vec::with_capacity(4);
+            spans.push(Span::raw(
+                "↓/j ↑/k home/g end/G │ <c>ontinue at │ <r>eset │ filter ",
+            ));
+            match self.filter {
+                Filter::Done => {
+                    spans.push("<d>one".underlined().magenta());
+                    spans.push(Span::raw("/<p>ending"));
+                }
+                Filter::Pending => {
+                    spans.push(Span::raw("<d>one/"));
+                    spans.push("<p>ending".underlined().magenta());
+                }
+                Filter::None => spans.push(Span::raw("<d>one/<p>ending")),
+            }
+            spans.push(Span::raw(" │ <q>uit"));
+            Line::from(spans)
         } else {
-            self.message.as_str().light_blue()
+            Line::from(self.message.as_str().light_blue())
         };
         frame.render_widget(
             message,
