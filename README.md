@@ -64,6 +64,21 @@ cd rustlings/
 rustlings
 ```
 
+## Working environment
+
+### Editor
+
+Our general recommendation is [VS Code](https://code.visualstudio.com/) with the [rust-analyzer plugin](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer).
+But any editor that supports [rust-analyzer](https://rust-analyzer.github.io/) should be enough for working on the exercises.
+
+### Terminal
+
+While working with Rustlings, please use a modern terminal for the best user experience.
+The default terminal on Linux and Mac should be sufficient.
+On Windows, we recommend the [Windows Terminal](https://aka.ms/terminal).
+
+If you use VS Code, the builtin terminal should also be fine.
+
 ## Doing exercises
 
 The exercises are sorted by topic and can be found in the subdirectory `exercises/<topic>`.
