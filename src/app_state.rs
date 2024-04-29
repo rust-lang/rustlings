@@ -33,6 +33,7 @@ pub enum StateFileStatus {
     NotRead,
 }
 
+// Parses parts of the output of `cargo metadata`.
 #[derive(Deserialize)]
 struct CargoMetadata {
     target_directory: PathBuf,
@@ -41,14 +42,18 @@ struct CargoMetadata {
 pub struct AppState {
     current_exercise_ind: usize,
     exercises: Vec<Exercise>,
+    // Caches the number of done exercises to avoid iterating over all exercises every time.
     n_done: u16,
     final_message: String,
+    // Preallocated buffer for reading and writing the state file.
     file_buf: Vec<u8>,
     official_exercises: bool,
+    // Cargo's target directory.
     target_dir: PathBuf,
 }
 
 impl AppState {
+    // Update the app state from the state file.
     fn update_from_file(&mut self) -> StateFileStatus {
         self.file_buf.clear();
         self.n_done = 0;
@@ -98,6 +103,7 @@ impl AppState {
         exercise_infos: Vec<ExerciseInfo>,
         final_message: String,
     ) -> Result<(Self, StateFileStatus)> {
+        // Get the target directory from Cargo.
         let metadata_output = Command::new("cargo")
             .arg("metadata")
             .arg("-q")
@@ -115,6 +121,7 @@ impl AppState {
             )?
             .target_directory;
 
+        // Build exercises from their metadata in the info file.
         let exercises = exercise_infos
             .into_iter()
             .map(|mut exercise_info| {
@@ -184,6 +191,36 @@ impl AppState {
         &self.target_dir
     }
 
+    // Write the state file.
+    // The file's format is very simple:
+    // - The first line is a comment.
+    // - The second line is an empty line.
+    // - The third line is the name of the current exercise. It must end with `\n` even if there
+    // are no done exercises.
+    // - The fourth line is an empty line.
+    // - All remaining lines are the names of done exercises.
+    fn write(&mut self) -> Result<()> {
+        self.file_buf.clear();
+
+        self.file_buf
+            .extend_from_slice(b"DON'T EDIT THIS FILE!\n\n");
+        self.file_buf
+            .extend_from_slice(self.current_exercise().name.as_bytes());
+        self.file_buf.push(b'\n');
+
+        for exercise in &self.exercises {
+            if exercise.done {
+                self.file_buf.push(b'\n');
+                self.file_buf.extend_from_slice(exercise.name.as_bytes());
+            }
+        }
+
+        fs::write(STATE_FILE_NAME, &self.file_buf)
+            .with_context(|| format!("Failed to write the state file {STATE_FILE_NAME}"))?;
+
+        Ok(())
+    }
+
     pub fn set_current_exercise_ind(&mut self, ind: usize) -> Result<()> {
         if ind >= self.exercises.len() {
             bail!(BAD_INDEX_ERR);
@@ -218,6 +255,8 @@ impl AppState {
         Ok(())
     }
 
+    // Official exercises: Dump the original file from the binary.
+    // Third-party exercises: Reset the exercise file with `git stash`.
     fn reset(&self, ind: usize, dir_name: Option<&str>, path: &str) -> Result<()> {
         if self.official_exercises {
             return EMBEDDED_FILES
@@ -271,6 +310,7 @@ impl AppState {
         Ok(exercise.path)
     }
 
+    // Return the index of the next pending exercise or `None` if all exercises are done.
     fn next_pending_exercise_ind(&self) -> Option<usize> {
         if self.current_exercise_ind == self.exercises.len() - 1 {
             // The last exercise is done.
@@ -293,6 +333,8 @@ impl AppState {
         }
     }
 
+    // Official exercises: Dump the solution file form the binary and return its path.
+    // Third-party exercises: Check if a solution file exists and return its path in that case.
     pub fn current_solution_path(&self) -> Result<Option<String>> {
         if DEBUG_PROFILE {
             return Ok(None);
@@ -328,6 +370,9 @@ impl AppState {
         }
     }
 
+    // Mark the current exercise as done and move on to the next pending exercise if one exists.
+    // If all exercises are marked as done, run all of them to make sure that they are actually
+    // done. If an exercise which is marked as done fails, mark it as pending and continue on it.
     pub fn done_current_exercise(&mut self, writer: &mut StdoutLock) -> Result<ExercisesProgress> {
         let exercise = &mut self.exercises[self.current_exercise_ind];
         if !exercise.done {
@@ -335,78 +380,48 @@ impl AppState {
             self.n_done += 1;
         }
 
-        let Some(ind) = self.next_pending_exercise_ind() else {
-            writer.write_all(RERUNNING_ALL_EXERCISES_MSG)?;
+        if let Some(ind) = self.next_pending_exercise_ind() {
+            self.set_current_exercise_ind(ind)?;
 
-            let mut output = Vec::with_capacity(OUTPUT_CAPACITY);
-            for (exercise_ind, exercise) in self.exercises().iter().enumerate() {
-                write!(writer, "Running {exercise} ... ")?;
-                writer.flush()?;
-
-                let success = exercise.run(&mut output, &self.target_dir)?;
-                if !success {
-                    writeln!(writer, "{}\n", "FAILED".red())?;
-
-                    self.current_exercise_ind = exercise_ind;
-
-                    // No check if the exercise is done before setting it to pending
-                    // because no pending exercise was found.
-                    self.exercises[exercise_ind].done = false;
-                    self.n_done -= 1;
-
-                    self.write()?;
-
-                    return Ok(ExercisesProgress::Pending);
-                }
-
-                writeln!(writer, "{}", "ok".green())?;
-            }
-
-            writer.execute(Clear(ClearType::All))?;
-            writer.write_all(FENISH_LINE.as_bytes())?;
-
-            let final_message = self.final_message.trim();
-            if !final_message.is_empty() {
-                writer.write_all(final_message.as_bytes())?;
-                writer.write_all(b"\n")?;
-            }
-
-            return Ok(ExercisesProgress::AllDone);
-        };
-
-        self.set_current_exercise_ind(ind)?;
-
-        Ok(ExercisesProgress::Pending)
-    }
-
-    // Write the state file.
-    // The file's format is very simple:
-    // - The first line is a comment.
-    // - The second line is an empty line.
-    // - The third line is the name of the current exercise. It must end with `\n` even if there
-    // are no done exercises.
-    // - The fourth line is an empty line.
-    // - All remaining lines are the names of done exercises.
-    fn write(&mut self) -> Result<()> {
-        self.file_buf.clear();
-
-        self.file_buf
-            .extend_from_slice(b"DON'T EDIT THIS FILE!\n\n");
-        self.file_buf
-            .extend_from_slice(self.current_exercise().name.as_bytes());
-        self.file_buf.push(b'\n');
-
-        for exercise in &self.exercises {
-            if exercise.done {
-                self.file_buf.push(b'\n');
-                self.file_buf.extend_from_slice(exercise.name.as_bytes());
-            }
+            return Ok(ExercisesProgress::Pending);
         }
 
-        fs::write(STATE_FILE_NAME, &self.file_buf)
-            .with_context(|| format!("Failed to write the state file {STATE_FILE_NAME}"))?;
+        writer.write_all(RERUNNING_ALL_EXERCISES_MSG)?;
 
-        Ok(())
+        let mut output = Vec::with_capacity(OUTPUT_CAPACITY);
+        for (exercise_ind, exercise) in self.exercises().iter().enumerate() {
+            write!(writer, "Running {exercise} ... ")?;
+            writer.flush()?;
+
+            let success = exercise.run(&mut output, &self.target_dir)?;
+            if !success {
+                writeln!(writer, "{}\n", "FAILED".red())?;
+
+                self.current_exercise_ind = exercise_ind;
+
+                // No check if the exercise is done before setting it to pending
+                // because no pending exercise was found.
+                self.exercises[exercise_ind].done = false;
+                self.n_done -= 1;
+
+                self.write()?;
+
+                return Ok(ExercisesProgress::Pending);
+            }
+
+            writeln!(writer, "{}", "ok".green())?;
+        }
+
+        writer.execute(Clear(ClearType::All))?;
+        writer.write_all(FENISH_LINE.as_bytes())?;
+
+        let final_message = self.final_message.trim();
+        if !final_message.is_empty() {
+            writer.write_all(final_message.as_bytes())?;
+            writer.write_all(b"\n")?;
+        }
+
+        Ok(ExercisesProgress::AllDone)
     }
 }
 

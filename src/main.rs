@@ -40,6 +40,11 @@ const DEBUG_PROFILE: bool = {
     debug_profile
 };
 
+// The current directory is the official Rustligns repository.
+fn in_official_repo() -> bool {
+    Path::new("dev/rustlings-repo.txt").exists()
+}
+
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
 #[derive(Parser)]
 #[command(version)]
@@ -54,7 +59,7 @@ struct Args {
 
 #[derive(Subcommand)]
 enum Subcommands {
-    /// Initialize Rustlings
+    /// Initialize the official Rustlings exercises
     Init,
     /// Run a single exercise. Runs the next pending exercise if the exercise name is not specified
     Run {
@@ -74,10 +79,6 @@ enum Subcommands {
     /// Commands for developing (third-party) Rustlings exercises
     #[command(subcommand)]
     Dev(DevCommands),
-}
-
-fn in_official_repo() -> bool {
-    Path::new("dev/rustlings-repo.txt").exists()
 }
 
 fn main() -> Result<()> {
@@ -123,6 +124,7 @@ fn main() -> Result<()> {
         info_file.final_message.unwrap_or_default(),
     )?;
 
+    // Show the welcome message if the state file doesn't exist yet.
     if let Some(welcome_message) = info_file.welcome_message {
         match state_file_status {
             StateFileStatus::NotRead => {

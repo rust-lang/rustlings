@@ -15,7 +15,7 @@ pub enum DevCommands {
     New {
         /// The path to create the project in
         path: PathBuf,
-        /// Don't initialize a Git repository in the project directory
+        /// Don't try to initialize a Git repository in the project directory
         #[arg(long)]
         no_git: bool,
     },
