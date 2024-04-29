@@ -1,13 +1,13 @@
 use anyhow::Result;
 use crossterm::{
     style::{style, Stylize},
-    terminal::{size, Clear, ClearType},
-    ExecutableCommand,
+    terminal::size,
 };
 use std::io::{self, StdoutLock, Write};
 
 use crate::{
     app_state::{AppState, ExercisesProgress},
+    clear_terminal,
     exercise::OUTPUT_CAPACITY,
     progress_bar::progress_bar,
     terminal_link::TerminalFileLink,
@@ -111,7 +111,7 @@ impl<'a> WatchState<'a> {
         // Prevent having the first line shifted.
         self.writer.write_all(b"\n")?;
 
-        self.writer.execute(Clear(ClearType::All))?;
+        clear_terminal(&mut self.writer)?;
 
         self.writer.write_all(&self.output)?;
         self.writer.write_all(b"\n")?;

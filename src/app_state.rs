@@ -1,9 +1,5 @@
 use anyhow::{bail, Context, Result};
-use crossterm::{
-    style::Stylize,
-    terminal::{Clear, ClearType},
-    ExecutableCommand,
-};
+use crossterm::style::Stylize;
 use serde::Deserialize;
 use std::{
     fs::{self, File},
@@ -13,6 +9,7 @@ use std::{
 };
 
 use crate::{
+    clear_terminal,
     embedded::EMBEDDED_FILES,
     exercise::{Exercise, OUTPUT_CAPACITY},
     info_file::ExerciseInfo,
@@ -387,7 +384,7 @@ impl AppState {
             writeln!(writer, "{}", "ok".green())?;
         }
 
-        writer.execute(Clear(ClearType::All))?;
+        clear_terminal(writer)?;
         writer.write_all(FENISH_LINE.as_bytes())?;
 
         let final_message = self.final_message.trim();

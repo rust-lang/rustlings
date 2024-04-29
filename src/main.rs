@@ -1,12 +1,8 @@
 use anyhow::{bail, Context, Result};
 use app_state::StateFileStatus;
 use clap::{Parser, Subcommand};
-use crossterm::{
-    terminal::{Clear, ClearType},
-    ExecutableCommand,
-};
 use std::{
-    io::{self, BufRead, Write},
+    io::{self, BufRead, StdoutLock, Write},
     path::Path,
     process::exit,
 };
@@ -43,6 +39,10 @@ const DEBUG_PROFILE: bool = {
 // The current directory is the official Rustligns repository.
 fn in_official_repo() -> bool {
     Path::new("dev/rustlings-repo.txt").exists()
+}
+
+fn clear_terminal(stdout: &mut StdoutLock) -> io::Result<()> {
+    stdout.write_all(b"\x1b[H\x1b[2J\x1b[3J")
 }
 
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
@@ -129,7 +129,7 @@ fn main() -> Result<()> {
         match state_file_status {
             StateFileStatus::NotRead => {
                 let mut stdout = io::stdout().lock();
-                stdout.execute(Clear(ClearType::All))?;
+                clear_terminal(&mut stdout)?;
 
                 let welcome_message = welcome_message.trim();
                 write!(stdout, "{welcome_message}\n\nPress ENTER to continue ")?;
@@ -137,7 +137,7 @@ fn main() -> Result<()> {
 
                 io::stdin().lock().read_until(b'\n', &mut Vec::new())?;
 
-                stdout.execute(Clear(ClearType::All))?;
+                clear_terminal(&mut stdout)?;
             }
             StateFileStatus::Read => (),
         }
