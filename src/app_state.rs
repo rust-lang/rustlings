@@ -121,34 +121,9 @@ impl AppState {
             )?
             .target_directory;
 
-        // Build exercises from their metadata in the info file.
         let exercises = exercise_infos
             .into_iter()
-            .map(|mut exercise_info| {
-                // Leaking to be able to borrow in the watch mode `Table`.
-                // Leaking is not a problem because the `AppState` instance lives until
-                // the end of the program.
-                let path = exercise_info.path().leak();
-
-                exercise_info.name.shrink_to_fit();
-                let name = exercise_info.name.leak();
-                let dir = exercise_info.dir.map(|mut dir| {
-                    dir.shrink_to_fit();
-                    &*dir.leak()
-                });
-
-                let hint = exercise_info.hint.trim().to_owned();
-
-                Exercise {
-                    dir,
-                    name,
-                    path,
-                    test: exercise_info.test,
-                    strict_clippy: exercise_info.strict_clippy,
-                    hint,
-                    done: false,
-                }
-            })
+            .map(Exercise::from)
             .collect::<Vec<_>>();
 
         let mut slf = Self {
