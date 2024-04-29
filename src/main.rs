@@ -45,6 +45,11 @@ fn clear_terminal(stdout: &mut StdoutLock) -> io::Result<()> {
     stdout.write_all(b"\x1b[H\x1b[2J\x1b[3J")
 }
 
+fn press_enter_prompt() -> io::Result<()> {
+    io::stdin().lock().read_until(b'\n', &mut Vec::new())?;
+    Ok(())
+}
+
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
 #[derive(Parser)]
 #[command(version)]
@@ -98,7 +103,7 @@ fn main() -> Result<()> {
                 let mut stdout = io::stdout().lock();
                 stdout.write_all(b"This command will create the directory `rustlings/` which will contain the exercises.\nPress ENTER to continue ")?;
                 stdout.flush()?;
-                io::stdin().lock().read_until(b'\n', &mut Vec::new())?;
+                press_enter_prompt()?;
                 stdout.write_all(b"\n")?;
             }
 
@@ -134,9 +139,7 @@ fn main() -> Result<()> {
                 let welcome_message = welcome_message.trim();
                 write!(stdout, "{welcome_message}\n\nPress ENTER to continue ")?;
                 stdout.flush()?;
-
-                io::stdin().lock().read_until(b'\n', &mut Vec::new())?;
-
+                press_enter_prompt()?;
                 clear_terminal(&mut stdout)?;
             }
             StateFileStatus::Read => (),
