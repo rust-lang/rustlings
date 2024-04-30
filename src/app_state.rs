@@ -428,3 +428,56 @@ const FENISH_LINE: &str = "+----------------------------------------------------
            ▒▒  ▒▒                      ▒▒  ▒▒\x1b[0m
 
 ";
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn dummy_exercise() -> Exercise {
+        Exercise {
+            dir: None,
+            name: "0",
+            path: "exercises/0.rs",
+            test: false,
+            strict_clippy: false,
+            hint: String::new(),
+            done: false,
+        }
+    }
+
+    #[test]
+    fn next_pending_exercise() {
+        let mut app_state = AppState {
+            current_exercise_ind: 0,
+            exercises: vec![dummy_exercise(), dummy_exercise(), dummy_exercise()],
+            n_done: 0,
+            final_message: String::new(),
+            file_buf: Vec::new(),
+            official_exercises: true,
+            target_dir: PathBuf::new(),
+        };
+
+        let mut assert = |done: [bool; 3], expected: [Option<usize>; 3]| {
+            for (exercise, done) in app_state.exercises.iter_mut().zip(done) {
+                exercise.done = done;
+            }
+            for (ind, expected) in expected.into_iter().enumerate() {
+                app_state.current_exercise_ind = ind;
+                assert_eq!(
+                    app_state.next_pending_exercise_ind(),
+                    expected,
+                    "done={done:?}, ind={ind}",
+                );
+            }
+        };
+
+        assert([true, true, true], [None, None, None]);
+        assert([false, false, false], [Some(1), Some(2), Some(0)]);
+        assert([false, true, true], [None, Some(0), Some(0)]);
+        assert([true, false, true], [Some(1), None, Some(1)]);
+        assert([true, true, false], [Some(2), Some(2), None]);
+        assert([true, false, false], [Some(1), Some(2), Some(1)]);
+        assert([false, true, false], [Some(2), Some(2), Some(0)]);
+        assert([false, false, true], [Some(1), Some(0), Some(0)]);
+    }
+}
