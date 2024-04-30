@@ -2,6 +2,10 @@ use anyhow::{Context, Result};
 
 use crate::info_file::ExerciseInfo;
 
+// Return the start and end index of the content of the list `bin = […]`.
+// bin = [xxxxxxxxxxxxxxxxx]
+//        |start_ind       |
+//                         |end_ind
 pub fn bins_start_end_ind(cargo_toml: &str) -> Result<(usize, usize)> {
     let start_ind = cargo_toml
         .find("bin = [")
@@ -16,6 +20,8 @@ pub fn bins_start_end_ind(cargo_toml: &str) -> Result<(usize, usize)> {
     Ok((start_ind, end_ind))
 }
 
+// Generate and append the content of the `bin` list in `Cargo.toml`.
+// The `exercise_path_prefix` is the prefix of the `path` field of every list entry.
 pub fn append_bins(
     buf: &mut Vec<u8>,
     exercise_infos: &[ExerciseInfo],
@@ -37,6 +43,7 @@ pub fn append_bins(
     }
 }
 
+// Update the `bin` list and leave everything else unchanged.
 pub fn updated_cargo_toml(
     exercise_infos: &[ExerciseInfo],
     current_cargo_toml: &str,
@@ -54,4 +61,62 @@ pub fn updated_cargo_toml(
     updated_cargo_toml.extend_from_slice(current_cargo_toml[bins_end_ind..].as_bytes());
 
     Ok(updated_cargo_toml)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_bins_start_end_ind() {
+        assert_eq!(bins_start_end_ind("").ok(), None);
+        assert_eq!(bins_start_end_ind("[]").ok(), None);
+        assert_eq!(bins_start_end_ind("bin = [").ok(), None);
+        assert_eq!(bins_start_end_ind("bin = ]").ok(), None);
+        assert_eq!(bins_start_end_ind("bin = []").ok(), Some((7, 7)));
+        assert_eq!(bins_start_end_ind("bin= []").ok(), None);
+        assert_eq!(bins_start_end_ind("bin =[]").ok(), None);
+        assert_eq!(bins_start_end_ind("bin=[]").ok(), None);
+        assert_eq!(bins_start_end_ind("bin = [\nxxx\n]").ok(), Some((7, 12)));
+    }
+
+    #[test]
+    fn test_bins() {
+        let exercise_infos = [
+            ExerciseInfo {
+                name: String::from("1"),
+                dir: None,
+                test: true,
+                strict_clippy: true,
+                hint: String::new(),
+            },
+            ExerciseInfo {
+                name: String::from("2"),
+                dir: Some(String::from("d")),
+                test: false,
+                strict_clippy: false,
+                hint: String::new(),
+            },
+        ];
+
+        let mut buf = Vec::with_capacity(128);
+        append_bins(&mut buf, &exercise_infos, b"");
+        assert_eq!(
+            buf,
+            br#"
+  { name = "1", path = "exercises/1.rs" },
+  { name = "2", path = "exercises/d/2.rs" },
+"#,
+        );
+
+        assert_eq!(
+            updated_cargo_toml(&exercise_infos, "abc\nbin = [xxx]\n123", b"../").unwrap(),
+            br#"abc
+bin = [
+  { name = "1", path = "../exercises/1.rs" },
+  { name = "2", path = "../exercises/d/2.rs" },
+]
+123"#,
+        );
+    }
 }
