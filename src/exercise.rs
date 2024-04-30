@@ -105,14 +105,7 @@ impl Exercise {
 
         let test_success = CargoCmd {
             subcommand: "test",
-            args: &[
-                "--",
-                "--color",
-                "always",
-                "--show-output",
-                "--format",
-                "pretty",
-            ],
+            args: &["--", "--color", "always", "--show-output"],
             exercise_name: self.name,
             description: "cargo test …",
             // Hide warnings because they are shown by Clippy.
