@@ -22,22 +22,17 @@ fn check_info_file_exercises(info_file: &InfoFile) -> Result<hashbrown::HashSet<
 
     let mut file_buf = String::with_capacity(1 << 14);
     for exercise_info in &info_file.exercises {
-        if exercise_info.name.is_empty() {
+        let name = exercise_info.name.as_str();
+        if name.is_empty() {
             bail!("Found an empty exercise name in `info.toml`");
         }
-        if let Some(c) = forbidden_char(&exercise_info.name) {
-            bail!(
-                "Char `{c}` in the exercise name `{}` is not allowed",
-                exercise_info.name,
-            );
+        if let Some(c) = forbidden_char(name) {
+            bail!("Char `{c}` in the exercise name `{name}` is not allowed");
         }
 
         if let Some(dir) = &exercise_info.dir {
             if dir.is_empty() {
-                bail!(
-                    "The exercise `{}` has an empty dir name in `info.toml`",
-                    exercise_info.name,
-                );
+                bail!("The exercise `{name}` has an empty dir name in `info.toml`");
             }
             if let Some(c) = forbidden_char(dir) {
                 bail!("Char `{c}` in the exercise dir `{dir}` is not allowed");
@@ -45,14 +40,11 @@ fn check_info_file_exercises(info_file: &InfoFile) -> Result<hashbrown::HashSet<
         }
 
         if exercise_info.hint.trim().is_empty() {
-            bail!("The exercise `{}` has an empty hint. Please provide a hint or at least tell the user why a hint isn't needed for this exercise", exercise_info.name);
+            bail!("The exercise `{name}` has an empty hint. Please provide a hint or at least tell the user why a hint isn't needed for this exercise");
         }
 
-        if !names.insert(exercise_info.name.as_str()) {
-            bail!(
-                "The exercise name `{}` is duplicated. Exercise names must all be unique",
-                exercise_info.name,
-            );
+        if !names.insert(name) {
+            bail!("The exercise name `{name}` is duplicated. Exercise names must all be unique");
         }
 
         let path = exercise_info.path();
@@ -66,6 +58,10 @@ fn check_info_file_exercises(info_file: &InfoFile) -> Result<hashbrown::HashSet<
 
         if !file_buf.contains("fn main()") {
             bail!("The `main` function is missing in the file `{path}`.\nCreate at least an empty `main` function to avoid language server errors");
+        }
+
+        if !exercise_info.test && file_buf.contains("#[test]") {
+            bail!("The file `{path}` contains tests annotated with `#[test]` but the exercise `{name}` has `test = false` in the `info.toml` file");
         }
 
         file_buf.clear();
