@@ -75,3 +75,19 @@ impl<'a> CargoCmd<'a> {
         run_cmd(cmd, self.description, self.output)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_run_cmd() {
+        let mut cmd = Command::new("echo");
+        cmd.arg("Hello");
+
+        let mut output = Vec::with_capacity(8);
+        run_cmd(cmd, "echo …", &mut output).unwrap();
+
+        assert_eq!(output, b"Hello\n\n");
+    }
+}
