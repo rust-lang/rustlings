@@ -12,10 +12,12 @@ use crate::{
     CURRENT_FORMAT_VERSION, DEBUG_PROFILE,
 };
 
+// Find a char that isn't allowed in the exercise's `name` or `dir`.
 fn forbidden_char(input: &str) -> Option<char> {
     input.chars().find(|c| *c != '_' && !c.is_alphanumeric())
 }
 
+// Check the info of all exercises and return their paths in a set.
 fn check_info_file_exercises(info_file: &InfoFile) -> Result<hashbrown::HashSet<PathBuf>> {
     let mut names = hashbrown::HashSet::with_capacity(info_file.exercises.len());
     let mut paths = hashbrown::HashSet::with_capacity(info_file.exercises.len());
@@ -72,11 +74,12 @@ fn check_info_file_exercises(info_file: &InfoFile) -> Result<hashbrown::HashSet<
     Ok(paths)
 }
 
-fn unexpected_file(path: &Path) -> Error {
-    anyhow!("Found the file `{}`. Only `README.md` and Rust files related to an exercise in `info.toml` are allowed in the `exercises` directory", path.display())
-}
+// Check the `exercises` directory for unexpected files.
+fn check_unexpected_files(info_file_paths: &hashbrown::HashSet<PathBuf>) -> Result<()> {
+    fn unexpected_file(path: &Path) -> Error {
+        anyhow!("Found the file `{}`. Only `README.md` and Rust files related to an exercise in `info.toml` are allowed in the `exercises` directory", path.display())
+    }
 
-fn check_exercise_dir_files(info_file_paths: &hashbrown::HashSet<PathBuf>) -> Result<()> {
     for entry in read_dir("exercises").context("Failed to open the `exercises` directory")? {
         let entry = entry.context("Failed to read the `exercises` directory")?;
 
@@ -128,11 +131,12 @@ fn check_exercises(info_file: &InfoFile) -> Result<()> {
     }
 
     let info_file_paths = check_info_file_exercises(info_file)?;
-    check_exercise_dir_files(&info_file_paths)?;
+    check_unexpected_files(&info_file_paths)?;
 
     Ok(())
 }
 
+// Check that the Cargo.toml file is up-to-date.
 fn check_cargo_toml(
     exercise_infos: &[ExerciseInfo],
     current_cargo_toml: &str,
@@ -159,6 +163,7 @@ pub fn check() -> Result<()> {
     let info_file = InfoFile::parse()?;
     check_exercises(&info_file)?;
 
+    // A hack to make `cargo run -- dev check` work when developing Rustlings.
     if DEBUG_PROFILE {
         check_cargo_toml(
             &info_file.exercises,

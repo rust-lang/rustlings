@@ -8,6 +8,7 @@ use std::{
 
 use crate::CURRENT_FORMAT_VERSION;
 
+// Create a directory relative to the current directory and print its path.
 fn create_rel_dir(dir_name: &str, current_dir: &str) -> Result<()> {
     create_dir(dir_name)
         .with_context(|| format!("Failed to create the directory {current_dir}/{dir_name}"))?;
@@ -15,6 +16,7 @@ fn create_rel_dir(dir_name: &str, current_dir: &str) -> Result<()> {
     Ok(())
 }
 
+// Write a file relative to the current directory and print its path.
 fn write_rel_file<C>(file_name: &str, current_dir: &str, content: C) -> Result<()>
 where
     C: AsRef<[u8]>,
@@ -27,13 +29,13 @@ where
 }
 
 pub fn new(path: &Path, no_git: bool) -> Result<()> {
-    let dir_name = path.to_string_lossy();
+    let dir_path_str = path.to_string_lossy();
 
-    create_dir(path).with_context(|| format!("Failed to create the directory {dir_name}"))?;
-    println!("Created the directory {dir_name}");
+    create_dir(path).with_context(|| format!("Failed to create the directory {dir_path_str}"))?;
+    println!("Created the directory {dir_path_str}");
 
     set_current_dir(path)
-        .with_context(|| format!("Failed to set {dir_name} as the current directory"))?;
+        .with_context(|| format!("Failed to set {dir_path_str} as the current directory"))?;
 
     if !no_git
         && !Command::new("git")
@@ -42,28 +44,28 @@ pub fn new(path: &Path, no_git: bool) -> Result<()> {
             .context("Failed to run `git init`")?
             .success()
     {
-        bail!("`git init` didn't run successfully. See the error message above");
+        bail!("`git init` didn't run successfully. See the possible error message above");
     }
 
-    write_rel_file(".gitignore", &dir_name, GITIGNORE)?;
+    write_rel_file(".gitignore", &dir_path_str, GITIGNORE)?;
 
-    create_rel_dir("exercises", &dir_name)?;
-    create_rel_dir("solutions", &dir_name)?;
+    create_rel_dir("exercises", &dir_path_str)?;
+    create_rel_dir("solutions", &dir_path_str)?;
 
     write_rel_file(
         "info.toml",
-        &dir_name,
+        &dir_path_str,
         format!("{INFO_FILE_BEFORE_FORMAT_VERSION}{CURRENT_FORMAT_VERSION}{INFO_FILE_AFTER_FORMAT_VERSION}"),
     )?;
 
-    write_rel_file("Cargo.toml", &dir_name, CARGO_TOML)?;
+    write_rel_file("Cargo.toml", &dir_path_str, CARGO_TOML)?;
 
-    write_rel_file("README.md", &dir_name, README)?;
+    write_rel_file("README.md", &dir_path_str, README)?;
 
-    create_rel_dir(".vscode", &dir_name)?;
+    create_rel_dir(".vscode", &dir_path_str)?;
     write_rel_file(
         ".vscode/extensions.json",
-        &dir_name,
+        &dir_path_str,
         crate::init::VS_CODE_EXTENSIONS_JSON,
     )?;
 
@@ -137,8 +139,7 @@ const README: &str = "# Rustlings 🦀
 
 Welcome to these third-party Rustlings exercises 😃
 
-First,
-[install Rustlings using the official instructions in the README of the Rustlings project](https://github.com/rust-lang/rustlings) ✅
+First, [install Rustlings using the official instructions in the README of the Rustlings project](https://github.com/rust-lang/rustlings) ✅
 
 Then, open your terminal in this directory and run `rustlings` to get started with the exercises 🚀
 ";

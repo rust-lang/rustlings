@@ -1,6 +1,5 @@
-use std::fs;
-
 use anyhow::{Context, Result};
+use std::fs;
 
 use crate::{
     cargo_toml::updated_cargo_toml,
@@ -8,6 +7,7 @@ use crate::{
     DEBUG_PROFILE,
 };
 
+// Update the `Cargo.toml` file.
 fn update_cargo_toml(
     exercise_infos: &[ExerciseInfo],
     current_cargo_toml: &str,
@@ -26,6 +26,7 @@ fn update_cargo_toml(
 pub fn update() -> Result<()> {
     let info_file = InfoFile::parse()?;
 
+    // A hack to make `cargo run -- dev update` work when developing Rustlings.
     if DEBUG_PROFILE {
         update_cargo_toml(
             &info_file.exercises,
