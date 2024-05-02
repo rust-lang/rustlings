@@ -25,9 +25,9 @@ impl WriteStrategy {
                 .open(path),
         };
 
-        file.context("Failed to open the file `{path}` in write mode")?
+        file.with_context(|| format!("Failed to open the file `{path}` in write mode"))?
             .write_all(content)
-            .context("Failed to write the file {path}")
+            .with_context(|| format!("Failed to write the file {path}"))
     }
 }
 
