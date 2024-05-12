@@ -193,12 +193,12 @@ impl AppState {
         Ok(())
     }
 
-    pub fn set_current_exercise_ind(&mut self, ind: usize) -> Result<()> {
-        if ind >= self.exercises.len() {
+    pub fn set_current_exercise_ind(&mut self, exercise_ind: usize) -> Result<()> {
+        if exercise_ind >= self.exercises.len() {
             bail!(BAD_INDEX_ERR);
         }
 
-        self.current_exercise_ind = ind;
+        self.current_exercise_ind = exercise_ind;
 
         self.write()
     }
@@ -215,8 +215,11 @@ impl AppState {
         self.write()
     }
 
-    pub fn set_pending(&mut self, ind: usize) -> Result<()> {
-        let exercise = self.exercises.get_mut(ind).context(BAD_INDEX_ERR)?;
+    pub fn set_pending(&mut self, exercise_ind: usize) -> Result<()> {
+        let exercise = self
+            .exercises
+            .get_mut(exercise_ind)
+            .context(BAD_INDEX_ERR)?;
 
         if exercise.done {
             exercise.done = false;
@@ -229,16 +232,10 @@ impl AppState {
 
     // Official exercises: Dump the original file from the binary.
     // Third-party exercises: Reset the exercise file with `git stash`.
-    fn reset(&self, ind: usize, dir_name: Option<&str>, path: &str) -> Result<()> {
+    fn reset(&self, exercise_ind: usize, path: &str) -> Result<()> {
         if self.official_exercises {
             return EMBEDDED_FILES
-                .write_exercise_to_disk(
-                    ind,
-                    dir_name.context(
-                        "Official exercises must be nested in the `exercises` directory",
-                    )?,
-                    path,
-                )
+                .write_exercise_to_disk(exercise_ind, path)
                 .with_context(|| format!("Failed to reset the exercise {path}"));
         }
 
@@ -265,7 +262,7 @@ impl AppState {
     pub fn reset_current_exercise(&mut self) -> Result<&'static str> {
         self.set_pending(self.current_exercise_ind)?;
         let exercise = self.current_exercise();
-        self.reset(self.current_exercise_ind, exercise.dir, exercise.path)?;
+        self.reset(self.current_exercise_ind, exercise.path)?;
 
         Ok(exercise.path)
     }
@@ -277,7 +274,7 @@ impl AppState {
 
         self.set_pending(exercise_ind)?;
         let exercise = &self.exercises[exercise_ind];
-        self.reset(exercise_ind, exercise.dir, exercise.path)?;
+        self.reset(exercise_ind, exercise.path)?;
 
         Ok(exercise.path)
     }
@@ -315,18 +312,9 @@ impl AppState {
         let current_exercise = self.current_exercise();
 
         if self.official_exercises {
-            let dir_name = current_exercise
-                .dir
-                .context("Official exercises must be nested in the `exercises` directory")?;
-            let solution_path = format!("solutions/{dir_name}/{}.rs", current_exercise.name);
-
-            EMBEDDED_FILES.write_solution_to_disk(
-                self.current_exercise_ind,
-                dir_name,
-                &solution_path,
-            )?;
-
-            Ok(Some(solution_path))
+            EMBEDDED_FILES
+                .write_solution_to_disk(self.current_exercise_ind, current_exercise.name)
+                .map(Some)
         } else {
             let solution_path = if let Some(dir) = current_exercise.dir {
                 format!("solutions/{dir}/{}.rs", current_exercise.name)

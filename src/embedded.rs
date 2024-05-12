@@ -1,4 +1,4 @@
-use anyhow::{bail, Context, Error, Result};
+use anyhow::{Context, Error, Result};
 use std::{
     fs::{create_dir, create_dir_all, OpenOptions},
     io::{self, Write},
@@ -34,6 +34,7 @@ impl WriteStrategy {
 struct ExerciseFiles {
     exercise: &'static [u8],
     solution: &'static [u8],
+    dir_ind: usize,
 }
 
 struct ExerciseDir {
@@ -43,11 +44,10 @@ struct ExerciseDir {
 
 impl ExerciseDir {
     fn init_on_disk(&self) -> Result<()> {
-        let path_prefix = "exercises/";
-        let readme_path_postfix = "/README.md";
-        let mut dir_path =
-            String::with_capacity(path_prefix.len() + self.name.len() + readme_path_postfix.len());
-        dir_path.push_str(path_prefix);
+        // 20 = 10 + 10
+        // exercises/ + /README.md
+        let mut dir_path = String::with_capacity(20 + self.name.len());
+        dir_path.push_str("exercises/");
         dir_path.push_str(self.name);
 
         if let Err(e) = create_dir(&dir_path) {
@@ -60,10 +60,9 @@ impl ExerciseDir {
             );
         }
 
-        let readme_path = {
-            dir_path.push_str(readme_path_postfix);
-            dir_path
-        };
+        let mut readme_path = dir_path;
+        readme_path.push_str("/README.md");
+
         WriteStrategy::Overwrite.write(&readme_path, self.readme)?;
 
         Ok(())
@@ -95,30 +94,71 @@ impl EmbeddedFiles {
         Ok(())
     }
 
-    pub fn write_exercise_to_disk(
-        &self,
-        exercise_ind: usize,
-        dir_name: &str,
-        path: &str,
-    ) -> Result<()> {
-        let Some(dir) = self.exercise_dirs.iter().find(|dir| dir.name == dir_name) else {
-            bail!("`{dir_name}` not found in the embedded directories");
-        };
+    pub fn write_exercise_to_disk(&self, exercise_ind: usize, path: &str) -> Result<()> {
+        let exercise_files = &EMBEDDED_FILES.exercise_files[exercise_ind];
+        let dir = &EMBEDDED_FILES.exercise_dirs[exercise_files.dir_ind];
 
         dir.init_on_disk()?;
-        WriteStrategy::Overwrite.write(path, self.exercise_files[exercise_ind].exercise)
+        WriteStrategy::Overwrite.write(path, exercise_files.exercise)
     }
 
+    // Write the solution file to disk and return its path.
     pub fn write_solution_to_disk(
         &self,
         exercise_ind: usize,
-        dir_name: &str,
-        path: &str,
-    ) -> Result<()> {
-        let dir_path = format!("solutions/{dir_name}");
+        exercise_name: &str,
+    ) -> Result<String> {
+        let exercise_files = &EMBEDDED_FILES.exercise_files[exercise_ind];
+        let dir = &EMBEDDED_FILES.exercise_dirs[exercise_files.dir_ind];
+
+        // 14 = 10 + 1 + 3
+        // solutions/ + / + .rs
+        let mut dir_path = String::with_capacity(14 + dir.name.len() + exercise_name.len());
+        dir_path.push_str("solutions/");
+        dir_path.push_str(dir.name);
         create_dir_all(&dir_path)
             .with_context(|| format!("Failed to create the directory {dir_path}"))?;
 
-        WriteStrategy::Overwrite.write(path, self.exercise_files[exercise_ind].solution)
+        let mut solution_path = dir_path;
+        solution_path.push('/');
+        solution_path.push_str(exercise_name);
+        solution_path.push_str(".rs");
+
+        WriteStrategy::Overwrite.write(&solution_path, exercise_files.solution)?;
+
+        Ok(solution_path)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use serde::Deserialize;
+
+    use super::*;
+
+    #[derive(Deserialize)]
+    struct ExerciseInfo {
+        dir: String,
+    }
+
+    #[derive(Deserialize)]
+    struct InfoFile {
+        exercises: Vec<ExerciseInfo>,
+    }
+
+    #[test]
+    fn dirs() {
+        let exercises = toml_edit::de::from_str::<InfoFile>(include_str!("../info.toml"))
+            .expect("Failed to parse `info.toml`")
+            .exercises;
+
+        assert_eq!(exercises.len(), EMBEDDED_FILES.exercise_files.len());
+
+        for (exercise, exercise_files) in exercises.iter().zip(EMBEDDED_FILES.exercise_files) {
+            assert_eq!(
+                exercise.dir,
+                EMBEDDED_FILES.exercise_dirs[exercise_files.dir_ind].name,
+            );
+        }
     }
 }
