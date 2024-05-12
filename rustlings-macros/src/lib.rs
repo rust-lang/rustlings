@@ -15,7 +15,8 @@ struct InfoFile {
 
 #[proc_macro]
 pub fn include_files(_: TokenStream) -> TokenStream {
-    let exercises = toml_edit::de::from_str::<InfoFile>(include_str!("../info.toml"))
+    let info_file = include_str!("../info.toml");
+    let exercises = toml_edit::de::from_str::<InfoFile>(info_file)
         .expect("Failed to parse `info.toml`")
         .exercises;
 
@@ -46,6 +47,7 @@ pub fn include_files(_: TokenStream) -> TokenStream {
 
     quote! {
         EmbeddedFiles {
+            info_file: #info_file,
             exercise_files: &[#(ExerciseFiles { exercise: include_bytes!(#exercise_files), solution: include_bytes!(#solution_files), dir_ind: #dir_inds }),*],
             exercise_dirs: &[#(ExerciseDir { name: #dirs, readme: include_bytes!(#readmes) }),*]
         }

@@ -70,6 +70,7 @@ impl ExerciseDir {
 }
 
 pub struct EmbeddedFiles {
+    pub info_file: &'static str,
     exercise_files: &'static [ExerciseFiles],
     exercise_dirs: &'static [ExerciseDir],
 }
@@ -148,7 +149,7 @@ mod tests {
 
     #[test]
     fn dirs() {
-        let exercises = toml_edit::de::from_str::<InfoFile>(include_str!("../info.toml"))
+        let exercises = toml_edit::de::from_str::<InfoFile>(EMBEDDED_FILES.info_file)
             .expect("Failed to parse `info.toml`")
             .exercises;
 

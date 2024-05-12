@@ -37,7 +37,7 @@ Please be patient 😇
 - Name the file `exercises/yourTopic/yourTopicN.rs`.
 - Make sure to put in some helpful links, and link to sections of the book in `exercises/yourTopic/README.md`.
 - Add a (possible) solution at `solutions/yourTopic/yourTopicN.rs` with comments and links explaining it.
-- Add the [metadata for your exercise](#exercise-metadata) in the `info.toml` file.
+- Add the [metadata for your exercise](#exercise-metadata) in the `rustlings-macros/info.toml` file.
 - Make sure your exercise runs with `rustlings run yourTopicN`.
 - [Open a pull request](#pull-requests).
 

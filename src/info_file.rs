@@ -2,6 +2,8 @@ use anyhow::{bail, Context, Error, Result};
 use serde::Deserialize;
 use std::{fs, io::ErrorKind};
 
+use crate::embedded::EMBEDDED_FILES;
+
 // Deserialized from the `info.toml` file.
 #[derive(Deserialize)]
 pub struct ExerciseInfo {
@@ -47,7 +49,7 @@ impl InfoFile {
                 .context("Failed to parse the `info.toml` file")?,
             Err(e) => {
                 if e.kind() == ErrorKind::NotFound {
-                    return toml_edit::de::from_str(include_str!("../info.toml"))
+                    return toml_edit::de::from_str(EMBEDDED_FILES.info_file)
                         .context("Failed to parse the embedded `info.toml` file");
                 }
 
