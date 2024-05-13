@@ -41,11 +41,7 @@ pub fn run(app_state: &mut AppState) -> Result<()> {
 
     match app_state.done_current_exercise(&mut stdout)? {
         ExercisesProgress::AllDone => (),
-        ExercisesProgress::CurrentPending => println!(
-            "Current exercise: {}",
-            app_state.current_exercise().terminal_link(),
-        ),
-        ExercisesProgress::NewPending => println!(
+        ExercisesProgress::CurrentPending | ExercisesProgress::NewPending => println!(
             "Next exercise: {}",
             app_state.current_exercise().terminal_link(),
         ),

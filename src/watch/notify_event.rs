@@ -3,12 +3,13 @@ use std::sync::mpsc::Sender;
 
 use super::WatchEvent;
 
-pub struct DebounceEventHandler {
+pub struct NotifyEventHandler {
     pub tx: Sender<WatchEvent>,
+    /// Used to report which exercise was modified.
     pub exercise_names: &'static [&'static [u8]],
 }
 
-impl notify_debouncer_mini::DebounceEventHandler for DebounceEventHandler {
+impl notify_debouncer_mini::DebounceEventHandler for NotifyEventHandler {
     fn handle_event(&mut self, input_event: DebounceEventResult) {
         let output_event = match input_event {
             Ok(input_event) => {

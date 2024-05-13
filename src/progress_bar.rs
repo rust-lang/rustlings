@@ -12,6 +12,7 @@ const MIN_LINE_WIDTH: u16 = WRAPPER_WIDTH + 4;
 const PROGRESS_EXCEEDS_MAX_ERR: &str =
     "The progress of the progress bar is higher than the maximum";
 
+/// Terminal progress bar to be used when not using Ratataui.
 pub fn progress_bar(progress: u16, total: u16, line_width: u16) -> Result<String> {
     use crossterm::style::Stylize;
 
@@ -54,6 +55,8 @@ pub fn progress_bar(progress: u16, total: u16, line_width: u16) -> Result<String
     Ok(line)
 }
 
+/// Progress bar to be used with Ratataui.
+// Not using Ratatui's Gauge widget to keep the progress bar consistent.
 pub fn progress_bar_ratatui(progress: u16, total: u16, line_width: u16) -> Result<Line<'static>> {
     use ratatui::style::Stylize;
 

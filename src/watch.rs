@@ -14,7 +14,7 @@ use std::{
 use crate::app_state::{AppState, ExercisesProgress};
 
 use self::{
-    notify_event::DebounceEventHandler,
+    notify_event::NotifyEventHandler,
     state::WatchState,
     terminal_event::{terminal_event_handler, InputEvent},
 };
@@ -40,6 +40,7 @@ pub enum WatchExit {
     List,
 }
 
+/// `notify_exercise_names` as None activates the manual run mode.
 pub fn watch(
     app_state: &mut AppState,
     notify_exercise_names: Option<&'static [&'static [u8]]>,
@@ -52,7 +53,7 @@ pub fn watch(
     let _debouncer_guard = if let Some(exercise_names) = notify_exercise_names {
         let mut debouncer = new_debouncer(
             Duration::from_millis(200),
-            DebounceEventHandler {
+            NotifyEventHandler {
                 tx: tx.clone(),
                 exercise_names,
             },

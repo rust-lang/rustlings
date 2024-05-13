@@ -1,7 +1,7 @@
 use anyhow::Result;
 use crossterm::{
     style::{style, Stylize},
-    terminal::size,
+    terminal,
 };
 use std::io::{self, StdoutLock, Write};
 
@@ -84,6 +84,7 @@ impl<'a> WatchState<'a> {
         self.run_current_exercise()
     }
 
+    /// Move on to the next exercise if the current one is done.
     pub fn next_exercise(&mut self) -> Result<ExercisesProgress> {
         if self.done_status == DoneStatus::Pending {
             return Ok(ExercisesProgress::CurrentPending);
@@ -113,7 +114,7 @@ impl<'a> WatchState<'a> {
     }
 
     pub fn render(&mut self) -> Result<()> {
-        // Prevent having the first line shifted.
+        // Prevent having the first line shifted if clearing wasn't successful.
         self.writer.write_all(b"\n")?;
 
         clear_terminal(&mut self.writer)?;
@@ -145,11 +146,11 @@ When you are done experimenting, enter `n` to move on to the next exercise 🦀"
             writeln!(
                 self.writer,
                 "A solution file can be found at {}\n",
-                style(TerminalFileLink(solution_path)).underlined().green()
+                style(TerminalFileLink(solution_path)).underlined().green(),
             )?;
         }
 
-        let line_width = size()?.0;
+        let line_width = terminal::size()?.0;
         let progress_bar = progress_bar(
             self.app_state.n_done(),
             self.app_state.exercises().len() as u16,
