@@ -142,7 +142,7 @@ impl From<ExerciseInfo> for Exercise {
 
         let hint = exercise_info.hint.trim().to_owned();
 
-        Exercise {
+        Self {
             dir,
             name,
             path,

@@ -96,8 +96,8 @@ impl EmbeddedFiles {
     }
 
     pub fn write_exercise_to_disk(&self, exercise_ind: usize, path: &str) -> Result<()> {
-        let exercise_files = &EMBEDDED_FILES.exercise_files[exercise_ind];
-        let dir = &EMBEDDED_FILES.exercise_dirs[exercise_files.dir_ind];
+        let exercise_files = &self.exercise_files[exercise_ind];
+        let dir = &self.exercise_dirs[exercise_files.dir_ind];
 
         dir.init_on_disk()?;
         WriteStrategy::Overwrite.write(path, exercise_files.exercise)
@@ -109,8 +109,8 @@ impl EmbeddedFiles {
         exercise_ind: usize,
         exercise_name: &str,
     ) -> Result<String> {
-        let exercise_files = &EMBEDDED_FILES.exercise_files[exercise_ind];
-        let dir = &EMBEDDED_FILES.exercise_dirs[exercise_files.dir_ind];
+        let exercise_files = &self.exercise_files[exercise_ind];
+        let dir = &self.exercise_dirs[exercise_files.dir_ind];
 
         // 14 = 10 + 1 + 3
         // solutions/ + / + .rs
