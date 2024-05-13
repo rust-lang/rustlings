@@ -13,6 +13,9 @@ pub enum InputEvent {
 }
 
 pub fn terminal_event_handler(tx: Sender<WatchEvent>, manual_run: bool) {
+    // Only send `Unrecognized` on ENTER if the last input wasn't valid.
+    let mut last_input_valid = false;
+
     let last_input_event = loop {
         let terminal_event = match event::read() {
             Ok(v) => v,
@@ -32,22 +35,42 @@ pub fn terminal_event_handler(tx: Sender<WatchEvent>, manual_run: bool) {
                 }
 
                 if key.modifiers != KeyModifiers::NONE {
+                    last_input_valid = false;
                     continue;
                 }
 
-                if let KeyCode::Char(c) = key.code {
-                    let input_event = match c {
-                        'n' => InputEvent::Next,
-                        'h' => InputEvent::Hint,
-                        'l' => break InputEvent::List,
-                        'q' => break InputEvent::Quit,
-                        'r' if manual_run => InputEvent::Run,
-                        _ => InputEvent::Unrecognized,
-                    };
+                let input_event = match key.code {
+                    KeyCode::Enter => {
+                        if last_input_valid {
+                            continue;
+                        }
 
-                    if tx.send(WatchEvent::Input(input_event)).is_err() {
-                        return;
+                        InputEvent::Unrecognized
                     }
+                    KeyCode::Char(c) => {
+                        let input_event = match c {
+                            'n' => InputEvent::Next,
+                            'h' => InputEvent::Hint,
+                            'l' => break InputEvent::List,
+                            'q' => break InputEvent::Quit,
+                            'r' if manual_run => InputEvent::Run,
+                            _ => {
+                                last_input_valid = false;
+                                continue;
+                            }
+                        };
+
+                        last_input_valid = true;
+                        input_event
+                    }
+                    _ => {
+                        last_input_valid = false;
+                        continue;
+                    }
+                };
+
+                if tx.send(WatchEvent::Input(input_event)).is_err() {
+                    return;
                 }
             }
             Event::Resize(_, _) => {
