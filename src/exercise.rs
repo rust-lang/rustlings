@@ -10,30 +10,33 @@ use std::{
 use crate::{
     cmd::{run_cmd, CargoCmd},
     in_official_repo,
-    info_file::ExerciseInfo,
     terminal_link::TerminalFileLink,
     DEBUG_PROFILE,
 };
 
+// The initial capacity of the output buffer.
 pub const OUTPUT_CAPACITY: usize = 1 << 14;
 
 pub struct Exercise {
+    /// Directory name.
     pub dir: Option<&'static str>,
-    // Exercise's unique name
+    /// Exercise's unique name.
     pub name: &'static str,
-    // Exercise's path
+    /// Path of the exercise file starting with the `exercises/` directory.
     pub path: &'static str,
     pub test: bool,
     pub strict_clippy: bool,
-    // The hint text associated with the exercise
     pub hint: String,
     pub done: bool,
 }
 
 impl Exercise {
+    // Run the exercise's binary and append its output to the `output` buffer.
+    // Compilation should be done before calling this method.
     fn run_bin(&self, output: &mut Vec<u8>, target_dir: &Path) -> Result<bool> {
         writeln!(output, "{}", "Output".underlined())?;
 
+        // 7 = "/debug/".len()
         let mut bin_path =
             PathBuf::with_capacity(target_dir.as_os_str().len() + 7 + self.name.len());
         bin_path.push(target_dir);
@@ -43,18 +46,23 @@ impl Exercise {
         let success = run_cmd(Command::new(&bin_path), &bin_path.to_string_lossy(), output)?;
 
         if !success {
+            // This output is important to show the user that something went wrong.
+            // Otherwise, calling something like `exit(1)` in an exercise without further output
+            // leaves the user confused about why the exercise isn't done yet.
             writeln!(
                 output,
                 "{}",
                 "The exercise didn't run successfully (nonzero exit code)"
                     .bold()
-                    .red()
+                    .red(),
             )?;
         }
 
         Ok(success)
     }
 
+    /// Compile, check and run the exercise.
+    /// The output is written to the `output` buffer after clearing it.
     pub fn run(&self, output: &mut Vec<u8>, target_dir: &Path) -> Result<bool> {
         output.clear();
 
@@ -76,9 +84,10 @@ impl Exercise {
             return Ok(false);
         }
 
-        // Discard the output of `cargo build` because it will be shown again by the Cargo command.
+        // Discard the output of `cargo build` because it will be shown again by Clippy.
         output.clear();
 
+        // `--profile test` is required to also check code with `[cfg(test)]`.
         let clippy_args: &[&str] = if self.strict_clippy {
             &["--profile", "test", "--", "-D", "warnings"]
         } else {
@@ -123,34 +132,6 @@ impl Exercise {
 
     pub fn terminal_link(&self) -> StyledContent<TerminalFileLink<'_>> {
         style(TerminalFileLink(self.path)).underlined().blue()
-    }
-}
-
-impl From<ExerciseInfo> for Exercise {
-    fn from(mut exercise_info: ExerciseInfo) -> Self {
-        // Leaking to be able to borrow in the watch mode `Table`.
-        // Leaking is not a problem because the `AppState` instance lives until
-        // the end of the program.
-        let path = exercise_info.path().leak();
-
-        exercise_info.name.shrink_to_fit();
-        let name = exercise_info.name.leak();
-        let dir = exercise_info.dir.map(|mut dir| {
-            dir.shrink_to_fit();
-            &*dir.leak()
-        });
-
-        let hint = exercise_info.hint.trim().to_owned();
-
-        Self {
-            dir,
-            name,
-            path,
-            test: exercise_info.test,
-            strict_clippy: exercise_info.strict_clippy,
-            hint,
-            done: false,
-        }
     }
 }
 

@@ -124,7 +124,27 @@ impl AppState {
 
         let exercises = exercise_infos
             .into_iter()
-            .map(Exercise::from)
+            .map(|exercise_info| {
+                // Leaking to be able to borrow in the watch mode `Table`.
+                // Leaking is not a problem because the `AppState` instance lives until
+                // the end of the program.
+                let path = exercise_info.path().leak();
+                let name = exercise_info.name.leak();
+                let dir = exercise_info.dir.map(|dir| &*dir.leak());
+
+                let hint = exercise_info.hint.trim().to_owned();
+
+                Exercise {
+                    dir,
+                    name,
+                    path,
+                    test: exercise_info.test,
+                    strict_clippy: exercise_info.strict_clippy,
+                    hint,
+                    // Updated in `Self::update_from_file`.
+                    done: false,
+                }
+            })
             .collect::<Vec<_>>();
 
         let mut slf = Self {
