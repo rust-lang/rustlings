@@ -13,6 +13,7 @@ use crate::{
     terminal_link::TerminalFileLink,
 };
 
+#[derive(PartialEq, Eq)]
 enum DoneStatus {
     DoneWithSolution(String),
     DoneWithoutSolution,
@@ -77,7 +78,7 @@ impl<'a> WatchState<'a> {
     }
 
     pub fn next_exercise(&mut self) -> Result<ExercisesProgress> {
-        if matches!(self.done_status, DoneStatus::Pending) {
+        if self.done_status == DoneStatus::Pending {
             return Ok(ExercisesProgress::CurrentPending);
         }
 
@@ -91,7 +92,7 @@ impl<'a> WatchState<'a> {
             write!(self.writer, "{}un/", 'r'.bold())?;
         }
 
-        if !matches!(self.done_status, DoneStatus::Pending) {
+        if self.done_status != DoneStatus::Pending {
             write!(self.writer, "{}ext/", 'n'.bold())?;
         }
 
@@ -122,7 +123,7 @@ impl<'a> WatchState<'a> {
             )?;
         }
 
-        if !matches!(self.done_status, DoneStatus::Pending) {
+        if self.done_status != DoneStatus::Pending {
             writeln!(
                 self.writer,
                 "{}\n",
