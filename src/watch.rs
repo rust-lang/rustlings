@@ -79,7 +79,8 @@ pub fn watch(
         match event {
             WatchEvent::Input(InputEvent::Next) => match watch_state.next_exercise()? {
                 ExercisesProgress::AllDone => break,
-                ExercisesProgress::Pending => watch_state.run_current_exercise()?,
+                ExercisesProgress::CurrentPending => watch_state.render()?,
+                ExercisesProgress::NewPending => watch_state.run_current_exercise()?,
             },
             WatchEvent::Input(InputEvent::Hint) => {
                 watch_state.show_hint()?;
@@ -92,9 +93,7 @@ pub fn watch(
                 break;
             }
             WatchEvent::Input(InputEvent::Run) => watch_state.run_current_exercise()?,
-            WatchEvent::Input(InputEvent::Unrecognized(input)) => {
-                watch_state.handle_invalid_input(input)?;
-            }
+            WatchEvent::Input(InputEvent::Unrecognized) => watch_state.render()?,
             WatchEvent::FileChange { exercise_ind } => {
                 watch_state.run_exercise_with_ind(exercise_ind)?;
             }

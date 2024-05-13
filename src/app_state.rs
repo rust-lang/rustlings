@@ -21,8 +21,12 @@ const BAD_INDEX_ERR: &str = "The current exercise index is higher than the numbe
 
 #[must_use]
 pub enum ExercisesProgress {
+    // All exercises are done.
     AllDone,
-    Pending,
+    // The current exercise failed and is still pending.
+    CurrentPending,
+    // A new exercise is now pending.
+    NewPending,
 }
 
 pub enum StateFileStatus {
@@ -343,7 +347,7 @@ impl AppState {
         if let Some(ind) = self.next_pending_exercise_ind() {
             self.set_current_exercise_ind(ind)?;
 
-            return Ok(ExercisesProgress::Pending);
+            return Ok(ExercisesProgress::NewPending);
         }
 
         writer.write_all(RERUNNING_ALL_EXERCISES_MSG)?;
@@ -366,7 +370,7 @@ impl AppState {
 
                 self.write()?;
 
-                return Ok(ExercisesProgress::Pending);
+                return Ok(ExercisesProgress::NewPending);
             }
 
             writeln!(writer, "{}", "ok".green())?;

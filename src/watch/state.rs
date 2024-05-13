@@ -78,10 +78,7 @@ impl<'a> WatchState<'a> {
 
     pub fn next_exercise(&mut self) -> Result<ExercisesProgress> {
         if matches!(self.done_status, DoneStatus::Pending) {
-            self.writer
-                .write_all(b"The current exercise isn't done yet\n")?;
-            self.show_prompt()?;
-            return Ok(ExercisesProgress::Pending);
+            return Ok(ExercisesProgress::CurrentPending);
         }
 
         self.app_state.done_current_exercise(&mut self.writer)
@@ -164,13 +161,5 @@ When you are done experimenting, enter `n` (or `next`) to move on to the next ex
     pub fn show_hint(&mut self) -> Result<()> {
         self.show_hint = true;
         self.render()
-    }
-
-    pub fn handle_invalid_input(&mut self, input: char) -> io::Result<()> {
-        writeln!(
-            self.writer,
-            "Invalid input: {input} (confusing input can occur after resizing the terminal)",
-        )?;
-        self.show_prompt()
     }
 }

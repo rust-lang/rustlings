@@ -9,7 +9,7 @@ pub enum InputEvent {
     Hint,
     List,
     Quit,
-    Unrecognized(char),
+    Unrecognized,
 }
 
 pub fn terminal_event_handler(tx: Sender<WatchEvent>, manual_run: bool) {
@@ -42,7 +42,7 @@ pub fn terminal_event_handler(tx: Sender<WatchEvent>, manual_run: bool) {
                         'l' => break InputEvent::List,
                         'q' => break InputEvent::Quit,
                         'r' if manual_run => InputEvent::Run,
-                        _ => InputEvent::Unrecognized(c),
+                        _ => InputEvent::Unrecognized,
                     };
 
                     if tx.send(WatchEvent::Input(input_event)).is_err() {
