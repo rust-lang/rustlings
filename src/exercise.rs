@@ -17,10 +17,9 @@ use crate::{
 /// The initial capacity of the output buffer.
 pub const OUTPUT_CAPACITY: usize = 1 << 14;
 
+/// See `info_file::ExerciseInfo`
 pub struct Exercise {
-    /// Directory name.
     pub dir: Option<&'static str>,
-    /// Exercise's unique name.
     pub name: &'static str,
     /// Path of the exercise file starting with the `exercises/` directory.
     pub path: &'static str,
