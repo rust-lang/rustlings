@@ -11,8 +11,11 @@ use std::{
 use crate::{cargo_toml::updated_cargo_toml, embedded::EMBEDDED_FILES, info_file::InfoFile};
 
 pub fn init() -> Result<()> {
-    if Path::new("exercises").is_dir() && Path::new("Cargo.toml").is_file() {
-        bail!(PROBABLY_IN_RUSTLINGS_DIR_ERR);
+    // Prevent initialization in a directory that contains the file `Cargo.toml`.
+    // This can mean that Rustlings was already initialized in this directory.
+    // Otherwise, this can cause problems with Cargo workspaces.
+    if Path::new("Cargo.toml").exists() {
+        bail!(CARGO_TOML_EXISTS_ERR);
     }
 
     let rustlings_path = Path::new("rustlings");
@@ -24,7 +27,7 @@ pub fn init() -> Result<()> {
     }
 
     set_current_dir("rustlings")
-        .context("Failed to change the current directory to `rustlings`")?;
+        .context("Failed to change the current directory to `rustlings/`")?;
 
     let info_file = InfoFile::parse()?;
     EMBEDDED_FILES
@@ -37,9 +40,10 @@ pub fn init() -> Result<()> {
         .as_bytes()
         .iter()
         .position(|c| *c == b'\n')
-        .context("The embedded `Cargo.toml` is empty or contains only one line.")?;
-    let current_cargo_toml =
-        &current_cargo_toml[(newline_ind + 1).min(current_cargo_toml.len() - 1)..];
+        .context("The embedded `Cargo.toml` is empty or contains only one line")?;
+    let current_cargo_toml = current_cargo_toml
+        .get(newline_ind + 1..)
+        .context("The embedded `Cargo.toml` contains only one line")?;
     let updated_cargo_toml = updated_cargo_toml(&info_file.exercises, current_cargo_toml, b"")
         .context("Failed to generate `Cargo.toml`")?;
     fs::write("Cargo.toml", updated_cargo_toml)
@@ -77,12 +81,10 @@ target
 
 pub const VS_CODE_EXTENSIONS_JSON: &[u8] = br#"{"recommendations":["rust-lang.rust-analyzer"]}"#;
 
-const PROBABLY_IN_RUSTLINGS_DIR_ERR: &str =
-    "A directory with the name `exercises` and a file with the name `Cargo.toml` already exist
-in the current directory. It looks like Rustlings was already initialized here.
-Run `rustlings` for instructions on getting started with the exercises.
+const CARGO_TOML_EXISTS_ERR: &str = "The current directory contains the file `Cargo.toml`.
 
-If you didn't already initialize Rustlings, please initialize it in another directory.";
+If you already initialized Rustlings, run the command `rustlings` for instructions on getting started with the exercises.
+Otherwise, please run `rustlings init` again in another directory.";
 
 const RUSTLINGS_DIR_ALREADY_EXISTS_ERR: &str =
     "A directory with the name `rustlings` already exists in the current directory.
