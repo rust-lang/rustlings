@@ -9,17 +9,17 @@ pub struct DebounceEventHandler {
 }
 
 impl notify_debouncer_mini::DebounceEventHandler for DebounceEventHandler {
-    fn handle_event(&mut self, event: DebounceEventResult) {
-        let event = match event {
-            Ok(event) => {
-                let Some(exercise_ind) = event
+    fn handle_event(&mut self, input_event: DebounceEventResult) {
+        let output_event = match input_event {
+            Ok(input_event) => {
+                let Some(exercise_ind) = input_event
                     .iter()
-                    .filter_map(|event| {
-                        if event.kind != DebouncedEventKind::Any {
+                    .filter_map(|input_event| {
+                        if input_event.kind != DebouncedEventKind::Any {
                             return None;
                         }
 
-                        let file_name = event.path.file_name()?.to_str()?.as_bytes();
+                        let file_name = input_event.path.file_name()?.to_str()?.as_bytes();
 
                         if file_name.len() < 4 {
                             return None;
@@ -46,6 +46,6 @@ impl notify_debouncer_mini::DebounceEventHandler for DebounceEventHandler {
 
         // An error occurs when the receiver is dropped.
         // After dropping the receiver, the debouncer guard should also be dropped.
-        let _ = self.tx.send(event);
+        let _ = self.tx.send(output_event);
     }
 }
