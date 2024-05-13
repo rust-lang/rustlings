@@ -82,7 +82,7 @@ pub struct EmbeddedFiles {
 }
 
 impl EmbeddedFiles {
-    /// Dump all the embedded files of the `exercises/` direcotry.
+    /// Dump all the embedded files of the `exercises/` directory.
     pub fn init_exercises_dir(&self, exercise_infos: &[ExerciseInfo]) -> Result<()> {
         create_dir("exercises").context("Failed to create the directory `exercises`")?;
 
