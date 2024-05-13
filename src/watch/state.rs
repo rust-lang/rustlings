@@ -96,18 +96,18 @@ impl<'a> WatchState<'a> {
         self.writer.write_all(b"\n")?;
 
         if self.manual_run {
-            write!(self.writer, "{}un/", 'r'.bold())?;
+            write!(self.writer, "{}:run / ", 'r'.bold())?;
         }
 
         if self.done_status != DoneStatus::Pending {
-            write!(self.writer, "{}ext/", 'n'.bold())?;
+            write!(self.writer, "{}:next / ", 'n'.bold())?;
         }
 
         if !self.show_hint {
-            write!(self.writer, "{}int/", 'h'.bold())?;
+            write!(self.writer, "{}:hint / ", 'h'.bold())?;
         }
 
-        write!(self.writer, "{}ist/{}uit? ", 'l'.bold(), 'q'.bold())?;
+        write!(self.writer, "{}:list / {}:quit ? ", 'l'.bold(), 'q'.bold())?;
 
         self.writer.flush()
     }
