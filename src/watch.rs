@@ -92,8 +92,8 @@ pub fn watch(
                 break;
             }
             WatchEvent::Input(InputEvent::Run) => watch_state.run_current_exercise()?,
-            WatchEvent::Input(InputEvent::Unrecognized(cmd)) => {
-                watch_state.handle_invalid_cmd(&cmd)?;
+            WatchEvent::Input(InputEvent::Unrecognized(input)) => {
+                watch_state.handle_invalid_input(input)?;
             }
             WatchEvent::FileChange { exercise_ind } => {
                 watch_state.run_exercise_with_ind(exercise_ind)?;

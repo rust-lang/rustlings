@@ -9,12 +9,10 @@ pub enum InputEvent {
     Hint,
     List,
     Quit,
-    Unrecognized(String),
+    Unrecognized(char),
 }
 
 pub fn terminal_event_handler(tx: Sender<WatchEvent>, manual_run: bool) {
-    let mut input = String::with_capacity(8);
-
     let last_input_event = loop {
         let terminal_event = match event::read() {
             Ok(v) => v,
@@ -28,36 +26,28 @@ pub fn terminal_event_handler(tx: Sender<WatchEvent>, manual_run: bool) {
 
         match terminal_event {
             Event::Key(key) => {
+                match key.kind {
+                    KeyEventKind::Release | KeyEventKind::Repeat => continue,
+                    KeyEventKind::Press => (),
+                }
+
                 if key.modifiers != KeyModifiers::NONE {
                     continue;
                 }
 
-                match key.kind {
-                    KeyEventKind::Release => continue,
-                    KeyEventKind::Press | KeyEventKind::Repeat => (),
-                }
+                if let KeyCode::Char(c) = key.code {
+                    let input_event = match c {
+                        'n' => InputEvent::Next,
+                        'h' => InputEvent::Hint,
+                        'l' => break InputEvent::List,
+                        'q' => break InputEvent::Quit,
+                        'r' if manual_run => InputEvent::Run,
+                        _ => InputEvent::Unrecognized(c),
+                    };
 
-                match key.code {
-                    KeyCode::Enter => {
-                        let input_event = match input.trim() {
-                            "n" | "next" => InputEvent::Next,
-                            "h" | "hint" => InputEvent::Hint,
-                            "l" | "list" => break InputEvent::List,
-                            "q" | "quit" => break InputEvent::Quit,
-                            "r" | "run" if manual_run => InputEvent::Run,
-                            _ => InputEvent::Unrecognized(input.clone()),
-                        };
-
-                        if tx.send(WatchEvent::Input(input_event)).is_err() {
-                            return;
-                        }
-
-                        input.clear();
+                    if tx.send(WatchEvent::Input(input_event)).is_err() {
+                        return;
                     }
-                    KeyCode::Char(c) => {
-                        input.push(c);
-                    }
-                    _ => (),
                 }
             }
             Event::Resize(_, _) => {

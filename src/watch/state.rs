@@ -166,14 +166,11 @@ When you are done experimenting, enter `n` (or `next`) to move on to the next ex
         self.render()
     }
 
-    pub fn handle_invalid_cmd(&mut self, cmd: &str) -> io::Result<()> {
-        self.writer.write_all(b"Invalid command: ")?;
-        self.writer.write_all(cmd.as_bytes())?;
-        if cmd.len() > 1 {
-            self.writer
-                .write_all(b" (confusing input can occur after resizing the terminal)")?;
-        }
-        self.writer.write_all(b"\n")?;
+    pub fn handle_invalid_input(&mut self, input: char) -> io::Result<()> {
+        writeln!(
+            self.writer,
+            "Invalid input: {input} (confusing input can occur after resizing the terminal)",
+        )?;
         self.show_prompt()
     }
 }
