@@ -148,14 +148,12 @@ impl<'a> UiState<'a> {
         }
     }
 
-    #[inline]
     pub fn select_first(&mut self) {
         if self.n_rows > 0 {
             self.table_state.select(Some(0));
         }
     }
 
-    #[inline]
     pub fn select_last(&mut self) {
         if self.n_rows > 0 {
             self.table_state.select(Some(self.n_rows - 1));
