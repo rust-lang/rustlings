@@ -656,7 +656,7 @@ checksum = "adad44e29e4c806119491a7f06f03de4d1af22c3a680dd47f1e6e179439d1f56"
 
 [[package]]
 name = "rustlings"
-version = "6.0.0-beta.6"
+version = "6.0.0-beta.7"
 dependencies = [
  "anyhow",
  "assert_cmd",
@@ -675,7 +675,7 @@ dependencies = [
 
 [[package]]
 name = "rustlings-macros"
-version = "6.0.0-beta.6"
+version = "6.0.0-beta.7"
 dependencies = [
  "quote",
  "serde",

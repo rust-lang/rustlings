@@ -8,7 +8,7 @@ exclude = [
 ]
 
 [workspace.package]
-version = "6.0.0-beta.6"
+version = "6.0.0-beta.7"
 authors = [
   "Liv <mokou@fastmail.com>",
   "Mo Bitar <mo8it@proton.me>",
@@ -53,7 +53,7 @@ hashbrown = "0.14.5"
 notify-debouncer-mini = { version = "0.4.1", default-features = false }
 os_pipe = "1.1.5"
 ratatui = { version = "0.26.2", default-features = false, features = ["crossterm"] }
-rustlings-macros = { path = "rustlings-macros", version = "=6.0.0-beta.6" }
+rustlings-macros = { path = "rustlings-macros", version = "=6.0.0-beta.7" }
 serde_json = "1.0.117"
 serde.workspace = true
 toml_edit.workspace = true
