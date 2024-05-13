@@ -56,7 +56,7 @@ fn press_enter_prompt() -> io::Result<()> {
 struct Args {
     #[command(subcommand)]
     command: Option<Subcommands>,
-    /// Manually run the current exercise using `r` or `run` in the watch mode.
+    /// Manually run the current exercise using `r` in the watch mode.
     /// Only use this if Rustlings fails to detect exercise file changes.
     #[arg(long)]
     manual_run: bool,
