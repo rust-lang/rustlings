@@ -198,6 +198,10 @@ impl AppState {
     }
 
     pub fn set_current_exercise_ind(&mut self, exercise_ind: usize) -> Result<()> {
+        if exercise_ind == self.current_exercise_ind {
+            return Ok(());
+        }
+
         if exercise_ind >= self.exercises.len() {
             bail!(BAD_INDEX_ERR);
         }

@@ -95,7 +95,7 @@ pub fn watch(
             WatchEvent::Input(InputEvent::Run) => watch_state.run_current_exercise()?,
             WatchEvent::Input(InputEvent::Unrecognized) => watch_state.render()?,
             WatchEvent::FileChange { exercise_ind } => {
-                watch_state.run_exercise_with_ind(exercise_ind)?;
+                watch_state.handle_file_change(exercise_ind)?;
             }
             WatchEvent::TerminalResize => {
                 watch_state.render()?;
