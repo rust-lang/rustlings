@@ -2,10 +2,10 @@ use anyhow::{Context, Result};
 
 use crate::info_file::ExerciseInfo;
 
-// Return the start and end index of the content of the list `bin = […]`.
-// bin = [xxxxxxxxxxxxxxxxx]
-//        |start_ind       |
-//                         |end_ind
+/// Return the start and end index of the content of the list `bin = […]`.
+/// bin = [xxxxxxxxxxxxxxxxx]
+///        |start_ind       |
+///                         |end_ind
 pub fn bins_start_end_ind(cargo_toml: &str) -> Result<(usize, usize)> {
     let start_ind = cargo_toml
         .find("bin = [")
@@ -20,8 +20,8 @@ pub fn bins_start_end_ind(cargo_toml: &str) -> Result<(usize, usize)> {
     Ok((start_ind, end_ind))
 }
 
-// Generate and append the content of the `bin` list in `Cargo.toml`.
-// The `exercise_path_prefix` is the prefix of the `path` field of every list entry.
+/// Generate and append the content of the `bin` list in `Cargo.toml`.
+/// The `exercise_path_prefix` is the prefix of the `path` field of every list entry.
 pub fn append_bins(
     buf: &mut Vec<u8>,
     exercise_infos: &[ExerciseInfo],
@@ -43,7 +43,7 @@ pub fn append_bins(
     }
 }
 
-// Update the `bin` list and leave everything else unchanged.
+/// Update the `bin` list and leave everything else unchanged.
 pub fn updated_cargo_toml(
     exercise_infos: &[ExerciseInfo],
     current_cargo_toml: &str,

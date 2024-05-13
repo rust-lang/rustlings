@@ -14,7 +14,7 @@ use crate::{
     DEBUG_PROFILE,
 };
 
-// The initial capacity of the output buffer.
+/// The initial capacity of the output buffer.
 pub const OUTPUT_CAPACITY: usize = 1 << 14;
 
 pub struct Exercise {

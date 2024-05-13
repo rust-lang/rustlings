@@ -6,7 +6,7 @@ use std::{
 
 use crate::info_file::ExerciseInfo;
 
-// Contains all embedded files.
+/// Contains all embedded files.
 pub static EMBEDDED_FILES: EmbeddedFiles = rustlings_macros::include_files!();
 
 #[derive(Clone, Copy)]
@@ -73,16 +73,16 @@ impl ExerciseDir {
     }
 }
 
-// All embedded files.
+/// All embedded files.
 pub struct EmbeddedFiles {
-    // `info.toml`
+    /// The content of the `info.toml` file.
     pub info_file: &'static str,
     exercise_files: &'static [ExerciseFiles],
     exercise_dirs: &'static [ExerciseDir],
 }
 
 impl EmbeddedFiles {
-    // Dump all the embedded files of the `exercises/` direcotry.
+    /// Dump all the embedded files of the `exercises/` direcotry.
     pub fn init_exercises_dir(&self, exercise_infos: &[ExerciseInfo]) -> Result<()> {
         create_dir("exercises").context("Failed to create the directory `exercises`")?;
 
@@ -110,7 +110,7 @@ impl EmbeddedFiles {
         WriteStrategy::Overwrite.write(path, exercise_files.exercise)
     }
 
-    // Write the solution file to disk and return its path.
+    /// Write the solution file to disk and return its path.
     pub fn write_solution_to_disk(
         &self,
         exercise_ind: usize,

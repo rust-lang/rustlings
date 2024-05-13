@@ -1,8 +1,8 @@
 use anyhow::{Context, Result};
 use std::{io::Read, path::Path, process::Command};
 
-// Run a command with a description for a possible error and append the merged stdout and stderr.
-// The boolean in the returned `Result` is true if the command's exit status is success.
+/// Run a command with a description for a possible error and append the merged stdout and stderr.
+/// The boolean in the returned `Result` is true if the command's exit status is success.
 pub fn run_cmd(mut cmd: Command, description: &str, output: &mut Vec<u8>) -> Result<bool> {
     let (mut reader, writer) = os_pipe::pipe()
         .with_context(|| format!("Failed to create a pipe to run the command `{description}``"))?;
@@ -37,18 +37,18 @@ pub struct CargoCmd<'a> {
     pub args: &'a [&'a str],
     pub exercise_name: &'a str,
     pub description: &'a str,
-    // RUSTFLAGS="-A warnings"
+    /// RUSTFLAGS="-A warnings"
     pub hide_warnings: bool,
-    // Added as `--target-dir` if `Self::dev` is true.
+    /// Added as `--target-dir` if `Self::dev` is true.
     pub target_dir: &'a Path,
-    // The output buffer to append the merged stdout and stderr.
+    /// The output buffer to append the merged stdout and stderr.
     pub output: &'a mut Vec<u8>,
-    // true while developing Rustlings.
+    /// true while developing Rustlings.
     pub dev: bool,
 }
 
 impl<'a> CargoCmd<'a> {
-    // Run `cargo SUBCOMMAND --bin EXERCISE_NAME … ARGS`.
+    /// Run `cargo SUBCOMMAND --bin EXERCISE_NAME … ARGS`.
     pub fn run(&mut self) -> Result<bool> {
         let mut cmd = Command::new("cargo");
         cmd.arg(self.subcommand);

@@ -330,8 +330,8 @@ impl AppState {
         }
     }
 
-    // Official exercises: Dump the solution file form the binary and return its path.
-    // Third-party exercises: Check if a solution file exists and return its path in that case.
+    /// Official exercises: Dump the solution file form the binary and return its path.
+    /// Third-party exercises: Check if a solution file exists and return its path in that case.
     pub fn current_solution_path(&self) -> Result<Option<String>> {
         if DEBUG_PROFILE {
             return Ok(None);
@@ -358,9 +358,9 @@ impl AppState {
         }
     }
 
-    // Mark the current exercise as done and move on to the next pending exercise if one exists.
-    // If all exercises are marked as done, run all of them to make sure that they are actually
-    // done. If an exercise which is marked as done fails, mark it as pending and continue on it.
+    /// Mark the current exercise as done and move on to the next pending exercise if one exists.
+    /// If all exercises are marked as done, run all of them to make sure that they are actually
+    /// done. If an exercise which is marked as done fails, mark it as pending and continue on it.
     pub fn done_current_exercise(&mut self, writer: &mut StdoutLock) -> Result<ExercisesProgress> {
         let exercise = &mut self.exercises[self.current_exercise_ind];
         if !exercise.done {
