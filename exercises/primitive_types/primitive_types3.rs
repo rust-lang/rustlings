@@ -2,10 +2,13 @@
 // Create an array with at least 100 elements in it where the ??? is. 
 // Execute `rustlings hint primitive_types3` for hints!
 
-// I AM NOT DONE
-
 fn main() {
-    let a = ???
+    // Initialize the array to zeroes of size 100
+    // Copy trait needs to be implemented by the type. In this case its primitive type.
+    let a = [0; 100];
+    // Explicitly initialize each element
+    // let a = [0, 0, 0];
+    // let a: [Option<String>; 3] = [None; 3]; alternatively let a: [Option<String>; 3] = Default::default(); if string doesn't support copy trait.
 
     if a.len() >= 100 {
         println!("Wow, that's a big array!");

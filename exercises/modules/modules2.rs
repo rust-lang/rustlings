@@ -1,11 +1,10 @@
 // modules2.rs
 // Make me compile! Execute `rustlings hint modules2` for hints :)
 
-// I AM NOT DONE
-
 mod delicious_snacks {
-    use self::fruits::PEAR as fruit;
-    use self::veggies::CUCUMBER as veggie;
+    // Just like items, name bindings as a result of use is private by default.
+    pub use self::fruits::PEAR as fruit;
+    pub use self::veggies::CUCUMBER as veggie;
 
     mod fruits {
         pub const PEAR: &'static str = "Pear";
