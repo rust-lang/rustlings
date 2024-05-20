@@ -20,8 +20,8 @@ license = "MIT"
 edition = "2021"
 
 [workspace.dependencies]
-serde = { version = "1.0.199", features = ["derive"] }
-toml_edit = { version = "0.22.12", default-features = false, features = ["parse", "serde"] }
+serde = { version = "1.0.202", features = ["derive"] }
+toml_edit = { version = "0.22.13", default-features = false, features = ["parse", "serde"] }
 
 [package]
 name = "rustlings"
@@ -46,13 +46,13 @@ include = [
 ]
 
 [dependencies]
-anyhow = "1.0.83"
+anyhow = "1.0.86"
 clap = { version = "4.5.4", features = ["derive"] }
 crossterm = "0.27.0"
 hashbrown = "0.14.5"
 notify-debouncer-mini = { version = "0.4.1", default-features = false }
 os_pipe = "1.1.5"
-ratatui = { version = "0.26.2", default-features = false, features = ["crossterm"] }
+ratatui = { version = "0.26.3", default-features = false, features = ["crossterm"] }
 rustlings-macros = { path = "rustlings-macros", version = "=6.0.0-beta.9" }
 serde_json = "1.0.117"
 serde.workspace = true
