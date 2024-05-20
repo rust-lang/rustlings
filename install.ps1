@@ -1,7 +1,7 @@
 #!/usr/bin/env pwsh
 
 #Requires -Version 5
-param($path = "$pwd/rustlings")
+param($path = "$home/rustlings")
 
 Write-Host "Let's get you set up with Rustlings!"
 
@@ -35,7 +35,7 @@ if (Get-Command cargo -ErrorAction SilentlyContinue) {
 function vercomp($v1, $v2) {
     if ($v1 -eq $v2) {
        return 0
-    } 
+    }
 
     $v1 = $v1.Replace(".", "0")
     $v2 = $v2.Replace(".", "0")
@@ -53,7 +53,7 @@ function vercomp($v1, $v2) {
 }
 
 $rustVersion = $(rustc --version).Split(" ")[1]
-$minRustVersion = "1.31"
+$minRustVersion = "1.70"
 if ((vercomp $rustVersion $minRustVersion) -eq 2) {
     Write-Host "WARNING: Rust version is too old: $rustVersion - needs at least $minRustVersion"
     Write-Host "Please update Rust with 'rustup update'"
@@ -72,14 +72,23 @@ if (!($LASTEXITCODE -eq 0)) {
 # but anyone running pwsh 5 will have to pass the argument.
 $version = Invoke-WebRequest -UseBasicParsing https://api.github.com/repos/rust-lang/rustlings/releases/latest `
     | ConvertFrom-Json | Select-Object -ExpandProperty tag_name
+
 Write-Host "Checking out version $version..."
 Set-Location $path
 git checkout -q tags/$version
 
 Write-Host "Installing the 'rustlings' executable..."
-cargo install --force --path .
+cargo install --locked --force --path .
 if (!(Get-Command rustlings -ErrorAction SilentlyContinue)) {
     Write-Host "WARNING: Please check that you have '~/.cargo/bin' in your PATH environment variable!"
 }
 
-Write-Host "All done! Run 'rustlings' to get started."
+# Checking whether Clippy is installed.
+# Due to a bug in Cargo, this must be done with Rustup: https://github.com/rust-lang/rustup/issues/1514
+$clippy = (rustup component list | Select-String "clippy" | Select-String "installed") | Out-String
+if (!$clippy) {
+    Write-Host "Installing the 'cargo-clippy' executable..."
+    rustup component add clippy
+}
+
+Write-Host "All done! Navigate to $path and run 'rustlings' to get started!"

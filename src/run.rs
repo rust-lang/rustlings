@@ -1,52 +1,75 @@
+use std::process::Command;
+use std::time::Duration;
+
 use crate::exercise::{Exercise, Mode};
 use crate::verify::test;
-use console::{style, Emoji};
 use indicatif::ProgressBar;
 
-pub fn run(exercise: &Exercise) -> Result<(), ()> {
+// Invoke the rust compiler on the path of the given exercise,
+// and run the ensuing binary.
+// The verbose argument helps determine whether or not to show
+// the output from the test harnesses (if the mode of the exercise is test)
+pub fn run(exercise: &Exercise, verbose: bool) -> Result<(), ()> {
     match exercise.mode {
-        Mode::Test => test(exercise)?,
+        Mode::Test => test(exercise, verbose)?,
         Mode::Compile => compile_and_run(exercise)?,
+        Mode::Clippy => compile_and_run(exercise)?,
     }
     Ok(())
 }
 
-pub fn compile_and_run(exercise: &Exercise) -> Result<(), ()> {
+// Resets the exercise by stashing the changes.
+pub fn reset(exercise: &Exercise) -> Result<(), ()> {
+    let command = Command::new("git")
+        .arg("stash")
+        .arg("--")
+        .arg(&exercise.path)
+        .spawn();
+
+    match command {
+        Ok(_) => Ok(()),
+        Err(_) => Err(()),
+    }
+}
+
+// Invoke the rust compiler on the path of the given exercise
+// and run the ensuing binary.
+// This is strictly for non-test binaries, so output is displayed
+fn compile_and_run(exercise: &Exercise) -> Result<(), ()> {
     let progress_bar = ProgressBar::new_spinner();
-    progress_bar.set_message(format!("Compiling {}...", exercise).as_str());
-    progress_bar.enable_steady_tick(100);
+    progress_bar.set_message(format!("Compiling {exercise}..."));
+    progress_bar.enable_steady_tick(Duration::from_millis(100));
 
-    let compilecmd = exercise.compile();
-    progress_bar.set_message(format!("Running {}...", exercise).as_str());
-    if compilecmd.status.success() {
-        let runcmd = exercise.run();
-        progress_bar.finish_and_clear();
+    let compilation_result = exercise.compile();
+    let compilation = match compilation_result {
+        Ok(compilation) => compilation,
+        Err(output) => {
+            progress_bar.finish_and_clear();
+            warn!(
+                "Compilation of {} failed!, Compiler error message:\n",
+                exercise
+            );
+            println!("{}", output.stderr);
+            return Err(());
+        }
+    };
 
-        if runcmd.status.success() {
-            println!("{}", String::from_utf8_lossy(&runcmd.stdout));
-            let formatstr = format!("{} Successfully ran {}", Emoji("✅", "✓"), exercise);
-            println!("{}", style(formatstr).green());
-            exercise.clean();
+    progress_bar.set_message(format!("Running {exercise}..."));
+    let result = compilation.run();
+    progress_bar.finish_and_clear();
+
+    match result {
+        Ok(output) => {
+            println!("{}", output.stdout);
+            success!("Successfully ran {}", exercise);
             Ok(())
-        } else {
-            println!("{}", String::from_utf8_lossy(&runcmd.stdout));
-            println!("{}", String::from_utf8_lossy(&runcmd.stderr));
+        }
+        Err(output) => {
+            println!("{}", output.stdout);
+            println!("{}", output.stderr);
 
-            let formatstr = format!("{} Ran {} with errors", Emoji("⚠️ ", "!"), exercise);
-            println!("{}", style(formatstr).red());
-            exercise.clean();
+            warn!("Ran {} with errors", exercise);
             Err(())
         }
-    } else {
-        progress_bar.finish_and_clear();
-        let formatstr = format!(
-            "{} Compilation of {} failed! Compiler error message:\n",
-            Emoji("⚠️ ", "!"),
-            exercise
-        );
-        println!("{}", style(formatstr).red());
-        println!("{}", String::from_utf8_lossy(&compilecmd.stderr));
-        exercise.clean();
-        Err(())
     }
 }
