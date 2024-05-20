@@ -1,5 +1,5 @@
-// Make the code print a greeting to the world.
+// TODO: Fix the code to print "Hello world!".
 
 fn main() {
-    printline!("Hello there!")
+    printline!("Hello world!");
 }

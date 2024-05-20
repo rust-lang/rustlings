@@ -1,6 +1,8 @@
 fn main() {
-    let number = "T-H-R-E-E"; // don't change this line
-    println!("Spell a Number : {}", number);
-    number = 3; // don't rename this variable
-    println!("Number plus two is : {}", number + 2);
+    let number = "T-H-R-E-E"; // Don't change this line
+    println!("Spell a number: {}", number);
+
+    // TODO: Fix the compiler error by changing the line below without renaming the the variable.
+    number = 3;
+    println!("Number plus two is: {}", number + 2);
 }

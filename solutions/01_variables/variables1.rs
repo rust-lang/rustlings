@@ -1,1 +1,6 @@
-// Solutions will be available before the stable release. Thank you for testing the beta version 🥰
+fn main() {
+    // Declaring variables requires the `let` keyword.
+    let x = 5;
+
+    println!("x has the value {x}");
+}

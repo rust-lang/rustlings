@@ -1,1 +1,6 @@
-// Solutions will be available before the stable release. Thank you for testing the beta version 🥰
+// The type of constants must always be annotated.
+const NUMBER: u64 = 3;
+
+fn main() {
+    println!("Number: {NUMBER}");
+}

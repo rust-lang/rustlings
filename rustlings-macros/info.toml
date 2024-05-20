@@ -29,20 +29,21 @@ https://github.com/rust-lang/rustlings/blob/main/CONTRIBUTING.md
 
 # INTRO
 
-# TODO: Update exercise
 [[exercises]]
 name = "intro1"
 dir = "00_intro"
 test = false
-# TODO: Fix hint
-hint = """Enter `n` to move on to the next exercise. You might need to press ENTER after typing `n`."""
+hint = """
+Enter `n` to move on to the next exercise.
+You might need to press ENTER after typing `n`."""
 
 [[exercises]]
 name = "intro2"
 dir = "00_intro"
 test = false
 hint = """
-The compiler is informing us that we've got the name of the print macro wrong, and has suggested an alternative."""
+The compiler is informing us that we've got the name of the print macro wrong.
+It also suggests an alternative."""
 
 # VARIABLES
 
@@ -51,18 +52,18 @@ name = "variables1"
 dir = "01_variables"
 test = false
 hint = """
-The declaration in the first line in the main function is missing a keyword
-that is needed in Rust to create a new variable binding."""
+The declaration in the `main` function is missing a keyword that is needed
+in Rust to create a new variable binding."""
 
 [[exercises]]
 name = "variables2"
 dir = "01_variables"
 test = false
 hint = """
-The compiler message is saying that Rust cannot infer the type that the
+The compiler message is saying that Rust can't infer the type that the
 variable binding `x` has with what is given here.
 
-What happens if you annotate the first line in the main function with a type
+What happens if you annotate the first line in the `main` function with a type
 annotation?
 
 What if you give `x` a value?
@@ -78,9 +79,9 @@ name = "variables3"
 dir = "01_variables"
 test = false
 hint = """
-Oops! In this exercise, we have a variable binding that we've created on in the
-first line in the `main` function, and we're trying to use it in the next line,
-but we haven't given it a value.
+In this exercise, we have a variable binding that we've created in the `main`
+function, and we're trying to use it in the next line, but we haven't given it
+a value.
 
 We can't print out something that isn't there; try giving `x` a value!
 
@@ -92,7 +93,7 @@ name = "variables4"
 dir = "01_variables"
 test = false
 hint = """
-In Rust, variable bindings are immutable by default. But here we're trying
+In Rust, variable bindings are immutable by default. But here, we're trying
 to reassign a different value to `x`! There's a keyword we can use to make
 a variable binding mutable instead."""
 
@@ -120,12 +121,12 @@ dir = "01_variables"
 test = false
 hint = """
 We know about variables and mutability, but there is another important type of
-variable available: constants.
+variables available: constants.
 
-Constants are always immutable and they are declared with keyword `const` rather
-than keyword `let`.
+Constants are always immutable. They are declared with the keyword `const` instead
+of `let`.
 
-Constants types must also always be annotated.
+The type of Constants must always be annotated.
 
 Read more about constants and the differences between variables and constants
 under 'Constants' in the book's section 'Variables and Mutability':
@@ -139,7 +140,7 @@ name = "functions1"
 dir = "02_functions"
 test = false
 hint = """
-This main function is calling a function that it expects to exist, but the
+This `main` function is calling a function that it expects to exist, but the
 function doesn't exist. It expects this function to have the name `call_me`.
 It expects this function to not take any arguments and not return a value.
 Sounds a lot like `main`, doesn't it?"""
@@ -688,7 +689,7 @@ test = false
 hint = """
 If other functions can return a `Result`, why shouldn't `main`? It's a fairly
 common convention to return something like `Result<(), ErrorType>` from your
-main function.
+`main` function.
 
 The unit (`()`) type is there because nothing is really needed in terms of
 positive results."""
