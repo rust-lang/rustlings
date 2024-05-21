@@ -1,5 +1,5 @@
 fn main() {
-    let number = "T-H-R-E-E"; // Don't change this line
+    let number = "T-H-R-E-E";
     println!("Spell a number: {}", number);
 
     // Using variable shadowing

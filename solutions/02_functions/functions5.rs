@@ -1,1 +1,9 @@
-// Solutions will be available before the stable release. Thank you for testing the beta version 🥰
+fn square(num: i32) -> i32 {
+    // Removed the semicolon `;` at the end of the line below to implicitely return the result.
+    num * num
+}
+
+fn main() {
+    let answer = square(3);
+    println!("The square of 3 is {answer}");
+}

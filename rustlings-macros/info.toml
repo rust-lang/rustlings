@@ -142,7 +142,7 @@ test = false
 hint = """
 This `main` function is calling a function that it expects to exist, but the
 function doesn't exist. It expects this function to have the name `call_me`.
-It expects this function to not take any arguments and not return a value.
+It also expects this function to not take any arguments and not return a value.
 Sounds a lot like `main`, doesn't it?"""
 
 [[exercises]]
@@ -159,7 +159,7 @@ dir = "02_functions"
 test = false
 hint = """
 This time, the function *declaration* is okay, but there's something wrong
-with the place where we're calling the function."""
+with the place where we are calling the function."""
 
 [[exercises]]
 name = "functions4"
@@ -167,8 +167,8 @@ dir = "02_functions"
 test = false
 hint = """
 The error message points to the function `sale_price` and says it expects a type
-after the `->`. This is where the function's return type should be -- take a
-look at the `is_even` function for an example!"""
+after `->`. This is where the function's return type should be.
+Take a look at the `is_even` function for an example!"""
 
 [[exercises]]
 name = "functions5"
@@ -177,15 +177,15 @@ test = false
 hint = """
 This is a really common error that can be fixed by removing one character.
 It happens because Rust distinguishes between expressions and statements:
-expressions return a value based on their operand(s), and statements simply
-return a `()` type which behaves just like `void` in C/C++ language.
+Expressions return a value based on their operand(s), and statements simply
+return a `()` type which behaves just like `void` in C/C++.
 
-We want to return a value of `i32` type from the `square` function, but it is
-returning a `()` type...
+We want to return a value with the type `i32` from the `square` function, but
+it is returning the type `()`.
 
-They are not the same. There are two solutions:
-1. Add a `return` ahead of `num * num;`
-2. remove `;`, make it to be `num * num`"""
+There are two solutions:
+1. Add the `return` keyword before `num * num;`
+2. Remove the semicolon `;` after `num * num`"""
 
 # IF
 
