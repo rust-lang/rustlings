@@ -200,9 +200,9 @@ Some similar examples from other languages:
 - In Python this would be:  `a if a > b else b`
 
 Remember in Rust that:
-- the `if` condition does not need to be surrounded by parentheses
+- The `if` condition does not need to be surrounded by parentheses
 - `if`/`else` conditionals are expressions
-- Each condition is followed by a `{}` block."""
+- Each condition is followed by a `{}` block"""
 
 [[exercises]]
 name = "if2"
