@@ -3,7 +3,7 @@
 //
 // Consider what you can add to the Licensed trait.
 
-pub trait Licensed {
+trait Licensed {
     fn licensing_info(&self) -> String;
 }
 

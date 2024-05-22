@@ -15,7 +15,7 @@
 // Note: the tests should not be changed
 
 #[derive(PartialEq, Debug)]
-pub enum List {
+enum List {
     Cons(i32, List),
     Nil,
 }
@@ -28,11 +28,11 @@ fn main() {
     );
 }
 
-pub fn create_empty_list() -> List {
+fn create_empty_list() -> List {
     todo!()
 }
 
-pub fn create_non_empty_list() -> List {
+fn create_non_empty_list() -> List {
     todo!()
 }
 

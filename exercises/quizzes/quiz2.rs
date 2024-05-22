@@ -16,7 +16,7 @@
 //   the first element is the string, the second one is the command.
 // - The output element is going to be a Vector of strings.
 
-pub enum Command {
+enum Command {
     Uppercase,
     Trim,
     Append(usize),

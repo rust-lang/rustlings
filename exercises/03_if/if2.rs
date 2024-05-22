@@ -1,7 +1,7 @@
 // Step 1: Make me compile!
 // Step 2: Get the bar_for_fuzz and default_to_baz tests passing!
 
-pub fn foo_if_fizz(fizzish: &str) -> &str {
+fn foo_if_fizz(fizzish: &str) -> &str {
     if fizzish == "fizz" {
         "foo"
     } else {

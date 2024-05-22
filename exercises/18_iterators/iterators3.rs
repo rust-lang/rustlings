@@ -5,20 +5,20 @@
 //    list_of_results functions.
 
 #[derive(Debug, PartialEq, Eq)]
-pub enum DivisionError {
+enum DivisionError {
     NotDivisible(NotDivisibleError),
     DivideByZero,
 }
 
 #[derive(Debug, PartialEq, Eq)]
-pub struct NotDivisibleError {
+struct NotDivisibleError {
     dividend: i32,
     divisor: i32,
 }
 
 // Calculate `a` divided by `b` if `a` is evenly divisible by `b`.
 // Otherwise, return a suitable error.
-pub fn divide(a: i32, b: i32) -> Result<i32, DivisionError> {
+fn divide(a: i32, b: i32) -> Result<i32, DivisionError> {
     todo!();
 }
 

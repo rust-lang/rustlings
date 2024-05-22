@@ -2,13 +2,13 @@
 //
 // Don't change any line other than the marked one.
 
-pub trait SomeTrait {
+trait SomeTrait {
     fn some_function(&self) -> bool {
         true
     }
 }
 
-pub trait OtherTrait {
+trait OtherTrait {
     fn other_function(&self) -> bool {
         true
     }

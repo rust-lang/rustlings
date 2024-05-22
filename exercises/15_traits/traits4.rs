@@ -2,7 +2,7 @@
 //
 // Don't change any line other than the marked one.
 
-pub trait Licensed {
+trait Licensed {
     fn licensing_info(&self) -> String {
         "some information".to_string()
     }

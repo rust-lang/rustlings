@@ -6,7 +6,7 @@ struct Wrapper {
 }
 
 impl Wrapper {
-    pub fn new(value: u32) -> Self {
+    fn new(value: u32) -> Self {
         Wrapper { value }
     }
 }

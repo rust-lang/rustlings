@@ -2,7 +2,7 @@
 // the test passes. Then write a second test that tests whether we get the
 // result we expect to get when we call `is_even(5)`.
 
-pub fn is_even(num: i32) -> bool {
+fn is_even(num: i32) -> bool {
     num % 2 == 0
 }
 

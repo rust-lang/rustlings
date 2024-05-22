@@ -8,7 +8,7 @@ fn main() {
     // You can optionally experiment here.
 }
 
-pub fn generate_nametag_text(name: String) -> Option<String> {
+fn generate_nametag_text(name: String) -> Option<String> {
     if name.is_empty() {
         // Empty names aren't allowed.
         None

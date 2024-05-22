@@ -1,4 +1,4 @@
-pub fn animal_habitat(animal: &str) -> &'static str {
+fn animal_habitat(animal: &str) -> &'static str {
     let identifier = if animal == "crab" {
         1
     } else if animal == "gopher" {
