@@ -14,6 +14,6 @@ mod tests {
 
         let nice_slice = ???
 
-        assert_eq!([2, 3, 4], nice_slice)
+        assert_eq!([2, 3, 4], nice_slice);
     }
 }

@@ -60,6 +60,6 @@ mod tests {
         }
 
         println!("total numbers received: {}", total_received);
-        assert_eq!(total_received, queue_length)
+        assert_eq!(total_received, queue_length);
     }
 }
