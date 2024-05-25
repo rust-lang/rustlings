@@ -34,6 +34,20 @@ pub fn init() -> Result<()> {
         .init_exercises_dir(&info_file.exercises)
         .context("Failed to initialize the `rustlings/exercises` directory")?;
 
+    create_dir("solutions").context("Failed to create the `solutions/` directory")?;
+    for dir in EMBEDDED_FILES.exercise_dirs {
+        let mut dir_path = String::with_capacity(10 + dir.name.len());
+        dir_path.push_str("solutions/");
+        dir_path.push_str(dir.name);
+        create_dir(&dir_path)
+            .with_context(|| format!("Failed to create the directory {dir_path}"))?;
+    }
+    for exercise_info in &info_file.exercises {
+        let solution_path = exercise_info.sol_path();
+        fs::write(&solution_path, INIT_SOLUTION_FILE)
+            .with_context(|| format!("Failed to create the file {solution_path}"))?;
+    }
+
     let current_cargo_toml = include_str!("../dev-Cargo.toml");
     // Skip the first line (comment).
     let newline_ind = current_cargo_toml
@@ -71,6 +85,12 @@ pub fn init() -> Result<()> {
 
     Ok(())
 }
+
+const INIT_SOLUTION_FILE: &[u8] = b"fn main() {
+    // DON'T EDIT THIS SOLUTION FILE!
+    // It will be automatically filled after you finish the exercise.
+}
+";
 
 const GITIGNORE: &[u8] = b".rustlings-state.txt
 solutions

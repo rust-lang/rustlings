@@ -1,6 +1,6 @@
 use anyhow::{Context, Error, Result};
 use std::{
-    fs::{create_dir, create_dir_all, OpenOptions},
+    fs::{create_dir, OpenOptions},
     io::{self, Write},
 };
 
@@ -43,8 +43,8 @@ struct ExerciseFiles {
 }
 
 // A directory in the `exercises/` directory.
-struct ExerciseDir {
-    name: &'static str,
+pub struct ExerciseDir {
+    pub name: &'static str,
     readme: &'static [u8],
 }
 
@@ -78,7 +78,7 @@ pub struct EmbeddedFiles {
     /// The content of the `info.toml` file.
     pub info_file: &'static str,
     exercise_files: &'static [ExerciseFiles],
-    exercise_dirs: &'static [ExerciseDir],
+    pub exercise_dirs: &'static [ExerciseDir],
 }
 
 impl EmbeddedFiles {
@@ -121,13 +121,9 @@ impl EmbeddedFiles {
 
         // 14 = 10 + 1 + 3
         // solutions/ + / + .rs
-        let mut dir_path = String::with_capacity(14 + dir.name.len() + exercise_name.len());
-        dir_path.push_str("solutions/");
-        dir_path.push_str(dir.name);
-        create_dir_all(&dir_path)
-            .with_context(|| format!("Failed to create the directory {dir_path}"))?;
-
-        let mut solution_path = dir_path;
+        let mut solution_path = String::with_capacity(14 + dir.name.len() + exercise_name.len());
+        solution_path.push_str("solutions/");
+        solution_path.push_str(dir.name);
         solution_path.push('/');
         solution_path.push_str(exercise_name);
         solution_path.push_str(".rs");
