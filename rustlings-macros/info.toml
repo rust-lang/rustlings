@@ -234,7 +234,10 @@ hint = "No hints this time ;)"
 name = "primitive_types1"
 dir = "04_primitive_types"
 test = false
-hint = "No hints this time ;)"
+hint = """
+In Rust, a boolean can be negated using the operator `!` before it.
+Example: `!true == false`
+This also works with boolean variables."""
 
 [[exercises]]
 name = "primitive_types2"
