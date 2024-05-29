@@ -816,7 +816,7 @@ path = "exercises/15_traits/traits4.rs"
 mode = "test"
 hint = """
 Instead of using concrete types as parameters you can use traits. Try replacing
-the '??' with 'impl <what goes here?>'
+the '??' with 'impl [what goes here?]'
 
 See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#traits-as-parameters
 """
@@ -827,7 +827,7 @@ path = "exercises/15_traits/traits5.rs"
 mode = "compile"
 hint = """
 To ensure a parameter implements multiple traits use the '+ syntax'. Try
-replacing the '??' with 'impl <> + <>'.
+replacing the '??' with 'impl [what goes here?] + [what goes here?]'.
 
 See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#specifying-multiple-trait-bounds-with-the--syntax
 """
