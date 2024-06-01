@@ -19,7 +19,11 @@ pub enum DevCommands {
         no_git: bool,
     },
     /// Run checks on the exercises
-    Check,
+    Check {
+        /// Require that every exercise has a solution
+        #[arg(short, long)]
+        require_solutions: bool,
+    },
     /// Update the `Cargo.toml` file for the exercises
     Update,
 }
@@ -34,7 +38,7 @@ impl DevCommands {
 
                 new::new(&path, no_git).context(INIT_ERR)
             }
-            Self::Check => check::check(),
+            Self::Check { require_solutions } => check::check(require_solutions),
             Self::Update => update::update(),
         }
     }

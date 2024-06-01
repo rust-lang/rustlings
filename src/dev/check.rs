@@ -166,7 +166,7 @@ fn check_exercises(info_file: &InfoFile) -> Result<()> {
     Ok(())
 }
 
-fn check_solutions(info_file: &InfoFile) -> Result<()> {
+fn check_solutions(require_solutions: bool, info_file: &InfoFile) -> Result<()> {
     let mut paths = hashbrown::HashSet::with_capacity(info_file.exercises.len());
     let target_dir = parse_target_dir()?;
     let mut output = Vec::with_capacity(OUTPUT_CAPACITY);
@@ -174,6 +174,10 @@ fn check_solutions(info_file: &InfoFile) -> Result<()> {
     for exercise_info in &info_file.exercises {
         let path = exercise_info.sol_path();
         if !Path::new(&path).exists() {
+            if require_solutions {
+                bail!("Exercise {} is missing a solution", exercise_info.name);
+            }
+
             // No solution to check.
             continue;
         }
@@ -197,7 +201,7 @@ fn check_solutions(info_file: &InfoFile) -> Result<()> {
     Ok(())
 }
 
-pub fn check() -> Result<()> {
+pub fn check(require_solutions: bool) -> Result<()> {
     let info_file = InfoFile::parse()?;
 
     // A hack to make `cargo run -- dev check` work when developing Rustlings.
@@ -214,7 +218,7 @@ pub fn check() -> Result<()> {
     }
 
     check_exercises(&info_file)?;
-    check_solutions(&info_file)?;
+    check_solutions(require_solutions, &info_file)?;
 
     println!("\nEverything looks fine!");
 
