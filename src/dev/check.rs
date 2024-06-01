@@ -7,7 +7,7 @@ use std::{
 };
 
 use crate::{
-    cargo_toml::{append_bins, bins_start_end_ind},
+    cargo_toml::{append_bins, bins_start_end_ind, BINS_BUFFER_CAPACITY},
     info_file::{ExerciseInfo, InfoFile},
     CURRENT_FORMAT_VERSION, DEBUG_PROFILE,
 };
@@ -145,7 +145,7 @@ fn check_cargo_toml(
     let (bins_start_ind, bins_end_ind) = bins_start_end_ind(current_cargo_toml)?;
 
     let old_bins = &current_cargo_toml.as_bytes()[bins_start_ind..bins_end_ind];
-    let mut new_bins = Vec::with_capacity(1 << 13);
+    let mut new_bins = Vec::with_capacity(BINS_BUFFER_CAPACITY);
     append_bins(&mut new_bins, exercise_infos, exercise_path_prefix);
 
     if old_bins != new_bins {

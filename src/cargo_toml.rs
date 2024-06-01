@@ -3,6 +3,9 @@ use std::path::Path;
 
 use crate::info_file::ExerciseInfo;
 
+/// Initial capacity of the bins buffer.
+pub const BINS_BUFFER_CAPACITY: usize = 1 << 14;
+
 /// Return the start and end index of the content of the list `bin = […]`.
 /// bin = [xxxxxxxxxxxxxxxxx]
 ///        |start_ind       |
@@ -70,7 +73,7 @@ pub fn updated_cargo_toml(
 ) -> Result<Vec<u8>> {
     let (bins_start_ind, bins_end_ind) = bins_start_end_ind(current_cargo_toml)?;
 
-    let mut updated_cargo_toml = Vec::with_capacity(1 << 13);
+    let mut updated_cargo_toml = Vec::with_capacity(BINS_BUFFER_CAPACITY);
     updated_cargo_toml.extend_from_slice(current_cargo_toml[..bins_start_ind].as_bytes());
     append_bins(
         &mut updated_cargo_toml,
