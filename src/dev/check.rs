@@ -1,4 +1,4 @@
-use anyhow::{anyhow, bail, Context, Error, Result};
+use anyhow::{anyhow, bail, Context, Result};
 use std::{
     cmp::Ordering,
     fs::{self, read_dir, OpenOptions},
@@ -99,14 +99,19 @@ fn check_info_file_exercises(info_file: &InfoFile) -> Result<hashbrown::HashSet<
     Ok(paths)
 }
 
-// Check the `exercises` directory for unexpected files.
-fn check_unexpected_files(info_file_paths: &hashbrown::HashSet<PathBuf>) -> Result<()> {
-    fn unexpected_file(path: &Path) -> Error {
-        anyhow!("Found the file `{}`. Only `README.md` and Rust files related to an exercise in `info.toml` are allowed in the `exercises` directory", path.display())
-    }
+// Check `dir` for unexpected files.
+// Only Rust files in `allowed_rust_files` and `README.md` files are allowed.
+// Only one level of directory nesting is allowed.
+fn check_unexpected_files(
+    dir: &str,
+    allowed_rust_files: &hashbrown::HashSet<PathBuf>,
+) -> Result<()> {
+    let unexpected_file = |path: &Path| {
+        anyhow!("Found the file `{}`. Only `README.md` and Rust files related to an exercise in `info.toml` are allowed in the `{dir}` directory", path.display())
+    };
 
-    for entry in read_dir("exercises").context("Failed to open the `exercises` directory")? {
-        let entry = entry.context("Failed to read the `exercises` directory")?;
+    for entry in read_dir(dir).with_context(|| format!("Failed to open the `{dir}` directory"))? {
+        let entry = entry.with_context(|| format!("Failed to read the `{dir}` directory"))?;
 
         if entry.file_type().unwrap().is_file() {
             let path = entry.path();
@@ -115,7 +120,7 @@ fn check_unexpected_files(info_file_paths: &hashbrown::HashSet<PathBuf>) -> Resu
                 continue;
             }
 
-            if !info_file_paths.contains(&path) {
+            if !allowed_rust_files.contains(&path) {
                 return Err(unexpected_file(&path));
             }
 
@@ -139,7 +144,7 @@ fn check_unexpected_files(info_file_paths: &hashbrown::HashSet<PathBuf>) -> Resu
                 continue;
             }
 
-            if !info_file_paths.contains(&path) {
+            if !allowed_rust_files.contains(&path) {
                 return Err(unexpected_file(&path));
             }
         }
@@ -156,17 +161,19 @@ fn check_exercises(info_file: &InfoFile) -> Result<()> {
     }
 
     let info_file_paths = check_info_file_exercises(info_file)?;
-    check_unexpected_files(&info_file_paths)?;
+    check_unexpected_files("exercises", &info_file_paths)?;
 
     Ok(())
 }
 
 fn check_solutions(info_file: &InfoFile) -> Result<()> {
+    let mut paths = hashbrown::HashSet::with_capacity(info_file.exercises.len());
     let target_dir = parse_target_dir()?;
     let mut output = Vec::with_capacity(OUTPUT_CAPACITY);
 
     for exercise_info in &info_file.exercises {
-        if !Path::new(&exercise_info.sol_path()).exists() {
+        let path = exercise_info.sol_path();
+        if !Path::new(&path).exists() {
             // No solution to check.
             continue;
         }
@@ -181,7 +188,11 @@ fn check_solutions(info_file: &InfoFile) -> Result<()> {
                 exercise_info.name,
             );
         }
+
+        paths.insert(PathBuf::from(path));
     }
+
+    check_unexpected_files("solutions", &paths)?;
 
     Ok(())
 }
