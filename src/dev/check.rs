@@ -171,6 +171,7 @@ fn check_solutions(info_file: &InfoFile) -> Result<()> {
             continue;
         }
 
+        println!("Running the solution of {}", exercise_info.name);
         let success = exercise_info.run_solution(&mut output, &target_dir)?;
         if !success {
             io::stderr().write_all(&output)?;
