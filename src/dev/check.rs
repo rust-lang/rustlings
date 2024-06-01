@@ -14,7 +14,7 @@ use crate::{
 
 // Find a char that isn't allowed in the exercise's `name` or `dir`.
 fn forbidden_char(input: &str) -> Option<char> {
-    input.chars().find(|c| *c != '_' && !c.is_alphanumeric())
+    input.chars().find(|c| !c.is_alphanumeric() && *c != '_')
 }
 
 // Check the info of all exercises and return their paths in a set.
