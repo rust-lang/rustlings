@@ -166,6 +166,11 @@ fn check_solutions(info_file: &InfoFile) -> Result<()> {
     let mut output = Vec::with_capacity(OUTPUT_CAPACITY);
 
     for exercise_info in &info_file.exercises {
+        if !Path::new(&exercise_info.sol_path()).exists() {
+            // No solution to check.
+            continue;
+        }
+
         let success = exercise_info.run_solution(&mut output, &target_dir)?;
         if !success {
             io::stderr().write_all(&output)?;
