@@ -35,7 +35,7 @@ pub fn run_cmd(mut cmd: Command, description: &str, output: &mut Vec<u8>) -> Res
 pub struct CargoCmd<'a> {
     pub subcommand: &'a str,
     pub args: &'a [&'a str],
-    pub exercise_name: &'a str,
+    pub bin_name: &'a str,
     pub description: &'a str,
     /// RUSTFLAGS="-A warnings"
     pub hide_warnings: bool,
@@ -65,7 +65,7 @@ impl<'a> CargoCmd<'a> {
             .arg("always")
             .arg("-q")
             .arg("--bin")
-            .arg(self.exercise_name)
+            .arg(self.bin_name)
             .args(self.args);
 
         if self.hide_warnings {

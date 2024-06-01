@@ -2,12 +2,14 @@ use anyhow::{anyhow, bail, Context, Error, Result};
 use std::{
     cmp::Ordering,
     fs::{self, read_dir, OpenOptions},
-    io::Read,
+    io::{self, Read, Write},
     path::{Path, PathBuf},
 };
 
 use crate::{
+    app_state::parse_target_dir,
     cargo_toml::{append_bins, bins_start_end_ind, BINS_BUFFER_CAPACITY},
+    exercise::{RunnableExercise, OUTPUT_CAPACITY},
     info_file::{ExerciseInfo, InfoFile},
     CURRENT_FORMAT_VERSION, DEBUG_PROFILE,
 };
@@ -15,6 +17,29 @@ use crate::{
 // Find a char that isn't allowed in the exercise's `name` or `dir`.
 fn forbidden_char(input: &str) -> Option<char> {
     input.chars().find(|c| !c.is_alphanumeric() && *c != '_')
+}
+
+// Check that the Cargo.toml file is up-to-date.
+fn check_cargo_toml(
+    exercise_infos: &[ExerciseInfo],
+    current_cargo_toml: &str,
+    exercise_path_prefix: &[u8],
+) -> Result<()> {
+    let (bins_start_ind, bins_end_ind) = bins_start_end_ind(current_cargo_toml)?;
+
+    let old_bins = &current_cargo_toml.as_bytes()[bins_start_ind..bins_end_ind];
+    let mut new_bins = Vec::with_capacity(BINS_BUFFER_CAPACITY);
+    append_bins(&mut new_bins, exercise_infos, exercise_path_prefix);
+
+    if old_bins != new_bins {
+        if DEBUG_PROFILE {
+            bail!("The file `dev/Cargo.toml` is outdated. Please run `cargo run -- dev update` to update it");
+        }
+
+        bail!("The file `Cargo.toml` is outdated. Please run `rustlings dev update` to update it");
+    }
+
+    Ok(())
 }
 
 // Check the info of all exercises and return their paths in a set.
@@ -136,24 +161,20 @@ fn check_exercises(info_file: &InfoFile) -> Result<()> {
     Ok(())
 }
 
-// Check that the Cargo.toml file is up-to-date.
-fn check_cargo_toml(
-    exercise_infos: &[ExerciseInfo],
-    current_cargo_toml: &str,
-    exercise_path_prefix: &[u8],
-) -> Result<()> {
-    let (bins_start_ind, bins_end_ind) = bins_start_end_ind(current_cargo_toml)?;
+fn check_solutions(info_file: &InfoFile) -> Result<()> {
+    let target_dir = parse_target_dir()?;
+    let mut output = Vec::with_capacity(OUTPUT_CAPACITY);
 
-    let old_bins = &current_cargo_toml.as_bytes()[bins_start_ind..bins_end_ind];
-    let mut new_bins = Vec::with_capacity(BINS_BUFFER_CAPACITY);
-    append_bins(&mut new_bins, exercise_infos, exercise_path_prefix);
+    for exercise_info in &info_file.exercises {
+        let success = exercise_info.run_solution(&mut output, &target_dir)?;
+        if !success {
+            io::stderr().write_all(&output)?;
 
-    if old_bins != new_bins {
-        if DEBUG_PROFILE {
-            bail!("The file `dev/Cargo.toml` is outdated. Please run `cargo run -- dev update` to update it");
+            bail!(
+                "Failed to run the solution of the exercise {}",
+                exercise_info.name,
+            );
         }
-
-        bail!("The file `Cargo.toml` is outdated. Please run `rustlings dev update` to update it");
     }
 
     Ok(())
@@ -161,7 +182,6 @@ fn check_cargo_toml(
 
 pub fn check() -> Result<()> {
     let info_file = InfoFile::parse()?;
-    check_exercises(&info_file)?;
 
     // A hack to make `cargo run -- dev check` work when developing Rustlings.
     if DEBUG_PROFILE {
@@ -175,6 +195,9 @@ pub fn check() -> Result<()> {
             fs::read_to_string("Cargo.toml").context("Failed to read the file `Cargo.toml`")?;
         check_cargo_toml(&info_file.exercises, &current_cargo_toml, b"")?;
     }
+
+    check_exercises(&info_file)?;
+    check_solutions(&info_file)?;
 
     println!("\nEverything looks fine!");
 

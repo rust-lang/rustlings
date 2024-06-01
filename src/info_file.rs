@@ -2,7 +2,7 @@ use anyhow::{bail, Context, Error, Result};
 use serde::Deserialize;
 use std::{fs, io::ErrorKind};
 
-use crate::embedded::EMBEDDED_FILES;
+use crate::{embedded::EMBEDDED_FILES, exercise::RunnableExercise};
 
 /// Deserialized from the `info.toml` file.
 #[derive(Deserialize)]
@@ -72,6 +72,23 @@ impl ExerciseInfo {
         path.push_str(".rs");
 
         path
+    }
+}
+
+impl RunnableExercise for ExerciseInfo {
+    #[inline]
+    fn name(&self) -> &str {
+        &self.name
+    }
+
+    #[inline]
+    fn strict_clippy(&self) -> bool {
+        self.strict_clippy
+    }
+
+    #[inline]
+    fn test(&self) -> bool {
+        self.test
     }
 }
 

@@ -11,7 +11,7 @@ use std::{
 use crate::{
     clear_terminal,
     embedded::EMBEDDED_FILES,
-    exercise::{Exercise, OUTPUT_CAPACITY},
+    exercise::{Exercise, RunnableExercise, OUTPUT_CAPACITY},
     info_file::ExerciseInfo,
     DEBUG_PROFILE,
 };
@@ -38,6 +38,25 @@ pub enum StateFileStatus {
 #[derive(Deserialize)]
 struct CargoMetadata {
     target_directory: PathBuf,
+}
+
+pub fn parse_target_dir() -> Result<PathBuf> {
+    // Get the target directory from Cargo.
+    let metadata_output = Command::new("cargo")
+        .arg("metadata")
+        .arg("-q")
+        .arg("--format-version")
+        .arg("1")
+        .arg("--no-deps")
+        .stdin(Stdio::null())
+        .stderr(Stdio::inherit())
+        .output()
+        .context(CARGO_METADATA_ERR)?
+        .stdout;
+
+    serde_json::de::from_slice::<CargoMetadata>(&metadata_output)
+        .context("Failed to read the field `target_directory` from the `cargo metadata` output")
+        .map(|metadata| metadata.target_directory)
 }
 
 pub struct AppState {
@@ -104,23 +123,7 @@ impl AppState {
         exercise_infos: Vec<ExerciseInfo>,
         final_message: String,
     ) -> Result<(Self, StateFileStatus)> {
-        // Get the target directory from Cargo.
-        let metadata_output = Command::new("cargo")
-            .arg("metadata")
-            .arg("-q")
-            .arg("--format-version")
-            .arg("1")
-            .arg("--no-deps")
-            .stdin(Stdio::null())
-            .stderr(Stdio::inherit())
-            .output()
-            .context(CARGO_METADATA_ERR)?
-            .stdout;
-        let target_dir = serde_json::de::from_slice::<CargoMetadata>(&metadata_output)
-            .context(
-                "Failed to read the field `target_directory` from the `cargo metadata` output",
-            )?
-            .target_directory;
+        let target_dir = parse_target_dir()?;
 
         let exercises = exercise_infos
             .into_iter()
@@ -381,7 +384,7 @@ impl AppState {
             write!(writer, "Running {exercise} ... ")?;
             writer.flush()?;
 
-            let success = exercise.run(&mut output, &self.target_dir)?;
+            let success = exercise.run_exercise(&mut output, &self.target_dir)?;
             if !success {
                 writeln!(writer, "{}\n", "FAILED".red())?;
 

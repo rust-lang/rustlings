@@ -8,7 +8,7 @@ use std::io::{self, StdoutLock, Write};
 use crate::{
     app_state::{AppState, ExercisesProgress},
     clear_terminal,
-    exercise::OUTPUT_CAPACITY,
+    exercise::{RunnableExercise, OUTPUT_CAPACITY},
     progress_bar::progress_bar,
     terminal_link::TerminalFileLink,
 };
@@ -54,7 +54,7 @@ impl<'a> WatchState<'a> {
         let success = self
             .app_state
             .current_exercise()
-            .run(&mut self.output, self.app_state.target_dir())?;
+            .run_exercise(&mut self.output, self.app_state.target_dir())?;
         if success {
             self.done_status =
                 if let Some(solution_path) = self.app_state.current_solution_path()? {
