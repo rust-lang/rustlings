@@ -5,8 +5,8 @@
 // Execute `rustlings hint intro2` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
+//Dans ce code comme dans le premier l'erreur était qu'il manquait un ; après le printline! (le dernier pour l'intro1.rs)
 
 fn main() {
-    printline!("Hello there!")
+    printline!("Hello there!");
 }
