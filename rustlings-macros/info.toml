@@ -250,7 +250,7 @@ name = "primitive_types3"
 dir = "04_primitive_types"
 test = false
 hint = """
-There's a shorthand to initialize Arrays with a certain size that does not
+There's a shorthand to initialize arrays with a certain size that doesn't
 require you to type in 100 items (but you certainly can if you want!).
 
 For example, you can do:
