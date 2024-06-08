@@ -1,5 +1,5 @@
 fn main() {
-    // TODO: Create an array with at least 100 elements in it where the ??? is.
+    // TODO: Create an array called `a` with at least 100 elements in it.
     // let a = ???
 
     if a.len() >= 100 {
