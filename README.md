@@ -19,8 +19,8 @@ cargo install --git https://github.com/TimLai666/rustlings-zh-TW
 
 另外，對於 Rust 初學者，還有以下資源可以參考：
 
-- [The Book](https://doc.rust-lang.org/book/index.html) - 學習 Rust 最全面的資源，但有時有點理論性。建議您可以搭配 Rustlings 一起使用！
-- [Rust By Example](https://doc.rust-lang.org/rust-by-example/index.html) - 透過解小練習來學習 Rust！和`rustlings`類似，但是是線上的。
+- [The Book](https://doc.rust-lang.org/book/index.html) - 最全面的 Rust 學習資源，但有時有點理論性。建議您可以搭配 Rustlings 一起使用！
+- [Rust By Example](https://doc.rust-lang.org/rust-by-example/index.html) - 透過小練習來學習 Rust！和`rustlings`類似，但是是線上的。
 
 ## 新手上路
 
