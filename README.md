@@ -102,17 +102,17 @@ rustup update
 
 Then, same as above, run `rustlings` to get started.
 
-## Doing exercises
+## 進行練習
 
-The exercises are sorted by topic and can be found in the subdirectory `rustlings/exercises/<topic>`. For every topic there is an additional README file with some resources to get you started on the topic. We really recommend that you have a look at them before you start.
+練習題按照主題排序，您可以在子目錄 `rustlings/exercises/<topic>` 中找到它們。每個主題都有一個附加的自述文件，其中包含一些資源，可幫助您了解該主題。我們強烈建議您在開始之前先看一下它們。
 
-The task is simple. Most exercises contain an error that keeps them from compiling, and it's up to you to fix it! Some exercises are also run as tests, but rustlings handles them all the same. To run the exercises in the recommended order, execute:
+這些任務很簡單。大多數練習包含錯誤，導致它們無法編譯，你的任務就是修復這些錯誤！有些練習也會作為測試運行，但 rustlings 會以相同的方式處理它們。要按照推薦順序執行這些練習，請執行以下命令：
 
 ```bash
 rustlings watch
 ```
 
-This will try to verify the completion of every exercise in a predetermined order (what we think is best for newcomers). It will also rerun automatically every time you change a file in the `exercises/` directory. If you want to only run it once, you can use:
+以上命令將使 rustlings 嘗試按照預定順序（我們認為最適合新手的順序）驗證每個練習的完成情況。每當你更改 `exercises/` 目錄中的文件時，它都會自動重新運行。如果你只想運行一次，可以使用以下命令：
 
 ```bash
 rustlings verify
