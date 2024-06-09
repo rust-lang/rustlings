@@ -6,6 +6,13 @@
 
 這是 Rustlings 的繁體中文翻譯版本。此版本包含了所有練習的中文註釋和文檔翻譯 **（還在努力...）**。
 
+## 新手上路
+
+_Note: 如果您使用的是 MacOS，請確保您已安裝 Xcode 及其開發人員工具，方法是輸入 `xcode-select --install`._
+_Note: 如果您使用的是 Linux，請確保您已安裝 gcc。 Deb: `sudo apt install gcc`. Yum: `sudo yum -y install gcc`._
+
+您需要安裝 Rust。 您可以至 <https://rustup.rs> 取得它。這也將安裝 Cargo（Rust 的套件/專案管理器）。
+
 ## 安裝
 
 使用以下命令安裝此翻譯版本：
@@ -21,13 +28,6 @@ cargo install --git https://github.com/TimLai666/rustlings-zh-TW
 
 - [The Book](https://doc.rust-lang.org/book/index.html) - 最全面的 Rust 學習資源，但有時有點理論性。建議您可以搭配 Rustlings 一起使用！
 - [Rust By Example](https://doc.rust-lang.org/rust-by-example/index.html) - 透過小練習來學習 Rust！和`rustlings`類似，但是是線上的。
-
-## 新手上路
-
-_Note: 如果您使用的是 MacOS，請確保您已安裝 Xcode 及其開發人員工具，方法是輸入 `xcode-select --install`._
-_Note: 如果您使用的是 Linux，請確保您已安裝 gcc。 Deb: `sudo apt install gcc`. Yum: `sudo yum -y install gcc`._
-
-您需要安裝 Rust。 您可以至 <https://rustup.rs> 取得它。這也將安裝 Cargo（Rust 的套件/專案管理器）。
 
 ## MacOS/Linux
 
