@@ -163,10 +163,9 @@ Run the command `rustlings lsp` which will generate a `rust-project.json` at the
 
 Once you've completed Rustlings, put your new knowledge to good use! Continue practicing your Rust skills by building your own projects, contributing to Rustlings, or finding other open-source projects to contribute to.
 
-## Uninstalling Rustlings
+## 解除安裝 Rustlings
 
-If you want to remove Rustlings from your system, there are two steps. First, you'll need to remove the exercises folder that the install script created
-for you:
+如果您想從系統中刪除 Rustlings，有兩個步驟。首先，您需要刪除安裝腳本為您建立的練習資料夾：
 
 ```bash
 rm -rf rustlings # or your custom folder name, if you chose and or renamed it
