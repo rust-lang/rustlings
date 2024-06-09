@@ -1,8 +1,19 @@
 <div class="oranda-hide">
 
-# rustlings 🦀❤️
+# rustlings 🦀❤️ Rust繁中簡學!
 
 </div>
+
+這是 Rustlings 的繁體中文翻譯版本。此版本包含了所有練習的中文註釋和文檔翻譯 **（還在努力...）**。
+
+## 安裝
+
+使用以下命令安裝此翻譯版本：
+
+```sh
+cargo install --git https://github.com/TimLai666/rustlings-zh-TW
+```
+<hr>
 
 Greetings and welcome to `rustlings`. This project contains small exercises to get you used to reading and writing Rust code. This includes reading and responding to compiler messages!
 
