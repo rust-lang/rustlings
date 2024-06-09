@@ -6,6 +6,15 @@
 
 這是 Rustlings 的繁體中文翻譯版本。此版本包含了所有練習的中文註釋和文檔翻譯 **（還在努力...）**。
 
+<hr>
+
+歡迎來到 `rustlings`。這個專案包含一些小練習，可幫助您習慣閱讀和編寫 Rust 程式碼。包括閱讀和回應編譯器訊息！
+
+另外，對於 Rust 初學者，還有以下資源可以參考：
+
+- [The Book](https://doc.rust-lang.org/book/index.html) - 最全面的 Rust 學習資源，但有時有點理論性。建議您可以搭配 Rustlings 一起使用！
+- [Rust By Example](https://doc.rust-lang.org/rust-by-example/index.html) - 透過小練習來學習 Rust！和`rustlings`類似，但是是線上的。
+
 ## 新手上路
 
 _Note: 如果您使用的是 MacOS，請確保您已安裝 Xcode 及其開發人員工具，方法是輸入 `xcode-select --install`._
@@ -20,14 +29,6 @@ _Note: 如果您使用的是 Linux，請確保您已安裝 gcc。 Deb: `sudo apt
 ```sh
 cargo install --git https://github.com/TimLai666/rustlings-zh-TW
 ```
-<hr>
-
-歡迎來到 `rustlings`。這個專案包含一些小練習，可幫助您習慣閱讀和編寫 Rust 程式碼。包括閱讀和回應編譯器訊息！
-
-另外，對於 Rust 初學者，還有以下資源可以參考：
-
-- [The Book](https://doc.rust-lang.org/book/index.html) - 最全面的 Rust 學習資源，但有時有點理論性。建議您可以搭配 Rustlings 一起使用！
-- [Rust By Example](https://doc.rust-lang.org/rust-by-example/index.html) - 透過小練習來學習 Rust！和`rustlings`類似，但是是線上的。
 
 ## MacOS/Linux
 
