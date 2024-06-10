@@ -22,86 +22,30 @@ _Note: 如果您使用的是 Linux，請確保您已安裝 gcc。 Deb: `sudo apt
 
 ## 安裝
 
-使用以下命令安裝此翻譯版本：
-
-```sh
-cargo install --git https://github.com/TimLai666/rustlings-zh-TW
-```
-
-## MacOS/Linux
-
-Just run:
-
-```bash
-curl -L https://raw.githubusercontent.com/rust-lang/rustlings/main/install.sh | bash
-```
-
-Or if you want it to be installed to a different path:
-
-```bash
-curl -L https://raw.githubusercontent.com/rust-lang/rustlings/main/install.sh | bash -s mypath/
-```
-
-This will install Rustlings and give you access to the `rustlings` command. Run it to get started!
-
-### Nix
-
-Basically: Clone the repository at the latest tag, finally run `nix develop` or `nix-shell`.
-
-```bash
-# find out the latest version at https://github.com/rust-lang/rustlings/releases/latest (on edit 5.6.1)
-git clone -b 5.6.1 --depth 1 https://github.com/rust-lang/rustlings
-cd rustlings
-# if nix version > 2.3
-nix develop
-# if nix version <= 2.3
-nix-shell
-```
-
-## Windows
-
-In PowerShell (Run as Administrator), set `ExecutionPolicy` to `RemoteSigned`:
-
-```ps1
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-```
-
-Then, you can run:
-
-```ps1
-Start-BitsTransfer -Source https://raw.githubusercontent.com/rust-lang/rustlings/main/install.ps1 -Destination $env:TMP/install_rustlings.ps1; Unblock-File $env:TMP/install_rustlings.ps1; Invoke-Expression $env:TMP/install_rustlings.ps1
-```
-
-To install Rustlings. Same as on MacOS/Linux, you will have access to the `rustlings` command after it. Keep in mind that this works best in PowerShell, and any other terminals may give you errors.
-
-If you get a permission denied message, you might have to exclude the directory where you cloned Rustlings in your antivirus.
-
-## Browser
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/rust-lang/rustlings)
-
-[![Open Rustlings On Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new/?repo=rust-lang%2Frustlings&ref=main)
-
-## Manually
-
-Basically: Clone the repository at the latest tag, run `cargo install --locked --path .`.
-
-```bash
-# find out the latest version at https://github.com/rust-lang/rustlings/releases/latest (on edit 5.6.1)
-git clone -b 5.6.1 --depth 1 https://github.com/rust-lang/rustlings
-cd rustlings
-cargo install --locked --force --path .
-```
-
-If there are installation errors, ensure that your toolchain is up to date. For the latest, run:
-
-```bash
-rustup update
-```
-
-Then, same as above, run `rustlings` to get started.
+請依照以下順序執行命令安裝此翻譯版本：
+1. 打開 `終端機` 或 `命令提示字元` 並導航到你希望克隆倉庫的目錄。例如，如果你希望將倉庫克隆到桌面，可以運行：
+  ```sh
+  cd ~/Desktop
+  ```
+2. 執行克隆命令：
+  ```sh
+  git clone https://github.com/TimLai666/rustlings-zh-TW.git
+  ```
+3. 安裝相關套件：
+  ```sh
+  cargo install --git https://github.com/TimLai666/rustlings-zh-TW
+  ```
 
 ## 進行練習
+
+1. 進入倉庫目錄：
+  ```sh
+  cd rustlings-zh-TW
+  ```
+2. 運行 Rustlings 命令開始練習：
+  ```sh
+  rustlings watch
+  ```
 
 練習題按照主題排序，您可以在子目錄 `rustlings/exercises/<topic>` 中找到它們。每個主題都有一個附加的解說文件，其中包含一些資源，可幫助您了解該主題。我們強烈建議您在開始之前先看一下它們。
 
