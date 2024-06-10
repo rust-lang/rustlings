@@ -1,7 +1,6 @@
 // variables5.rs
 //
-// Execute `rustlings hint variables5` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint variables5` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 
