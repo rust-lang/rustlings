@@ -56,26 +56,26 @@ _Note: 如果您使用的是 Linux，請確保您已安裝 gcc。 Deb: `sudo apt
 
 安裝好 Git 之後，請依照以下順序執行命令安裝這個翻譯版本的庫：
 
-1. 打開 `終端機` 或 `命令提示字元` 並導航到你希望克隆倉庫的目錄。例如，如果你希望將倉庫克隆到桌面，可以運行：
+**1. 打開 `終端機` 或 `命令提示字元` 並導航到你希望克隆倉庫的目錄。例如，如果你希望將倉庫克隆到桌面，可以運行：**
   ```sh
   cd ~/Desktop
   ```
-2. 執行克隆命令：
+**2. 執行克隆命令：**
   ```sh
   git clone https://github.com/TimLai666/rustlings-zh-TW.git
   ```
-3. 安裝相關套件：
+**3. 安裝相關套件：**
   ```sh
   cargo install --git https://github.com/TimLai666/rustlings-zh-TW
   ```
 
 ## 進行練習
 
-1. 進入倉庫目錄：
+**1. 進入倉庫目錄：**
   ```sh
   cd rustlings-zh-TW
   ```
-2. 運行 Rustlings 命令開始練習，例如：
+**2. 運行 Rustlings 命令開始練習，例如：**
   ```sh
   rustlings watch
   ```
