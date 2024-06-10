@@ -1,10 +1,8 @@
 // move_semantics3.rs
 //
-// Make me compile without adding new lines -- just changing existing lines! (no
-// lines with multiple semicolons necessary!)
+// 使我編譯通過且不新增新行 -- 只更改現有行！（不需要多個分號的行！）
 //
-// Execute `rustlings hint move_semantics3` or use the `hint` watch subcommand
-// for a hint.
+// 執行 `rustlings hint move_semantics3` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 

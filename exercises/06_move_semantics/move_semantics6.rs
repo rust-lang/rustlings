@@ -1,9 +1,8 @@
 // move_semantics6.rs
 //
-// You can't change anything except adding or removing references.
+// 您只能添加或刪除引用（reference），不能更改其他任何內容。
 //
-// Execute `rustlings hint move_semantics6` or use the `hint` watch subcommand
-// for a hint.
+// 執行 `rustlings hint move_semantics6` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 
@@ -15,12 +14,12 @@ fn main() {
     string_uppercase(&data);
 }
 
-// Should not take ownership
+// 不應該取得所有權
 fn get_char(data: String) -> char {
     data.chars().last().unwrap()
 }
 
-// Should take ownership
+// 應該取得所有權
 fn string_uppercase(mut data: &String) {
     data = &data.to_uppercase();
 

@@ -1,11 +1,9 @@
 // move_semantics4.rs
 //
-// Refactor this code so that instead of passing `vec0` into the `fill_vec`
-// function, the Vector gets created in the function itself and passed back to
-// the main function.
+// 重構這段代碼，使得 `vec0` 不再被傳遞給 `fill_vec` 函數，
+// 而是在函數內部創建 Vector 並傳回給主函數。
 //
-// Execute `rustlings hint move_semantics4` or use the `hint` watch subcommand
-// for a hint.
+// 執行 `rustlings hint move_semantics4` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 
@@ -18,9 +16,9 @@ fn main() {
     assert_eq!(vec1, vec![22, 44, 66, 88]);
 }
 
-// `fill_vec()` no longer takes `vec: Vec<i32>` as argument - don't change this!
+// `fill_vec()` 不再接受 `vec: Vec<i32>` 作為參數 - 不要更改這點！
 fn fill_vec() -> Vec<i32> {
-    // Instead, let's create and fill the Vec in here - how do you do that?
+    // 相反，讓我們在這裡創建並填充 Vec - 您該怎麼做呢？
     let mut vec = vec;
 
     vec.push(88);

@@ -1,10 +1,8 @@
 // move_semantics5.rs
 //
-// Make me compile only by reordering the lines in `main()`, but without adding,
-// changing or removing any of them.
+// 使我編譯通過，只需重新排列 `main()` 中的行，但不添加、更改或刪除其中任何一行。
 //
-// Execute `rustlings hint move_semantics5` or use the `hint` watch subcommand
-// for a hint.
+// 執行 `rustlings hint move_semantics5` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 

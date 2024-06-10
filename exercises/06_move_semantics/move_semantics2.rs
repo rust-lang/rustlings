@@ -1,9 +1,8 @@
 // move_semantics2.rs
 //
-// Make the test pass by finding a way to keep both Vecs separate!
+// 使測試通過，找到一種方法讓兩個 Vec 保持分離！
 //
-// Execute `rustlings hint move_semantics2` or use the `hint` watch subcommand
-// for a hint.
+// 執行 `rustlings hint move_semantics2` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 
@@ -11,7 +10,7 @@
 fn main() {
     let vec0 = vec![22, 44, 66];
 
-    let vec1 = fill_vec(vec0);
+    let vec1 = fill_vec(vec0.clone());
 
     assert_eq!(vec0, vec![22, 44, 66]);
     assert_eq!(vec1, vec![22, 44, 66, 88]);
