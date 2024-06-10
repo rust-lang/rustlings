@@ -1,17 +1,16 @@
 // vecs1.rs
 //
-// Your task is to create a `Vec` which holds the exact same elements as in the
-// array `a`.
+// 您的任務是創建一個 `Vec`，其中包含與陣列 `a` 完全相同的元素。
 //
-// Make me compile and pass the test!
+// 讓我編譯並通過測試！
 //
-// Execute `rustlings hint vecs1` or use the `hint` watch subcommand for a hint.
+// 執行 `rustlings hint vecs1` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 
 fn array_and_vec() -> ([i32; 4], Vec<i32>) {
-    let a = [10, 20, 30, 40]; // a plain array
-    let v = // TODO: declare your vector here with the macro for vectors
+    let a = [10, 20, 30, 40]; // 一個普通的陣列
+    let v = // TODO: 使用向量的巨集在這裡宣告您的向量
 
     (a, v)
 }

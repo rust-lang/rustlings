@@ -1,29 +1,26 @@
 // vecs2.rs
 //
-// A Vec of even numbers is given. Your task is to complete the loop so that
-// each number in the Vec is multiplied by 2.
+// 給定了一個包含偶數的 Vec。您的任務是完成循環，使 Vec 中的每個數字都乘以 2。
 //
-// Make me pass the test!
+// 讓我通過測試！
 //
-// Execute `rustlings hint vecs2` or use the `hint` watch subcommand for a hint.
+// 執行 `rustlings hint vecs2` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 
 fn vec_loop(mut v: Vec<i32>) -> Vec<i32> {
     for element in v.iter_mut() {
-        // TODO: Fill this up so that each element in the Vec `v` is
-        // multiplied by 2.
+        // TODO: 填寫這裡，使 Vec `v` 中的每個元素都乘以 2。
         ???
     }
 
-    // At this point, `v` should be equal to [4, 8, 12, 16, 20].
+    // 在這個點，`v` 應該等於 [4, 8, 12, 16, 20]。
     v
 }
 
 fn vec_map(v: &Vec<i32>) -> Vec<i32> {
     v.iter().map(|element| {
-        // TODO: Do the same thing as above - but instead of mutating the
-        // Vec, you can just return the new number!
+        // TODO: 做與上面相同的事情 - 但不修改 Vec，您可以直接返回新的數字！
         ???
     }).collect()
 }
