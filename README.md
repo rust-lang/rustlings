@@ -79,6 +79,7 @@ _Note: 如果您使用的是 Linux，請確保您已安裝 gcc。 Deb: `sudo apt
   ```sh
   rustlings watch
   ```
+<br>
 
 練習題按照主題排序，您可以在子目錄 `rustlings-zh-TW/exercises/<主題>` 中找到它們。每個主題都有一個附加的解說文件，其中包含一些資源，可幫助您了解該主題。我們強烈建議您在開始之前先看一下它們。
 
@@ -94,71 +95,71 @@ rustlings watch
 rustlings verify
 ```
 
-This will do the same as watch, but it'll quit after running.
+這將與 `watch` 命令執行相同的操作，但會在運行後退出。
 
-In case you want to go by your own order, or want to only verify a single exercise, you can run:
+如果您想按照自己的順序進行，或只想驗證單個練習，可以執行以下命令：
 
 ```bash
 rustlings run myExercise1
 ```
 
-Or simply use the following command to run the next unsolved exercise in the course:
+或者，只需使用以下命令來運行課程中下一個未解決的練習：
 
 ```bash
 rustlings run next
 ```
 
-In case you get stuck, you can run the following command to get a hint for your
-exercise:
+如果您遇到困難，可以執行以下命令來獲取該練習的提示：
 
 ```bash
 rustlings hint myExercise1
 ```
 
-You can also get the hint for the next unsolved exercise with the following command:
+您也可以使用以下命令獲取下一個未解決練習的提示：
 
 ```bash
 rustlings hint next
 ```
 
-To check your progress, you can run the following command:
+要檢查您的進度，可以執行以下命令：
 
 ```bash
 rustlings list
 ```
 
-## Testing yourself
+## 自我測驗
 
-After every couple of sections, there will be a quiz that'll test your knowledge on a bunch of sections at once. These quizzes are found in `exercises/quizN.rs`.
+每隔幾個章節後，會有一個測驗來檢驗你對多個章節的知識。這些測驗可以在 `exercises/quizN.rs` 中找到。
 
-## Enabling `rust-analyzer`
+## 啟用 `rust-analyzer`
 
-Run the command `rustlings lsp` which will generate a `rust-project.json` at the root of the project, this allows [rust-analyzer](https://rust-analyzer.github.io/) to parse each exercise.
+執行命令 `rustlings lsp`，這會在項目的根目錄生成一個 `rust-project.json` 文件，以允許 [rust-analyzer](https://rust-analyzer.github.io/) 解析每個練習。
 
-## Continuing On
+## 持續學習
 
-Once you've completed Rustlings, put your new knowledge to good use! Continue practicing your Rust skills by building your own projects, contributing to Rustlings, or finding other open-source projects to contribute to.
+完成 Rustlings 後，將你的新知識學以致用！通過建立自己的項目、為 Rustlings 做貢獻，或找到其他開源項目進行貢獻，繼續練習您的 Rust 技能。
 
 ## 解除安裝 Rustlings
 
 如果您想從系統中刪除 Rustlings，有兩個步驟。首先，您需要刪除安裝腳本為您建立的練習資料夾：
 
 ```bash
-rm -rf rustlings # or your custom folder name, if you chose and or renamed it
+rm -rf rustlings-zh-TW # 或您自定義的資料夾名稱，如果您重命名過它。
 ```
 
-Second, run `cargo uninstall` to remove the `rustlings` binary:
+接著，運行 `cargo uninstall` 來移除 `rustlings` 可執行文件：
 
 ```bash
 cargo uninstall rustlings
 ```
 
-Now you should be done!
+這樣應該就可以了！
 
-## Contributing
+## 參與貢獻
 
-See [CONTRIBUTING.md](https://github.com/rust-lang/rustlings/blob/main/CONTRIBUTING.md).
+請參閱 [CONTRIBUTING.md](https://github.com/rust-lang/rustlings/blob/main/CONTRIBUTING.md).
 
-## Contributors ✨
+## 貢獻者 ✨
 
-Thanks goes to the wonderful people listed in [AUTHORS.md](https://github.com/rust-lang/rustlings/blob/main/AUTHORS.md) 🎉
+感謝 [AUTHORS.md](https://github.com/rust-lang/rustlings/blob/main/AUTHORS.md) 中列出的所有出色的人士 🎉
+
