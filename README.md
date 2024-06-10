@@ -22,6 +22,7 @@ _Note: 如果您使用的是 Linux，請確保您已安裝 gcc。 Deb: `sudo apt
 
 ## 安裝
 
+>
 > 如果您的電腦還沒安裝 Git，請先安裝。
 > ### 安裝 Git
 > #### macOS
@@ -53,6 +54,7 @@ _Note: 如果您使用的是 Linux，請確保您已安裝 gcc。 Deb: `sudo apt
 > ```sh
 > sudo pacman -S git
 > ```
+>
 
 安裝好 Git 之後，請依照以下順序執行命令安裝這個翻譯版本的庫：
 
