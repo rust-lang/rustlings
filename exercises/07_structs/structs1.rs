@@ -1,17 +1,16 @@
 // structs1.rs
 //
-// Address all the TODOs to make the tests pass!
+// 完成所有的 TODO 項以通過測試！
 //
-// Execute `rustlings hint structs1` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint structs1` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 
 struct ColorClassicStruct {
-    // TODO: Something goes here
+    // TODO: 在此處添加內容
 }
 
-struct ColorTupleStruct(/* TODO: Something goes here */);
+struct ColorTupleStruct(/* TODO: 在此處添加內容 */);
 
 #[derive(Debug)]
 struct UnitLikeStruct;
@@ -22,7 +21,7 @@ mod tests {
 
     #[test]
     fn classic_c_structs() {
-        // TODO: Instantiate a classic c struct!
+        // TODO: 實例化一個經典 C 結構體！
         // let green =
 
         assert_eq!(green.red, 0);
@@ -32,7 +31,7 @@ mod tests {
 
     #[test]
     fn tuple_structs() {
-        // TODO: Instantiate a tuple struct!
+        // TODO: 實例化一個元組結構體！
         // let green =
 
         assert_eq!(green.0, 0);
@@ -42,7 +41,7 @@ mod tests {
 
     #[test]
     fn unit_structs() {
-        // TODO: Instantiate a unit-like struct!
+        // TODO: 實例化一個單元結構體！
         // let unit_like_struct =
         let message = format!("{:?}s are fun!", unit_like_struct);
 

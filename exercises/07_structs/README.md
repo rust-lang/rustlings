@@ -1,8 +1,8 @@
-# Structs
+# 結構體
 
-Rust has three struct types: a classic C struct, a tuple struct, and a unit struct.
+Rust 有三種結構體類型：經典 C 結構體、元組結構體和單元結構體。
 
-## Further information
+## 更多資訊
 
-- [Structures](https://doc.rust-lang.org/book/ch05-01-defining-structs.html)
-- [Method Syntax](https://doc.rust-lang.org/book/ch05-03-method-syntax.html)
+- [結構體](https://doc.rust-lang.org/book/ch05-01-defining-structs.html)
+- [方法語法](https://doc.rust-lang.org/book/ch05-03-method-syntax.html)

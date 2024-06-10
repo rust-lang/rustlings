@@ -1,10 +1,10 @@
-# Move Semantics
+# 移動語義（Move Semantics）
 
-These exercises are adapted from [pnkfelix](https://github.com/pnkfelix)'s [Rust Tutorial](https://pnkfelix.github.io/rust-examples-icfp2014/) -- Thank you Felix!!!
+這些練習改編自 [pnkfelix](https://github.com/pnkfelix) 的 [Rust Tutorial](https://pnkfelix.github.io/rust-examples-icfp2014/) ——感謝 Felix！！！
 
-## Further information
+## 更多資訊
 
-For this section, the book links are especially important.
+在這一部分中的連結特別重要。
 
-- [Ownership](https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html)
-- [Reference and borrowing](https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html)
+- [所有權](https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html)
+- [引用與借用](https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html)
