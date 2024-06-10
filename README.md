@@ -1,6 +1,6 @@
 <div class="oranda-hide">
 
-# rustlings 🦀❤️ Rust繁中簡學!
+# rustlings 🦀❤️
 
 </div>
 
