@@ -4,6 +4,11 @@ use std::{
     fs::{self, read_dir, OpenOptions},
     io::{self, Read, Write},
     path::{Path, PathBuf},
+    sync::{
+        atomic::{self, AtomicBool},
+        Mutex,
+    },
+    thread,
 };
 
 use crate::{
@@ -167,36 +172,52 @@ fn check_exercises(info_file: &InfoFile) -> Result<()> {
 }
 
 fn check_solutions(require_solutions: bool, info_file: &InfoFile) -> Result<()> {
-    let mut paths = hashbrown::HashSet::with_capacity(info_file.exercises.len());
     let target_dir = parse_target_dir()?;
-    let mut output = Vec::with_capacity(OUTPUT_CAPACITY);
+    let paths = Mutex::new(hashbrown::HashSet::with_capacity(info_file.exercises.len()));
+    let error_occured = AtomicBool::new(false);
 
-    for exercise_info in &info_file.exercises {
-        let path = exercise_info.sol_path();
-        if !Path::new(&path).exists() {
-            if require_solutions {
-                bail!("Exercise {} is missing a solution", exercise_info.name);
-            }
+    println!("Running all solutions. This may take a while...\n");
+    thread::scope(|s| {
+        for exercise_info in &info_file.exercises {
+            s.spawn(|| {
+                let error = |e| {
+                    let mut stderr = io::stderr().lock();
+                    stderr.write_all(e).unwrap();
+                    stderr
+                        .write_all(b"\nFailed to run the solution of the exercise ")
+                        .unwrap();
+                    stderr.write_all(exercise_info.name.as_bytes()).unwrap();
+                    stderr.write_all(SEPARATOR).unwrap();
+                    error_occured.store(true, atomic::Ordering::Relaxed);
+                };
 
-            // No solution to check.
-            continue;
+                let path = exercise_info.sol_path();
+                if !Path::new(&path).exists() {
+                    if require_solutions {
+                        error(b"Solution missing");
+                    }
+
+                    // No solution to check.
+                    return;
+                }
+
+                let mut output = Vec::with_capacity(OUTPUT_CAPACITY);
+                match exercise_info.run_solution(&mut output, &target_dir) {
+                    Ok(true) => {
+                        paths.lock().unwrap().insert(PathBuf::from(path));
+                    }
+                    Ok(false) => error(&output),
+                    Err(e) => error(e.to_string().as_bytes()),
+                }
+            });
         }
+    });
 
-        println!("Running the solution of {}", exercise_info.name);
-        let success = exercise_info.run_solution(&mut output, &target_dir)?;
-        if !success {
-            io::stderr().write_all(&output)?;
-
-            bail!(
-                "Failed to run the solution of the exercise {}",
-                exercise_info.name,
-            );
-        }
-
-        paths.insert(PathBuf::from(path));
+    if error_occured.load(atomic::Ordering::Relaxed) {
+        bail!("At least one solution failed. See the output above.");
     }
 
-    check_unexpected_files("solutions", &paths)?;
+    check_unexpected_files("solutions", &paths.into_inner().unwrap())?;
 
     Ok(())
 }
@@ -224,3 +245,6 @@ pub fn check(require_solutions: bool) -> Result<()> {
 
     Ok(())
 }
+
+const SEPARATOR: &[u8] =
+    b"\n========================================================================================\n";
