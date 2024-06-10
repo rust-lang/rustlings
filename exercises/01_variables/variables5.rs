@@ -5,8 +5,8 @@
 // I AM NOT DONE
 
 fn main() {
-    let number = "T-H-R-E-E"; // don't change this line
+    let number = "T-H-R-E-E"; // 不要改這一行
     println!("Spell a Number : {}", number);
-    number = 3; // don't rename this variable
+    number = 3; // 不要重命名這個變數
     println!("Number plus two is : {}", number + 2);
 }

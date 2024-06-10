@@ -13,8 +13,8 @@
 // I AM NOT DONE
 
 fn main() {
-    println!("Hello and");
-    println!(r#"       welcome to...                      "#);
+    println!("您好，");
+    println!(r#"       歡迎來到...                      "#);
     println!(r#"                 _   _ _                  "#);
     println!(r#"  _ __ _   _ ___| |_| (_)_ __   __ _ ___  "#);
     println!(r#" | '__| | | / __| __| | | '_ \ / _` / __| "#);
@@ -22,17 +22,14 @@ fn main() {
     println!(r#" |_|   \__,_|___/\__|_|_|_| |_|\__, |___/ "#);
     println!(r#"                               |___/      "#);
     println!();
-    println!("This exercise compiles successfully. The remaining exercises contain a compiler");
-    println!("or logic error. The central concept behind Rustlings is to fix these errors and");
-    println!("solve the exercises. Good luck!");
+    println!("此練習已成功編譯。其餘練習包含編譯或邏輯錯誤。Rustlings 的核心概念是修復這些錯誤並解決練習。祝您好運！");
     println!();
-    println!("The source for this exercise is in `exercises/00_intro/intro1.rs`. Have a look!");
-    println!(
-        "Going forward, the source of the exercises will always be in the success/failure output."
-    );
+    println!("此練習的源碼在 `exercises/00_intro/intro1.rs`。請查看！");
+    println!("之後，每個練習的源碼路徑將會顯示在成功或失敗的輸出結果中。");
     println!();
     println!(
-        "If you want to use rust-analyzer, Rust's LSP implementation, make sure your editor is set"
+        "如果您想使用 Rust 的 LSP 實現 rust-analyzer，請確保您的編輯器已設置，"
     );
-    println!("up, and then run `rustlings lsp` before continuing.")
+    println!("然後在繼續之前運行 `rustlings lsp`。")
 }
+

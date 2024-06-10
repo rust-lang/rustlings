@@ -8,5 +8,5 @@
 
 fn main() {
     x = 5;
-    println!("x has the value {}", x);
+    println!("x 的值： {}", x);
 }

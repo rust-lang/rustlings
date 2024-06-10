@@ -10,7 +10,7 @@
 
 fn main() {
     let original_price = 51;
-    println!("Your sale price is {}", sale_price(original_price));
+    println!("您的售價是 {}", sale_price(original_price));
 }
 
 fn sale_price(price: i32) -> {
