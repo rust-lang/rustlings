@@ -157,7 +157,7 @@ cargo uninstall rustlings
 
 ## 參與貢獻
 
-請參閱 [CONTRIBUTING.md](https://github.com/rust-lang/rustlings/blob/main/CONTRIBUTING.md).
+請參閱 [CONTRIBUTING.md](https://github.com/rust-lang/rustlings/blob/main/CONTRIBUTING.md)。
 
 ## 貢獻者 ✨
 
