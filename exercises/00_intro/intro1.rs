@@ -1,17 +1,14 @@
 // intro1.rs
 //
-// About this `I AM NOT DONE` thing:
-// We sometimes encourage you to keep trying things on a given exercise, even
-// after you already figured it out. If you got everything working and feel
-// ready for the next exercise, remove the `I AM NOT DONE` comment below.
+// 關於這個 `I AM NOT DONE` 標註:
+// 我們有時會鼓勵您在已經解決一個練習之後繼續嘗試，即使您已經找到了答案。
+// 如果您已經完成了所有工作並且準備好進行下一個練習，請刪除下面的 `I AM NOT DONE` 註釋。
 //
-// If you're running this using `rustlings watch`: The exercise file will be
-// reloaded when you change one of the lines below! Try adding a `println!`
-// line, or try changing what it outputs in your terminal. Try removing a
-// semicolon and see what happens!
+// 如果您正在使用 `rustlings watch` 運行這個文件: 每當您更改下面的一行代碼時，練習文件將會重新加載！
+// 嘗試添加一行 `println!`，或者嘗試改變它在終端輸出的內容。
+// 嘗試刪除一個分號，看看會發生什麼！
 //
-// Execute `rustlings hint intro1` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint intro1` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 
