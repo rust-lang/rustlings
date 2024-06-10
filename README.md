@@ -23,6 +23,39 @@ _Note: 如果您使用的是 Linux，請確保您已安裝 gcc。 Deb: `sudo apt
 ## 安裝
 
 請依照以下順序執行命令安裝此翻譯版本：
+
+> 如果您的電腦還沒安裝 Git，請先安裝。
+> ### 安裝 Git
+> #### macOS
+> 1. 安裝 Homebrew（如果還沒有安裝）：<br>
+> 打開終端，運行以下命令來安裝 Homebrew：
+> ```sh
+> /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+> ```
+> 2. 使用 Homebrew 安裝 Git：
+> ```sh
+> brew install git
+> ```
+> #### Windows
+> 可以從 Git 官網下載安裝程序：
+> 1. 前往 [Git for Windows](https://gitforwindows.org/) 下載最新版本的安裝程序。
+> 2. 運行下載的安裝程序，按照提示完成安裝。
+> #### Linux
+> 可以使用系統的包管理器來安裝 Git。以下是一些常見的 Linux 發行版的安裝命令：
+> * Ubuntu/Debian：
+> ```sh
+> sudo apt update
+> sudo apt install git
+> ```
+> * Fedora：
+> ```sh
+> sudo dnf install git
+> ```
+> * Arch Linux：
+> ```sh
+> sudo pacman -S git
+> ```
+
 1. 打開 `終端機` 或 `命令提示字元` 並導航到你希望克隆倉庫的目錄。例如，如果你希望將倉庫克隆到桌面，可以運行：
   ```sh
   cd ~/Desktop
