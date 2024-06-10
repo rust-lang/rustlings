@@ -5,10 +5,9 @@ use crate::exercise::{Exercise, Mode};
 use crate::verify::test;
 use indicatif::ProgressBar;
 
-// Invoke the rust compiler on the path of the given exercise,
-// and run the ensuing binary.
-// The verbose argument helps determine whether or not to show
-// the output from the test harnesses (if the mode of the exercise is test)
+// 在給定練習的路徑上調用 Rust 編譯器，並運行隨後的二進制文件。
+// verbose 參數有助於確定是否顯示
+// 測試框架的輸出（如果練習模式是測試）
 pub fn run(exercise: &Exercise, verbose: bool) -> Result<(), ()> {
     match exercise.mode {
         Mode::Test => test(exercise, verbose)?,
@@ -18,7 +17,7 @@ pub fn run(exercise: &Exercise, verbose: bool) -> Result<(), ()> {
     Ok(())
 }
 
-// Resets the exercise by stashing the changes.
+// 通過存儲更改來重置練習。
 pub fn reset(exercise: &Exercise) -> Result<(), ()> {
     let command = Command::new("git")
         .arg("stash")
@@ -32,12 +31,12 @@ pub fn reset(exercise: &Exercise) -> Result<(), ()> {
     }
 }
 
-// Invoke the rust compiler on the path of the given exercise
-// and run the ensuing binary.
-// This is strictly for non-test binaries, so output is displayed
+// 在給定練習的路徑上調用 Rust 編譯器
+// 並運行隨後的二進制文件。
+// 這僅適用於非測試二進制文件，因此顯示輸出
 fn compile_and_run(exercise: &Exercise) -> Result<(), ()> {
     let progress_bar = ProgressBar::new_spinner();
-    progress_bar.set_message(format!("Compiling {exercise}..."));
+    progress_bar.set_message(format!("正在編譯 {exercise}..."));
     progress_bar.enable_steady_tick(Duration::from_millis(100));
 
     let compilation_result = exercise.compile();
@@ -46,7 +45,7 @@ fn compile_and_run(exercise: &Exercise) -> Result<(), ()> {
         Err(output) => {
             progress_bar.finish_and_clear();
             warn!(
-                "Compilation of {} failed!, Compiler error message:\n",
+                "編譯 {} 失敗！編譯器錯誤訊息：\n",
                 exercise
             );
             println!("{}", output.stderr);
@@ -54,21 +53,21 @@ fn compile_and_run(exercise: &Exercise) -> Result<(), ()> {
         }
     };
 
-    progress_bar.set_message(format!("Running {exercise}..."));
+    progress_bar.set_message(format!("正在運行 {exercise}..."));
     let result = compilation.run();
     progress_bar.finish_and_clear();
 
     match result {
         Ok(output) => {
             println!("{}", output.stdout);
-            success!("Successfully ran {}", exercise);
+            success!("成功運行 {}", exercise);
             Ok(())
         }
         Err(output) => {
             println!("{}", output.stdout);
             println!("{}", output.stderr);
 
-            warn!("Ran {} with errors", exercise);
+            warn!("運行 {} 時出現錯誤", exercise);
             Err(())
         }
     }

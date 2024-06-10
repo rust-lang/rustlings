@@ -27,11 +27,11 @@ mod project;
 mod run;
 mod verify;
 
-/// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
+/// Rustlings 是一組小練習，用來讓您習慣於編寫和閱讀 Rust 代碼
 #[derive(Parser)]
 #[command(version)]
 struct Args {
-    /// Show outputs from the test exercises
+    /// 顯示測試練習的輸出
     #[arg(long)]
     nocapture: bool,
     #[command(subcommand)]
@@ -40,49 +40,49 @@ struct Args {
 
 #[derive(Subcommand)]
 enum Subcommands {
-    /// Verify all exercises according to the recommended order
+    /// 按推薦順序驗證所有練習
     Verify,
-    /// Rerun `verify` when files were edited
+    /// 在文件編輯後重新運行 `verify`
     Watch {
-        /// Show hints on success
+        /// 成功時顯示提示
         #[arg(long)]
         success_hints: bool,
     },
-    /// Run/Test a single exercise
+    /// 運行/測試單個練習
     Run {
-        /// The name of the exercise
+        /// 練習的名稱
         name: String,
     },
-    /// Reset a single exercise using "git stash -- <filename>"
+    /// 使用 "git stash -- <filename>" 重置單個練習
     Reset {
-        /// The name of the exercise
+        /// 練習的名稱
         name: String,
     },
-    /// Return a hint for the given exercise
+    /// 返回指定練習的提示
     Hint {
-        /// The name of the exercise
+        /// 練習的名稱
         name: String,
     },
-    /// List the exercises available in Rustlings
+    /// 列出 Rustlings 中可用的練習
     List {
-        /// Show only the paths of the exercises
+        /// 僅顯示練習的路徑
         #[arg(short, long)]
         paths: bool,
-        /// Show only the names of the exercises
+        /// 僅顯示練習的名稱
         #[arg(short, long)]
         names: bool,
-        /// Provide a string to match exercise names.
-        /// Comma separated patterns are accepted
+        /// 提供一個字符串來匹配練習名稱。
+        /// 接受逗號分隔的模式
         #[arg(short, long)]
         filter: Option<String>,
-        /// Display only exercises not yet solved
+        /// 僅顯示尚未解決的練習
         #[arg(short, long)]
         unsolved: bool,
-        /// Display only exercises that have been solved
+        /// 僅顯示已經解決的練習
         #[arg(short, long)]
         solved: bool,
     },
-    /// Enable rust-analyzer for exercises
+    /// 啟用 rust-analyzer 用於練習
     Lsp,
 }
 
@@ -94,18 +94,18 @@ fn main() -> Result<()> {
     }
 
     if which::which("rustc").is_err() {
-        println!("We cannot find `rustc`.");
-        println!("Try running `rustc --version` to diagnose your problem.");
-        println!("For instructions on how to install Rust, check the README.");
+        println!("我們無法找到 `rustc`。");
+        println!("嘗試運行 `rustc --version` 來診斷您的問題。");
+        println!("有關如何安裝 Rust 的說明，請查看 README。");
         std::process::exit(1);
     }
 
     let info_file = fs::read_to_string("info.toml").unwrap_or_else(|e| {
         match e.kind() {
             io::ErrorKind::NotFound => println!(
-                "The program must be run from the rustlings directory\nTry `cd rustlings/`!",
+                "程序必須在 rustlings 目錄中運行\n嘗試 `cd rustlings/`!",
             ),
-            _ => println!("Failed to read the info.toml file: {e}"),
+            _ => println!("讀取 info.toml 文件失敗: {e}"),
         }
         std::process::exit(1);
     });
@@ -128,7 +128,7 @@ fn main() -> Result<()> {
             solved,
         } => {
             if !paths && !names {
-                println!("{:<17}\t{:<46}\t{:<7}", "Name", "Path", "Status");
+                println!("{:<17}\t{:<46}\t{:<7}", "名稱", "路徑", "狀態");
             }
             let mut exercises_done: u16 = 0;
             let lowercase_filter = filter
@@ -155,9 +155,9 @@ fn main() -> Result<()> {
                 let looks_done = exercise.looks_done();
                 let status = if looks_done {
                     exercises_done += 1;
-                    "Done"
+                    "已完成"
                 } else {
-                    "Pending"
+                    "未完成"
                 };
                 let solve_cond =
                     (looks_done && solved) || (!looks_done && unsolved) || (!solved && !unsolved);
@@ -169,9 +169,8 @@ fn main() -> Result<()> {
                     } else {
                         format!("{:<17}\t{fname:<46}\t{status:<7}\n", exercise.name)
                     };
-                    // Somehow using println! leads to the binary panicking
-                    // when its output is piped.
-                    // So, we're handling a Broken Pipe error and exiting with 0 anyway
+                    // 不知為何，使用 println! 在其輸出被管道時會導致二進制文件恐慌
+                    // 因此，我們處理了一個 Broken Pipe 錯誤並仍然以 0 退出
                     let stdout = std::io::stdout();
                     {
                         let mut handle = stdout.lock();
@@ -187,7 +186,7 @@ fn main() -> Result<()> {
 
             let percentage_progress = exercises_done as f32 / exercises.len() as f32 * 100.0;
             println!(
-                "Progress: You completed {} / {} exercises ({:.1} %).",
+                "進度: 您完成了 {} / {} 個練習 ({:.1} %)。",
                 exercises_done,
                 exercises.len(),
                 percentage_progress
@@ -220,29 +219,29 @@ fn main() -> Result<()> {
 
         Subcommands::Lsp => {
             if let Err(e) = write_project_json(exercises) {
-                println!("Failed to write rust-project.json to disk for rust-analyzer: {e}");
+                println!("無法將 rust-project.json 寫入磁碟以用於 rust-analyzer: {e}");
             } else {
-                println!("Successfully generated rust-project.json");
-                println!("rust-analyzer will now parse exercises, restart your language server or editor");
+                println!("成功生成 rust-project.json");
+                println!("rust-analyzer 現在將解析練習，重啟您的語言服務器或編輯器");
             }
         }
 
         Subcommands::Watch { success_hints } => match watch(&exercises, verbose, success_hints) {
             Err(e) => {
-                println!("Error: Could not watch your progress. Error message was {e:?}.");
-                println!("Most likely you've run out of disk space or your 'inotify limit' has been reached.");
+                println!("錯誤: 無法監視您的進度。錯誤訊息為 {e:?}。");
+                println!("最有可能是您的磁碟空間已滿或您的 'inotify 限制' 已達到。");
                 std::process::exit(1);
             }
             Ok(WatchStatus::Finished) => {
                 println!(
-                    "{emoji} All exercises completed! {emoji}",
+                    "{emoji} 所有練習都完成了！ {emoji}",
                     emoji = Emoji("🎉", "★")
                 );
                 println!("\n{FENISH_LINE}\n");
             }
             Ok(WatchStatus::Unfinished) => {
-                println!("We hope you're enjoying learning about Rust!");
-                println!("If you want to continue working on the exercises at a later point, you can simply run `rustlings watch` again");
+                println!("我們希望您享受學習 Rust 的過程！");
+                println!("如果您想在稍後繼續完成這些練習，只需再次運行 `rustlings watch`");
             }
         },
     }
@@ -254,18 +253,18 @@ fn spawn_watch_shell(
     failed_exercise_hint: Arc<Mutex<Option<String>>>,
     should_quit: Arc<AtomicBool>,
 ) {
-    println!("Welcome to watch mode! You can type 'help' to get an overview of the commands you can use here.");
+    println!("歡迎來到 watch 模式！您可以輸入 'help' 來獲取此處可用命令的概覽。");
 
     thread::spawn(move || {
         let mut input = String::with_capacity(32);
         let mut stdin = io::stdin().lock();
 
         loop {
-            // Recycle input buffer.
+            // 回收輸入緩衝區。
             input.clear();
 
             if let Err(e) = stdin.read_line(&mut input) {
-                println!("error reading command: {e}");
+                println!("讀取命令錯誤: {e}");
             }
 
             let input = input.trim();
@@ -277,22 +276,22 @@ fn spawn_watch_shell(
                 println!("\x1B[2J\x1B[1;1H");
             } else if input == "quit" {
                 should_quit.store(true, Ordering::SeqCst);
-                println!("Bye!");
+                println!("再見！");
             } else if input == "help" {
                 println!("{WATCH_MODE_HELP_MESSAGE}");
             } else if let Some(cmd) = input.strip_prefix('!') {
                 let mut parts = Shlex::new(cmd);
 
                 let Some(program) = parts.next() else {
-                    println!("no command provided");
+                    println!("未提供命令");
                     continue;
                 };
 
                 if let Err(e) = Command::new(program).args(parts).status() {
-                    println!("failed to execute command `{cmd}`: {e}");
+                    println!("執行命令 `{cmd}` 失敗: {e}");
                 }
             } else {
-                println!("unknown command: {input}\n{WATCH_MODE_HELP_MESSAGE}");
+                println!("未知命令: {input}\n{WATCH_MODE_HELP_MESSAGE}");
             }
         }
     });
@@ -304,8 +303,8 @@ fn find_exercise<'a>(name: &str, exercises: &'a [Exercise]) -> &'a Exercise {
             .iter()
             .find(|e| !e.looks_done())
             .unwrap_or_else(|| {
-                println!("🎉 Congratulations! You have done all the exercises!");
-                println!("🔚 There are no more exercises to do next!");
+                println!("🎉 恭喜！您已完成所有練習！");
+                println!("🔚 沒有更多的練習可以做了！");
                 std::process::exit(1)
             })
     } else {
@@ -313,7 +312,7 @@ fn find_exercise<'a>(name: &str, exercises: &'a [Exercise]) -> &'a Exercise {
             .iter()
             .find(|e| e.name == name)
             .unwrap_or_else(|| {
-                println!("No exercise found for '{name}'!");
+                println!("找不到名為 '{name}' 的練習！");
                 std::process::exit(1)
             })
     }
@@ -329,8 +328,8 @@ fn watch(
     verbose: bool,
     success_hints: bool,
 ) -> notify::Result<WatchStatus> {
-    /* Clears the terminal with an ANSI escape code.
-    Works in UNIX and newer Windows terminals. */
+    /* 使用 ANSI 轉義碼清除終端。
+    適用於 UNIX 和較新的 Windows 終端。 */
     fn clear_screen() {
         println!("\x1Bc");
     }
@@ -395,50 +394,35 @@ fn watch(
                         }
                     }
                 }
-                Err(e) => println!("watch error: {e:?}"),
+                Err(e) => println!("監視錯誤: {e:?}"),
             },
             Err(RecvTimeoutError::Timeout) => {
-                // the timeout expired, just check the `should_quit` variable below then loop again
+                // 超時了，只需檢查下面的 `should_quit` 變量，然後再次循環
             }
-            Err(e) => println!("watch error: {e:?}"),
+            Err(e) => println!("監視錯誤: {e:?}"),
         }
-        // Check if we need to exit
+        // 檢查是否需要退出
         if should_quit.load(Ordering::SeqCst) {
             return Ok(WatchStatus::Unfinished);
         }
     }
 }
 
-const DEFAULT_OUT: &str = "Thanks for installing Rustlings!
+const DEFAULT_OUT: &str = "感謝您安裝 Rustlings！
 
-Is this your first time? Don't worry, Rustlings was made for beginners! We are
-going to teach you a lot of things about Rust, but before we can get
-started, here's a couple of notes about how Rustlings operates:
+這是您第一次使用嗎？別擔心，Rustlings 是為初學者設計的！我們將教您很多關於 Rust 的知識，但在開始之前，這裡有一些關於 Rustlings 的操作注意事項：
 
-1. The central concept behind Rustlings is that you solve exercises. These
-   exercises usually have some sort of syntax error in them, which will cause
-   them to fail compilation or testing. Sometimes there's a logic error instead
-   of a syntax error. No matter what error, it's your job to find it and fix it!
-   You'll know when you fixed it because then, the exercise will compile and
-   Rustlings will be able to move on to the next exercise.
-2. If you run Rustlings in watch mode (which we recommend), it'll automatically
-   start with the first exercise. Don't get confused by an error message popping
-   up as soon as you run Rustlings! This is part of the exercise that you're
-   supposed to solve, so open the exercise file in an editor and start your
-   detective work!
-3. If you're stuck on an exercise, there is a helpful hint you can view by typing
-   'hint' (in watch mode), or running `rustlings hint exercise_name`.
-4. If an exercise doesn't make sense to you, feel free to open an issue on GitHub!
-   (https://github.com/rust-lang/rustlings/issues/new). We look at every issue,
-   and sometimes, other learners do too so you can help each other out!
-5. If you want to use `rust-analyzer` with exercises, which provides features like
-   autocompletion, run the command `rustlings lsp`.
+1. Rustlings 的核心概念是讓您解決練習。這些練習通常會有某種語法錯誤，這會導致它們無法編譯或測試。有時會是邏輯錯誤而不是語法錯誤。無論是什麼錯誤，您的任務是找到並修復它！
+   當您修復它時，您會知道，因為那時練習會編譯並且 Rustlings 將能夠進行到下一個練習。
+2. 如果您以 watch 模式運行 Rustlings（我們推薦這樣做），它會自動從第一個練習開始。剛運行 Rustlings 時出現錯誤消息不要感到困惑！這是您要解決的練習的一部分，因此在編輯器中打開練習文件並開始您的偵探工作吧！
+3. 如果您在練習中遇到困難，可以通過輸入 'hint' 來查看提示（在 watch 模式下），或者運行 `rustlings hint exercise_name`。
+4. 如果一個練習對您來說沒有意義，請隨時在 GitHub 上打開一個問題！(https://github.com/rust-lang/rustlings/issues/new) 我們會查看每個問題，有時其他學習者也會這樣做，所以您可以互相幫助！
+5. 如果您想在練習中使用 `rust-analyzer`，這會提供自動完成等功能，請運行命令 `rustlings lsp`。
 
-Got all that? Great! To get started, run `rustlings watch` in order to get the first
-exercise. Make sure to have your editor open!";
+都記住了嗎？很好！要開始，請運行 `rustlings watch` 以獲取第一個練習。確保您的編輯器是開著的！";
 
 const FENISH_LINE: &str = "+----------------------------------------------------+
-|          You made it to the Fe-nish line!          |
+|          您已經到達 Fe-nish 線！          |
 +--------------------------  ------------------------+
                            \\/\x1b[31m
      ▒▒          ▒▒▒▒▒▒▒▒      ▒▒▒▒▒▒▒▒          ▒▒
@@ -457,11 +441,11 @@ const FENISH_LINE: &str = "+----------------------------------------------------
        ▒▒  ▒▒    ▒▒                  ▒▒    ▒▒  ▒▒
            ▒▒  ▒▒                      ▒▒  ▒▒\x1b[0m
 
-We hope you enjoyed learning about the various aspects of Rust!
-If you noticed any issues, please don't hesitate to report them to our repo.
-You can also contribute your own exercises to help the greater community!
+我們希望您喜歡學習 Rust 的各個方面！
+如果您發現任何問題，請隨時向我們的倉庫報告。
+您也可以貢獻您自己的練習來幫助更多的人！
 
-Before reporting an issue or contributing, please read our guidelines:
+在報告問題或貢獻之前，請閱讀我們的指南：
 https://github.com/rust-lang/rustlings/blob/main/CONTRIBUTING.md";
 
 const WELCOME: &str = r"       welcome to...
@@ -472,12 +456,11 @@ const WELCOME: &str = r"       welcome to...
  |_|   \__,_|___/\__|_|_|_| |_|\__, |___/
                                |___/";
 
-const WATCH_MODE_HELP_MESSAGE: &str = "Commands available to you in watch mode:
-  hint   - prints the current exercise's hint
-  clear  - clears the screen
-  quit   - quits watch mode
-  !<cmd> - executes a command, like `!rustc --explain E0381`
-  help   - displays this help message
+const WATCH_MODE_HELP_MESSAGE: &str = "在 watch 模式下可用的命令：
+  hint   - 打印當前練習的提示
+  clear  - 清屏
+  quit   - 退出 watch 模式
+  !<cmd> - 執行一個命令，例如 `!rustc --explain E0381`
+  help   - 顯示此幫助消息
 
-Watch mode automatically re-evaluates the current exercise
-when you edit a file's contents.";
+watch 模式在您編輯文件內容時會自動重新評估當前的練習。";
