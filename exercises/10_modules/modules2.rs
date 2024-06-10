@@ -1,25 +1,22 @@
 // modules2.rs
 //
-// You can bring module paths into scopes and provide new names for them with
-// the 'use' and 'as' keywords. Fix these 'use' statements to make the code
-// compile.
+// 您可以將模組路徑引入作用域並使用 'use' 和 'as' 關鍵字為它們提供新名稱。修復這些 'use' 語句以使代碼編譯。
 //
-// Execute `rustlings hint modules2` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint modules2` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 
 mod delicious_snacks {
-    // TODO: Fix these use statements
-    use self::fruits::PEAR as ???
-    use self::veggies::CUCUMBER as ???
+    // TODO: 修復這些 use 語句
+    use self::fruits::PEAR as fruit;
+    use self::veggies::CUCUMBER as veggie;
 
-    mod fruits {
+    pub mod fruits {
         pub const PEAR: &'static str = "Pear";
         pub const APPLE: &'static str = "Apple";
     }
 
-    mod veggies {
+    pub mod veggies {
         pub const CUCUMBER: &'static str = "Cucumber";
         pub const CARROT: &'static str = "Carrot";
     }
@@ -27,7 +24,7 @@ mod delicious_snacks {
 
 fn main() {
     println!(
-        "favorite snacks: {} and {}",
+        "最喜歡的蔬果: {} 和 {}",
         delicious_snacks::fruit,
         delicious_snacks::veggie
     );

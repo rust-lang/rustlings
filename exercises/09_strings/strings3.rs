@@ -1,22 +1,21 @@
 // strings3.rs
 //
-// Execute `rustlings hint strings3` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint strings3` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 
 fn trim_me(input: &str) -> String {
-    // TODO: Remove whitespace from both ends of a string!
+    // TODO: 去掉字串兩端的空白！
     ???
 }
 
 fn compose_me(input: &str) -> String {
-    // TODO: Add " world!" to the string! There are multiple ways to do this!
+    // TODO: 添加 " world!" 到字串！有多種方法可以做到這一點！
     ???
 }
 
 fn replace_me(input: &str) -> String {
-    // TODO: Replace "cars" in the string with "balloons"!
+    // TODO: 將字串中的 "cars" 替換為 "balloons"！
     ???
 }
 

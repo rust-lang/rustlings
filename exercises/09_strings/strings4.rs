@@ -1,11 +1,11 @@
 // strings4.rs
 //
-// Ok, here are a bunch of values-- some are `String`s, some are `&str`s. Your
-// task is to call one of these two functions on each value depending on what
-// you think each value is. That is, add either `string_slice` or `string`
-// before the parentheses on each line. If you're right, it will compile!
+// 好了，這裡有一堆值-- 有些是 `String`，有些是 `&str`。您的
+// 任務是根據您認為每個值的類型來對每個值調用其中一個函數。
+// 也就是說，在每行括號前添加 `string_slice` 或 `string`。
+// 如果您正確的話，它將會編譯！
 //
-// No hints this time!
+// 這次沒有提示！
 
 // I AM NOT DONE
 

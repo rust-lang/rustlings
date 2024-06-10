@@ -1,12 +1,11 @@
 // modules1.rs
 //
-// Execute `rustlings hint modules1` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint modules1` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 
 mod sausage_factory {
-    // Don't let anybody outside of this module see this!
+    // 不要讓這個模組外的任何人看到這個！
     fn get_secret_recipe() -> String {
         String::from("Ginger")
     }
