@@ -1,19 +1,17 @@
 // primitive_types6.rs
 //
-// Use a tuple index to access the second element of `numbers`. You can put the
-// expression for the second element where ??? is so that the test passes.
+// 使用元組索引來訪問 `numbers` 的第二個元素。您可以將表達式替換到 ??? 處，使測試通過。
 //
-// Execute `rustlings hint primitive_types6` or use the `hint` watch subcommand
-// for a hint.
+// 執行 `rustlings hint primitive_types6` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 
 #[test]
 fn indexing_tuple() {
     let numbers = (1, 2, 3);
-    // Replace below ??? with the tuple indexing syntax.
+    // 使用元組索引語法替換下面的 ???。
     let second = ???;
 
     assert_eq!(2, second,
-        "This is not the 2nd number in the tuple!")
+        "這不是元組中的第二個數字！")
 }

@@ -1,9 +1,8 @@
 // primitive_types4.rs
 //
-// Get a slice out of Array a where the ??? is so that the test passes.
+// 從陣列 a 中獲取一個切片，填寫 ??? 處的代碼，使測試通過。
 //
-// Execute `rustlings hint primitive_types4` or use the `hint` watch subcommand
-// for a hint.
+// 執行 `rustlings hint primitive_types4` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 

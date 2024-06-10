@@ -1,20 +1,19 @@
 // primitive_types1.rs
 //
-// Fill in the rest of the line that has code missing! No hints, there's no
-// tricks, just get used to typing these :)
+// 填寫剩下缺少代碼的行！沒有提示，沒有技巧，只是讓您習慣打字 :)
 
 // I AM NOT DONE
 
 fn main() {
-    // Booleans (`bool`)
+    // 布林值 (`bool`)
 
     let is_morning = true;
     if is_morning {
-        println!("Good morning!");
+        println!("早安！");
     }
 
-    let // Finish the rest of this line like the example! Or make it be false!
+    let is_evening = false; // 像例子一樣完成這行！或者讓它變成 false！
     if is_evening {
-        println!("Good evening!");
+        println!("晚安！");
     }
 }

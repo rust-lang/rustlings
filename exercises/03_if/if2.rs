@@ -1,9 +1,9 @@
 // if2.rs
 //
-// Step 1: Make me compile!
-// Step 2: Get the bar_for_fuzz and default_to_baz tests passing!
+// 第一步：讓我編譯通過！
+// 第二步：讓 bar_for_fuzz 和 default_to_baz 測試通過！
 //
-// Execute `rustlings hint if2` or use the `hint` watch subcommand for a hint.
+// 執行 `rustlings hint if2` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 
@@ -15,7 +15,7 @@ pub fn foo_if_fizz(fizzish: &str) -> &str {
     }
 }
 
-// No test changes needed!
+// 不需要更改測試！
 #[cfg(test)]
 mod tests {
     use super::*;
