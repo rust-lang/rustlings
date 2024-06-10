@@ -1,18 +1,17 @@
 // strings2.rs
 //
-// Make me compile without changing the function signature!
+// 使我在不改變函數簽名的情況下編譯！
 //
-// Execute `rustlings hint strings2` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint strings2` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 
 fn main() {
-    let word = String::from("green"); // Try not changing this line :)
+    let word = String::from("green"); // 嘗試不要更改這行 :)
     if is_a_color_word(word) {
-        println!("That is a color word I know!");
+        println!("那是一個我知道的顏色字！");
     } else {
-        println!("That is not a color word I know.");
+        println!("那不是一個我知道的顏色字。");
     }
 }
 
