@@ -1,21 +1,21 @@
-# Options
+# Option
 
-Type Option represents an optional value: every Option is either Some and contains a value, or None, and does not.
-Option types are very common in Rust code, as they have a number of uses:
+`Option` 類型表示一個可選的值：每個 `Option` 要麼是 `Some` 並包含一個值，要麼是 `None`，不包含任何值。
+`Option` 類型在 Rust 代碼中非常常見，因為它們有很多用途：
 
-- Initial values
-- Return values for functions that are not defined over their entire input range (partial functions)
-- Return value for otherwise reporting simple errors, where None is returned on error
-- Optional struct fields
-- Struct fields that can be loaned or "taken"
-- Optional function arguments
-- Nullable pointers
-- Swapping things out of difficult situations
+- 初始值
+- 函數在未定義所有輸入範圍時的返回值（部分函數）
+- 用於報告簡單錯誤的返回值，其中 `None` 表示錯誤
+- 可選的結構體字段
+- 可以被借用或“取走”的結構體字段
+- 可選的函數參數
+- 可空指針
+- 將複雜的事情變簡單
 
-## Further Information
+## 更多資訊
 
-- [Option Enum Format](https://doc.rust-lang.org/stable/book/ch10-01-syntax.html#in-enum-definitions)
-- [Option Module Documentation](https://doc.rust-lang.org/std/option/)
-- [Option Enum Documentation](https://doc.rust-lang.org/std/option/enum.Option.html)
+- [Option 枚舉格式](https://doc.rust-lang.org/stable/book/ch10-01-syntax.html#in-enum-definitions)
+- [Option 模組文檔](https://doc.rust-lang.org/std/option/)
+- [Option 枚舉文檔](https://doc.rust-lang.org/std/option/enum.Option.html)
 - [if let](https://doc.rust-lang.org/rust-by-example/flow_control/if_let.html)
 - [while let](https://doc.rust-lang.org/rust-by-example/flow_control/while_let.html)

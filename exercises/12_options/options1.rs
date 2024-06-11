@@ -1,18 +1,16 @@
 // options1.rs
 //
-// Execute `rustlings hint options1` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint options1` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 
-// This function returns how much icecream there is left in the fridge.
-// If it's before 10PM, there's 5 scoops left. At 10PM, someone eats it
-// all, so there'll be no more left :(
+// 此函數返回冰箱裡剩下多少冰淇淋。
+// 如果是晚上10點之前，還剩下5勺冰淇淋。晚上10點時，有人把它全吃光了，
+// 所以不會剩下冰淇淋了 :(
 fn maybe_icecream(time_of_day: u16) -> Option<u16> {
-    // We use the 24-hour system here, so 10PM is a value of 22 and 12AM is a
-    // value of 0. The Option output should gracefully handle cases where
-    // time_of_day > 23.
-    // TODO: Complete the function body - remember to return an Option!
+    // 我們這裡使用24小時制，所以晚上10點是22，凌晨12點是0。
+    // Option 輸出應該優雅地處理 time_of_day > 23 的情況。
+    // TODO: 完成函數主體 - 記得返回一個 Option！
     ???
 }
 
@@ -32,8 +30,7 @@ mod tests {
 
     #[test]
     fn raw_value() {
-        // TODO: Fix this test. How do you get at the value contained in the
-        // Option?
+        // TODO: 修復此測試。您如何獲取 Option 中包含的值？
         let icecreams = maybe_icecream(12);
         assert_eq!(icecreams, 5);
     }

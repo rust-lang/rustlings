@@ -1,7 +1,6 @@
 // options3.rs
 //
-// Execute `rustlings hint options3` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint options3` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 
@@ -14,8 +13,8 @@ fn main() {
     let y: Option<Point> = Some(Point { x: 100, y: 200 });
 
     match y {
-        Some(p) => println!("Co-ordinates are {},{} ", p.x, p.y),
-        _ => panic!("no match!"),
+        Some(p) => println!("座標是 {},{} ", p.x, p.y),
+        _ => panic!("沒有匹配！"),
     }
-    y; // Fix without deleting this line.
+    y; // 修復此處而不刪除此行。
 }
