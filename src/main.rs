@@ -151,7 +151,7 @@ fn main() -> Result<()> {
             let notify_exercise_names = if args.manual_run {
                 None
             } else {
-                // For the the notify event handler thread.
+                // For the notify event handler thread.
                 // Leaking is not a problem because the slice lives until the end of the program.
                 Some(
                     &*app_state
