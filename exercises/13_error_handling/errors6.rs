@@ -1,19 +1,15 @@
 // errors6.rs
 //
-// Using catch-all error types like `Box<dyn error::Error>` isn't recommended
-// for library code, where callers might want to make decisions based on the
-// error content, instead of printing it out or propagating it further. Here, we
-// define a custom error type to make it possible for callers to decide what to
-// do next when our function returns an error.
+// 不建議在庫代碼中使用 `Box<dyn error::Error>` 這樣的通用錯誤類型，因為調用者可能希望根據錯誤內容做出決策，而不是印出來或進一步傳播錯誤。
+// 在這裡，我們定義了一個自定義錯誤類型，使得當我們的函數回傳錯誤時，調用者可以決定接下來的操作。
 //
-// Execute `rustlings hint errors6` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint errors6` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 
 use std::num::ParseIntError;
 
-// This is a custom error type that we will be using in `parse_pos_nonzero()`.
+// 這是一個我們將在 `parse_pos_nonzero()` 中使用的自定義錯誤類型。
 #[derive(PartialEq, Debug)]
 enum ParsePosNonzeroError {
     Creation(CreationError),
@@ -24,18 +20,17 @@ impl ParsePosNonzeroError {
     fn from_creation(err: CreationError) -> ParsePosNonzeroError {
         ParsePosNonzeroError::Creation(err)
     }
-    // TODO: add another error conversion function here.
+    // TODO: 在這裡添加另一個錯誤轉換函數。
     // fn from_parseint...
 }
 
 fn parse_pos_nonzero(s: &str) -> Result<PositiveNonzeroInteger, ParsePosNonzeroError> {
-    // TODO: change this to return an appropriate error instead of panicking
-    // when `parse()` returns an error.
+    // TODO: 修改這裡以返回合適的錯誤，而不是在 `parse()` 返回錯誤時崩潰。
     let x: i64 = s.parse().unwrap();
     PositiveNonzeroInteger::new(x).map_err(ParsePosNonzeroError::from_creation)
 }
 
-// Don't change anything below this line.
+// 不要更改此行以下的任何內容。
 
 #[derive(PartialEq, Debug)]
 struct PositiveNonzeroInteger(u64);
@@ -62,7 +57,7 @@ mod test {
 
     #[test]
     fn test_parse_error() {
-        // We can't construct a ParseIntError, so we have to pattern match.
+        // 我們無法構造 ParseIntError，因此我們必須進行模式匹配。
         assert!(matches!(
             parse_pos_nonzero("not a number"),
             Err(ParsePosNonzeroError::ParseInt(_))

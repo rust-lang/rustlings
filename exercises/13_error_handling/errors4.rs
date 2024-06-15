@@ -1,7 +1,6 @@
 // errors4.rs
 //
-// Execute `rustlings hint errors4` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint errors4` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 
@@ -16,7 +15,7 @@ enum CreationError {
 
 impl PositiveNonzeroInteger {
     fn new(value: i64) -> Result<PositiveNonzeroInteger, CreationError> {
-        // Hmm... Why is this always returning an Ok value?
+        // Hmm... 為什麼這裡總是返回 Ok 值呢？
         Ok(PositiveNonzeroInteger(value as u64))
     }
 }

@@ -2,7 +2,7 @@
 
 這些練習改編自 [pnkfelix](https://github.com/pnkfelix) 的 [Rust Tutorial](https://pnkfelix.github.io/rust-examples-icfp2014/) ——感謝 Felix！！！
 
-## 更多資訊
+## 進一步了解
 
 在這一部分中的連結特別重要。
 

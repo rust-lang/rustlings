@@ -12,7 +12,7 @@
 - 可空指針
 - 將複雜的事情變簡單
 
-## 更多資訊
+## 進一步了解
 
 - [Option 枚舉格式](https://doc.rust-lang.org/stable/book/ch10-01-syntax.html#in-enum-definitions)
 - [Option 模組文檔](https://doc.rust-lang.org/std/option/)

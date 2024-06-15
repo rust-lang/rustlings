@@ -5,6 +5,6 @@
 
 這是我們之前談論 Vecs 時提到的另一個資料結構。
 
-## 更多資訊
+## 進一步了解
 
 - [在雜湊表中存儲鍵和值](https://doc.rust-lang.org/book/ch08-03-hash-maps.html)

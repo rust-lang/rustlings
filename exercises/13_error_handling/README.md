@@ -1,12 +1,10 @@
-# Error handling
+# 錯誤處理
 
-Most errors aren’t serious enough to require the program to stop entirely.
-Sometimes, when a function fails, it’s for a reason that you can easily interpret and respond to.
-For example, if you try to open a file and that operation fails because the file doesn’t exist, you might want to create the file instead of terminating the process.
+大多數錯誤不會嚴重到需要程式完全停止。有時候，當一個函數發生錯誤時，原因可能很容易理解並能夠應對。例如，如果您嘗試打開一個檔案，但操作失敗是因為該檔案不存在，您可能希望建立該檔案，而不是終止進程。
 
-## Further information
+## 進一步了解
 
-- [Error Handling](https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html)
-- [Generics](https://doc.rust-lang.org/book/ch10-01-syntax.html)
+- [錯誤處理](https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html)
+- [泛型](https://doc.rust-lang.org/book/ch10-01-syntax.html)
 - [Result](https://doc.rust-lang.org/rust-by-example/error/result.html)
-- [Boxing errors](https://doc.rust-lang.org/rust-by-example/error/multiple_error_types/boxing_errors.html)
+- [包裝錯誤](https://doc.rust-lang.org/rust-by-example/error/multiple_error_types/boxing_errors.html)

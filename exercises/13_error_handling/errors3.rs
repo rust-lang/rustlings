@@ -1,11 +1,9 @@
 // errors3.rs
 //
-// This is a program that is trying to use a completed version of the
-// `total_cost` function from the previous exercise. It's not working though!
-// Why not? What should we do to fix it?
+// 這是一個試圖使用前一個練習中完成的 `total_cost` 函數的程序。但它不起作用！
+// 為什麼不行？我們應該怎麼做才能修復它？
 //
-// Execute `rustlings hint errors3` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint errors3` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 
@@ -18,10 +16,10 @@ fn main() {
     let cost = total_cost(pretend_user_input)?;
 
     if cost > tokens {
-        println!("You can't afford that many!");
+        println!("您買不起！");
     } else {
         tokens -= cost;
-        println!("You now have {} tokens.", tokens);
+        println!("您現在有 {} 個代幣。", tokens);
     }
 }
 

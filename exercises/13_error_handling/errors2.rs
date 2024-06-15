@@ -1,23 +1,16 @@
 // errors2.rs
 //
-// Say we're writing a game where you can buy items with tokens. All items cost
-// 5 tokens, and whenever you purchase items there is a processing fee of 1
-// token. A player of the game will type in how many items they want to buy, and
-// the `total_cost` function will calculate the total cost of the items. Since
-// the player typed in the quantity, though, we get it as a string-- and they
-// might have typed anything, not just numbers!
+// 假設我們在編寫一個可以用代幣購買物品的遊戲。所有物品的價格都是 5 個代幣，並且每次購買物品時都有 1 個代幣的處理費用。
+// 遊戲玩家會輸入他們想購買的物品數量，而 `total_cost` 函數將計算物品的總成本。
+// 由於玩家輸入的是數量，所以我們得到的是一個字串 —— 他們可能輸入了任何東西，不僅僅是數字！
 //
-// Right now, this function isn't handling the error case at all (and isn't
-// handling the success case properly either). What we want to do is: if we call
-// the `total_cost` function on a string that is not a number, that function
-// will return a `ParseIntError`, and in that case, we want to immediately
-// return that error from our function and not try to multiply and add.
+// 現在，這個函數根本沒有處理錯誤情況（並且也沒有正確處理成功情況）。
+// 我們想要的是：如果我們在一個不是數字的字符串上調用 `total_cost` 函數，那麼該函數將返回一個 `ParseIntError`，
+// 在這種情況下，我們希望立即從我們的函數返回該錯誤，而不是嘗試進行乘法和加法。
 //
-// There are at least two ways to implement this that are both correct-- but one
-// is a lot shorter!
+// 至少有兩種實現方法都是正確的 —— 但其中一種要短得多！
 //
-// Execute `rustlings hint errors2` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint errors2` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 

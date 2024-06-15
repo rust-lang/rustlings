@@ -4,7 +4,7 @@
 
 向量在書中屬於稍後的章節，但我們認為它們足夠有用，值得提前介紹。我們將在後面討論另一個有用的資料結構：雜湊表。
 
-## 更多資訊
+## 進一步了解
 
 - [使用向量存儲值列表](https://doc.rust-lang.org/stable/book/ch08-01-vectors.html)
 - [`iter_mut`](https://doc.rust-lang.org/std/primitive.slice.html#method.iter_mut)
