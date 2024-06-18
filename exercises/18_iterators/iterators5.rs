@@ -1,15 +1,10 @@
 // iterators5.rs
 //
-// Let's define a simple model to track Rustlings exercise progress. Progress
-// will be modelled using a hash map. The name of the exercise is the key and
-// the progress is the value. Two counting functions were created to count the
-// number of exercises with a given progress. Recreate this counting
-// functionality using iterators. Try not to use imperative loops (for, while).
-// Only the two iterator methods (count_iterator and count_collection_iterator)
-// need to be modified.
+// 定義一個簡單的模型來跟蹤 Rustlings 練習的進度。進度將使用雜湊表來建模。練習的名稱是鍵，進度是值。
+// 創建了兩個計數函數來計算具有給定進度的練習數量。使用迭代器重新創建此計數功能。嘗試不要使用命令式循環（for、while）。
+// 只需修改兩個迭代器方法（count_iterator 和 count_collection_iterator）。
 //
-// Execute `rustlings hint iterators5` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint iterators5` 或使用 `hint` 子命令獲取提示。
 
 // I AM NOT DONE
 
@@ -33,7 +28,7 @@ fn count_for(map: &HashMap<String, Progress>, value: Progress) -> usize {
 }
 
 fn count_iterator(map: &HashMap<String, Progress>, value: Progress) -> usize {
-    // map is a hashmap with String keys and Progress values.
+    // map 是一個具有 String 鍵和 Progress 值的雜湊表。
     // map = { "variables1": Complete, "from_str": None, ... }
     todo!();
 }
@@ -51,7 +46,7 @@ fn count_collection_for(collection: &[HashMap<String, Progress>], value: Progres
 }
 
 fn count_collection_iterator(collection: &[HashMap<String, Progress>], value: Progress) -> usize {
-    // collection is a slice of hashmaps.
+    // collection 是一個雜湊表的切片。
     // collection = [{ "variables1": Complete, "from_str": None, ... },
     //     { "variables2": Complete, ... }, ... ]
     todo!();

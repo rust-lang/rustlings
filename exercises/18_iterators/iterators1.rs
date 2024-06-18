@@ -1,13 +1,10 @@
 // iterators1.rs
 //
-// When performing operations on elements within a collection, iterators are
-// essential. This module helps you get familiar with the structure of using an
-// iterator and how to go through elements within an iterable collection.
+// 當對集合中的元素執行操作時，迭代器是必不可少的。此模組幫助您熟悉使用迭代器的結構以及如何遍歷可迭代集合中的元素。
 //
-// Make me compile by filling in the `???`s
+// 填寫 `???` 使我編譯通過
 //
-// Execute `rustlings hint iterators1` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint iterators1` 或使用 `hint` 子命令獲取提示。
 
 // I AM NOT DONE
 

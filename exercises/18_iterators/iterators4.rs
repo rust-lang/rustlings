@@ -1,20 +1,19 @@
 // iterators4.rs
 //
-// Execute `rustlings hint iterators4` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint iterators4` 或使用 `hint` 子命令獲取提示。
 
 // I AM NOT DONE
 
 pub fn factorial(num: u64) -> u64 {
-    // Complete this function to return the factorial of num
-    // Do not use:
-    // - early returns (using the `return` keyword explicitly)
-    // Try not to use:
-    // - imperative style loops (for, while)
-    // - additional variables
-    // For an extra challenge, don't use:
-    // - recursion
-    // Execute `rustlings hint iterators4` for hints.
+    // 完成此函數以回傳 num 的階乘
+    // 不要使用：
+    // - 提前返回（顯式使用 `return` 關鍵字）
+    // 嘗試不要使用：
+    // - 命令式風格的循環（for、while）
+    // - 其他變量
+    // 額外挑戰，不要使用：
+    // - 遞迴
+    // 執行 `rustlings hint iterators4` 獲取提示。
 }
 
 #[cfg(test)]
