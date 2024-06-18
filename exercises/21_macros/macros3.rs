@@ -1,16 +1,15 @@
 // macros3.rs
 //
-// Make me compile, without taking the macro out of the module!
+// 讓我能夠編譯通過，不用把巨集移出模組！
 //
-// Execute `rustlings hint macros3` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint macros3` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 
 mod macros {
     macro_rules! my_macro {
         () => {
-            println!("Check out my macro!");
+            println!("看看我的巨集！");
         };
     }
 }

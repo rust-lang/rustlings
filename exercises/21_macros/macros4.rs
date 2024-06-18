@@ -1,17 +1,16 @@
 // macros4.rs
 //
-// Execute `rustlings hint macros4` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint macros4` 或使用 `hint` watch 子指令來獲取提示。
 
 // I AM NOT DONE
 
 #[rustfmt::skip]
 macro_rules! my_macro {
     () => {
-        println!("Check out my macro!");
+        println!("看看我的巨集！");
     }
     ($val:expr) => {
-        println!("Look at this other macro: {}", $val);
+        println!("看看這個其他的巨集: {}", $val);
     }
 }
 

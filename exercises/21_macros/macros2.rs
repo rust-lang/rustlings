@@ -1,7 +1,6 @@
 // macros2.rs
 //
-// Execute `rustlings hint macros2` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint macros2` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 
@@ -11,6 +10,6 @@ fn main() {
 
 macro_rules! my_macro {
     () => {
-        println!("Check out my macro!");
+        println!("看看我的巨集！");
     };
 }
