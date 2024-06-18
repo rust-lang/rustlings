@@ -1,9 +1,6 @@
 // clippy2.rs
 // 
-// Execute `rustlings hint clippy2` or use the `hint` watch subcommand for a
-// hint.
-
-// I AM NOT DONE
+// 執行 `rustlings hint clippy2` 或使用 `hint` 子命令來獲取提示。
 
 fn main() {
     let mut res = 42;

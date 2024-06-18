@@ -1,13 +1,10 @@
 // clippy1.rs
 //
-// The Clippy tool is a collection of lints to analyze your code so you can
-// catch common mistakes and improve your Rust code.
+// Clippy 工具是一組 lint，用來分析您的程式碼，讓您能夠捕捉常見的錯誤並改進您的 Rust 程式碼。
 //
-// For these exercises the code will fail to compile when there are Clippy
-// warnings. Check Clippy's suggestions from the output to solve the exercise.
+// 對於這些練習，當存在 Clippy 警告時，程式碼將無法編譯。請檢查輸出中的 Clippy 建議來解決這些練習。
 //
-// Execute `rustlings hint clippy1` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint clippy1` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 
@@ -20,7 +17,7 @@ fn main() {
     let area = pi * f32::powi(radius, 2);
 
     println!(
-        "The area of a circle with radius {:.2} is {:.5}!",
+        "半徑 {:.2} 的圓的面積是 {:.5}!",
         radius, area
     )
 }

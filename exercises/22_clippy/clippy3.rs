@@ -1,9 +1,7 @@
 // clippy3.rs
 // 
-// Here's a couple more easy Clippy fixes, so you can see its utility.
-// No hints.
-
-// I AM NOT DONE
+// 這裡有一些簡單的 Clippy 修正，你可以看到它的實用性。
+// 沒有提示。
 
 #[allow(unused_variables, unused_assignments)]
 fn main() {
@@ -16,15 +14,15 @@ fn main() {
         -1, -2, -3
         -4, -5, -6
     ];
-    println!("My array! Here it is: {:?}", my_arr);
+    println!("我的陣列! 看這裡: {:?}", my_arr);
 
     let my_empty_vec = vec![1, 2, 3, 4, 5].resize(0, 5);
-    println!("This Vec is empty, see? {:?}", my_empty_vec);
+    println!("這個 Vec 是空的，看到嗎? {:?}", my_empty_vec);
 
     let mut value_a = 45;
     let mut value_b = 66;
-    // Let's swap these two!
+    // 讓我們交換這兩個值！
     value_a = value_b;
     value_b = value_a;
-    println!("value a: {}; value b: {}", value_a, value_b);
+    println!("值 a: {}; 值 b: {}", value_a, value_b);
 }
