@@ -1,10 +1,9 @@
 // generics2.rs
 //
-// This powerful wrapper provides the ability to store a positive integer value.
-// Rewrite it using generics so that it supports wrapping ANY type.
+// 這個強大的包裝器提供了存儲正整數值的能力。
+// 使用泛型重寫它，使其支援包裝任何類型。
 //
-// Execute `rustlings hint generics2` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint generics2` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 
