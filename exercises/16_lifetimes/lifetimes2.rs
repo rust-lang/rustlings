@@ -1,10 +1,8 @@
 // lifetimes2.rs
 //
-// So if the compiler is just validating the references passed to the annotated
-// parameters and the return type, what do we need to change?
+// 如果編譯器只是驗證傳遞給註釋參數和回傳類型的引用，那麼我們需要更改什麼？
 //
-// Execute `rustlings hint lifetimes2` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint lifetimes2` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 

@@ -1,9 +1,8 @@
 // lifetimes3.rs
 //
-// Lifetimes are also needed when structs hold references.
+// 當結構體持有引用時，也需要生命週期標註。
 //
-// Execute `rustlings hint lifetimes3` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint lifetimes3` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 
