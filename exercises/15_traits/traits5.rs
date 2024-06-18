@@ -1,11 +1,10 @@
 // traits5.rs
 //
-// Your task is to replace the '??' sections so the code compiles.
+// 您的任務是替換 '??' 部分以使代碼通過編譯。
 //
-// Don't change any line other than the marked one.
+// 除了標記的行外，不要更改任何行。
 //
-// Execute `rustlings hint traits5` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint traits5` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 
@@ -29,7 +28,7 @@ impl OtherTrait for SomeStruct {}
 impl SomeTrait for OtherStruct {}
 impl OtherTrait for OtherStruct {}
 
-// YOU MAY ONLY CHANGE THE NEXT LINE
+// 您只能更改下一行
 fn some_func(item: ??) -> bool {
     item.some_function() && item.other_function()
 }

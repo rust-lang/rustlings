@@ -1,12 +1,10 @@
 // traits3.rs
 //
-// Your task is to implement the Licensed trait for both structures and have
-// them return the same information without writing the same function twice.
+// 您的任務是為兩個結構實現 Licensed 特徵，並讓它們回傳相同的訊息，而不需要兩次編寫相同的函數。
 //
-// Consider what you can add to the Licensed trait.
+// 您考慮一下可以向 Licensed 特徵添加點什麼。
 //
-// Execute `rustlings hint traits3` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint traits3` 或使用 `hint` watch 子命令來獲取提示。
 
 // I AM NOT DONE
 
@@ -22,8 +20,8 @@ struct OtherSoftware {
     version_number: String,
 }
 
-impl Licensed for SomeSoftware {} // Don't edit this line
-impl Licensed for OtherSoftware {} // Don't edit this line
+impl Licensed for SomeSoftware {} // 不要編輯這一行
+impl Licensed for OtherSoftware {} // 不要編輯這一行
 
 #[cfg(test)]
 mod tests {
