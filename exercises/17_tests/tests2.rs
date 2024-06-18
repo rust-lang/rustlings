@@ -1,10 +1,8 @@
 // tests2.rs
 //
-// This test has a problem with it -- make the test compile! Make the test pass!
-// Make the test fail!
+// 這個測試有問題——請先讓測試編譯通過，然後讓測試成功，再故意讓測試失敗，以熟悉測試操作。
 //
-// Execute `rustlings hint tests2` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint tests2` 或使用 `hint` 子命令獲取提示。
 
 // I AM NOT DONE
 

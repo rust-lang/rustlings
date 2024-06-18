@@ -1,11 +1,8 @@
 // tests3.rs
 //
-// This test isn't testing our function -- make it do that in such a way that
-// the test passes. Then write a second test that tests whether we get the
-// result we expect to get when we call `is_even(5)`.
+// 這個測試沒有測試我們的函數——讓它以一種通過測試的方式來測試函數。然後寫第二個測試，測試當我們調用 `is_even(5)` 時是否得到預期的結果。
 //
-// Execute `rustlings hint tests3` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint tests3` 或使用 `hint` 子命令獲取提示。
 
 // I AM NOT DONE
 
