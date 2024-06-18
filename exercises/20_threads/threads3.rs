@@ -1,7 +1,6 @@
 // threads3.rs
 //
-// Execute `rustlings hint threads3` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint threads3` 或使用 `hint` watch 子命令以獲取提示。
 
 // I AM NOT DONE
 

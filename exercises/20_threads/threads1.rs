@@ -1,12 +1,9 @@
 // threads1.rs
 //
-// This program spawns multiple threads that each run for at least 250ms, and
-// each thread returns how much time they took to complete. The program should
-// wait until all the spawned threads have finished and should collect their
-// return values into a vector.
+// 這個程式會生成多個執行緒，每個執行緒至少執行250毫秒，並回傳它們完成所需的時間。
+// 程式應該等待所有生成的執行緒完成，並將它們的回傳值收集到一個向量中。
 //
-// Execute `rustlings hint threads1` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint threads1` 或使用 `hint` watch 子命令以獲取提示。
 
 // I AM NOT DONE
 
@@ -26,15 +23,15 @@ fn main() {
 
     let mut results: Vec<u128> = vec![];
     for handle in handles {
-        // TODO: a struct is returned from thread::spawn, can you use it?
+        // TODO: 有一個結構體是從 thread::spawn 回傳的，你能使用它嗎？
     }
 
     if results.len() != 10 {
-        panic!("Oh no! All the spawned threads did not finish!");
+        panic!("哦不！所有生成的執行緒都沒有完成！");
     }
 
     println!();
     for (i, result) in results.into_iter().enumerate() {
-        println!("thread {} took {}ms", i, result);
+        println!("thread {} 花費了 {} 毫秒", i, result);
     }
 }
