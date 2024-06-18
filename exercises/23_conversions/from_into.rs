@@ -1,11 +1,8 @@
 // from_into.rs
 //
-// The From trait is used for value-to-value conversions. If From is implemented
-// correctly for a type, the Into trait should work conversely. You can read
-// more about it at https://doc.rust-lang.org/std/convert/trait.From.html
+// From trait 用於值到值的轉換。如果 From 為某個類型正確實現，那麼 Into trait 應該可以反向工作。可以在 https://doc.rust-lang.org/std/convert/trait.From.html 閱讀更多內容。
 //
-// Execute `rustlings hint from_into` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint from_into` 或使用 `hint` 子命令來獲取提示。
 
 #[derive(Debug)]
 struct Person {
@@ -13,8 +10,7 @@ struct Person {
     age: usize,
 }
 
-// We implement the Default trait to use it as a fallback
-// when the provided string is not convertible into a Person object
+// 我們實現 Default trait，以便在提供的字串無法轉換為 Person 物件時用作回退。
 impl Default for Person {
     fn default() -> Person {
         Person {
@@ -24,33 +20,26 @@ impl Default for Person {
     }
 }
 
-
-// Your task is to complete this implementation in order for the line `let p1 =
-// Person::from("Mark,20")` to compile. Please note that you'll need to parse the
-// age component into a `usize` with something like `"4".parse::<usize>()`. The
-// outcome of this needs to be handled appropriately.
+// 你的任務是完成此實現，以便讓 `let p1 = Person::from("Mark,20")` 這行代碼可以編譯。請注意，您需要將年齡部分解析為 `usize`，可以使用 `"4".parse::<usize>()` 之類的方法。需要適當處理此操作的結果。
 //
-// Steps:
-// 1. If the length of the provided string is 0, then return the default of
-//    Person.
-// 2. Split the given string on the commas present in it.
-// 3. Extract the first element from the split operation and use it as the name.
-// 4. If the name is empty, then return the default of Person.
-// 5. Extract the other element from the split operation and parse it into a
-//    `usize` as the age.
-// If while parsing the age, something goes wrong, then return the default of
-// Person Otherwise, then return an instantiated Person object with the results
-
-// I AM NOT DONE
+// 步驟：
+// 1. 如果提供的字串長度為 0，則返回 Person 的默認值。
+// 2. 在字串中找到逗號並進行分割。
+// 3. 從分割操作中提取第一個元素，並將其用作名字。
+// 4. 如果名字為空，則返回 Person 的默認值。
+// 5. 從分割操作中提取另一個元素，並將其解析為 `usize` 作為年齡。
+// 如果在解析年齡時出現錯誤，則返回 Person 的默認值。否則，返回具有結果的實例化 Person 物件。
 
 impl From<&str> for Person {
-    fn from(s: &str) -> Person {}
+    fn from(s: &str) -> Person {
+        // TODO: Complete the function body
+    }
 }
 
 fn main() {
-    // Use the `from` function
+    // 使用 `from` 函數
     let p1 = Person::from("Mark,20");
-    // Since From is implemented for Person, we should be able to use Into
+    // 由於為 Person 實現了 From，因此我們應該能夠使用 Into
     let p2: Person = "Gerald,70".into();
     println!("{:?}", p1);
     println!("{:?}", p2);
@@ -61,29 +50,28 @@ mod tests {
     use super::*;
     #[test]
     fn test_default() {
-        // Test that the default person is 30 year old John
+        // 測試默認的 Person 是否是 30 歲的 John
         let dp = Person::default();
         assert_eq!(dp.name, "John");
         assert_eq!(dp.age, 30);
     }
     #[test]
     fn test_bad_convert() {
-        // Test that John is returned when bad string is provided
+        // 測試當提供錯誤的字串時是否返回 John
         let p = Person::from("");
         assert_eq!(p.name, "John");
         assert_eq!(p.age, 30);
     }
     #[test]
     fn test_good_convert() {
-        // Test that "Mark,20" works
+        // 測試 "Mark,20" 是否工作
         let p = Person::from("Mark,20");
         assert_eq!(p.name, "Mark");
         assert_eq!(p.age, 20);
     }
     #[test]
     fn test_bad_age() {
-        // Test that "Mark,twenty" will return the default person due to an
-        // error in parsing age
+        // 測試 "Mark,twenty" 是否會因為解析年齡錯誤回傳默認的 Person
         let p = Person::from("Mark,twenty");
         assert_eq!(p.name, "John");
         assert_eq!(p.age, 30);
