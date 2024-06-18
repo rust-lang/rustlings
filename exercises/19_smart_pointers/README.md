@@ -1,12 +1,11 @@
-# Smart Pointers
+# 智慧型指標
 
-In Rust, smart pointers are variables that contain an address in memory and reference some other data, but they also have additional metadata and capabilities.
-Smart pointers in Rust often own the data they point to, while references only borrow data.
+在 Rust 中，智慧型指標是包含記憶體位址並引用其他資料的變數，但它們還具有額外的元數據和功能。Rust 中的智慧型指標通常擁有它們指向的資料，而引用僅僅是借用資料。
 
-## Further Information
+## 進一步了解
 
-- [Smart Pointers](https://doc.rust-lang.org/book/ch15-00-smart-pointers.html)
-- [Using Box to Point to Data on the Heap](https://doc.rust-lang.org/book/ch15-01-box.html)
-- [Rc\<T\>, the Reference Counted Smart Pointer](https://doc.rust-lang.org/book/ch15-04-rc.html)
-- [Shared-State Concurrency](https://doc.rust-lang.org/book/ch16-03-shared-state.html)
-- [Cow Documentation](https://doc.rust-lang.org/std/borrow/enum.Cow.html)
+- [智慧型指標](https://doc.rust-lang.org/book/ch15-00-smart-pointers.html)
+- [使用 Box 指向堆上的資料](https://doc.rust-lang.org/book/ch15-01-box.html)
+- [Rc<T>，引用計數智慧型指標](https://doc.rust-lang.org/book/ch15-04-rc.html)
+- [共享狀態並發](https://doc.rust-lang.org/book/ch16-03-shared-state.html)
+- [Cow 文檔](https://doc.rust-lang.org/std/borrow/enum.Cow.html)
