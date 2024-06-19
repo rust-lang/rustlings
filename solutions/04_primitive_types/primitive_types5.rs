@@ -1,1 +1,8 @@
-// Solutions will be available before the stable release. Thank you for testing the beta version 🥰
+fn main() {
+    let cat = ("Furry McFurson", 3.5);
+
+    // Destructuring the tuple.
+    let (name, age) = cat;
+
+    println!("{name} is {age} years old");
+}

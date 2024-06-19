@@ -286,7 +286,7 @@ Particularly the part about destructuring (second to last example in the
 section).
 
 You'll need to make a pattern to bind `name` and `age` to the appropriate parts
-of the tuple. You can do it!!"""
+of the tuple."""
 
 [[exercises]]
 name = "primitive_types6"
