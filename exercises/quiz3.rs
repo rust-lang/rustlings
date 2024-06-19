@@ -1,20 +1,16 @@
 // quiz3.rs
 //
-// This quiz tests:
-// - Generics
-// - Traits
+// 本測驗涵蓋:
+// - 泛型 (Generics)
+// - 特徵 (Traits)
 //
-// An imaginary magical school has a new report card generation system written
-// in Rust! Currently the system only supports creating report cards where the
-// student's grade is represented numerically (e.g. 1.0 -> 5.5). However, the
-// school also issues alphabetical grades (A+ -> F-) and needs to be able to
-// print both types of report card!
+// 一所虛構的魔法學校有一個用 Rust 編寫的新報告卡生成系統！目前該系統僅支持創建成績以數字表示的報告卡（例如 1.0 -> 5.5）。
+// 然而，學校也發佈了字母成績（A+ -> F-），需要能夠打印這兩種類型的報告卡！
 //
-// Make the necessary code changes in the struct ReportCard and the impl block
-// to support alphabetical report cards. Change the Grade in the second test to
-// "A+" to show that your changes allow alphabetical grades.
+// 在 ReportCard 結構和 impl 塊中做出必要的代碼更改，以支持字母報告卡。
+// 在第二個測試中將 Grade 更改為 "A+"，以表明您的更改允許字母成績。
 //
-// Execute `rustlings hint quiz3` or use the `hint` watch subcommand for a hint.
+// 執行 `rustlings hint quiz3` 或使用 `hint` watch 子命令獲取提示。
 
 // I AM NOT DONE
 
@@ -50,7 +46,7 @@ mod tests {
 
     #[test]
     fn generate_alphabetic_report_card() {
-        // TODO: Make sure to change the grade here after you finish the exercise.
+        // TODO: 完成練習後，請確保在這裡更改成績。
         let report_card = ReportCard {
             grade: 2.1,
             student_name: "Gary Plotter".to_string(),

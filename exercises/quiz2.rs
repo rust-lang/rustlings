@@ -1,24 +1,23 @@
 // quiz2.rs
 //
-// This is a quiz for the following sections:
-// - Strings
-// - Vecs
-// - Move semantics
-// - Modules
-// - Enums
+// 本測驗涵蓋以下章節:
+// - 字串
+// - 向量 (Vec)
+// - 移動語義 (Move semantics)
+// - 模組 (Modules)
+// - 枚舉 (Enums)
 //
-// Let's build a little machine in the form of a function. As input, we're going
-// to give a list of strings and commands. These commands determine what action
-// is going to be applied to the string. It can either be:
-// - Uppercase the string
-// - Trim the string
-// - Append "bar" to the string a specified amount of times
-// The exact form of this will be:
-// - The input is going to be a Vector of a 2-length tuple,
-//   the first element is the string, the second one is the command.
-// - The output element is going to be a Vector of strings.
+// 讓我們建立一個函數形式的小機器。作為輸入，我們將提供一個字串和命令的列表。
+// 這些命令決定了要對字串執行的操作。它可以是:
+// - 將字串轉為大寫
+// - 修剪字串
+// - 將 "bar" 附加到字串指定的次數
+// 具體形式如下:
+// - 輸入是一個長度為2的元組向量，
+//   第一個元素是字串，第二個是命令。
+// - 輸出是一個字串向量。
 //
-// No hints this time!
+// 這次沒有提示!
 
 // I AM NOT DONE
 
@@ -31,12 +30,12 @@ pub enum Command {
 mod my_module {
     use super::Command;
 
-    // TODO: Complete the function signature!
+    // TODO: 完成函數簽名!
     pub fn transformer(input: ???) -> ??? {
-        // TODO: Complete the output declaration!
+        // TODO: 完成輸出聲明!
         let mut output: ??? = vec![];
         for (string, command) in input.iter() {
-            // TODO: Complete the function body. You can do it!
+            // TODO: 完成函數體。你能做到的！
         }
         output
     }
@@ -44,7 +43,7 @@ mod my_module {
 
 #[cfg(test)]
 mod tests {
-    // TODO: What do we need to import to have `transformer` in scope?
+    // TODO: 我們需要導入什麼來讓 `transformer` 在作用域內?
     use ???;
     use super::Command;
 
