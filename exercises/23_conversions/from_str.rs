@@ -1,13 +1,8 @@
 // from_str.rs
 //
-// This is similar to from_into.rs, but this time we'll implement `FromStr` and
-// return errors instead of falling back to a default value. Additionally, upon
-// implementing FromStr, you can use the `parse` method on strings to generate
-// an object of the implementor type. You can read more about it at
-// https://doc.rust-lang.org/std/str/trait.FromStr.html
+// 這與 from_into.rs 類似，但這次我們將實現 `FromStr` 並返回錯誤，而不是回退到默認值。此外，在實現 FromStr 之後，你可以在字串上使用 `parse` 方法來生成實現者類型的物件。可以在 https://doc.rust-lang.org/std/str/trait.FromStr.html 閱讀更多相關資訊。
 //
-// Execute `rustlings hint from_str` or use the `hint` watch subcommand for a
-// hint.
+// 執行 `rustlings hint from_str` 或使用 `hint` 子命令來獲取提示。
 
 use std::num::ParseIntError;
 use std::str::FromStr;
@@ -18,32 +13,29 @@ struct Person {
     age: usize,
 }
 
-// We will use this error type for the `FromStr` implementation.
+// 我們將使用此錯誤類型來實現 `FromStr`。
 #[derive(Debug, PartialEq)]
 enum ParsePersonError {
-    // Empty input string
+    // 輸入字串為空
     Empty,
-    // Incorrect number of fields
+    // 字段數量不正確
     BadLen,
-    // Empty name field
+    // 名字字段為空
     NoName,
-    // Wrapped error from parse::<usize>()
+    // 來自 parse::<usize>() 的錯誤
     ParseInt(ParseIntError),
 }
 
 // I AM NOT DONE
 
-// Steps:
-// 1. If the length of the provided string is 0, an error should be returned
-// 2. Split the given string on the commas present in it
-// 3. Only 2 elements should be returned from the split, otherwise return an
-//    error
-// 4. Extract the first element from the split operation and use it as the name
-// 5. Extract the other element from the split operation and parse it into a
-//    `usize` as the age with something like `"4".parse::<usize>()`
-// 6. If while extracting the name and the age something goes wrong, an error
-//    should be returned
-// If everything goes well, then return a Result of a Person object
+// 步驟：
+// 1. 如果提供的字串長度為 0，則應返回錯誤
+// 2. 將給定的字串按照其中的逗號分割
+// 3. 分割後應返回 2 個元素，否則返回錯誤
+// 4. 從分割操作中提取第一個元素並用作名字
+// 5. 從分割操作中提取另一個元素並將其解析為 `usize` 作為年齡，如 `"4".parse::<usize>()`
+// 6. 如果在提取名字和年齡時出現錯誤，應返回錯誤
+// 如果一切順利，則返回一個 Person 物件的 Result
 
 impl FromStr for Person {
     type Err = ParsePersonError;

@@ -20,6 +20,8 @@ impl Default for Person {
     }
 }
 
+// I AM NOT DONE
+
 // 你的任務是完成此實現，以便讓 `let p1 = Person::from("Mark,20")` 這行代碼可以編譯。請注意，您需要將年齡部分解析為 `usize`，可以使用 `"4".parse::<usize>()` 之類的方法。需要適當處理此操作的結果。
 //
 // 步驟：

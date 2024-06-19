@@ -1,13 +1,8 @@
 // try_from_into.rs
 //
-// TryFrom is a simple and safe type conversion that may fail in a controlled
-// way under some circumstances. Basically, this is the same as From. The main
-// difference is that this should return a Result type instead of the target
-// type itself. You can read more about it at
-// https://doc.rust-lang.org/std/convert/trait.TryFrom.html
+// TryFrom 是一種簡單且安全的類型轉換，在某些情況下可能會以可控制的方式失敗。基本上，這與 From 類似。主要的區別在於這應該返回一個 Result 類型，而不是目標類型本身。你可以在 https://doc.rust-lang.org/std/convert/trait.TryFrom.html 閱讀更多相關資訊。
 //
-// Execute `rustlings hint try_from_into` or use the `hint` watch subcommand for
-// a hint.
+// 執行 `rustlings hint try_from_into` 或使用 `hint` 子命令來獲取提示。
 
 use std::convert::{TryFrom, TryInto};
 
@@ -18,40 +13,35 @@ struct Color {
     blue: u8,
 }
 
-// We will use this error type for these `TryFrom` conversions.
+// 我們將使用這個錯誤類型來進行 `TryFrom` 轉換。
 #[derive(Debug, PartialEq)]
 enum IntoColorError {
-    // Incorrect length of slice
+    // 切片長度不正確
     BadLen,
-    // Integer conversion error
+    // 整數轉換錯誤
     IntConversion,
 }
 
 // I AM NOT DONE
 
-// Your task is to complete this implementation and return an Ok result of inner
-// type Color. You need to create an implementation for a tuple of three
-// integers, an array of three integers, and a slice of integers.
-//
-// Note that the implementation for tuple and array will be checked at compile
-// time, but the slice implementation needs to check the slice length! Also note
-// that correct RGB color values must be integers in the 0..=255 range.
+// 你的任務是完成此實現並返回內部類型為 Color 的 Ok 結果。你需要為三個整數的元組、三個整數的數組和整數的切片創建實現。
+// 請注意，元組和數組的實現將在編譯時檢查，但切片實現需要檢查切片的長度！還要注意，正確的 RGB 顏色值必須是範圍在 0..=255 內的整數。
 
-// Tuple implementation
+// 元組實現
 impl TryFrom<(i16, i16, i16)> for Color {
     type Error = IntoColorError;
     fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {
     }
 }
 
-// Array implementation
+// 數組實現
 impl TryFrom<[i16; 3]> for Color {
     type Error = IntoColorError;
     fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {
     }
 }
 
-// Slice implementation
+// 切片實現
 impl TryFrom<&[i16]> for Color {
     type Error = IntoColorError;
     fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {
@@ -59,19 +49,19 @@ impl TryFrom<&[i16]> for Color {
 }
 
 fn main() {
-    // Use the `try_from` function
+    // 使用 `try_from` 函數
     let c1 = Color::try_from((183, 65, 14));
     println!("{:?}", c1);
 
-    // Since TryFrom is implemented for Color, we should be able to use TryInto
+    // 由於 Color 實現了 TryFrom，我們應該能夠使用 TryInto
     let c2: Result<Color, _> = [183, 65, 14].try_into();
     println!("{:?}", c2);
 
     let v = vec![183, 65, 14];
-    // With slice we should use `try_from` function
+    // 使用切片我們應該使用 `try_from` 函數
     let c3 = Color::try_from(&v[..]);
     println!("{:?}", c3);
-    // or take slice within round brackets and use TryInto
+    // 或在圓括號內使用切片並使用 TryInto
     let c4: Result<Color, _> = (&v[..]).try_into();
     println!("{:?}", c4);
 }
