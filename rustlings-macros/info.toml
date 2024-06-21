@@ -371,28 +371,15 @@ an existing binding to be a mutable binding instead of an immutable one :)"""
 name = "move_semantics4"
 dir = "06_move_semantics"
 hint = """
-Stop reading whenever you feel like you have enough direction :) Or try
-doing one step and then fixing the compiler errors that result!
-So the end goal is to:
-   - get rid of the first line in main that creates the new vector
-   - so then `vec0` doesn't exist, so we can't pass it to `fill_vec`
-   - `fill_vec` has had its signature changed, which our call should reflect
-   - since we're not creating a new vec in `main` anymore, we need to create
-     a new vec in `fill_vec`, and fill it with the expected values"""
-
-[[exercises]]
-name = "move_semantics5"
-dir = "06_move_semantics"
-hint = """
 Carefully reason about the range in which each mutable reference is in
 scope. Does it help to update the value of referent (`x`) immediately after
-the mutable reference is taken? Read more about 'Mutable References'
-in the book's section 'References and Borrowing':
+the mutable reference is taken?
+Read more about 'Mutable References' in the book's section 'References and Borrowing':
 https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html#mutable-references.
 """
 
 [[exercises]]
-name = "move_semantics6"
+name = "move_semantics5"
 dir = "06_move_semantics"
 test = false
 hint = """
@@ -401,14 +388,10 @@ https://doc.rust-lang.org/stable/book/ch04-02-references-and-borrowing.html
 
 The first problem is that `get_char` is taking ownership of the string. So
 `data` is moved and can't be used for `string_uppercase`. `data` is moved to
-`get_char` first, meaning that `string_uppercase` cannot manipulate the data.
+`get_char` first, meaning that `string_uppercase` can't manipulate the data.
 
 Once you've fixed that, `string_uppercase`'s function signature will also need
-to be adjusted.
-
-Can you figure out how?
-
-Another hint: it has to do with the `&` character."""
+to be adjusted."""
 
 # STRUCTS
 
