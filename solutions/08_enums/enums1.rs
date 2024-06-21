@@ -1,1 +1,14 @@
-// Solutions will be available before the stable release. Thank you for testing the beta version 🥰
+#[derive(Debug)]
+enum Message {
+    Quit,
+    Echo,
+    Move,
+    ChangeColor,
+}
+
+fn main() {
+    println!("{:?}", Message::Quit);
+    println!("{:?}", Message::Echo);
+    println!("{:?}", Message::Move);
+    println!("{:?}", Message::ChangeColor);
+}
