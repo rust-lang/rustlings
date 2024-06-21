@@ -1,5 +1,5 @@
-// TODO: Fix the compiler erros. Don't change anything except adding or removing
-// references (the character `&`).
+// TODO: Fix the compiler errors without changing anything except adding or
+// removing references (the character `&`).
 
 fn main() {
     let data = "Rust is great!".to_string();
