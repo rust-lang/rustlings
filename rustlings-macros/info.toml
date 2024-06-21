@@ -342,8 +342,7 @@ error on the line where we push an element to the vector, right?
 The fix for this is going to be adding one keyword, and the addition is NOT on
 the line where we push to the vector (where the error is).
 
-Also: Try accessing `vec0` after having called `fill_vec()`. See what
-happens!"""
+Try accessing `vec0` after having called `fill_vec()`. See what happens!"""
 
 [[exercises]]
 name = "move_semantics2"
