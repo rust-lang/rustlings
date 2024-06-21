@@ -1,6 +1,6 @@
 #[derive(Debug)]
 enum Message {
-    // TODO: define the different variants used below
+    // TODO: Define the different variants used below.
 }
 
 impl Message {

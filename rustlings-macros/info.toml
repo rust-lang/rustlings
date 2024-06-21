@@ -451,7 +451,7 @@ dir = "08_enums"
 test = false
 hint = """
 You can create enumerations that have different variants with different types
-such as no data, anonymous structs, a single string, tuples, ...etc"""
+such as no data, anonymous structs, a single string, tuples, etc."""
 
 [[exercises]]
 name = "enums3"
