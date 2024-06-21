@@ -318,7 +318,7 @@ name = "move_semantics1"
 path = "exercises/06_move_semantics/move_semantics1.rs"
 mode = "test"
 hint = """
-So you've got the "cannot borrow immutable local variable `vec` as mutable"
+So you've got the "cannot borrow `vec` as mutable, as it is not declared as mutable"
 error on the line where we push an element to the vector, right?
 
 The fix for this is going to be adding one keyword, and the addition is NOT on
