@@ -1,13 +1,12 @@
-// Address all the TODOs to make the tests pass!
-
-struct ColorClassicStruct {
-    // TODO: Something goes here
+struct ColorRegularStruct {
+    // TODO: Add the fields that the test `regular_structs` expects.
+    // What types should the fields have? What are the minimum and maximum values for RGB colors?
 }
 
-struct ColorTupleStruct(/* TODO: Something goes here */);
+struct ColorTupleStruct(/* TODO: Add the fields that the test `tuple_structs` expects */);
 
 #[derive(Debug)]
-struct UnitLikeStruct;
+struct UnitStruct;
 
 fn main() {
     // You can optionally experiment here.
@@ -18,8 +17,8 @@ mod tests {
     use super::*;
 
     #[test]
-    fn classic_c_structs() {
-        // TODO: Instantiate a classic c struct!
+    fn regular_structs() {
+        // TODO: Instantiate a regular struct.
         // let green =
 
         assert_eq!(green.red, 0);
@@ -29,7 +28,7 @@ mod tests {
 
     #[test]
     fn tuple_structs() {
-        // TODO: Instantiate a tuple struct!
+        // TODO: Instantiate a tuple struct.
         // let green =
 
         assert_eq!(green.0, 0);
@@ -39,10 +38,10 @@ mod tests {
 
     #[test]
     fn unit_structs() {
-        // TODO: Instantiate a unit-like struct!
-        // let unit_like_struct =
-        let message = format!("{:?}s are fun!", unit_like_struct);
+        // TODO: Instantiate a unit struct.
+        // let unit_struct =
+        let message = format!("{unit_struct:?}s are fun!");
 
-        assert_eq!(message, "UnitLikeStructs are fun!");
+        assert_eq!(message, "UnitStructs are fun!");
     }
 }
