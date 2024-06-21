@@ -319,15 +319,10 @@ of the Rust book to learn more.
 name = "vecs2"
 dir = "05_vecs"
 hint = """
-In the first function we are looping over the Vector and getting a reference to
-one `element` at a time.
+In the first function, we create an empty vector and want to push new elements
+to it.
 
-To modify the value of that `element` we need to use the `*` dereference
-operator. You can learn more in this chapter of the Rust book:
-https://doc.rust-lang.org/stable/book/ch08-01-vectors.html#iterating-over-the-values-in-a-vector
-
-In the second function this dereferencing is not necessary, because the `map`
-function expects the new value to be returned.
+In the second function, we map the values of the input and collect them into a vector.
 
 After you've completed both functions, decide for yourself which approach you
 like better.
