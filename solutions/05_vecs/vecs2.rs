@@ -16,6 +16,11 @@ fn vec_map_example(input: &[i32]) -> Vec<i32> {
 }
 
 fn vec_map(input: &[i32]) -> Vec<i32> {
+    // We will dive deeper into iterators, but for now, this is all what you
+    // had to do!
+    // Advanced note: This method is more efficient because it automatically
+    // preallocates enough capacity. This can be done manually in `vec_loop`
+    // using `Vec::with_capacity(input.len())` instead of `Vec::new()`.
     input.iter().map(|element| 2 * element).collect()
 }
 
