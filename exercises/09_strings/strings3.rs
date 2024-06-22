@@ -1,16 +1,13 @@
-fn trim_me(input: &str) -> String {
-    // TODO: Remove whitespace from both ends of a string!
-    ???
+fn trim_me(input: &str) -> &str {
+    // TODO: Remove whitespace from both ends of a string.
 }
 
 fn compose_me(input: &str) -> String {
-    // TODO: Add " world!" to the string! There are multiple ways to do this!
-    ???
+    // TODO: Add " world!" to the string! There are multiple ways to do this.
 }
 
 fn replace_me(input: &str) -> String {
-    // TODO: Replace "cars" in the string with "balloons"!
-    ???
+    // TODO: Replace "cars" in the string with "balloons".
 }
 
 fn main() {
@@ -36,7 +33,13 @@ mod tests {
 
     #[test]
     fn replace_a_string() {
-        assert_eq!(replace_me("I think cars are cool"), "I think balloons are cool");
-        assert_eq!(replace_me("I love to look at cars"), "I love to look at balloons");
+        assert_eq!(
+            replace_me("I think cars are cool"),
+            "I think balloons are cool",
+        );
+        assert_eq!(
+            replace_me("I love to look at cars"),
+            "I love to look at balloons",
+        );
     }
 }

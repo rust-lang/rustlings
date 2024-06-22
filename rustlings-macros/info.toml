@@ -499,7 +499,8 @@ https://doc.rust-lang.org/stable/book/ch15-02-deref.html#implicit-deref-coercion
 name = "strings3"
 dir = "09_strings"
 hint = """
-There's tons of useful standard library functions for strings. Let's try and use some of them:
+There are many useful standard library functions for strings. Let's try and use
+some of them:
 https://doc.rust-lang.org/std/string/struct.String.html#method.trim
 
 For the `compose_me` method: You can either use the `format!` macro, or convert
