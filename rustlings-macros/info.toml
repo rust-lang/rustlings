@@ -527,9 +527,8 @@ name = "modules1"
 dir = "10_modules"
 test = false
 hint = """
-Everything is private in Rust by default-- but there's a keyword we can use
-to make something public! The compiler error should point to the thing that
-needs to be public."""
+Everything is private in Rust by default. But there's a keyword we can use
+to make something public!"""
 
 [[exercises]]
 name = "modules2"
