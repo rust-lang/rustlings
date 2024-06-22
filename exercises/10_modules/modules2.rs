@@ -1,20 +1,19 @@
 // You can bring module paths into scopes and provide new names for them with
-// the 'use' and 'as' keywords. Fix these 'use' statements to make the code
-// compile.
+// the `use` and `as` keywords.
 
 mod delicious_snacks {
-    // TODO: Fix these use statements
-    use self::fruits::PEAR as ???
-    use self::veggies::CUCUMBER as ???
+    // TODO: Add the follwing two `use` statements after fixing them.
+    // use self::fruits::PEAR as ???;
+    // use self::veggies::CUCUMBER as ???;
 
     mod fruits {
-        pub const PEAR: &'static str = "Pear";
-        pub const APPLE: &'static str = "Apple";
+        pub const PEAR: &str = "Pear";
+        pub const APPLE: &str = "Apple";
     }
 
     mod veggies {
-        pub const CUCUMBER: &'static str = "Cucumber";
-        pub const CARROT: &'static str = "Carrot";
+        pub const CUCUMBER: &str = "Cucumber";
+        pub const CARROT: &str = "Carrot";
     }
 }
 
@@ -22,6 +21,6 @@ fn main() {
     println!(
         "favorite snacks: {} and {}",
         delicious_snacks::fruit,
-        delicious_snacks::veggie
+        delicious_snacks::veggie,
     );
 }
