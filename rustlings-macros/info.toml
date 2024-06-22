@@ -510,7 +510,15 @@ the string slice into an owned string, which you can then freely extend."""
 name = "strings4"
 dir = "09_strings"
 test = false
-hint = "No hints this time ;)"
+hint = """
+Replace `placeholder` with either `string` or `string_slice` in the `main` function.
+
+Example:
+`placeholder("blue");`
+should become
+`string_slice("blue");`
+because "blue" is `&str`, not `String`.
+"""
 
 # MODULES
 
