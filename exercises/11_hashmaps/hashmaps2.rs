@@ -11,7 +11,7 @@
 
 use std::collections::HashMap;
 
-#[derive(Hash, PartialEq, Eq)]
+#[derive(Hash, PartialEq, Eq, Debug)]
 enum Fruit {
     Apple,
     Banana,
@@ -81,9 +81,20 @@ mod tests {
 
     #[test]
     fn all_fruit_types_in_basket() {
+        let fruit_kinds = vec![
+            Fruit::Apple,
+            Fruit::Banana,
+            Fruit::Mango,
+            Fruit::Lychee,
+            Fruit::Pineapple,
+        ];
+
         let mut basket = get_fruit_basket();
         fruit_basket(&mut basket);
-        for amount in basket.values() {
+        for fruit_kind in fruit_kinds {
+            let amount = basket
+                .get(&fruit_kind)
+                .expect(format!("Fruit kind {:?} was not found in basket", fruit_kind).as_str());
             assert_ne!(amount, &0);
         }
     }
