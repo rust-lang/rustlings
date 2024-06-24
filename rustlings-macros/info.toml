@@ -558,12 +558,8 @@ paths to bring these two in using only one line."""
 name = "hashmaps1"
 dir = "11_hashmaps"
 hint = """
-Hint 1: Take a look at the return type of the function to figure out
-        the type for the `basket`.
-
-Hint 2: Number of fruits should be at least 5. And you have to put
-        at least three different types of fruits.
-"""
+The number of fruits should be at least 5 and you have to put at least 3
+different types of fruits."""
 
 [[exercises]]
 name = "hashmaps2"
