@@ -6,8 +6,6 @@
 // must add fruit to the basket so that there is at least one of each kind and
 // more than 11 in total - we have a lot of mouths to feed. You are not allowed
 // to insert any more of these fruits!
-//
-// Make me pass the tests!
 
 use std::collections::HashMap;
 
@@ -21,7 +19,7 @@ enum Fruit {
 }
 
 fn fruit_basket(basket: &mut HashMap<Fruit, u32>) {
-    let fruit_kinds = vec![
+    let fruit_kinds = [
         Fruit::Apple,
         Fruit::Banana,
         Fruit::Mango,
@@ -46,12 +44,8 @@ mod tests {
 
     // Don't modify this function!
     fn get_fruit_basket() -> HashMap<Fruit, u32> {
-        let mut basket = HashMap::<Fruit, u32>::new();
-        basket.insert(Fruit::Apple, 4);
-        basket.insert(Fruit::Mango, 2);
-        basket.insert(Fruit::Lychee, 5);
-
-        basket
+        let content = [(Fruit::Apple, 4), (Fruit::Mango, 2), (Fruit::Lychee, 5)];
+        HashMap::from_iter(content)
     }
 
     #[test]
@@ -81,7 +75,7 @@ mod tests {
 
     #[test]
     fn all_fruit_types_in_basket() {
-        let fruit_kinds = vec![
+        let fruit_kinds = [
             Fruit::Apple,
             Fruit::Banana,
             Fruit::Mango,
@@ -91,11 +85,12 @@ mod tests {
 
         let mut basket = get_fruit_basket();
         fruit_basket(&mut basket);
+
         for fruit_kind in fruit_kinds {
-            let amount = basket
-                .get(&fruit_kind)
-                .expect(format!("Fruit kind {:?} was not found in basket", fruit_kind).as_str());
-            assert_ne!(amount, &0);
+            let Some(amount) = basket.get(&fruit_kind) else {
+                panic!("Fruit kind {fruit_kind:?} was not found in basket");
+            };
+            assert!(*amount > 0);
         }
     }
 }
