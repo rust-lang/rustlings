@@ -1,39 +1,38 @@
 // A list of scores (one per line) of a soccer match is given. Each line is of
-// the form : "<team_1_name>,<team_2_name>,<team_1_goals>,<team_2_goals>"
-// Example: England,France,4,2 (England scored 4 goals, France 2).
+// the form "<team_1_name>,<team_2_name>,<team_1_goals>,<team_2_goals>"
+// Example: "England,France,4,2" (England scored 4 goals, France 2).
 //
 // You have to build a scores table containing the name of the team, the total
 // number of goals the team scored, and the total number of goals the team
-// conceded. One approach to build the scores table is to use a Hashmap.
-// The solution is partially written to use a Hashmap,
-// complete it to pass the test.
-//
-// Make me pass the tests!
+// conceded.
 
 use std::collections::HashMap;
 
 // A structure to store the goal details of a team.
+#[derive(Default)]
 struct Team {
     goals_scored: u8,
     goals_conceded: u8,
 }
 
-fn build_scores_table(results: String) -> HashMap<String, Team> {
+fn build_scores_table(results: &str) -> HashMap<&str, Team> {
     // The name of the team is the key and its associated struct is the value.
-    let mut scores: HashMap<String, Team> = HashMap::new();
+    let mut scores = HashMap::new();
 
-    for r in results.lines() {
-        let v: Vec<&str> = r.split(',').collect();
-        let team_1_name = v[0].to_string();
-        let team_1_score: u8 = v[2].parse().unwrap();
-        let team_2_name = v[1].to_string();
-        let team_2_score: u8 = v[3].parse().unwrap();
-        // TODO: Populate the scores table with details extracted from the
-        // current line. Keep in mind that goals scored by team_1
-        // will be the number of goals conceded by team_2, and similarly
-        // goals scored by team_2 will be the number of goals conceded by
-        // team_1.
+    for line in results.lines() {
+        let mut split_iterator = line.split(',');
+        // NOTE: We use `unwrap` because we didn't deal with error handling yet.
+        let team_1_name = split_iterator.next().unwrap();
+        let team_2_name = split_iterator.next().unwrap();
+        let team_1_score: u8 = split_iterator.next().unwrap().parse().unwrap();
+        let team_2_score: u8 = split_iterator.next().unwrap().parse().unwrap();
+
+        // TODO: Populate the scores table with the extracted details.
+        // Keep in mind that goals scored by team 1 will be the number of goals
+        // conceded by team 2. Similarly, goals scored by team 2 will be the
+        // number of goals conceded by team 1.
     }
+
     scores
 }
 
@@ -45,40 +44,34 @@ fn main() {
 mod tests {
     use super::*;
 
-    fn get_results() -> String {
-        let results = "".to_string()
-            + "England,France,4,2\n"
-            + "France,Italy,3,1\n"
-            + "Poland,Spain,2,0\n"
-            + "Germany,England,2,1\n";
-        results
-    }
+    const RESULTS: &str = "England,France,4,2
+France,Italy,3,1
+Poland,Spain,2,0
+Germany,England,2,1
+England,Spain,1,0";
 
     #[test]
     fn build_scores() {
-        let scores = build_scores_table(get_results());
+        let scores = build_scores_table(RESULTS);
 
-        let mut keys: Vec<&String> = scores.keys().collect();
-        keys.sort();
-        assert_eq!(
-            keys,
-            vec!["England", "France", "Germany", "Italy", "Poland", "Spain"]
-        );
+        assert!(["England", "France", "Germany", "Italy", "Poland", "Spain"]
+            .into_iter()
+            .all(|team_name| scores.contains_key(team_name)));
     }
 
     #[test]
     fn validate_team_score_1() {
-        let scores = build_scores_table(get_results());
+        let scores = build_scores_table(RESULTS);
         let team = scores.get("England").unwrap();
-        assert_eq!(team.goals_scored, 5);
+        assert_eq!(team.goals_scored, 6);
         assert_eq!(team.goals_conceded, 4);
     }
 
     #[test]
     fn validate_team_score_2() {
-        let scores = build_scores_table(get_results());
+        let scores = build_scores_table(RESULTS);
         let team = scores.get("Spain").unwrap();
         assert_eq!(team.goals_scored, 0);
-        assert_eq!(team.goals_conceded, 2);
+        assert_eq!(team.goals_conceded, 3);
     }
 }
