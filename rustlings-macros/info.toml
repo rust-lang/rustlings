@@ -683,11 +683,9 @@ name = "errors4"
 dir = "13_error_handling"
 hint = """
 `PositiveNonzeroInteger::new` is always creating a new instance and returning
-an `Ok` result.
-
-It should be doing some checking, returning an `Err` result if those checks
-fail, and only returning an `Ok` result if those checks determine that
-everything is... okay :)"""
+an `Ok` result. But it should be doing some checking, returning an `Err` if
+those checks fail, and only returning an `Ok` if those checks determine that
+everything is… okay :)"""
 
 [[exercises]]
 name = "errors5"
