@@ -2,7 +2,7 @@
 // the `use` and `as` keywords.
 
 mod delicious_snacks {
-    // TODO: Add the follwing two `use` statements after fixing them.
+    // TODO: Add the following two `use` statements after fixing them.
     // use self::fruits::PEAR as ???;
     // use self::veggies::CUCUMBER as ???;
 

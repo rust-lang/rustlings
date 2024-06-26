@@ -25,7 +25,8 @@ impl Package {
 
     // TODO: Add the correct return type to the function signature.
     fn is_international(&self) {
-        // TODO: Read the tests that use this method to find out when a package is concidered international.
+        // TODO: Read the tests that use this method to find out when a package
+        // is considered international.
     }
 
     // TODO: Add the correct return type to the function signature.
