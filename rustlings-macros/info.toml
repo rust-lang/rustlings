@@ -603,7 +603,7 @@ hint = """
 Options can have a `Some` value, with an inner value, or a `None` value,
 without an inner value.
 
-There's multiple ways to get at the inner value, you can use `unwrap`, or
+There are multiple ways to get at the inner value, you can use `unwrap`, or
 pattern match. Unwrapping is the easiest, but how do you do it safely so that
 it doesn't panic in your face later?"""
 
