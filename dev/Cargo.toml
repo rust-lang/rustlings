@@ -140,8 +140,6 @@ bin = [
   { name = "tests2_sol", path = "../solutions/17_tests/tests2.rs" },
   { name = "tests3", path = "../exercises/17_tests/tests3.rs" },
   { name = "tests3_sol", path = "../solutions/17_tests/tests3.rs" },
-  { name = "tests4", path = "../exercises/17_tests/tests4.rs" },
-  { name = "tests4_sol", path = "../solutions/17_tests/tests4.rs" },
   { name = "iterators1", path = "../exercises/18_iterators/iterators1.rs" },
   { name = "iterators1_sol", path = "../solutions/18_iterators/iterators1.rs" },
   { name = "iterators2", path = "../exercises/18_iterators/iterators2.rs" },

@@ -856,7 +856,10 @@ argument, `assert!` will do nothing (in which case the test will pass) or
 `assert!` will panic (in which case the test will fail).
 
 So try giving different values to `assert!` and see which ones compile, which
-ones pass, and which ones fail :)"""
+ones pass, and which ones fail :)
+
+If you want to check for `false`, you can negate the result of what you're
+checking using `!`, like `assert!(!…)`."""
 
 [[exercises]]
 name = "tests2"
@@ -870,19 +873,9 @@ Try switching which argument comes first and which comes second!"""
 name = "tests3"
 dir = "17_tests"
 hint = """
-You can call a function right where you're passing arguments to `assert!`. So
-you could do something like `assert!(having_fun())`.
+We expect the method `Rectangle::new` to panic for negative values.
 
-If you want to check that you indeed get `false`, you can negate the result of
-what you're doing using `!`, like `assert!(!having_fun())`."""
-
-[[exercises]]
-name = "tests4"
-dir = "17_tests"
-hint = """
-We expect method `Rectangle::new()` to panic for negative values.
-
-To handle that you need to add a special attribute to the test function.
+To handle that, you need to add a special attribute to the test function.
 
 You can refer to the docs:
 https://doc.rust-lang.org/stable/book/ch11-01-writing-tests.html#checking-for-panics-with-should_panic"""
