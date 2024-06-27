@@ -1,9 +1,9 @@
 // Tests are important to ensure that your code does what you think it should
-// do. Tests can be run on this file with the following command: rustlings run
-// tests1
-//
-// This test has a problem with it -- make the test compile! Make the test pass!
-// Make the test fail!
+// do.
+
+fn is_even(n: i64) -> bool {
+    n % 2 == 0
+}
 
 fn main() {
     // You can optionally experiment here.
@@ -11,8 +11,13 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
+    // TODO: Import `is_even`. You can use a wildcard to import everything in
+    // the outer module.
+
     #[test]
     fn you_can_assert() {
+        // TODO: Test the function `is_even` with some values.
+        assert!();
         assert!();
     }
 }
