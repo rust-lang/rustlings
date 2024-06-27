@@ -784,9 +784,10 @@ name = "traits4"
 dir = "15_traits"
 hint = """
 Instead of using concrete types as parameters you can use traits. Try replacing
-the '??' with 'impl [what goes here?]'
+`???` with `impl [what goes here?]`.
 
-See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#traits-as-parameters"""
+Related section in The Book:
+https://doc.rust-lang.org/book/ch10-02-traits.html#traits-as-parameters"""
 
 [[exercises]]
 name = "traits5"

@@ -1,23 +1,18 @@
-// Your task is to replace the '??' sections so the code compiles.
-//
-// Don't change any line other than the marked one.
-
 trait Licensed {
     fn licensing_info(&self) -> String {
-        "some information".to_string()
+        "Default license".to_string()
     }
 }
 
-struct SomeSoftware {}
-
-struct OtherSoftware {}
+struct SomeSoftware;
+struct OtherSoftware;
 
 impl Licensed for SomeSoftware {}
 impl Licensed for OtherSoftware {}
 
-// YOU MAY ONLY CHANGE THE NEXT LINE
-fn compare_license_types(software: ??, software_two: ??) -> bool {
-    software.licensing_info() == software_two.licensing_info()
+// TODO: Fix the compiler error by only changing the signature of this function.
+fn compare_license_types(software1: ???, software2: ???) -> bool {
+    software1.licensing_info() == software2.licensing_info()
 }
 
 fn main() {
@@ -30,17 +25,11 @@ mod tests {
 
     #[test]
     fn compare_license_information() {
-        let some_software = SomeSoftware {};
-        let other_software = OtherSoftware {};
-
-        assert!(compare_license_types(some_software, other_software));
+        assert!(compare_license_types(SomeSoftware, OtherSoftware));
     }
 
     #[test]
     fn compare_license_information_backwards() {
-        let some_software = SomeSoftware {};
-        let other_software = OtherSoftware {};
-
-        assert!(compare_license_types(other_software, some_software));
+        assert!(compare_license_types(OtherSoftware, SomeSoftware));
     }
 }
