@@ -11,6 +11,7 @@ impl Licensed for SomeSoftware {}
 impl Licensed for OtherSoftware {}
 
 fn compare_license_types(software1: impl Licensed, software2: impl Licensed) -> bool {
+    //                              ^^^^^^^^^^^^^             ^^^^^^^^^^^^^
     software1.licensing_info() == software2.licensing_info()
 }
 
