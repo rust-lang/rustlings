@@ -843,9 +843,7 @@ inner block:
 name = "lifetimes3"
 dir = "16_lifetimes"
 test = false
-hint = """
-If you use a lifetime annotation in a struct's fields, where else does it need
-to be added?"""
+hint = """Let the compiler guide you :)"""
 
 # TESTS
 
