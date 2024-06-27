@@ -3,6 +3,7 @@
 // going out of scope before it is used. Remember, references are borrows and do
 // not own their own data. What if their owner goes out of scope?
 
+// TODO: Fix the compiler error by updating the function signature.
 fn longest(x: &str, y: &str) -> &str {
     if x.len() > y.len() {
         x
@@ -12,9 +13,16 @@ fn longest(x: &str, y: &str) -> &str {
 }
 
 fn main() {
-    let string1 = String::from("abcd");
-    let string2 = "xyz";
+    // You can optionally experiment here.
+}
 
-    let result = longest(string1.as_str(), string2);
-    println!("The longest string is '{}'", result);
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_longest() {
+        assert_eq!(longest("abcd", "123"), "abcd");
+        assert_eq!(longest("abc", "1234"), "1234");
+    }
 }

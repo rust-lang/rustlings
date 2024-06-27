@@ -821,9 +821,8 @@ You may need this:
 [[exercises]]
 name = "lifetimes1"
 dir = "16_lifetimes"
-test = false
 hint = """
-Let the compiler guide you. Also take a look at the book if you need help:
+Let the compiler guide you. Also take a look at The Book if you need help:
 https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html"""
 
 [[exercises]]
