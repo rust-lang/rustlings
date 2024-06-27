@@ -9,7 +9,7 @@ then
     echo "SUCCESS: Git is installed"
 else
     echo "ERROR: Git does not seem to be installed."
-    echo "Please download Git using your package manager or over https://git-scm.com/!"
+    echo "Please download Git using your package manager or over https://git-scm.com/ !"
     exit 1
 fi
 
@@ -30,7 +30,7 @@ then
     echo "SUCCESS: rustup is installed"
 else
     echo "ERROR: rustup does not seem to be installed."
-    echo "Please download rustup using https://rustup.rs!"
+    echo "Please download rustup using https://rustup.rs/ !"
     exit 1
 fi
 
