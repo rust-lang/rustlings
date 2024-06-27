@@ -792,12 +792,12 @@ https://doc.rust-lang.org/book/ch10-02-traits.html#traits-as-parameters"""
 [[exercises]]
 name = "traits5"
 dir = "15_traits"
-test = false
 hint = """
 To ensure a parameter implements multiple traits use the '+ syntax'. Try
-replacing the '??' with 'impl [what goes here?] + [what goes here?]'.
+replacing `???` with 'impl [what goes here?] + [what goes here?]'.
 
-See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#specifying-multiple-trait-bounds-with-the--syntax"""
+Related section in The Book:
+https://doc.rust-lang.org/book/ch10-02-traits.html#specifying-multiple-trait-bounds-with-the--syntax"""
 
 # QUIZ 3
 
