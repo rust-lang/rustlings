@@ -10,7 +10,7 @@ if (Get-Command git -ErrorAction SilentlyContinue) {
     Write-Host "SUCCESS: Git is installed"
 } else {
     Write-Host "WARNING: Git does not seem to be installed."
-    Write-Host "Please download Git using your package manager or over https://git-scm.com/!"
+    Write-Host "Please download Git using your package manager or over https://git-scm.com/ !"
     exit 1
 }
 
@@ -18,7 +18,7 @@ if (Get-Command rustc -ErrorAction SilentlyContinue) {
     Write-Host "SUCCESS:  Rust is installed"
 } else {
     Write-Host "WARNING: Rust does not seem to be installed."
-    Write-Host "Please download Rust using https://rustup.rs!"
+    Write-Host "Please download Rust using https://rustup.rs/ !"
     exit 1
 }
 
@@ -26,7 +26,7 @@ if (Get-Command cargo -ErrorAction SilentlyContinue) {
     Write-Host "SUCCESS: Cargo is installed"
 } else {
     Write-Host "WARNING: Cargo does not seem to be installed."
-    Write-Host "Please download Rust and Cargo using https://rustup.rs!"
+    Write-Host "Please download Rust and Cargo using https://rustup.rs/ !"
     exit 1
 }
 
