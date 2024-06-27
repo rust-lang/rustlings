@@ -776,8 +776,7 @@ Traits can have a default implementation for functions. Structs that implement
 the trait can then use the default version of these functions if they choose not
 to implement the function themselves.
 
-See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#default-implementations
-"""
+See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#default-implementations"""
 
 [[exercises]]
 name = "traits4"
@@ -786,8 +785,7 @@ hint = """
 Instead of using concrete types as parameters you can use traits. Try replacing
 the '??' with 'impl [what goes here?]'
 
-See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#traits-as-parameters
-"""
+See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#traits-as-parameters"""
 
 [[exercises]]
 name = "traits5"
@@ -797,8 +795,7 @@ hint = """
 To ensure a parameter implements multiple traits use the '+ syntax'. Try
 replacing the '??' with 'impl [what goes here?] + [what goes here?]'.
 
-See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#specifying-multiple-trait-bounds-with-the--syntax
-"""
+See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#specifying-multiple-trait-bounds-with-the--syntax"""
 
 # QUIZ 3
 
@@ -913,8 +910,7 @@ Step 4:
 
 An iterator goes through all elements in a collection, but what if we've run
 out of elements? What should we expect here? If you're stuck, take a look at
-https://doc.rust-lang.org/std/iter/trait.Iterator.html for some ideas.
-"""
+https://doc.rust-lang.org/std/iter/trait.Iterator.html for some ideas."""
 
 [[exercises]]
 name = "iterators2"
@@ -1008,8 +1004,7 @@ assertions).
 
 For a non-empty list keep in mind that we want to use our `Cons` "list builder".
 Although the current list is one of integers (`i32`), feel free to change the
-definition and try other types!
-"""
+definition and try other types!"""
 
 [[exercises]]
 name = "rc1"
@@ -1026,8 +1021,7 @@ In the end the `Sun` only has one reference again, to itself.
 
 See more at: https://doc.rust-lang.org/book/ch15-04-rc.html
 
-* Unfortunately Pluto is no longer considered a planet :(
-"""
+* Unfortunately Pluto is no longer considered a planet :("""
 
 [[exercises]]
 name = "arc1"
@@ -1042,10 +1036,9 @@ inside the loop but still in the main thread.
 thread-local copy of the numbers.
 
 This is a simple exercise if you understand the underlying concepts, but if this
-is too much of a struggle, consider reading through all of Chapter 16 in the
-book:
-https://doc.rust-lang.org/stable/book/ch16-00-concurrency.html
-"""
+is too much of a struggle, consider reading through all of Chapter 16 in The
+Book:
+https://doc.rust-lang.org/stable/book/ch16-00-concurrency.html"""
 
 [[exercises]]
 name = "cow1"
@@ -1055,8 +1048,7 @@ If `Cow` already owns the data it doesn't need to clone it when `to_mut()` is
 called.
 
 Check out https://doc.rust-lang.org/std/borrow/enum.Cow.html for documentation
-on the `Cow` type.
-"""
+on the `Cow` type."""
 
 # THREADS
 
@@ -1075,8 +1067,7 @@ https://doc.rust-lang.org/book/ch16-01-threads.html#waiting-for-all-threads-to-f
 Use the `JoinHandle`s to wait for each thread to finish and collect their
 results.
 
-https://doc.rust-lang.org/std/thread/struct.JoinHandle.html
-"""
+https://doc.rust-lang.org/std/thread/struct.JoinHandle.html"""
 
 [[exercises]]
 name = "threads2"
@@ -1097,8 +1088,7 @@ let status = Arc::new(Mutex::new(JobStatus { jobs_completed: 0 }));
 ```
 
 Similar to the code in the following example in the book:
-https://doc.rust-lang.org/book/ch16-03-shared-state.html#sharing-a-mutext-between-multiple-threads
-"""
+https://doc.rust-lang.org/book/ch16-03-shared-state.html#sharing-a-mutext-between-multiple-threads"""
 
 [[exercises]]
 name = "threads3"
@@ -1113,8 +1103,7 @@ one thread and receive them in another.
 Multiple producers are possible by using clone() to create a duplicate of the
 original sending end.
 
-See https://doc.rust-lang.org/book/ch16-02-message-passing.html for more info.
-"""
+See https://doc.rust-lang.org/book/ch16-02-message-passing.html for more info."""
 
 # MACROS
 
@@ -1230,8 +1219,7 @@ or a closure to wrap the error from `parse::<usize>`.
 
 Yet another hint: If you would like to propagate errors by using the `?`
 operator in your solution, you might want to look at
-https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/reenter_question_mark.html
-"""
+https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/reenter_question_mark.html"""
 
 [[exercises]]
 name = "try_from_into"
