@@ -746,12 +746,8 @@ the generic of the vector."""
 name = "generics2"
 dir = "14_generics"
 hint = """
-Currently we are wrapping only values of type `u32`.
-
-Maybe we could update the explicit references to this data type somehow?
-
-If you are still stuck https://doc.rust-lang.org/stable/book/ch10-01-syntax.html#in-method-definitions
-"""
+Related section in The Book:
+https://doc.rust-lang.org/stable/book/ch10-01-syntax.html#in-method-definitions"""
 
 # TRAITS
 
