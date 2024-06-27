@@ -60,8 +60,6 @@ bin = [
   { name = "move_semantics4_sol", path = "../solutions/06_move_semantics/move_semantics4.rs" },
   { name = "move_semantics5", path = "../exercises/06_move_semantics/move_semantics5.rs" },
   { name = "move_semantics5_sol", path = "../solutions/06_move_semantics/move_semantics5.rs" },
-  { name = "move_semantics6", path = "../exercises/06_move_semantics/move_semantics6.rs" },
-  { name = "move_semantics6_sol", path = "../solutions/06_move_semantics/move_semantics6.rs" },
   { name = "structs1", path = "../exercises/07_structs/structs1.rs" },
   { name = "structs1_sol", path = "../solutions/07_structs/structs1.rs" },
   { name = "structs2", path = "../exercises/07_structs/structs2.rs" },
