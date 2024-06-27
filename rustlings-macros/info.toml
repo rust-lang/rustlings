@@ -805,10 +805,16 @@ https://doc.rust-lang.org/book/ch10-02-traits.html#specifying-multiple-trait-bou
 name = "quiz3"
 dir = "quizzes"
 hint = """
-To find the best solution to this challenge you're going to need to think back
-to your knowledge of traits, specifically 'Trait Bound Syntax'
+To find the best solution to this challenge, you need to recall your knowledge
+of traits, specifically "Trait Bound Syntax":
+https://doc.rust-lang.org/book/ch10-02-traits.html#trait-bound-syntax
 
-You may also need this: `use std::fmt::Display;`."""
+Here is how to specify a trait bound for an implementation block:
+`impl<T: Trait1 + Trait2 + …> for Foo<T> { … }`
+
+You may need this:
+`use std::fmt::Display;`
+"""
 
 # LIFETIMES
 
