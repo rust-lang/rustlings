@@ -772,11 +772,12 @@ the value is owned anyway."""
 name = "traits3"
 dir = "15_traits"
 hint = """
-Traits can have a default implementation for functions. Structs that implement
-the trait can then use the default version of these functions if they choose not
-to implement the function themselves.
+Traits can have a default implementation for functions. Data types that
+implement the trait can then use the default version of these functions
+if they choose not to implement the function themselves.
 
-See the documentation at: https://doc.rust-lang.org/book/ch10-02-traits.html#default-implementations"""
+Related section in The Book:
+https://doc.rust-lang.org/book/ch10-02-traits.html#default-implementations"""
 
 [[exercises]]
 name = "traits4"
