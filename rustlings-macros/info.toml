@@ -1004,7 +1004,7 @@ name = "arc1"
 dir = "19_smart_pointers"
 test = false
 hint = """
-Make `shared_numbers` be an `Arc` from the numbers vector. Then, in order
+Make `shared_numbers` be an `Arc` from the `numbers` vector. Then, in order
 to avoid creating a copy of `numbers`, you'll need to create `child_numbers`
 inside the loop but still in the main thread.
 
