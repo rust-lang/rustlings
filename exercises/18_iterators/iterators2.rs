@@ -1,31 +1,28 @@
 // In this exercise, you'll learn some of the unique advantages that iterators
-// can offer. Follow the steps to complete the exercise.
+// can offer.
 
-// Step 1.
-// Complete the `capitalize_first` function.
+// TODO: Complete the `capitalize_first` function.
 // "hello" -> "Hello"
 fn capitalize_first(input: &str) -> String {
-    let mut c = input.chars();
-    match c.next() {
+    let mut chars = input.chars();
+    match chars.next() {
         None => String::new(),
-        Some(first) => ???,
+        Some(first) => todo!(),
     }
 }
 
-// Step 2.
-// Apply the `capitalize_first` function to a slice of string slices.
+// TODO: Apply the `capitalize_first` function to a slice of string slices.
 // Return a vector of strings.
 // ["hello", "world"] -> ["Hello", "World"]
 fn capitalize_words_vector(words: &[&str]) -> Vec<String> {
-    vec![]
+    // ???
 }
 
-// Step 3.
-// Apply the `capitalize_first` function again to a slice of string slices.
-// Return a single string.
+// TODO: Apply the `capitalize_first` function again to a slice of string
+// slices. Return a single string.
 // ["hello", " ", "world"] -> "Hello World"
 fn capitalize_words_string(words: &[&str]) -> String {
-    String::new()
+    // ???
 }
 
 fn main() {

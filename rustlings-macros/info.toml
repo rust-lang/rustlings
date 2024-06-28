@@ -894,7 +894,7 @@ https://doc.rust-lang.org/std/iter/trait.Iterator.html"""
 name = "iterators2"
 dir = "18_iterators"
 hint = """
-Step 1:
+`capitalize_first`:
 
 The variable `first` is a `char`. It needs to be capitalized and added to the
 remaining characters in `c` in order to return the correct `String`.
@@ -905,12 +905,15 @@ The remaining characters in `c` can be viewed as a string slice using the
 The documentation for `char` contains many useful methods.
 https://doc.rust-lang.org/std/primitive.char.html
 
-Step 2:
+Use `char::to_uppercase`. It returns an iterator that can be converted to a
+`String`.
+
+`capitalize_words_vector`:
 
 Create an iterator from the slice. Transform the iterated values by applying
 the `capitalize_first` function. Remember to `collect` the iterator.
 
-Step 3:
+`capitalize_words_string`:
 
 This is surprisingly similar to the previous solution. `collect` is very
 powerful and very general. Rust just needs to know the desired type."""
