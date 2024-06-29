@@ -1020,11 +1020,11 @@ https://doc.rust-lang.org/stable/book/ch16-00-concurrency.html"""
 name = "cow1"
 dir = "19_smart_pointers"
 hint = """
-If `Cow` already owns the data it doesn't need to clone it when `to_mut()` is
+If `Cow` already owns the data, it doesn't need to clone it when `to_mut()` is
 called.
 
-Check out https://doc.rust-lang.org/std/borrow/enum.Cow.html for documentation
-on the `Cow` type."""
+Check out the documentation of the `Cow` type:
+https://doc.rust-lang.org/std/borrow/enum.Cow.html"""
 
 # THREADS
 
