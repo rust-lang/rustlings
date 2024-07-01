@@ -1151,7 +1151,8 @@ dir = "22_clippy"
 test = false
 strict_clippy = true
 hint = """
-`for` loops over `Option` values are more clearly expressed as an `if let`"""
+`for` loops over `Option` values are more clearly expressed as an `if-let`
+statement."""
 
 [[exercises]]
 name = "clippy3"
