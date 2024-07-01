@@ -101,7 +101,7 @@ impl<'a> WatchState<'a> {
         }
 
         if self.done_status != DoneStatus::Pending {
-            write!(self.writer, "{}:next / ", 'n'.bold())?;
+            write!(self.writer, "{}:{} / ", 'n'.bold(), "next".underlined())?;
         }
 
         if !self.show_hint {
