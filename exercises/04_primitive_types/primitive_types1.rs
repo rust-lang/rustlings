@@ -12,7 +12,7 @@ fn main() {
         println!("早安！");
     }
 
-    let is_evening = false; // 像例子一樣完成這行！或者讓它變成 false！
+    let  // 像例子一樣完成這行！或者讓它變成 false！
     if is_evening {
         println!("晚安！");
     }
