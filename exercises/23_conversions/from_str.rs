@@ -52,10 +52,11 @@ fn main() {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use ParsePersonError::*;
 
     #[test]
     fn empty_input() {
-        assert_eq!("".parse::<Person>(), Err(ParsePersonError::BadLen));
+        assert_eq!("".parse::<Person>(), Err(BadLen));
     }
 
     #[test]
@@ -69,56 +70,44 @@ mod tests {
 
     #[test]
     fn missing_age() {
-        assert!(matches!(
-            "John,".parse::<Person>(),
-            Err(ParsePersonError::ParseInt(_)),
-        ));
+        assert!(matches!("John,".parse::<Person>(), Err(ParseInt(_))));
     }
 
     #[test]
     fn invalid_age() {
-        assert!(matches!(
-            "John,twenty".parse::<Person>(),
-            Err(ParsePersonError::ParseInt(_)),
-        ));
+        assert!(matches!("John,twenty".parse::<Person>(), Err(ParseInt(_))));
     }
 
     #[test]
     fn missing_comma_and_age() {
-        assert_eq!("John".parse::<Person>(), Err(ParsePersonError::BadLen));
+        assert_eq!("John".parse::<Person>(), Err(BadLen));
     }
 
     #[test]
     fn missing_name() {
-        assert_eq!(",1".parse::<Person>(), Err(ParsePersonError::NoName));
+        assert_eq!(",1".parse::<Person>(), Err(NoName));
     }
 
     #[test]
     fn missing_name_and_age() {
-        assert!(matches!(
-            ",".parse::<Person>(),
-            Err(ParsePersonError::NoName | ParsePersonError::ParseInt(_)),
-        ));
+        assert!(matches!(",".parse::<Person>(), Err(NoName | ParseInt(_))));
     }
 
     #[test]
     fn missing_name_and_invalid_age() {
         assert!(matches!(
             ",one".parse::<Person>(),
-            Err(ParsePersonError::NoName | ParsePersonError::ParseInt(_)),
+            Err(NoName | ParseInt(_)),
         ));
     }
 
     #[test]
     fn trailing_comma() {
-        assert_eq!("John,32,".parse::<Person>(), Err(ParsePersonError::BadLen));
+        assert_eq!("John,32,".parse::<Person>(), Err(BadLen));
     }
 
     #[test]
     fn trailing_comma_and_some_string() {
-        assert_eq!(
-            "John,32,man".parse::<Person>(),
-            Err(ParsePersonError::BadLen),
-        );
+        assert_eq!("John,32,man".parse::<Person>(), Err(BadLen));
     }
 }
