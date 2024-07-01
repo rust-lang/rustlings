@@ -451,6 +451,16 @@ the `Package` struct that this relates to?
 Have a look in The Book, to find out more about method implementations:
 https://doc.rust-lang.org/book/ch05-03-method-syntax.html"""
 
+[[exercises]]
+name = "structs4"
+path = "exercises/structs/structs4.rs"
+mode = "test"
+hint = """
+The signature of methods must be different depending on the fact that attributes of an instance are
+read or written. How do we do that in Rust?
+
+Have a look in The Book, to find out more about method implementations: https://doc.rust-lang.org/book/ch05-03-method-syntax.html"""
+
 # ENUMS
 
 [[exercises]]
