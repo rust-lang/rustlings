@@ -1,5 +1,5 @@
-// Make me compile, without taking the macro out of the module!
-
+// TODO: Fix the compiler error without taking the macro definition out of this
+// module.
 mod macros {
     macro_rules! my_macro {
         () => {
