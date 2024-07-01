@@ -1103,6 +1103,20 @@ Check out https://doc.rust-lang.org/std/borrow/enum.Cow.html for documentation
 on the `Cow` type.
 """
 
+[[exercises]]
+name = "refcell1"
+path = "exercises/19_smart_pointers/refcell1.rs"
+mode = "compile"
+hint = """
+Remember that RefCell<T> allows for an immutable object to be modified.
+
+Use the .borrow_mut() method on the RefCell to get a mutable reference to
+the underlying data.
+
+See https://doc.rust-lang.org/book/ch15-05-interior-mutability.html for more
+information on RefCell.
+"""
+
 # THREADS
 
 [[exercises]]
