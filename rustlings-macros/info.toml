@@ -1076,10 +1076,11 @@ An alternate way to handle concurrency between threads is to use an `mpsc`
 With both a sending end and a receiving end, it's possible to send values in
 one thread and receive them in another.
 
-Multiple producers are possible by using clone() to create a duplicate of the
+Multiple producers are possible by using `clone()` to create a duplicate of the
 original sending end.
 
-See https://doc.rust-lang.org/book/ch16-02-message-passing.html for more info."""
+Related section in The Book:
+https://doc.rust-lang.org/book/ch16-02-message-passing.html"""
 
 # MACROS
 
