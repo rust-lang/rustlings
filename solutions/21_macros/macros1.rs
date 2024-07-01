@@ -1,1 +1,10 @@
-// Solutions will be available before the stable release. Thank you for testing the beta version 🥰
+macro_rules! my_macro {
+    () => {
+        println!("Check out my macro!");
+    };
+}
+
+fn main() {
+    my_macro!();
+    //      ^
+}
