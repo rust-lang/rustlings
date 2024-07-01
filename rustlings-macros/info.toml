@@ -1174,7 +1174,7 @@ Use the `as` operator to cast one of the operands in the last line of the
 name = "from_into"
 dir = "23_conversions"
 hint = """
-Follow the steps provided right before the `From` implementation"""
+Follow the steps provided right before the `From` implementation."""
 
 [[exercises]]
 name = "from_str"
