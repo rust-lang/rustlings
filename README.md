@@ -117,10 +117,14 @@ See the footer of the list for all possible keys.
 
 ## Continuing On
 
-<!-- TODO: Mention third-party exercises -->
-
 Once you've completed Rustlings, put your new knowledge to good use!
 Continue practicing your Rust skills by building your own projects, contributing to Rustlings, or finding other open-source projects to contribute to.
+
+## Third-Party Exercises
+
+Do you want to create your own set of Rustlings exercises to focus on some specific topic?
+Or did you want to translate the original Rustlings exercises?
+Then follow the link to the guide about [third-party exercises](THIRD_PARTY_EXERCISES.md)!
 
 ## Uninstalling Rustlings
 
