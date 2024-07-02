@@ -3,7 +3,7 @@ trait AppendBar {
 }
 
 // TODO: Implement the trait `AppendBar` for a vector of strings.
-// `appned_bar` should push the string "Bar" into the vector.
+// `append_bar` should push the string "Bar" into the vector.
 
 fn main() {
     // You can optionally experiment here.

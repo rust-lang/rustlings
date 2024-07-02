@@ -174,7 +174,7 @@ fn check_exercises(info_file: &InfoFile) -> Result<()> {
 fn check_solutions(require_solutions: bool, info_file: &InfoFile) -> Result<()> {
     let target_dir = parse_target_dir()?;
     let paths = Mutex::new(hashbrown::HashSet::with_capacity(info_file.exercises.len()));
-    let error_occured = AtomicBool::new(false);
+    let error_occurred = AtomicBool::new(false);
 
     println!("Running all solutions. This may take a while...\n");
     thread::scope(|s| {
@@ -188,7 +188,7 @@ fn check_solutions(require_solutions: bool, info_file: &InfoFile) -> Result<()> 
                         .unwrap();
                     stderr.write_all(exercise_info.name.as_bytes()).unwrap();
                     stderr.write_all(SEPARATOR).unwrap();
-                    error_occured.store(true, atomic::Ordering::Relaxed);
+                    error_occurred.store(true, atomic::Ordering::Relaxed);
                 };
 
                 let path = exercise_info.sol_path();
@@ -213,7 +213,7 @@ fn check_solutions(require_solutions: bool, info_file: &InfoFile) -> Result<()> 
         }
     });
 
-    if error_occured.load(atomic::Ordering::Relaxed) {
+    if error_occurred.load(atomic::Ordering::Relaxed) {
         bail!("At least one solution failed. See the output above.");
     }
 
