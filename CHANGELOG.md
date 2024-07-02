@@ -32,23 +32,28 @@ You can enter it by entering `l` in the watch mode.
 It offers the following features:
 
 - Browse all exercises and see their state (pending/done).
-- Filter exercises based on their state (done/pending).
+- Filter exercises based on their state (pending/done).
 - Continue at another exercise. This allows you to skip some exercises or go back to previous ones.
-- Reset an exercise so that you can start over and revert your changes.
+- Reset an exercise so you can start over and revert your changes.
 
 ### Solutions
 
 After finishing an exercise, a solution file will be available and Rustlings will show you its path in green.
 This allows you to compare your solution with an idiomatic solution and maybe learn about other ways to solve a problem.
 
+While writing the solutions, all exercises have been polished 🌟
+For example, every exercise now contains `TODO` comments to highlight what the user needs to change and where.
+
 ### LSP support out of the box
 
-Instead of creating a `project.json` file using `rustlings lsp`, Rustlings now works with a `Cargo.toml` file.
+Instead of creating a `project.json` file using `rustlings lsp`, Rustlings now works with a `Cargo.toml` file out of the box.
+No actions are needed to activate the language server `rust-analyzer`.
+
 This should avoid issues related to the language server or to running exercises, especially the ones with Clippy.
 
 ### Clippy
 
-Clippy lints are now shown on all exercises! 📎
+Clippy lints are now shown on all exercises, not only the Clippy exercises 📎
 Make Clippy your friend from early on 🥰
 
 ### Third party exercises
@@ -56,7 +61,7 @@ Make Clippy your friend from early on 🥰
 Rustlings now supports third-party exercises!
 
 Do you want to create your own set of Rustlings exercises to focus on some specific topic?
-Or did you want to translate the original Rustlings exercises?
+Or do you want to translate the original Rustlings exercises?
 Then follow the link to the guide about [third-party exercises](THIRD_PARTY_EXERCISES.md)!
 
 <a name="5.6.1"></a>

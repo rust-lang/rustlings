@@ -1,14 +1,14 @@
 # Third-Party Exercises
 
 The support of Rustlings for third-party exercises allows you to create your own set of Rustlings exercises to focus on some specific topic.
-You could also offer a translatation of the original Rustlings exercises as a third-party exercises.
+You could also offer a translatation of the original Rustlings exercises as third-party exercises.
 
 ## Getting started
 
 To create third-party exercises, install Rustlings and run `rustlings dev new PROJECT_NAME`.
 This command will, similar to `cargo new PROJECT_NAME`, create a template directory called `PROJECT_NAME` with all what you need to get started.
 
-Read the comments in the generated `info.toml` file to understand the format of this file.
+Read the comments in the generated `info.toml` file to understand its format.
 It allows you to set a custom welcome and final message and specify the metadata of every exercise.
 
 ## Create an exercise
@@ -46,8 +46,8 @@ Now, add more exercises and publish them as a Git repository.
 Users just have to clone that repository and run `rustlings` in it to start working on your set of exercises just like the official ones.
 
 One difference to the official exercises is that the solution files will not be hidden until the user finishes an exercise.
-But you can trust the user to not look at the solution too early ;)
+But you can trust the users to not look at the solution too early 😉
 
 ## Share
 
-After publishing your set of exercises, open a pull request in the official Rustlings repository to link to your project in the README 😃
+After publishing your set of exercises, open an issue or a pull request in the official Rustlings repository to link to your project in the README 😃
