@@ -32,19 +32,15 @@ This'll also install _Cargo_, Rust's package/project manager.
 
 The following command will download and compile Rustlings:
 
-<!-- TODO: Remove @6.0.0-beta.x -->
-
 ```bash
-cargo install rustlings@6.0.0-beta.9
+cargo install rustlings
 ```
 
 <details>
 <summary><strong>If the installation fails…</strong> (<em>click to expand</em>)</summary>
 
-<!-- TODO: Remove @6.0.0-beta.x -->
-
 - Make sure you have the latest Rust version by running `rustup update`
-- Try adding the `--locked` flag: `cargo install rustlings@6.0.0-beta.9 --locked`
+- Try adding the `--locked` flag: `cargo install rustlings --locked`
 - Otherwise, please [report the issue](https://github.com/rust-lang/rustlings/issues/new)
 
 </details>
@@ -87,6 +83,9 @@ We highly recommend that you have a look at them before you start 📚️
 
 Most exercises contain an error that keeps them from compiling, and it's up to you to fix it!
 Some exercises contain tests that need to pass for the exercise to be done ✅
+
+Search for `TODO` and `todo!()` to find out what you need to change.
+Ask for hints by entering `h` in the _watch mode_ 💡
 
 ### Watch Mode
 
