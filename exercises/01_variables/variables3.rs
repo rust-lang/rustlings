@@ -1,11 +1,6 @@
-// variables3.rs
-//
-// Execute `rustlings hint variables3` or use the `hint` watch subcommand for a
-// hint.
-
-// I AM NOT DONE
-
 fn main() {
+    // TODO: Change the line below to fix the compiler error.
     let x: i32;
-    println!("Number {}", x);
+
+    println!("Number {x}");
 }

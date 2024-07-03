@@ -1,14 +1,8 @@
-// macros2.rs
-//
-// Execute `rustlings hint macros2` or use the `hint` watch subcommand for a
-// hint.
-
-// I AM NOT DONE
-
 fn main() {
     my_macro!();
 }
 
+// TODO: Fix the compiler error by moving the whole definition of this macro.
 macro_rules! my_macro {
     () => {
         println!("Check out my macro!");

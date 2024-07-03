@@ -1,0 +1,20 @@
+[package]
+name = "rustlings-macros"
+description = "A macros crate intended to be used only by Rustlings"
+version.workspace = true
+authors.workspace = true
+repository.workspace = true
+license.workspace = true
+edition.workspace = true
+include = [
+  "/src/",
+  "/info.toml",
+]
+
+[lib]
+proc-macro = true
+
+[dependencies]
+quote = "1.0.36"
+serde.workspace = true
+toml_edit.workspace = true

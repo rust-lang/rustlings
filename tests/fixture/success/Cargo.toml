@@ -1,0 +1,12 @@
+[package]
+name = "success"
+edition = "2021"
+publish = false
+
+[[bin]]
+name = "compSuccess"
+path = "exercises/compSuccess.rs"
+
+[[bin]]
+name = "testSuccess"
+path = "exercises/testSuccess.rs"
