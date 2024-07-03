@@ -57,7 +57,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: dtolnay/rust-toolchain@stable
       - uses: swatinem/rust-cache@v2
 
       # If you use any mdbook plugins, here's the place to install them!
