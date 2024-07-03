@@ -34,5 +34,10 @@ jobs:
       - uses: swatinem/rust-cache@v2
       - name: Run cargo test
         run: cargo test
+  dev-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: swatinem/rust-cache@v2
       - name: Run rustlings dev check
         run: cargo run -- dev check
