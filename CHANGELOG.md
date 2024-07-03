@@ -1,5 +1,6 @@
 <a name="6.0.0"></a>
-## 6.0.0 (2024-07-02)
+
+## 6.0.0 (2024-07-03)
 
 This release is the result of a complete rewrite to deliver a ton of new features and improvements ✨
 The most important changes are highlighted below.
@@ -27,7 +28,7 @@ You can read about the motivations of this change in [this issue](https://github
 
 ### List mode
 
-A list mode was added using [`Ratatui`](https://ratatui.rs).
+A list mode was added using [Ratatui](https://ratatui.rs).
 You can enter it by entering `l` in the watch mode.
 It offers the following features:
 
@@ -65,6 +66,7 @@ Or do you want to translate the original Rustlings exercises?
 Then follow the link to the guide about [third-party exercises](THIRD_PARTY_EXERCISES.md)!
 
 <a name="5.6.1"></a>
+
 ## 5.6.1 (2023-09-18)
 
 #### Changed
@@ -81,6 +83,7 @@ Then follow the link to the guide about [third-party exercises](THIRD_PARTY_EXER
 - `enums3`: Fixed formatting with `rustfmt`.
 
 <a name="5.6.0"></a>
+
 ## 5.6.0 (2023-09-04)
 
 #### Added
@@ -121,6 +124,7 @@ Then follow the link to the guide about [third-party exercises](THIRD_PARTY_EXER
 - Improved CI workflows, we're now testing on multiple platforms at once.
 
 <a name="5.5.1"></a>
+
 ## 5.5.1 (2023-05-17)
 
 #### Fixed
@@ -128,6 +132,7 @@ Then follow the link to the guide about [third-party exercises](THIRD_PARTY_EXER
 - Reverted `rust-project.json` path generation due to an upstream `rust-analyzer` fix.
 
 <a name="5.5.0"></a>
+
 ## 5.5.0 (2023-05-17)
 
 #### Added
@@ -163,6 +168,7 @@ Then follow the link to the guide about [third-party exercises](THIRD_PARTY_EXER
 - Split quick installation section into two code blocks
 
 <a name="5.4.1"></a>
+
 ## 5.4.1 (2023-03-10)
 
 #### Changed
