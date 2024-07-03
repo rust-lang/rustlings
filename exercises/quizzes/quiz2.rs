@@ -13,7 +13,7 @@
 // - Append "bar" to the string a specified amount of times
 //
 // The exact form of this will be:
-// - The input is going to be a vector of a 2-length tuple,
+// - The input is going to be a Vector of 2-length tuples,
 //   the first element is the string, the second one is the command.
 // - The output element is going to be a vector of strings.
 
