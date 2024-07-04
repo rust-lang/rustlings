@@ -1,4 +1,4 @@
-fn factorial(num: u8) -> u64 {
+fn factorial(num: u64) -> u64 {
     // TODO: Complete this function to return the factorial of `num`.
     // Do not use:
     // - early returns (using the `return` keyword explicitly)
