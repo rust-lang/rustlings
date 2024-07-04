@@ -7,7 +7,7 @@ fn main() {
 
     println!("Number {x}");
 
-    // It possible to declare a variable and initialize it later.
+    // It is possible to declare a variable and initialize it later.
     // But it can't be used before initialization.
     let y: i32;
     y = 42;
