@@ -1,3 +1,4 @@
+#[allow(dead_code)]
 #[derive(Debug)]
 enum Message {
     Move { x: i64, y: i64 },
@@ -8,7 +9,7 @@ enum Message {
 
 impl Message {
     fn call(&self) {
-        println!("{:?}", self);
+        println!("{self:?}");
     }
 }
 

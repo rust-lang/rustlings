@@ -1,3 +1,5 @@
+#![allow(clippy::needless_late_init)]
+
 fn main() {
     // Reading uninitialized variables isn't allowed in Rust!
     // Therefore, we need to assign a value first.

@@ -1,3 +1,4 @@
+#[allow(dead_code)]
 #[derive(Debug)]
 enum Message {
     // TODO: Define the different variants used below.
@@ -5,7 +6,7 @@ enum Message {
 
 impl Message {
     fn call(&self) {
-        println!("{:?}", self);
+        println!("{self:?}");
     }
 }
 

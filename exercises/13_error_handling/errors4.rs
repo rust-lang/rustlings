@@ -1,3 +1,5 @@
+#![allow(clippy::comparison_chain)]
+
 #[derive(PartialEq, Debug)]
 enum CreationError {
     Negative,

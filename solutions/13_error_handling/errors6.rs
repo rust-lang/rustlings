@@ -36,7 +36,7 @@ impl PositiveNonzeroInteger {
     fn new(value: i64) -> Result<Self, CreationError> {
         match value {
             x if x < 0 => Err(CreationError::Negative),
-            x if x == 0 => Err(CreationError::Zero),
+            0 => Err(CreationError::Zero),
             x => Ok(Self(x as u64)),
         }
     }
@@ -57,7 +57,6 @@ fn main() {
 #[cfg(test)]
 mod test {
     use super::*;
-    use std::num::IntErrorKind;
 
     #[test]
     fn test_parse_error() {

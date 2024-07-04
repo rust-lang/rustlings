@@ -1,3 +1,4 @@
+#[allow(dead_code)]
 mod delicious_snacks {
     // Added `pub` and used the expected alias after `as`.
     pub use self::fruits::PEAR as fruit;

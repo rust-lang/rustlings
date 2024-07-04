@@ -8,6 +8,7 @@ use std::rc::Rc;
 #[derive(Debug)]
 struct Sun;
 
+#[allow(dead_code)]
 #[derive(Debug)]
 enum Planet {
     Mercury(Rc<Sun>),

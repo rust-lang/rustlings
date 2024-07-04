@@ -4,6 +4,7 @@
 // type itself. You can read more about it in the documentation:
 // https://doc.rust-lang.org/std/convert/trait.TryFrom.html
 
+#![allow(clippy::useless_vec)]
 use std::convert::{TryFrom, TryInto};
 
 #[derive(Debug, PartialEq)]
