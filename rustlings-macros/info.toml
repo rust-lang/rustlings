@@ -16,16 +16,14 @@ get started, here are some notes about how Rustlings operates:
 3. If you're stuck on an exercise, enter `h` to show a hint.
 4. If an exercise doesn't make sense to you, feel free to open an issue on GitHub!
    (https://github.com/rust-lang/rustlings). We look at every issue, and sometimes,
-   other learners do too so you can help each other out!
-"""
+   other learners do too so you can help each other out!"""
 
 final_message = """We hope you enjoyed learning about the various aspects of Rust!
 If you noticed any issues, don't hesitate to report them on Github.
 You can also contribute your own exercises to help the greater community!
 
 Before reporting an issue or contributing, please read our guidelines:
-https://github.com/rust-lang/rustlings/blob/main/CONTRIBUTING.md
-"""
+https://github.com/rust-lang/rustlings/blob/main/CONTRIBUTING.md"""
 
 # INTRO
 
@@ -130,8 +128,7 @@ The type of Constants must always be annotated.
 
 Read more about constants and the differences between variables and constants
 under 'Constants' in the book's section 'Variables and Mutability':
-https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html#constants
-"""
+https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html#constants"""
 
 # FUNCTIONS
 
@@ -312,8 +309,7 @@ In Rust, there are two ways to define a Vector.
    the initial values.
 
 Check this chapter: https://doc.rust-lang.org/stable/book/ch08-01-vectors.html
-of the Rust book to learn more.
-"""
+of the Rust book to learn more."""
 
 [[exercises]]
 name = "vecs2"
@@ -327,8 +323,7 @@ In the second function, we map the values of the input and collect them into a v
 After you've completed both functions, decide for yourself which approach you
 like better.
 
-What do you think is the more commonly used pattern under Rust developers?
-"""
+What do you think is the more commonly used pattern under Rust developers?"""
 
 # MOVE SEMANTICS
 
@@ -355,8 +350,7 @@ We call this "moving" a variable. When we pass `vec0` into `fill_vec`, it's
 being "moved" into `vec1`, meaning we can't access `vec0` anymore.
 
 You could make another, separate version of the data that's in `vec0` and
-pass it to `fill_vec` instead.
-"""
+pass it to `fill_vec` instead."""
 
 [[exercises]]
 name = "move_semantics3"
@@ -375,8 +369,7 @@ Carefully reason about the range in which each mutable reference is in
 scope. Does it help to update the value of `x` immediately after
 the mutable reference is taken?
 Read more about 'Mutable References' in the book's section 'References and Borrowing':
-https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html#mutable-references.
-"""
+https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html#mutable-references."""
 
 [[exercises]]
 name = "move_semantics5"
@@ -517,8 +510,7 @@ Example:
 `placeholder("blue");`
 should become
 `string_slice("blue");`
-because "blue" is `&str`, not `String`.
-"""
+because "blue" is `&str`, not `String`."""
 
 # MODULES
 
@@ -620,8 +612,7 @@ Remember that `Option`s can be nested in if-let and while-let statements.
 
 For example: `if let Some(Some(x)) = y`
 
-Also see `Option::flatten`
-"""
+Also see `Option::flatten`"""
 
 [[exercises]]
 name = "options3"
@@ -813,8 +804,7 @@ Here is how to specify a trait bound for an implementation block:
 `impl<T: Trait1 + Trait2 + …> for Foo<T> { … }`
 
 You may need this:
-`use std::fmt::Display;`
-"""
+`use std::fmt::Display;`"""
 
 # LIFETIMES
 
