@@ -4,7 +4,6 @@
 //
 // The exercise file will be reloaded when you change one of the lines below!
 // Try adding a new `println!`.
-// Try removing a semicolon and see what happens in the terminal!
 
 fn main() {
     println!("Hello and");
