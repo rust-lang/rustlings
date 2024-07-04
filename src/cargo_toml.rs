@@ -111,6 +111,7 @@ mod tests {
                 test: true,
                 strict_clippy: true,
                 hint: String::new(),
+                skip_check_unsolved: false,
             },
             ExerciseInfo {
                 name: String::from("2"),
@@ -118,6 +119,7 @@ mod tests {
                 test: false,
                 strict_clippy: false,
                 hint: String::new(),
+                skip_check_unsolved: false,
             },
         ];
 
