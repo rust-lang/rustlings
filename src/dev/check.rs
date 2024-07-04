@@ -92,6 +92,10 @@ fn check_info_file_exercises(info_file: &InfoFile) -> Result<hashbrown::HashSet<
             bail!("The `main` function is missing in the file `{path}`.\nCreate at least an empty `main` function to avoid language server errors");
         }
 
+        if !file_buf.contains("// TODO") {
+            bail!("Didn't find any `// TODO` comment in the file `{path}`.\nYou need to have at least one such comment to guide the user.");
+        }
+
         if !exercise_info.test && file_buf.contains("#[test]") {
             bail!("The file `{path}` contains tests annotated with `#[test]` but the exercise `{name}` has `test = false` in the `info.toml` file");
         }
