@@ -1,3 +1,10 @@
+<a name="6.0.1"></a>
+
+## 6.0.1 (2024-07-04)
+
+Small exercise improvements and fixes.
+Most importantly, fixed that the exercise `clippy1` was already solved 😅
+
 <a name="6.0.0"></a>
 
 ## 6.0.0 (2024-07-03)
