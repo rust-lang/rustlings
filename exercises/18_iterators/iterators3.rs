@@ -54,7 +54,7 @@ mod tests {
 
     #[test]
     fn test_result_with_list() {
-        assert_eq!(result_with_list().unwarp(), [1, 11, 1426, 3]);
+        assert_eq!(result_with_list().unwrap(), [1, 11, 1426, 3]);
     }
 
     #[test]
