@@ -31,6 +31,7 @@ https://github.com/rust-lang/rustlings/blob/main/CONTRIBUTING.md"""
 name = "intro1"
 dir = "00_intro"
 test = false
+skip_check_unsolved = true
 hint = """
 Enter `n` to move on to the next exercise.
 You might need to press ENTER after typing `n`."""

@@ -11,14 +11,17 @@ pub struct ExerciseInfo {
     pub name: String,
     /// Exercise's directory name inside the `exercises/` directory.
     pub dir: Option<String>,
-    #[serde(default = "default_true")]
     /// Run `cargo test` on the exercise.
+    #[serde(default = "default_true")]
     pub test: bool,
     /// Deny all Clippy warnings.
     #[serde(default)]
     pub strict_clippy: bool,
     /// The exercise's hint to be shown to the user on request.
     pub hint: String,
+    /// The exercise is already solved. Ignore it when checking that all exercises are unsolved.
+    #[serde(default)]
+    pub skip_check_unsolved: bool,
 }
 #[inline(always)]
 const fn default_true() -> bool {

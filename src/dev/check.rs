@@ -162,7 +162,46 @@ fn check_unexpected_files(
     Ok(())
 }
 
-fn check_exercises(info_file: &InfoFile) -> Result<()> {
+fn check_exercises_unsolved(info_file: &InfoFile, target_dir: &Path) -> Result<()> {
+    let error_occurred = AtomicBool::new(false);
+
+    println!(
+        "Running all exercises to check that they aren't already solved. This may take a while…\n",
+    );
+    thread::scope(|s| {
+        for exercise_info in &info_file.exercises {
+            if exercise_info.skip_check_unsolved {
+                continue;
+            }
+
+            s.spawn(|| {
+                let error = |e| {
+                    let mut stderr = io::stderr().lock();
+                    stderr.write_all(e).unwrap();
+                    stderr.write_all(b"\nProblem with the exercise ").unwrap();
+                    stderr.write_all(exercise_info.name.as_bytes()).unwrap();
+                    stderr.write_all(SEPARATOR).unwrap();
+                    error_occurred.store(true, atomic::Ordering::Relaxed);
+                };
+
+                let mut output = Vec::with_capacity(OUTPUT_CAPACITY);
+                match exercise_info.run_exercise(&mut output, target_dir) {
+                    Ok(true) => error(b"Already solved!"),
+                    Ok(false) => (),
+                    Err(e) => error(e.to_string().as_bytes()),
+                }
+            });
+        }
+    });
+
+    if error_occurred.load(atomic::Ordering::Relaxed) {
+        bail!(CHECK_EXERCISES_UNSOLVED_ERR);
+    }
+
+    Ok(())
+}
+
+fn check_exercises(info_file: &InfoFile, target_dir: &Path) -> Result<()> {
     match info_file.format_version.cmp(&CURRENT_FORMAT_VERSION) {
         Ordering::Less => bail!("`format_version` < {CURRENT_FORMAT_VERSION} (supported version)\nPlease migrate to the latest format version"),
         Ordering::Greater => bail!("`format_version` > {CURRENT_FORMAT_VERSION} (supported version)\nTry updating the Rustlings program"),
@@ -172,15 +211,14 @@ fn check_exercises(info_file: &InfoFile) -> Result<()> {
     let info_file_paths = check_info_file_exercises(info_file)?;
     check_unexpected_files("exercises", &info_file_paths)?;
 
-    Ok(())
+    check_exercises_unsolved(info_file, target_dir)
 }
 
-fn check_solutions(require_solutions: bool, info_file: &InfoFile) -> Result<()> {
-    let target_dir = parse_target_dir()?;
+fn check_solutions(require_solutions: bool, info_file: &InfoFile, target_dir: &Path) -> Result<()> {
     let paths = Mutex::new(hashbrown::HashSet::with_capacity(info_file.exercises.len()));
     let error_occurred = AtomicBool::new(false);
 
-    println!("Running all solutions. This may take a while...\n");
+    println!("Running all solutions. This may take a while…\n");
     thread::scope(|s| {
         for exercise_info in &info_file.exercises {
             s.spawn(|| {
@@ -206,7 +244,7 @@ fn check_solutions(require_solutions: bool, info_file: &InfoFile) -> Result<()> 
                 }
 
                 let mut output = Vec::with_capacity(OUTPUT_CAPACITY);
-                match exercise_info.run_solution(&mut output, &target_dir) {
+                match exercise_info.run_solution(&mut output, target_dir) {
                     Ok(true) => {
                         paths.lock().unwrap().insert(PathBuf::from(path));
                     }
@@ -242,8 +280,9 @@ pub fn check(require_solutions: bool) -> Result<()> {
         check_cargo_toml(&info_file.exercises, &current_cargo_toml, b"")?;
     }
 
-    check_exercises(&info_file)?;
-    check_solutions(require_solutions, &info_file)?;
+    let target_dir = parse_target_dir()?;
+    check_exercises(&info_file, &target_dir)?;
+    check_solutions(require_solutions, &info_file, &target_dir)?;
 
     println!("\nEverything looks fine!");
 
@@ -252,3 +291,6 @@ pub fn check(require_solutions: bool) -> Result<()> {
 
 const SEPARATOR: &[u8] =
     b"\n========================================================================================\n";
+
+const CHECK_EXERCISES_UNSOLVED_ERR: &str = "At least one exercise is already solved or failed to run. See the output above.
+If this is an intro exercise that is intended to be already solved, add `skip_check_unsolved = true` to the exercise's metadata in the `info.toml` file.";
