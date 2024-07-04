@@ -1,4 +1,4 @@
-// In this exercise, we are given a `Vec` of u32 called `numbers` with values
+// In this exercise, we are given a `Vec` of `u32` called `numbers` with values
 // ranging from 0 to 99. We would like to use this set of numbers within 8
 // different threads simultaneously. Each thread is going to get the sum of
 // every eighth value with an offset.
@@ -9,8 +9,11 @@
 // …
 // The eighth thread (offset 7), will sum 7, 15, 23, …
 //
-// Because we are using threads, our values need to be thread-safe. Therefore,
-// we are using `Arc`.
+// Each thread should own a reference-counting pointer to the vector of
+// numbers. But `Rc` isn't thread-safe. Therefore, we need to use `Arc`.
+//
+// Don't get distracted by how threads are spawned and joined. We will practice
+// that later in the exercises about threads.
 
 // Don't change the lines below.
 #![forbid(unused_imports)]
