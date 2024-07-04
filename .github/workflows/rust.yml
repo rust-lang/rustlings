@@ -40,4 +40,4 @@ jobs:
       - uses: actions/checkout@v4
       - uses: swatinem/rust-cache@v2
       - name: Run rustlings dev check
-        run: cargo run -- dev check
+        run: cargo run -- dev check --require-solutions
