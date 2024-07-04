@@ -22,6 +22,7 @@ mod tests {
     fn raw_value() {
         // Using `unwrap` is fine in a test.
         let icecreams = maybe_icecream(12).unwrap();
+
         assert_eq!(icecreams, 5);
     }
 
