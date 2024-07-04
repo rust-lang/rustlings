@@ -3,7 +3,7 @@
 // ready for the next exercise, enter `n` in the terminal.
 //
 // The exercise file will be reloaded when you change one of the lines below!
-// Try adding a new `println!`.
+// Try adding a new `println!` and check the updated output in the terminal.
 
 fn main() {
     println!("Hello and");
