@@ -1,7 +1,3 @@
-// This quiz tests:
-// - Generics
-// - Traits
-//
 // An imaginary magical school has a new report card generation system written
 // in Rust! Currently, the system only supports creating report cards where the
 // student's grade is represented numerically (e.g. 1.0 -> 5.5). However, the
