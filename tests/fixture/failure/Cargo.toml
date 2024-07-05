@@ -1,0 +1,20 @@
+[package]
+name = "failure"
+edition = "2021"
+publish = false
+
+[[bin]]
+name = "compFailure"
+path = "exercises/compFailure.rs"
+
+[[bin]]
+name = "compNoExercise"
+path = "exercises/compNoExercise.rs"
+
+[[bin]]
+name = "testFailure"
+path = "exercises/testFailure.rs"
+
+[[bin]]
+name = "testNotPassed"
+path = "exercises/testNotPassed.rs"

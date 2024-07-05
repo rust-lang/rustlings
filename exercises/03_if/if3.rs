@@ -1,10 +1,5 @@
-// if3.rs
-//
-// Execute `rustlings hint if3` or use the `hint` watch subcommand for a hint.
-
-// I AM NOT DONE
-
-pub fn animal_habitat(animal: &str) -> &'static str {
+fn animal_habitat(animal: &str) -> &str {
+    // TODO: Fix the compiler error in the statement below.
     let identifier = if animal == "crab" {
         1
     } else if animal == "gopher" {
@@ -15,8 +10,8 @@ pub fn animal_habitat(animal: &str) -> &'static str {
         "Unknown"
     };
 
-    // DO NOT CHANGE THIS STATEMENT BELOW
-    let habitat = if identifier == 1 {
+    // Don't change the expression below!
+    if identifier == 1 {
         "Beach"
     } else if identifier == 2 {
         "Burrow"
@@ -24,12 +19,14 @@ pub fn animal_habitat(animal: &str) -> &'static str {
         "Desert"
     } else {
         "Unknown"
-    };
-
-    habitat
+    }
 }
 
-// No test changes needed.
+fn main() {
+    // You can optionally experiment here.
+}
+
+// Don't change the tests!
 #[cfg(test)]
 mod tests {
     use super::*;

@@ -1,378 +1,181 @@
-use regex::Regex;
-use serde::Deserialize;
-use std::env;
-use std::fmt::{self, Display, Formatter};
-use std::fs::{self, remove_file, File};
-use std::io::Read;
-use std::path::PathBuf;
-use std::process::{self, Command};
+use anyhow::Result;
+use crossterm::style::{style, StyledContent, Stylize};
+use std::{
+    fmt::{self, Display, Formatter},
+    io::Write,
+    path::{Path, PathBuf},
+    process::Command,
+};
 
-const RUSTC_COLOR_ARGS: &[&str] = &["--color", "always"];
-const RUSTC_EDITION_ARGS: &[&str] = &["--edition", "2021"];
-const RUSTC_NO_DEBUG_ARGS: &[&str] = &["-C", "strip=debuginfo"];
-const I_AM_DONE_REGEX: &str = r"(?m)^\s*///?\s*I\s+AM\s+NOT\s+DONE";
-const CONTEXT: usize = 2;
-const CLIPPY_CARGO_TOML_PATH: &str = "./exercises/22_clippy/Cargo.toml";
+use crate::{
+    cmd::{run_cmd, CargoCmd},
+    in_official_repo,
+    terminal_link::TerminalFileLink,
+    DEBUG_PROFILE,
+};
 
-// Get a temporary file name that is hopefully unique
-#[inline]
-fn temp_file() -> String {
-    let thread_id: String = format!("{:?}", std::thread::current().id())
-        .chars()
-        .filter(|c| c.is_alphanumeric())
-        .collect();
+/// The initial capacity of the output buffer.
+pub const OUTPUT_CAPACITY: usize = 1 << 14;
 
-    format!("./temp_{}_{thread_id}", process::id())
+// Run an exercise binary and append its output to the `output` buffer.
+// Compilation must be done before calling this method.
+fn run_bin(bin_name: &str, output: &mut Vec<u8>, target_dir: &Path) -> Result<bool> {
+    writeln!(output, "{}", "Output".underlined())?;
+
+    // 7 = "/debug/".len()
+    let mut bin_path = PathBuf::with_capacity(target_dir.as_os_str().len() + 7 + bin_name.len());
+    bin_path.push(target_dir);
+    bin_path.push("debug");
+    bin_path.push(bin_name);
+
+    let success = run_cmd(Command::new(&bin_path), &bin_path.to_string_lossy(), output)?;
+
+    if !success {
+        // This output is important to show the user that something went wrong.
+        // Otherwise, calling something like `exit(1)` in an exercise without further output
+        // leaves the user confused about why the exercise isn't done yet.
+        writeln!(
+            output,
+            "{}",
+            "The exercise didn't run successfully (nonzero exit code)"
+                .bold()
+                .red(),
+        )?;
+    }
+
+    Ok(success)
 }
 
-// The mode of the exercise.
-#[derive(Deserialize, Copy, Clone, Debug)]
-#[serde(rename_all = "lowercase")]
-pub enum Mode {
-    // Indicates that the exercise should be compiled as a binary
-    Compile,
-    // Indicates that the exercise should be compiled as a test harness
-    Test,
-    // Indicates that the exercise should be linted with clippy
-    Clippy,
-}
-
-#[derive(Deserialize)]
-pub struct ExerciseList {
-    pub exercises: Vec<Exercise>,
-}
-
-// A representation of a rustlings exercise.
-// This is deserialized from the accompanying info.toml file
-#[derive(Deserialize, Debug)]
+/// See `info_file::ExerciseInfo`
 pub struct Exercise {
-    // Name of the exercise
-    pub name: String,
-    // The path to the file containing the exercise's source code
-    pub path: PathBuf,
-    // The mode of the exercise (Test, Compile, or Clippy)
-    pub mode: Mode,
-    // The hint text associated with the exercise
+    pub dir: Option<&'static str>,
+    pub name: &'static str,
+    /// Path of the exercise file starting with the `exercises/` directory.
+    pub path: &'static str,
+    pub test: bool,
+    pub strict_clippy: bool,
     pub hint: String,
-}
-
-// An enum to track of the state of an Exercise.
-// An Exercise can be either Done or Pending
-#[derive(PartialEq, Debug)]
-pub enum State {
-    // The state of the exercise once it's been completed
-    Done,
-    // The state of the exercise while it's not completed yet
-    Pending(Vec<ContextLine>),
-}
-
-// The context information of a pending exercise
-#[derive(PartialEq, Debug)]
-pub struct ContextLine {
-    // The source code that is still pending completion
-    pub line: String,
-    // The line number of the source code still pending completion
-    pub number: usize,
-    // Whether or not this is important
-    pub important: bool,
-}
-
-// The result of compiling an exercise
-pub struct CompiledExercise<'a> {
-    exercise: &'a Exercise,
-    _handle: FileHandle,
-}
-
-impl<'a> CompiledExercise<'a> {
-    // Run the compiled exercise
-    pub fn run(&self) -> Result<ExerciseOutput, ExerciseOutput> {
-        self.exercise.run()
-    }
-}
-
-// A representation of an already executed binary
-#[derive(Debug)]
-pub struct ExerciseOutput {
-    // The textual contents of the standard output of the binary
-    pub stdout: String,
-    // The textual contents of the standard error of the binary
-    pub stderr: String,
-}
-
-struct FileHandle;
-
-impl Drop for FileHandle {
-    fn drop(&mut self) {
-        clean();
-    }
+    pub done: bool,
 }
 
 impl Exercise {
-    pub fn compile(&self) -> Result<CompiledExercise, ExerciseOutput> {
-        let cmd = match self.mode {
-            Mode::Compile => Command::new("rustc")
-                .args([self.path.to_str().unwrap(), "-o", &temp_file()])
-                .args(RUSTC_COLOR_ARGS)
-                .args(RUSTC_EDITION_ARGS)
-                .args(RUSTC_NO_DEBUG_ARGS)
-                .output(),
-            Mode::Test => Command::new("rustc")
-                .args(["--test", self.path.to_str().unwrap(), "-o", &temp_file()])
-                .args(RUSTC_COLOR_ARGS)
-                .args(RUSTC_EDITION_ARGS)
-                .args(RUSTC_NO_DEBUG_ARGS)
-                .output(),
-            Mode::Clippy => {
-                let cargo_toml = format!(
-                    r#"[package]
-name = "{}"
-version = "0.0.1"
-edition = "2021"
-[[bin]]
-name = "{}"
-path = "{}.rs""#,
-                    self.name, self.name, self.name
-                );
-                let cargo_toml_error_msg = if env::var("NO_EMOJI").is_ok() {
-                    "Failed to write Clippy Cargo.toml file."
-                } else {
-                    "Failed to write 📎 Clippy 📎 Cargo.toml file."
-                };
-                fs::write(CLIPPY_CARGO_TOML_PATH, cargo_toml).expect(cargo_toml_error_msg);
-                // To support the ability to run the clippy exercises, build
-                // an executable, in addition to running clippy. With a
-                // compilation failure, this would silently fail. But we expect
-                // clippy to reflect the same failure while compiling later.
-                Command::new("rustc")
-                    .args([self.path.to_str().unwrap(), "-o", &temp_file()])
-                    .args(RUSTC_COLOR_ARGS)
-                    .args(RUSTC_EDITION_ARGS)
-                    .args(RUSTC_NO_DEBUG_ARGS)
-                    .output()
-                    .expect("Failed to compile!");
-                // Due to an issue with Clippy, a cargo clean is required to catch all lints.
-                // See https://github.com/rust-lang/rust-clippy/issues/2604
-                // This is already fixed on Clippy's master branch. See this issue to track merging into Cargo:
-                // https://github.com/rust-lang/rust-clippy/issues/3837
-                Command::new("cargo")
-                    .args(["clean", "--manifest-path", CLIPPY_CARGO_TOML_PATH])
-                    .args(RUSTC_COLOR_ARGS)
-                    .output()
-                    .expect("Failed to run 'cargo clean'");
-                Command::new("cargo")
-                    .args(["clippy", "--manifest-path", CLIPPY_CARGO_TOML_PATH])
-                    .args(RUSTC_COLOR_ARGS)
-                    .args(["--", "-D", "warnings", "-D", "clippy::float_cmp"])
-                    .output()
-            }
-        }
-        .expect("Failed to run 'compile' command.");
-
-        if cmd.status.success() {
-            Ok(CompiledExercise {
-                exercise: self,
-                _handle: FileHandle,
-            })
-        } else {
-            clean();
-            Err(ExerciseOutput {
-                stdout: String::from_utf8_lossy(&cmd.stdout).to_string(),
-                stderr: String::from_utf8_lossy(&cmd.stderr).to_string(),
-            })
-        }
-    }
-
-    fn run(&self) -> Result<ExerciseOutput, ExerciseOutput> {
-        let arg = match self.mode {
-            Mode::Test => "--show-output",
-            _ => "",
-        };
-        let cmd = Command::new(temp_file())
-            .arg(arg)
-            .output()
-            .expect("Failed to run 'run' command");
-
-        let output = ExerciseOutput {
-            stdout: String::from_utf8_lossy(&cmd.stdout).to_string(),
-            stderr: String::from_utf8_lossy(&cmd.stderr).to_string(),
-        };
-
-        if cmd.status.success() {
-            Ok(output)
-        } else {
-            Err(output)
-        }
-    }
-
-    pub fn state(&self) -> State {
-        let mut source_file = File::open(&self.path).unwrap_or_else(|e| {
-            panic!(
-                "We were unable to open the exercise file {}! {e}",
-                self.path.display()
-            )
-        });
-
-        let source = {
-            let mut s = String::new();
-            source_file.read_to_string(&mut s).unwrap_or_else(|e| {
-                panic!(
-                    "We were unable to read the exercise file {}! {e}",
-                    self.path.display()
-                )
-            });
-            s
-        };
-
-        let re = Regex::new(I_AM_DONE_REGEX).unwrap();
-
-        if !re.is_match(&source) {
-            return State::Done;
-        }
-
-        let matched_line_index = source
-            .lines()
-            .enumerate()
-            .find_map(|(i, line)| if re.is_match(line) { Some(i) } else { None })
-            .expect("This should not happen at all");
-
-        let min_line = ((matched_line_index as i32) - (CONTEXT as i32)).max(0) as usize;
-        let max_line = matched_line_index + CONTEXT;
-
-        let context = source
-            .lines()
-            .enumerate()
-            .filter(|&(i, _)| i >= min_line && i <= max_line)
-            .map(|(i, line)| ContextLine {
-                line: line.to_string(),
-                number: i + 1,
-                important: i == matched_line_index,
-            })
-            .collect();
-
-        State::Pending(context)
-    }
-
-    // Check that the exercise looks to be solved using self.state()
-    // This is not the best way to check since
-    // the user can just remove the "I AM NOT DONE" string from the file
-    // without actually having solved anything.
-    // The only other way to truly check this would to compile and run
-    // the exercise; which would be both costly and counterintuitive
-    pub fn looks_done(&self) -> bool {
-        self.state() == State::Done
+    pub fn terminal_link(&self) -> StyledContent<TerminalFileLink<'_>> {
+        style(TerminalFileLink(self.path)).underlined().blue()
     }
 }
 
 impl Display for Exercise {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
-        write!(f, "{}", self.path.to_str().unwrap())
+        self.path.fmt(f)
     }
 }
 
-#[inline]
-fn clean() {
-    let _ignored = remove_file(temp_file());
+pub trait RunnableExercise {
+    fn name(&self) -> &str;
+    fn strict_clippy(&self) -> bool;
+    fn test(&self) -> bool;
+
+    // Compile, check and run the exercise or its solution (depending on `bin_name´).
+    // The output is written to the `output` buffer after clearing it.
+    fn run(&self, bin_name: &str, output: &mut Vec<u8>, target_dir: &Path) -> Result<bool> {
+        output.clear();
+
+        // Developing the official Rustlings.
+        let dev = DEBUG_PROFILE && in_official_repo();
+
+        let build_success = CargoCmd {
+            subcommand: "build",
+            args: &[],
+            bin_name,
+            description: "cargo build …",
+            hide_warnings: false,
+            target_dir,
+            output,
+            dev,
+        }
+        .run()?;
+        if !build_success {
+            return Ok(false);
+        }
+
+        // Discard the output of `cargo build` because it will be shown again by Clippy.
+        output.clear();
+
+        // `--profile test` is required to also check code with `[cfg(test)]`.
+        let clippy_args: &[&str] = if self.strict_clippy() {
+            &["--profile", "test", "--", "-D", "warnings"]
+        } else {
+            &["--profile", "test"]
+        };
+        let clippy_success = CargoCmd {
+            subcommand: "clippy",
+            args: clippy_args,
+            bin_name,
+            description: "cargo clippy …",
+            hide_warnings: false,
+            target_dir,
+            output,
+            dev,
+        }
+        .run()?;
+        if !clippy_success {
+            return Ok(false);
+        }
+
+        if !self.test() {
+            return run_bin(bin_name, output, target_dir);
+        }
+
+        let test_success = CargoCmd {
+            subcommand: "test",
+            args: &["--", "--color", "always", "--show-output"],
+            bin_name,
+            description: "cargo test …",
+            // Hide warnings because they are shown by Clippy.
+            hide_warnings: true,
+            target_dir,
+            output,
+            dev,
+        }
+        .run()?;
+
+        let run_success = run_bin(bin_name, output, target_dir)?;
+
+        Ok(test_success && run_success)
+    }
+
+    /// Compile, check and run the exercise.
+    /// The output is written to the `output` buffer after clearing it.
+    #[inline]
+    fn run_exercise(&self, output: &mut Vec<u8>, target_dir: &Path) -> Result<bool> {
+        self.run(self.name(), output, target_dir)
+    }
+
+    /// Compile, check and run the exercise's solution.
+    /// The output is written to the `output` buffer after clearing it.
+    fn run_solution(&self, output: &mut Vec<u8>, target_dir: &Path) -> Result<bool> {
+        let name = self.name();
+        let mut bin_name = String::with_capacity(name.len());
+        bin_name.push_str(name);
+        bin_name.push_str("_sol");
+
+        self.run(&bin_name, output, target_dir)
+    }
 }
 
-#[cfg(test)]
-mod test {
-    use super::*;
-    use std::path::Path;
-
-    #[test]
-    fn test_clean() {
-        File::create(temp_file()).unwrap();
-        let exercise = Exercise {
-            name: String::from("example"),
-            path: PathBuf::from("tests/fixture/state/pending_exercise.rs"),
-            mode: Mode::Compile,
-            hint: String::from(""),
-        };
-        let compiled = exercise.compile().unwrap();
-        drop(compiled);
-        assert!(!Path::new(&temp_file()).exists());
+impl RunnableExercise for Exercise {
+    #[inline]
+    fn name(&self) -> &str {
+        self.name
     }
 
-    #[test]
-    #[cfg(target_os = "windows")]
-    fn test_no_pdb_file() {
-        [Mode::Compile, Mode::Test] // Clippy doesn't like to test
-            .iter()
-            .for_each(|mode| {
-                let exercise = Exercise {
-                    name: String::from("example"),
-                    // We want a file that does actually compile
-                    path: PathBuf::from("tests/fixture/state/pending_exercise.rs"),
-                    mode: *mode,
-                    hint: String::from(""),
-                };
-                let _ = exercise.compile().unwrap();
-                assert!(!Path::new(&format!("{}.pdb", temp_file())).exists());
-            });
+    #[inline]
+    fn strict_clippy(&self) -> bool {
+        self.strict_clippy
     }
 
-    #[test]
-    fn test_pending_state() {
-        let exercise = Exercise {
-            name: "pending_exercise".into(),
-            path: PathBuf::from("tests/fixture/state/pending_exercise.rs"),
-            mode: Mode::Compile,
-            hint: String::new(),
-        };
-
-        let state = exercise.state();
-        let expected = vec![
-            ContextLine {
-                line: "// fake_exercise".to_string(),
-                number: 1,
-                important: false,
-            },
-            ContextLine {
-                line: "".to_string(),
-                number: 2,
-                important: false,
-            },
-            ContextLine {
-                line: "// I AM NOT DONE".to_string(),
-                number: 3,
-                important: true,
-            },
-            ContextLine {
-                line: "".to_string(),
-                number: 4,
-                important: false,
-            },
-            ContextLine {
-                line: "fn main() {".to_string(),
-                number: 5,
-                important: false,
-            },
-        ];
-
-        assert_eq!(state, State::Pending(expected));
-    }
-
-    #[test]
-    fn test_finished_exercise() {
-        let exercise = Exercise {
-            name: "finished_exercise".into(),
-            path: PathBuf::from("tests/fixture/state/finished_exercise.rs"),
-            mode: Mode::Compile,
-            hint: String::new(),
-        };
-
-        assert_eq!(exercise.state(), State::Done);
-    }
-
-    #[test]
-    fn test_exercise_with_output() {
-        let exercise = Exercise {
-            name: "exercise_with_output".into(),
-            path: PathBuf::from("tests/fixture/success/testSuccess.rs"),
-            mode: Mode::Test,
-            hint: String::new(),
-        };
-        let out = exercise.compile().unwrap().run().unwrap();
-        assert!(out.stdout.contains("THIS TEST TOO SHALL PASS"));
+    #[inline]
+    fn test(&self) -> bool {
+        self.test
     }
 }

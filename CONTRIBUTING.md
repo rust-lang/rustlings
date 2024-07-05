@@ -1,130 +1,61 @@
-## Contributing to Rustlings
+# Contributing to Rustlings
 
-First off, thanks for taking the time to contribute!! ❤️
+First off, thanks for taking the time to contribute! ❤️
 
-### Quick Reference
+## Quick Reference
 
-I want to...
+I want to …
 
-_add an exercise! ➡️ [read this](#addex) and then [open a Pull Request](#prs)_
+- _report a bug!_ ➡️ [open an issue](#issues)
+- _fix a bug!_ ➡️ [open a pull request](#pull-requests)
+- _implement a new feature!_ ➡️ [open an issue to discuss it first, then a pull request](#issues)
+- _add an exercise!_ ➡️ [read this](#adding-an-exercise)
+- _update an outdated exercise!_ ➡️ [open a pull request](#pull-requests)
 
-_update an outdated exercise! ➡️ [open a Pull Request](#prs)_
-
-_report a bug! ➡️ [open an Issue](#issues)_
-
-_fix a bug! ➡️ [open a Pull Request](#prs)_
-
-_implement a new feature! ➡️ [open an Issue to discuss it first, then a Pull Request](#issues)_
-
-<a name="#src"></a>
-### Working on the source code
-
-`rustlings` is basically a glorified `rustc` wrapper. Therefore the source code
-isn't really that complicated since the bulk of the work is done by `rustc`.
-`src/main.rs` contains a simple `argh` CLI that connects to most of the other source files.
-
-<a name="addex"></a>
-### Adding an exercise
-
-The first step is to add the exercise! Name the file `exercises/yourTopic/yourTopicN.rs`, make sure to
-put in some helpful links, and link to sections of the book in `exercises/yourTopic/README.md`.
-
-Next make sure it runs with `rustlings`. The exercise metadata is stored in `info.toml`, under the `exercises` array. The order of the `exercises` array determines the order the exercises are run by `rustlings verify` and `rustlings watch`.
-
-Add the metadata for your exercise in the correct order in the `exercises` array. If you are unsure of the correct ordering, add it at the bottom and ask in your pull request. The exercise metadata should contain the following:
-```diff
-  ...
-+ [[exercises]]
-+ name = "yourTopicN"
-+ path = "exercises/yourTopic/yourTopicN.rs"
-+ mode = "compile"
-+ hint = """
-+ Some kind of useful hint for your exercise."""
-  ...
-```
-
-The `mode` attribute decides whether Rustlings will only compile your exercise, or compile and test it. If you have tests to verify in your exercise, choose `test`, otherwise `compile`. If you're working on a Clippy exercise, use `mode = "clippy"`.
-
-That's all! Feel free to put up a pull request.
-
-<a name="issues"></a>
-### Issues
+## Issues
 
 You can open an issue [here](https://github.com/rust-lang/rustlings/issues/new).
 If you're reporting a bug, please include the output of the following commands:
 
-- `rustc --version`
+- `cargo --version`
 - `rustlings --version`
 - `ls -la`
 - Your OS name and version
 
-<a name="prs"></a>
-### Pull Requests
+## Pull Requests
 
-Opening a pull request is as easy as forking the repository and committing your
-changes. There's a couple of things to watch out for:
+You are welcome to open a pull request, but unless it is small and trivial, **please open an issue to discuss your idea first** 🙏🏼
 
-#### Write correct commit messages
+Opening a pull request is as easy as forking the repository and committing your changes.
+If you need any help with it or face any Git related problems, don't hesitate to ask for help 🤗
 
-We follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0-beta.4/)
-specification.
-This means that you have to format your commit messages in a specific way. Say
-you're working on adding a new exercise called `foobar1.rs`. You could write
-the following commit message:
+It may take time to review your pull request.
+Please be patient 😇
 
-```
-feat: add foobar1.rs exercise
-```
+When updating an exercise, check if its solution needs to be updated.
 
-If you're just fixing a bug, please use the `fix` type:
+## Adding An Exercise
 
-```
-fix(verify): make sure verify doesn't self-destruct
-```
+- Name the file `exercises/yourTopic/yourTopicN.rs`.
+- Make sure to put in some helpful links, and link to sections of The Book in `exercises/yourTopic/README.md`.
+- In the exercise, add a `// TODO: …` comment where user changes are required.
+- Add a solution at `solutions/yourTopic/yourTopicN.rs` with comments explaining it.
+- Add the [metadata for your exercise](#exercise-metadata) in the `rustlings-macros/info.toml` file.
+- Make sure your exercise runs with `rustlings run yourTopicN`.
+- [Open a pull request](#pull-requests).
 
-The scope within the brackets is optional, but should be any of these:
+### Exercise Metadata
 
-- `installation` (for the installation script)
-- `cli` (for general CLI changes)
-- `verify` (for the verification source file)
-- `watch` (for the watch functionality source)
-- `run` (for the run functionality source)
-- `EXERCISENAME` (if you're changing a specific exercise, or set of exercises,
-  substitute them here)
+The exercise metadata should contain the following:
 
-When the commit also happens to close an existing issue, link it in the message
-body:
-
-```
-fix: update foobar
-
-closes #101029908
+```toml
+[[exercises]]
+name = "yourTopicN"
+dir = "yourTopic"
+hint = """
+A useful (multi-line) hint for your exercise.
+Include links to a section in The Book or a documentation page."""
 ```
 
-If you're doing simple changes, like updating a book link, use `chore`:
-
-```
-chore: update exercise1.rs book link
-```
-
-If you're updating documentation, use `docs`:
-
-```
-docs: add more information to Readme
-```
-
-If, and only if, you're absolutely sure you want to make a breaking change
-(please discuss this beforehand!), add an exclamation mark to the type and
-explain the breaking change in the message body:
-
-```
-fix!: completely change verification
-
-BREAKING CHANGE: This has to be done because lorem ipsum dolor
-```
-
-#### Pull Request Workflow
-
-Once you open a Pull Request, it may be reviewed or labeled (or both) until
-the maintainers accept your change. Please be patient, it may take some time
-for this to happen!
+If your exercise doesn't contain any test, add `test = false` to the exercise metadata.
+But adding tests is recommended.

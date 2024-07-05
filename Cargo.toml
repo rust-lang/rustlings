@@ -1,30 +1,72 @@
+[workspace]
+resolver = "2"
+exclude = [
+  "tests/fixture/failure",
+  "tests/fixture/state",
+  "tests/fixture/success",
+  "dev",
+]
+
+[workspace.package]
+version = "6.0.1"
+authors = [
+  "Liv <mokou@fastmail.com>",
+  "Mo Bitar <mo8it@proton.me>",
+  # Alumni
+  "Carol (Nichols || Goulding) <carol.nichols@gmail.com>",
+]
+repository = "https://github.com/rust-lang/rustlings"
+license = "MIT"
+edition = "2021"
+
+[workspace.dependencies]
+serde = { version = "1.0.203", features = ["derive"] }
+toml_edit = { version = "0.22.14", default-features = false, features = ["parse", "serde"] }
+
 [package]
 name = "rustlings"
 description = "Small exercises to get you used to reading and writing Rust code!"
-version = "5.6.1"
-authors = [
-  "Liv <mokou@fastmail.com>",
-  "Carol (Nichols || Goulding) <carol.nichols@gmail.com>",
+version.workspace = true
+authors.workspace = true
+repository.workspace = true
+license.workspace = true
+edition.workspace = true
+keywords = [
+  "exercise",
+  "learning",
 ]
-edition = "2021"
+include = [
+  "/src/",
+  "/exercises/",
+  "/solutions/",
+  # A symlink to be able to include `dev/Cargo.toml` although `dev` is excluded.
+  "/dev-Cargo.toml",
+  "/README.md",
+  "/LICENSE",
+]
 
 [dependencies]
-indicatif = "0.17.6"
-console = "0.15"
-notify = "4.0"
-toml = "0.7.6"
-regex = "1.5"
-serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0.81"
-home = "0.5.3"
-glob = "0.3.0"
-clap = { version = "4.4.0", features = ["derive"] }
-
-[[bin]]
-name = "rustlings"
-path = "src/main.rs"
+anyhow = "1.0.86"
+clap = { version = "4.5.8", features = ["derive"] }
+crossterm = "0.27.0"
+hashbrown = "0.14.5"
+notify-debouncer-mini = { version = "0.4.1", default-features = false }
+os_pipe = "1.2.0"
+ratatui = { version = "0.27.0", default-features = false, features = ["crossterm"] }
+rustlings-macros = { path = "rustlings-macros", version = "=6.0.1" }
+serde_json = "1.0.120"
+serde.workspace = true
+toml_edit.workspace = true
 
 [dev-dependencies]
-assert_cmd = "2.0.12"
-predicates = "3.0.3"
-glob = "0.3.0"
+assert_cmd = "2.0.14"
+predicates = "3.1.0"
+
+[profile.release]
+panic = "abort"
+
+[profile.dev]
+panic = "abort"
+
+[package.metadata.release]
+pre-release-hook = ["./release-hook.sh"]

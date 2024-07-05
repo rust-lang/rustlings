@@ -1,13 +1,7 @@
-// enums2.rs
-//
-// Execute `rustlings hint enums2` or use the `hint` watch subcommand for a
-// hint.
-
-// I AM NOT DONE
-
+#[allow(dead_code)]
 #[derive(Debug)]
 enum Message {
-    // TODO: define the different variants used below
+    // TODO: Define the different variants used below.
 }
 
 #[derive(Debug)]
@@ -18,7 +12,7 @@ struct Point {
 
 impl Message {
     fn call(&self) {
-        println!("{:?}", self);
+        println!("{self:?}");
     }
 }
 

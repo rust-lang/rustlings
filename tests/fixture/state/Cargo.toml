@@ -1,0 +1,16 @@
+[package]
+name = "state"
+edition = "2021"
+publish = false
+
+[[bin]]
+name = "pending_exercise"
+path = "exercises/pending_exercise.rs"
+
+[[bin]]
+name = "pending_test_exercise"
+path = "exercises/pending_test_exercise.rs"
+
+[[bin]]
+name = "finished_exercise"
+path = "exercises/finished_exercise.rs"

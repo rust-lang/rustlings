@@ -1,14 +1,4 @@
-// threads3.rs
-//
-// Execute `rustlings hint threads3` or use the `hint` watch subcommand for a
-// hint.
-
-// I AM NOT DONE
-
-use std::sync::mpsc;
-use std::sync::Arc;
-use std::thread;
-use std::time::Duration;
+use std::{sync::mpsc, thread, time::Duration};
 
 struct Queue {
     length: u32,
@@ -18,7 +8,7 @@ struct Queue {
 
 impl Queue {
     fn new() -> Self {
-        Queue {
+        Self {
             length: 10,
             first_half: vec![1, 2, 3, 4, 5],
             second_half: vec![6, 7, 8, 9, 10],
@@ -26,42 +16,49 @@ impl Queue {
     }
 }
 
-fn send_tx(q: Queue, tx: mpsc::Sender<u32>) -> () {
-    let qc = Arc::new(q);
-    let qc1 = Arc::clone(&qc);
-    let qc2 = Arc::clone(&qc);
-
+fn send_tx(q: Queue, tx: mpsc::Sender<u32>) {
+    // TODO: We want to send `tx` to both threads. But currently, it is moved
+    // into the first thread. How could you solve this problem?
     thread::spawn(move || {
-        for val in &qc1.first_half {
-            println!("sending {:?}", val);
-            tx.send(*val).unwrap();
-            thread::sleep(Duration::from_secs(1));
+        for val in q.first_half {
+            println!("Sending {val:?}");
+            tx.send(val).unwrap();
+            thread::sleep(Duration::from_millis(250));
         }
     });
 
     thread::spawn(move || {
-        for val in &qc2.second_half {
-            println!("sending {:?}", val);
-            tx.send(*val).unwrap();
-            thread::sleep(Duration::from_secs(1));
+        for val in q.second_half {
+            println!("Sending {val:?}");
+            tx.send(val).unwrap();
+            thread::sleep(Duration::from_millis(250));
         }
     });
 }
 
-#[test]
 fn main() {
-    let (tx, rx) = mpsc::channel();
-    let queue = Queue::new();
-    let queue_length = queue.length;
+    // You can optionally experiment here.
+}
 
-    send_tx(queue, tx);
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-    let mut total_received: u32 = 0;
-    for received in rx {
-        println!("Got: {}", received);
-        total_received += 1;
+    #[test]
+    fn threads3() {
+        let (tx, rx) = mpsc::channel();
+        let queue = Queue::new();
+        let queue_length = queue.length;
+
+        send_tx(queue, tx);
+
+        let mut total_received: u32 = 0;
+        for received in rx {
+            println!("Got: {received}");
+            total_received += 1;
+        }
+
+        println!("Number of received values: {total_received}");
+        assert_eq!(total_received, queue_length);
     }
-
-    println!("total numbers received: {}", total_received);
-    assert_eq!(total_received, queue_length)
 }
