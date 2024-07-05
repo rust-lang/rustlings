@@ -5,7 +5,8 @@
 //
 // Mary is buying apples. The price of an apple is calculated as follows:
 // - An apple costs 2 rustbucks.
-// - If Mary buys more than 40 apples, each apple only costs 1 rustbuck!
+// - However, if Mary buys more than 40 apples, the price of each apple in the
+// entire order is reduced to only 1 rustbuck!
 // TODO: Write a function that calculates the price of an order of apples given
 // the quantity bought.
 
