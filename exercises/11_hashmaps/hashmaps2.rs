@@ -5,7 +5,8 @@
 // Apple (4), Mango (2) and Lychee (5) are already in the basket hash map. You
 // must add fruit to the basket so that there is at least one of each kind and
 // more than 11 in total - we have a lot of mouths to feed. You are not allowed
-// to insert any more of these fruits!
+// to insert any more of the fruits that are already in the basket (Apple,
+// Mango, and Lyche).
 
 use std::collections::HashMap;
 
