@@ -47,6 +47,23 @@ fn count_collection_iterator(collection: &[HashMap<String, Progress>], value: Pr
         .sum()
 }
 
+// Equivalent to `count_collection_iterator`+`count_iterator`, iterating as if
+// the collection was a single container instead of a container of containers
+// (and more accurately, a single iterator instead of an iterator of iterators).
+fn count_collection_iterator_flat(
+    collection: &[HashMap<String, Progress>],
+    value: Progress,
+) -> usize {
+    // `collection` is a slice of hash maps.
+    // collection = [{ "variables1": Complete, "from_str": None, … },
+    //               { "variables2": Complete, … }, … ]
+    collection
+        .iter()
+        .flat_map(HashMap::values) // or just `.flatten()` when wanting the default iterator (`HashMap::iter`)
+        .filter(|val| **val == value)
+        .count()
+}
+
 fn main() {
     // You can optionally experiment here.
 }
@@ -121,18 +138,30 @@ mod tests {
             count_collection_iterator(&collection, Progress::Complete),
             6,
         );
+        assert_eq!(
+            count_collection_iterator_flat(&collection, Progress::Complete),
+            6,
+        );
     }
 
     #[test]
     fn count_collection_some() {
         let collection = get_vec_map();
         assert_eq!(count_collection_iterator(&collection, Progress::Some), 1);
+        assert_eq!(
+            count_collection_iterator_flat(&collection, Progress::Some),
+            1
+        );
     }
 
     #[test]
     fn count_collection_none() {
         let collection = get_vec_map();
         assert_eq!(count_collection_iterator(&collection, Progress::None), 4);
+        assert_eq!(
+            count_collection_iterator_flat(&collection, Progress::None),
+            4
+        );
     }
 
     #[test]
@@ -144,6 +173,10 @@ mod tests {
             assert_eq!(
                 count_collection_for(&collection, progress_state),
                 count_collection_iterator(&collection, progress_state),
+            );
+            assert_eq!(
+                count_collection_for(&collection, progress_state),
+                count_collection_iterator_flat(&collection, progress_state),
             );
         }
     }
