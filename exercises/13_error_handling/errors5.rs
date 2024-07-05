@@ -39,8 +39,8 @@ struct PositiveNonzeroInteger(u64);
 impl PositiveNonzeroInteger {
     fn new(value: i64) -> Result<PositiveNonzeroInteger, CreationError> {
         match value {
-            0 => Err(CreationError::Zero),
             x if x < 0 => Err(CreationError::Negative),
+            0 => Err(CreationError::Zero),
             x => Ok(PositiveNonzeroInteger(x as u64)),
         }
     }
