@@ -1,14 +1,16 @@
 #[derive(Debug)]
 enum Message {
-    Quit,
-    Echo,
+    Resize,
     Move,
+    Echo,
     ChangeColor,
+    Quit,
 }
 
 fn main() {
-    println!("{:?}", Message::Quit);
-    println!("{:?}", Message::Echo);
+    println!("{:?}", Message::Resize);
     println!("{:?}", Message::Move);
+    println!("{:?}", Message::Echo);
     println!("{:?}", Message::ChangeColor);
+    println!("{:?}", Message::Quit);
 }
