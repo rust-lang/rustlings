@@ -1,7 +1,7 @@
 # Third-Party Exercises
 
 The support of Rustlings for third-party exercises allows you to create your own set of Rustlings exercises to focus on some specific topic.
-You could also offer a translatation of the original Rustlings exercises as third-party exercises.
+You could also offer a translation of the original Rustlings exercises as third-party exercises.
 
 ## Getting started
 
