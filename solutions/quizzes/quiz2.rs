@@ -52,12 +52,7 @@ mod my_module {
             .map(|(mut string, command)| match command {
                 Command::Uppercase => string.to_uppercase(),
                 Command::Trim => string.trim().to_string(),
-                Command::Append(n) => {
-                    for _ in 0..n {
-                        string += "bar";
-                    }
-                    string
-                }
+                Command::Append(n) => string + &"bar".repeat(n),
             })
             .collect()
     }
