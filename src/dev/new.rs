@@ -139,7 +139,7 @@ const README: &str = "# Rustlings 🦀
 
 Welcome to these third-party Rustlings exercises 😃
 
-First, [install Rustlings using the official instructions in the README of the Rustlings project](https://github.com/rust-lang/rustlings) ✅
+First, [install Rustlings using the official instructions](https://github.com/rust-lang/rustlings) ✅
 
-Then, open your terminal in this directory and run `rustlings` to get started with the exercises 🚀
+Then, clone this repository, open a terminal in this directory and run `rustlings` to get started with the exercises 🚀
 ";

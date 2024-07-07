@@ -197,9 +197,10 @@ fn main() -> Result<()> {
     Ok(())
 }
 
-const OLD_METHOD_ERR: &str = "You are trying to run Rustlings using the old method before v6.
+const OLD_METHOD_ERR: &str =
+    "You are trying to run Rustlings using the old method before version 6.
 The new method doesn't include cloning the Rustlings' repository.
-Please follow the instructions in the README:
+Please follow the instructions in `README.md`:
 https://github.com/rust-lang/rustlings#getting-started";
 
 const FORMAT_VERSION_HIGHER_ERR: &str =
@@ -216,5 +217,5 @@ const PRE_INIT_MSG: &str = r"
  |_|   \__,_|___/\__|_|_|_| |_|\__, |___/
                                |___/
 
-The `exercises` directory wasn't found in the current directory.
+The `exercises/` directory couldn't be found in the current directory.
 If you are just starting with Rustlings, run the command `rustlings init` to initialize it.";
