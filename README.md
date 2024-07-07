@@ -19,7 +19,7 @@ It contains code examples and exercises similar to Rustlings, but online.
 
 Before installing Rustlings, you need to have _Rust installed_.
 Visit [www.rust-lang.org/tools/install](https://www.rust-lang.org/tools/install) for further instructions on installing Rust.
-This'll also install _Cargo_, Rust's package/project manager.
+This will also install _Cargo_, Rust's package/project manager.
 
 > 🐧 If you're on Linux, make sure you've installed `gcc` (for a linker).
 >
