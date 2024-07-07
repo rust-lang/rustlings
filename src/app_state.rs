@@ -403,6 +403,9 @@ impl AppState {
             writeln!(writer, "{}", "ok".green())?;
         }
 
+        // Write that the last exercise is done.
+        self.write()?;
+
         clear_terminal(writer)?;
         writer.write_all(FENISH_LINE.as_bytes())?;
 
