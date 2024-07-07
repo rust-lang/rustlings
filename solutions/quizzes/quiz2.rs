@@ -24,17 +24,12 @@ mod my_module {
     pub fn transformer(input: Vec<(String, Command)>) -> Vec<String> {
         let mut output = Vec::new();
 
-        for (mut string, command) in input {
+        for (string, command) in input {
             // Create the new string.
             let new_string = match command {
                 Command::Uppercase => string.to_uppercase(),
                 Command::Trim => string.trim().to_string(),
-                Command::Append(n) => {
-                    for _ in 0..n {
-                        string += "bar";
-                    }
-                    string
-                }
+                Command::Append(n) => string + &"bar".repeat(n),
             };
 
             // Push the new string to the output vector.
@@ -49,7 +44,7 @@ mod my_module {
     pub fn transformer_iter(input: Vec<(String, Command)>) -> Vec<String> {
         input
             .into_iter()
-            .map(|(mut string, command)| match command {
+            .map(|(string, command)| match command {
                 Command::Uppercase => string.to_uppercase(),
                 Command::Trim => string.trim().to_string(),
                 Command::Append(n) => string + &"bar".repeat(n),
