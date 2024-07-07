@@ -34,8 +34,8 @@ impl State {
         self.message = s;
     }
 
-    fn change_color(&mut self, color: (u8, u8, u8)) {
-        self.color = color;
+    fn change_color(&mut self, red: u8, green: u8, blue: u8) {
+        self.color = (red, green, blue);
     }
 
     fn quit(&mut self) {
@@ -47,7 +47,7 @@ impl State {
             Message::Resize { width, height } => self.resize(width, height),
             Message::Move(point) => self.move_position(point),
             Message::Echo(s) => self.echo(s),
-            Message::ChangeColor(r, g, b) => self.change_color((r, g, b)),
+            Message::ChangeColor(r, g, b) => self.change_color(r, g, b),
             Message::Quit => self.quit(),
         }
     }

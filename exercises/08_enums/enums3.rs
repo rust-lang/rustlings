@@ -12,6 +12,7 @@ struct State {
     height: u64,
     position: Point,
     message: String,
+    // RGB color composed of red, green and blue.
     color: (u8, u8, u8),
     quit: bool,
 }
@@ -30,8 +31,8 @@ impl State {
         self.message = s;
     }
 
-    fn change_color(&mut self, color: (u8, u8, u8)) {
-        self.color = color;
+    fn change_color(&mut self, red: u8, green: u8, blue: u8) {
+        self.color = (red, green, blue);
     }
 
     fn quit(&mut self) {
@@ -39,9 +40,8 @@ impl State {
     }
 
     fn process(&mut self, message: Message) {
-        // TODO: Create a match expression to process the different message variants.
-        // Remember: When passing a tuple as a function argument, you'll need extra parentheses:
-        // e.g. `foo((t, u, p, l, e))`
+        // TODO: Create a match expression to process the different message
+        // variants using the methods defined above.
     }
 }
 
