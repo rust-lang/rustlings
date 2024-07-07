@@ -45,8 +45,9 @@ mod tests {
     #[test]
     fn owned_no_mutation() {
         // We can also pass `vec` without `&` so `Cow` owns it directly. In this
-        // case, no mutation occurs and thus also no clone. But the result is
-        // still owned because it was never borrowed or mutated.
+        // case, no mutation occurs (all numbers are already absolute) and thus
+        // also no clone. But the result is still owned because it was never
+        // borrowed or mutated.
         let vec = vec![0, 1, 2];
         let mut input = Cow::from(vec);
         abs_all(&mut input);
@@ -56,9 +57,9 @@ mod tests {
 
     #[test]
     fn owned_mutation() {
-        // Of course this is also the case if a mutation does occur. In this
-        // case, the call to `to_mut()` in the `abs_all` function returns a
-        // reference to the same data as before.
+        // Of course this is also the case if a mutation does occur (not all
+        // numbers are absolute). In this case, the call to `to_mut()` in the
+        // `abs_all` function returns a reference to the same data as before.
         let vec = vec![-1, 0, 1];
         let mut input = Cow::from(vec);
         abs_all(&mut input);
