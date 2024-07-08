@@ -585,7 +585,7 @@ https://doc.rust-lang.org/book/ch08-03-hash-maps.html#updating-a-value-based-on-
 [[exercises]]
 name = "quiz2"
 dir = "quizzes"
-hint = "No hints this time ;)"
+hint = "The `+` operator can concatinate a `String` with a `&str`."
 
 # OPTIONS
 
@@ -748,7 +748,9 @@ name = "traits1"
 dir = "15_traits"
 hint = """
 More about traits in The Book:
-https://doc.rust-lang.org/book/ch10-02-traits.html"""
+https://doc.rust-lang.org/book/ch10-02-traits.html
+
+The `+` operator can concatinate a `String` with a `&str`."""
 
 [[exercises]]
 name = "traits2"
