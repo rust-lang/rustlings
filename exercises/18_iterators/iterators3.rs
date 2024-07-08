@@ -1,12 +1,16 @@
 #[derive(Debug, PartialEq, Eq)]
 enum DivisionError {
+    // Example: 42 / 0
     DivideByZero,
+    // Only case for `i64`: `i64::MIN / -1` because the result is `i64::MAX + 1`
+    IntegerOverflow,
+    // Example: 5 / 2 = 2.5
     NotDivisible,
 }
 
 // TODO: Calculate `a` divided by `b` if `a` is evenly divisible by `b`.
 // Otherwise, return a suitable error.
-fn divide(a: i32, b: i32) -> Result<i32, DivisionError> {
+fn divide(a: i64, b: i64) -> Result<i64, DivisionError> {
     todo!();
 }
 
@@ -40,6 +44,11 @@ mod tests {
     #[test]
     fn test_divide_by_0() {
         assert_eq!(divide(81, 0), Err(DivisionError::DivideByZero));
+    }
+
+    #[test]
+    fn test_integer_overflow() {
+        assert_eq!(divide(i64::MIN, -1), Err(DivisionError::IntegerOverflow));
     }
 
     #[test]
