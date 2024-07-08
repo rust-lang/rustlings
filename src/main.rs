@@ -2,7 +2,7 @@ use anyhow::{bail, Context, Result};
 use app_state::StateFileStatus;
 use clap::{Parser, Subcommand};
 use std::{
-    io::{self, BufRead, StdoutLock, Write},
+    io::{self, BufRead, IsTerminal, StdoutLock, Write},
     path::Path,
     process::exit,
 };
@@ -148,6 +148,10 @@ fn main() -> Result<()> {
 
     match args.command {
         None => {
+            if !io::stdout().is_terminal() {
+                bail!("Unsupported or missing terminal/TTY");
+            }
+
             let notify_exercise_names = if args.manual_run {
                 None
             } else {
