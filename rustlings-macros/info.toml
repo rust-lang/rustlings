@@ -890,9 +890,9 @@ hint = """
 `capitalize_first`:
 
 The variable `first` is a `char`. It needs to be capitalized and added to the
-remaining characters in `c` in order to return the correct `String`.
+remaining characters in `chars` in order to return the correct `String`.
 
-The remaining characters in `c` can be viewed as a string slice using the
+The remaining characters in `chars` can be viewed as a string slice using the
 `as_str` method.
 
 The documentation for `char` contains many useful methods.
