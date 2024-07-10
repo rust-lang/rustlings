@@ -351,7 +351,7 @@ We call this "moving" a variable. When we pass `vec0` into `fill_vec`, it's
 being "moved" into `vec1`, meaning we can't access `vec0` anymore.
 
 You could make another, separate version of the data that's in `vec0` and
-pass it to `fill_vec` instead."""
+pass it to `fill_vec` instead. This is called cloning in Rust."""
 
 [[exercises]]
 name = "move_semantics3"
