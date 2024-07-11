@@ -3,7 +3,7 @@
 // The program should wait until all the tasks have finished and should collect their return values into a vector.
 
 use std::time::{Duration, Instant};
-use futures::executor::block_on; // This will allow us to block on async code for simplicity in an educational context
+use tokio::time::{sleep, Duration};
 
 async fn perform_task(id: usize) -> u128 {
     let start = Instant::now();
@@ -36,6 +36,7 @@ async fn main_async() {
     }
 }
 
-fn main() {
-    block_on(main_async());
+#[tokio::main]
+async fn main() {
+    main_async().await;
 }
