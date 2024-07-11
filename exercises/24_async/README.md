@@ -8,12 +8,6 @@ Discover the basics of asynchronous programming by writing your first async func
 ## Using Async and Await
 Convert a traditional synchronous function to use async/await syntax. This exercise helps illustrate the benefits and usage of Rust’s async constructs.
 
-## Understanding Task Execution
-Learn about executing multiple tasks concurrently without blocking. This exercise focuses on how Rust handles async task execution under the hood.
-
-## Shared State in Async Code
-Tackle the challenges of managing shared state in an asynchronous context. Use synchronization tools like Mutexes to safely manage state across concurrent tasks.
-
 ## Error Handling in Async
 Navigate the complexities of error handling in async code. Understand how errors propagate differently in async workflows and how to handle them effectively.
 
