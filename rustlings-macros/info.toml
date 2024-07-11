@@ -627,6 +627,25 @@ After making the correction as suggested by the compiler, read the related docs
 page:
 https://doc.rust-lang.org/std/keyword.ref.html"""
 
+[[exercises]]
+name = "options4"
+dir = "12_options"
+test = false
+hint = """
+Exercise 1:
+
+Hint: Use the ok_or method to convert the Option<Point> to a Result<Point, &str>. Handle the Ok case to print the coordinates and the Err case to print the error message.
+Example: optional_point.ok_or("Point does not exist")
+Exercise 2:
+
+Hint: Use the ok_or_else method to convert the Option<Point> to a Result<Point, &str>, similar to ok_or but using a closure to generate the error message.
+Example: optional_point.ok_or_else(|| "Point does not exist")
+Exercise 3:
+
+Hint: Use the and_then method to chain the operation of calculating the distance from the origin. This method should only execute if optional_point is Some.
+Example: optional_point.and_then(|p| { let distance = ((p.x.pow(2) + p.y.pow(2)) as f64).sqrt(); Some(distance) })
+"""
+
 # ERROR HANDLING
 
 [[exercises]]

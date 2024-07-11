@@ -100,6 +100,8 @@ bin = [
   { name = "options2_sol", path = "../solutions/12_options/options2.rs" },
   { name = "options3", path = "../exercises/12_options/options3.rs" },
   { name = "options3_sol", path = "../solutions/12_options/options3.rs" },
+  { name = "options4", path = "../exercises/12_options/options4.rs" },
+  { name = "options4_sol", path = "../solutions/12_options/options4.rs" },
   { name = "errors1", path = "../exercises/13_error_handling/errors1.rs" },
   { name = "errors1_sol", path = "../solutions/13_error_handling/errors1.rs" },
   { name = "errors2", path = "../exercises/13_error_handling/errors2.rs" },
