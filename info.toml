@@ -684,6 +684,18 @@ Maybe we could update the explicit references to this data type somehow?
 If you are still stuck https://doc.rust-lang.org/stable/book/ch10-01-syntax.html#in-method-definitions
 """
 
+[[exercises]]
+name = "generics3"
+path = "exercises/generics/generics3.rs"
+mode = "test"
+hint = """
+Vectors in Rust use generics to create dynamically-sized arrays of any type.
+The last_on_list function takes a vector as an argument, but only accepts vectors that store the &str type.
+To allow the function to accept vectors that store any type, you can leverage your knowledge about generics.
+If you're unsure how to proceed, please refer to the Rust Book at:
+https://doc.rust-lang.org/book/ch10-01-syntax.html#in-function-definitions.
+"""
+
 # TRAITS
 
 [[exercises]]
