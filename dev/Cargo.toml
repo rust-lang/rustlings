@@ -188,6 +188,12 @@ bin = [
   { name = "try_from_into_sol", path = "../solutions/23_conversions/try_from_into.rs" },
   { name = "as_ref_mut", path = "../exercises/23_conversions/as_ref_mut.rs" },
   { name = "as_ref_mut_sol", path = "../solutions/23_conversions/as_ref_mut.rs" },
+  { name = "async1", path = "../exercises/24_async/async1.rs" },
+  { name = "async1_sol", path = "../solutions/24_async/async1.rs" },
+  { name = "async2", path = "../exercises/24_async/async2.rs" },
+  { name = "async2_sol", path = "../solutions/24_async/async2.rs" },
+  { name = "async3", path = "../exercises/24_async/async3.rs" },
+  { name = "async3_sol", path = "../solutions/24_async/async3.rs" },
 ]
 
 [package]
