@@ -1204,3 +1204,21 @@ name = "as_ref_mut"
 dir = "23_conversions"
 hint = """
 Add `AsRef<str>` or `AsMut<u32>` as a trait bound to the functions."""
+
+[[exercises]]
+name = "async1"
+dir = "24_async"
+hint = """
+Use `.await` to collect the results of all tasks into the `results` vector."""
+
+[[exercises]]
+name = "async2"
+dir = "24_async"
+hint = """
+Synchronous version of a function that simulates a long-running operation"""
+
+[[exercises]]
+name = "async3"
+dir = "24_async"
+hint = """
+Consider using match or Result combinators like `map_err` or `and_then`."""
