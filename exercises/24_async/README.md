@@ -18,4 +18,3 @@ Navigate the complexities of error handling in async code. Understand how errors
 
 - [Learn more about async programming in Rust](https://doc.rust-lang.org/book/ch16-00-concurrency.html)
 - [Deep dive into handling concurrency](https://doc.rust-lang.org/book/ch16-02-message-passing.html)
-- [Advanced async patterns](https://tokio.rs/tokio/tutorial)

@@ -1,30 +1,25 @@
-// This program creates multiple asynchronous tasks that each simulate a long-running operation
-// using `async` and `await`, and each task will return how much time it took to complete.
-// The program should wait until all the tasks have finished and should collect their return values into a vector.
-
+// Importing necessary modules from async-std to handle asynchronous tasks.
+use async_std::task;
 use std::time::{Duration, Instant};
-use tokio::time::{sleep, Duration};
 
-async fn perform_task(id: usize) -> u128 {
+async fn run_async_task(id: usize) -> u128 {
     let start = Instant::now();
-    // Simulate async work using sleep
-    tokio::time::sleep(Duration::from_millis(250)).await;
+    // Simulate work by sleeping, but now this is asynchronous sleep.
+    task::sleep(Duration::from_millis(250)).await;
     println!("Task {id} done");
     start.elapsed().as_millis()
 }
 
-async fn main_async() {
-    let mut handles = Vec::new();
+async fn main() {
+    let mut tasks = Vec::new();
+
+    // Create asynchronous tasks
     for i in 0..10 {
-        let handle = perform_task(i);
-        handles.push(handle);
+        tasks.push(run_async_task(i));
     }
 
-    let mut results = Vec::new();
-    for handle in handles {
-        // Use `.await` to collect the results of all tasks into the `results` vector.
-        results.push(handle.await);
-    }
+    // Wait for all tasks to complete and collect their results.
+    let results = futures::future::join_all(tasks).await;
 
     if results.len() != 10 {
         panic!("Oh no! Some task isn't done yet!");
@@ -36,7 +31,7 @@ async fn main_async() {
     }
 }
 
-#[tokio::main]
-async fn main() {
-    main_async().await;
+// Main function now starts the async main function using `task::block_on`.
+fn main() {
+    task::block_on(main());
 }

@@ -1209,16 +1209,10 @@ Add `AsRef<str>` or `AsMut<u32>` as a trait bound to the functions."""
 name = "async1"
 dir = "24_async"
 hint = """
-Use `.await` to collect the results of all tasks into the `results` vector."""
+Push new asynchronous tasks into the vector."""
 
 [[exercises]]
 name = "async2"
 dir = "24_async"
 hint = """
-Synchronous version of a function that simulates a long-running operation"""
-
-[[exercises]]
-name = "async3"
-dir = "24_async"
-hint = """
-Consider using match or Result combinators like `map_err` or `and_then`."""
+Wait for all tasks to complete and collect their results, handling errors appropriately."""

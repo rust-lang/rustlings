@@ -48,9 +48,6 @@ include = [
 [dependencies]
 anyhow = "1.0.86"
 
-tokio = { version = "1.0", features = ["full"] }
-futures = "0.3"
-
 clap = { version = "4.5.9", features = ["derive"] }
 crossterm = "0.27.0"
 hashbrown = "0.14.5"

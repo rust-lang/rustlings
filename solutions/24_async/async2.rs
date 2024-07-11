@@ -1,37 +1,60 @@
-// This program demonstrates the transformation of a synchronous function into an asynchronous one.
-// The original function performs a time-consuming operation, which we'll simulate with a sleep.
-// You need to convert this function to use async/await syntax and understand how it improves the responsiveness of the application.
+use async_std::task;
+use std::time::{Duration, Instant};
+use std::fmt;
 
-use std::time::Duration;
-use futures::executor::block_on; // This is for running the async main function in this educational context.
-use tokio; // We use tokio for the async sleep functionality.
-
-// Synchronous version of a function that simulates a long-running operation
-fn calculate_value_synchronously() -> i32 {
-    println!("Starting synchronous calculation...");
-    std::thread::sleep(Duration::from_secs(2)); // Simulating a long-running task
-    println!("Synchronous calculation done.");
-    42 // returns a computed value
+// 自定义错误类型
+#[derive(Debug)]
+enum TaskError {
+    Timeout,
+    Other(String),
 }
 
-// Converted to async version
-async fn calculate_value_asynchronously() -> i32 {
-    println!("Starting asynchronous calculation...");
-    tokio::time::sleep(Duration::from_secs(2)).await; // Using Tokio's async sleep
-    println!("Asynchronous calculation done.");
-    42 // returns a computed value
+impl fmt::Display for TaskError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match *self {
+            TaskError::Timeout => write!(f, "Task timed out"),
+            TaskError::Other(ref err) => write!(f, "Other error: {}", err),
+        }
+    }
 }
 
-async fn main_async() {
-    println!("Calling synchronous function:");
-    let sync_result = calculate_value_synchronously();
-    println!("Result from synchronous function: {}", sync_result);
+async fn run_async_task(id: usize) -> Result<u128, TaskError> {
+    let start = Instant::now();
+    // Simulate a possible failure
+    if id == 5 {
+        // Simulate a timeout error
+        task::sleep(Duration::from_millis(100)).await;
+        return Err(TaskError::Timeout);
+    } else if id == 8 {
+        // Simulate another type of error
+        return Err(TaskError::Other("Unexpected error".to_string()));
+    }
 
-    println!("Calling asynchronous function:");
-    let async_result = calculate_value_asynchronously().await;
-    println!("Result from asynchronous function: {}", async_result);
+    // Normal operation with async sleep
+    task::sleep(Duration::from_millis(250)).await;
+    println!("Task {id} done");
+    Ok(start.elapsed().as_millis())
 }
 
+async fn main() {
+    let mut tasks = Vec::new();
+
+    for i in 0..10 {
+        tasks.push(run_async_task(i));
+    }
+
+    let results: Vec<Result<u128, TaskError>> = futures::future::join_all(tasks).await;
+
+    // Process results
+    for (i, result) in results.into_iter().enumerate() {
+        match result {
+            Ok(duration) => println!("Task {i} took {duration}ms"),
+            Err(e) => println!("Task {i} failed with error: {}", e),
+        }
+    }
+}
+
+// Main function that starts the async main function using `task::block_on`.
 fn main() {
-    block_on(main_async());
+    task::block_on(main());
 }
