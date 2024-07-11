@@ -2,7 +2,7 @@
 // Execute `rustlings hint generics3` or use the `hint` watch subcommand for a hint.
 
 // Here we add generic in function declaration so function can work with different types
-fn stringify<T>(list: &Vec<T>) -> String 
+fn stringify<T>(list: &[T]) -> String 
 where
     T: ToString // here we also specify that T needs to implement ToString trait so we can use .to_string() on the vetor elements
 {
