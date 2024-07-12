@@ -746,13 +746,10 @@ name = "generics3"
 dir = "14_generics"
 hint = """
 Vectors in Rust use generics to create dynamically-sized arrays of any type.
-The stringify function takes a vector as an argument, but only accepts vectors that store the &str type.
+The `into_dispose_nulls` function takes a vector as an argument, but only accepts vectors that store the &str type.
 To allow the function to accept vectors that store any type, you can leverage your knowledge about generics.
 If you're unsure how to proceed, please refer to the Rust Book at:
 https://doc.rust-lang.org/book/ch10-01-syntax.html#in-function-definitions.
-
-*Please note that in `stringify` we want to use `.to_string()` on vector elements
-Refer to this: https://doc.rust-lang.org/book/ch10-02-traits.html
 """
 
 # TRAITS
