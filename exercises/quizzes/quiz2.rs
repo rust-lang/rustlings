@@ -26,7 +26,7 @@ enum Command {
 mod my_module {
     use super::Command;
 
-    // TODO: Complete the function.
+    // TODO: Complete the function as described above.
     // pub fn transformer(input: ???) -> ??? { ??? }
 }
 
