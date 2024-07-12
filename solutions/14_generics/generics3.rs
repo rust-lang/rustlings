@@ -4,10 +4,7 @@
 // Here we added generic type `T` to function signature
 // Now this function can be used with vector of any
 fn into_dispose_nulls<T>(list: Vec<Option<T>>) -> Vec<T> {
-    list
-        .into_iter()
-        .flatten()
-        .collect()
+    list.into_iter().flatten().collect()
 }
 
 fn main() {
@@ -36,7 +33,7 @@ mod tests {
     fn store_custom_type_on_list() {
         struct Rectangle {
             width: i32,
-            height: i32
+            height: i32,
         }
         impl Rectangle {
             fn new(width: i32, height: i32) -> Self {
@@ -44,7 +41,12 @@ mod tests {
             }
         }
 
-        let custom_list = vec![Some(Rectangle::new(1, 2)), None, None, Some(Rectangle::new(3, 4))];
+        let custom_list = vec![
+            Some(Rectangle::new(1, 2)),
+            None,
+            None,
+            Some(Rectangle::new(3, 4)),
+        ];
         let only_values = into_dispose_nulls(custom_list);
         assert_eq!(only_values.len(), 2);
     }
