@@ -60,8 +60,11 @@ You are probably using Linux and installed Rust using your package manager.
 
 Cargo installs binaries to the directory `~/.cargo/bin`.
 Sadly, package managers often don't add `~/.cargo/bin` to your `PATH` environment variable.
-The solution is to either add it manually or to uninstall Rust from the package manager and isntall it using the official way with `rustup`:
-https://www.rust-lang.org/tools/install
+
+The solution is to …
+
+- either add `~/.cargo/bin` manually to `PATH`
+- or to uninstall Rust from the package manager and install it using the official way with `rustup`: https://www.rust-lang.org/tools/install
 
 </details>
 
