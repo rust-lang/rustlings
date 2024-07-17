@@ -37,7 +37,10 @@ jobs:
       - name: Run cargo test
         run: cargo test --workspace
   dev-check:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
     steps:
       - uses: actions/checkout@v4
       - uses: swatinem/rust-cache@v2
