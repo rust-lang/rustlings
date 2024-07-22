@@ -21,7 +21,7 @@ edition = "2021"
 
 [workspace.dependencies]
 serde = { version = "1.0.204", features = ["derive"] }
-toml_edit = { version = "0.22.15", default-features = false, features = ["parse", "serde"] }
+toml_edit = { version = "0.22.16", default-features = false, features = ["parse", "serde"] }
 
 [package]
 name = "rustlings"
