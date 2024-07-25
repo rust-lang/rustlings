@@ -95,10 +95,6 @@ fn main() -> Result<()> {
 
     match args.command {
         Some(Subcommands::Init) => {
-            if DEBUG_PROFILE {
-                bail!("Disabled in the debug build");
-            }
-
             {
                 let mut stdout = io::stdout().lock();
                 stdout.write_all(b"This command will create the directory `rustlings/` which will contain the exercises.\nPress ENTER to continue ")?;

@@ -1,15 +1,23 @@
 use std::{
     env::{self, consts::EXE_SUFFIX},
+    fs,
     process::{Command, Stdio},
     str::from_utf8,
 };
+
+enum Output<'a> {
+    FullStdout(&'a str),
+    PartialStdout(&'a str),
+    PartialStderr(&'a str),
+}
+
+use Output::*;
 
 #[derive(Default)]
 struct Cmd<'a> {
     current_dir: Option<&'a str>,
     args: &'a [&'a str],
-    stdout: Option<&'a str>,
-    full_stdout: bool,
+    output: Option<Output<'a>>,
 }
 
 impl<'a> Cmd<'a> {
@@ -26,14 +34,8 @@ impl<'a> Cmd<'a> {
     }
 
     #[inline]
-    fn stdout(&mut self, stdout: &'a str) -> &mut Self {
-        self.stdout = Some(stdout);
-        self
-    }
-
-    #[inline]
-    fn full_stdout(&mut self) -> &mut Self {
-        self.full_stdout = true;
+    fn output(&mut self, output: Output<'a>) -> &mut Self {
+        self.output = Some(output);
         self
     }
 
@@ -57,26 +59,32 @@ impl<'a> Cmd<'a> {
             cmd.current_dir(current_dir);
         }
 
-        cmd.args(self.args)
-            .stdin(Stdio::null())
-            .stderr(Stdio::null());
+        cmd.args(self.args).stdin(Stdio::null());
 
-        let status = if let Some(expected_stdout) = self.stdout {
-            let output = cmd.output().unwrap();
-            let stdout = from_utf8(&output.stdout).unwrap();
-
-            if self.full_stdout {
-                assert_eq!(stdout, expected_stdout);
-            } else {
-                assert!(stdout.contains(expected_stdout));
+        let status = match self.output {
+            None => cmd
+                .stdout(Stdio::null())
+                .stderr(Stdio::null())
+                .status()
+                .unwrap(),
+            Some(FullStdout(stdout)) => {
+                let output = cmd.stderr(Stdio::null()).output().unwrap();
+                assert_eq!(from_utf8(&output.stdout).unwrap(), stdout);
+                output.status
             }
-
-            output.status
-        } else {
-            cmd.stdout(Stdio::null()).status().unwrap()
+            Some(PartialStdout(stdout)) => {
+                let output = cmd.stderr(Stdio::null()).output().unwrap();
+                assert!(from_utf8(&output.stdout).unwrap().contains(stdout));
+                output.status
+            }
+            Some(PartialStderr(stderr)) => {
+                let output = cmd.stdout(Stdio::null()).output().unwrap();
+                assert!(from_utf8(&output.stderr).unwrap().contains(stderr));
+                output.status
+            }
         };
 
-        assert_eq!(status.success(), success);
+        assert_eq!(status.success(), success, "{cmd:?}");
     }
 
     #[inline]
@@ -88,11 +96,6 @@ impl<'a> Cmd<'a> {
     fn fail(&self) {
         self.assert(false);
     }
-}
-
-#[test]
-fn wrong_dir() {
-    Cmd::default().current_dir("tests").fail();
 }
 
 #[test]
@@ -116,7 +119,7 @@ fn run_test_success() {
     Cmd::default()
         .current_dir("tests/test_exercises")
         .args(&["run", "test_success"])
-        .stdout("\nOutput from `main` function\n")
+        .output(PartialStdout("\nOutput from `main` function\n"))
         .success();
 }
 
@@ -146,7 +149,34 @@ fn hint() {
     Cmd::default()
         .current_dir("tests/test_exercises")
         .args(&["hint", "test_failure"])
-        .stdout("The answer to everything: 42\n")
-        .full_stdout()
+        .output(FullStdout("The answer to everything: 42\n"))
         .success();
+}
+
+#[test]
+fn init() {
+    let _ = fs::remove_dir_all("tests/rustlings");
+
+    Cmd::default().current_dir("tests").fail();
+
+    Cmd::default()
+        .current_dir("tests")
+        .args(&["init"])
+        .success();
+
+    // Running `init` after a successful initialization.
+    Cmd::default()
+        .current_dir("tests")
+        .args(&["init"])
+        .output(PartialStderr("`cd rustlings`"))
+        .fail();
+
+    // Running `init` in the initialized directory.
+    Cmd::default()
+        .current_dir("tests/rustlings")
+        .args(&["init"])
+        .output(PartialStderr("already initialized"))
+        .fail();
+
+    fs::remove_dir_all("tests/rustlings").unwrap();
 }

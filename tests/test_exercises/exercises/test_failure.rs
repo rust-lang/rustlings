@@ -4,6 +4,6 @@ fn main() {}
 mod tests {
     #[test]
     fn fails() {
-        asset!(false);
+        assert!(false);
     }
 }
