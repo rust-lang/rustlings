@@ -47,7 +47,7 @@ include = [
 
 [dependencies]
 anyhow = "1.0.86"
-clap = { version = "4.5.9", features = ["derive"] }
+clap = { version = "4.5.10", features = ["derive"] }
 crossterm = "0.27.0"
 hashbrown = "0.14.5"
 notify-debouncer-mini = { version = "0.4.1", default-features = false }
