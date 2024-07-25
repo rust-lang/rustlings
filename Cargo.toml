@@ -58,10 +58,6 @@ serde_json = "1.0.120"
 serde.workspace = true
 toml_edit.workspace = true
 
-[dev-dependencies]
-assert_cmd = "2.0.14"
-predicates = "3.1.0"
-
 [profile.release]
 panic = "abort"
 
