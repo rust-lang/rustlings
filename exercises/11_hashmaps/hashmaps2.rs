@@ -6,7 +6,7 @@
 // must add fruit to the basket so that there is at least one of each kind and
 // more than 11 in total - we have a lot of mouths to feed. You are not allowed
 // to insert any more of the fruits that are already in the basket (Apple,
-// Mango, and Lyche).
+// Mango, and Lychee).
 
 use std::collections::HashMap;
 

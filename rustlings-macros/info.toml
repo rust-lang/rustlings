@@ -309,7 +309,7 @@ In Rust, there are two ways to define a Vector.
    inside the square brackets. This way is simpler when you exactly know
    the initial values.
 
-Check this chapter: https://doc.rust-lang.org/stable/book/ch08-01-vectors.html
+Check this chapter: https://doc.rust-lang.org/book/ch08-01-vectors.html
 of the Rust book to learn more."""
 
 [[exercises]]
@@ -351,7 +351,7 @@ We call this "moving" a variable. When we pass `vec0` into `fill_vec`, it's
 being "moved" into `vec1`, meaning we can't access `vec0` anymore.
 
 You could make another, separate version of the data that's in `vec0` and
-pass it to `fill_vec` instead."""
+pass it to `fill_vec` instead. This is called cloning in Rust."""
 
 [[exercises]]
 name = "move_semantics3"
@@ -378,7 +378,7 @@ dir = "06_move_semantics"
 test = false
 hint = """
 To find the answer, you can consult the book section "References and Borrowing":
-https://doc.rust-lang.org/stable/book/ch04-02-references-and-borrowing.html
+https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html
 
 The first problem is that `get_char` is taking ownership of the string. So
 `data` is moved and can't be used for `string_uppercase`. `data` is moved to
@@ -416,7 +416,7 @@ to its fields.
 
 There are however some shortcuts that can be taken when instantiating structs.
 Have a look in The Book to find out more:
-https://doc.rust-lang.org/stable/book/ch05-01-defining-structs.html#creating-instances-from-other-instances-with-struct-update-syntax"""
+https://doc.rust-lang.org/book/ch05-01-defining-structs.html#creating-instances-from-other-instances-with-struct-update-syntax"""
 
 [[exercises]]
 name = "structs3"
@@ -487,7 +487,7 @@ to add one character to the `if` statement, though, that will coerce the
 Side note: If you're interested in learning about how this kind of reference
 conversion works, you can jump ahead in the book and read this part in the
 smart pointers chapter:
-https://doc.rust-lang.org/stable/book/ch15-02-deref.html#implicit-deref-coercions-with-functions-and-methods"""
+https://doc.rust-lang.org/book/ch15-02-deref.html#implicit-deref-coercions-with-functions-and-methods"""
 
 [[exercises]]
 name = "strings3"
@@ -498,7 +498,10 @@ some of them:
 https://doc.rust-lang.org/std/string/struct.String.html#method.trim
 
 For the `compose_me` method: You can either use the `format!` macro, or convert
-the string slice into an owned string, which you can then freely extend."""
+the string slice into an owned string, which you can then freely extend.
+
+For the `replace_me` method, you can check out the `replace` method:
+https://doc.rust-lang.org/std/string/struct.String.html#method.replace"""
 
 [[exercises]]
 name = "strings4"
@@ -561,7 +564,7 @@ hint = """
 Use the `entry()` and `or_insert()` methods of `HashMap` to achieve this.
 
 Learn more in The Book:
-https://doc.rust-lang.org/stable/book/ch08-03-hash-maps.html#only-inserting-a-value-if-the-key-has-no-value"""
+https://doc.rust-lang.org/book/ch08-03-hash-maps.html#only-inserting-a-value-if-the-key-has-no-value"""
 
 [[exercises]]
 name = "hashmaps3"
@@ -572,7 +575,7 @@ Hint 1: Use the `entry()` and `or_insert()` (or `or_insert_with()`) methods of
         exist in the table yet.
 
 Learn more in The Book:
-https://doc.rust-lang.org/stable/book/ch08-03-hash-maps.html#only-inserting-a-value-if-the-key-has-no-value
+https://doc.rust-lang.org/book/ch08-03-hash-maps.html#only-inserting-a-value-if-the-key-has-no-value
 
 Hint 2: If there is already an entry for a given key, the value returned by
         `entry()` can be updated based on the existing value.
@@ -585,7 +588,7 @@ https://doc.rust-lang.org/book/ch08-03-hash-maps.html#updating-a-value-based-on-
 [[exercises]]
 name = "quiz2"
 dir = "quizzes"
-hint = "No hints this time ;)"
+hint = "The `+` operator can concatenate a `String` with a `&str`."
 
 # OPTIONS
 
@@ -739,7 +742,7 @@ name = "generics2"
 dir = "14_generics"
 hint = """
 Related section in The Book:
-https://doc.rust-lang.org/stable/book/ch10-01-syntax.html#in-method-definitions"""
+https://doc.rust-lang.org/book/ch10-01-syntax.html#in-method-definitions"""
 
 # TRAITS
 
@@ -748,7 +751,9 @@ name = "traits1"
 dir = "15_traits"
 hint = """
 More about traits in The Book:
-https://doc.rust-lang.org/book/ch10-02-traits.html"""
+https://doc.rust-lang.org/book/ch10-02-traits.html
+
+The `+` operator can concatenate a `String` with a `&str`."""
 
 [[exercises]]
 name = "traits2"
@@ -869,7 +874,7 @@ We expect the method `Rectangle::new` to panic for negative values.
 To handle that, you need to add a special attribute to the test function.
 
 You can refer to the docs:
-https://doc.rust-lang.org/stable/book/ch11-01-writing-tests.html#checking-for-panics-with-should_panic"""
+https://doc.rust-lang.org/book/ch11-01-writing-tests.html#checking-for-panics-with-should_panic"""
 
 # STANDARD LIBRARY TYPES
 
@@ -888,9 +893,9 @@ hint = """
 `capitalize_first`:
 
 The variable `first` is a `char`. It needs to be capitalized and added to the
-remaining characters in `c` in order to return the correct `String`.
+remaining characters in `chars` in order to return the correct `String`.
 
-The remaining characters in `c` can be viewed as a string slice using the
+The remaining characters in `chars` can be viewed as a string slice using the
 `as_str` method.
 
 The documentation for `char` contains many useful methods.
@@ -1005,7 +1010,7 @@ thread-local copy of the numbers.
 This is a simple exercise if you understand the underlying concepts, but if this
 is too much of a struggle, consider reading through all of Chapter 16 in The
 Book:
-https://doc.rust-lang.org/stable/book/ch16-00-concurrency.html"""
+https://doc.rust-lang.org/book/ch16-00-concurrency.html"""
 
 [[exercises]]
 name = "cow1"
@@ -1143,7 +1148,11 @@ test = false
 strict_clippy = true
 hint = """
 `for` loops over `Option` values are more clearly expressed as an `if-let`
-statement."""
+statement.
+
+Not required to solve this exercise, but if you are interested in when iterating
+over `Option` can be useful, read the following section in the documentation:
+https://doc.rust-lang.org/std/option/#iterating-over-option"""
 
 [[exercises]]
 name = "clippy3"

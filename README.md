@@ -53,6 +53,21 @@ After installing Rustlings, run the following command to initialize the `rustlin
 rustlings init
 ```
 
+<details>
+<summary><strong>If the command <code>rustlings</code> can't be found…</strong> (<em>click to expand</em>)</summary>
+
+You are probably using Linux and installed Rust using your package manager.
+
+Cargo installs binaries to the directory `~/.cargo/bin`.
+Sadly, package managers often don't add `~/.cargo/bin` to your `PATH` environment variable.
+
+The solution is to …
+
+- either add `~/.cargo/bin` manually to `PATH`
+- or to uninstall Rust from the package manager and install it using the official way with `rustup`: https://www.rust-lang.org/tools/install
+
+</details>
+
 Now, go into the newly initialized directory and launch Rustlings for further instructions on getting started with the exercises:
 
 ```bash

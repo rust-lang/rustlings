@@ -1,3 +1,22 @@
+<a name="6.1.0"></a>
+
+## 6.1.0 (2024-07-10)
+
+#### Added
+
+- `dev check`: Check that all exercises (including third-party ones) include at least one `TODO` comment.
+- `dev check`: Check that all exercises actually fail to run (not already solved).
+
+#### Changed
+
+- Make enum variants more consistent between enum exercises.
+- `iterators3`: Teach about the possible case of integer overflow during division.
+
+#### Fixed
+
+- Exit with a helpful error message on missing/unsupported terminal/TTY.
+- Mark the last exercise as done.
+
 <a name="6.0.1"></a>
 
 ## 6.0.1 (2024-07-04)
@@ -64,7 +83,7 @@ This should avoid issues related to the language server or to running exercises,
 Clippy lints are now shown on all exercises, not only the Clippy exercises 📎
 Make Clippy your friend from early on 🥰
 
-### Third party exercises
+### Third-party exercises
 
 Rustlings now supports third-party exercises!
 
