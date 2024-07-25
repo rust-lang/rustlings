@@ -1,9 +1,7 @@
 [workspace]
 resolver = "2"
 exclude = [
-  "tests/fixture/failure",
-  "tests/fixture/state",
-  "tests/fixture/success",
+  "tests/test_exercises",
   "dev",
 ]
 

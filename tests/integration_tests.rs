@@ -91,99 +91,62 @@ impl<'a> Cmd<'a> {
 }
 
 #[test]
-fn fails_when_in_wrong_dir() {
+fn wrong_dir() {
     Cmd::default().current_dir("tests").fail();
 }
 
 #[test]
-fn run_single_compile_success() {
+fn run_compilation_success() {
     Cmd::default()
-        .current_dir("tests/fixture/success")
-        .args(&["run", "compSuccess"])
+        .current_dir("tests/test_exercises")
+        .args(&["run", "compilation_success"])
         .success();
 }
 
 #[test]
-fn run_single_compile_failure() {
+fn run_compilation_failure() {
     Cmd::default()
-        .current_dir("tests/fixture/failure")
-        .args(&["run", "compFailure"])
+        .current_dir("tests/test_exercises")
+        .args(&["run", "compilation_failure"])
         .fail();
 }
 
 #[test]
-fn run_single_test_success() {
+fn run_test_success() {
     Cmd::default()
-        .current_dir("tests/fixture/success")
-        .args(&["run", "testSuccess"])
+        .current_dir("tests/test_exercises")
+        .args(&["run", "test_success"])
+        .stdout("\nOutput from `main` function\n")
         .success();
 }
 
 #[test]
-fn run_single_test_failure() {
+fn run_test_failure() {
     Cmd::default()
-        .current_dir("tests/fixture/failure")
-        .args(&["run", "testFailure"])
+        .current_dir("tests/test_exercises")
+        .args(&["run", "test_failure"])
         .fail();
 }
 
 #[test]
-fn run_single_test_not_passed() {
+fn run_exercise_not_in_info() {
     Cmd::default()
-        .current_dir("tests/fixture/failure")
-        .args(&["run", "testNotPassed.rs"])
+        .current_dir("tests/test_exercises")
+        .args(&["run", "not_in_info"])
         .fail();
 }
 
 #[test]
-fn run_single_test_no_exercise() {
-    Cmd::default()
-        .current_dir("tests/fixture/failure")
-        .args(&["run", "compNoExercise.rs"])
-        .fail();
-}
-
-#[test]
-fn reset_single_exercise() {
-    Cmd::default().args(&["reset", "intro1"]).success();
-}
-
-#[test]
-fn reset_no_exercise() {
+fn reset_without_exercise_name() {
     Cmd::default().args(&["reset"]).fail();
 }
 
 #[test]
-fn get_hint_for_single_test() {
+fn hint() {
     Cmd::default()
-        .current_dir("tests/fixture/failure")
-        .args(&["hint", "testFailure"])
-        .stdout("Hello!\n")
+        .current_dir("tests/test_exercises")
+        .args(&["hint", "test_failure"])
+        .stdout("The answer to everything: 42\n")
         .full_stdout()
-        .success();
-}
-
-#[test]
-fn run_compile_exercise_does_not_prompt() {
-    Cmd::default()
-        .current_dir("tests/fixture/state")
-        .args(&["run", "pending_exercise"])
-        .success();
-}
-
-#[test]
-fn run_test_exercise_does_not_prompt() {
-    Cmd::default()
-        .current_dir("tests/fixture/state")
-        .args(&["run", "pending_test_exercise"])
-        .success();
-}
-
-#[test]
-fn run_single_test_success_with_output() {
-    Cmd::default()
-        .current_dir("tests/fixture/success")
-        .args(&["run", "testSuccess"])
-        .stdout("\nTHIS TEST TOO SHALL PASS\n")
         .success();
 }
