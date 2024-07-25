@@ -13,7 +13,7 @@ enum DivisionError {
 fn divide(a: i64, b: i64) -> Result<i64, DivisionError> {
     if b == 0 {
         Err(DivisionError::DivideByZero)
-    } else if (a == i64::MIN && b == -1) {
+    } else if a == i64::MIN && b == -1 {
         Err(DivisionError::IntegerOverflow)
     } else if a % b == 0 {
         Ok(a / b)
@@ -24,14 +24,14 @@ fn divide(a: i64, b: i64) -> Result<i64, DivisionError> {
 
 // TODO: Add the correct return type and complete the function body.
 // Desired output: `Ok([1, 11, 1426, 3])`
-fn result_with_list() -> Result<Vec<i32>, DivisionError> {
+fn result_with_list() -> Result<Vec<i64>, DivisionError> {
     let numbers = [27, 297, 38502, 81];
     numbers.into_iter().map(|n| divide(n, 27)).collect()
 }
 
 // TODO: Add the correct return type and complete the function body.
 // Desired output: `[Ok(1), Ok(11), Ok(1426), Ok(3)]`
-fn list_of_results() -> Vec<Result<i32, DivisionError>> {
+fn list_of_results() -> Vec<Result<i64, DivisionError>> {
     let numbers = [27, 297, 38502, 81];
     numbers.into_iter().map(|n| divide(n, 27)).collect()
 }
