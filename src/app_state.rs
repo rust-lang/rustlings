@@ -1,5 +1,5 @@
 use anyhow::{bail, Context, Result};
-use crossterm::style::Stylize;
+use ratatui::crossterm::style::Stylize;
 use serde::Deserialize;
 use std::{
     fs::{self, File},

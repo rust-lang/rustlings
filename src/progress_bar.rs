@@ -14,7 +14,7 @@ const PROGRESS_EXCEEDS_MAX_ERR: &str =
 
 /// Terminal progress bar to be used when not using Ratataui.
 pub fn progress_bar(progress: u16, total: u16, line_width: u16) -> Result<String> {
-    use crossterm::style::Stylize;
+    use ratatui::crossterm::style::Stylize;
 
     if progress > total {
         bail!(PROGRESS_EXCEEDS_MAX_ERR);

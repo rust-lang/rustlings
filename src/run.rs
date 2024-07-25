@@ -1,5 +1,5 @@
 use anyhow::{bail, Result};
-use crossterm::style::{style, Stylize};
+use ratatui::crossterm::style::{style, Stylize};
 use std::io::{self, Write};
 
 use crate::{

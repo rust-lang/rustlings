@@ -1,5 +1,5 @@
 use anyhow::{bail, Context, Result};
-use crossterm::style::Stylize;
+use ratatui::crossterm::style::Stylize;
 use std::{
     env::set_current_dir,
     fs::{self, create_dir},

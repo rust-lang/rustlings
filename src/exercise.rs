@@ -1,5 +1,5 @@
 use anyhow::Result;
-use crossterm::style::{style, StyledContent, Stylize};
+use ratatui::crossterm::style::{style, StyledContent, Stylize};
 use std::{
     fmt::{self, Display, Formatter},
     io::Write,

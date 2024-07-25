@@ -1,5 +1,5 @@
 use anyhow::Result;
-use crossterm::{
+use ratatui::crossterm::{
     style::{style, Stylize},
     terminal,
 };
