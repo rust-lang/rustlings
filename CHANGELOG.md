@@ -1,3 +1,10 @@
+<a name="6.1.1"></a>
+
+## 6.1.1 (UNRELEASED)
+
+- Run the final check of all exercises in parallel.
+- Small exercise improvements.
+
 <a name="6.1.0"></a>
 
 ## 6.1.0 (2024-07-10)

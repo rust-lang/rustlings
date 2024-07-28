@@ -1,11 +1,11 @@
-use anyhow::{bail, Context, Result};
-use ratatui::crossterm::style::Stylize;
+use anyhow::{bail, Context, Error, Result};
 use serde::Deserialize;
 use std::{
     fs::{self, File},
     io::{Read, StdoutLock, Write},
     path::{Path, PathBuf},
     process::{Command, Stdio},
+    thread,
 };
 
 use crate::{
@@ -373,34 +373,50 @@ impl AppState {
 
         if let Some(ind) = self.next_pending_exercise_ind() {
             self.set_current_exercise_ind(ind)?;
-
             return Ok(ExercisesProgress::NewPending);
         }
 
         writer.write_all(RERUNNING_ALL_EXERCISES_MSG)?;
 
-        let mut output = Vec::with_capacity(OUTPUT_CAPACITY);
-        for (exercise_ind, exercise) in self.exercises().iter().enumerate() {
-            write!(writer, "Running {exercise} ... ")?;
-            writer.flush()?;
+        let n_exercises = self.exercises.len();
 
-            let success = exercise.run_exercise(&mut output, &self.target_dir)?;
-            if !success {
-                writeln!(writer, "{}\n", "FAILED".red())?;
+        let pending_exercise_ind = thread::scope(|s| {
+            let handles = self
+                .exercises
+                .iter_mut()
+                .map(|exercise| {
+                    s.spawn(|| {
+                        let mut output = Vec::with_capacity(OUTPUT_CAPACITY);
+                        let success = exercise.run_exercise(&mut output, &self.target_dir)?;
+                        exercise.done = success;
+                        Ok::<_, Error>(success)
+                    })
+                })
+                .collect::<Vec<_>>();
 
-                self.current_exercise_ind = exercise_ind;
+            for (exercise_ind, handle) in handles.into_iter().enumerate() {
+                write!(writer, "\rProgress: {exercise_ind}/{n_exercises}")?;
+                writer.flush()?;
 
-                // No check if the exercise is done before setting it to pending
-                // because no pending exercise was found.
-                self.exercises[exercise_ind].done = false;
-                self.n_done -= 1;
-
-                self.write()?;
-
-                return Ok(ExercisesProgress::NewPending);
+                let success = handle.join().unwrap()?;
+                if !success {
+                    writer.write_all(b"\n\n")?;
+                    return Ok(Some(exercise_ind));
+                }
             }
 
-            writeln!(writer, "{}", "ok".green())?;
+            Ok::<_, Error>(None)
+        })?;
+
+        if let Some(pending_exercise_ind) = pending_exercise_ind {
+            self.current_exercise_ind = pending_exercise_ind;
+            self.n_done = self
+                .exercises
+                .iter()
+                .filter(|exercise| exercise.done)
+                .count() as u16;
+            self.write()?;
+            return Ok(ExercisesProgress::NewPending);
         }
 
         // Write that the last exercise is done.
@@ -426,7 +442,6 @@ Try running `cargo --version` to diagnose the problem.";
 const RERUNNING_ALL_EXERCISES_MSG: &[u8] = b"
 All exercises seem to be done.
 Recompiling and running all exercises to make sure that all of them are actually done.
-
 ";
 
 const FENISH_LINE: &str = "+----------------------------------------------------+
