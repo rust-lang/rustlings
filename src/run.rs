@@ -11,7 +11,7 @@ use crate::{
 pub fn run(app_state: &mut AppState) -> Result<()> {
     let exercise = app_state.current_exercise();
     let mut output = Vec::with_capacity(OUTPUT_CAPACITY);
-    let success = exercise.run_exercise(&mut output, app_state.target_dir())?;
+    let success = exercise.run_exercise(Some(&mut output), app_state.target_dir())?;
 
     let mut stdout = io::stdout().lock();
     stdout.write_all(&output)?;

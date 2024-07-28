@@ -184,8 +184,7 @@ fn check_exercises_unsolved(info_file: &InfoFile, target_dir: &Path) -> Result<(
                     error_occurred.store(true, atomic::Ordering::Relaxed);
                 };
 
-                let mut output = Vec::with_capacity(OUTPUT_CAPACITY);
-                match exercise_info.run_exercise(&mut output, target_dir) {
+                match exercise_info.run_exercise(None, target_dir) {
                     Ok(true) => error(b"Already solved!"),
                     Ok(false) => (),
                     Err(e) => error(e.to_string().as_bytes()),
@@ -244,7 +243,7 @@ fn check_solutions(require_solutions: bool, info_file: &InfoFile, target_dir: &P
                 }
 
                 let mut output = Vec::with_capacity(OUTPUT_CAPACITY);
-                match exercise_info.run_solution(&mut output, target_dir) {
+                match exercise_info.run_solution(Some(&mut output), target_dir) {
                     Ok(true) => {
                         paths.lock().unwrap().insert(PathBuf::from(path));
                     }

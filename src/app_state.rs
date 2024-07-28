@@ -11,7 +11,7 @@ use std::{
 use crate::{
     clear_terminal,
     embedded::EMBEDDED_FILES,
-    exercise::{Exercise, RunnableExercise, OUTPUT_CAPACITY},
+    exercise::{Exercise, RunnableExercise},
     info_file::ExerciseInfo,
     DEBUG_PROFILE,
 };
@@ -386,8 +386,7 @@ impl AppState {
                 .iter_mut()
                 .map(|exercise| {
                     s.spawn(|| {
-                        let mut output = Vec::with_capacity(OUTPUT_CAPACITY);
-                        let success = exercise.run_exercise(&mut output, &self.target_dir)?;
+                        let success = exercise.run_exercise(None, &self.target_dir)?;
                         exercise.done = success;
                         Ok::<_, Error>(success)
                     })

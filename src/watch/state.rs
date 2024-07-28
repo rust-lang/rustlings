@@ -54,7 +54,7 @@ impl<'a> WatchState<'a> {
         let success = self
             .app_state
             .current_exercise()
-            .run_exercise(&mut self.output, self.app_state.target_dir())?;
+            .run_exercise(Some(&mut self.output), self.app_state.target_dir())?;
         if success {
             self.done_status =
                 if let Some(solution_path) = self.app_state.current_solution_path()? {
