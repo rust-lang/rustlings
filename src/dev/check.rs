@@ -41,7 +41,7 @@ fn check_cargo_toml(
             bail!("The file `dev/Cargo.toml` is outdated. Please run `cargo run -- dev update` to update it");
         }
 
-        bail!("The file `Cargo.toml` is outdated. Please run `rustlings dev update` to update it");
+        bail!("The file `Cargo.toml` is outdated. Please run `rustlings dev update` to update it. Then run `rustlings dev check` again");
     }
 
     Ok(())
