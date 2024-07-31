@@ -10,7 +10,8 @@ use std::{
 pub fn run_cmd(mut cmd: Command, description: &str, output: Option<&mut Vec<u8>>) -> Result<bool> {
     let spawn = |mut cmd: Command| {
         // NOTE: The closure drops `cmd` which prevents a pipe deadlock.
-        cmd.spawn()
+        cmd.stdin(Stdio::null())
+            .spawn()
             .with_context(|| format!("Failed to run the command `{description}`"))
     };
 
