@@ -8,10 +8,10 @@ exclude = [
 [workspace.package]
 version = "6.1.0"
 authors = [
-  "Liv <mokou@fastmail.com>",
-  "Mo Bitar <mo8it@proton.me>",
+  "Mo Bitar <mo8it@proton.me>", # https://github.com/mo8it
+  "Liv <mokou@fastmail.com>", # https://github.com/shadows-withal
   # Alumni
-  "Carol (Nichols || Goulding) <carol.nichols@gmail.com>",
+  "Carol (Nichols || Goulding) <carol.nichols@gmail.com>", # https://github.com/carols10cents
 ]
 repository = "https://github.com/rust-lang/rustlings"
 license = "MIT"
