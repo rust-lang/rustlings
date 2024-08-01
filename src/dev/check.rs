@@ -12,11 +12,11 @@ use std::{
 };
 
 use crate::{
-    app_state::parse_target_dir,
     cargo_toml::{append_bins, bins_start_end_ind, BINS_BUFFER_CAPACITY},
+    cmd::CmdRunner,
     exercise::{RunnableExercise, OUTPUT_CAPACITY},
     info_file::{ExerciseInfo, InfoFile},
-    CURRENT_FORMAT_VERSION, DEBUG_PROFILE,
+    CURRENT_FORMAT_VERSION,
 };
 
 // Find a char that isn't allowed in the exercise's `name` or `dir`.
@@ -37,8 +37,8 @@ fn check_cargo_toml(
     append_bins(&mut new_bins, exercise_infos, exercise_path_prefix);
 
     if old_bins != new_bins {
-        if DEBUG_PROFILE {
-            bail!("The file `dev/Cargo.toml` is outdated. Please run `cargo run -- dev update` to update it");
+        if cfg!(debug_assertions) {
+            bail!("The file `dev/Cargo.toml` is outdated. Please run `cargo run -- dev update` to update it. Then run `cargo run -- dev check` again");
         }
 
         bail!("The file `Cargo.toml` is outdated. Please run `rustlings dev update` to update it. Then run `rustlings dev check` again");
@@ -162,7 +162,7 @@ fn check_unexpected_files(
     Ok(())
 }
 
-fn check_exercises_unsolved(info_file: &InfoFile, target_dir: &Path) -> Result<()> {
+fn check_exercises_unsolved(info_file: &InfoFile, cmd_runner: &CmdRunner) -> Result<()> {
     let error_occurred = AtomicBool::new(false);
 
     println!(
@@ -184,7 +184,7 @@ fn check_exercises_unsolved(info_file: &InfoFile, target_dir: &Path) -> Result<(
                     error_occurred.store(true, atomic::Ordering::Relaxed);
                 };
 
-                match exercise_info.run_exercise(None, target_dir) {
+                match exercise_info.run_exercise(None, cmd_runner) {
                     Ok(true) => error(b"Already solved!"),
                     Ok(false) => (),
                     Err(e) => error(e.to_string().as_bytes()),
@@ -200,7 +200,7 @@ fn check_exercises_unsolved(info_file: &InfoFile, target_dir: &Path) -> Result<(
     Ok(())
 }
 
-fn check_exercises(info_file: &InfoFile, target_dir: &Path) -> Result<()> {
+fn check_exercises(info_file: &InfoFile, cmd_runner: &CmdRunner) -> Result<()> {
     match info_file.format_version.cmp(&CURRENT_FORMAT_VERSION) {
         Ordering::Less => bail!("`format_version` < {CURRENT_FORMAT_VERSION} (supported version)\nPlease migrate to the latest format version"),
         Ordering::Greater => bail!("`format_version` > {CURRENT_FORMAT_VERSION} (supported version)\nTry updating the Rustlings program"),
@@ -210,10 +210,14 @@ fn check_exercises(info_file: &InfoFile, target_dir: &Path) -> Result<()> {
     let info_file_paths = check_info_file_exercises(info_file)?;
     check_unexpected_files("exercises", &info_file_paths)?;
 
-    check_exercises_unsolved(info_file, target_dir)
+    check_exercises_unsolved(info_file, cmd_runner)
 }
 
-fn check_solutions(require_solutions: bool, info_file: &InfoFile, target_dir: &Path) -> Result<()> {
+fn check_solutions(
+    require_solutions: bool,
+    info_file: &InfoFile,
+    cmd_runner: &CmdRunner,
+) -> Result<()> {
     let paths = Mutex::new(hashbrown::HashSet::with_capacity(info_file.exercises.len()));
     let error_occurred = AtomicBool::new(false);
 
@@ -243,7 +247,7 @@ fn check_solutions(require_solutions: bool, info_file: &InfoFile, target_dir: &P
                 }
 
                 let mut output = Vec::with_capacity(OUTPUT_CAPACITY);
-                match exercise_info.run_solution(Some(&mut output), target_dir) {
+                match exercise_info.run_solution(Some(&mut output), cmd_runner) {
                     Ok(true) => {
                         paths.lock().unwrap().insert(PathBuf::from(path));
                     }
@@ -266,8 +270,8 @@ fn check_solutions(require_solutions: bool, info_file: &InfoFile, target_dir: &P
 pub fn check(require_solutions: bool) -> Result<()> {
     let info_file = InfoFile::parse()?;
 
-    // A hack to make `cargo run -- dev check` work when developing Rustlings.
-    if DEBUG_PROFILE {
+    if cfg!(debug_assertions) {
+        // A hack to make `cargo run -- dev check` work when developing Rustlings.
         check_cargo_toml(
             &info_file.exercises,
             include_str!("../../dev-Cargo.toml"),
@@ -279,9 +283,9 @@ pub fn check(require_solutions: bool) -> Result<()> {
         check_cargo_toml(&info_file.exercises, &current_cargo_toml, b"")?;
     }
 
-    let target_dir = parse_target_dir()?;
-    check_exercises(&info_file, &target_dir)?;
-    check_solutions(require_solutions, &info_file, &target_dir)?;
+    let cmd_runner = CmdRunner::build()?;
+    check_exercises(&info_file, &cmd_runner)?;
+    check_solutions(require_solutions, &info_file, &cmd_runner)?;
 
     println!("\nEverything looks fine!");
 

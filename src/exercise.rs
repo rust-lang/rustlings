@@ -3,38 +3,25 @@ use ratatui::crossterm::style::{style, StyledContent, Stylize};
 use std::{
     fmt::{self, Display, Formatter},
     io::Write,
-    path::{Path, PathBuf},
-    process::Command,
 };
 
-use crate::{
-    cmd::{run_cmd, CargoCmd},
-    in_official_repo,
-    terminal_link::TerminalFileLink,
-    DEBUG_PROFILE,
-};
+use crate::{cmd::CmdRunner, terminal_link::TerminalFileLink};
 
 /// The initial capacity of the output buffer.
 pub const OUTPUT_CAPACITY: usize = 1 << 14;
 
 // Run an exercise binary and append its output to the `output` buffer.
 // Compilation must be done before calling this method.
-fn run_bin(bin_name: &str, mut output: Option<&mut Vec<u8>>, target_dir: &Path) -> Result<bool> {
+fn run_bin(
+    bin_name: &str,
+    mut output: Option<&mut Vec<u8>>,
+    cmd_runner: &CmdRunner,
+) -> Result<bool> {
     if let Some(output) = output.as_deref_mut() {
         writeln!(output, "{}", "Output".underlined())?;
     }
 
-    // 7 = "/debug/".len()
-    let mut bin_path = PathBuf::with_capacity(target_dir.as_os_str().len() + 7 + bin_name.len());
-    bin_path.push(target_dir);
-    bin_path.push("debug");
-    bin_path.push(bin_name);
-
-    let success = run_cmd(
-        Command::new(&bin_path),
-        &bin_path.to_string_lossy(),
-        output.as_deref_mut(),
-    )?;
+    let success = cmd_runner.run_debug_bin(bin_name, output.as_deref_mut())?;
 
     if let Some(output) = output {
         if !success {
@@ -89,26 +76,20 @@ pub trait RunnableExercise {
         &self,
         bin_name: &str,
         mut output: Option<&mut Vec<u8>>,
-        target_dir: &Path,
+        cmd_runner: &CmdRunner,
     ) -> Result<bool> {
-        if let Some(output) = output.as_deref_mut() {
+        let output_is_none = if let Some(output) = output.as_deref_mut() {
             output.clear();
-        }
+            false
+        } else {
+            true
+        };
 
-        // Developing the official Rustlings.
-        let dev = DEBUG_PROFILE && in_official_repo();
-
-        let build_success = CargoCmd {
-            subcommand: "build",
-            args: &[],
-            bin_name,
-            description: "cargo build …",
-            hide_warnings: output.is_none(),
-            target_dir,
-            output: output.as_deref_mut(),
-            dev,
+        let mut build_cmd = cmd_runner.cargo("build", bin_name, output.as_deref_mut());
+        if output_is_none {
+            build_cmd.hide_warnings();
         }
-        .run()?;
+        let build_success = build_cmd.run("cargo build …")?;
         if !build_success {
             return Ok(false);
         }
@@ -118,45 +99,33 @@ pub trait RunnableExercise {
             output.clear();
         }
 
+        let mut clippy_cmd = cmd_runner.cargo("clippy", bin_name, output.as_deref_mut());
+
         // `--profile test` is required to also check code with `[cfg(test)]`.
-        let clippy_args: &[&str] = if self.strict_clippy() {
-            &["--profile", "test", "--", "-D", "warnings"]
+        if self.strict_clippy() {
+            clippy_cmd.args(["--profile", "test", "--", "-D", "warnings"]);
         } else {
-            &["--profile", "test"]
-        };
-        let clippy_success = CargoCmd {
-            subcommand: "clippy",
-            args: clippy_args,
-            bin_name,
-            description: "cargo clippy …",
-            hide_warnings: false,
-            target_dir,
-            output: output.as_deref_mut(),
-            dev,
+            clippy_cmd.args(["--profile", "test"]);
         }
-        .run()?;
+
+        let clippy_success = clippy_cmd.run("cargo clippy …")?;
         if !clippy_success {
             return Ok(false);
         }
 
         if !self.test() {
-            return run_bin(bin_name, output.as_deref_mut(), target_dir);
+            return run_bin(bin_name, output.as_deref_mut(), cmd_runner);
         }
 
-        let test_success = CargoCmd {
-            subcommand: "test",
-            args: &["--", "--color", "always", "--show-output"],
-            bin_name,
-            description: "cargo test …",
-            // Hide warnings because they are shown by Clippy.
-            hide_warnings: true,
-            target_dir,
-            output: output.as_deref_mut(),
-            dev,
+        let mut test_cmd = cmd_runner.cargo("test", bin_name, output.as_deref_mut());
+        if !output_is_none {
+            test_cmd.args(["--", "--color", "always", "--show-output"]);
         }
-        .run()?;
+        // Hide warnings because they are shown by Clippy.
+        test_cmd.hide_warnings();
+        let test_success = test_cmd.run("cargo test …")?;
 
-        let run_success = run_bin(bin_name, output.as_deref_mut(), target_dir)?;
+        let run_success = run_bin(bin_name, output, cmd_runner)?;
 
         Ok(test_success && run_success)
     }
@@ -164,19 +133,19 @@ pub trait RunnableExercise {
     /// Compile, check and run the exercise.
     /// The output is written to the `output` buffer after clearing it.
     #[inline]
-    fn run_exercise(&self, output: Option<&mut Vec<u8>>, target_dir: &Path) -> Result<bool> {
-        self.run(self.name(), output, target_dir)
+    fn run_exercise(&self, output: Option<&mut Vec<u8>>, cmd_runner: &CmdRunner) -> Result<bool> {
+        self.run(self.name(), output, cmd_runner)
     }
 
     /// Compile, check and run the exercise's solution.
     /// The output is written to the `output` buffer after clearing it.
-    fn run_solution(&self, output: Option<&mut Vec<u8>>, target_dir: &Path) -> Result<bool> {
+    fn run_solution(&self, output: Option<&mut Vec<u8>>, cmd_runner: &CmdRunner) -> Result<bool> {
         let name = self.name();
         let mut bin_name = String::with_capacity(name.len() + 4);
         bin_name.push_str(name);
         bin_name.push_str("_sol");
 
-        self.run(&bin_name, output, target_dir)
+        self.run(&bin_name, output, cmd_runner)
     }
 }
 

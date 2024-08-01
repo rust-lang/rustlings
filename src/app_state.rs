@@ -1,19 +1,18 @@
 use anyhow::{bail, Context, Error, Result};
-use serde::Deserialize;
 use std::{
     fs::{self, File},
     io::{Read, StdoutLock, Write},
-    path::{Path, PathBuf},
+    path::Path,
     process::{Command, Stdio},
     thread,
 };
 
 use crate::{
     clear_terminal,
+    cmd::CmdRunner,
     embedded::EMBEDDED_FILES,
     exercise::{Exercise, RunnableExercise},
     info_file::ExerciseInfo,
-    DEBUG_PROFILE,
 };
 
 const STATE_FILE_NAME: &str = ".rustlings-state.txt";
@@ -34,31 +33,6 @@ pub enum StateFileStatus {
     NotRead,
 }
 
-// Parses parts of the output of `cargo metadata`.
-#[derive(Deserialize)]
-struct CargoMetadata {
-    target_directory: PathBuf,
-}
-
-pub fn parse_target_dir() -> Result<PathBuf> {
-    // Get the target directory from Cargo.
-    let metadata_output = Command::new("cargo")
-        .arg("metadata")
-        .arg("-q")
-        .arg("--format-version")
-        .arg("1")
-        .arg("--no-deps")
-        .stdin(Stdio::null())
-        .stderr(Stdio::inherit())
-        .output()
-        .context(CARGO_METADATA_ERR)?
-        .stdout;
-
-    serde_json::de::from_slice::<CargoMetadata>(&metadata_output)
-        .context("Failed to read the field `target_directory` from the `cargo metadata` output")
-        .map(|metadata| metadata.target_directory)
-}
-
 pub struct AppState {
     current_exercise_ind: usize,
     exercises: Vec<Exercise>,
@@ -68,8 +42,7 @@ pub struct AppState {
     // Preallocated buffer for reading and writing the state file.
     file_buf: Vec<u8>,
     official_exercises: bool,
-    // Cargo's target directory.
-    target_dir: PathBuf,
+    cmd_runner: CmdRunner,
 }
 
 impl AppState {
@@ -123,7 +96,7 @@ impl AppState {
         exercise_infos: Vec<ExerciseInfo>,
         final_message: String,
     ) -> Result<(Self, StateFileStatus)> {
-        let target_dir = parse_target_dir()?;
+        let cmd_runner = CmdRunner::build()?;
 
         let exercises = exercise_infos
             .into_iter()
@@ -157,7 +130,7 @@ impl AppState {
             final_message,
             file_buf: Vec::with_capacity(2048),
             official_exercises: !Path::new("info.toml").exists(),
-            target_dir,
+            cmd_runner,
         };
 
         let state_file_status = slf.update_from_file();
@@ -186,8 +159,8 @@ impl AppState {
     }
 
     #[inline]
-    pub fn target_dir(&self) -> &Path {
-        &self.target_dir
+    pub fn cmd_runner(&self) -> &CmdRunner {
+        &self.cmd_runner
     }
 
     // Write the state file.
@@ -336,7 +309,7 @@ impl AppState {
     /// Official exercises: Dump the solution file form the binary and return its path.
     /// Third-party exercises: Check if a solution file exists and return its path in that case.
     pub fn current_solution_path(&self) -> Result<Option<String>> {
-        if DEBUG_PROFILE {
+        if cfg!(debug_assertions) {
             return Ok(None);
         }
 
@@ -386,7 +359,7 @@ impl AppState {
                 .iter_mut()
                 .map(|exercise| {
                     s.spawn(|| {
-                        let success = exercise.run_exercise(None, &self.target_dir)?;
+                        let success = exercise.run_exercise(None, &self.cmd_runner)?;
                         exercise.done = success;
                         Ok::<_, Error>(success)
                     })
@@ -433,10 +406,6 @@ impl AppState {
         Ok(ExercisesProgress::AllDone)
     }
 }
-
-const CARGO_METADATA_ERR: &str = "Failed to run the command `cargo metadata …`
-Did you already install Rust?
-Try running `cargo --version` to diagnose the problem.";
 
 const RERUNNING_ALL_EXERCISES_MSG: &[u8] = b"
 All exercises seem to be done.
@@ -490,7 +459,7 @@ mod tests {
             final_message: String::new(),
             file_buf: Vec::new(),
             official_exercises: true,
-            target_dir: PathBuf::new(),
+            cmd_runner: CmdRunner::build().unwrap(),
         };
 
         let mut assert = |done: [bool; 3], expected: [Option<usize>; 3]| {

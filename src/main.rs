@@ -24,22 +24,6 @@ mod terminal_link;
 mod watch;
 
 const CURRENT_FORMAT_VERSION: u8 = 1;
-const DEBUG_PROFILE: bool = {
-    #[allow(unused_assignments, unused_mut)]
-    let mut debug_profile = false;
-
-    #[cfg(debug_assertions)]
-    {
-        debug_profile = true;
-    }
-
-    debug_profile
-};
-
-// The current directory is the official Rustligns repository.
-fn in_official_repo() -> bool {
-    Path::new("dev/rustlings-repo.txt").exists()
-}
 
 fn clear_terminal(stdout: &mut StdoutLock) -> io::Result<()> {
     stdout.write_all(b"\x1b[H\x1b[2J\x1b[3J")
@@ -89,7 +73,7 @@ enum Subcommands {
 fn main() -> Result<()> {
     let args = Args::parse();
 
-    if !DEBUG_PROFILE && in_official_repo() {
+    if cfg!(not(debug_assertions)) && Path::new("dev/rustlings-repo.txt").exists() {
         bail!("{OLD_METHOD_ERR}");
     }
 
