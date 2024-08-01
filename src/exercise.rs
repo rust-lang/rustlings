@@ -103,7 +103,7 @@ pub trait RunnableExercise {
             args: &[],
             bin_name,
             description: "cargo build …",
-            hide_warnings: false,
+            hide_warnings: output.is_none(),
             target_dir,
             output: output.as_deref_mut(),
             dev,
