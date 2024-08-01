@@ -4,6 +4,7 @@
 
 - Run the final check of all exercises in parallel.
 - Small exercise improvements.
+- `dev check`: Check that all solutions are formatted with `rustfmt`.
 
 <a name="6.1.0"></a>
 

@@ -4,6 +4,7 @@ use std::{
     fs::{self, read_dir, OpenOptions},
     io::{self, Read, Write},
     path::{Path, PathBuf},
+    process::{Command, Stdio},
     sync::atomic::{self, AtomicBool},
     thread,
 };
@@ -224,7 +225,7 @@ fn check_solutions(
     cmd_runner: &CmdRunner,
 ) -> Result<()> {
     println!("Running all solutions. This may take a while…\n");
-    let sol_paths = thread::scope(|s| {
+    thread::scope(|s| {
         let handles = info_file
             .exercises
             .iter()
@@ -250,6 +251,14 @@ fn check_solutions(
             .collect::<Vec<_>>();
 
         let mut sol_paths = hashbrown::HashSet::with_capacity(info_file.exercises.len());
+        let mut fmt_cmd = Command::new("rustfmt");
+        fmt_cmd
+            .arg("--check")
+            .arg("--edition")
+            .arg("2021")
+            .arg("--color")
+            .arg("--always")
+            .stdin(Stdio::null());
 
         for (exercise_name, handle) in info_file
             .exercises
@@ -259,6 +268,7 @@ fn check_solutions(
         {
             match handle.join() {
                 Ok(SolutionCheck::Success { sol_path }) => {
+                    fmt_cmd.arg(&sol_path);
                     sol_paths.insert(PathBuf::from(sol_path));
                 }
                 Ok(SolutionCheck::MissingRequired) => {
@@ -276,12 +286,18 @@ fn check_solutions(
             }
         }
 
-        Ok(sol_paths)
-    })?;
+        let handle = s.spawn(move || check_unexpected_files("solutions", &sol_paths));
 
-    check_unexpected_files("solutions", &sol_paths)?;
+        if !fmt_cmd
+            .status()
+            .context("Failed to run `rustfmt` on all solution files")?
+            .success()
+        {
+            bail!("Some solutions aren't formatted. Run `rustfmt` on them");
+        }
 
-    Ok(())
+        handle.join().unwrap()
+    })
 }
 
 pub fn check(require_solutions: bool) -> Result<()> {

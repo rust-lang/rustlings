@@ -15,7 +15,7 @@ authors = [
 ]
 repository = "https://github.com/rust-lang/rustlings"
 license = "MIT"
-edition = "2021"
+edition = "2021" # On Update: Update the edition of the `rustfmt` command that checks the solutions.
 
 [workspace.dependencies]
 serde = { version = "1.0.204", features = ["derive"] }
