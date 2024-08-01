@@ -172,7 +172,7 @@ pub trait RunnableExercise {
     /// The output is written to the `output` buffer after clearing it.
     fn run_solution(&self, output: Option<&mut Vec<u8>>, target_dir: &Path) -> Result<bool> {
         let name = self.name();
-        let mut bin_name = String::with_capacity(name.len());
+        let mut bin_name = String::with_capacity(name.len() + 4);
         bin_name.push_str(name);
         bin_name.push_str("_sol");
 
