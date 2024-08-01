@@ -260,7 +260,7 @@ fn check_solutions(
             .arg("--edition")
             .arg("2021")
             .arg("--color")
-            .arg("--always")
+            .arg("always")
             .stdin(Stdio::null());
 
         for (exercise_name, handle) in info_file
