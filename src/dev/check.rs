@@ -317,7 +317,7 @@ pub fn check(require_solutions: bool) -> Result<()> {
     check_exercises(&info_file, &cmd_runner)?;
     check_solutions(require_solutions, &info_file, &cmd_runner)?;
 
-    println!("\nEverything looks fine!");
+    println!("Everything looks fine!");
 
     Ok(())
 }
