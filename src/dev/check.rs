@@ -25,10 +25,13 @@ fn forbidden_char(input: &str) -> Option<char> {
 // Check that the Cargo.toml file is up-to-date.
 fn check_cargo_toml(
     exercise_infos: &[ExerciseInfo],
-    current_cargo_toml: &str,
+    cargo_toml_path: &str,
     exercise_path_prefix: &[u8],
 ) -> Result<()> {
-    let (bins_start_ind, bins_end_ind) = bins_start_end_ind(current_cargo_toml)?;
+    let current_cargo_toml = fs::read_to_string(cargo_toml_path)
+        .with_context(|| format!("Failed to read the file `{cargo_toml_path}`"))?;
+
+    let (bins_start_ind, bins_end_ind) = bins_start_end_ind(&current_cargo_toml)?;
 
     let old_bins = &current_cargo_toml.as_bytes()[bins_start_ind..bins_end_ind];
     let mut new_bins = Vec::with_capacity(BINS_BUFFER_CAPACITY);
@@ -305,15 +308,9 @@ pub fn check(require_solutions: bool) -> Result<()> {
 
     if cfg!(debug_assertions) {
         // A hack to make `cargo run -- dev check` work when developing Rustlings.
-        check_cargo_toml(
-            &info_file.exercises,
-            include_str!("../../dev-Cargo.toml"),
-            b"../",
-        )?;
+        check_cargo_toml(&info_file.exercises, "dev/Cargo.toml", b"../")?;
     } else {
-        let current_cargo_toml =
-            fs::read_to_string("Cargo.toml").context("Failed to read the file `Cargo.toml`")?;
-        check_cargo_toml(&info_file.exercises, &current_cargo_toml, b"")?;
+        check_cargo_toml(&info_file.exercises, "Cargo.toml", b"")?;
     }
 
     let cmd_runner = CmdRunner::build()?;

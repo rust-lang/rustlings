@@ -1,0 +1,11 @@
+bin = [
+  { name = "compilation_success", path = "../exercises/compilation_success.rs" },
+  { name = "compilation_failure", path = "../exercises/compilation_failure.rs" },
+  { name = "test_success", path = "../exercises/test_success.rs" },
+  { name = "test_failure", path = "../exercises/test_failure.rs" },
+]
+
+[package]
+name = "test_exercises"
+edition = "2021"
+publish = false
