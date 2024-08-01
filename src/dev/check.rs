@@ -1,13 +1,10 @@
-use anyhow::{anyhow, bail, Context, Result};
+use anyhow::{anyhow, bail, Context, Error, Result};
 use std::{
     cmp::Ordering,
     fs::{self, read_dir, OpenOptions},
     io::{self, Read, Write},
     path::{Path, PathBuf},
-    sync::{
-        atomic::{self, AtomicBool},
-        Mutex,
-    },
+    sync::atomic::{self, AtomicBool},
     thread,
 };
 
@@ -213,56 +210,76 @@ fn check_exercises(info_file: &InfoFile, cmd_runner: &CmdRunner) -> Result<()> {
     check_exercises_unsolved(info_file, cmd_runner)
 }
 
+enum SolutionCheck {
+    Success { sol_path: String },
+    MissingRequired,
+    MissingOptional,
+    RunFailure { output: Vec<u8> },
+    Err(Error),
+}
+
 fn check_solutions(
     require_solutions: bool,
     info_file: &InfoFile,
     cmd_runner: &CmdRunner,
 ) -> Result<()> {
-    let paths = Mutex::new(hashbrown::HashSet::with_capacity(info_file.exercises.len()));
-    let error_occurred = AtomicBool::new(false);
-
     println!("Running all solutions. This may take a while…\n");
-    thread::scope(|s| {
-        for exercise_info in &info_file.exercises {
-            s.spawn(|| {
-                let error = |e| {
-                    let mut stderr = io::stderr().lock();
-                    stderr.write_all(e).unwrap();
-                    stderr
-                        .write_all(b"\nFailed to run the solution of the exercise ")
-                        .unwrap();
-                    stderr.write_all(exercise_info.name.as_bytes()).unwrap();
-                    stderr.write_all(SEPARATOR).unwrap();
-                    error_occurred.store(true, atomic::Ordering::Relaxed);
-                };
+    let sol_paths = thread::scope(|s| {
+        let handles = info_file
+            .exercises
+            .iter()
+            .map(|exercise_info| {
+                s.spawn(|| {
+                    let sol_path = exercise_info.sol_path();
+                    if !Path::new(&sol_path).exists() {
+                        if require_solutions {
+                            return SolutionCheck::MissingRequired;
+                        }
 
-                let path = exercise_info.sol_path();
-                if !Path::new(&path).exists() {
-                    if require_solutions {
-                        error(b"Solution missing");
+                        return SolutionCheck::MissingOptional;
                     }
 
-                    // No solution to check.
-                    return;
-                }
-
-                let mut output = Vec::with_capacity(OUTPUT_CAPACITY);
-                match exercise_info.run_solution(Some(&mut output), cmd_runner) {
-                    Ok(true) => {
-                        paths.lock().unwrap().insert(PathBuf::from(path));
+                    let mut output = Vec::with_capacity(OUTPUT_CAPACITY);
+                    match exercise_info.run_solution(Some(&mut output), cmd_runner) {
+                        Ok(true) => SolutionCheck::Success { sol_path },
+                        Ok(false) => SolutionCheck::RunFailure { output },
+                        Err(e) => SolutionCheck::Err(e),
                     }
-                    Ok(false) => error(&output),
-                    Err(e) => error(e.to_string().as_bytes()),
+                })
+            })
+            .collect::<Vec<_>>();
+
+        let mut sol_paths = hashbrown::HashSet::with_capacity(info_file.exercises.len());
+
+        for (exercise_name, handle) in info_file
+            .exercises
+            .iter()
+            .map(|exercise_info| &exercise_info.name)
+            .zip(handles)
+        {
+            match handle.join() {
+                Ok(SolutionCheck::Success { sol_path }) => {
+                    sol_paths.insert(PathBuf::from(sol_path));
                 }
-            });
+                Ok(SolutionCheck::MissingRequired) => {
+                    bail!("The solution of the exercise {exercise_name} is missing");
+                }
+                Ok(SolutionCheck::MissingOptional) => (),
+                Ok(SolutionCheck::RunFailure { output }) => {
+                    io::stderr().lock().write_all(&output)?;
+                    bail!("Running the solution of the exercise {exercise_name} failed with the error above");
+                }
+                Ok(SolutionCheck::Err(e)) => return Err(e),
+                Err(_) => {
+                    bail!("Panic while trying to run the solution of the exericse {exercise_name}");
+                }
+            }
         }
-    });
 
-    if error_occurred.load(atomic::Ordering::Relaxed) {
-        bail!("At least one solution failed. See the output above.");
-    }
+        Ok(sol_paths)
+    })?;
 
-    check_unexpected_files("solutions", &paths.into_inner().unwrap())?;
+    check_unexpected_files("solutions", &sol_paths)?;
 
     Ok(())
 }
