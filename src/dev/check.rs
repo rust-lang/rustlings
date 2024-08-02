@@ -5,7 +5,6 @@ use std::{
     io::{self, Read, Write},
     path::{Path, PathBuf},
     process::{Command, Stdio},
-    sync::atomic::{self, AtomicBool},
     thread,
 };
 
@@ -22,7 +21,7 @@ fn forbidden_char(input: &str) -> Option<char> {
     input.chars().find(|c| !c.is_alphanumeric() && *c != '_')
 }
 
-// Check that the Cargo.toml file is up-to-date.
+// Check that the `Cargo.toml` file is up-to-date.
 fn check_cargo_toml(
     exercise_infos: &[ExerciseInfo],
     cargo_toml_path: &str,
@@ -164,41 +163,42 @@ fn check_unexpected_files(
 }
 
 fn check_exercises_unsolved(info_file: &InfoFile, cmd_runner: &CmdRunner) -> Result<()> {
-    let error_occurred = AtomicBool::new(false);
-
     println!(
         "Running all exercises to check that they aren't already solved. This may take a while…\n",
     );
     thread::scope(|s| {
-        for exercise_info in &info_file.exercises {
-            if exercise_info.skip_check_unsolved {
-                continue;
-            }
-
-            s.spawn(|| {
-                let error = |e| {
-                    let mut stderr = io::stderr().lock();
-                    stderr.write_all(e).unwrap();
-                    stderr.write_all(b"\nProblem with the exercise ").unwrap();
-                    stderr.write_all(exercise_info.name.as_bytes()).unwrap();
-                    stderr.write_all(SEPARATOR).unwrap();
-                    error_occurred.store(true, atomic::Ordering::Relaxed);
-                };
-
-                match exercise_info.run_exercise(None, cmd_runner) {
-                    Ok(true) => error(b"Already solved!"),
-                    Ok(false) => (),
-                    Err(e) => error(e.to_string().as_bytes()),
+        let handles = info_file
+            .exercises
+            .iter()
+            .filter_map(|exercise_info| {
+                if exercise_info.skip_check_unsolved {
+                    return None;
                 }
-            });
+
+                Some(s.spawn(|| exercise_info.run_exercise(None, cmd_runner)))
+            })
+            .collect::<Vec<_>>();
+
+        for (exercise_info, handle) in info_file.exercises.iter().zip(handles) {
+            let Ok(result) = handle.join() else {
+                bail!(
+                    "Panic while trying to run the exericse {}",
+                    exercise_info.name,
+                );
+            };
+
+            match result {
+                Ok(true) => bail!(
+                    "The exercise {} is already solved.\n{SKIP_CHECK_UNSOLVED_HINT}",
+                    exercise_info.name,
+                ),
+                Ok(false) => (),
+                Err(e) => return Err(e),
+            }
         }
-    });
 
-    if error_occurred.load(atomic::Ordering::Relaxed) {
-        bail!(CHECK_EXERCISES_UNSOLVED_ERR);
-    }
-
-    Ok(())
+        Ok(())
+    })
 }
 
 fn check_exercises(info_file: &InfoFile, cmd_runner: &CmdRunner) -> Result<()> {
@@ -209,9 +209,10 @@ fn check_exercises(info_file: &InfoFile, cmd_runner: &CmdRunner) -> Result<()> {
     }
 
     let info_file_paths = check_info_file_exercises(info_file)?;
-    check_unexpected_files("exercises", &info_file_paths)?;
+    let handle = thread::spawn(move || check_unexpected_files("exercises", &info_file_paths));
 
-    check_exercises_unsolved(info_file, cmd_runner)
+    check_exercises_unsolved(info_file, cmd_runner)?;
+    handle.join().unwrap()
 }
 
 enum SolutionCheck {
@@ -263,29 +264,34 @@ fn check_solutions(
             .arg("always")
             .stdin(Stdio::null());
 
-        for (exercise_name, handle) in info_file
-            .exercises
-            .iter()
-            .map(|exercise_info| &exercise_info.name)
-            .zip(handles)
-        {
-            match handle.join() {
-                Ok(SolutionCheck::Success { sol_path }) => {
+        for (exercise_info, handle) in info_file.exercises.iter().zip(handles) {
+            let Ok(check_result) = handle.join() else {
+                bail!(
+                    "Panic while trying to run the solution of the exericse {}",
+                    exercise_info.name,
+                );
+            };
+
+            match check_result {
+                SolutionCheck::Success { sol_path } => {
                     fmt_cmd.arg(&sol_path);
                     sol_paths.insert(PathBuf::from(sol_path));
                 }
-                Ok(SolutionCheck::MissingRequired) => {
-                    bail!("The solution of the exercise {exercise_name} is missing");
+                SolutionCheck::MissingRequired => {
+                    bail!(
+                        "The solution of the exercise {} is missing",
+                        exercise_info.name,
+                    );
                 }
-                Ok(SolutionCheck::MissingOptional) => (),
-                Ok(SolutionCheck::RunFailure { output }) => {
+                SolutionCheck::MissingOptional => (),
+                SolutionCheck::RunFailure { output } => {
                     io::stderr().lock().write_all(&output)?;
-                    bail!("Running the solution of the exercise {exercise_name} failed with the error above");
+                    bail!(
+                        "Running the solution of the exercise {} failed with the error above",
+                        exercise_info.name,
+                    );
                 }
-                Ok(SolutionCheck::Err(e)) => return Err(e),
-                Err(_) => {
-                    bail!("Panic while trying to run the solution of the exericse {exercise_name}");
-                }
+                SolutionCheck::Err(e) => return Err(e),
             }
         }
 
@@ -322,8 +328,4 @@ pub fn check(require_solutions: bool) -> Result<()> {
     Ok(())
 }
 
-const SEPARATOR: &[u8] =
-    b"\n========================================================================================\n";
-
-const CHECK_EXERCISES_UNSOLVED_ERR: &str = "At least one exercise is already solved or failed to run. See the output above.
-If this is an intro exercise that is intended to be already solved, add `skip_check_unsolved = true` to the exercise's metadata in the `info.toml` file.";
+const SKIP_CHECK_UNSOLVED_HINT: &str = "If this is an introduction exercise that is intended to be already solved, add `skip_check_unsolved = true` to the exercise's metadata in the `info.toml` file";
