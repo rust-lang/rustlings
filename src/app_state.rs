@@ -107,8 +107,7 @@ impl AppState {
                 let path = exercise_info.path().leak();
                 let name = exercise_info.name.leak();
                 let dir = exercise_info.dir.map(|dir| &*dir.leak());
-
-                let hint = exercise_info.hint.trim().to_owned();
+                let hint = exercise_info.hint.leak().trim_ascii();
 
                 Exercise {
                     dir,
@@ -397,7 +396,7 @@ impl AppState {
         clear_terminal(writer)?;
         writer.write_all(FENISH_LINE.as_bytes())?;
 
-        let final_message = self.final_message.trim();
+        let final_message = self.final_message.trim_ascii();
         if !final_message.is_empty() {
             writer.write_all(final_message.as_bytes())?;
             writer.write_all(b"\n")?;
@@ -445,7 +444,7 @@ mod tests {
             path: "exercises/0.rs",
             test: false,
             strict_clippy: false,
-            hint: String::new(),
+            hint: "",
             done: false,
         }
     }

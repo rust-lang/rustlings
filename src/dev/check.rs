@@ -71,7 +71,7 @@ fn check_info_file_exercises(info_file: &InfoFile) -> Result<hashbrown::HashSet<
             }
         }
 
-        if exercise_info.hint.trim().is_empty() {
+        if exercise_info.hint.trim_ascii().is_empty() {
             bail!("The exercise `{name}` has an empty hint. Please provide a hint or at least tell the user why a hint isn't needed for this exercise");
         }
 

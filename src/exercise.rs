@@ -49,7 +49,7 @@ pub struct Exercise {
     pub path: &'static str,
     pub test: bool,
     pub strict_clippy: bool,
-    pub hint: String,
+    pub hint: &'static str,
     pub done: bool,
 }
 

@@ -116,7 +116,7 @@ fn main() -> Result<()> {
                 let mut stdout = io::stdout().lock();
                 clear_terminal(&mut stdout)?;
 
-                let welcome_message = welcome_message.trim();
+                let welcome_message = welcome_message.trim_ascii();
                 write!(stdout, "{welcome_message}\n\nPress ENTER to continue ")?;
                 stdout.flush()?;
                 press_enter_prompt()?;
