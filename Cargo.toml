@@ -16,6 +16,7 @@ authors = [
 repository = "https://github.com/rust-lang/rustlings"
 license = "MIT"
 edition = "2021" # On Update: Update the edition of the `rustfmt` command that checks the solutions.
+rust-version = "1.80"
 
 [workspace.dependencies]
 serde = { version = "1.0.204", features = ["derive"] }
@@ -29,6 +30,7 @@ authors.workspace = true
 repository.workspace = true
 license.workspace = true
 edition.workspace = true
+rust-version.workspace = true
 keywords = [
   "exercise",
   "learning",

@@ -17,7 +17,7 @@ It contains code examples and exercises similar to Rustlings, but online.
 
 ### Installing Rust
 
-Before installing Rustlings, you need to have _Rust installed_.
+Before installing Rustlings, you need to have the **latest version of Rust** installed.
 Visit [www.rust-lang.org/tools/install](https://www.rust-lang.org/tools/install) for further instructions on installing Rust.
 This will also install _Cargo_, Rust's package/project manager.
 
