@@ -25,7 +25,7 @@ impl ParsePosNonzeroError {
     }
 
     // TODO: Add another error conversion function here.
-    // fn from_parseint(???) -> Self { ??? }
+    // fn from_parse_int(???) -> Self { ??? }
 }
 
 #[derive(PartialEq, Debug)]
