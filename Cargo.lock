@@ -519,7 +519,6 @@ version = "6.1.0"
 dependencies = [
  "anyhow",
  "clap",
- "hashbrown",
  "notify-debouncer-mini",
  "os_pipe",
  "ratatui",
