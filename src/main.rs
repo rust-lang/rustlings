@@ -121,6 +121,8 @@ fn main() -> Result<()> {
                 stdout.flush()?;
                 press_enter_prompt()?;
                 clear_terminal(&mut stdout)?;
+                // Flush to be able to show errors occuring before printing a newline to stdout.
+                stdout.flush()?;
             }
             StateFileStatus::Read => (),
         }
