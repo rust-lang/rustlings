@@ -88,8 +88,6 @@ While working with Rustlings, please use a modern terminal for the best user exp
 The default terminal on Linux and Mac should be sufficient.
 On Windows, we recommend the [Windows Terminal](https://aka.ms/terminal).
 
-If you use VS Code, the builtin terminal should also be fine.
-
 ## Doing exercises
 
 The exercises are sorted by topic and can be found in the subdirectory `exercises/<topic>`.
