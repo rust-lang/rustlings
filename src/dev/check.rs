@@ -175,22 +175,21 @@ fn check_exercises_unsolved(info_file: &InfoFile, cmd_runner: &CmdRunner) -> Res
                     return None;
                 }
 
-                Some(s.spawn(|| exercise_info.run_exercise(None, cmd_runner)))
+                Some((
+                    exercise_info.name.as_str(),
+                    s.spawn(|| exercise_info.run_exercise(None, cmd_runner)),
+                ))
             })
             .collect::<Vec<_>>();
 
-        for (exercise_info, handle) in info_file.exercises.iter().zip(handles) {
+        for (exercise_name, handle) in handles {
             let Ok(result) = handle.join() else {
-                bail!(
-                    "Panic while trying to run the exericse {}",
-                    exercise_info.name,
-                );
+                bail!("Panic while trying to run the exericse {exercise_name}");
             };
 
             match result {
                 Ok(true) => bail!(
-                    "The exercise {} is already solved.\n{SKIP_CHECK_UNSOLVED_HINT}",
-                    exercise_info.name,
+                    "The exercise {exercise_name} is already solved.\n{SKIP_CHECK_UNSOLVED_HINT}",
                 ),
                 Ok(false) => (),
                 Err(e) => return Err(e),
