@@ -1,6 +1,6 @@
-<a name="6.1.1"></a>
+<a name="6.2.0"></a>
 
-## 6.1.1 (2024-08-08)
+## 6.2.0 (2024-08-08)
 
 It is recommended to update to this version to fix issues with the language server `rust-analyzer`.
 You can update using the following two commands:
@@ -12,6 +12,7 @@ cargo install rustlings
 
 - Fix `rust-analyzer` rebuilding all exercises after changing one file.
 - Show a helpful error message when trying to install Rustlings with a Rust version lower than the minimum one that Rustlings supports.
+- Remove the state file and the solutions directory from the generated `.gitignore` file.
 - Run the final check of all exercises in parallel.
 - Small exercise improvements.
 - `dev check`: Check that all solutions are formatted with `rustfmt`.

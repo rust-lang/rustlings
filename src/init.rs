@@ -92,11 +92,9 @@ const INIT_SOLUTION_FILE: &[u8] = b"fn main() {
 }
 ";
 
-const GITIGNORE: &[u8] = b".rustlings-state.txt
-solutions
-Cargo.lock
-target
-.vscode
+const GITIGNORE: &[u8] = b"Cargo.lock
+target/
+.vscode/
 ";
 
 pub const VS_CODE_EXTENSIONS_JSON: &[u8] = br#"{"recommendations":["rust-lang.rust-analyzer"]}"#;

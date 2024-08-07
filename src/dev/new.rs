@@ -76,8 +76,8 @@ pub fn new(path: &Path, no_git: bool) -> Result<()> {
 
 pub const GITIGNORE: &[u8] = b".rustlings-state.txt
 Cargo.lock
-target
-.vscode
+target/
+.vscode/
 !.vscode/extensions.json
 ";
 
