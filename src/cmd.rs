@@ -129,13 +129,6 @@ impl<'out> CargoSubcommand<'out> {
         self
     }
 
-    /// RUSTFLAGS="-A warnings"
-    #[inline]
-    pub fn hide_warnings(&mut self) -> &mut Self {
-        self.cmd.env("RUSTFLAGS", "-A warnings");
-        self
-    }
-
     /// The boolean in the returned `Result` is true if the command's exit status is success.
     #[inline]
     pub fn run(self, description: &str) -> Result<bool> {

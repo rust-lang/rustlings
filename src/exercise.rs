@@ -78,25 +78,38 @@ pub trait RunnableExercise {
         mut output: Option<&mut Vec<u8>>,
         cmd_runner: &CmdRunner,
     ) -> Result<bool> {
-        let output_is_none = if let Some(output) = output.as_deref_mut() {
+        if let Some(output) = output.as_deref_mut() {
             output.clear();
-            false
-        } else {
-            true
-        };
-
-        let mut build_cmd = cmd_runner.cargo("build", bin_name, output.as_deref_mut());
-        if output_is_none {
-            build_cmd.hide_warnings();
         }
-        let build_success = build_cmd.run("cargo build …")?;
+
+        let build_success = cmd_runner
+            .cargo("build", bin_name, output.as_deref_mut())
+            .run("cargo build …")?;
         if !build_success {
             return Ok(false);
         }
 
-        // Discard the output of `cargo build` because it will be shown again by Clippy.
+        // Discard the compiler output because it will be shown again by `cargo test` or Clippy.
         if let Some(output) = output.as_deref_mut() {
             output.clear();
+        }
+
+        if self.test() {
+            let output_is_some = output.is_some();
+            let mut test_cmd = cmd_runner.cargo("test", bin_name, output.as_deref_mut());
+            if output_is_some {
+                test_cmd.args(["--", "--color", "always", "--show-output"]);
+            }
+            let test_success = test_cmd.run("cargo test …")?;
+            if !test_success {
+                run_bin(bin_name, output, cmd_runner)?;
+                return Ok(false);
+            }
+
+            // Discard the compiler output because it will be shown again by Clippy.
+            if let Some(output) = output.as_deref_mut() {
+                output.clear();
+            }
         }
 
         let mut clippy_cmd = cmd_runner.cargo("clippy", bin_name, output.as_deref_mut());
@@ -109,25 +122,9 @@ pub trait RunnableExercise {
         }
 
         let clippy_success = clippy_cmd.run("cargo clippy …")?;
-        if !clippy_success {
-            return Ok(false);
-        }
-
-        if !self.test() {
-            return run_bin(bin_name, output.as_deref_mut(), cmd_runner);
-        }
-
-        let mut test_cmd = cmd_runner.cargo("test", bin_name, output.as_deref_mut());
-        if !output_is_none {
-            test_cmd.args(["--", "--color", "always", "--show-output"]);
-        }
-        // Hide warnings because they are shown by Clippy.
-        test_cmd.hide_warnings();
-        let test_success = test_cmd.run("cargo test …")?;
-
         let run_success = run_bin(bin_name, output, cmd_runner)?;
 
-        Ok(test_success && run_success)
+        Ok(clippy_success && run_success)
     }
 
     /// Compile, check and run the exercise.
