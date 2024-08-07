@@ -571,7 +571,7 @@ name = "hashmaps3"
 dir = "11_hashmaps"
 hint = """
 Hint 1: Use the `entry()` and `or_insert()` (or `or_insert_with()`) methods of
-        `HashMap` to insert the default value of `Team` if a team doesn't
+        `HashMap` to insert the default value of `TeamScores` if a team doesn't
         exist in the table yet.
 
 Learn more in The Book:
