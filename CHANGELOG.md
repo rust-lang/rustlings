@@ -13,6 +13,7 @@ cargo install rustlings
 - Fix `rust-analyzer` rebuilding all exercises after changing one file.
 - Show a helpful error message when trying to install Rustlings with a Rust version lower than the minimum one that Rustlings supports.
 - Remove the state file and the solutions directory from the generated `.gitignore` file.
+- Add a `README.md` file to the `solutions/` directory.
 - Run the final check of all exercises in parallel.
 - Small exercise improvements.
 - `dev check`: Check that all solutions are formatted with `rustfmt`.
