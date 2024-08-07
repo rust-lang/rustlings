@@ -1,3 +1,4 @@
+use ahash::{HashSet, HashSetExt};
 use anyhow::{bail, Context, Error, Result};
 use std::{
     fs::{self, File},
@@ -69,7 +70,7 @@ impl AppState {
             return StateFileStatus::NotRead;
         }
 
-        let mut done_exercises = hashbrown::HashSet::with_capacity(self.exercises.len());
+        let mut done_exercises = HashSet::with_capacity(self.exercises.len());
 
         for done_exerise_name in lines {
             if done_exerise_name.is_empty() {
