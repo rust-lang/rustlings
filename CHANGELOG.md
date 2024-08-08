@@ -2,6 +2,7 @@
 
 ## 6.2.0 (2024-08-08)
 
+- Show a message before checking and running an exercise. This gives the user instant feedback and avoids confusion if the checks take too long.
 - Show a helpful error message when trying to install Rustlings with a Rust version lower than the minimum one that Rustlings supports.
 - Remove the state file and the solutions directory from the generated `.gitignore` file.
 - Add a `README.md` file to the `solutions/` directory.
