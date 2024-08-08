@@ -3,30 +3,40 @@ use ratatui::crossterm::style::Stylize;
 use std::{
     env::set_current_dir,
     fs::{self, create_dir},
-    io::ErrorKind,
+    io::{self, Write},
     path::Path,
     process::{Command, Stdio},
 };
 
-use crate::{cargo_toml::updated_cargo_toml, embedded::EMBEDDED_FILES, info_file::InfoFile};
+use crate::{
+    cargo_toml::updated_cargo_toml, embedded::EMBEDDED_FILES, info_file::InfoFile,
+    term::press_enter_prompt,
+};
 
 pub fn init() -> Result<()> {
-    // Prevent initialization in a directory that contains the file `Cargo.toml`.
-    // This can mean that Rustlings was already initialized in this directory.
-    // Otherwise, this can cause problems with Cargo workspaces.
+    let rustlings_dir = Path::new("rustlings");
+    if rustlings_dir.exists() {
+        bail!(RUSTLINGS_DIR_ALREADY_EXISTS_ERR);
+    }
+
+    let mut stdout = io::stdout().lock();
+    let mut init_git = true;
+
     if Path::new("Cargo.toml").exists() {
-        bail!(CARGO_TOML_EXISTS_ERR);
-    }
-
-    let rustlings_path = Path::new("rustlings");
-    if let Err(e) = create_dir(rustlings_path) {
-        if e.kind() == ErrorKind::AlreadyExists {
-            bail!(RUSTLINGS_DIR_ALREADY_EXISTS_ERR);
+        if Path::new("exercises").exists() && Path::new("solutions").exists() {
+            bail!(IN_INITIALIZED_DIR_ERR);
         }
-        return Err(e.into());
+
+        stdout.write_all(CARGO_TOML_EXISTS_PROMPT_MSG)?;
+        press_enter_prompt(&mut stdout)?;
+        init_git = false;
     }
 
-    set_current_dir("rustlings")
+    stdout.write_all(b"This command will create the directory `rustlings/` which will contain the exercises.\nPress ENTER to continue ")?;
+    press_enter_prompt(&mut stdout)?;
+
+    create_dir(rustlings_dir).context("Failed to create the `rustlings/` directory")?;
+    set_current_dir(rustlings_dir)
         .context("Failed to change the current directory to `rustlings/`")?;
 
     let info_file = InfoFile::parse()?;
@@ -75,18 +85,21 @@ pub fn init() -> Result<()> {
     fs::write(".vscode/extensions.json", VS_CODE_EXTENSIONS_JSON)
         .context("Failed to create the file `rustlings/.vscode/extensions.json`")?;
 
-    // Ignore any Git error because Git initialization is not required.
-    let _ = Command::new("git")
-        .arg("init")
-        .stdin(Stdio::null())
-        .stderr(Stdio::null())
-        .status();
+    if init_git {
+        // Ignore any Git error because Git initialization is not required.
+        let _ = Command::new("git")
+            .arg("init")
+            .stdin(Stdio::null())
+            .stderr(Stdio::null())
+            .status();
+    }
 
-    println!(
+    writeln!(
+        stdout,
         "\n{}\n\n{}",
         "Initialization done ✓".green(),
         POST_INIT_MSG.bold(),
-    );
+    )?;
 
     Ok(())
 }
@@ -104,7 +117,7 @@ target/
 
 pub const VS_CODE_EXTENSIONS_JSON: &[u8] = br#"{"recommendations":["rust-lang.rust-analyzer"]}"#;
 
-const CARGO_TOML_EXISTS_ERR: &str = "The current directory contains the file `Cargo.toml`.
+const IN_INITIALIZED_DIR_ERR: &str = "It looks like Rustlings is already initialized in this directory.
 
 If you already initialized Rustlings, run the command `rustlings` for instructions on getting started with the exercises.
 Otherwise, please run `rustlings init` again in another directory.";
@@ -114,6 +127,20 @@ const RUSTLINGS_DIR_ALREADY_EXISTS_ERR: &str =
 You probably already initialized Rustlings.
 Run `cd rustlings`
 Then run `rustlings` again";
+
+const CARGO_TOML_EXISTS_PROMPT_MSG: &[u8] = br#"You are about to initialize Rustlings in a directory that already contains a `Cargo.toml` file!
+
+  => It is recommended to abort with CTRL+C and initialize Rustlings in another directory <=
+
+If you know what you are doing and want to initialize Rustlings in a Cargo workspace,
+then you need to add its directory to `members` in the `workspace` section of the `Cargo.toml` file:
+
+```toml
+[workspace]
+members = ["rustlings"]
+```
+
+Press ENTER if you are sure that you want to continue after reading the warning above "#;
 
 const POST_INIT_MSG: &str = "Run `cd rustlings` to go into the generated directory.
 Then run `rustlings` to get started.";
