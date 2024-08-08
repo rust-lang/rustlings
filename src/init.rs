@@ -57,6 +57,9 @@ pub fn init() -> Result<()> {
             bail!("The current directory is already part of a Cargo project.\nPlease initialize Rustlings in a different directory");
         }
 
+        stdout.write_all(b"This command will create the directory `rustlings/` as a member of this Cargo workspace.\nPress ENTER to continue ")?;
+        press_enter_prompt(&mut stdout)?;
+
         // Make sure "rustlings" is added to `workspace.members` by making
         // Cargo initialize a new project.
         let status = Command::new("cargo")
@@ -76,10 +79,10 @@ pub fn init() -> Result<()> {
         fs::remove_dir_all("rustlings")
             .context("Failed to remove the temporary directory `rustlings/`")?;
         init_git = false;
+    } else {
+        stdout.write_all(b"This command will create the directory `rustlings/` which will contain the exercises.\nPress ENTER to continue ")?;
+        press_enter_prompt(&mut stdout)?;
     }
-
-    stdout.write_all(b"This command will create the directory `rustlings/` which will contain the exercises.\nPress ENTER to continue ")?;
-    press_enter_prompt(&mut stdout)?;
 
     create_dir(rustlings_dir).context("Failed to create the `rustlings/` directory")?;
     set_current_dir(rustlings_dir)
