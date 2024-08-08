@@ -1,3 +1,4 @@
+use ahash::{HashSet, HashSetExt};
 use anyhow::{anyhow, bail, Context, Error, Result};
 use std::{
     cmp::Ordering,
@@ -48,9 +49,9 @@ fn check_cargo_toml(
 }
 
 // Check the info of all exercises and return their paths in a set.
-fn check_info_file_exercises(info_file: &InfoFile) -> Result<hashbrown::HashSet<PathBuf>> {
-    let mut names = hashbrown::HashSet::with_capacity(info_file.exercises.len());
-    let mut paths = hashbrown::HashSet::with_capacity(info_file.exercises.len());
+fn check_info_file_exercises(info_file: &InfoFile) -> Result<HashSet<PathBuf>> {
+    let mut names = HashSet::with_capacity(info_file.exercises.len());
+    let mut paths = HashSet::with_capacity(info_file.exercises.len());
 
     let mut file_buf = String::with_capacity(1 << 14);
     for exercise_info in &info_file.exercises {
@@ -111,10 +112,7 @@ fn check_info_file_exercises(info_file: &InfoFile) -> Result<hashbrown::HashSet<
 // Check `dir` for unexpected files.
 // Only Rust files in `allowed_rust_files` and `README.md` files are allowed.
 // Only one level of directory nesting is allowed.
-fn check_unexpected_files(
-    dir: &str,
-    allowed_rust_files: &hashbrown::HashSet<PathBuf>,
-) -> Result<()> {
+fn check_unexpected_files(dir: &str, allowed_rust_files: &HashSet<PathBuf>) -> Result<()> {
     let unexpected_file = |path: &Path| {
         anyhow!("Found the file `{}`. Only `README.md` and Rust files related to an exercise in `info.toml` are allowed in the `{dir}` directory", path.display())
     };
@@ -253,7 +251,7 @@ fn check_solutions(
             })
             .collect::<Vec<_>>();
 
-        let mut sol_paths = hashbrown::HashSet::with_capacity(info_file.exercises.len());
+        let mut sol_paths = HashSet::with_capacity(info_file.exercises.len());
         let mut fmt_cmd = Command::new("rustfmt");
         fmt_cmd
             .arg("--check")
