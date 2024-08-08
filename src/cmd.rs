@@ -1,4 +1,4 @@
-use anyhow::{Context, Result};
+use anyhow::{bail, Context, Result};
 use serde::Deserialize;
 use std::{
     io::Read,
@@ -68,12 +68,16 @@ impl CmdRunner {
             .stdin(Stdio::null())
             .stderr(Stdio::inherit())
             .output()
-            .context(CARGO_METADATA_ERR)?
-            .stdout;
+            .context(CARGO_METADATA_ERR)?;
 
-        let target_dir = serde_json::de::from_slice::<CargoMetadata>(&metadata_output)
-            .context("Failed to read the field `target_directory` from the `cargo metadata` output")
-            .map(|metadata| metadata.target_directory)?;
+        if !metadata_output.status.success() {
+            bail!("The command `cargo metadata …` failed. Are you in the `rustlings/` directory?");
+        }
+
+        let target_dir = serde_json::de::from_slice::<CargoMetadata>(&metadata_output.stdout)
+            .context(
+                "Failed to read the field `target_directory` from the output of the command `cargo metadata …`",
+            )?.target_directory;
 
         Ok(Self { target_dir })
     }
