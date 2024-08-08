@@ -46,7 +46,7 @@ include = [
 ]
 
 [dependencies]
-ahash = "0.8.11"
+ahash = { version = "0.8.11", default-features = false }
 anyhow = "1.0.86"
 clap = { version = "4.5.13", features = ["derive"] }
 notify-debouncer-mini = { version = "0.4.1", default-features = false }

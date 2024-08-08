@@ -13,6 +13,7 @@ use self::{app_state::AppState, dev::DevCommands, info_file::InfoFile, watch::Wa
 mod app_state;
 mod cargo_toml;
 mod cmd;
+mod collections;
 mod dev;
 mod embedded;
 mod exercise;

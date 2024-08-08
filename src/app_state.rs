@@ -1,4 +1,3 @@
-use ahash::{HashSet, HashSetExt};
 use anyhow::{bail, Context, Error, Result};
 use std::{
     fs::{self, File},
@@ -11,6 +10,7 @@ use std::{
 use crate::{
     clear_terminal,
     cmd::CmdRunner,
+    collections::hash_set_with_capacity,
     embedded::EMBEDDED_FILES,
     exercise::{Exercise, RunnableExercise},
     info_file::ExerciseInfo,
@@ -70,7 +70,7 @@ impl AppState {
             return StateFileStatus::NotRead;
         }
 
-        let mut done_exercises = HashSet::with_capacity(self.exercises.len());
+        let mut done_exercises = hash_set_with_capacity(self.exercises.len());
 
         for done_exerise_name in lines {
             if done_exerise_name.is_empty() {
