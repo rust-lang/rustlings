@@ -27,6 +27,7 @@ pub struct WatchState<'a> {
     show_hint: bool,
     done_status: DoneStatus,
     manual_run: bool,
+    pending: bool,
 }
 
 impl<'a> WatchState<'a> {
@@ -40,6 +41,7 @@ impl<'a> WatchState<'a> {
             show_hint: false,
             done_status: DoneStatus::Pending,
             manual_run,
+            pending: false,
         }
     }
 
@@ -50,6 +52,10 @@ impl<'a> WatchState<'a> {
 
     pub fn run_current_exercise(&mut self) -> Result<()> {
         self.show_hint = false;
+
+        self.pending = true;
+        self.render()?;
+        self.pending = false; // remove pending UI on next render
 
         let success = self
             .app_state
@@ -163,6 +169,13 @@ When you are done experimenting, enter `n` to move on to the next exercise 🦀"
         )?;
 
         self.show_prompt()?;
+
+        // TODO remove the whole pending logic once this is fixed:
+        // https://github.com/rust-lang/rustlings/issues/2071
+        if self.pending {
+            self.writer
+                .write_all(b"\n\nChecking the exercises...\n\nThank you for your patience...\n")?;
+        }
 
         Ok(())
     }
