@@ -1,6 +1,5 @@
 use std::{
     env::{self, consts::EXE_SUFFIX},
-    fs,
     process::{Command, Stdio},
     str::from_utf8,
 };
@@ -156,7 +155,6 @@ fn hint() {
 #[test]
 fn init() {
     let test_dir = tempfile::TempDir::new().unwrap();
-    let initialized_dir = test_dir.path().join("rustlings");
     let test_dir = test_dir.path().to_str().unwrap();
 
     Cmd::default().current_dir(test_dir).fail();
@@ -173,9 +171,11 @@ fn init() {
         .output(PartialStderr("`cd rustlings`"))
         .fail();
 
+    let initialized_dir = format!("{test_dir}/rustlings");
+
     // Running `init` in the initialized directory.
     Cmd::default()
-        .current_dir(initialized_dir.to_str().unwrap())
+        .current_dir(&initialized_dir)
         .args(&["init"])
         .output(PartialStderr("already initialized"))
         .fail();
