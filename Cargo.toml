@@ -19,7 +19,7 @@ edition = "2021" # On Update: Update the edition of the `rustfmt` command that c
 rust-version = "1.80"
 
 [workspace.dependencies]
-serde = { version = "1.0.204", features = ["derive"] }
+serde = { version = "1.0.205", features = ["derive"] }
 toml_edit = { version = "0.22.20", default-features = false, features = ["parse", "serde"] }
 
 [package]
@@ -48,7 +48,7 @@ include = [
 [dependencies]
 ahash = { version = "0.8.11", default-features = false }
 anyhow = "1.0.86"
-clap = { version = "4.5.13", features = ["derive"] }
+clap = { version = "4.5.14", features = ["derive"] }
 notify-debouncer-mini = { version = "0.4.1", default-features = false }
 os_pipe = "1.2.1"
 ratatui = { version = "0.27.0", default-features = false, features = ["crossterm"] }
