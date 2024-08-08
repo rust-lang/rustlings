@@ -155,28 +155,28 @@ fn hint() {
 
 #[test]
 fn init() {
-    let _ = fs::remove_dir_all("tests/rustlings");
+    let test_dir = tempfile::TempDir::new().unwrap();
+    let initialized_dir = test_dir.path().join("rustlings");
+    let test_dir = test_dir.path().to_str().unwrap();
 
-    Cmd::default().current_dir("tests").fail();
+    Cmd::default().current_dir(test_dir).fail();
 
     Cmd::default()
-        .current_dir("tests")
+        .current_dir(test_dir)
         .args(&["init"])
         .success();
 
     // Running `init` after a successful initialization.
     Cmd::default()
-        .current_dir("tests")
+        .current_dir(test_dir)
         .args(&["init"])
         .output(PartialStderr("`cd rustlings`"))
         .fail();
 
     // Running `init` in the initialized directory.
     Cmd::default()
-        .current_dir("tests/rustlings")
+        .current_dir(initialized_dir.to_str().unwrap())
         .args(&["init"])
         .output(PartialStderr("already initialized"))
         .fail();
-
-    fs::remove_dir_all("tests/rustlings").unwrap();
 }
