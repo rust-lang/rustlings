@@ -4,7 +4,7 @@ use std::{
     env::set_current_dir,
     fs::{self, create_dir},
     io::{self, Write},
-    path::Path,
+    path::{Path, PathBuf},
     process::{Command, Stdio},
 };
 
@@ -22,14 +22,27 @@ pub fn init() -> Result<()> {
     let mut stdout = io::stdout().lock();
     let mut init_git = true;
 
-    if Path::new("Cargo.toml").exists() {
+    let manifest_path = Command::new("cargo")
+        .args(["locate-project", "--message-format=plain"])
+        .output()?;
+    if manifest_path.status.success() {
+        let manifest_path: PathBuf = String::from_utf8_lossy(&manifest_path.stdout).trim().into();
+
         if Path::new("exercises").exists() && Path::new("solutions").exists() {
             bail!(IN_INITIALIZED_DIR_ERR);
         }
-
-        stdout.write_all(CARGO_TOML_EXISTS_PROMPT_MSG)?;
-        press_enter_prompt(&mut stdout)?;
-        init_git = false;
+        if fs::read_to_string(manifest_path)?.contains("[workspace]") {
+            // make sure "rustlings" is added to `workspace.members` by making
+            // cargo initialize a new project
+            let output = Command::new("cargo").args(["new", "rustlings"]).output()?;
+            if !output.status.success() {
+                bail!("Failed to initilize new workspace member");
+            }
+            fs::remove_dir_all("rustlings")?;
+            init_git = false;
+        } else {
+            bail!(IN_NON_WORKSPACE_CARGO_PROJECT_ERR);
+        }
     }
 
     stdout.write_all(b"This command will create the directory `rustlings/` which will contain the exercises.\nPress ENTER to continue ")?;
@@ -128,19 +141,9 @@ You probably already initialized Rustlings.
 Run `cd rustlings`
 Then run `rustlings` again";
 
-const CARGO_TOML_EXISTS_PROMPT_MSG: &[u8] = br#"You are about to initialize Rustlings in a directory that already contains a `Cargo.toml` file!
-
-  => It is recommended to abort with CTRL+C and initialize Rustlings in another directory <=
-
-If you know what you are doing and want to initialize Rustlings in a Cargo workspace,
-then you need to add its directory to `members` in the `workspace` section of the `Cargo.toml` file:
-
-```toml
-[workspace]
-members = ["rustlings"]
-```
-
-Press ENTER if you are sure that you want to continue after reading the warning above "#;
+const IN_NON_WORKSPACE_CARGO_PROJECT_ERR: &str = "\
+The current directory is already part of a cargo project.
+Please initialize rustlings in a different directory.";
 
 const POST_INIT_MSG: &str = "Run `cd rustlings` to go into the generated directory.
 Then run `rustlings` to get started.";
