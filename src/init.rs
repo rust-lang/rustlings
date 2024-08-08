@@ -69,7 +69,7 @@ pub fn init() -> Result<()> {
             .stdout(Stdio::null())
             .status()?;
         if !status.success() {
-            bail!("Failed to initilize a new Cargo workspace member.\nPlease initialize Rustlings in a different directory");
+            bail!("Failed to initialize a new Cargo workspace member.\nPlease initialize Rustlings in a different directory");
         }
 
         stdout.write_all(b"The directory `rustlings` has been added to `workspace.members` in the Cargo.toml file of this Cargo workspace.\n")?;

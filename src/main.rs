@@ -106,7 +106,7 @@ fn main() -> Result<()> {
                 write!(stdout, "{welcome_message}\n\nPress ENTER to continue ")?;
                 press_enter_prompt(&mut stdout)?;
                 clear_terminal(&mut stdout)?;
-                // Flush to be able to show errors occuring before printing a newline to stdout.
+                // Flush to be able to show errors occurring before printing a newline to stdout.
                 stdout.flush()?;
             }
             StateFileStatus::Read => (),
