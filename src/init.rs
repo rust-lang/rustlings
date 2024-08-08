@@ -1,5 +1,6 @@
 use anyhow::{bail, Context, Result};
 use ratatui::crossterm::style::Stylize;
+use serde::Deserialize;
 use std::{
     env::set_current_dir,
     fs::{self, create_dir},
@@ -13,36 +14,68 @@ use crate::{
     term::press_enter_prompt,
 };
 
+#[derive(Deserialize)]
+struct CargoLocateProject {
+    root: PathBuf,
+}
+
 pub fn init() -> Result<()> {
     let rustlings_dir = Path::new("rustlings");
     if rustlings_dir.exists() {
         bail!(RUSTLINGS_DIR_ALREADY_EXISTS_ERR);
     }
 
+    let locate_project_output = Command::new("cargo")
+        .arg("locate-project")
+        .arg("-q")
+        .arg("--workspace")
+        .stdin(Stdio::null())
+        .stderr(Stdio::inherit())
+        .output()
+        .context(CARGO_LOCATE_PROJECT_ERR)?;
+
     let mut stdout = io::stdout().lock();
     let mut init_git = true;
 
-    let manifest_path = Command::new("cargo")
-        .args(["locate-project", "--message-format=plain"])
-        .output()?;
-    if manifest_path.status.success() {
-        let manifest_path: PathBuf = String::from_utf8_lossy(&manifest_path.stdout).trim().into();
-
+    if locate_project_output.status.success() {
         if Path::new("exercises").exists() && Path::new("solutions").exists() {
             bail!(IN_INITIALIZED_DIR_ERR);
         }
-        if fs::read_to_string(manifest_path)?.contains("[workspace]") {
-            // make sure "rustlings" is added to `workspace.members` by making
-            // cargo initialize a new project
-            let output = Command::new("cargo").args(["new", "rustlings"]).output()?;
-            if !output.status.success() {
-                bail!("Failed to initilize new workspace member");
-            }
-            fs::remove_dir_all("rustlings")?;
-            init_git = false;
-        } else {
-            bail!(IN_NON_WORKSPACE_CARGO_PROJECT_ERR);
+
+        let workspace_manifest =
+            serde_json::de::from_slice::<CargoLocateProject>(&locate_project_output.stdout)
+                .context(
+                    "Failed to read the field `root` from the output of `cargo locate-project …`",
+                )?
+                .root;
+
+        let workspace_manifest_content = fs::read_to_string(&workspace_manifest)
+            .with_context(|| format!("Failed to read the file {}", workspace_manifest.display()))?;
+        if !workspace_manifest_content.contains("[workspace]\n")
+            && !workspace_manifest_content.contains("workspace.")
+        {
+            bail!("The current directory is already part of a Cargo project.\nPlease initialize Rustlings in a different directory");
         }
+
+        // Make sure "rustlings" is added to `workspace.members` by making
+        // Cargo initialize a new project.
+        let status = Command::new("cargo")
+            .arg("new")
+            .arg("-q")
+            .arg("--vcs")
+            .arg("none")
+            .arg("rustlings")
+            .stdin(Stdio::null())
+            .stdout(Stdio::null())
+            .status()?;
+        if !status.success() {
+            bail!("Failed to initilize a new Cargo workspace member.\nPlease initialize Rustlings in a different directory");
+        }
+
+        stdout.write_all(b"The directory `rustlings` has been added to `workspace.members` in the Cargo.toml file of this Cargo workspace.\n")?;
+        fs::remove_dir_all("rustlings")
+            .context("Failed to remove the temporary directory `rustlings/`")?;
+        init_git = false;
     }
 
     stdout.write_all(b"This command will create the directory `rustlings/` which will contain the exercises.\nPress ENTER to continue ")?;
@@ -117,6 +150,10 @@ pub fn init() -> Result<()> {
     Ok(())
 }
 
+const CARGO_LOCATE_PROJECT_ERR: &str = "Failed to run the command `cargo locate-project …`
+Did you already install Rust?
+Try running `cargo --version` to diagnose the problem.";
+
 const INIT_SOLUTION_FILE: &[u8] = b"fn main() {
     // DON'T EDIT THIS SOLUTION FILE!
     // It will be automatically filled after you finish the exercise.
@@ -133,17 +170,13 @@ pub const VS_CODE_EXTENSIONS_JSON: &[u8] = br#"{"recommendations":["rust-lang.ru
 const IN_INITIALIZED_DIR_ERR: &str = "It looks like Rustlings is already initialized in this directory.
 
 If you already initialized Rustlings, run the command `rustlings` for instructions on getting started with the exercises.
-Otherwise, please run `rustlings init` again in another directory.";
+Otherwise, please run `rustlings init` again in a different directory.";
 
 const RUSTLINGS_DIR_ALREADY_EXISTS_ERR: &str =
     "A directory with the name `rustlings` already exists in the current directory.
 You probably already initialized Rustlings.
 Run `cd rustlings`
 Then run `rustlings` again";
-
-const IN_NON_WORKSPACE_CARGO_PROJECT_ERR: &str = "\
-The current directory is already part of a cargo project.
-Please initialize rustlings in a different directory.";
 
 const POST_INIT_MSG: &str = "Run `cd rustlings` to go into the generated directory.
 Then run `rustlings` to get started.";
