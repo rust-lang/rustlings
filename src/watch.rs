@@ -102,8 +102,7 @@ pub fn watch(
                 watch_state.render()?;
             }
             WatchEvent::NotifyErr(e) => {
-                watch_state.into_writer().write_all(NOTIFY_ERR.as_bytes())?;
-                return Err(Error::from(e));
+                return Err(Error::from(e).context(NOTIFY_ERR));
             }
             WatchEvent::TerminalEventErr(e) => {
                 return Err(Error::from(e).context("Terminal event listener failed"));
