@@ -30,7 +30,7 @@ pub fn init() -> Result<()> {
         .arg("-q")
         .arg("--workspace")
         .stdin(Stdio::null())
-        .stderr(Stdio::inherit())
+        .stderr(Stdio::null())
         .output()
         .context(CARGO_LOCATE_PROJECT_ERR)?;
 
