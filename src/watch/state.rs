@@ -51,6 +51,8 @@ impl<'a> WatchState<'a> {
     pub fn run_current_exercise(&mut self) -> Result<()> {
         self.show_hint = false;
 
+        self.writer
+            .write_all(b"\nChecking the exercise, please wait...")?;
         let success = self
             .app_state
             .current_exercise()
