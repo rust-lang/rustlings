@@ -1,14 +1,20 @@
 <a name="6.2.0"></a>
 
-## 6.2.0 (2024-08-08)
+## 6.2.0 (2024-08-09)
+
+### Added
 
 - Show a message before checking and running an exercise. This gives the user instant feedback and avoids confusion if the checks take too long.
 - Show a helpful error message when trying to install Rustlings with a Rust version lower than the minimum one that Rustlings supports.
-- Remove the state file and the solutions directory from the generated `.gitignore` file.
 - Add a `README.md` file to the `solutions/` directory.
+- Allow initializing Rustlings in a Cargo workspace.
+- `dev check`: Check that all solutions are formatted with `rustfmt`.
+
+### Changed
+
+- Remove the state file and the solutions directory from the generated `.gitignore` file.
 - Run the final check of all exercises in parallel.
 - Small exercise improvements.
-- `dev check`: Check that all solutions are formatted with `rustfmt`.
 
 <a name="6.1.0"></a>
 
