@@ -27,7 +27,7 @@ pub fn list(app_state: &mut AppState) -> Result<()> {
     let mut ui_state = UiState::new(app_state);
 
     'outer: loop {
-        terminal.draw(|frame| ui_state.draw(frame).unwrap())?;
+        terminal.try_draw(|frame| ui_state.draw(frame).map_err(io::Error::other))?;
 
         let key = loop {
             match event::read()? {

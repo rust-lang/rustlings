@@ -161,7 +161,7 @@ impl<'a> UiState<'a> {
     }
 
     pub fn draw(&mut self, frame: &mut Frame) -> Result<()> {
-        let area = frame.size();
+        let area = frame.area();
 
         frame.render_stateful_widget(
             &self.table,

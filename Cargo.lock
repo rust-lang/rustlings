@@ -162,13 +162,14 @@ checksum = "d3fd119d74b830634cea2a0f58bbd0d54540518a14397557951e79340abc28c0"
 
 [[package]]
 name = "compact_str"
-version = "0.7.1"
+version = "0.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f86b9c4c00838774a6d902ef931eff7470720c51d90c2e32cfe15dc304737b3f"
+checksum = "6050c3a16ddab2e412160b31f2c871015704239bca62f72f6e5f0be631d3f644"
 dependencies = [
  "castaway",
  "cfg-if",
  "itoa",
+ "rustversion",
  "ryu",
  "static_assertions",
 ]
@@ -190,15 +191,15 @@ checksum = "22ec99545bb0ed0ea7bb9b8e1e9122ea386ff8a48c0922e43f36d45ab09e0e80"
 
 [[package]]
 name = "crossterm"
-version = "0.27.0"
+version = "0.28.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f476fe445d41c9e991fd07515a6f463074b782242ccf4a5b7b1d1012e70824df"
+checksum = "829d955a0bb380ef178a640b91779e3987da38c9aea133b20614cfed8cdea9c6"
 dependencies = [
  "bitflags 2.6.0",
  "crossterm_winapi",
- "libc",
- "mio",
+ "mio 1.0.1",
  "parking_lot",
+ "rustix",
  "signal-hook",
  "signal-hook-mio",
  "winapi",
@@ -279,6 +280,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2304e00983f87ffb38b55b444b5e3b60a884b5d30c0fca7d82fe33449bbe55ea"
 
 [[package]]
+name = "hermit-abi"
+version = "0.3.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d231dfb89cfffdbc30e7fc41579ed6066ad03abda9e567ccafae602b97ec5024"
+
+[[package]]
 name = "indexmap"
 version = "2.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -306,6 +313,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e05c02b5e89bff3b946cedeca278abc628fe811e604f027c45a8aa3cf793d0eb"
 dependencies = [
  "libc",
+]
+
+[[package]]
+name = "instability"
+version = "0.3.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b23a0c8dfe501baac4adf6ebbfa6eddf8f0c07f56b058cc1288017e32397846c"
+dependencies = [
+ "quote",
+ "syn",
 ]
 
 [[package]]
@@ -405,6 +422,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "mio"
+version = "1.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4569e456d394deccd22ce1c1913e6ea0e54519f577285001215d33557431afe4"
+dependencies = [
+ "hermit-abi",
+ "libc",
+ "log",
+ "wasi",
+ "windows-sys 0.52.0",
+]
+
+[[package]]
 name = "notify"
 version = "6.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -418,7 +448,7 @@ dependencies = [
  "kqueue",
  "libc",
  "log",
- "mio",
+ "mio 0.8.11",
  "walkdir",
  "windows-sys 0.48.0",
 ]
@@ -498,18 +528,18 @@ dependencies = [
 
 [[package]]
 name = "ratatui"
-version = "0.27.0"
+version = "0.28.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d16546c5b5962abf8ce6e2881e722b4e0ae3b6f1a08a26ae3573c55853ca68d3"
+checksum = "5ba6a365afbe5615999275bea2446b970b10a41102500e27ce7678d50d978303"
 dependencies = [
  "bitflags 2.6.0",
  "cassowary",
  "compact_str",
  "crossterm",
+ "instability",
  "itertools",
  "lru",
  "paste",
- "stability",
  "strum",
  "strum_macros",
  "unicode-segmentation",
@@ -659,7 +689,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "34db1a06d485c9142248b7a054f034b349b212551f3dfd19c94d45a754a217cd"
 dependencies = [
  "libc",
- "mio",
+ "mio 1.0.1",
  "signal-hook",
 ]
 
@@ -677,16 +707,6 @@ name = "smallvec"
 version = "1.13.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3c5e1a9a646d36c3599cd173a41282daf47c44583ad367b8e6837255952e5c67"
-
-[[package]]
-name = "stability"
-version = "0.2.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d904e7009df136af5297832a3ace3370cd14ff1546a232f4f185036c2736fcac"
-dependencies = [
- "quote",
- "syn",
-]
 
 [[package]]
 name = "static_assertions"
