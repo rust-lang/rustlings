@@ -580,7 +580,7 @@ dependencies = [
 
 [[package]]
 name = "rustlings"
-version = "6.1.0"
+version = "6.2.0"
 dependencies = [
  "ahash",
  "anyhow",
@@ -597,7 +597,7 @@ dependencies = [
 
 [[package]]
 name = "rustlings-macros"
-version = "6.1.0"
+version = "6.2.0"
 dependencies = [
  "quote",
  "serde",
