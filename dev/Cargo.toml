@@ -201,3 +201,19 @@ panic = "abort"
 
 [profile.dev]
 panic = "abort"
+
+[lints.rust]
+# You shouldn't write unsafe code in Rustlings
+unsafe_code = "forbid"
+# You don't need unstable features in Rustlings and shouldn't rely on them while learning Rust
+unstable_features = "forbid"
+
+[lints.clippy]
+# You forgot a `todo!()`
+todo = "forbid"
+# This can only happen by mistake in Rustlings
+empty_loop = "forbid"
+# No infinite loops are needed in Rustlings
+infinite_loop = "deny"
+# You shouldn't leak memory while still learning Rust
+mem_forget = "deny"
