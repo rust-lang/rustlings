@@ -35,7 +35,7 @@ fn build_scores_table(results: &str) -> HashMap<&str, TeamScores> {
         team_1.goals_scored += team_1_score;
         team_1.goals_conceded += team_2_score;
 
-        // Similarely for the second team.
+        // Similarly for the second team.
         let team_2 = scores
             .entry(team_2_name)
             .or_insert_with(TeamScores::default);
