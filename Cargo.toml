@@ -69,6 +69,18 @@ panic = "abort"
 [package.metadata.release]
 pre-release-hook = ["./release-hook.sh"]
 
+[workspace.lints.rust]
+unsafe_code = "forbid"
+unstable_features = "forbid"
+
+[workspace.lints.clippy]
+empty_loop = "forbid"
+infinite_loop = "deny"
+mem_forget = "deny"
+dbg_macro = "warn"
+todo = "warn"
 # TODO: Remove after the following fix is released: https://github.com/rust-lang/rust-clippy/pull/13102
-[lints.clippy]
 needless_option_as_deref = "allow"
+
+[lints]
+workspace = true

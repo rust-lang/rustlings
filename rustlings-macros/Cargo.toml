@@ -19,3 +19,6 @@ proc-macro = true
 quote = "1.0.36"
 serde.workspace = true
 toml_edit.workspace = true
+
+[lints]
+workspace = true
