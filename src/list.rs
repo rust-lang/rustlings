@@ -8,7 +8,7 @@ use ratatui::{
     },
     Terminal,
 };
-use std::io::{self, Write};
+use std::io::{self, StdoutLock, Write};
 
 use crate::app_state::AppState;
 
@@ -16,15 +16,8 @@ use self::state::{Filter, UiState};
 
 mod state;
 
-pub fn list(app_state: &mut AppState) -> Result<()> {
-    let mut stdout = io::stdout().lock();
-    stdout
-        .queue(EnterAlternateScreen)?
-        .queue(EnableMouseCapture)?
-        .flush()?;
-    enable_raw_mode()?;
-
-    let mut terminal = Terminal::new(CrosstermBackend::new(&mut stdout))?;
+fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> {
+    let mut terminal = Terminal::new(CrosstermBackend::new(stdout))?;
     terminal.clear()?;
 
     let mut ui_state = UiState::new(app_state);
@@ -88,12 +81,25 @@ pub fn list(app_state: &mut AppState) -> Result<()> {
         }
     }
 
-    drop(terminal);
+    Ok(())
+}
+
+pub fn list(app_state: &mut AppState) -> Result<()> {
+    let mut stdout = io::stdout().lock();
+    stdout
+        .queue(EnterAlternateScreen)?
+        .queue(EnableMouseCapture)?
+        .flush()?;
+    enable_raw_mode()?;
+
+    let res = handle_list(app_state, &mut stdout);
+
+    // Restore the terminal even if we got an error.
     stdout
         .queue(LeaveAlternateScreen)?
         .queue(DisableMouseCapture)?
         .flush()?;
     disable_raw_mode()?;
 
-    Ok(())
+    res
 }
