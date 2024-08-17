@@ -1,14 +1,14 @@
-use anyhow::Result;
+use anyhow::{Context, Result};
 use ratatui::{
     backend::CrosstermBackend,
     crossterm::{
-        event::{self, Event, KeyCode, KeyEventKind},
+        event::{self, DisableMouseCapture, EnableMouseCapture, Event, KeyCode, KeyEventKind},
         terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
-        ExecutableCommand,
+        QueueableCommand,
     },
     Terminal,
 };
-use std::io;
+use std::io::{self, Write};
 
 use crate::app_state::AppState;
 
@@ -18,7 +18,10 @@ mod state;
 
 pub fn list(app_state: &mut AppState) -> Result<()> {
     let mut stdout = io::stdout().lock();
-    stdout.execute(EnterAlternateScreen)?;
+    stdout
+        .queue(EnterAlternateScreen)?
+        .queue(EnableMouseCapture)?
+        .flush()?;
     enable_raw_mode()?;
 
     let mut terminal = Terminal::new(CrosstermBackend::new(&mut stdout))?;
@@ -30,7 +33,7 @@ pub fn list(app_state: &mut AppState) -> Result<()> {
         terminal.try_draw(|frame| ui_state.draw(frame).map_err(io::Error::other))?;
 
         let key = loop {
-            match event::read()? {
+            match event::read().context("Failed to read terminal event")? {
                 Event::Key(key) => match key.kind {
                     KeyEventKind::Press | KeyEventKind::Repeat => break key,
                     KeyEventKind::Release => (),
@@ -86,7 +89,10 @@ pub fn list(app_state: &mut AppState) -> Result<()> {
     }
 
     drop(terminal);
-    stdout.execute(LeaveAlternateScreen)?;
+    stdout
+        .queue(LeaveAlternateScreen)?
+        .queue(DisableMouseCapture)?
+        .flush()?;
     disable_raw_mode()?;
 
     Ok(())
