@@ -193,7 +193,7 @@ impl<'a> UiState<'a> {
             // Help footer.
             let mut spans = Vec::with_capacity(4);
             spans.push(Span::raw(
-                "↓/j ↑/k home/g end/G │ <c>ontinue at │ <r>eset │ filter ",
+                "↓/j ↑/k home/g end/G │ <c>ontinue at │ <r>eset exercise │ filter ",
             ));
             match self.filter {
                 Filter::Done => {
