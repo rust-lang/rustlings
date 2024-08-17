@@ -2,11 +2,11 @@ use anyhow::{Context, Result};
 use ratatui::{
     layout::{Constraint, Rect},
     style::{Style, Stylize},
-    text::{Line, Span},
+    text::{Span, Text},
     widgets::{Block, Borders, HighlightSpacing, Paragraph, Row, Table, TableState},
     Frame,
 };
-use std::fmt::Write;
+use std::{fmt::Write, mem};
 
 use crate::{app_state::AppState, progress_bar::progress_bar_ratatui};
 
@@ -162,6 +162,9 @@ impl<'a> UiState<'a> {
 
     pub fn draw(&mut self, frame: &mut Frame) -> Result<()> {
         let area = frame.area();
+        let narrow = area.width < 95;
+        let narrow_u16 = u16::from(narrow);
+        let table_height = area.height - 3 - narrow_u16;
 
         frame.render_stateful_widget(
             &self.table,
@@ -169,7 +172,7 @@ impl<'a> UiState<'a> {
                 x: 0,
                 y: 0,
                 width: area.width,
-                height: area.height - 3,
+                height: table_height,
             },
             &mut self.table_state,
         );
@@ -183,7 +186,7 @@ impl<'a> UiState<'a> {
             .block(Block::default().borders(Borders::BOTTOM)),
             Rect {
                 x: 0,
-                y: area.height - 3,
+                y: table_height,
                 width: area.width,
                 height: 2,
             },
@@ -191,10 +194,19 @@ impl<'a> UiState<'a> {
 
         let message = if self.message.is_empty() {
             // Help footer.
+            let mut text = Text::default();
             let mut spans = Vec::with_capacity(4);
             spans.push(Span::raw(
-                "↓/j ↑/k home/g end/G │ <c>ontinue at │ <r>eset exercise │ filter ",
+                "↓/j ↑/k home/g end/G │ <c>ontinue at │ <r>eset exercise │",
             ));
+
+            if narrow {
+                text.push_line(mem::take(&mut spans));
+                spans.push(Span::raw("filter "));
+            } else {
+                spans.push(Span::raw(" filter "));
+            }
+
             match self.filter {
                 Filter::Done => {
                     spans.push("<d>one".underlined().magenta());
@@ -206,18 +218,20 @@ impl<'a> UiState<'a> {
                 }
                 Filter::None => spans.push(Span::raw("<d>one/<p>ending")),
             }
+
             spans.push(Span::raw(" │ <q>uit list"));
-            Line::from(spans)
+            text.push_line(spans);
+            text
         } else {
-            Line::from(self.message.as_str().light_blue())
+            Text::from(self.message.as_str().light_blue())
         };
         frame.render_widget(
             message,
             Rect {
                 x: 0,
-                y: area.height - 1,
+                y: table_height + 2,
                 width: area.width,
-                height: 1,
+                height: 1 + narrow_u16,
             },
         );
 
