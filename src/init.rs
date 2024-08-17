@@ -139,13 +139,14 @@ pub fn init() -> Result<()> {
         let _ = Command::new("git")
             .arg("init")
             .stdin(Stdio::null())
+            .stdout(Stdio::null())
             .stderr(Stdio::null())
             .status();
     }
 
     writeln!(
         stdout,
-        "\n{}\n\n{}",
+        "{}\n\n{}",
         "Initialization done ✓".green(),
         POST_INIT_MSG.bold(),
     )?;
