@@ -206,7 +206,7 @@ impl<'a> UiState<'a> {
                 }
                 Filter::None => spans.push(Span::raw("<d>one/<p>ending")),
             }
-            spans.push(Span::raw(" │ <q>uit"));
+            spans.push(Span::raw(" │ <q>uit list"));
             Line::from(spans)
         } else {
             Line::from(self.message.as_str().light_blue())
