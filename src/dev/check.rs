@@ -161,9 +161,9 @@ fn check_unexpected_files(dir: &str, allowed_rust_files: &HashSet<PathBuf>) -> R
 }
 
 fn check_exercises_unsolved(info_file: &InfoFile, cmd_runner: &CmdRunner) -> Result<()> {
-    println!(
-        "Running all exercises to check that they aren't already solved. This may take a while…\n",
-    );
+    let mut stdout = io::stdout().lock();
+    stdout.write_all(b"Running all exercises to check that they aren't already solved...\n")?;
+
     thread::scope(|s| {
         let handles = info_file
             .exercises
@@ -180,6 +180,11 @@ fn check_exercises_unsolved(info_file: &InfoFile, cmd_runner: &CmdRunner) -> Res
             })
             .collect::<Vec<_>>();
 
+        let n_handles = handles.len();
+        write!(stdout, "Progress: 0/{n_handles}")?;
+        stdout.flush()?;
+        let mut handle_num = 1;
+
         for (exercise_name, handle) in handles {
             let Ok(result) = handle.join() else {
                 bail!("Panic while trying to run the exericse {exercise_name}");
@@ -192,7 +197,12 @@ fn check_exercises_unsolved(info_file: &InfoFile, cmd_runner: &CmdRunner) -> Res
                 Ok(false) => (),
                 Err(e) => return Err(e),
             }
+
+            write!(stdout, "\rProgress: {handle_num}/{n_handles}")?;
+            stdout.flush()?;
+            handle_num += 1;
         }
+        stdout.write_all(b"\n")?;
 
         Ok(())
     })
@@ -225,7 +235,9 @@ fn check_solutions(
     info_file: &InfoFile,
     cmd_runner: &CmdRunner,
 ) -> Result<()> {
-    println!("Running all solutions. This may take a while…\n");
+    let mut stdout = io::stdout().lock();
+    stdout.write_all(b"Running all solutions...\n")?;
+
     thread::scope(|s| {
         let handles = info_file
             .exercises
@@ -261,6 +273,11 @@ fn check_solutions(
             .arg("always")
             .stdin(Stdio::null());
 
+        let n_handles = handles.len();
+        write!(stdout, "Progress: 0/{n_handles}")?;
+        stdout.flush()?;
+        let mut handle_num = 1;
+
         for (exercise_info, handle) in info_file.exercises.iter().zip(handles) {
             let Ok(check_result) = handle.join() else {
                 bail!(
@@ -282,7 +299,8 @@ fn check_solutions(
                 }
                 SolutionCheck::MissingOptional => (),
                 SolutionCheck::RunFailure { output } => {
-                    io::stderr().lock().write_all(&output)?;
+                    stdout.write_all(b"\n\n")?;
+                    stdout.write_all(&output)?;
                     bail!(
                         "Running the solution of the exercise {} failed with the error above",
                         exercise_info.name,
@@ -290,7 +308,12 @@ fn check_solutions(
                 }
                 SolutionCheck::Err(e) => return Err(e),
             }
+
+            write!(stdout, "\rProgress: {handle_num}/{n_handles}")?;
+            stdout.flush()?;
+            handle_num += 1;
         }
+        stdout.write_all(b"\n")?;
 
         let handle = s.spawn(move || check_unexpected_files("solutions", &sol_paths));
 
