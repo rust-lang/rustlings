@@ -75,7 +75,7 @@ fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> 
             }
             KeyCode::Char('c') => {
                 ui_state.selected_to_current_exercise()?;
-                ui_state = ui_state.with_updated_rows();
+                break;
             }
             _ => (),
         }
