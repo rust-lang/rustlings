@@ -97,7 +97,7 @@ fn check_info_file_exercises(info_file: &InfoFile) -> Result<HashSet<PathBuf>> {
             bail!("Didn't find any `// TODO` comment in the file `{path}`.\nYou need to have at least one such comment to guide the user.");
         }
 
-        if !exercise_info.test && file_buf.contains("#[test]") {
+        if !exercise_info.test && file_buf.contains("#[test]\n") {
             bail!("The file `{path}` contains tests annotated with `#[test]` but the exercise `{name}` has `test = false` in the `info.toml` file");
         }
 
