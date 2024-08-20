@@ -165,65 +165,67 @@ fn check_unexpected_files(dir: &str, allowed_rust_files: &HashSet<PathBuf>) -> R
     Ok(())
 }
 
-fn check_exercises_unsolved(info_file: &InfoFile, cmd_runner: &CmdRunner) -> Result<()> {
+fn check_exercises_unsolved(
+    info_file: &'static InfoFile,
+    cmd_runner: &'static CmdRunner,
+) -> Result<()> {
     let mut stdout = io::stdout().lock();
     stdout.write_all(b"Running all exercises to check that they aren't already solved...\n")?;
 
-    thread::scope(|s| {
-        let handles = info_file
-            .exercises
-            .iter()
-            .filter_map(|exercise_info| {
-                if exercise_info.skip_check_unsolved {
-                    return None;
-                }
-
-                Some((
-                    exercise_info.name.as_str(),
-                    s.spawn(|| exercise_info.run_exercise(None, cmd_runner)),
-                ))
-            })
-            .collect::<Vec<_>>();
-
-        let n_handles = handles.len();
-        write!(stdout, "Progress: 0/{n_handles}")?;
-        stdout.flush()?;
-        let mut handle_num = 1;
-
-        for (exercise_name, handle) in handles {
-            let Ok(result) = handle.join() else {
-                bail!("Panic while trying to run the exericse {exercise_name}");
-            };
-
-            match result {
-                Ok(true) => bail!(
-                    "The exercise {exercise_name} is already solved.\n{SKIP_CHECK_UNSOLVED_HINT}",
-                ),
-                Ok(false) => (),
-                Err(e) => return Err(e),
+    let handles = info_file
+        .exercises
+        .iter()
+        .filter_map(|exercise_info| {
+            if exercise_info.skip_check_unsolved {
+                return None;
             }
 
-            write!(stdout, "\rProgress: {handle_num}/{n_handles}")?;
-            stdout.flush()?;
-            handle_num += 1;
-        }
-        stdout.write_all(b"\n")?;
+            Some((
+                exercise_info.name.as_str(),
+                thread::spawn(|| exercise_info.run_exercise(None, cmd_runner)),
+            ))
+        })
+        .collect::<Vec<_>>();
 
-        Ok(())
-    })
+    let n_handles = handles.len();
+    write!(stdout, "Progress: 0/{n_handles}")?;
+    stdout.flush()?;
+    let mut handle_num = 1;
+
+    for (exercise_name, handle) in handles {
+        let Ok(result) = handle.join() else {
+            bail!("Panic while trying to run the exericse {exercise_name}");
+        };
+
+        match result {
+            Ok(true) => {
+                bail!("The exercise {exercise_name} is already solved.\n{SKIP_CHECK_UNSOLVED_HINT}",)
+            }
+            Ok(false) => (),
+            Err(e) => return Err(e),
+        }
+
+        write!(stdout, "\rProgress: {handle_num}/{n_handles}")?;
+        stdout.flush()?;
+        handle_num += 1;
+    }
+    stdout.write_all(b"\n")?;
+
+    Ok(())
 }
 
-fn check_exercises(info_file: &InfoFile, cmd_runner: &CmdRunner) -> Result<()> {
+fn check_exercises(info_file: &'static InfoFile, cmd_runner: &'static CmdRunner) -> Result<()> {
     match info_file.format_version.cmp(&CURRENT_FORMAT_VERSION) {
         Ordering::Less => bail!("`format_version` < {CURRENT_FORMAT_VERSION} (supported version)\nPlease migrate to the latest format version"),
         Ordering::Greater => bail!("`format_version` > {CURRENT_FORMAT_VERSION} (supported version)\nTry updating the Rustlings program"),
         Ordering::Equal => (),
     }
 
-    let info_file_paths = check_info_file_exercises(info_file)?;
-    let handle = thread::spawn(move || check_unexpected_files("exercises", &info_file_paths));
+    let handle = thread::spawn(move || check_exercises_unsolved(info_file, cmd_runner));
 
-    check_exercises_unsolved(info_file, cmd_runner)?;
+    let info_file_paths = check_info_file_exercises(info_file)?;
+    check_unexpected_files("exercises", &info_file_paths)?;
+
     handle.join().unwrap()
 }
 
@@ -236,98 +238,96 @@ enum SolutionCheck {
 
 fn check_solutions(
     require_solutions: bool,
-    info_file: &InfoFile,
-    cmd_runner: &CmdRunner,
+    info_file: &'static InfoFile,
+    cmd_runner: &'static CmdRunner,
 ) -> Result<()> {
     let mut stdout = io::stdout().lock();
     stdout.write_all(b"Running all solutions...\n")?;
 
-    thread::scope(|s| {
-        let handles = info_file
-            .exercises
-            .iter()
-            .map(|exercise_info| {
-                s.spawn(|| {
-                    let sol_path = exercise_info.sol_path();
-                    if !Path::new(&sol_path).exists() {
-                        if require_solutions {
-                            return SolutionCheck::Err(anyhow!(
-                                "The solution of the exercise {} is missing",
-                                exercise_info.name,
-                            ));
-                        }
-
-                        return SolutionCheck::MissingOptional;
+    let handles = info_file
+        .exercises
+        .iter()
+        .map(|exercise_info| {
+            thread::spawn(move || {
+                let sol_path = exercise_info.sol_path();
+                if !Path::new(&sol_path).exists() {
+                    if require_solutions {
+                        return SolutionCheck::Err(anyhow!(
+                            "The solution of the exercise {} is missing",
+                            exercise_info.name,
+                        ));
                     }
 
-                    let mut output = Vec::with_capacity(OUTPUT_CAPACITY);
-                    match exercise_info.run_solution(Some(&mut output), cmd_runner) {
-                        Ok(true) => SolutionCheck::Success { sol_path },
-                        Ok(false) => SolutionCheck::RunFailure { output },
-                        Err(e) => SolutionCheck::Err(e),
-                    }
-                })
+                    return SolutionCheck::MissingOptional;
+                }
+
+                let mut output = Vec::with_capacity(OUTPUT_CAPACITY);
+                match exercise_info.run_solution(Some(&mut output), cmd_runner) {
+                    Ok(true) => SolutionCheck::Success { sol_path },
+                    Ok(false) => SolutionCheck::RunFailure { output },
+                    Err(e) => SolutionCheck::Err(e),
+                }
             })
-            .collect::<Vec<_>>();
+        })
+        .collect::<Vec<_>>();
 
-        let mut sol_paths = hash_set_with_capacity(info_file.exercises.len());
-        let mut fmt_cmd = Command::new("rustfmt");
-        fmt_cmd
-            .arg("--check")
-            .arg("--edition")
-            .arg("2021")
-            .arg("--color")
-            .arg("always")
-            .stdin(Stdio::null());
+    let mut sol_paths = hash_set_with_capacity(info_file.exercises.len());
+    let mut fmt_cmd = Command::new("rustfmt");
+    fmt_cmd
+        .arg("--check")
+        .arg("--edition")
+        .arg("2021")
+        .arg("--color")
+        .arg("always")
+        .stdin(Stdio::null());
 
-        let n_handles = handles.len();
-        write!(stdout, "Progress: 0/{n_handles}")?;
-        stdout.flush()?;
-        let mut handle_num = 1;
+    let n_handles = handles.len();
+    write!(stdout, "Progress: 0/{n_handles}")?;
+    stdout.flush()?;
+    let mut handle_num = 1;
 
-        for (exercise_info, handle) in info_file.exercises.iter().zip(handles) {
-            let Ok(check_result) = handle.join() else {
+    for (exercise_info, handle) in info_file.exercises.iter().zip(handles) {
+        let Ok(check_result) = handle.join() else {
+            bail!(
+                "Panic while trying to run the solution of the exericse {}",
+                exercise_info.name,
+            );
+        };
+
+        match check_result {
+            SolutionCheck::Success { sol_path } => {
+                fmt_cmd.arg(&sol_path);
+                sol_paths.insert(PathBuf::from(sol_path));
+            }
+            SolutionCheck::MissingOptional => (),
+            SolutionCheck::RunFailure { output } => {
+                stdout.write_all(b"\n\n")?;
+                stdout.write_all(&output)?;
                 bail!(
-                    "Panic while trying to run the solution of the exericse {}",
+                    "Running the solution of the exercise {} failed with the error above",
                     exercise_info.name,
                 );
-            };
-
-            match check_result {
-                SolutionCheck::Success { sol_path } => {
-                    fmt_cmd.arg(&sol_path);
-                    sol_paths.insert(PathBuf::from(sol_path));
-                }
-                SolutionCheck::MissingOptional => (),
-                SolutionCheck::RunFailure { output } => {
-                    stdout.write_all(b"\n\n")?;
-                    stdout.write_all(&output)?;
-                    bail!(
-                        "Running the solution of the exercise {} failed with the error above",
-                        exercise_info.name,
-                    );
-                }
-                SolutionCheck::Err(e) => return Err(e),
             }
-
-            write!(stdout, "\rProgress: {handle_num}/{n_handles}")?;
-            stdout.flush()?;
-            handle_num += 1;
-        }
-        stdout.write_all(b"\n")?;
-
-        let handle = s.spawn(move || check_unexpected_files("solutions", &sol_paths));
-
-        if !fmt_cmd
-            .status()
-            .context("Failed to run `rustfmt` on all solution files")?
-            .success()
-        {
-            bail!("Some solutions aren't formatted. Run `rustfmt` on them");
+            SolutionCheck::Err(e) => return Err(e),
         }
 
-        handle.join().unwrap()
-    })
+        write!(stdout, "\rProgress: {handle_num}/{n_handles}")?;
+        stdout.flush()?;
+        handle_num += 1;
+    }
+    stdout.write_all(b"\n")?;
+
+    let handle = thread::spawn(move || check_unexpected_files("solutions", &sol_paths));
+
+    if !fmt_cmd
+        .status()
+        .context("Failed to run `rustfmt` on all solution files")?
+        .success()
+    {
+        bail!("Some solutions aren't formatted. Run `rustfmt` on them");
+    }
+
+    handle.join().unwrap()
 }
 
 pub fn check(require_solutions: bool) -> Result<()> {
@@ -340,9 +340,12 @@ pub fn check(require_solutions: bool) -> Result<()> {
         check_cargo_toml(&info_file.exercises, "Cargo.toml", b"")?;
     }
 
-    let cmd_runner = CmdRunner::build()?;
-    check_exercises(&info_file, &cmd_runner)?;
-    check_solutions(require_solutions, &info_file, &cmd_runner)?;
+    // Leaking is fine since they are used until the end of the program.
+    let cmd_runner = Box::leak(Box::new(CmdRunner::build()?));
+    let info_file = Box::leak(Box::new(info_file));
+
+    check_exercises(info_file, cmd_runner)?;
+    check_solutions(require_solutions, info_file, cmd_runner)?;
 
     println!("Everything looks fine!");
 
