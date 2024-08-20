@@ -135,4 +135,4 @@ impl InfoFile {
 }
 
 const NO_EXERCISES_ERR: &str = "There are no exercises yet!
-If you are developing third-party exercises, add at least one exercise before testing.";
+Add at least one exercise before testing.";
