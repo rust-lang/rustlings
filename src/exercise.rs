@@ -98,7 +98,7 @@ pub trait RunnableExercise {
             let output_is_some = output.is_some();
             let mut test_cmd = cmd_runner.cargo("test", bin_name, output.as_deref_mut());
             if output_is_some {
-                test_cmd.args(["--", "--color", "always", "--show-output"]);
+                test_cmd.args(["--", "--color", "always", "--format", "pretty"]);
             }
             let test_success = test_cmd.run("cargo test …")?;
             if !test_success {
