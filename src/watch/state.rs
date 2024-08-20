@@ -137,21 +137,20 @@ impl<'a> WatchState<'a> {
         }
 
         if self.done_status != DoneStatus::Pending {
-            writeln!(
-                self.writer,
-                "{}\n",
-                "Exercise done ✓
-When you are done experimenting, enter `n` to move on to the next exercise 🦀"
-                    .bold()
-                    .green(),
-            )?;
-        }
+            writeln!(self.writer, "{}", "Exercise done ✓".bold().green())?;
 
-        if let DoneStatus::DoneWithSolution(solution_path) = &self.done_status {
+            if let DoneStatus::DoneWithSolution(solution_path) = &self.done_status {
+                writeln!(
+                    self.writer,
+                    "{} for comparison: {}",
+                    "Solution".bold(),
+                    style(TerminalFileLink(solution_path)).underlined().cyan(),
+                )?;
+            }
+
             writeln!(
                 self.writer,
-                "A solution file can be found at {}\n",
-                style(TerminalFileLink(solution_path)).underlined().green(),
+                "When done experimenting, enter `n` to move on to the next exercise 🦀\n",
             )?;
         }
 

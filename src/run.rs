@@ -33,18 +33,21 @@ pub fn run(app_state: &mut AppState) -> Result<()> {
     )?;
 
     if let Some(solution_path) = app_state.current_solution_path()? {
-        println!(
-            "\nA solution file can be found at {}\n",
-            style(TerminalFileLink(&solution_path)).underlined().green(),
-        );
+        writeln!(
+            stdout,
+            "\n{} for comparison: {}\n",
+            "Solution".bold(),
+            style(TerminalFileLink(&solution_path)).underlined().cyan(),
+        )?;
     }
 
     match app_state.done_current_exercise(&mut stdout)? {
         ExercisesProgress::AllDone => (),
-        ExercisesProgress::CurrentPending | ExercisesProgress::NewPending => println!(
+        ExercisesProgress::CurrentPending | ExercisesProgress::NewPending => writeln!(
+            stdout,
             "Next exercise: {}",
             app_state.current_exercise().terminal_link(),
-        ),
+        )?,
     }
 
     Ok(())
