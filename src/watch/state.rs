@@ -56,10 +56,12 @@ impl<'a> WatchState<'a> {
             "\nChecking the exercise `{}`. Please wait…",
             self.app_state.current_exercise().name,
         )?;
+
         let success = self
             .app_state
             .current_exercise()
             .run_exercise(Some(&mut self.output), self.app_state.cmd_runner())?;
+        self.output.push(b'\n');
         if success {
             self.done_status =
                 if let Some(solution_path) = self.app_state.current_solution_path()? {
@@ -121,11 +123,9 @@ impl<'a> WatchState<'a> {
     pub fn render(&mut self) -> Result<()> {
         // Prevent having the first line shifted if clearing wasn't successful.
         self.writer.write_all(b"\n")?;
-
         clear_terminal(&mut self.writer)?;
 
         self.writer.write_all(&self.output)?;
-        self.writer.write_all(b"\n")?;
 
         if self.show_hint {
             writeln!(
