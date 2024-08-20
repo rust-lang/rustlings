@@ -229,7 +229,6 @@ fn check_exercises(info_file: &InfoFile, cmd_runner: &CmdRunner) -> Result<()> {
 
 enum SolutionCheck {
     Success { sol_path: String },
-    MissingRequired,
     MissingOptional,
     RunFailure { output: Vec<u8> },
     Err(Error),
@@ -252,7 +251,10 @@ fn check_solutions(
                     let sol_path = exercise_info.sol_path();
                     if !Path::new(&sol_path).exists() {
                         if require_solutions {
-                            return SolutionCheck::MissingRequired;
+                            return SolutionCheck::Err(anyhow!(
+                                "The solution of the exercise {} is missing",
+                                exercise_info.name,
+                            ));
                         }
 
                         return SolutionCheck::MissingOptional;
@@ -295,12 +297,6 @@ fn check_solutions(
                 SolutionCheck::Success { sol_path } => {
                     fmt_cmd.arg(&sol_path);
                     sol_paths.insert(PathBuf::from(sol_path));
-                }
-                SolutionCheck::MissingRequired => {
-                    bail!(
-                        "The solution of the exercise {} is missing",
-                        exercise_info.name,
-                    );
                 }
                 SolutionCheck::MissingOptional => (),
                 SolutionCheck::RunFailure { output } => {
