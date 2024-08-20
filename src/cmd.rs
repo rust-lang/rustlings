@@ -74,12 +74,14 @@ impl CmdRunner {
             bail!("The command `cargo metadata …` failed. Are you in the `rustlings/` directory?");
         }
 
-        let target_dir = serde_json::de::from_slice::<CargoMetadata>(&metadata_output.stdout)
+        let metadata: CargoMetadata = serde_json::de::from_slice(&metadata_output.stdout)
             .context(
                 "Failed to read the field `target_directory` from the output of the command `cargo metadata …`",
-            )?.target_directory;
+            )?;
 
-        Ok(Self { target_dir })
+        Ok(Self {
+            target_dir: metadata.target_directory,
+        })
     }
 
     pub fn cargo<'out>(
