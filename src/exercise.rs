@@ -72,7 +72,7 @@ pub trait RunnableExercise {
 
     // Compile, check and run the exercise or its solution (depending on `bin_name´).
     // The output is written to the `output` buffer after clearing it.
-    fn run(
+    fn run<const FORCE_STRICT_CLIPPY: bool>(
         &self,
         bin_name: &str,
         mut output: Option<&mut Vec<u8>>,
@@ -115,7 +115,7 @@ pub trait RunnableExercise {
         let mut clippy_cmd = cmd_runner.cargo("clippy", bin_name, output.as_deref_mut());
 
         // `--profile test` is required to also check code with `[cfg(test)]`.
-        if self.strict_clippy() {
+        if FORCE_STRICT_CLIPPY || self.strict_clippy() {
             clippy_cmd.args(["--profile", "test", "--", "-D", "warnings"]);
         } else {
             clippy_cmd.args(["--profile", "test"]);
@@ -131,7 +131,7 @@ pub trait RunnableExercise {
     /// The output is written to the `output` buffer after clearing it.
     #[inline]
     fn run_exercise(&self, output: Option<&mut Vec<u8>>, cmd_runner: &CmdRunner) -> Result<bool> {
-        self.run(self.name(), output, cmd_runner)
+        self.run::<false>(self.name(), output, cmd_runner)
     }
 
     /// Compile, check and run the exercise's solution.
@@ -142,7 +142,7 @@ pub trait RunnableExercise {
         bin_name.push_str(name);
         bin_name.push_str("_sol");
 
-        self.run(&bin_name, output, cmd_runner)
+        self.run::<true>(&bin_name, output, cmd_runner)
     }
 }
 
