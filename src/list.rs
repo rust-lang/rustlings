@@ -63,7 +63,9 @@ fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> 
                         list_state.reset_selected()?;
                     }
                     KeyCode::Char('c') => {
-                        return list_state.selected_to_current_exercise();
+                        if list_state.selected_to_current_exercise()? {
+                            return Ok(());
+                        }
                     }
                     // Redraw to remove the message.
                     KeyCode::Esc => (),

@@ -250,25 +250,27 @@ impl<'a> ListState<'a> {
         Ok(())
     }
 
-    pub fn selected_to_current_exercise(&mut self) -> Result<()> {
+    // Return `true` if there was something to select.
+    pub fn selected_to_current_exercise(&mut self) -> Result<bool> {
         let Some(selected) = self.selected else {
-            // TODO: Don't exit list
-            return Ok(());
+            self.message.push_str("Nothing selected to continue at!");
+            return Ok(false);
         };
 
-        let ind = self
+        let (ind, _) = self
             .app_state
             .exercises()
             .iter()
             .enumerate()
-            .filter_map(|(ind, exercise)| match self.filter {
-                Filter::Done => exercise.done.then_some(ind),
-                Filter::Pending => (!exercise.done).then_some(ind),
-                Filter::None => Some(ind),
+            .filter(|(_, exercise)| match self.filter {
+                Filter::Done => exercise.done,
+                Filter::Pending => !exercise.done,
+                Filter::None => true,
             })
             .nth(selected)
             .context("Invalid selection index")?;
 
-        self.app_state.set_current_exercise_ind(ind)
+        self.app_state.set_current_exercise_ind(ind)?;
+        Ok(true)
     }
 }
