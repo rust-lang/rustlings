@@ -1,14 +1,19 @@
 use anyhow::{Context, Result};
-use ratatui::{
-    layout::{Constraint, Rect},
-    style::{Style, Stylize},
-    text::{Span, Text},
-    widgets::{Block, Borders, HighlightSpacing, Paragraph, Row, Table, TableState},
-    Frame,
+use crossterm::{
+    cursor::{MoveDown, MoveTo},
+    style::{Color, ResetColor, SetForegroundColor},
+    terminal::{self, BeginSynchronizedUpdate, EndSynchronizedUpdate},
+    QueueableCommand,
 };
-use std::{fmt::Write, mem};
+use std::{
+    fmt::Write as _,
+    io::{self, StdoutLock, Write as _},
+};
 
-use crate::{app_state::AppState, progress_bar::progress_bar_ratatui};
+use crate::{app_state::AppState, term::clear_terminal, MAX_EXERCISE_NAME_LEN};
+
+// +1 for padding.
+const SPACE: &[u8] = &[b' '; MAX_EXERCISE_NAME_LEN + 1];
 
 #[derive(Copy, Clone, PartialEq, Eq)]
 pub enum Filter {
@@ -17,230 +22,213 @@ pub enum Filter {
     None,
 }
 
-pub struct UiState<'a> {
-    pub table: Table<'static>,
+pub struct ListState<'a> {
     pub message: String,
-    pub filter: Filter,
+    filter: Filter,
     app_state: &'a mut AppState,
-    table_state: TableState,
-    n_rows: usize,
+    n_rows_with_filter: usize,
+    name_col_width: usize,
+    offset: usize,
+    selected: Option<usize>,
 }
 
-impl<'a> UiState<'a> {
-    pub fn with_updated_rows(mut self) -> Self {
-        let current_exercise_ind = self.app_state.current_exercise_ind();
-
-        self.n_rows = 0;
-        let rows = self
-            .app_state
-            .exercises()
-            .iter()
-            .enumerate()
-            .filter_map(|(ind, exercise)| {
-                let exercise_state = if exercise.done {
-                    if self.filter == Filter::Pending {
-                        return None;
-                    }
-
-                    "DONE".green()
-                } else {
-                    if self.filter == Filter::Done {
-                        return None;
-                    }
-
-                    "PENDING".yellow()
-                };
-
-                self.n_rows += 1;
-
-                let next = if ind == current_exercise_ind {
-                    ">>>>".bold().red()
-                } else {
-                    Span::default()
-                };
-
-                Some(Row::new([
-                    next,
-                    exercise_state,
-                    Span::raw(exercise.name),
-                    Span::raw(exercise.path),
-                ]))
-            });
-
-        self.table = self.table.rows(rows);
-
-        if self.n_rows == 0 {
-            self.table_state.select(None);
-        } else {
-            self.table_state.select(Some(
-                self.table_state
-                    .selected()
-                    .map_or(0, |selected| selected.min(self.n_rows - 1)),
-            ));
-        }
-
-        self
-    }
-
-    pub fn new(app_state: &'a mut AppState) -> Self {
-        let header = Row::new(["Next", "State", "Name", "Path"]);
-
-        let max_name_len = app_state
+impl<'a> ListState<'a> {
+    pub fn new(app_state: &'a mut AppState, stdout: &mut StdoutLock) -> io::Result<Self> {
+        let name_col_width = app_state
             .exercises()
             .iter()
             .map(|exercise| exercise.name.len())
             .max()
-            .unwrap_or(4) as u16;
+            .map_or(4, |max| max.max(4));
 
-        let widths = [
-            Constraint::Length(4),
-            Constraint::Length(7),
-            Constraint::Length(max_name_len),
-            Constraint::Fill(1),
-        ];
-
-        let table = Table::default()
-            .widths(widths)
-            .header(header)
-            .column_spacing(2)
-            .highlight_spacing(HighlightSpacing::Always)
-            .highlight_style(Style::new().bg(ratatui::style::Color::Rgb(50, 50, 50)))
-            .highlight_symbol("🦀")
-            .block(Block::default().borders(Borders::BOTTOM));
+        clear_terminal(stdout)?;
+        stdout.write_all(b"  Current  State    Name  ")?;
+        stdout.write_all(&SPACE[..name_col_width - 4])?;
+        stdout.write_all(b"Path\r\n")?;
 
         let selected = app_state.current_exercise_ind();
-        let table_state = TableState::default()
-            .with_offset(selected.saturating_sub(10))
-            .with_selected(Some(selected));
+        let n_rows_with_filter = app_state.exercises().len();
 
-        let filter = Filter::None;
-        let n_rows = app_state.exercises().len();
-
-        let slf = Self {
-            table,
+        let mut slf = Self {
             message: String::with_capacity(128),
-            filter,
+            filter: Filter::None,
             app_state,
-            table_state,
-            n_rows,
+            n_rows_with_filter,
+            name_col_width,
+            offset: selected.saturating_sub(10),
+            selected: Some(selected),
         };
 
-        slf.with_updated_rows()
+        slf.redraw(stdout)?;
+
+        Ok(slf)
+    }
+
+    #[inline]
+    pub fn filter(&self) -> Filter {
+        self.filter
+    }
+
+    pub fn set_filter(&mut self, filter: Filter) {
+        self.filter = filter;
+        self.n_rows_with_filter = match filter {
+            Filter::Done => self
+                .app_state
+                .exercises()
+                .iter()
+                .filter(|exercise| !exercise.done)
+                .count(),
+            Filter::Pending => self
+                .app_state
+                .exercises()
+                .iter()
+                .filter(|exercise| exercise.done)
+                .count(),
+            Filter::None => self.app_state.exercises().len(),
+        };
+
+        if self.n_rows_with_filter == 0 {
+            self.selected = None;
+        } else {
+            self.selected = Some(
+                self.selected
+                    .map_or(0, |selected| selected.min(self.n_rows_with_filter - 1)),
+            );
+        }
     }
 
     pub fn select_next(&mut self) {
-        if self.n_rows > 0 {
-            let next = self
-                .table_state
-                .selected()
-                .map_or(0, |selected| (selected + 1).min(self.n_rows - 1));
-            self.table_state.select(Some(next));
+        if self.n_rows_with_filter > 0 {
+            let next = self.selected.map_or(0, |selected| {
+                (selected + 1).min(self.n_rows_with_filter - 1)
+            });
+            self.selected = Some(next);
         }
     }
 
     pub fn select_previous(&mut self) {
-        if self.n_rows > 0 {
+        if self.n_rows_with_filter > 0 {
             let previous = self
-                .table_state
-                .selected()
+                .selected
                 .map_or(0, |selected| selected.saturating_sub(1));
-            self.table_state.select(Some(previous));
+            self.selected = Some(previous);
         }
     }
 
     pub fn select_first(&mut self) {
-        if self.n_rows > 0 {
-            self.table_state.select(Some(0));
+        if self.n_rows_with_filter > 0 {
+            self.selected = Some(0);
         }
     }
 
     pub fn select_last(&mut self) {
-        if self.n_rows > 0 {
-            self.table_state.select(Some(self.n_rows - 1));
+        if self.n_rows_with_filter > 0 {
+            self.selected = Some(self.n_rows_with_filter - 1);
         }
     }
 
-    pub fn draw(&mut self, frame: &mut Frame) -> Result<()> {
-        let area = frame.area();
-        let narrow = area.width < 95;
+    pub fn redraw(&mut self, stdout: &mut StdoutLock) -> io::Result<()> {
+        stdout.queue(BeginSynchronizedUpdate)?;
+        stdout.queue(MoveTo(0, 1))?;
+        let (width, height) = terminal::size()?;
+        let narrow = width < 95;
         let narrow_u16 = u16::from(narrow);
-        let table_height = area.height - 3 - narrow_u16;
+        let max_n_rows_to_display = height.saturating_sub(narrow_u16 + 4);
 
-        frame.render_stateful_widget(
-            &self.table,
-            Rect {
-                x: 0,
-                y: 0,
-                width: area.width,
-                height: table_height,
-            },
-            &mut self.table_state,
-        );
+        let displayed_exercises = self
+            .app_state
+            .exercises()
+            .iter()
+            .enumerate()
+            .filter(|(_, exercise)| match self.filter {
+                Filter::Done => exercise.done,
+                Filter::Pending => !exercise.done,
+                Filter::None => true,
+            })
+            .skip(self.offset)
+            .take(max_n_rows_to_display as usize);
 
-        frame.render_widget(
-            Paragraph::new(progress_bar_ratatui(
-                self.app_state.n_done(),
-                self.app_state.exercises().len() as u16,
-                area.width,
-            )?)
-            .block(Block::default().borders(Borders::BOTTOM)),
-            Rect {
-                x: 0,
-                y: table_height,
-                width: area.width,
-                height: 2,
-            },
-        );
-
-        let message = if self.message.is_empty() {
-            // Help footer.
-            let mut text = Text::default();
-            let mut spans = Vec::with_capacity(4);
-            spans.push(Span::raw(
-                "↓/j ↑/k home/g end/G │ <c>ontinue at │ <r>eset exercise │",
-            ));
-
-            if narrow {
-                text.push_line(mem::take(&mut spans));
-                spans.push(Span::raw("filter "));
+        let mut n_displayed_rows: u16 = 0;
+        let current_exercise_ind = self.app_state.current_exercise_ind();
+        for (ind, exercise) in displayed_exercises {
+            if self.selected == Some(n_displayed_rows as usize) {
+                write!(stdout, "🦀")?;
             } else {
-                spans.push(Span::raw(" filter "));
+                stdout.write_all(b"  ")?;
             }
 
-            match self.filter {
-                Filter::Done => {
-                    spans.push("<d>one".underlined().magenta());
-                    spans.push(Span::raw("/<p>ending"));
-                }
-                Filter::Pending => {
-                    spans.push(Span::raw("<d>one/"));
-                    spans.push("<p>ending".underlined().magenta());
-                }
-                Filter::None => spans.push(Span::raw("<d>one/<p>ending")),
+            if ind == current_exercise_ind {
+                stdout.queue(SetForegroundColor(Color::Red))?;
+                stdout.write_all(b">>>>>>>  ")?;
+            } else {
+                stdout.write_all(b"         ")?;
             }
 
-            spans.push(Span::raw(" │ <q>uit list"));
-            text.push_line(spans);
-            text
-        } else {
-            Text::from(self.message.as_str().light_blue())
-        };
-        frame.render_widget(
-            message,
-            Rect {
-                x: 0,
-                y: table_height + 2,
-                width: area.width,
-                height: 1 + narrow_u16,
-            },
-        );
+            if exercise.done {
+                stdout.queue(SetForegroundColor(Color::Yellow))?;
+                stdout.write_all(b"DONE     ")?;
+            } else {
+                stdout.queue(SetForegroundColor(Color::Green))?;
+                stdout.write_all(b"PENDING  ")?;
+            }
+
+            stdout.queue(ResetColor)?;
+
+            stdout.write_all(exercise.name.as_bytes())?;
+            stdout.write_all(&SPACE[..self.name_col_width + 2 - exercise.name.len()])?;
+
+            stdout.write_all(exercise.path.as_bytes())?;
+            stdout.write_all(b"\r\n")?;
+
+            n_displayed_rows += 1;
+        }
+
+        stdout.queue(MoveDown(max_n_rows_to_display - n_displayed_rows))?;
+
+        // TODO
+        // let message = if self.message.is_empty() {
+        //     // Help footer.
+        //     let mut text = Text::default();
+        //     let mut spans = Vec::with_capacity(4);
+        //     spans.push(Span::raw(
+        //         "↓/j ↑/k home/g end/G │ <c>ontinue at │ <r>eset exercise │",
+        //     ));
+
+        //     if narrow {
+        //         text.push_line(mem::take(&mut spans));
+        //         spans.push(Span::raw("filter "));
+        //     } else {
+        //         spans.push(Span::raw(" filter "));
+        //     }
+
+        //     match self.filter {
+        //         Filter::Done => {
+        //             spans.push("<d>one".underlined().magenta());
+        //             spans.push(Span::raw("/<p>ending"));
+        //         }
+        //         Filter::Pending => {
+        //             spans.push(Span::raw("<d>one/"));
+        //             spans.push("<p>ending".underlined().magenta());
+        //         }
+        //         Filter::None => spans.push(Span::raw("<d>one/<p>ending")),
+        //     }
+
+        //     spans.push(Span::raw(" │ <q>uit list"));
+        //     text.push_line(spans);
+        //     text
+        // } else {
+        //     Text::from(self.message.as_str().light_blue())
+        // };
+
+        stdout.queue(EndSynchronizedUpdate)?;
+        stdout.flush()?;
 
         Ok(())
     }
 
-    pub fn with_reset_selected(mut self) -> Result<Self> {
-        let Some(selected) = self.table_state.selected() else {
-            return Ok(self);
+    pub fn reset_selected(&mut self) -> Result<()> {
+        let Some(selected) = self.selected else {
+            return Ok(());
         };
 
         let ind = self
@@ -259,11 +247,12 @@ impl<'a> UiState<'a> {
         let exercise_path = self.app_state.reset_exercise_by_ind(ind)?;
         write!(self.message, "The exercise {exercise_path} has been reset")?;
 
-        Ok(self.with_updated_rows())
+        Ok(())
     }
 
     pub fn selected_to_current_exercise(&mut self) -> Result<()> {
-        let Some(selected) = self.table_state.selected() else {
+        let Some(selected) = self.selected else {
+            // TODO: Don't exit list
             return Ok(());
         };
 

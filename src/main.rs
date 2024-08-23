@@ -27,6 +27,7 @@ mod terminal_link;
 mod watch;
 
 const CURRENT_FORMAT_VERSION: u8 = 1;
+const MAX_EXERCISE_NAME_LEN: usize = 32;
 
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
 #[derive(Parser)]

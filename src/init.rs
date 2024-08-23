@@ -1,5 +1,5 @@
 use anyhow::{bail, Context, Result};
-use ratatui::crossterm::style::Stylize;
+use crossterm::style::Stylize;
 use serde::Deserialize;
 use std::{
     env::set_current_dir,
