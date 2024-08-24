@@ -84,7 +84,7 @@ fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> 
             Event::FocusGained | Event::FocusLost => continue,
         }
 
-        list_state.redraw(stdout)?;
+        list_state.draw(stdout)?;
     }
 }
 

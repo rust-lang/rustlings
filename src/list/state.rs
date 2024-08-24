@@ -10,7 +10,10 @@ use std::{
     io::{self, StdoutLock, Write},
 };
 
-use crate::{app_state::AppState, term::progress_bar, MAX_EXERCISE_NAME_LEN};
+use crate::{app_state::AppState, exercise::Exercise, term::progress_bar, MAX_EXERCISE_NAME_LEN};
+
+// +1 for padding.
+const SPACE: &[u8] = &[b' '; MAX_EXERCISE_NAME_LEN + 1];
 
 fn next_ln<const CLEAR_LAST_CHAR: bool>(stdout: &mut StdoutLock) -> io::Result<()> {
     if CLEAR_LAST_CHAR {
@@ -74,46 +77,24 @@ impl<'a> ListState<'a> {
             separator: "─".as_bytes().repeat(term_width as usize),
         };
 
-        slf.redraw(stdout)?;
+        slf.draw(stdout)?;
 
         Ok(slf)
     }
 
-    pub fn redraw(&mut self, stdout: &mut StdoutLock) -> io::Result<()> {
-        if self.term_height == 0 {
-            return Ok(());
-        }
-
-        stdout.queue(BeginSynchronizedUpdate)?.queue(MoveTo(0, 0))?;
-
-        // +1 for padding.
-        const SPACE: &[u8] = &[b' '; MAX_EXERCISE_NAME_LEN + 1];
-        stdout.write_all(b"  Current  State    Name")?;
-        stdout.write_all(&SPACE[..self.name_col_width - 2])?;
-        stdout.write_all(b"Path")?;
-        next_ln::<true>(stdout)?;
-
-        let narrow = self.term_width < 95;
-        let show_footer = self.term_height > 6;
-        let max_n_rows_to_display =
-            (self.term_height - 1 - u16::from(show_footer) * (4 + u16::from(narrow))) as usize;
-
-        let displayed_exercises = self
-            .app_state
-            .exercises()
-            .iter()
-            .enumerate()
-            .filter(|(_, exercise)| match self.filter {
-                Filter::Done => exercise.done,
-                Filter::Pending => !exercise.done,
-                Filter::None => true,
-            })
-            .skip(self.offset)
-            .take(max_n_rows_to_display);
-
+    fn draw_rows(
+        &self,
+        stdout: &mut StdoutLock,
+        max_n_rows_to_display: usize,
+        filtered_exercises: impl Iterator<Item = (usize, &'a Exercise)>,
+    ) -> io::Result<usize> {
         let current_exercise_ind = self.app_state.current_exercise_ind();
         let mut n_displayed_rows = 0;
-        for (exercise_ind, exercise) in displayed_exercises {
+
+        for (exercise_ind, exercise) in filtered_exercises
+            .skip(self.offset)
+            .take(max_n_rows_to_display)
+        {
             if self.selected == Some(n_displayed_rows) {
                 stdout.queue(SetBackgroundColor(Color::Rgb {
                     r: 50,
@@ -152,6 +133,43 @@ impl<'a> ListState<'a> {
             n_displayed_rows += 1;
         }
 
+        Ok(n_displayed_rows)
+    }
+
+    pub fn draw(&mut self, stdout: &mut StdoutLock) -> io::Result<()> {
+        if self.term_height == 0 {
+            return Ok(());
+        }
+
+        stdout.queue(BeginSynchronizedUpdate)?.queue(MoveTo(0, 0))?;
+
+        // Header
+        stdout.write_all(b"  Current  State    Name")?;
+        stdout.write_all(&SPACE[..self.name_col_width - 2])?;
+        stdout.write_all(b"Path")?;
+        next_ln::<true>(stdout)?;
+
+        let narrow = self.term_width < 95;
+        let show_footer = self.term_height > 6;
+        let max_n_rows_to_display =
+            (self.term_height - 1 - u16::from(show_footer) * (4 + u16::from(narrow))) as usize;
+
+        // Rows
+        let iter = self.app_state.exercises().iter().enumerate();
+        let n_displayed_rows = match self.filter {
+            Filter::Done => self.draw_rows(
+                stdout,
+                max_n_rows_to_display,
+                iter.filter(|(_, exercise)| exercise.done),
+            )?,
+            Filter::Pending => self.draw_rows(
+                stdout,
+                max_n_rows_to_display,
+                iter.filter(|(_, exercise)| !exercise.done),
+            )?,
+            Filter::None => self.draw_rows(stdout, max_n_rows_to_display, iter)?,
+        };
+
         for _ in 0..max_n_rows_to_display - n_displayed_rows {
             next_ln::<false>(stdout)?;
         }
@@ -172,7 +190,7 @@ impl<'a> ListState<'a> {
             next_ln::<false>(stdout)?;
 
             if self.message.is_empty() {
-                // Help footer.
+                // Help footer
                 stdout.write_all(
                     "↓/j ↑/k home/g end/G │ <c>ontinue at │ <r>eset exercise │".as_bytes(),
                 )?;
