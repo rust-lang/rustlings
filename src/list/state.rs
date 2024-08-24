@@ -1,7 +1,7 @@
 use anyhow::{Context, Result};
 use crossterm::{
     cursor::{MoveTo, MoveToNextLine},
-    style::{Attribute, Color, ResetColor, SetAttribute, SetForegroundColor},
+    style::{Attribute, Color, ResetColor, SetAttribute, SetBackgroundColor, SetForegroundColor},
     terminal::{self, BeginSynchronizedUpdate, Clear, ClearType, EndSynchronizedUpdate},
     QueueableCommand,
 };
@@ -115,6 +115,11 @@ impl<'a> ListState<'a> {
         let mut n_displayed_rows = 0;
         for (exercise_ind, exercise) in displayed_exercises {
             if self.selected == Some(n_displayed_rows) {
+                stdout.queue(SetBackgroundColor(Color::Rgb {
+                    r: 50,
+                    g: 50,
+                    b: 50,
+                }))?;
                 stdout.write_all("🦀".as_bytes())?;
             } else {
                 stdout.write_all(b"  ")?;
@@ -135,7 +140,7 @@ impl<'a> ListState<'a> {
                 stdout.write_all(b"PENDING  ")?;
             }
 
-            stdout.queue(ResetColor)?;
+            stdout.queue(SetForegroundColor(Color::Reset))?;
 
             stdout.write_all(exercise.name.as_bytes())?;
             stdout.write_all(&SPACE[..self.name_col_width + 2 - exercise.name.len()])?;
@@ -143,6 +148,7 @@ impl<'a> ListState<'a> {
             stdout.write_all(exercise.path.as_bytes())?;
 
             next_ln::<true>(stdout)?;
+            stdout.queue(ResetColor)?;
             n_displayed_rows += 1;
         }
 
