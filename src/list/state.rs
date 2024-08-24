@@ -93,7 +93,7 @@ impl<'a> ListState<'a> {
         stdout.write_all(b"Path")?;
         next_ln::<true>(stdout)?;
 
-        let narrow = self.term_width < 96;
+        let narrow = self.term_width < 95;
         let show_footer = self.term_height > 6;
         let max_n_rows_to_display =
             (self.term_height - 1 - u16::from(show_footer) * (4 + u16::from(narrow))) as usize;
@@ -203,7 +203,11 @@ impl<'a> ListState<'a> {
                     Filter::None => stdout.write_all(b"<d>one/<p>ending")?,
                 }
                 stdout.write_all(" │ <q>uit list".as_bytes())?;
-                next_ln::<true>(stdout)?;
+                if narrow {
+                    next_ln::<true>(stdout)?;
+                } else {
+                    next_ln::<false>(stdout)?;
+                }
             } else {
                 stdout.queue(SetForegroundColor(Color::Magenta))?;
                 stdout.write_all(self.message.as_bytes())?;
