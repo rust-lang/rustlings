@@ -38,15 +38,15 @@ fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> 
                     KeyCode::Home | KeyCode::Char('g') => list_state.select_first(),
                     KeyCode::End | KeyCode::Char('G') => list_state.select_last(),
                     KeyCode::Char('d') => {
-                        let message = if list_state.filter() == Filter::Done {
+                        if list_state.filter() == Filter::Done {
                             list_state.set_filter(Filter::None);
-                            "Disabled filter DONE"
+                            list_state.message.push_str("Disabled filter DONE");
                         } else {
                             list_state.set_filter(Filter::Done);
-                            "Enabled filter DONE │ Press d again to disable the filter"
-                        };
-
-                        list_state.message.push_str(message);
+                            list_state.message.push_str(
+                                "Enabled filter DONE │ Press d again to disable the filter",
+                            );
+                        }
                     }
                     KeyCode::Char('p') => {
                         let message = if list_state.filter() == Filter::Pending {
@@ -71,23 +71,20 @@ fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> 
                     KeyCode::Esc => (),
                     _ => continue,
                 }
-
-                list_state.redraw(stdout)?;
             }
-            Event::Mouse(event) => {
-                match event.kind {
-                    MouseEventKind::ScrollDown => list_state.select_next(),
-                    MouseEventKind::ScrollUp => list_state.select_previous(),
-                    _ => continue,
-                }
-
-                list_state.redraw(stdout)?;
+            Event::Mouse(event) => match event.kind {
+                MouseEventKind::ScrollDown => list_state.select_next(),
+                MouseEventKind::ScrollUp => list_state.select_previous(),
+                _ => continue,
+            },
+            Event::Resize(width, height) => {
+                list_state.set_term_size(width, height);
             }
-            // Redraw
-            Event::Resize(_, _) => list_state.redraw(stdout)?,
             // Ignore
-            Event::FocusGained | Event::FocusLost => (),
+            Event::FocusGained | Event::FocusLost => continue,
         }
+
+        list_state.redraw(stdout)?;
     }
 }
 

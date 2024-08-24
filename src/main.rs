@@ -20,7 +20,6 @@ mod exercise;
 mod info_file;
 mod init;
 mod list;
-mod progress_bar;
 mod run;
 mod term;
 mod terminal_link;

@@ -9,7 +9,7 @@ use crate::{
     app_state::{AppState, ExercisesProgress},
     clear_terminal,
     exercise::{RunnableExercise, OUTPUT_CAPACITY},
-    progress_bar::progress_bar,
+    term::progress_bar,
     terminal_link::TerminalFileLink,
 };
 
