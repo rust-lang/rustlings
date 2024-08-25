@@ -271,6 +271,7 @@ impl AppState {
         Ok(exercise.path)
     }
 
+    // Reset the exercise by index and return its name.
     pub fn reset_exercise_by_ind(&mut self, exercise_ind: usize) -> Result<&'static str> {
         if exercise_ind >= self.exercises.len() {
             bail!(BAD_INDEX_ERR);
@@ -280,7 +281,7 @@ impl AppState {
         let exercise = &self.exercises[exercise_ind];
         self.reset(exercise_ind, exercise.path)?;
 
-        Ok(exercise.path)
+        Ok(exercise.name)
     }
 
     // Return the index of the next pending exercise or `None` if all exercises are done.

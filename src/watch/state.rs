@@ -1,5 +1,5 @@
 use anyhow::Result;
-use ratatui::crossterm::{
+use crossterm::{
     style::{style, Stylize},
     terminal,
 };
@@ -9,7 +9,7 @@ use crate::{
     app_state::{AppState, ExercisesProgress},
     clear_terminal,
     exercise::{RunnableExercise, OUTPUT_CAPACITY},
-    progress_bar::progress_bar,
+    term::progress_bar,
     terminal_link::TerminalFileLink,
 };
 
@@ -76,7 +76,8 @@ impl<'a> WatchState<'a> {
             self.done_status = DoneStatus::Pending;
         }
 
-        self.render()
+        self.render()?;
+        Ok(())
     }
 
     pub fn handle_file_change(&mut self, exercise_ind: usize) -> Result<()> {
@@ -120,7 +121,7 @@ impl<'a> WatchState<'a> {
         self.writer.flush()
     }
 
-    pub fn render(&mut self) -> Result<()> {
+    pub fn render(&mut self) -> io::Result<()> {
         // Prevent having the first line shifted if clearing wasn't successful.
         self.writer.write_all(b"\n")?;
         clear_terminal(&mut self.writer)?;
@@ -155,14 +156,15 @@ impl<'a> WatchState<'a> {
         }
 
         let line_width = terminal::size()?.0;
-        let progress_bar = progress_bar(
+        progress_bar(
+            &mut self.writer,
             self.app_state.n_done(),
             self.app_state.exercises().len() as u16,
             line_width,
         )?;
         writeln!(
             self.writer,
-            "{progress_bar}Current exercise: {}",
+            "\nCurrent exercise: {}",
             self.app_state.current_exercise().terminal_link(),
         )?;
 
@@ -171,7 +173,7 @@ impl<'a> WatchState<'a> {
         Ok(())
     }
 
-    pub fn show_hint(&mut self) -> Result<()> {
+    pub fn show_hint(&mut self) -> io::Result<()> {
         self.show_hint = true;
         self.render()
     }

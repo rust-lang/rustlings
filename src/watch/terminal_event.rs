@@ -1,4 +1,4 @@
-use ratatui::crossterm::event::{self, Event, KeyCode, KeyEventKind, KeyModifiers};
+use crossterm::event::{self, Event, KeyCode, KeyEventKind, KeyModifiers};
 use std::sync::mpsc::Sender;
 
 use super::WatchEvent;
@@ -78,7 +78,7 @@ pub fn terminal_event_handler(tx: Sender<WatchEvent>, manual_run: bool) {
                     return;
                 }
             }
-            Event::FocusGained | Event::FocusLost | Event::Mouse(_) | Event::Paste(_) => continue,
+            Event::FocusGained | Event::FocusLost | Event::Mouse(_) => continue,
         }
     };
 
