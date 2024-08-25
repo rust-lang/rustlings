@@ -72,35 +72,32 @@ pub fn watch(
 
     let mut watch_state = WatchState::new(app_state, manual_run);
 
-    watch_state.run_current_exercise()?;
+    let mut stdout = io::stdout().lock();
+    watch_state.run_current_exercise(&mut stdout)?;
 
     thread::spawn(move || terminal_event_handler(tx, manual_run));
 
     while let Ok(event) = rx.recv() {
         match event {
-            WatchEvent::Input(InputEvent::Next) => match watch_state.next_exercise()? {
+            WatchEvent::Input(InputEvent::Next) => match watch_state.next_exercise(&mut stdout)? {
                 ExercisesProgress::AllDone => break,
-                ExercisesProgress::CurrentPending => watch_state.render()?,
-                ExercisesProgress::NewPending => watch_state.run_current_exercise()?,
+                ExercisesProgress::CurrentPending => watch_state.render(&mut stdout)?,
+                ExercisesProgress::NewPending => watch_state.run_current_exercise(&mut stdout)?,
             },
-            WatchEvent::Input(InputEvent::Hint) => {
-                watch_state.show_hint()?;
-            }
+            WatchEvent::Input(InputEvent::Hint) => watch_state.show_hint(&mut stdout)?,
             WatchEvent::Input(InputEvent::List) => {
                 return Ok(WatchExit::List);
             }
             WatchEvent::Input(InputEvent::Quit) => {
-                watch_state.into_writer().write_all(QUIT_MSG)?;
+                stdout.write_all(QUIT_MSG)?;
                 break;
             }
-            WatchEvent::Input(InputEvent::Run) => watch_state.run_current_exercise()?,
-            WatchEvent::Input(InputEvent::Unrecognized) => watch_state.render()?,
+            WatchEvent::Input(InputEvent::Run) => watch_state.run_current_exercise(&mut stdout)?,
+            WatchEvent::Input(InputEvent::Unrecognized) => watch_state.render(&mut stdout)?,
             WatchEvent::FileChange { exercise_ind } => {
-                watch_state.handle_file_change(exercise_ind)?;
+                watch_state.handle_file_change(exercise_ind, &mut stdout)?;
             }
-            WatchEvent::TerminalResize => {
-                watch_state.render()?;
-            }
+            WatchEvent::TerminalResize => watch_state.render(&mut stdout)?,
             WatchEvent::NotifyErr(e) => {
                 return Err(Error::from(e).context(NOTIFY_ERR));
             }
