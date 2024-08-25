@@ -75,6 +75,8 @@ unstable_features = "forbid"
 
 [workspace.lints.clippy]
 empty_loop = "forbid"
+disallowed-types = "deny"
+disallowed-methods = "deny"
 infinite_loop = "deny"
 mem_forget = "deny"
 dbg_macro = "warn"

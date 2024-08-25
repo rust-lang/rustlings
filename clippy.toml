@@ -1,0 +1,13 @@
+disallowed-types = [
+  # Inefficient. Use `.queue(…)` instead.
+  "crossterm::style::Stylize",
+  "crossterm::style::styled_content::StyledContent",
+]
+
+disallowed-methods = [
+  # We use `ahash` instead of the default hasher.
+  "std::collections::HashSet::new",
+  "std::collections::HashSet::with_capacity",
+  # Inefficient. Use `.queue(…)` instead.
+  "crossterm::style::style",
+]
