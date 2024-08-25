@@ -1,14 +1,26 @@
 use anyhow::Result;
-use crossterm::style::{style, StyledContent, Stylize};
-use std::{
-    fmt::{self, Display, Formatter},
-    io::Write,
+use crossterm::{
+    style::{Attribute, Color, ResetColor, SetAttribute, SetForegroundColor},
+    QueueableCommand,
 };
+use std::io::{self, StdoutLock, Write};
 
-use crate::{cmd::CmdRunner, terminal_link::TerminalFileLink};
+use crate::{
+    cmd::CmdRunner,
+    term::{terminal_file_link, write_ansi},
+};
 
 /// The initial capacity of the output buffer.
 pub const OUTPUT_CAPACITY: usize = 1 << 14;
+
+pub fn solution_link_line(stdout: &mut StdoutLock, solution_path: &str) -> io::Result<()> {
+    stdout.queue(SetAttribute(Attribute::Bold))?;
+    stdout.write_all(b"Solution")?;
+    stdout.queue(ResetColor)?;
+    stdout.write_all(b" for comparison: ")?;
+    terminal_file_link(stdout, solution_path, Color::Cyan)?;
+    stdout.write_all(b"\n")
+}
 
 // Run an exercise binary and append its output to the `output` buffer.
 // Compilation must be done before calling this method.
@@ -18,7 +30,9 @@ fn run_bin(
     cmd_runner: &CmdRunner,
 ) -> Result<bool> {
     if let Some(output) = output.as_deref_mut() {
-        writeln!(output, "{}", "Output".underlined())?;
+        write_ansi(output, SetAttribute(Attribute::Underlined));
+        output.extend_from_slice(b"Output\n");
+        write_ansi(output, ResetColor);
     }
 
     let success = cmd_runner.run_debug_bin(bin_name, output.as_deref_mut())?;
@@ -28,13 +42,10 @@ fn run_bin(
             // This output is important to show the user that something went wrong.
             // Otherwise, calling something like `exit(1)` in an exercise without further output
             // leaves the user confused about why the exercise isn't done yet.
-            writeln!(
-                output,
-                "{}",
-                "The exercise didn't run successfully (nonzero exit code)"
-                    .bold()
-                    .red(),
-            )?;
+            write_ansi(output, SetAttribute(Attribute::Bold));
+            write_ansi(output, SetForegroundColor(Color::Red));
+            output.extend_from_slice(b"The exercise didn't run successfully (nonzero exit code)\n");
+            write_ansi(output, ResetColor);
         }
     }
 
@@ -51,18 +62,6 @@ pub struct Exercise {
     pub strict_clippy: bool,
     pub hint: &'static str,
     pub done: bool,
-}
-
-impl Exercise {
-    pub fn terminal_link(&self) -> StyledContent<TerminalFileLink<'_>> {
-        style(TerminalFileLink(self.path)).underlined().blue()
-    }
-}
-
-impl Display for Exercise {
-    fn fmt(&self, f: &mut Formatter) -> fmt::Result {
-        self.path.fmt(f)
-    }
 }
 
 pub trait RunnableExercise {

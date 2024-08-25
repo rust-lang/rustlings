@@ -338,7 +338,7 @@ impl AppState {
     /// Mark the current exercise as done and move on to the next pending exercise if one exists.
     /// If all exercises are marked as done, run all of them to make sure that they are actually
     /// done. If an exercise which is marked as done fails, mark it as pending and continue on it.
-    pub fn done_current_exercise(&mut self, writer: &mut StdoutLock) -> Result<ExercisesProgress> {
+    pub fn done_current_exercise(&mut self, stdout: &mut StdoutLock) -> Result<ExercisesProgress> {
         let exercise = &mut self.exercises[self.current_exercise_ind];
         if !exercise.done {
             exercise.done = true;
@@ -350,7 +350,7 @@ impl AppState {
             return Ok(ExercisesProgress::NewPending);
         }
 
-        writer.write_all(RERUNNING_ALL_EXERCISES_MSG)?;
+        stdout.write_all(RERUNNING_ALL_EXERCISES_MSG)?;
 
         let n_exercises = self.exercises.len();
 
@@ -368,12 +368,12 @@ impl AppState {
                 .collect::<Vec<_>>();
 
             for (exercise_ind, handle) in handles.into_iter().enumerate() {
-                write!(writer, "\rProgress: {exercise_ind}/{n_exercises}")?;
-                writer.flush()?;
+                write!(stdout, "\rProgress: {exercise_ind}/{n_exercises}")?;
+                stdout.flush()?;
 
                 let success = handle.join().unwrap()?;
                 if !success {
-                    writer.write_all(b"\n\n")?;
+                    stdout.write_all(b"\n\n")?;
                     return Ok(Some(exercise_ind));
                 }
             }
@@ -395,13 +395,13 @@ impl AppState {
         // Write that the last exercise is done.
         self.write()?;
 
-        clear_terminal(writer)?;
-        writer.write_all(FENISH_LINE.as_bytes())?;
+        clear_terminal(stdout)?;
+        stdout.write_all(FENISH_LINE.as_bytes())?;
 
         let final_message = self.final_message.trim_ascii();
         if !final_message.is_empty() {
-            writer.write_all(final_message.as_bytes())?;
-            writer.write_all(b"\n")?;
+            stdout.write_all(final_message.as_bytes())?;
+            stdout.write_all(b"\n")?;
         }
 
         Ok(ExercisesProgress::AllDone)

@@ -1,16 +1,17 @@
 use anyhow::Result;
 use crossterm::{
-    style::{style, Stylize},
-    terminal,
+    style::{
+        Attribute, Attributes, Color, ResetColor, SetAttribute, SetAttributes, SetForegroundColor,
+    },
+    terminal, QueueableCommand,
 };
 use std::io::{self, StdoutLock, Write};
 
 use crate::{
     app_state::{AppState, ExercisesProgress},
     clear_terminal,
-    exercise::{RunnableExercise, OUTPUT_CAPACITY},
-    term::progress_bar,
-    terminal_link::TerminalFileLink,
+    exercise::{solution_link_line, RunnableExercise, OUTPUT_CAPACITY},
+    term::{progress_bar, terminal_file_link},
 };
 
 #[derive(PartialEq, Eq)]
@@ -21,7 +22,7 @@ enum DoneStatus {
 }
 
 pub struct WatchState<'a> {
-    writer: StdoutLock<'a>,
+    stdout: StdoutLock<'a>,
     app_state: &'a mut AppState,
     output: Vec<u8>,
     show_hint: bool,
@@ -31,10 +32,11 @@ pub struct WatchState<'a> {
 
 impl<'a> WatchState<'a> {
     pub fn new(app_state: &'a mut AppState, manual_run: bool) -> Self {
-        let writer = io::stdout().lock();
+        // TODO: Take stdout as arg.
+        let stdout = io::stdout().lock();
 
         Self {
-            writer,
+            stdout,
             app_state,
             output: Vec::with_capacity(OUTPUT_CAPACITY),
             show_hint: false,
@@ -45,14 +47,14 @@ impl<'a> WatchState<'a> {
 
     #[inline]
     pub fn into_writer(self) -> StdoutLock<'a> {
-        self.writer
+        self.stdout
     }
 
     pub fn run_current_exercise(&mut self) -> Result<()> {
         self.show_hint = false;
 
         writeln!(
-            self.writer,
+            self.stdout,
             "\nChecking the exercise `{}`. Please wait…",
             self.app_state.current_exercise().name,
         )?;
@@ -98,75 +100,101 @@ impl<'a> WatchState<'a> {
             return Ok(ExercisesProgress::CurrentPending);
         }
 
-        self.app_state.done_current_exercise(&mut self.writer)
+        self.app_state.done_current_exercise(&mut self.stdout)
     }
 
     fn show_prompt(&mut self) -> io::Result<()> {
-        self.writer.write_all(b"\n")?;
-
         if self.manual_run {
-            write!(self.writer, "{}:run / ", 'r'.bold())?;
+            self.stdout.queue(SetAttribute(Attribute::Bold))?;
+            self.stdout.write_all(b"r")?;
+            self.stdout.queue(ResetColor)?;
+            self.stdout.write_all(b":run / ")?;
         }
 
         if self.done_status != DoneStatus::Pending {
-            write!(self.writer, "{}:{} / ", 'n'.bold(), "next".underlined())?;
+            self.stdout.queue(SetAttribute(Attribute::Bold))?;
+            self.stdout.write_all(b"n")?;
+            self.stdout.queue(ResetColor)?;
+            self.stdout.write_all(b":")?;
+            self.stdout.queue(SetAttribute(Attribute::Underlined))?;
+            self.stdout.write_all(b"next")?;
+            self.stdout.queue(ResetColor)?;
+            self.stdout.write_all(b" / ")?;
         }
 
         if !self.show_hint {
-            write!(self.writer, "{}:hint / ", 'h'.bold())?;
+            self.stdout.queue(SetAttribute(Attribute::Bold))?;
+            self.stdout.write_all(b"h")?;
+            self.stdout.queue(ResetColor)?;
+            self.stdout.write_all(b":hint / ")?;
         }
 
-        write!(self.writer, "{}:list / {}:quit ? ", 'l'.bold(), 'q'.bold())?;
+        self.stdout.queue(SetAttribute(Attribute::Bold))?;
+        self.stdout.write_all(b"l")?;
+        self.stdout.queue(ResetColor)?;
+        self.stdout.write_all(b":list / ")?;
 
-        self.writer.flush()
+        self.stdout.queue(SetAttribute(Attribute::Bold))?;
+        self.stdout.write_all(b"q")?;
+        self.stdout.queue(ResetColor)?;
+        self.stdout.write_all(b":quit ? ")?;
+
+        self.stdout.flush()
     }
 
     pub fn render(&mut self) -> io::Result<()> {
         // Prevent having the first line shifted if clearing wasn't successful.
-        self.writer.write_all(b"\n")?;
-        clear_terminal(&mut self.writer)?;
+        self.stdout.write_all(b"\n")?;
+        clear_terminal(&mut self.stdout)?;
 
-        self.writer.write_all(&self.output)?;
+        self.stdout.write_all(&self.output)?;
 
         if self.show_hint {
-            writeln!(
-                self.writer,
-                "{}\n{}\n",
-                "Hint".bold().cyan().underlined(),
-                self.app_state.current_exercise().hint,
-            )?;
+            self.stdout
+                .queue(SetAttributes(
+                    Attributes::from(Attribute::Bold).with(Attribute::Underlined),
+                ))?
+                .queue(SetForegroundColor(Color::Cyan))?;
+            self.stdout.write_all(b"Hint\n")?;
+            self.stdout.queue(ResetColor)?;
+
+            self.stdout
+                .write_all(self.app_state.current_exercise().hint.as_bytes())?;
+            self.stdout.write_all(b"\n\n")?;
         }
 
         if self.done_status != DoneStatus::Pending {
-            writeln!(self.writer, "{}", "Exercise done ✓".bold().green())?;
+            self.stdout
+                .queue(SetAttribute(Attribute::Bold))?
+                .queue(SetForegroundColor(Color::Green))?;
+            self.stdout.write_all("Exercise done ✓\n".as_bytes())?;
+            self.stdout.queue(ResetColor)?;
 
             if let DoneStatus::DoneWithSolution(solution_path) = &self.done_status {
-                writeln!(
-                    self.writer,
-                    "{} for comparison: {}",
-                    "Solution".bold(),
-                    style(TerminalFileLink(solution_path)).underlined().cyan(),
-                )?;
+                solution_link_line(&mut self.stdout, solution_path)?;
             }
 
             writeln!(
-                self.writer,
+                self.stdout,
                 "When done experimenting, enter `n` to move on to the next exercise 🦀\n",
             )?;
         }
 
         let line_width = terminal::size()?.0;
         progress_bar(
-            &mut self.writer,
+            &mut self.stdout,
             self.app_state.n_done(),
             self.app_state.exercises().len() as u16,
             line_width,
         )?;
-        writeln!(
-            self.writer,
-            "\nCurrent exercise: {}",
-            self.app_state.current_exercise().terminal_link(),
+
+        self.stdout.write_all(b"\nCurrent exercise: ")?;
+        terminal_file_link(
+            &mut self.stdout,
+            self.app_state.current_exercise().path,
+            Color::Blue,
         )?;
+        self.stdout.write_all(b"\n\n")?;
 
         self.show_prompt()?;
 

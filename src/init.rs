@@ -1,5 +1,8 @@
 use anyhow::{bail, Context, Result};
-use crossterm::style::Stylize;
+use crossterm::{
+    style::{Attribute, Color, ResetColor, SetAttribute, SetForegroundColor},
+    QueueableCommand,
+};
 use serde::Deserialize;
 use std::{
     env::set_current_dir,
@@ -144,12 +147,13 @@ pub fn init() -> Result<()> {
             .status();
     }
 
-    writeln!(
-        stdout,
-        "{}\n\n{}",
-        "Initialization done ✓".green(),
-        POST_INIT_MSG.bold(),
-    )?;
+    stdout.queue(SetForegroundColor(Color::Green))?;
+    stdout.write_all("Initialization done ✓\n\n".as_bytes())?;
+    stdout
+        .queue(ResetColor)?
+        .queue(SetAttribute(Attribute::Bold))?;
+    stdout.write_all(POST_INIT_MSG)?;
+    stdout.queue(ResetColor)?;
 
     Ok(())
 }
@@ -182,5 +186,6 @@ You probably already initialized Rustlings.
 Run `cd rustlings`
 Then run `rustlings` again";
 
-const POST_INIT_MSG: &str = "Run `cd rustlings` to go into the generated directory.
-Then run `rustlings` to get started.";
+const POST_INIT_MSG: &[u8] = b"Run `cd rustlings` to go into the generated directory.
+Then run `rustlings` to get started.
+";

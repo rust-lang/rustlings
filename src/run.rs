@@ -1,11 +1,17 @@
-use anyhow::{bail, Result};
-use crossterm::style::{style, Stylize};
-use std::io::{self, Write};
+use anyhow::Result;
+use crossterm::{
+    style::{Color, ResetColor, SetForegroundColor},
+    QueueableCommand,
+};
+use std::{
+    io::{self, Write},
+    process::exit,
+};
 
 use crate::{
     app_state::{AppState, ExercisesProgress},
-    exercise::{RunnableExercise, OUTPUT_CAPACITY},
-    terminal_link::TerminalFileLink,
+    exercise::{solution_link_line, RunnableExercise, OUTPUT_CAPACITY},
+    term::terminal_file_link,
 };
 
 pub fn run(app_state: &mut AppState) -> Result<()> {
@@ -19,35 +25,31 @@ pub fn run(app_state: &mut AppState) -> Result<()> {
     if !success {
         app_state.set_pending(app_state.current_exercise_ind())?;
 
-        bail!(
-            "Ran {} with errors",
-            app_state.current_exercise().terminal_link(),
-        );
+        stdout.write_all(b"Ran ")?;
+        terminal_file_link(&mut stdout, app_state.current_exercise().path, Color::Blue)?;
+        stdout.write_all(b" with errors\n")?;
+        exit(1);
     }
 
-    writeln!(
-        stdout,
-        "{}{}",
-        "✓ Successfully ran ".green(),
-        exercise.path.green(),
-    )?;
+    stdout.queue(SetForegroundColor(Color::Green))?;
+    stdout.write_all("✓ Successfully ran ".as_bytes())?;
+    stdout.write_all(exercise.path.as_bytes())?;
+    stdout.queue(ResetColor)?;
+    stdout.write_all(b"\n")?;
 
     if let Some(solution_path) = app_state.current_solution_path()? {
-        writeln!(
-            stdout,
-            "\n{} for comparison: {}\n",
-            "Solution".bold(),
-            style(TerminalFileLink(&solution_path)).underlined().cyan(),
-        )?;
+        stdout.write_all(b"\n")?;
+        solution_link_line(&mut stdout, &solution_path)?;
+        stdout.write_all(b"\n")?;
     }
 
     match app_state.done_current_exercise(&mut stdout)? {
+        ExercisesProgress::CurrentPending | ExercisesProgress::NewPending => {
+            stdout.write_all(b"Next exercise: ")?;
+            terminal_file_link(&mut stdout, app_state.current_exercise().path, Color::Blue)?;
+            stdout.write_all(b"\n")?;
+        }
         ExercisesProgress::AllDone => (),
-        ExercisesProgress::CurrentPending | ExercisesProgress::NewPending => writeln!(
-            stdout,
-            "Next exercise: {}",
-            app_state.current_exercise().terminal_link(),
-        )?,
     }
 
     Ok(())

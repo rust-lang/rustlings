@@ -1,10 +1,13 @@
-use std::io::{self, BufRead, StdoutLock, Write};
+use std::{
+    fmt, fs,
+    io::{self, BufRead, StdoutLock, Write},
+};
 
 use crossterm::{
     cursor::MoveTo,
-    style::{Color, ResetColor, SetForegroundColor},
+    style::{Attribute, Color, ResetColor, SetAttribute, SetForegroundColor},
     terminal::{Clear, ClearType},
-    QueueableCommand,
+    Command, QueueableCommand,
 };
 
 /// Terminal progress bar to be used when not using Ratataui.
@@ -67,4 +70,44 @@ pub fn press_enter_prompt(stdout: &mut StdoutLock) -> io::Result<()> {
     io::stdin().lock().read_until(b'\n', &mut Vec::new())?;
     stdout.write_all(b"\n")?;
     Ok(())
+}
+
+pub fn terminal_file_link(stdout: &mut StdoutLock, path: &str, color: Color) -> io::Result<()> {
+    let canonical_path = fs::canonicalize(path).ok();
+
+    let Some(canonical_path) = canonical_path.as_deref().and_then(|p| p.to_str()) else {
+        return stdout.write_all(path.as_bytes());
+    };
+
+    // Windows itself can't handle its verbatim paths.
+    #[cfg(windows)]
+    let canonical_path = if canonical_path.len() > 5 && &canonical_path[0..4] == r"\\?\" {
+        &canonical_path[4..]
+    } else {
+        canonical_path
+    };
+
+    stdout
+        .queue(SetForegroundColor(color))?
+        .queue(SetAttribute(Attribute::Underlined))?;
+    write!(
+        stdout,
+        "\x1b]8;;file://{canonical_path}\x1b\\{path}\x1b]8;;\x1b\\",
+    )?;
+    stdout.queue(ResetColor)?;
+
+    Ok(())
+}
+
+pub fn write_ansi(output: &mut Vec<u8>, command: impl Command) {
+    struct FmtWriter<'a>(&'a mut Vec<u8>);
+
+    impl fmt::Write for FmtWriter<'_> {
+        fn write_str(&mut self, s: &str) -> fmt::Result {
+            self.0.extend_from_slice(s.as_bytes());
+            Ok(())
+        }
+    }
+
+    let _ = command.write_ansi(&mut FmtWriter(output));
 }
