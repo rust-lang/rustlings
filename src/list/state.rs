@@ -12,7 +12,7 @@ use std::{
 
 use crate::{app_state::AppState, exercise::Exercise, term::progress_bar, MAX_EXERCISE_NAME_LEN};
 
-const MAX_SCROLL_PADDING: usize = 8;
+const MAX_SCROLL_PADDING: usize = 5;
 // +1 for column padding.
 const SPACE: &[u8] = &[b' '; MAX_EXERCISE_NAME_LEN + 1];
 
