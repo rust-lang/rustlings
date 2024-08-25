@@ -149,8 +149,9 @@ impl<'a> WatchState<'a> {
                     Attributes::from(Attribute::Bold).with(Attribute::Underlined),
                 ))?
                 .queue(SetForegroundColor(Color::Cyan))?;
-            stdout.write_all(b"Hint\n")?;
+            stdout.write_all(b"Hint")?;
             stdout.queue(ResetColor)?;
+            stdout.write_all(b"\n")?;
 
             stdout.write_all(self.app_state.current_exercise().hint.as_bytes())?;
             stdout.write_all(b"\n\n")?;
@@ -160,16 +161,17 @@ impl<'a> WatchState<'a> {
             stdout
                 .queue(SetAttribute(Attribute::Bold))?
                 .queue(SetForegroundColor(Color::Green))?;
-            stdout.write_all("Exercise done ✓\n".as_bytes())?;
+            stdout.write_all("Exercise done ✓".as_bytes())?;
             stdout.queue(ResetColor)?;
+            stdout.write_all(b"\n")?;
 
             if let DoneStatus::DoneWithSolution(solution_path) = &self.done_status {
                 solution_link_line(stdout, solution_path)?;
             }
 
-            writeln!(
-                stdout,
-                "When done experimenting, enter `n` to move on to the next exercise 🦀\n",
+            stdout.write_all(
+                "When done experimenting, enter `n` to move on to the next exercise 🦀\n\n"
+                    .as_bytes(),
             )?;
         }
 

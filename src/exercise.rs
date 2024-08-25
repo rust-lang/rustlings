@@ -31,8 +31,9 @@ fn run_bin(
 ) -> Result<bool> {
     if let Some(output) = output.as_deref_mut() {
         write_ansi(output, SetAttribute(Attribute::Underlined));
-        output.extend_from_slice(b"Output\n");
+        output.extend_from_slice(b"Output");
         write_ansi(output, ResetColor);
+        output.push(b'\n');
     }
 
     let success = cmd_runner.run_debug_bin(bin_name, output.as_deref_mut())?;
@@ -44,8 +45,9 @@ fn run_bin(
             // leaves the user confused about why the exercise isn't done yet.
             write_ansi(output, SetAttribute(Attribute::Bold));
             write_ansi(output, SetForegroundColor(Color::Red));
-            output.extend_from_slice(b"The exercise didn't run successfully (nonzero exit code)\n");
+            output.extend_from_slice(b"The exercise didn't run successfully (nonzero exit code)");
             write_ansi(output, ResetColor);
+            output.push(b'\n');
         }
     }
 

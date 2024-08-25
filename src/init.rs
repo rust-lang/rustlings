@@ -148,10 +148,11 @@ pub fn init() -> Result<()> {
     }
 
     stdout.queue(SetForegroundColor(Color::Green))?;
-    stdout.write_all("Initialization done ✓\n\n".as_bytes())?;
-    stdout
-        .queue(ResetColor)?
-        .queue(SetAttribute(Attribute::Bold))?;
+    stdout.write_all("Initialization done ✓".as_bytes())?;
+    stdout.queue(ResetColor)?;
+    stdout.write_all(b"\n\n")?;
+
+    stdout.queue(SetAttribute(Attribute::Bold))?;
     stdout.write_all(POST_INIT_MSG)?;
     stdout.queue(ResetColor)?;
 
