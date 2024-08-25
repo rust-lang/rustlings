@@ -178,10 +178,10 @@ impl<'a> ListState<'a> {
             }
 
             if exercise.done {
-                stdout.queue(SetForegroundColor(Color::Yellow))?;
+                stdout.queue(SetForegroundColor(Color::Green))?;
                 stdout.write_all(b"DONE     ")?;
             } else {
-                stdout.queue(SetForegroundColor(Color::Green))?;
+                stdout.queue(SetForegroundColor(Color::Yellow))?;
                 stdout.write_all(b"PENDING  ")?;
             }
 
