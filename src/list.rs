@@ -59,9 +59,7 @@ fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> 
 
                         list_state.message.push_str(message);
                     }
-                    KeyCode::Char('r') => {
-                        list_state.reset_selected()?;
-                    }
+                    KeyCode::Char('r') => list_state.reset_selected()?,
                     KeyCode::Char('c') => {
                         if list_state.selected_to_current_exercise()? {
                             return Ok(());
@@ -77,9 +75,7 @@ fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> 
                 MouseEventKind::ScrollUp => list_state.select_previous(),
                 _ => continue,
             },
-            Event::Resize(width, height) => {
-                list_state.set_term_size(width, height);
-            }
+            Event::Resize(width, height) => list_state.set_term_size(width, height),
             // Ignore
             Event::FocusGained | Event::FocusLost => continue,
         }
