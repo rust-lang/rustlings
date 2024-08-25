@@ -94,7 +94,9 @@ pub fn terminal_file_link(stdout: &mut StdoutLock, path: &str, color: Color) -> 
         stdout,
         "\x1b]8;;file://{canonical_path}\x1b\\{path}\x1b]8;;\x1b\\",
     )?;
-    stdout.queue(ResetColor)?;
+    stdout
+        .queue(SetForegroundColor(Color::Reset))?
+        .queue(SetAttribute(Attribute::NoUnderline))?;
 
     Ok(())
 }
