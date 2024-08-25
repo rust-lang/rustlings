@@ -10,7 +10,12 @@ use std::{
     io::{self, StdoutLock, Write},
 };
 
-use crate::{app_state::AppState, exercise::Exercise, term::progress_bar, MAX_EXERCISE_NAME_LEN};
+use crate::{
+    app_state::AppState,
+    exercise::Exercise,
+    term::{progress_bar, terminal_file_link},
+    MAX_EXERCISE_NAME_LEN,
+};
 
 const MAX_SCROLL_PADDING: usize = 5;
 // +1 for column padding.
@@ -190,7 +195,7 @@ impl<'a> ListState<'a> {
             stdout.write_all(exercise.name.as_bytes())?;
             stdout.write_all(&SPACE[..self.name_col_width + 2 - exercise.name.len()])?;
 
-            stdout.write_all(exercise.path.as_bytes())?;
+            terminal_file_link(stdout, exercise.path, Color::Blue)?;
 
             next_ln_overwrite(stdout)?;
             stdout.queue(ResetColor)?;
