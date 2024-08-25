@@ -166,9 +166,9 @@ impl<'a> ListState<'a> {
         {
             if self.selected_row == Some(self.row_offset + n_displayed_rows) {
                 stdout.queue(SetBackgroundColor(Color::Rgb {
-                    r: 50,
-                    g: 50,
-                    b: 50,
+                    r: 40,
+                    g: 40,
+                    b: 40,
                 }))?;
                 stdout.write_all("🦀".as_bytes())?;
             } else {
