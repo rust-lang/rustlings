@@ -12,7 +12,7 @@ use crossterm::{
 };
 
 thread_local! {
-    static VS_CODE: Cell<bool> = Cell::new(env::var_os("TERM").is_some_and(|v| v == "vscode"));
+    static VS_CODE: Cell<bool> = Cell::new(env::var_os("TERM_PROGRAM").is_some_and(|v| v == "vscode"));
 }
 
 /// Terminal progress bar to be used when not using Ratataui.
