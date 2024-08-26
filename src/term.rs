@@ -15,9 +15,83 @@ thread_local! {
     static VS_CODE: Cell<bool> = Cell::new(env::var_os("TERM_PROGRAM").is_some_and(|v| v == "vscode"));
 }
 
+pub struct MaxLenWriter<'a, 'b> {
+    pub stdout: &'a mut StdoutLock<'b>,
+    len: usize,
+    max_len: usize,
+}
+
+impl<'a, 'b> MaxLenWriter<'a, 'b> {
+    #[inline]
+    pub fn new(stdout: &'a mut StdoutLock<'b>, max_len: usize) -> Self {
+        Self {
+            stdout,
+            len: 0,
+            max_len,
+        }
+    }
+
+    // Additional is for emojis that take more space.
+    #[inline]
+    pub fn add_to_len(&mut self, additional: usize) {
+        self.len += additional;
+    }
+}
+
+pub trait CountedWrite<'a> {
+    fn write_ascii(&mut self, ascii: &[u8]) -> io::Result<()>;
+    fn write_str(&mut self, unicode: &str) -> io::Result<()>;
+    fn stdout(&mut self) -> &mut StdoutLock<'a>;
+}
+
+impl<'a, 'b> CountedWrite<'b> for MaxLenWriter<'a, 'b> {
+    fn write_ascii(&mut self, ascii: &[u8]) -> io::Result<()> {
+        let n = ascii.len().min(self.max_len.saturating_sub(self.len));
+        self.stdout.write_all(&ascii[..n])?;
+        self.len += n;
+        Ok(())
+    }
+
+    fn write_str(&mut self, unicode: &str) -> io::Result<()> {
+        if let Some((ind, c)) = unicode
+            .char_indices()
+            .take(self.max_len.saturating_sub(self.len))
+            .last()
+        {
+            self.stdout
+                .write_all(&unicode.as_bytes()[..ind + c.len_utf8()])?;
+            self.len += ind + 1;
+        }
+
+        Ok(())
+    }
+
+    #[inline]
+    fn stdout(&mut self) -> &mut StdoutLock<'b> {
+        self.stdout
+    }
+}
+
+impl<'a> CountedWrite<'a> for StdoutLock<'a> {
+    #[inline]
+    fn write_ascii(&mut self, ascii: &[u8]) -> io::Result<()> {
+        self.write_all(ascii)
+    }
+
+    #[inline]
+    fn write_str(&mut self, unicode: &str) -> io::Result<()> {
+        self.write_all(unicode.as_bytes())
+    }
+
+    #[inline]
+    fn stdout(&mut self) -> &mut StdoutLock<'a> {
+        self
+    }
+}
+
 /// Terminal progress bar to be used when not using Ratataui.
-pub fn progress_bar(
-    stdout: &mut StdoutLock,
+pub fn progress_bar<'a>(
+    writer: &mut impl CountedWrite<'a>,
     progress: u16,
     total: u16,
     line_width: u16,
@@ -32,9 +106,13 @@ pub fn progress_bar(
     const MIN_LINE_WIDTH: u16 = WRAPPER_WIDTH + 4;
 
     if line_width < MIN_LINE_WIDTH {
-        return write!(stdout, "Progress: {progress}/{total} exercises");
+        writer.write_ascii(b"Progress: ")?;
+        // Integers are in ASCII.
+        writer.write_ascii(format!("{progress}/{total}").as_bytes())?;
+        return writer.write_ascii(b" exercises");
     }
 
+    let stdout = writer.stdout();
     stdout.write_all(PREFIX)?;
 
     let width = line_width - WRAPPER_WIDTH;
@@ -77,16 +155,20 @@ pub fn press_enter_prompt(stdout: &mut StdoutLock) -> io::Result<()> {
     Ok(())
 }
 
-pub fn terminal_file_link(stdout: &mut StdoutLock, path: &str, color: Color) -> io::Result<()> {
+pub fn terminal_file_link<'a>(
+    writer: &mut impl CountedWrite<'a>,
+    path: &str,
+    color: Color,
+) -> io::Result<()> {
     // VS Code shows its own links. This also avoids some issues, especially on Windows.
     if VS_CODE.get() {
-        return stdout.write_all(path.as_bytes());
+        return writer.write_str(path);
     }
 
     let canonical_path = fs::canonicalize(path).ok();
 
     let Some(canonical_path) = canonical_path.as_deref().and_then(|p| p.to_str()) else {
-        return stdout.write_all(path.as_bytes());
+        return writer.write_str(path);
     };
 
     // Windows itself can't handle its verbatim paths.
@@ -97,14 +179,18 @@ pub fn terminal_file_link(stdout: &mut StdoutLock, path: &str, color: Color) -> 
         canonical_path
     };
 
-    stdout
+    writer
+        .stdout()
         .queue(SetForegroundColor(color))?
         .queue(SetAttribute(Attribute::Underlined))?;
-    write!(
-        stdout,
-        "\x1b]8;;file://{canonical_path}\x1b\\{path}\x1b]8;;\x1b\\",
-    )?;
-    stdout
+    writer.stdout().write_all(b"\x1b]8;;file://")?;
+    writer.stdout().write_all(canonical_path.as_bytes())?;
+    writer.stdout().write_all(b"\x1b\\")?;
+    // Only this part is visible.
+    writer.write_str(path)?;
+    writer.stdout().write_all(b"\x1b]8;;\x1b\\")?;
+    writer
+        .stdout()
         .queue(SetForegroundColor(Color::Reset))?
         .queue(SetAttribute(Attribute::NoUnderline))?;
 

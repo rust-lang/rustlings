@@ -13,7 +13,7 @@ use std::{
 use crate::{
     app_state::AppState,
     exercise::Exercise,
-    term::{progress_bar, terminal_file_link},
+    term::{progress_bar, terminal_file_link, CountedWrite, MaxLenWriter},
     MAX_EXERCISE_NAME_LEN,
 };
 
@@ -26,14 +26,6 @@ fn next_ln(stdout: &mut StdoutLock) -> io::Result<()> {
         .queue(Clear(ClearType::UntilNewLine))?
         .queue(MoveToNextLine(1))?;
     Ok(())
-}
-
-// Avoids having the last written char as the last displayed one when the
-// written width is higher than the terminal width.
-// Happens on the Gnome terminal for example.
-fn next_ln_overwrite(stdout: &mut StdoutLock) -> io::Result<()> {
-    stdout.write_all(b" ")?;
-    next_ln(stdout)
 }
 
 #[derive(Copy, Clone, PartialEq, Eq)]
@@ -164,40 +156,44 @@ impl<'a> ListState<'a> {
             .skip(self.row_offset)
             .take(self.max_n_rows_to_display)
         {
+            let mut writer = MaxLenWriter::new(stdout, self.term_width as usize);
+
             if self.selected_row == Some(self.row_offset + n_displayed_rows) {
-                stdout.queue(SetBackgroundColor(Color::Rgb {
+                writer.stdout.queue(SetBackgroundColor(Color::Rgb {
                     r: 40,
                     g: 40,
                     b: 40,
                 }))?;
-                stdout.write_all("🦀".as_bytes())?;
+                // The crab emoji has the width of two ascii chars.
+                writer.add_to_len(2);
+                writer.stdout.write_all("🦀".as_bytes())?;
             } else {
-                stdout.write_all(b"  ")?;
+                writer.write_ascii(b"  ")?;
             }
 
             if exercise_ind == current_exercise_ind {
-                stdout.queue(SetForegroundColor(Color::Red))?;
-                stdout.write_all(b">>>>>>>  ")?;
+                writer.stdout.queue(SetForegroundColor(Color::Red))?;
+                writer.write_ascii(b">>>>>>>  ")?;
             } else {
-                stdout.write_all(b"         ")?;
+                writer.write_ascii(b"         ")?;
             }
 
             if exercise.done {
-                stdout.queue(SetForegroundColor(Color::Green))?;
-                stdout.write_all(b"DONE     ")?;
+                writer.stdout.queue(SetForegroundColor(Color::Green))?;
+                writer.write_ascii(b"DONE     ")?;
             } else {
-                stdout.queue(SetForegroundColor(Color::Yellow))?;
-                stdout.write_all(b"PENDING  ")?;
+                writer.stdout.queue(SetForegroundColor(Color::Yellow))?;
+                writer.write_ascii(b"PENDING  ")?;
             }
 
-            stdout.queue(SetForegroundColor(Color::Reset))?;
+            writer.stdout.queue(SetForegroundColor(Color::Reset))?;
 
-            stdout.write_all(exercise.name.as_bytes())?;
-            stdout.write_all(&SPACE[..self.name_col_width + 2 - exercise.name.len()])?;
+            writer.write_str(exercise.name)?;
+            writer.write_ascii(&SPACE[..self.name_col_width + 2 - exercise.name.len()])?;
 
-            terminal_file_link(stdout, exercise.path, Color::Blue)?;
+            terminal_file_link(&mut writer, exercise.path, Color::Blue)?;
 
-            next_ln_overwrite(stdout)?;
+            next_ln(stdout)?;
             stdout.queue(ResetColor)?;
             n_displayed_rows += 1;
         }
@@ -213,10 +209,11 @@ impl<'a> ListState<'a> {
         stdout.queue(BeginSynchronizedUpdate)?.queue(MoveTo(0, 0))?;
 
         // Header
-        stdout.write_all(b"  Current  State    Name")?;
-        stdout.write_all(&SPACE[..self.name_col_width - 2])?;
-        stdout.write_all(b"Path")?;
-        next_ln_overwrite(stdout)?;
+        let mut writer = MaxLenWriter::new(stdout, self.term_width as usize);
+        writer.write_ascii(b"  Current  State    Name")?;
+        writer.write_ascii(&SPACE[..self.name_col_width - 2])?;
+        writer.write_ascii(b"Path")?;
+        next_ln(stdout)?;
 
         // Rows
         let iter = self.app_state.exercises().iter().enumerate();
@@ -237,7 +234,7 @@ impl<'a> ListState<'a> {
             next_ln(stdout)?;
 
             progress_bar(
-                stdout,
+                &mut MaxLenWriter::new(stdout, self.term_width as usize),
                 self.app_state.n_done(),
                 self.app_state.exercises().len() as u16,
                 self.term_width,
@@ -247,59 +244,55 @@ impl<'a> ListState<'a> {
             stdout.write_all(&self.separator_line)?;
             next_ln(stdout)?;
 
+            let mut writer = MaxLenWriter::new(stdout, self.term_width as usize);
             if self.message.is_empty() {
                 // Help footer message
                 if self.selected_row.is_some() {
-                    stdout.write_all(
-                        "↓/j ↑/k home/g end/G | <c>ontinue at | <r>eset exercise".as_bytes(),
-                    )?;
+                    writer.write_str("↓/j ↑/k home/g end/G | <c>ontinue at | <r>eset exercise")?;
                     if self.narrow_term {
-                        next_ln_overwrite(stdout)?;
-                        stdout.write_all(b"filter ")?;
+                        next_ln(stdout)?;
+                        writer = MaxLenWriter::new(stdout, self.term_width as usize);
+
+                        writer.write_ascii(b"filter ")?;
                     } else {
-                        stdout.write_all(b" | filter ")?;
+                        writer.write_ascii(b" | filter ")?;
                     }
                 } else {
                     // Nothing selected (and nothing shown), so only display filter and quit.
-                    stdout.write_all(b"filter ")?;
+                    writer.write_ascii(b"filter ")?;
                 }
 
                 match self.filter {
                     Filter::Done => {
-                        stdout
+                        writer
+                            .stdout
                             .queue(SetForegroundColor(Color::Magenta))?
                             .queue(SetAttribute(Attribute::Underlined))?;
-                        stdout.write_all(b"<d>one")?;
-                        stdout.queue(ResetColor)?;
-                        stdout.write_all(b"/<p>ending")?;
+                        writer.write_ascii(b"<d>one")?;
+                        writer.stdout.queue(ResetColor)?;
+                        writer.write_ascii(b"/<p>ending")?;
                     }
                     Filter::Pending => {
-                        stdout.write_all(b"<d>one/")?;
-                        stdout
+                        writer.write_ascii(b"<d>one/")?;
+                        writer
+                            .stdout
                             .queue(SetForegroundColor(Color::Magenta))?
                             .queue(SetAttribute(Attribute::Underlined))?;
-                        stdout.write_all(b"<p>ending")?;
-                        stdout.queue(ResetColor)?;
+                        writer.write_ascii(b"<p>ending")?;
+                        writer.stdout.queue(ResetColor)?;
                     }
-                    Filter::None => stdout.write_all(b"<d>one/<p>ending")?,
+                    Filter::None => writer.write_ascii(b"<d>one/<p>ending")?,
                 }
 
-                stdout.write_all(b" | <q>uit list")?;
-
-                if self.narrow_term {
-                    next_ln_overwrite(stdout)?;
-                } else {
-                    next_ln(stdout)?;
-                }
+                writer.write_ascii(b" | <q>uit list")?;
             } else {
-                stdout.queue(SetForegroundColor(Color::Magenta))?;
-                stdout.write_all(self.message.as_bytes())?;
+                writer.stdout.queue(SetForegroundColor(Color::Magenta))?;
+                writer.write_str(&self.message)?;
                 stdout.queue(ResetColor)?;
-                next_ln_overwrite(stdout)?;
-                if self.narrow_term {
-                    next_ln(stdout)?;
-                }
+                next_ln(stdout)?;
             }
+
+            next_ln(stdout)?;
         }
 
         stdout.queue(EndSynchronizedUpdate)?.flush()
