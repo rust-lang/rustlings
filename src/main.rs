@@ -71,9 +71,7 @@ fn main() -> Result<()> {
     }
 
     match args.command {
-        Some(Subcommands::Init) => {
-            return init::init().context("Initialization failed");
-        }
+        Some(Subcommands::Init) => return init::init().context("Initialization failed"),
         Some(Subcommands::Dev(dev_command)) => return dev_command.run(),
         _ => (),
     }
