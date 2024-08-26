@@ -16,6 +16,7 @@ use crate::app_state::AppState;
 
 use self::state::{Filter, ListState};
 
+mod scroll_state;
 mod state;
 
 fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> {

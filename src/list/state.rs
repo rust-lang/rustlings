@@ -17,7 +17,8 @@ use crate::{
     MAX_EXERCISE_NAME_LEN,
 };
 
-const MAX_SCROLL_PADDING: usize = 5;
+use super::scroll_state::ScrollState;
+
 // +1 for column padding.
 const SPACE: &[u8] = &[b' '; MAX_EXERCISE_NAME_LEN + 1];
 
@@ -39,19 +40,14 @@ pub struct ListState<'a> {
     /// Footer message to be displayed if not empty.
     pub message: String,
     app_state: &'a mut AppState,
+    scroll_state: ScrollState,
     name_col_width: usize,
     filter: Filter,
-    n_rows_with_filter: usize,
-    /// Selected row out of the filtered ones.
-    selected_row: Option<usize>,
-    row_offset: usize,
     term_width: u16,
     term_height: u16,
     separator_line: Vec<u8>,
     narrow_term: bool,
     show_footer: bool,
-    max_n_rows_to_display: usize,
-    scroll_padding: usize,
 }
 
 impl<'a> ListState<'a> {
@@ -70,48 +66,27 @@ impl<'a> ListState<'a> {
         let n_rows_with_filter = app_state.exercises().len();
         let selected = app_state.current_exercise_ind();
 
+        let (width, height) = terminal::size()?;
+        let scroll_state = ScrollState::new(n_rows_with_filter, Some(selected), 5);
+
         let mut slf = Self {
             message: String::with_capacity(128),
             app_state,
+            scroll_state,
             name_col_width,
             filter,
-            n_rows_with_filter,
-            selected_row: Some(selected),
-            row_offset: selected.saturating_sub(MAX_SCROLL_PADDING),
             // Set by `set_term_size`
             term_width: 0,
             term_height: 0,
             separator_line: Vec::new(),
             narrow_term: false,
             show_footer: true,
-            max_n_rows_to_display: 0,
-            scroll_padding: 0,
         };
 
-        let (width, height) = terminal::size()?;
         slf.set_term_size(width, height);
         slf.draw(stdout)?;
 
         Ok(slf)
-    }
-
-    fn update_offset(&mut self) {
-        let Some(selected) = self.selected_row else {
-            return;
-        };
-
-        let min_offset = (selected + self.scroll_padding)
-            .saturating_sub(self.max_n_rows_to_display.saturating_sub(1));
-        let max_offset = selected.saturating_sub(self.scroll_padding);
-        let global_max_offset = self
-            .n_rows_with_filter
-            .saturating_sub(self.max_n_rows_to_display);
-
-        self.row_offset = self
-            .row_offset
-            .max(min_offset)
-            .min(max_offset)
-            .min(global_max_offset);
     }
 
     pub fn set_term_size(&mut self, width: u16, height: u16) {
@@ -124,7 +99,7 @@ impl<'a> ListState<'a> {
 
         let wide_help_footer_width = 95;
         // The help footer is shorter when nothing is selected.
-        self.narrow_term = width < wide_help_footer_width && self.selected_row.is_some();
+        self.narrow_term = width < wide_help_footer_width && self.scroll_state.selected().is_some();
 
         let header_height = 1;
         // 2 separator, 1 progress bar, 1-2 footer message.
@@ -135,13 +110,10 @@ impl<'a> ListState<'a> {
             self.separator_line = "─".as_bytes().repeat(width as usize);
         }
 
-        self.max_n_rows_to_display = height
-            .saturating_sub(header_height + u16::from(self.show_footer) * footer_height)
-            as usize;
-
-        self.scroll_padding = (self.max_n_rows_to_display / 4).min(MAX_SCROLL_PADDING);
-
-        self.update_offset();
+        self.scroll_state.set_max_n_rows_to_display(
+            height.saturating_sub(header_height + u16::from(self.show_footer) * footer_height)
+                as usize,
+        );
     }
 
     fn draw_rows(
@@ -150,15 +122,16 @@ impl<'a> ListState<'a> {
         filtered_exercises: impl Iterator<Item = (usize, &'a Exercise)>,
     ) -> io::Result<usize> {
         let current_exercise_ind = self.app_state.current_exercise_ind();
+        let row_offset = self.scroll_state.offset();
         let mut n_displayed_rows = 0;
 
         for (exercise_ind, exercise) in filtered_exercises
-            .skip(self.row_offset)
-            .take(self.max_n_rows_to_display)
+            .skip(row_offset)
+            .take(self.scroll_state.max_n_rows_to_display())
         {
             let mut writer = MaxLenWriter::new(stdout, self.term_width as usize);
 
-            if self.selected_row == Some(self.row_offset + n_displayed_rows) {
+            if self.scroll_state.selected() == Some(row_offset + n_displayed_rows) {
                 writer.stdout.queue(SetBackgroundColor(Color::Rgb {
                     r: 40,
                     g: 40,
@@ -225,7 +198,7 @@ impl<'a> ListState<'a> {
             Filter::None => self.draw_rows(stdout, iter)?,
         };
 
-        for _ in 0..self.max_n_rows_to_display - n_displayed_rows {
+        for _ in 0..self.scroll_state.max_n_rows_to_display() - n_displayed_rows {
             next_ln(stdout)?;
         }
 
@@ -247,7 +220,7 @@ impl<'a> ListState<'a> {
             let mut writer = MaxLenWriter::new(stdout, self.term_width as usize);
             if self.message.is_empty() {
                 // Help footer message
-                if self.selected_row.is_some() {
+                if self.scroll_state.selected().is_some() {
                     writer.write_str("↓/j ↑/k home/g end/G | <c>ontinue at | <r>eset exercise")?;
                     if self.narrow_term {
                         next_ln(stdout)?;
@@ -298,13 +271,8 @@ impl<'a> ListState<'a> {
         stdout.queue(EndSynchronizedUpdate)?.flush()
     }
 
-    fn set_selected(&mut self, selected: usize) {
-        self.selected_row = Some(selected);
-        self.update_offset();
-    }
-
     fn update_rows(&mut self) {
-        self.n_rows_with_filter = match self.filter {
+        let n_rows = match self.filter {
             Filter::Done => self
                 .app_state
                 .exercises()
@@ -320,15 +288,7 @@ impl<'a> ListState<'a> {
             Filter::None => self.app_state.exercises().len(),
         };
 
-        if self.n_rows_with_filter == 0 {
-            self.selected_row = None;
-            return;
-        }
-
-        self.set_selected(
-            self.selected_row
-                .map_or(0, |selected| selected.min(self.n_rows_with_filter - 1)),
-        );
+        self.scroll_state.set_n_rows(n_rows);
     }
 
     #[inline]
@@ -341,28 +301,24 @@ impl<'a> ListState<'a> {
         self.update_rows();
     }
 
+    #[inline]
     pub fn select_next(&mut self) {
-        if let Some(selected) = self.selected_row {
-            self.set_selected((selected + 1).min(self.n_rows_with_filter - 1));
-        }
+        self.scroll_state.select_next();
     }
 
+    #[inline]
     pub fn select_previous(&mut self) {
-        if let Some(selected) = self.selected_row {
-            self.set_selected(selected.saturating_sub(1));
-        }
+        self.scroll_state.select_previous();
     }
 
+    #[inline]
     pub fn select_first(&mut self) {
-        if self.n_rows_with_filter > 0 {
-            self.set_selected(0);
-        }
+        self.scroll_state.select_first();
     }
 
+    #[inline]
     pub fn select_last(&mut self) {
-        if self.n_rows_with_filter > 0 {
-            self.set_selected(self.n_rows_with_filter - 1);
-        }
+        self.scroll_state.select_last();
     }
 
     fn selected_to_exercise_ind(&self, selected: usize) -> Result<usize> {
@@ -390,7 +346,7 @@ impl<'a> ListState<'a> {
     }
 
     pub fn reset_selected(&mut self) -> Result<()> {
-        let Some(selected) = self.selected_row else {
+        let Some(selected) = self.scroll_state.selected() else {
             self.message.push_str("Nothing selected to reset!");
             return Ok(());
         };
@@ -408,7 +364,7 @@ impl<'a> ListState<'a> {
 
     // Return `true` if there was something to select.
     pub fn selected_to_current_exercise(&mut self) -> Result<bool> {
-        let Some(selected) = self.selected_row else {
+        let Some(selected) = self.scroll_state.selected() else {
             self.message.push_str("Nothing selected to continue at!");
             return Ok(false);
         };
