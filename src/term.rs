@@ -47,8 +47,10 @@ pub trait CountedWrite<'a> {
 impl<'a, 'b> CountedWrite<'b> for MaxLenWriter<'a, 'b> {
     fn write_ascii(&mut self, ascii: &[u8]) -> io::Result<()> {
         let n = ascii.len().min(self.max_len.saturating_sub(self.len));
-        self.stdout.write_all(&ascii[..n])?;
-        self.len += n;
+        if n > 0 {
+            self.stdout.write_all(&ascii[..n])?;
+            self.len += n;
+        }
         Ok(())
     }
 
