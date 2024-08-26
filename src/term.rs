@@ -1,5 +1,6 @@
 use std::{
-    fmt, fs,
+    cell::Cell,
+    env, fmt, fs,
     io::{self, BufRead, StdoutLock, Write},
 };
 
@@ -9,6 +10,10 @@ use crossterm::{
     terminal::{Clear, ClearType},
     Command, QueueableCommand,
 };
+
+thread_local! {
+    static VS_CODE: Cell<bool> = Cell::new(env::var_os("TERM").is_some_and(|v| v == "vscode"));
+}
 
 /// Terminal progress bar to be used when not using Ratataui.
 pub fn progress_bar(
@@ -73,6 +78,11 @@ pub fn press_enter_prompt(stdout: &mut StdoutLock) -> io::Result<()> {
 }
 
 pub fn terminal_file_link(stdout: &mut StdoutLock, path: &str, color: Color) -> io::Result<()> {
+    // VS Code shows its own links. This also avoids some issues, especially on Windows.
+    if VS_CODE.get() {
+        return stdout.write_all(path.as_bytes());
+    }
+
     let canonical_path = fs::canonicalize(path).ok();
 
     let Some(canonical_path) = canonical_path.as_deref().and_then(|p| p.to_str()) else {
