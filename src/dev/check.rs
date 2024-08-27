@@ -14,7 +14,7 @@ use crate::{
     collections::{hash_set_with_capacity, HashSet},
     exercise::{RunnableExercise, OUTPUT_CAPACITY},
     info_file::{ExerciseInfo, InfoFile},
-    CURRENT_FORMAT_VERSION,
+    CURRENT_FORMAT_VERSION, MAX_EXERCISE_NAME_LEN,
 };
 
 // Find a char that isn't allowed in the exercise's `name` or `dir`.
@@ -58,6 +58,9 @@ fn check_info_file_exercises(info_file: &InfoFile) -> Result<HashSet<PathBuf>> {
         let name = exercise_info.name.as_str();
         if name.is_empty() {
             bail!("Found an empty exercise name in `info.toml`");
+        }
+        if name.len() > MAX_EXERCISE_NAME_LEN {
+            bail!("The length of the exercise name `{name}` is bigger than the maximum {MAX_EXERCISE_NAME_LEN}");
         }
         if let Some(c) = forbidden_char(name) {
             bail!("Char `{c}` in the exercise name `{name}` is not allowed");
