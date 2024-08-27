@@ -1,6 +1,5 @@
 use std::{
-    cell::Cell,
-    env, fmt, fs,
+    fmt, fs,
     io::{self, BufRead, StdoutLock, Write},
 };
 
@@ -10,10 +9,6 @@ use crossterm::{
     terminal::{Clear, ClearType},
     Command, QueueableCommand,
 };
-
-thread_local! {
-    static VS_CODE: Cell<bool> = Cell::new(env::var_os("TERM_PROGRAM").is_some_and(|v| v == "vscode"));
-}
 
 pub struct MaxLenWriter<'a, 'b> {
     pub stdout: &'a mut StdoutLock<'b>,
@@ -161,11 +156,6 @@ pub fn terminal_file_link<'a>(
     path: &str,
     color: Color,
 ) -> io::Result<()> {
-    // VS Code shows its own links. This also avoids some issues, especially on Windows.
-    if VS_CODE.get() {
-        return writer.write_str(path);
-    }
-
     let canonical_path = fs::canonicalize(path).ok();
 
     let Some(canonical_path) = canonical_path.as_deref().and_then(|p| p.to_str()) else {

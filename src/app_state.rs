@@ -1,5 +1,6 @@
 use anyhow::{bail, Context, Error, Result};
 use std::{
+    env,
     fs::{self, File},
     io::{Read, StdoutLock, Write},
     path::Path,
@@ -44,6 +45,8 @@ pub struct AppState {
     file_buf: Vec<u8>,
     official_exercises: bool,
     cmd_runner: CmdRunner,
+    // Running in VS Code.
+    vs_code: bool,
 }
 
 impl AppState {
@@ -131,6 +134,7 @@ impl AppState {
             file_buf: Vec::with_capacity(2048),
             official_exercises: !Path::new("info.toml").exists(),
             cmd_runner,
+            vs_code: env::var_os("TERM_PROGRAM").is_some_and(|v| v == "vscode"),
         };
 
         let state_file_status = slf.update_from_file();
@@ -161,6 +165,11 @@ impl AppState {
     #[inline]
     pub fn cmd_runner(&self) -> &CmdRunner {
         &self.cmd_runner
+    }
+
+    #[inline]
+    pub fn vs_code(&self) -> bool {
+        self.vs_code
     }
 
     // Write the state file.
@@ -457,6 +466,7 @@ mod tests {
             file_buf: Vec::new(),
             official_exercises: true,
             cmd_runner: CmdRunner::build().unwrap(),
+            vs_code: false,
         };
 
         let mut assert = |done: [bool; 3], expected: [Option<usize>; 3]| {
