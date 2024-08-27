@@ -321,14 +321,10 @@ impl AppState {
                 .write_solution_to_disk(self.current_exercise_ind, current_exercise.name)
                 .map(Some)
         } else {
-            let solution_path = if let Some(dir) = current_exercise.dir {
-                format!("solutions/{dir}/{}.rs", current_exercise.name)
-            } else {
-                format!("solutions/{}.rs", current_exercise.name)
-            };
+            let sol_path = current_exercise.sol_path();
 
-            if Path::new(&solution_path).exists() {
-                return Ok(Some(solution_path));
+            if Path::new(&sol_path).exists() {
+                return Ok(Some(sol_path));
             }
 
             Ok(None)

@@ -13,8 +13,8 @@ use std::{
 };
 
 use crate::{
-    cargo_toml::updated_cargo_toml, embedded::EMBEDDED_FILES, info_file::InfoFile,
-    term::press_enter_prompt,
+    cargo_toml::updated_cargo_toml, embedded::EMBEDDED_FILES, exercise::RunnableExercise,
+    info_file::InfoFile, term::press_enter_prompt,
 };
 
 #[derive(Deserialize)]

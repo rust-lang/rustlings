@@ -68,6 +68,7 @@ pub struct Exercise {
 
 pub trait RunnableExercise {
     fn name(&self) -> &str;
+    fn dir(&self) -> Option<&str>;
     fn strict_clippy(&self) -> bool;
     fn test(&self) -> bool;
 
@@ -145,12 +146,42 @@ pub trait RunnableExercise {
 
         self.run::<true>(&bin_name, output, cmd_runner)
     }
+
+    fn sol_path(&self) -> String {
+        let name = self.name();
+
+        let mut path = if let Some(dir) = self.dir() {
+            // 14 = 10 + 1 + 3
+            // solutions/ + / + .rs
+            let mut path = String::with_capacity(14 + dir.len() + name.len());
+            path.push_str("solutions/");
+            path.push_str(dir);
+            path.push('/');
+            path
+        } else {
+            // 13 = 10 + 3
+            // solutions/ + .rs
+            let mut path = String::with_capacity(13 + name.len());
+            path.push_str("solutions/");
+            path
+        };
+
+        path.push_str(name);
+        path.push_str(".rs");
+
+        path
+    }
 }
 
 impl RunnableExercise for Exercise {
     #[inline]
     fn name(&self) -> &str {
         self.name
+    }
+
+    #[inline]
+    fn dir(&self) -> Option<&str> {
+        self.dir
     }
 
     #[inline]
