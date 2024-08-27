@@ -14,8 +14,10 @@ use crate::{
     collections::{hash_set_with_capacity, HashSet},
     exercise::{RunnableExercise, OUTPUT_CAPACITY},
     info_file::{ExerciseInfo, InfoFile},
-    CURRENT_FORMAT_VERSION, MAX_EXERCISE_NAME_LEN,
+    CURRENT_FORMAT_VERSION,
 };
+
+const MAX_EXERCISE_NAME_LEN: usize = 32;
 
 // Find a char that isn't allowed in the exercise's `name` or `dir`.
 fn forbidden_char(input: &str) -> Option<char> {

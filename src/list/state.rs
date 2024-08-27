@@ -14,13 +14,11 @@ use crate::{
     app_state::AppState,
     exercise::Exercise,
     term::{progress_bar, terminal_file_link, CountedWrite, MaxLenWriter},
-    MAX_EXERCISE_NAME_LEN,
 };
 
 use super::scroll_state::ScrollState;
 
-// +1 for column padding.
-const SPACE: &[u8] = &[b' '; MAX_EXERCISE_NAME_LEN + 1];
+const COL_SPACING: usize = 2;
 
 fn next_ln(stdout: &mut StdoutLock) -> io::Result<()> {
     stdout
@@ -41,7 +39,7 @@ pub struct ListState<'a> {
     pub message: String,
     app_state: &'a mut AppState,
     scroll_state: ScrollState,
-    name_col_width: usize,
+    name_col_padding: Vec<u8>,
     filter: Filter,
     term_width: u16,
     term_height: u16,
@@ -61,6 +59,7 @@ impl<'a> ListState<'a> {
             .map(|exercise| exercise.name.len())
             .max()
             .map_or(name_col_title_len, |max| max.max(name_col_title_len));
+        let name_col_padding = vec![b' '; name_col_width + COL_SPACING];
 
         let filter = Filter::None;
         let n_rows_with_filter = app_state.exercises().len();
@@ -73,7 +72,7 @@ impl<'a> ListState<'a> {
             message: String::with_capacity(128),
             app_state,
             scroll_state,
-            name_col_width,
+            name_col_padding,
             filter,
             // Set by `set_term_size`
             term_width: 0,
@@ -162,7 +161,7 @@ impl<'a> ListState<'a> {
             writer.stdout.queue(SetForegroundColor(Color::Reset))?;
 
             writer.write_str(exercise.name)?;
-            writer.write_ascii(&SPACE[..self.name_col_width + 2 - exercise.name.len()])?;
+            writer.write_ascii(&self.name_col_padding[exercise.name.len()..])?;
 
             terminal_file_link(&mut writer, exercise.path, Color::Blue)?;
 
@@ -184,7 +183,7 @@ impl<'a> ListState<'a> {
         // Header
         let mut writer = MaxLenWriter::new(stdout, self.term_width as usize);
         writer.write_ascii(b"  Current  State    Name")?;
-        writer.write_ascii(&SPACE[..self.name_col_width - 2])?;
+        writer.write_ascii(&self.name_col_padding[2..])?;
         writer.write_ascii(b"Path")?;
         next_ln(stdout)?;
 
