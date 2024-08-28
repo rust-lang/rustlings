@@ -301,7 +301,7 @@ impl AppState {
 
     // Return the index of the next pending exercise or `None` if all exercises are done.
     fn next_pending_exercise_ind(&self) -> Option<usize> {
-        if self.current_exercise_ind == self.exercises.len() - 1 {
+        if self.current_exercise_ind + 1 == self.exercises.len() {
             // The last exercise is done.
             // Search for exercises not done from the start.
             return self.exercises[..self.current_exercise_ind]
