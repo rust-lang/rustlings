@@ -1,8 +1,8 @@
 use anyhow::{bail, Context, Result};
 use std::{
     env,
-    fs::{self, File},
-    io::{self, Read, StdoutLock, Write},
+    fs::{File, OpenOptions},
+    io::{self, Read, Seek, StdoutLock, Write},
     path::Path,
     process::{Command, Stdio},
     thread,
@@ -18,7 +18,6 @@ use crate::{
 };
 
 const STATE_FILE_NAME: &str = ".rustlings-state.txt";
-const BAD_INDEX_ERR: &str = "The current exercise index is higher than the number of exercises";
 
 #[must_use]
 pub enum ExercisesProgress {
@@ -47,6 +46,7 @@ pub struct AppState {
     // Caches the number of done exercises to avoid iterating over all exercises every time.
     n_done: u16,
     final_message: String,
+    state_file: File,
     // Preallocated buffer for reading and writing the state file.
     file_buf: Vec<u8>,
     official_exercises: bool,
@@ -56,59 +56,22 @@ pub struct AppState {
 }
 
 impl AppState {
-    // Update the app state from the state file.
-    fn update_from_file(&mut self) -> StateFileStatus {
-        self.file_buf.clear();
-        self.n_done = 0;
-
-        if File::open(STATE_FILE_NAME)
-            .and_then(|mut file| file.read_to_end(&mut self.file_buf))
-            .is_err()
-        {
-            return StateFileStatus::NotRead;
-        }
-
-        // See `Self::write` for more information about the file format.
-        let mut lines = self.file_buf.split(|c| *c == b'\n').skip(2);
-
-        let Some(current_exercise_name) = lines.next() else {
-            return StateFileStatus::NotRead;
-        };
-
-        if current_exercise_name.is_empty() || lines.next().is_none() {
-            return StateFileStatus::NotRead;
-        }
-
-        let mut done_exercises = hash_set_with_capacity(self.exercises.len());
-
-        for done_exerise_name in lines {
-            if done_exerise_name.is_empty() {
-                break;
-            }
-            done_exercises.insert(done_exerise_name);
-        }
-
-        for (ind, exercise) in self.exercises.iter_mut().enumerate() {
-            if done_exercises.contains(exercise.name.as_bytes()) {
-                exercise.done = true;
-                self.n_done += 1;
-            }
-
-            if exercise.name.as_bytes() == current_exercise_name {
-                self.current_exercise_ind = ind;
-            }
-        }
-
-        StateFileStatus::Read
-    }
-
     pub fn new(
         exercise_infos: Vec<ExerciseInfo>,
         final_message: String,
     ) -> Result<(Self, StateFileStatus)> {
         let cmd_runner = CmdRunner::build()?;
+        let mut state_file = OpenOptions::new()
+            .create(true)
+            .read(true)
+            .write(true)
+            .truncate(false)
+            .open(STATE_FILE_NAME)
+            .with_context(|| {
+                format!("Failed to open or create the state file {STATE_FILE_NAME}")
+            })?;
 
-        let exercises = exercise_infos
+        let mut exercises = exercise_infos
             .into_iter()
             .map(|exercise_info| {
                 // Leaking to be able to borrow in the watch mode `Table`.
@@ -126,24 +89,68 @@ impl AppState {
                     test: exercise_info.test,
                     strict_clippy: exercise_info.strict_clippy,
                     hint,
-                    // Updated in `Self::update_from_file`.
+                    // Updated below.
                     done: false,
                 }
             })
             .collect::<Vec<_>>();
 
-        let mut slf = Self {
-            current_exercise_ind: 0,
+        let mut current_exercise_ind = 0;
+        let mut n_done = 0;
+        let mut file_buf = Vec::with_capacity(2048);
+        let state_file_status = 'block: {
+            if state_file.read_to_end(&mut file_buf).is_err() {
+                break 'block StateFileStatus::NotRead;
+            }
+
+            // See `Self::write` for more information about the file format.
+            let mut lines = file_buf.split(|c| *c == b'\n').skip(2);
+
+            let Some(current_exercise_name) = lines.next() else {
+                break 'block StateFileStatus::NotRead;
+            };
+
+            if current_exercise_name.is_empty() || lines.next().is_none() {
+                break 'block StateFileStatus::NotRead;
+            }
+
+            let mut done_exercises = hash_set_with_capacity(exercises.len());
+
+            for done_exerise_name in lines {
+                if done_exerise_name.is_empty() {
+                    break;
+                }
+                done_exercises.insert(done_exerise_name);
+            }
+
+            for (ind, exercise) in exercises.iter_mut().enumerate() {
+                if done_exercises.contains(exercise.name.as_bytes()) {
+                    exercise.done = true;
+                    n_done += 1;
+                }
+
+                if exercise.name.as_bytes() == current_exercise_name {
+                    current_exercise_ind = ind;
+                }
+            }
+
+            StateFileStatus::Read
+        };
+
+        file_buf.clear();
+        file_buf.extend_from_slice(STATE_FILE_HEADER);
+
+        let slf = Self {
+            current_exercise_ind,
             exercises,
-            n_done: 0,
+            n_done,
             final_message,
-            file_buf: Vec::with_capacity(2048),
+            state_file,
+            file_buf,
             official_exercises: !Path::new("info.toml").exists(),
             cmd_runner,
             vs_code: env::var_os("TERM_PROGRAM").is_some_and(|v| v == "vscode"),
         };
-
-        let state_file_status = slf.update_from_file();
 
         Ok((slf, state_file_status))
     }
@@ -187,10 +194,8 @@ impl AppState {
     // - The fourth line is an empty line.
     // - All remaining lines are the names of done exercises.
     fn write(&mut self) -> Result<()> {
-        self.file_buf.clear();
+        self.file_buf.truncate(STATE_FILE_HEADER.len());
 
-        self.file_buf
-            .extend_from_slice(b"DON'T EDIT THIS FILE!\n\n");
         self.file_buf
             .extend_from_slice(self.current_exercise().name.as_bytes());
         self.file_buf.push(b'\n');
@@ -202,7 +207,14 @@ impl AppState {
             }
         }
 
-        fs::write(STATE_FILE_NAME, &self.file_buf)
+        self.state_file
+            .rewind()
+            .with_context(|| format!("Failed to rewind the state file {STATE_FILE_NAME}"))?;
+        self.state_file
+            .set_len(0)
+            .with_context(|| format!("Failed to truncate the state file {STATE_FILE_NAME}"))?;
+        self.state_file
+            .write_all(&self.file_buf)
             .with_context(|| format!("Failed to write the state file {STATE_FILE_NAME}"))?;
 
         Ok(())
@@ -440,11 +452,12 @@ impl AppState {
     }
 }
 
+const BAD_INDEX_ERR: &str = "The current exercise index is higher than the number of exercises";
+const STATE_FILE_HEADER: &[u8] = b"DON'T EDIT THIS FILE!\n\n";
 const RERUNNING_ALL_EXERCISES_MSG: &[u8] = b"
 All exercises seem to be done.
 Recompiling and running all exercises to make sure that all of them are actually done.
 ";
-
 const FENISH_LINE: &str = "+----------------------------------------------------+
 |          You made it to the Fe-nish line!          |
 +--------------------------  ------------------------+
@@ -490,6 +503,7 @@ mod tests {
             exercises: vec![dummy_exercise(), dummy_exercise(), dummy_exercise()],
             n_done: 0,
             final_message: String::new(),
+            state_file: tempfile::tempfile().unwrap(),
             file_buf: Vec::new(),
             official_exercises: true,
             cmd_runner: CmdRunner::build().unwrap(),
