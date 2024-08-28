@@ -313,25 +313,22 @@ impl AppState {
 
     // Return the index of the next pending exercise or `None` if all exercises are done.
     fn next_pending_exercise_ind(&self) -> Option<usize> {
-        if self.current_exercise_ind + 1 == self.exercises.len() {
-            // The last exercise is done.
-            // Search for exercises not done from the start.
-            return self.exercises[..self.current_exercise_ind]
-                .iter()
-                .position(|exercise| !exercise.done);
-        }
-
-        // The done exercise isn't the last one.
-        // Search for a pending exercise after the current one and then from the start.
-        match self.exercises[self.current_exercise_ind + 1..]
-            .iter()
-            .position(|exercise| !exercise.done)
-        {
-            Some(ind) => Some(self.current_exercise_ind + 1 + ind),
-            None => self.exercises[..self.current_exercise_ind]
-                .iter()
-                .position(|exercise| !exercise.done),
-        }
+        let next_ind = self.current_exercise_ind + 1;
+        self.exercises
+            // If the exercise done isn't the last, search for pending exercises after it.
+            .get(next_ind..)
+            .and_then(|later_exercises| {
+                later_exercises
+                    .iter()
+                    .position(|exercise| !exercise.done)
+                    .map(|ind| next_ind + ind)
+            })
+            // Search from the start.
+            .or_else(|| {
+                self.exercises[..self.current_exercise_ind]
+                    .iter()
+                    .position(|exercise| !exercise.done)
+            })
     }
 
     /// Official exercises: Dump the solution file form the binary and return its path.
