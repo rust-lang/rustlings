@@ -189,7 +189,7 @@ impl<'a> ListState<'a> {
         // Header
         let mut writer = MaxLenWriter::new(stdout, self.term_width as usize);
         writer.write_ascii(b"  Current  State    Name")?;
-        writer.write_ascii(&self.name_col_padding[2..])?;
+        writer.write_ascii(&self.name_col_padding[4..])?;
         writer.write_ascii(b"Path")?;
         next_ln(stdout)?;
 
