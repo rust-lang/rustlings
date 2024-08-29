@@ -203,9 +203,9 @@ checksum = "e8c02a5121d4ea3eb16a80748c74f5549a5665e4c21333c6098f283870fbdea6"
 
 [[package]]
 name = "filetime"
-version = "0.2.24"
+version = "0.2.25"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bf401df4a4e3872c4fe8151134cf483738e74b67fc934d6532c882b3d24a4550"
+checksum = "35c0522e981e68cbfa8c3f978441a5f34b30b96e146b33cd3359176b50fe8586"
 dependencies = [
  "cfg-if",
  "libc",
@@ -469,9 +469,9 @@ dependencies = [
 
 [[package]]
 name = "rustix"
-version = "0.38.34"
+version = "0.38.35"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "70dc5ec042f7a43c4a73241207cecc9873a06d45debb38b329f8541d85c2730f"
+checksum = "a85d50532239da68e9addb745ba38ff4612a242c1c7ceea689c4bc7c2f43c36f"
 dependencies = [
  "bitflags 2.6.0",
  "errno",
