@@ -263,14 +263,17 @@ impl<'a> ListState<'a> {
                 }
 
                 writer.write_ascii(b" | <q>uit list")?;
+                next_ln(stdout)?;
             } else {
                 writer.stdout.queue(SetForegroundColor(Color::Magenta))?;
                 writer.write_str(&self.message)?;
                 stdout.queue(ResetColor)?;
                 next_ln(stdout)?;
-            }
 
-            next_ln(stdout)?;
+                if self.narrow_term {
+                    next_ln(stdout)?;
+                }
+            }
         }
 
         stdout.queue(EndSynchronizedUpdate)?.flush()
