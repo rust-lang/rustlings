@@ -5,7 +5,7 @@ use std::{
 
 use crossterm::{
     cursor::MoveTo,
-    style::{Attribute, Color, ResetColor, SetAttribute, SetForegroundColor},
+    style::{Attribute, Color, SetAttribute, SetForegroundColor},
     terminal::{Clear, ClearType},
     Command, QueueableCommand,
 };
@@ -93,20 +93,19 @@ pub fn progress_bar<'a>(
     total: u16,
     line_width: u16,
 ) -> io::Result<()> {
+    debug_assert!(total < 1000);
     debug_assert!(progress <= total);
 
     const PREFIX: &[u8] = b"Progress: [";
     const PREFIX_WIDTH: u16 = PREFIX.len() as u16;
-    // Leaving the last char empty (_) for `total` > 99.
-    const POSTFIX_WIDTH: u16 = "] xxx/xx exercises_".len() as u16;
+    const POSTFIX_WIDTH: u16 = "] xxx/xxx".len() as u16;
     const WRAPPER_WIDTH: u16 = PREFIX_WIDTH + POSTFIX_WIDTH;
     const MIN_LINE_WIDTH: u16 = WRAPPER_WIDTH + 4;
 
     if line_width < MIN_LINE_WIDTH {
         writer.write_ascii(b"Progress: ")?;
         // Integers are in ASCII.
-        writer.write_ascii(format!("{progress}/{total}").as_bytes())?;
-        return writer.write_ascii(b" exercises");
+        return writer.write_ascii(format!("{progress}/{total}").as_bytes());
     }
 
     let stdout = writer.stdout();
@@ -133,8 +132,9 @@ pub fn progress_bar<'a>(
         }
     }
 
-    stdout.queue(ResetColor)?;
-    write!(stdout, "] {progress:>3}/{total} exercises")
+    stdout.queue(SetForegroundColor(Color::Reset))?;
+
+    write!(stdout, "] {progress:>3}/{total}")
 }
 
 pub fn clear_terminal(stdout: &mut StdoutLock) -> io::Result<()> {
