@@ -44,7 +44,6 @@ pub struct ListState<'a> {
     term_width: u16,
     term_height: u16,
     separator_line: Vec<u8>,
-    narrow_term: bool,
     show_footer: bool,
 }
 
@@ -78,7 +77,6 @@ impl<'a> ListState<'a> {
             term_width: 0,
             term_height: 0,
             separator_line: Vec::new(),
-            narrow_term: false,
             show_footer: true,
         };
 
@@ -96,13 +94,9 @@ impl<'a> ListState<'a> {
             return;
         }
 
-        let wide_help_footer_width = 95;
-        // The help footer is shorter when nothing is selected.
-        self.narrow_term = width < wide_help_footer_width && self.scroll_state.selected().is_some();
-
         let header_height = 1;
-        // 2 separator, 1 progress bar, 1-2 footer message.
-        let footer_height = 4 + u16::from(self.narrow_term);
+        // 2 separators, 1 progress bar, 2 footer message lines.
+        let footer_height = 5;
         self.show_footer = height > header_height + footer_height;
 
         if self.show_footer {
@@ -227,14 +221,10 @@ impl<'a> ListState<'a> {
                 // Help footer message
                 if self.scroll_state.selected().is_some() {
                     writer.write_str("↓/j ↑/k home/g end/G | <c>ontinue at | <r>eset exercise")?;
-                    if self.narrow_term {
-                        next_ln(stdout)?;
-                        writer = MaxLenWriter::new(stdout, self.term_width as usize);
+                    next_ln(stdout)?;
+                    writer = MaxLenWriter::new(stdout, self.term_width as usize);
 
-                        writer.write_ascii(b"filter ")?;
-                    } else {
-                        writer.write_ascii(b" | filter ")?;
-                    }
+                    writer.write_ascii(b"<s>earch | filter ")?;
                 } else {
                     // Nothing selected (and nothing shown), so only display filter and quit.
                     writer.write_ascii(b"filter ")?;
@@ -263,17 +253,14 @@ impl<'a> ListState<'a> {
                 }
 
                 writer.write_ascii(b" | <q>uit list")?;
-                next_ln(stdout)?;
             } else {
                 writer.stdout.queue(SetForegroundColor(Color::Magenta))?;
                 writer.write_str(&self.message)?;
                 stdout.queue(ResetColor)?;
                 next_ln(stdout)?;
-
-                if self.narrow_term {
-                    next_ln(stdout)?;
-                }
             }
+
+            next_ln(stdout)?;
         }
 
         stdout.queue(EndSynchronizedUpdate)?.flush()
