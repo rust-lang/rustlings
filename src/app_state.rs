@@ -331,7 +331,7 @@ impl AppState {
             })
     }
 
-    /// Official exercises: Dump the solution file form the binary and return its path.
+    /// Official exercises: Dump the solution file from the binary and return its path.
     /// Third-party exercises: Check if a solution file exists and return its path in that case.
     pub fn current_solution_path(&self) -> Result<Option<String>> {
         if cfg!(debug_assertions) {
