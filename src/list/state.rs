@@ -352,26 +352,10 @@ impl<'a> ListState<'a> {
             .app_state
             .exercises()
             .iter()
-            .filter_map(|exercise| {
-                match self.filter() {
-                    Filter::None => {
-                        Some(exercise)
-                    },
-                    Filter::Done => {
-                        if exercise.done {
-                            Some(exercise)
-                        } else {
-                            None
-                        }
-                    },
-                    Filter::Pending => {
-                        if !exercise.done {
-                            Some(exercise)
-                        } else {
-                            None
-                        }
-                    }
-                }
+            .filter(|exercise| match self.filter() {
+                Filter::None => true,
+                Filter::Done => exercise.done,
+                Filter::Pending => !exercise.done,
             })
             .enumerate()
             .find_map(|(i, s)| {
