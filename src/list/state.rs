@@ -352,6 +352,27 @@ impl<'a> ListState<'a> {
             .app_state
             .exercises()
             .iter()
+            .filter_map(|exercise| {
+                match self.filter() {
+                    Filter::None => {
+                        Some(exercise)
+                    },
+                    Filter::Done => {
+                        if exercise.done {
+                            Some(exercise)
+                        } else {
+                            None
+                        }
+                    },
+                    Filter::Pending => {
+                        if !exercise.done {
+                            Some(exercise)
+                        } else {
+                            None
+                        }
+                    }
+                }
+            })
             .enumerate()
             .find_map(|(i, s)| {
                 if s.name.contains(self.search_query.as_str()) {
@@ -363,8 +384,6 @@ impl<'a> ListState<'a> {
 
         match idx {
             Some(i) => {
-                // ? do we need this function call?
-                // let exercise_ind = self.selected_to_exercise_ind(i).unwrap();
                 let exercise_ind = i;
                 self.scroll_state.set_selected(exercise_ind);
                 self.update_rows();
