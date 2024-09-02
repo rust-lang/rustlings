@@ -46,7 +46,7 @@ impl ScrollState {
         self.selected
     }
 
-    fn set_selected(&mut self, selected: usize) {
+    pub fn set_selected(&mut self, selected: usize) {
         self.selected = Some(selected);
         self.update_offset();
     }
