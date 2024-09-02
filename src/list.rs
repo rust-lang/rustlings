@@ -40,7 +40,7 @@ fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> 
                         KeyCode::Esc | KeyCode::Enter => {
                             is_searching = false; // not sure why rust analyzer thinks this is unused
                             list_state.search_query.clear();
-                            return Ok(());
+                            continue;
                         }
                         KeyCode::Char(k) => {
                             list_state.search_query.push(k);
