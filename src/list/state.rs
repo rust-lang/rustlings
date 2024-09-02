@@ -346,7 +346,7 @@ impl<'a> ListState<'a> {
 
         Ok(())
     }
-    
+
     pub fn select_if_matches_search_query(&mut self) {
         let idx = self
             .app_state
@@ -360,7 +360,7 @@ impl<'a> ListState<'a> {
                     None
                 }
             });
-        
+
         match idx {
             Some(i) => {
                 // ? do we need this function call?
@@ -375,7 +375,6 @@ impl<'a> ListState<'a> {
                 self.message.push_str(&msg);
             }
         }
-        
     }
 
     // Return `true` if there was something to select.

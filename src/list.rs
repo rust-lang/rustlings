@@ -32,9 +32,9 @@ fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> 
                 }
 
                 list_state.message.clear();
-                
+
                 let curr_key = key.code;
-                
+
                 if is_searching {
                     match curr_key {
                         KeyCode::Esc | KeyCode::Enter => {
@@ -46,10 +46,10 @@ fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> 
                             list_state.search_query.push(k);
                             list_state.message.push_str("search:");
                             list_state.message.push_str(&list_state.search_query);
-                            list_state.message.push_str("|");
-                            
+                            list_state.message.push('|');
+
                             list_state.select_if_matches_search_query();
-                            
+
                             list_state.draw(stdout)?;
                             continue;
                         }
@@ -57,7 +57,7 @@ fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> 
                             list_state.search_query.pop();
                             list_state.message.push_str("search:");
                             list_state.message.push_str(&list_state.search_query);
-                            list_state.message.push_str("|");
+                            list_state.message.push('|');
 
                             list_state.select_if_matches_search_query();
 
