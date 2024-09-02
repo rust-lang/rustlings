@@ -43,7 +43,6 @@ pub struct ListState<'a> {
     filter: Filter,
     term_width: u16,
     term_height: u16,
-    separator_line: Vec<u8>,
     show_footer: bool,
     pub search_query: String,
 }
@@ -77,7 +76,6 @@ impl<'a> ListState<'a> {
             // Set by `set_term_size`
             term_width: 0,
             term_height: 0,
-            separator_line: Vec::new(),
             show_footer: true,
             search_query: String::new(),
         };
@@ -97,13 +95,9 @@ impl<'a> ListState<'a> {
         }
 
         let header_height = 1;
-        // 2 separators, 1 progress bar, 2 footer message lines.
-        let footer_height = 5;
+        // 1 progress bar, 2 footer message lines.
+        let footer_height = 3;
         self.show_footer = height > header_height + footer_height;
-
-        if self.show_footer {
-            self.separator_line = "─".as_bytes().repeat(width as usize);
-        }
 
         self.scroll_state.set_max_n_rows_to_display(
             height.saturating_sub(header_height + u16::from(self.show_footer) * footer_height)
@@ -204,18 +198,12 @@ impl<'a> ListState<'a> {
         }
 
         if self.show_footer {
-            stdout.write_all(&self.separator_line)?;
-            next_ln(stdout)?;
-
             progress_bar(
                 &mut MaxLenWriter::new(stdout, self.term_width as usize),
                 self.app_state.n_done(),
                 self.app_state.exercises().len() as u16,
                 self.term_width,
             )?;
-            next_ln(stdout)?;
-
-            stdout.write_all(&self.separator_line)?;
             next_ln(stdout)?;
 
             let mut writer = MaxLenWriter::new(stdout, self.term_width as usize);
