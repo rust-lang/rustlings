@@ -1,6 +1,7 @@
 format_version = 1
 
-welcome_message = """Is this your first time? Don't worry, Rustlings is made for beginners!
+welcome_message = """
+Is this your first time? Don't worry, Rustlings is made for beginners!
 We are going to teach you a lot of things about Rust, but before we can
 get started, here are some notes about how Rustlings operates:
 
@@ -10,15 +11,16 @@ get started, here are some notes about how Rustlings operates:
    and fix them!
 2. Make sure to have your editor open in the `rustlings/` directory. Rustlings
    will show you the path of the current exercise under the progress bar. Open
-   the exercise file in your editor, fix errors and save the file. Rustlings will
-   automatically detect the file change and rerun the exercise. If all errors are
-   fixed, Rustlings will ask you to move on to the next exercise.
+   the exercise file in your editor, fix errors and save the file. Rustlings
+   will automatically detect the file change and rerun the exercise. If all
+   errors are fixed, Rustlings will ask you to move on to the next exercise.
 3. If you're stuck on an exercise, enter `h` to show a hint.
-4. If an exercise doesn't make sense to you, feel free to open an issue on GitHub!
-   (https://github.com/rust-lang/rustlings). We look at every issue, and sometimes,
-   other learners do too so you can help each other out!"""
+4. If an exercise doesn't make sense to you, feel free to open an issue on
+   GitHub! (https://github.com/rust-lang/rustlings). We look at every issue, and
+   sometimes, other learners do too so you can help each other out!"""
 
-final_message = """We hope you enjoyed learning about the various aspects of Rust!
+final_message = """
+We hope you enjoyed learning about the various aspects of Rust!
 If you noticed any issues, don't hesitate to report them on Github.
 You can also contribute your own exercises to help the greater community!
 
@@ -122,8 +124,8 @@ hint = """
 We know about variables and mutability, but there is another important type of
 variables available: constants.
 
-Constants are always immutable. They are declared with the keyword `const` instead
-of `let`.
+Constants are always immutable. They are declared with the keyword `const`
+instead of `let`.
 
 The type of Constants must always be annotated.
 
@@ -319,7 +321,8 @@ hint = """
 In the first function, we create an empty vector and want to push new elements
 to it.
 
-In the second function, we map the values of the input and collect them into a vector.
+In the second function, we map the values of the input and collect them into
+a vector.
 
 After you've completed both functions, decide for yourself which approach you
 like better.
@@ -332,8 +335,8 @@ What do you think is the more commonly used pattern under Rust developers?"""
 name = "move_semantics1"
 dir = "06_move_semantics"
 hint = """
-So you've got the "cannot borrow `vec` as mutable, as it is not declared as mutable"
-error on the line where we push an element to the vector, right?
+So you've got the "cannot borrow `vec` as mutable, as it is not declared as
+mutable" error on the line where we push an element to the vector, right?
 
 The fix for this is going to be adding one keyword, and the addition is NOT on
 the line where we push to the vector (where the error is).
@@ -369,7 +372,8 @@ hint = """
 Carefully reason about the range in which each mutable reference is in
 scope. Does it help to update the value of `x` immediately after
 the mutable reference is taken?
-Read more about 'Mutable References' in the book's section 'References and Borrowing':
+Read more about 'Mutable References' in the book's section 'References and
+Borrowing':
 https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html#mutable-references."""
 
 [[exercises]]
@@ -508,7 +512,8 @@ name = "strings4"
 dir = "09_strings"
 test = false
 hint = """
-Replace `placeholder` with either `string` or `string_slice` in the `main` function.
+Replace `placeholder` with either `string` or `string_slice` in the `main`
+function.
 
 Example:
 `placeholder("blue");`
@@ -1200,7 +1205,8 @@ hint = """
 Is there an implementation of `TryFrom` in the standard library that can both do
 the required integer conversion and check the range of the input?
 
-Challenge: Can you make the `TryFrom` implementations generic over many integer types?"""
+Challenge: Can you make the `TryFrom` implementations generic over many integer
+types?"""
 
 [[exercises]]
 name = "as_ref_mut"
