@@ -55,6 +55,7 @@ fn run_bin(
 }
 
 /// See `info_file::ExerciseInfo`
+#[derive(Debug)]
 pub struct Exercise {
     pub dir: Option<&'static str>,
     pub name: &'static str,

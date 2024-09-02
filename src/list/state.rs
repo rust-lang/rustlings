@@ -44,6 +44,7 @@ pub struct ListState<'a> {
     term_width: u16,
     term_height: u16,
     show_footer: bool,
+    pub search_query: String,
 }
 
 impl<'a> ListState<'a> {
@@ -76,6 +77,7 @@ impl<'a> ListState<'a> {
             term_width: 0,
             term_height: 0,
             show_footer: true,
+            search_query: String::new(),
         };
 
         slf.set_term_size(width, height);
@@ -343,6 +345,41 @@ impl<'a> ListState<'a> {
         )?;
 
         Ok(())
+    }
+    
+    pub fn select_if_matches_search_query(&mut self) {
+        eprintln!("search query: {:?}", self.search_query); 
+
+        let idx = self
+            .app_state
+            .exercises()
+            .iter()
+            .enumerate()
+            .find_map(|(i, s)| {
+                if s.name.contains(self.search_query.as_str()) {
+                    Some(i)
+                } else {
+                    None
+                }
+            });
+        eprintln!("idx: {:?}", idx);
+        
+        match idx {
+            Some(i) => {
+                // ? do we need this function call?
+                // let exercise_ind = self.selected_to_exercise_ind(i).unwrap();
+                let exercise_ind = i;
+                self.scroll_state.set_selected(exercise_ind);
+                eprintln!("exercise_ind: {:?}", exercise_ind);
+                self.update_rows();
+            }
+            None => {
+                let msg = String::from("[NOT FOUND]") + &self.message.clone();
+                self.message.clear();
+                self.message.push_str(&msg);
+            }
+        }
+        
     }
 
     // Return `true` if there was something to select.

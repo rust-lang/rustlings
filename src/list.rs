@@ -1,4 +1,4 @@
-use anyhow::{Context, Result};
+use anyhow::{Context, Ok, Result};
 use crossterm::{
     cursor,
     event::{
@@ -21,6 +21,7 @@ mod state;
 
 fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> {
     let mut list_state = ListState::new(app_state, stdout)?;
+    let mut is_searching = false;
 
     loop {
         match event::read().context("Failed to read terminal event")? {
@@ -31,9 +32,50 @@ fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> 
                 }
 
                 list_state.message.clear();
+                
+                let curr_key = key.code;
+                
+                if is_searching {
+                    match curr_key {
+                        KeyCode::Esc | KeyCode::Enter => {
+                            is_searching = false; // not sure why rust analyzer thinks this is unused
+                            list_state.search_query.clear();
+                            return Ok(());
+                        }
+                        KeyCode::Char(k) => {
+                            eprintln!("pressed while searching {:?}", curr_key);
+
+                            list_state.search_query.push(k);
+                            list_state.message.push_str("search:");
+                            list_state.message.push_str(&list_state.search_query);
+                            list_state.message.push_str("|");
+                            
+                            list_state.select_if_matches_search_query();
+                            
+                            list_state.draw(stdout)?;
+                            continue;
+                        }
+                        KeyCode::Backspace => {
+                            list_state.search_query.pop();
+                            list_state.message.push_str("search:");
+                            list_state.message.push_str(&list_state.search_query);
+                            list_state.message.push_str("|");
+
+                            list_state.select_if_matches_search_query();
+
+                            list_state.draw(stdout)?;
+                            continue;
+                        }
+                        _ => {
+                            continue;
+                        }
+                    }
+                }
 
                 match key.code {
-                    KeyCode::Char('q') => return Ok(()),
+                    KeyCode::Char('q') => {
+                        return Ok(());
+                    }
                     KeyCode::Down | KeyCode::Char('j') => list_state.select_next(),
                     KeyCode::Up | KeyCode::Char('k') => list_state.select_previous(),
                     KeyCode::Home | KeyCode::Char('g') => list_state.select_first(),
@@ -66,9 +108,16 @@ fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> 
                             return Ok(());
                         }
                     }
+                    KeyCode::Char('s') | KeyCode::Char('/') => {
+                        eprintln!("starting search");
+                        list_state.message.push_str("search:|");
+                        is_searching = true;
+                    }
                     // Redraw to remove the message.
                     KeyCode::Esc => (),
-                    _ => continue,
+                    _ => {
+                        continue;
+                    }
                 }
             }
             Event::Mouse(event) => match event.kind {
