@@ -19,6 +19,7 @@
 | traits                 | §10.2               |
 | tests                  | §11.1               |
 | lifetimes              | §10.3               |
+| closures               | §13.1               |
 | iterators              | §13.2-4             |
 | threads                | §16.1-3             |
 | smart_pointers         | §15, §16.3          |
