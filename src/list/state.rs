@@ -348,8 +348,6 @@ impl<'a> ListState<'a> {
     }
     
     pub fn select_if_matches_search_query(&mut self) {
-        eprintln!("search query: {:?}", self.search_query); 
-
         let idx = self
             .app_state
             .exercises()
@@ -362,7 +360,6 @@ impl<'a> ListState<'a> {
                     None
                 }
             });
-        eprintln!("idx: {:?}", idx);
         
         match idx {
             Some(i) => {
@@ -370,7 +367,6 @@ impl<'a> ListState<'a> {
                 // let exercise_ind = self.selected_to_exercise_ind(i).unwrap();
                 let exercise_ind = i;
                 self.scroll_state.set_selected(exercise_ind);
-                eprintln!("exercise_ind: {:?}", exercise_ind);
                 self.update_rows();
             }
             None => {

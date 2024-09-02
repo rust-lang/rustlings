@@ -43,8 +43,6 @@ fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> 
                             return Ok(());
                         }
                         KeyCode::Char(k) => {
-                            eprintln!("pressed while searching {:?}", curr_key);
-
                             list_state.search_query.push(k);
                             list_state.message.push_str("search:");
                             list_state.message.push_str(&list_state.search_query);
@@ -109,15 +107,12 @@ fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> 
                         }
                     }
                     KeyCode::Char('s') | KeyCode::Char('/') => {
-                        eprintln!("starting search");
                         list_state.message.push_str("search:|");
                         is_searching = true;
                     }
                     // Redraw to remove the message.
                     KeyCode::Esc => (),
-                    _ => {
-                        continue;
-                    }
+                    _ => continue,
                 }
             }
             Event::Mouse(event) => match event.kind {
