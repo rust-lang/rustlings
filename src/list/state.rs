@@ -356,16 +356,17 @@ impl<'a> ListState<'a> {
             return;
         }
 
-        let ind = self
-            .app_state
-            .exercises()
-            .iter()
-            .filter(|exercise| match self.filter {
-                Filter::None => true,
-                Filter::Done => exercise.done,
-                Filter::Pending => !exercise.done,
-            })
-            .position(|exercise| exercise.name.contains(self.search_query.as_str()));
+        let is_search_result = |exercise: &Exercise| exercise.name.contains(&self.search_query);
+        let mut iter = self.app_state.exercises().iter();
+        let ind = match self.filter {
+            Filter::None => iter.position(is_search_result),
+            Filter::Done => iter
+                .filter(|exercise| exercise.done)
+                .position(is_search_result),
+            Filter::Pending => iter
+                .filter(|exercise| !exercise.done)
+                .position(is_search_result),
+        };
 
         match ind {
             Some(exercise_ind) => self.scroll_state.set_selected(exercise_ind),
