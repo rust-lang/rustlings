@@ -1,4 +1,4 @@
-use anyhow::{Context, Ok, Result};
+use anyhow::{Context, Result};
 use crossterm::{
     cursor,
     event::{
@@ -40,7 +40,6 @@ fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> 
                         KeyCode::Esc | KeyCode::Enter => {
                             is_searching = false;
                             list_state.search_query.clear();
-                            continue;
                         }
                         KeyCode::Char(k) => {
                             list_state.search_query.push(k);
@@ -51,7 +50,6 @@ fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> 
                             list_state.select_if_matches_search_query();
 
                             list_state.draw(stdout)?;
-                            continue;
                         }
                         KeyCode::Backspace => {
                             list_state.search_query.pop();
@@ -62,12 +60,10 @@ fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> 
                             list_state.select_if_matches_search_query();
 
                             list_state.draw(stdout)?;
-                            continue;
                         }
-                        _ => {
-                            continue;
-                        }
+                        _ => {}
                     }
+                    continue;
                 }
 
                 match key.code {
