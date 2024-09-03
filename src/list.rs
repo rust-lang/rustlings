@@ -33,26 +33,24 @@ fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> 
 
                 list_state.message.clear();
 
-                let curr_key = key.code;
-
                 if is_searching {
-                    match curr_key {
+                    match key.code {
                         KeyCode::Esc | KeyCode::Enter => {
                             is_searching = false;
                             list_state.search_query.clear();
                         }
-                        KeyCode::Char(k) => {
-                            list_state.search_query.push(k);
+                        KeyCode::Char(c) => {
+                            list_state.search_query.push(c);
                             list_state.apply_search_query();
-                            list_state.draw(stdout)?;
                         }
                         KeyCode::Backspace => {
                             list_state.search_query.pop();
                             list_state.apply_search_query();
-                            list_state.draw(stdout)?;
                         }
-                        _ => {}
+                        _ => continue,
                     }
+
+                    list_state.draw(stdout)?;
                     continue;
                 }
 
@@ -91,8 +89,8 @@ fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> 
                         }
                     }
                     KeyCode::Char('s' | '/') => {
-                        list_state.message.push_str("search:|");
                         is_searching = true;
+                        list_state.apply_search_query();
                     }
                     // Redraw to remove the message.
                     KeyCode::Esc => (),

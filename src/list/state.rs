@@ -37,6 +37,7 @@ pub enum Filter {
 pub struct ListState<'a> {
     /// Footer message to be displayed if not empty.
     pub message: String,
+    pub search_query: String,
     app_state: &'a mut AppState,
     scroll_state: ScrollState,
     name_col_padding: Vec<u8>,
@@ -44,7 +45,6 @@ pub struct ListState<'a> {
     term_width: u16,
     term_height: u16,
     show_footer: bool,
-    pub search_query: String,
 }
 
 impl<'a> ListState<'a> {
@@ -69,6 +69,7 @@ impl<'a> ListState<'a> {
 
         let mut slf = Self {
             message: String::with_capacity(128),
+            search_query: String::new(),
             app_state,
             scroll_state,
             name_col_padding,
@@ -77,7 +78,6 @@ impl<'a> ListState<'a> {
             term_width: 0,
             term_height: 0,
             show_footer: true,
-            search_query: String::new(),
         };
 
         slf.set_term_size(width, height);
@@ -356,25 +356,20 @@ impl<'a> ListState<'a> {
             return;
         }
 
-        let idx = self
+        let ind = self
             .app_state
             .exercises()
             .iter()
-            .filter(|exercise| match self.filter() {
+            .filter(|exercise| match self.filter {
                 Filter::None => true,
                 Filter::Done => exercise.done,
                 Filter::Pending => !exercise.done,
             })
             .position(|exercise| exercise.name.contains(self.search_query.as_str()));
 
-        match idx {
-            Some(exercise_ind) => {
-                self.scroll_state.set_selected(exercise_ind);
-            }
-            None => {
-                let msg = String::from(" (not found)");
-                self.message.push_str(&msg);
-            }
+        match ind {
+            Some(exercise_ind) => self.scroll_state.set_selected(exercise_ind),
+            None => self.message.push_str(" (not found)"),
         }
     }
 
