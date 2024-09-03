@@ -374,23 +374,21 @@ impl<'a> ListState<'a> {
                 }
             })
             .enumerate()
-            .find_map(|(i, s)| {
-                if s.name.contains(self.search_query.as_str()) {
-                    Some(i)
+            .find_map(|(idx, exercise)| {
+                if exercise.name.contains(self.search_query.as_str()) {
+                    Some(idx)
                 } else {
                     None
                 }
             });
 
         match idx {
-            Some(i) => {
-                let exercise_ind = i;
+            Some(x) => {
+                let exercise_ind = x;
                 self.scroll_state.set_selected(exercise_ind);
-                self.update_rows();
             }
             None => {
-                let msg = String::from("[NOT FOUND]") + &self.message.clone();
-                self.message.clear();
+                let msg = String::from(" (not found)");
                 self.message.push_str(&msg);
             }
         }

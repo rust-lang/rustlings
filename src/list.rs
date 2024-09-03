@@ -67,9 +67,7 @@ fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> 
                 }
 
                 match key.code {
-                    KeyCode::Char('q') => {
-                        return Ok(());
-                    }
+                    KeyCode::Char('q') => return Ok(()),
                     KeyCode::Down | KeyCode::Char('j') => list_state.select_next(),
                     KeyCode::Up | KeyCode::Char('k') => list_state.select_previous(),
                     KeyCode::Home | KeyCode::Char('g') => list_state.select_first(),
@@ -102,7 +100,7 @@ fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> 
                             return Ok(());
                         }
                     }
-                    KeyCode::Char('s') | KeyCode::Char('/') => {
+                    KeyCode::Char('s' | '/') => {
                         list_state.message.push_str("search:|");
                         is_searching = true;
                     }
