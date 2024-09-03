@@ -43,22 +43,12 @@ fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> 
                         }
                         KeyCode::Char(k) => {
                             list_state.search_query.push(k);
-                            list_state.message.push_str("search:");
-                            list_state.message.push_str(&list_state.search_query);
-                            list_state.message.push('|');
-
-                            list_state.select_if_matches_search_query();
-
+                            list_state.apply_search_query();
                             list_state.draw(stdout)?;
                         }
                         KeyCode::Backspace => {
                             list_state.search_query.pop();
-                            list_state.message.push_str("search:");
-                            list_state.message.push_str(&list_state.search_query);
-                            list_state.message.push('|');
-
-                            list_state.select_if_matches_search_query();
-
+                            list_state.apply_search_query();
                             list_state.draw(stdout)?;
                         }
                         _ => {}

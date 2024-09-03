@@ -347,40 +347,36 @@ impl<'a> ListState<'a> {
         Ok(())
     }
 
-    pub fn select_if_matches_search_query(&mut self) {
+    pub fn apply_search_query(&mut self) {
+        self.message.push_str("search:");
+        self.message.push_str(&self.search_query);
+        self.message.push('|');
+
+        if self.search_query.is_empty() { return; }
+
         let idx = self
-            .app_state
-            .exercises()
-            .iter()
-            .filter_map(|exercise| {
-                match self.filter() {
-                    Filter::None => {
-                        Some(exercise)
-                    },
-                    Filter::Done => {
-                        if exercise.done {
-                            Some(exercise)
-                        } else {
-                            None
-                        }
-                    },
-                    Filter::Pending => {
-                        if !exercise.done {
-                            Some(exercise)
-                        } else {
-                            None
-                        }
-                    }
-                }
-            })
-            .enumerate()
-            .find_map(|(idx, exercise)| {
-                if exercise.name.contains(self.search_query.as_str()) {
-                    Some(idx)
-                } else {
-                    None
-                }
-            });
+        .app_state
+        .exercises()
+        .iter()
+        .filter_map(|exercise| {
+            match self.filter() {
+                Filter::None => Some(exercise),
+                Filter::Done if exercise.done => Some(exercise),
+                Filter::Pending if !exercise.done => Some(exercise),
+                _ => None,
+            }
+        })
+        .position(|exercise| exercise.name.contains(self.search_query.as_str()));
+
+        match idx {
+            Some(exercise_ind) => {
+                self.scroll_state.set_selected(exercise_ind);
+            }
+            None => {
+                let msg = String::from(" (not found)");
+                self.message.push_str(&msg);
+            }
+        }
 
         match idx {
             Some(x) => {
