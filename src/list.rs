@@ -72,15 +72,15 @@ fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> 
                         }
                     }
                     KeyCode::Char('p') => {
-                        let message = if list_state.filter() == Filter::Pending {
+                        if list_state.filter() == Filter::Pending {
                             list_state.set_filter(Filter::None);
-                            "Disabled filter PENDING"
+                            list_state.message.push_str("Disabled filter PENDING");
                         } else {
                             list_state.set_filter(Filter::Pending);
-                            "Enabled filter PENDING │ Press p again to disable the filter"
-                        };
-
-                        list_state.message.push_str(message);
+                            list_state.message.push_str(
+                                "Enabled filter PENDING │ Press p again to disable the filter",
+                            );
+                        }
                     }
                     KeyCode::Char('r') => list_state.reset_selected()?,
                     KeyCode::Char('c') => {
