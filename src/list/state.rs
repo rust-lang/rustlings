@@ -352,35 +352,23 @@ impl<'a> ListState<'a> {
         self.message.push_str(&self.search_query);
         self.message.push('|');
 
-        if self.search_query.is_empty() { return; }
+        if self.search_query.is_empty() {
+            return;
+        }
 
         let idx = self
-        .app_state
-        .exercises()
-        .iter()
-        .filter_map(|exercise| {
-            match self.filter() {
-                Filter::None => Some(exercise),
-                Filter::Done if exercise.done => Some(exercise),
-                Filter::Pending if !exercise.done => Some(exercise),
-                _ => None,
-            }
-        })
-        .position(|exercise| exercise.name.contains(self.search_query.as_str()));
+            .app_state
+            .exercises()
+            .iter()
+            .filter(|exercise| match self.filter() {
+                Filter::None => true,
+                Filter::Done => exercise.done,
+                Filter::Pending => !exercise.done,
+            })
+            .position(|exercise| exercise.name.contains(self.search_query.as_str()));
 
         match idx {
             Some(exercise_ind) => {
-                self.scroll_state.set_selected(exercise_ind);
-            }
-            None => {
-                let msg = String::from(" (not found)");
-                self.message.push_str(&msg);
-            }
-        }
-
-        match idx {
-            Some(x) => {
-                let exercise_ind = x;
                 self.scroll_state.set_selected(exercise_ind);
             }
             None => {
