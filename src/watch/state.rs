@@ -11,7 +11,7 @@ use crate::{
     app_state::{AppState, ExercisesProgress},
     clear_terminal,
     exercise::{solution_link_line, RunnableExercise, OUTPUT_CAPACITY},
-    term::{progress_bar, terminal_file_link},
+    term::progress_bar,
 };
 
 #[derive(PartialEq, Eq)]
@@ -184,7 +184,9 @@ impl<'a> WatchState<'a> {
         )?;
 
         stdout.write_all(b"\nCurrent exercise: ")?;
-        terminal_file_link(stdout, self.app_state.current_exercise().path, Color::Blue)?;
+        self.app_state
+            .current_exercise()
+            .terminal_file_link(stdout)?;
         stdout.write_all(b"\n\n")?;
 
         self.show_prompt(stdout)?;

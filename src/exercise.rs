@@ -7,7 +7,7 @@ use std::io::{self, StdoutLock, Write};
 
 use crate::{
     cmd::CmdRunner,
-    term::{terminal_file_link, write_ansi},
+    term::{self, terminal_file_link, write_ansi, CountedWrite},
 };
 
 /// The initial capacity of the output buffer.
@@ -18,7 +18,11 @@ pub fn solution_link_line(stdout: &mut StdoutLock, solution_path: &str) -> io::R
     stdout.write_all(b"Solution")?;
     stdout.queue(ResetColor)?;
     stdout.write_all(b" for comparison: ")?;
-    terminal_file_link(stdout, solution_path, Color::Cyan)?;
+    if let Some(canonical_path) = term::canonicalize(solution_path) {
+        terminal_file_link(stdout, solution_path, &canonical_path, Color::Cyan)?;
+    } else {
+        stdout.write_all(solution_path.as_bytes())?;
+    }
     stdout.write_all(b"\n")
 }
 
@@ -60,10 +64,21 @@ pub struct Exercise {
     pub name: &'static str,
     /// Path of the exercise file starting with the `exercises/` directory.
     pub path: &'static str,
+    pub canonical_path: Option<String>,
     pub test: bool,
     pub strict_clippy: bool,
     pub hint: &'static str,
     pub done: bool,
+}
+
+impl Exercise {
+    pub fn terminal_file_link<'a>(&self, writer: &mut impl CountedWrite<'a>) -> io::Result<()> {
+        if let Some(canonical_path) = self.canonical_path.as_deref() {
+            return terminal_file_link(writer, self.path, canonical_path, Color::Blue);
+        }
+
+        writer.write_str(self.path)
+    }
 }
 
 pub trait RunnableExercise {

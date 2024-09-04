@@ -3,7 +3,7 @@ use std::{
     env,
     fs::{File, OpenOptions},
     io::{self, Read, Seek, StdoutLock, Write},
-    path::Path,
+    path::{Path, MAIN_SEPARATOR_STR},
     process::{Command, Stdio},
     thread,
 };
@@ -15,6 +15,7 @@ use crate::{
     embedded::EMBEDDED_FILES,
     exercise::{Exercise, RunnableExercise},
     info_file::ExerciseInfo,
+    term,
 };
 
 const STATE_FILE_NAME: &str = ".rustlings-state.txt";
@@ -71,6 +72,7 @@ impl AppState {
                 format!("Failed to open or create the state file {STATE_FILE_NAME}")
             })?;
 
+        let dir_canonical_path = term::canonicalize("exercises");
         let mut exercises = exercise_infos
             .into_iter()
             .map(|exercise_info| {
@@ -82,10 +84,32 @@ impl AppState {
                 let dir = exercise_info.dir.map(|dir| &*dir.leak());
                 let hint = exercise_info.hint.leak().trim_ascii();
 
+                let canonical_path = dir_canonical_path.as_deref().map(|dir_canonical_path| {
+                    let mut canonical_path;
+                    if let Some(dir) = dir {
+                        canonical_path = String::with_capacity(
+                            2 + dir_canonical_path.len() + dir.len() + name.len(),
+                        );
+                        canonical_path.push_str(dir_canonical_path);
+                        canonical_path.push_str(MAIN_SEPARATOR_STR);
+                        canonical_path.push_str(dir);
+                    } else {
+                        canonical_path =
+                            String::with_capacity(1 + dir_canonical_path.len() + name.len());
+                        canonical_path.push_str(dir_canonical_path);
+                    }
+
+                    canonical_path.push_str(MAIN_SEPARATOR_STR);
+                    canonical_path.push_str(name);
+                    canonical_path.push_str(".rs");
+                    canonical_path
+                });
+
                 Exercise {
                     dir,
                     name,
                     path,
+                    canonical_path,
                     test: exercise_info.test,
                     strict_clippy: exercise_info.strict_clippy,
                     hint,
@@ -486,6 +510,7 @@ mod tests {
             dir: None,
             name: "0",
             path: "exercises/0.rs",
+            canonical_path: None,
             test: false,
             strict_clippy: false,
             hint: "",

@@ -13,7 +13,7 @@ use std::{
 use crate::{
     app_state::AppState,
     exercise::Exercise,
-    term::{progress_bar, terminal_file_link, CountedWrite, MaxLenWriter},
+    term::{progress_bar, CountedWrite, MaxLenWriter},
 };
 
 use super::scroll_state::ScrollState;
@@ -158,7 +158,7 @@ impl<'a> ListState<'a> {
             if self.app_state.vs_code() {
                 writer.write_str(exercise.path)?;
             } else {
-                terminal_file_link(&mut writer, exercise.path, Color::Blue)?;
+                exercise.terminal_file_link(&mut writer)?;
             }
 
             next_ln(stdout)?;

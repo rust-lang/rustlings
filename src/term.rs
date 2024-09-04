@@ -1,13 +1,12 @@
-use std::{
-    fmt, fs,
-    io::{self, BufRead, StdoutLock, Write},
-};
-
 use crossterm::{
     cursor::MoveTo,
     style::{Attribute, Color, SetAttribute, SetForegroundColor},
     terminal::{Clear, ClearType},
     Command, QueueableCommand,
+};
+use std::{
+    fmt, fs,
+    io::{self, BufRead, StdoutLock, Write},
 };
 
 pub struct MaxLenWriter<'a, 'b> {
@@ -151,25 +150,29 @@ pub fn press_enter_prompt(stdout: &mut StdoutLock) -> io::Result<()> {
     stdout.write_all(b"\n")
 }
 
+/// Canonicalize, convert to string and remove verbatim part on Windows.
+pub fn canonicalize(path: &str) -> Option<String> {
+    fs::canonicalize(path)
+        .ok()?
+        .into_os_string()
+        .into_string()
+        .ok()
+        .map(|mut path| {
+            // Windows itself can't handle its verbatim paths.
+            if cfg!(windows) && path.as_bytes().starts_with(br"\\?\") {
+                path.drain(..4);
+            }
+
+            path
+        })
+}
+
 pub fn terminal_file_link<'a>(
     writer: &mut impl CountedWrite<'a>,
     path: &str,
+    canonical_path: &str,
     color: Color,
 ) -> io::Result<()> {
-    let canonical_path = fs::canonicalize(path).ok();
-
-    let Some(canonical_path) = canonical_path.as_deref().and_then(|p| p.to_str()) else {
-        return writer.write_str(path);
-    };
-
-    // Windows itself can't handle its verbatim paths.
-    #[cfg(windows)]
-    let canonical_path = if canonical_path.len() > 5 && &canonical_path[0..4] == r"\\?\" {
-        &canonical_path[4..]
-    } else {
-        canonical_path
-    };
-
     writer
         .stdout()
         .queue(SetForegroundColor(color))?
