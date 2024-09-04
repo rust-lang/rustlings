@@ -48,12 +48,12 @@ include = [
 [dependencies]
 ahash = { version = "0.8.11", default-features = false }
 anyhow = "1.0.86"
-clap = { version = "4.5.16", features = ["derive"] }
+clap = { version = "4.5.17", features = ["derive"] }
 crossterm = { version = "0.28.1", default-features = false, features = ["windows", "events"] }
 notify-debouncer-mini = { version = "0.4.1", default-features = false }
 os_pipe = "1.2.1"
 rustlings-macros = { path = "rustlings-macros", version = "=6.3.0" }
-serde_json = "1.0.127"
+serde_json = "1.0.128"
 serde.workspace = true
 toml_edit.workspace = true
 
