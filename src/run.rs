@@ -45,7 +45,7 @@ pub fn run(app_state: &mut AppState) -> Result<()> {
     }
 
     match app_state.done_current_exercise(&mut stdout)? {
-        ExercisesProgress::CurrentPending | ExercisesProgress::NewPending => {
+        ExercisesProgress::NewPending | ExercisesProgress::CurrentPending => {
             stdout.write_all(b"Next exercise: ")?;
             app_state
                 .current_exercise()

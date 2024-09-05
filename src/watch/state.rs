@@ -195,7 +195,11 @@ impl<'a> WatchState<'a> {
     }
 
     pub fn show_hint(&mut self, stdout: &mut StdoutLock) -> io::Result<()> {
-        self.show_hint = true;
-        self.render(stdout)
+        if !self.show_hint {
+            self.show_hint = true;
+            self.render(stdout)?;
+        }
+
+        Ok(())
     }
 }

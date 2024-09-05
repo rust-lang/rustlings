@@ -83,13 +83,11 @@ fn run_watch(
         match event {
             WatchEvent::Input(InputEvent::Next) => match watch_state.next_exercise(&mut stdout)? {
                 ExercisesProgress::AllDone => break,
-                ExercisesProgress::CurrentPending => watch_state.render(&mut stdout)?,
                 ExercisesProgress::NewPending => watch_state.run_current_exercise(&mut stdout)?,
+                ExercisesProgress::CurrentPending => (),
             },
             WatchEvent::Input(InputEvent::Hint) => watch_state.show_hint(&mut stdout)?,
-            WatchEvent::Input(InputEvent::List) => {
-                return Ok(WatchExit::List);
-            }
+            WatchEvent::Input(InputEvent::List) => return Ok(WatchExit::List),
             WatchEvent::Input(InputEvent::Quit) => {
                 stdout.write_all(QUIT_MSG)?;
                 break;
@@ -99,9 +97,7 @@ fn run_watch(
                 watch_state.handle_file_change(exercise_ind, &mut stdout)?;
             }
             WatchEvent::TerminalResize => watch_state.render(&mut stdout)?,
-            WatchEvent::NotifyErr(e) => {
-                return Err(Error::from(e).context(NOTIFY_ERR));
-            }
+            WatchEvent::NotifyErr(e) => return Err(Error::from(e).context(NOTIFY_ERR)),
             WatchEvent::TerminalEventErr(e) => {
                 return Err(Error::from(e).context("Terminal event listener failed"));
             }

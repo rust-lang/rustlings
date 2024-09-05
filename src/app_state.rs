@@ -24,10 +24,10 @@ const STATE_FILE_NAME: &str = ".rustlings-state.txt";
 pub enum ExercisesProgress {
     // All exercises are done.
     AllDone,
-    // The current exercise failed and is still pending.
-    CurrentPending,
     // A new exercise is now pending.
     NewPending,
+    // The current exercise is still pending.
+    CurrentPending,
 }
 
 pub enum StateFileStatus {
