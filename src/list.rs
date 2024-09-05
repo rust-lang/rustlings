@@ -20,7 +20,7 @@ mod scroll_state;
 mod state;
 
 fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> {
-    let mut list_state = ListState::new(app_state, stdout)?;
+    let mut list_state = ListState::build(app_state, stdout)?;
     let mut is_searching = false;
 
     loop {

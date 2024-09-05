@@ -48,7 +48,7 @@ pub struct ListState<'a> {
 }
 
 impl<'a> ListState<'a> {
-    pub fn new(app_state: &'a mut AppState, stdout: &mut StdoutLock) -> io::Result<Self> {
+    pub fn build(app_state: &'a mut AppState, stdout: &mut StdoutLock) -> Result<Self> {
         stdout.queue(Clear(ClearType::All))?;
 
         let name_col_title_len = 4;
@@ -64,7 +64,7 @@ impl<'a> ListState<'a> {
         let n_rows_with_filter = app_state.exercises().len();
         let selected = app_state.current_exercise_ind();
 
-        let (width, height) = terminal::size()?;
+        let (width, height) = terminal::size().context("Failed to get the terminal size")?;
         let scroll_state = ScrollState::new(n_rows_with_filter, Some(selected), 5);
 
         let mut slf = Self {
