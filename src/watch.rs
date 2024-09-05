@@ -95,7 +95,6 @@ fn run_watch(
                 break;
             }
             WatchEvent::Input(InputEvent::Run) => watch_state.run_current_exercise(&mut stdout)?,
-            WatchEvent::Input(InputEvent::Unrecognized) => watch_state.render(&mut stdout)?,
             WatchEvent::FileChange { exercise_ind } => {
                 watch_state.handle_file_change(exercise_ind, &mut stdout)?;
             }
