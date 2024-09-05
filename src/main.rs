@@ -8,7 +8,7 @@ use std::{
 };
 use term::{clear_terminal, press_enter_prompt};
 
-use self::{app_state::AppState, dev::DevCommands, info_file::InfoFile, watch::WatchExit};
+use self::{app_state::AppState, dev::DevCommands, info_file::InfoFile};
 
 mod app_state;
 mod cargo_toml;
@@ -130,15 +130,7 @@ fn main() -> Result<()> {
                 )
             };
 
-            loop {
-                match watch::watch(&mut app_state, notify_exercise_names)? {
-                    WatchExit::Shutdown => break,
-                    // It is much easier to exit the watch mode, launch the list mode and then restart
-                    // the watch mode instead of trying to pause the watch threads and correct the
-                    // watch state.
-                    WatchExit::List => list::list(&mut app_state)?,
-                }
-            }
+            watch::watch(&mut app_state, notify_exercise_names)?;
         }
         Some(Subcommands::Run { name }) => {
             if let Some(name) = name {

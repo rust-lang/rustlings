@@ -57,6 +57,9 @@ serde_json = "1.0.128"
 serde.workspace = true
 toml_edit.workspace = true
 
+[target.'cfg(not(windows))'.dependencies]
+rustix = { version = "0.38.35", default-features = false, features = ["std", "stdio", "termios"] }
+
 [dev-dependencies]
 tempfile = "3.12.0"
 

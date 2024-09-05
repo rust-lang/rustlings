@@ -490,6 +490,7 @@ dependencies = [
  "crossterm",
  "notify-debouncer-mini",
  "os_pipe",
+ "rustix",
  "rustlings-macros",
  "serde",
  "serde_json",
