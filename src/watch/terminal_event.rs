@@ -43,8 +43,8 @@ pub fn terminal_event_handler(tx: Sender<WatchEvent>, manual_run: bool) {
                     return;
                 }
             }
-            Event::Resize(_, _) => {
-                if tx.send(WatchEvent::TerminalResize).is_err() {
+            Event::Resize(width, _) => {
+                if tx.send(WatchEvent::TerminalResize { width }).is_err() {
                     return;
                 }
             }

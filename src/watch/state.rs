@@ -1,4 +1,4 @@
-use anyhow::Result;
+use anyhow::{Context, Result};
 use crossterm::{
     style::{
         Attribute, Attributes, Color, ResetColor, SetAttribute, SetAttributes, SetForegroundColor,
@@ -27,17 +27,23 @@ pub struct WatchState<'a> {
     show_hint: bool,
     done_status: DoneStatus,
     manual_run: bool,
+    term_width: u16,
 }
 
 impl<'a> WatchState<'a> {
-    pub fn new(app_state: &'a mut AppState, manual_run: bool) -> Self {
-        Self {
+    pub fn build(app_state: &'a mut AppState, manual_run: bool) -> Result<Self> {
+        let term_width = terminal::size()
+            .context("Failed to get the terminal size")?
+            .0;
+
+        Ok(Self {
             app_state,
             output: Vec::with_capacity(OUTPUT_CAPACITY),
             show_hint: false,
             done_status: DoneStatus::Pending,
             manual_run,
-        }
+            term_width,
+        })
     }
 
     pub fn run_current_exercise(&mut self, stdout: &mut StdoutLock) -> Result<()> {
@@ -175,12 +181,11 @@ impl<'a> WatchState<'a> {
             )?;
         }
 
-        let line_width = terminal::size()?.0;
         progress_bar(
             stdout,
             self.app_state.n_done(),
             self.app_state.exercises().len() as u16,
-            line_width,
+            self.term_width,
         )?;
 
         stdout.write_all(b"\nCurrent exercise: ")?;
@@ -197,6 +202,15 @@ impl<'a> WatchState<'a> {
     pub fn show_hint(&mut self, stdout: &mut StdoutLock) -> io::Result<()> {
         if !self.show_hint {
             self.show_hint = true;
+            self.render(stdout)?;
+        }
+
+        Ok(())
+    }
+
+    pub fn update_term_width(&mut self, width: u16, stdout: &mut StdoutLock) -> io::Result<()> {
+        if self.term_width != width {
+            self.term_width = width;
             self.render(stdout)?;
         }
 

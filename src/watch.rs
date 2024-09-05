@@ -29,7 +29,7 @@ mod terminal_event;
 enum WatchEvent {
     Input(InputEvent),
     FileChange { exercise_ind: usize },
-    TerminalResize,
+    TerminalResize { width: u16 },
     NotifyErr(notify::Error),
     TerminalEventErr(io::Error),
 }
@@ -72,7 +72,7 @@ fn run_watch(
         None
     };
 
-    let mut watch_state = WatchState::new(app_state, manual_run);
+    let mut watch_state = WatchState::build(app_state, manual_run)?;
 
     let mut stdout = io::stdout().lock();
     watch_state.run_current_exercise(&mut stdout)?;
@@ -96,7 +96,9 @@ fn run_watch(
             WatchEvent::FileChange { exercise_ind } => {
                 watch_state.handle_file_change(exercise_ind, &mut stdout)?;
             }
-            WatchEvent::TerminalResize => watch_state.render(&mut stdout)?,
+            WatchEvent::TerminalResize { width } => {
+                watch_state.update_term_width(width, &mut stdout)?;
+            }
             WatchEvent::NotifyErr(e) => return Err(Error::from(e).context(NOTIFY_ERR)),
             WatchEvent::TerminalEventErr(e) => {
                 return Err(Error::from(e).context("Terminal event listener failed"));
