@@ -41,10 +41,10 @@ fn check_cargo_toml(
 
     if old_bins != new_bins {
         if cfg!(debug_assertions) {
-            bail!("The file `dev/Cargo.toml` is outdated. Please run `cargo run -- dev update` to update it. Then run `cargo run -- dev check` again");
+            bail!("The file `dev/Cargo.toml` is outdated. Run `cargo run -- dev update` to update it. Then run `cargo run -- dev check` again");
         }
 
-        bail!("The file `Cargo.toml` is outdated. Please run `rustlings dev update` to update it. Then run `rustlings dev check` again");
+        bail!("The file `Cargo.toml` is outdated. Run `rustlings dev update` to update it. Then run `rustlings dev check` again");
     }
 
     Ok(())
