@@ -217,3 +217,5 @@ empty_loop = "forbid"
 infinite_loop = "deny"
 # You shouldn't leak memory while still learning Rust
 mem_forget = "deny"
+# Currently, there are no disallowed methods. This line avoids problems when developing Rustlings.
+disallowed_methods = "allow"
