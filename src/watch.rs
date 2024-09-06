@@ -1,4 +1,4 @@
-use anyhow::{Error, Result};
+use anyhow::{Context, Error, Result};
 use notify_debouncer_mini::{
     new_debouncer,
     notify::{self, RecursiveMode},
@@ -77,7 +77,9 @@ fn run_watch(
     let mut stdout = io::stdout().lock();
     watch_state.run_current_exercise(&mut stdout)?;
 
-    thread::spawn(move || terminal_event_handler(tx, manual_run));
+    thread::Builder::new()
+        .spawn(move || terminal_event_handler(tx, manual_run))
+        .context("Failed to spawn a thread to handle terminal events")?;
 
     while let Ok(event) = rx.recv() {
         match event {

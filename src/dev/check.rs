@@ -185,12 +185,14 @@ fn check_exercises_unsolved(
                 return None;
             }
 
-            Some((
-                exercise_info.name.as_str(),
-                thread::spawn(|| exercise_info.run_exercise(None, cmd_runner)),
-            ))
+            Some(
+                thread::Builder::new()
+                    .spawn(|| exercise_info.run_exercise(None, cmd_runner))
+                    .map(|handle| (exercise_info.name.as_str(), handle)),
+            )
         })
-        .collect::<Vec<_>>();
+        .collect::<Result<Vec<_>, _>>()
+        .context("Failed to spawn a thread to check if an exercise is already solved")?;
 
     let n_handles = handles.len();
     write!(stdout, "Progress: 0/{n_handles}")?;
@@ -226,7 +228,9 @@ fn check_exercises(info_file: &'static InfoFile, cmd_runner: &'static CmdRunner)
         Ordering::Equal => (),
     }
 
-    let handle = thread::spawn(move || check_exercises_unsolved(info_file, cmd_runner));
+    let handle = thread::Builder::new()
+        .spawn(move || check_exercises_unsolved(info_file, cmd_runner))
+        .context("Failed to spawn a thread to check if any exercise is already solved")?;
 
     let info_file_paths = check_info_file_exercises(info_file)?;
     check_unexpected_files("exercises", &info_file_paths)?;
@@ -253,7 +257,7 @@ fn check_solutions(
         .exercises
         .iter()
         .map(|exercise_info| {
-            thread::spawn(move || {
+            thread::Builder::new().spawn(move || {
                 let sol_path = exercise_info.sol_path();
                 if !Path::new(&sol_path).exists() {
                     if require_solutions {
@@ -274,7 +278,8 @@ fn check_solutions(
                 }
             })
         })
-        .collect::<Vec<_>>();
+        .collect::<Result<Vec<_>, _>>()
+        .context("Failed to spawn a thread to check a solution")?;
 
     let mut sol_paths = hash_set_with_capacity(info_file.exercises.len());
     let mut fmt_cmd = Command::new("rustfmt");
@@ -322,7 +327,11 @@ fn check_solutions(
     }
     stdout.write_all(b"\n")?;
 
-    let handle = thread::spawn(move || check_unexpected_files("solutions", &sol_paths));
+    let handle = thread::Builder::new()
+        .spawn(move || check_unexpected_files("solutions", &sol_paths))
+        .context(
+            "Failed to spawn a thread to check for unexpected files in the solutions directory",
+        )?;
 
     if !fmt_cmd
         .status()

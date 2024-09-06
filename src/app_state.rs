@@ -388,12 +388,19 @@ impl AppState {
             let handles = self
                 .exercises
                 .iter()
-                .map(|exercise| s.spawn(|| exercise.run_exercise(None, &self.cmd_runner)))
+                .map(|exercise| {
+                    thread::Builder::new()
+                        .spawn_scoped(s, || exercise.run_exercise(None, &self.cmd_runner))
+                })
                 .collect::<Vec<_>>();
 
-            for (exercise_ind, handle) in handles.into_iter().enumerate() {
+            for (exercise_ind, spawn_res) in handles.into_iter().enumerate() {
                 write!(stdout, "\rProgress: {exercise_ind}/{n_exercises}")?;
                 stdout.flush()?;
+
+                let Ok(handle) = spawn_res else {
+                    return Ok(AllExercisesCheck::CheckedUntil(exercise_ind));
+                };
 
                 let Ok(success) = handle.join().unwrap() else {
                     return Ok(AllExercisesCheck::CheckedUntil(exercise_ind));
