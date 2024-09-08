@@ -1,3 +1,7 @@
+# COMPLETED !!!!!!!!!!!!!
+
+![alt text](image.png)
+
 # Exercise to Book Chapter mapping
 
 | Exercise               | Book Chapter        |
