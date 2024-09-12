@@ -130,6 +130,10 @@ pub fn init() -> Result<()> {
     fs::write("Cargo.toml", updated_cargo_toml)
         .context("Failed to create the file `rustlings/Cargo.toml`")?;
 
+    let ra_toml = include_str!("../dev-rust-analyzer.toml");
+    fs::write("rust-analyzer.toml", ra_toml)
+        .context("Failed to create the file `rustlings/rust-analyzer.toml`")?;
+
     fs::write(".gitignore", GITIGNORE)
         .context("Failed to create the file `rustlings/.gitignore`")?;
 

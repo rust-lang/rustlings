@@ -1,0 +1,4 @@
+# rust-analyzer configuration file
+# DO NOT edit what is already defined.
+# You may add new configurations as needed.
+check.extraArgs = ["--profile", "test"]
