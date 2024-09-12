@@ -207,6 +207,8 @@ panic = "abort"
 unsafe_code = "forbid"
 # You don't need unstable features in Rustlings and shouldn't rely on them while learning Rust
 unstable_features = "forbid"
+# To avoid showing unnecessary `x is never used` warnings
+unused = { level = "allow", priority = -1 }
 
 [lints.clippy]
 # You forgot a `todo!()`
