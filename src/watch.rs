@@ -1,4 +1,4 @@
-use anyhow::{Context, Error, Result};
+use anyhow::{Error, Result};
 use notify_debouncer_mini::{
     new_debouncer,
     notify::{self, RecursiveMode},
@@ -7,7 +7,6 @@ use std::{
     io::{self, Write},
     path::Path,
     sync::mpsc::channel,
-    thread,
     time::Duration,
 };
 
@@ -16,11 +15,7 @@ use crate::{
     list,
 };
 
-use self::{
-    notify_event::NotifyEventHandler,
-    state::WatchState,
-    terminal_event::{terminal_event_handler, InputEvent},
-};
+use self::{notify_event::NotifyEventHandler, state::WatchState, terminal_event::InputEvent};
 
 mod notify_event;
 mod state;
@@ -47,7 +42,7 @@ fn run_watch(
     app_state: &mut AppState,
     notify_exercise_names: Option<&'static [&'static [u8]]>,
 ) -> Result<WatchExit> {
-    let (tx, rx) = channel();
+    let (watch_event_sender, watch_event_receiver) = channel();
 
     let mut manual_run = false;
     // Prevent dropping the guard until the end of the function.
@@ -56,7 +51,7 @@ fn run_watch(
         let mut debouncer = new_debouncer(
             Duration::from_millis(200),
             NotifyEventHandler {
-                tx: tx.clone(),
+                sender: watch_event_sender.clone(),
                 exercise_names,
             },
         )
@@ -72,16 +67,12 @@ fn run_watch(
         None
     };
 
-    let mut watch_state = WatchState::build(app_state, manual_run)?;
-
+    let mut watch_state = WatchState::build(app_state, watch_event_sender, manual_run)?;
     let mut stdout = io::stdout().lock();
+
     watch_state.run_current_exercise(&mut stdout)?;
 
-    thread::Builder::new()
-        .spawn(move || terminal_event_handler(tx, manual_run))
-        .context("Failed to spawn a thread to handle terminal events")?;
-
-    while let Ok(event) = rx.recv() {
+    while let Ok(event) = watch_event_receiver.recv() {
         match event {
             WatchEvent::Input(InputEvent::Next) => match watch_state.next_exercise(&mut stdout)? {
                 ExercisesProgress::AllDone => break,

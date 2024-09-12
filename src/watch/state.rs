@@ -5,13 +5,22 @@ use crossterm::{
     },
     terminal, QueueableCommand,
 };
-use std::io::{self, StdoutLock, Write};
+use std::{
+    io::{self, StdoutLock, Write},
+    sync::mpsc::Sender,
+    thread,
+};
 
 use crate::{
     app_state::{AppState, ExercisesProgress},
     clear_terminal,
     exercise::{solution_link_line, RunnableExercise, OUTPUT_CAPACITY},
     term::progress_bar,
+};
+
+use super::{
+    terminal_event::{terminal_event_handler, InputPauseGuard},
+    WatchEvent,
 };
 
 #[derive(PartialEq, Eq)]
@@ -31,10 +40,18 @@ pub struct WatchState<'a> {
 }
 
 impl<'a> WatchState<'a> {
-    pub fn build(app_state: &'a mut AppState, manual_run: bool) -> Result<Self> {
+    pub fn build(
+        app_state: &'a mut AppState,
+        watch_event_sender: Sender<WatchEvent>,
+        manual_run: bool,
+    ) -> Result<Self> {
         let term_width = terminal::size()
             .context("Failed to get the terminal size")?
             .0;
+
+        thread::Builder::new()
+            .spawn(move || terminal_event_handler(watch_event_sender, manual_run))
+            .context("Failed to spawn a thread to handle terminal events")?;
 
         Ok(Self {
             app_state,
@@ -47,6 +64,9 @@ impl<'a> WatchState<'a> {
     }
 
     pub fn run_current_exercise(&mut self, stdout: &mut StdoutLock) -> Result<()> {
+        // Ignore any input until running the exercise is done.
+        let _input_pause_guard = InputPauseGuard::scoped_pause();
+
         self.show_hint = false;
 
         writeln!(

@@ -4,7 +4,7 @@ use std::sync::mpsc::Sender;
 use super::WatchEvent;
 
 pub struct NotifyEventHandler {
-    pub tx: Sender<WatchEvent>,
+    pub sender: Sender<WatchEvent>,
     /// Used to report which exercise was modified.
     pub exercise_names: &'static [&'static [u8]],
 }
@@ -47,6 +47,6 @@ impl notify_debouncer_mini::DebounceEventHandler for NotifyEventHandler {
 
         // An error occurs when the receiver is dropped.
         // After dropping the receiver, the debouncer guard should also be dropped.
-        let _ = self.tx.send(output_event);
+        let _ = self.sender.send(output_event);
     }
 }
