@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 #[derive(PartialEq, Debug)]
 enum CreationError {
     Negative,

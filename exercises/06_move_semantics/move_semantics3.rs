@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 // TODO: Fix the compiler error in the function without adding any new line.
 fn fill_vec(vec: Vec<i32>) -> Vec<i32> {
     vec.push(88);

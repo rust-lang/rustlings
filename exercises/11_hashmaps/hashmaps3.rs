@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 // A list of scores (one per line) of a soccer match is given. Each line is of
 // the form "<team_1_name>,<team_2_name>,<team_1_goals>,<team_2_goals>"
 // Example: "England,France,4,2" (England scored 4 goals, France 2).

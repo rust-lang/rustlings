@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 // This quiz tests:
 // - Generics
 // - Traits

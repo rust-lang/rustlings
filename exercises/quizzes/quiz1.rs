@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 // This is a quiz for the following sections:
 // - Variables
 // - Functions

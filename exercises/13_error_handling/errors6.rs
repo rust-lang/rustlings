@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 // Using catch-all error types like `Box<dyn Error>` isn't recommended for
 // library code where callers might want to make decisions based on the error
 // content instead of printing it out or propagating it further. Here, we define

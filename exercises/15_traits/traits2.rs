@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 trait AppendBar {
     fn append_bar(self) -> Self;
 }

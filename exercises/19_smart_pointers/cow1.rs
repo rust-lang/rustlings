@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 // This exercise explores the `Cow` (Clone-On-Write) smart pointer. It can
 // enclose and provide immutable access to borrowed data and clone the data
 // lazily when mutation or ownership is required. The type is designed to work

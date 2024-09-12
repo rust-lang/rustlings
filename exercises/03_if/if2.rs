@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 // TODO: Fix the compiler error on this function.
 fn foo_if_fizz(fizzish: &str) -> &str {
     if fizzish == "fizz" {

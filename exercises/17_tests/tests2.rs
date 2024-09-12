@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 // Calculates the power of 2 using a bit shift.
 // `1 << n` is equivalent to "2 to the power of n".
 fn power_of_2(n: u8) -> u64 {
