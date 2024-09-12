@@ -131,7 +131,7 @@ pub trait RunnableExercise {
 
         let mut clippy_cmd = cmd_runner.cargo("clippy", bin_name, output.as_deref_mut());
 
-        // `--profile test` is required to also check code with `[cfg(test)]`.
+        // `--profile test` is required to also check code with `#[cfg(test)]`.
         if FORCE_STRICT_CLIPPY || self.strict_clippy() {
             clippy_cmd.args(["--profile", "test", "--", "-D", "warnings"]);
         } else {
