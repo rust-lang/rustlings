@@ -130,6 +130,9 @@ pub fn init() -> Result<()> {
     fs::write("Cargo.toml", updated_cargo_toml)
         .context("Failed to create the file `rustlings/Cargo.toml`")?;
 
+    fs::write("rust-analyzer.toml", RATOML)
+        .context("Failed to create the file `rustlings/rust-analyzer.toml`")?;
+
     fs::write(".gitignore", GITIGNORE)
         .context("Failed to create the file `rustlings/.gitignore`")?;
 
@@ -168,6 +171,11 @@ const INIT_SOLUTION_FILE: &[u8] = b"fn main() {
     // It will be automatically filled after you finish the exercise.
 }
 ";
+
+const RATOML: &[u8] = br#"# rust-analyzer configuration file
+# DO NOT edit what is already defined.
+# You may add new configurations as needed.
+check.extraArgs = ["--profile", "test"]"#;
 
 const GITIGNORE: &[u8] = b"Cargo.lock
 target/
