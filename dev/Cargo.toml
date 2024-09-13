@@ -203,19 +203,21 @@ panic = "abort"
 panic = "abort"
 
 [lints.rust]
-# You shouldn't write unsafe code in Rustlings
+# You shouldn't write unsafe code in Rustlings!
 unsafe_code = "forbid"
-# You don't need unstable features in Rustlings and shouldn't rely on them while learning Rust
+# You don't need unstable features in Rustlings and shouldn't rely on them while learning Rust.
 unstable_features = "forbid"
 
 [lints.clippy]
-# You forgot a `todo!()`
+# You forgot a `todo!()`!
 todo = "forbid"
-# This can only happen by mistake in Rustlings
+# This can only happen by mistake in Rustlings.
 empty_loop = "forbid"
-# No infinite loops are needed in Rustlings
+# No infinite loops are needed in Rustlings.
 infinite_loop = "deny"
-# You shouldn't leak memory while still learning Rust
+# You shouldn't leak memory while still learning Rust!
 mem_forget = "deny"
+# Dead code warnings can't be avoided in some exercises and might distract while learning.
+dead_code = "allow"
 # Currently, there are no disallowed methods. This line avoids problems when developing Rustlings.
 disallowed_methods = "allow"
