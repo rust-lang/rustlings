@@ -1,10 +1,10 @@
-fn foo_if_fizz(fizzish: &str) -> &str {
-    if fizzish == "fizz" {
-        "foo"
-    } else if fizzish == "fuzz" {
-        "bar"
+fn picky_eater(food: &str) -> &str {
+    if food == "strawberry" {
+        "Yummy!"
+    } else if food == "potato" {
+        "I guess I can eat that."
     } else {
-        "baz"
+        "No thanks!"
     }
 }
 
@@ -17,17 +17,19 @@ mod tests {
     use super::*;
 
     #[test]
-    fn foo_for_fizz() {
-        assert_eq!(foo_if_fizz("fizz"), "foo");
+    fn yummy_food() {
+        assert_eq!(picky_eater("strawberry"), "Yummy!");
     }
 
     #[test]
-    fn bar_for_fuzz() {
-        assert_eq!(foo_if_fizz("fuzz"), "bar");
+    fn neutral_food() {
+        assert_eq!(picky_eater("potato"), "I guess I can eat that.");
     }
 
     #[test]
-    fn default_to_baz() {
-        assert_eq!(foo_if_fizz("literally anything"), "baz");
+    fn default_disliked_food() {
+        assert_eq!(picky_eater("broccoli"), "No thanks!");
+        assert_eq!(picky_eater("gummy bears"), "No thanks!");
+        assert_eq!(picky_eater("literally anything"), "No thanks!");
     }
 }
