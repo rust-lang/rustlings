@@ -122,7 +122,7 @@ dir = "01_variables"
 test = false
 hint = """
 We know about variables and mutability, but there is another important type of
-variables available: constants.
+variable available: constants.
 
 Constants are always immutable. They are declared with the keyword `const`
 instead of `let`.
