@@ -100,14 +100,10 @@ impl<'a> WatchState<'a> {
         exercise_ind: usize,
         stdout: &mut StdoutLock,
     ) -> Result<()> {
-        // Don't skip exercises on file changes to avoid confusion from missing exercises.
-        // Skipping exercises must be explicit in the interactive list.
-        // But going back to an earlier exercise on file change is fine.
-        if self.app_state.current_exercise_ind() < exercise_ind {
+        if self.app_state.current_exercise_ind() != exercise_ind {
             return Ok(());
         }
 
-        self.app_state.set_current_exercise_ind(exercise_ind)?;
         self.run_current_exercise(stdout)
     }
 
