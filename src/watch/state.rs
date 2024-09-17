@@ -18,10 +18,7 @@ use crate::{
     term::progress_bar,
 };
 
-use super::{
-    terminal_event::{terminal_event_handler, InputPauseGuard},
-    WatchEvent,
-};
+use super::{terminal_event::terminal_event_handler, InputPauseGuard, WatchEvent};
 
 #[derive(PartialEq, Eq)]
 enum DoneStatus {

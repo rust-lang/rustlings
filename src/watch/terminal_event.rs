@@ -1,31 +1,7 @@
 use crossterm::event::{self, Event, KeyCode, KeyEventKind};
-use std::sync::{
-    atomic::{AtomicBool, Ordering::Relaxed},
-    mpsc::Sender,
-};
+use std::sync::{atomic::Ordering::Relaxed, mpsc::Sender};
 
-use super::WatchEvent;
-
-static INPUT_PAUSED: AtomicBool = AtomicBool::new(false);
-
-// Private unit type to force using the constructor function.
-#[must_use = "When the guard is dropped, the input is unpaused"]
-pub struct InputPauseGuard(());
-
-impl InputPauseGuard {
-    #[inline]
-    pub fn scoped_pause() -> Self {
-        INPUT_PAUSED.store(true, Relaxed);
-        Self(())
-    }
-}
-
-impl Drop for InputPauseGuard {
-    #[inline]
-    fn drop(&mut self) {
-        INPUT_PAUSED.store(false, Relaxed);
-    }
-}
+use super::{WatchEvent, EXERCISE_RUNNING};
 
 pub enum InputEvent {
     Run,
@@ -44,7 +20,7 @@ pub fn terminal_event_handler(sender: Sender<WatchEvent>, manual_run: bool) {
                     KeyEventKind::Press => (),
                 }
 
-                if INPUT_PAUSED.load(Relaxed) {
+                if EXERCISE_RUNNING.load(Relaxed) {
                     continue;
                 }
 

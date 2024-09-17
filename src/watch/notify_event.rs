@@ -1,7 +1,10 @@
-use notify_debouncer_mini::{DebounceEventResult, DebouncedEventKind};
-use std::sync::mpsc::Sender;
+use notify::{
+    event::{MetadataKind, ModifyKind},
+    Event, EventKind,
+};
+use std::sync::{atomic::Ordering::Relaxed, mpsc::Sender};
 
-use super::WatchEvent;
+use super::{WatchEvent, EXERCISE_RUNNING};
 
 pub struct NotifyEventHandler {
     pub sender: Sender<WatchEvent>,
@@ -9,44 +12,56 @@ pub struct NotifyEventHandler {
     pub exercise_names: &'static [&'static [u8]],
 }
 
-impl notify_debouncer_mini::DebounceEventHandler for NotifyEventHandler {
-    fn handle_event(&mut self, input_event: DebounceEventResult) {
-        let output_event = match input_event {
-            Ok(input_event) => {
-                let Some(exercise_ind) = input_event
-                    .iter()
-                    .filter_map(|input_event| {
-                        if input_event.kind != DebouncedEventKind::Any {
-                            return None;
-                        }
+impl notify::EventHandler for NotifyEventHandler {
+    fn handle_event(&mut self, input_event: notify::Result<Event>) {
+        if EXERCISE_RUNNING.load(Relaxed) {
+            return;
+        }
 
-                        let file_name = input_event.path.file_name()?.to_str()?.as_bytes();
-
-                        if file_name.len() < 4 {
-                            return None;
-                        }
-                        let (file_name_without_ext, ext) = file_name.split_at(file_name.len() - 3);
-
-                        if ext != b".rs" {
-                            return None;
-                        }
-
-                        self.exercise_names
-                            .iter()
-                            .position(|exercise_name| *exercise_name == file_name_without_ext)
-                    })
-                    .min()
-                else {
-                    return;
-                };
-
-                WatchEvent::FileChange { exercise_ind }
+        let input_event = match input_event {
+            Ok(v) => v,
+            Err(e) => {
+                // An error occurs when the receiver is dropped.
+                // After dropping the receiver, the debouncer guard should also be dropped.
+                let _ = self.sender.send(WatchEvent::NotifyErr(e));
+                return;
             }
-            Err(e) => WatchEvent::NotifyErr(e),
         };
 
-        // An error occurs when the receiver is dropped.
-        // After dropping the receiver, the debouncer guard should also be dropped.
-        let _ = self.sender.send(output_event);
+        match input_event.kind {
+            EventKind::Any => (),
+            EventKind::Modify(modify_kind) => match modify_kind {
+                ModifyKind::Any | ModifyKind::Data(_) => (),
+                ModifyKind::Metadata(metadata_kind) => match metadata_kind {
+                    MetadataKind::Any | MetadataKind::WriteTime => (),
+                    MetadataKind::AccessTime
+                    | MetadataKind::Permissions
+                    | MetadataKind::Ownership
+                    | MetadataKind::Extended
+                    | MetadataKind::Other => return,
+                },
+                ModifyKind::Name(_) | ModifyKind::Other => return,
+            },
+            EventKind::Access(_)
+            | EventKind::Create(_)
+            | EventKind::Remove(_)
+            | EventKind::Other => return,
+        }
+
+        let _ = input_event
+            .paths
+            .into_iter()
+            .filter_map(|path| {
+                let file_name = path.file_name()?.to_str()?.as_bytes();
+
+                let [file_name_without_ext @ .., b'.', b'r', b's'] = file_name else {
+                    return None;
+                };
+
+                self.exercise_names
+                    .iter()
+                    .position(|exercise_name| *exercise_name == file_name_without_ext)
+            })
+            .try_for_each(|exercise_ind| self.sender.send(WatchEvent::FileChange { exercise_ind }));
     }
 }

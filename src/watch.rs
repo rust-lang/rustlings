@@ -1,12 +1,12 @@
 use anyhow::{Error, Result};
-use notify_debouncer_mini::{
-    new_debouncer,
-    notify::{self, RecursiveMode},
-};
+use notify::{Config, RecommendedWatcher, RecursiveMode, Watcher};
 use std::{
     io::{self, Write},
     path::Path,
-    sync::mpsc::channel,
+    sync::{
+        atomic::{AtomicBool, Ordering::Relaxed},
+        mpsc::channel,
+    },
     time::Duration,
 };
 
@@ -20,6 +20,27 @@ use self::{notify_event::NotifyEventHandler, state::WatchState, terminal_event::
 mod notify_event;
 mod state;
 mod terminal_event;
+
+static EXERCISE_RUNNING: AtomicBool = AtomicBool::new(false);
+
+// Private unit type to force using the constructor function.
+#[must_use = "When the guard is dropped, the input is unpaused"]
+pub struct InputPauseGuard(());
+
+impl InputPauseGuard {
+    #[inline]
+    pub fn scoped_pause() -> Self {
+        EXERCISE_RUNNING.store(true, Relaxed);
+        Self(())
+    }
+}
+
+impl Drop for InputPauseGuard {
+    #[inline]
+    fn drop(&mut self) {
+        EXERCISE_RUNNING.store(false, Relaxed);
+    }
+}
 
 enum WatchEvent {
     Input(InputEvent),
@@ -47,21 +68,21 @@ fn run_watch(
     let mut manual_run = false;
     // Prevent dropping the guard until the end of the function.
     // Otherwise, the file watcher exits.
-    let _debouncer_guard = if let Some(exercise_names) = notify_exercise_names {
-        let mut debouncer = new_debouncer(
-            Duration::from_millis(200),
+    let _watcher_guard = if let Some(exercise_names) = notify_exercise_names {
+        let mut watcher = RecommendedWatcher::new(
             NotifyEventHandler {
                 sender: watch_event_sender.clone(),
                 exercise_names,
             },
+            Config::default().with_poll_interval(Duration::from_secs(1)),
         )
         .inspect_err(|_| eprintln!("{NOTIFY_ERR}"))?;
-        debouncer
-            .watcher()
+
+        watcher
             .watch(Path::new("exercises"), RecursiveMode::Recursive)
             .inspect_err(|_| eprintln!("{NOTIFY_ERR}"))?;
 
-        Some(debouncer)
+        Some(watcher)
     } else {
         manual_run = true;
         None

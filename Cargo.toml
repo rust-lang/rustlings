@@ -50,7 +50,7 @@ ahash = { version = "0.8.11", default-features = false }
 anyhow = "1.0.89"
 clap = { version = "4.5.17", features = ["derive"] }
 crossterm = { version = "0.28.1", default-features = false, features = ["windows", "events"] }
-notify-debouncer-mini = { version = "0.4.1", default-features = false }
+notify = { version = "6.1.1", default-features = false, features = ["macos_fsevent"] }
 os_pipe = "1.2.1"
 rustlings-macros = { path = "rustlings-macros", version = "=6.3.0" }
 serde_json = "1.0.128"
