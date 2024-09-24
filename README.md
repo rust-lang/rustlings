@@ -139,6 +139,10 @@ Do you want to create your own set of Rustlings exercises to focus on some speci
 Or do you want to translate the original Rustlings exercises?
 Then follow the link to the guide about [third-party exercises](https://github.com/rust-lang/rustlings/blob/main/THIRD_PARTY_EXERCISES.md)!
 
+### Third-Party List
+
+- [日本語版 Rustlings](https://github.com/sotanengel/rustlings-jp)：A Japanese translation of the Rustlings exercise.
+
 ## Uninstalling Rustlings
 
 If you want to remove Rustlings from your system, run the following command:
