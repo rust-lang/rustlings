@@ -113,7 +113,7 @@ impl<'a> WatchState<'a> {
             return Ok(ExercisesProgress::CurrentPending);
         }
 
-        self.app_state.done_current_exercise(stdout)
+        self.app_state.done_current_exercise::<true>(stdout)
     }
 
     fn show_prompt(&self, stdout: &mut StdoutLock) -> io::Result<()> {
