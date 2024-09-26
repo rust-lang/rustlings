@@ -1144,7 +1144,7 @@ constants, but clippy recognizes those imprecise mathematical constants as a
 source of potential error.
 
 See the suggestions of the Clippy warning in the compile output and use the
-appropriate replacement constant from `std::f32::consts`..."""
+appropriate replacement constant from `std::f32::consts`."""
 
 [[exercises]]
 name = "clippy2"
