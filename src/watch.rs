@@ -69,11 +69,11 @@ fn run_watch(
     // Prevent dropping the guard until the end of the function.
     // Otherwise, the file watcher exits.
     let _watcher_guard = if let Some(exercise_names) = notify_exercise_names {
+        let notify_event_handler =
+            NotifyEventHandler::build(watch_event_sender.clone(), exercise_names)?;
+
         let mut watcher = RecommendedWatcher::new(
-            NotifyEventHandler {
-                sender: watch_event_sender.clone(),
-                exercise_names,
-            },
+            notify_event_handler,
             Config::default().with_poll_interval(Duration::from_secs(1)),
         )
         .inspect_err(|_| eprintln!("{NOTIFY_ERR}"))?;
