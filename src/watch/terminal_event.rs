@@ -1,17 +1,25 @@
 use crossterm::event::{self, Event, KeyCode, KeyEventKind};
-use std::sync::{atomic::Ordering::Relaxed, mpsc::Sender};
+use std::sync::{
+    atomic::Ordering::Relaxed,
+    mpsc::{Receiver, Sender},
+};
 
 use super::{WatchEvent, EXERCISE_RUNNING};
 
 pub enum InputEvent {
-    Run,
     Next,
+    Run,
     Hint,
     List,
+    Reset,
     Quit,
 }
 
-pub fn terminal_event_handler(sender: Sender<WatchEvent>, manual_run: bool) {
+pub fn terminal_event_handler(
+    sender: Sender<WatchEvent>,
+    unpause_receiver: Receiver<()>,
+    manual_run: bool,
+) {
     let last_watch_event = loop {
         match event::read() {
             Ok(Event::Key(key)) => {
@@ -26,10 +34,22 @@ pub fn terminal_event_handler(sender: Sender<WatchEvent>, manual_run: bool) {
 
                 let input_event = match key.code {
                     KeyCode::Char('n') => InputEvent::Next,
+                    KeyCode::Char('r') if manual_run => InputEvent::Run,
                     KeyCode::Char('h') => InputEvent::Hint,
                     KeyCode::Char('l') => break WatchEvent::Input(InputEvent::List),
+                    KeyCode::Char('x') => {
+                        if sender.send(WatchEvent::Input(InputEvent::Reset)).is_err() {
+                            return;
+                        }
+
+                        // Pause input until quitting the confirmation prompt.
+                        if unpause_receiver.recv().is_err() {
+                            return;
+                        };
+
+                        continue;
+                    }
                     KeyCode::Char('q') => break WatchEvent::Input(InputEvent::Quit),
-                    KeyCode::Char('r') if manual_run => InputEvent::Run,
                     _ => continue,
                 };
 
