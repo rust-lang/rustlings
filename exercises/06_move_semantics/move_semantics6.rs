@@ -9,18 +9,16 @@
 // Execute `rustlings hint move_semantics7` or use the `hint` watch subcommand
 // for a hint.
 
-// I AM NOT DONE
-
 fn main() {
   let mut counter = 0;
 
   let mut increment = || {
     counter += 1;
-    println!("counter: {}", counter);
+    println!("counter equals {}", counter);
   };
 
   increment();
-  let _reborrowed_counter = &counter;
+  let _reborrowed_counter = &counter; // TODO: figure out where to put this borrowing instruction
   increment();
 
   assert_eq!(counter, 2);
