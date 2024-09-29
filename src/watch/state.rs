@@ -6,8 +6,8 @@ use crossterm::{
     terminal, QueueableCommand,
 };
 use std::{
-    io::{self, StdoutLock, Write},
-    sync::mpsc::Sender,
+    io::{self, Read, StdoutLock, Write},
+    sync::mpsc::{sync_channel, Sender, SyncSender},
     thread,
 };
 
@@ -34,6 +34,7 @@ pub struct WatchState<'a> {
     done_status: DoneStatus,
     manual_run: bool,
     term_width: u16,
+    terminal_event_unpause_sender: SyncSender<()>,
 }
 
 impl<'a> WatchState<'a> {
@@ -46,8 +47,16 @@ impl<'a> WatchState<'a> {
             .context("Failed to get the terminal size")?
             .0;
 
+        let (terminal_event_unpause_sender, terminal_event_unpause_receiver) = sync_channel(0);
+
         thread::Builder::new()
-            .spawn(move || terminal_event_handler(watch_event_sender, manual_run))
+            .spawn(move || {
+                terminal_event_handler(
+                    watch_event_sender,
+                    terminal_event_unpause_receiver,
+                    manual_run,
+                )
+            })
             .context("Failed to spawn a thread to handle terminal events")?;
 
         Ok(Self {
@@ -57,6 +66,7 @@ impl<'a> WatchState<'a> {
             done_status: DoneStatus::Pending,
             manual_run,
             term_width,
+            terminal_event_unpause_sender,
         })
     }
 
@@ -95,6 +105,44 @@ impl<'a> WatchState<'a> {
         Ok(())
     }
 
+    pub fn reset_exercise(&mut self, stdout: &mut StdoutLock) -> Result<()> {
+        clear_terminal(stdout)?;
+
+        stdout.write_all(b"Resetting will undo all your changes to the file ")?;
+        stdout.write_all(self.app_state.current_exercise().path.as_bytes())?;
+        stdout.write_all(b"\nReset (y/n)? ")?;
+        stdout.flush()?;
+
+        {
+            let mut stdin = io::stdin().lock();
+            let mut answer = [0];
+            loop {
+                stdin
+                    .read_exact(&mut answer)
+                    .context("Failed to read the user's input")?;
+
+                match answer[0] {
+                    b'y' | b'Y' => {
+                        self.app_state.reset_current_exercise()?;
+
+                        // The file watcher reruns the exercise otherwise.
+                        if self.manual_run {
+                            self.run_current_exercise(stdout)?;
+                        }
+                    }
+                    b'n' | b'N' => self.render(stdout)?,
+                    _ => continue,
+                }
+
+                break;
+            }
+        }
+
+        self.terminal_event_unpause_sender.send(())?;
+
+        Ok(())
+    }
+
     pub fn handle_file_change(
         &mut self,
         exercise_ind: usize,
@@ -113,17 +161,10 @@ impl<'a> WatchState<'a> {
             return Ok(ExercisesProgress::CurrentPending);
         }
 
-        self.app_state.done_current_exercise(stdout)
+        self.app_state.done_current_exercise::<true>(stdout)
     }
 
     fn show_prompt(&self, stdout: &mut StdoutLock) -> io::Result<()> {
-        if self.manual_run {
-            stdout.queue(SetAttribute(Attribute::Bold))?;
-            stdout.write_all(b"r")?;
-            stdout.queue(ResetColor)?;
-            stdout.write_all(b":run / ")?;
-        }
-
         if self.done_status != DoneStatus::Pending {
             stdout.queue(SetAttribute(Attribute::Bold))?;
             stdout.write_all(b"n")?;
@@ -133,6 +174,13 @@ impl<'a> WatchState<'a> {
             stdout.write_all(b"next")?;
             stdout.queue(ResetColor)?;
             stdout.write_all(b" / ")?;
+        }
+
+        if self.manual_run {
+            stdout.queue(SetAttribute(Attribute::Bold))?;
+            stdout.write_all(b"r")?;
+            stdout.queue(ResetColor)?;
+            stdout.write_all(b":run / ")?;
         }
 
         if !self.show_hint {
@@ -146,6 +194,11 @@ impl<'a> WatchState<'a> {
         stdout.write_all(b"l")?;
         stdout.queue(ResetColor)?;
         stdout.write_all(b":list / ")?;
+
+        stdout.queue(SetAttribute(Attribute::Bold))?;
+        stdout.write_all(b"x")?;
+        stdout.queue(ResetColor)?;
+        stdout.write_all(b":reset / ")?;
 
         stdout.queue(SetAttribute(Attribute::Bold))?;
         stdout.write_all(b"q")?;

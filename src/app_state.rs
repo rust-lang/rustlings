@@ -381,7 +381,7 @@ impl AppState {
 
     // Return the exercise index of the first pending exercise found.
     fn check_all_exercises(&self, stdout: &mut StdoutLock) -> Result<Option<usize>> {
-        stdout.write_all(RERUNNING_ALL_EXERCISES_MSG)?;
+        stdout.write_all(FINAL_CHECK_MSG)?;
         let n_exercises = self.exercises.len();
 
         let status = thread::scope(|s| {
@@ -441,7 +441,10 @@ impl AppState {
     /// Mark the current exercise as done and move on to the next pending exercise if one exists.
     /// If all exercises are marked as done, run all of them to make sure that they are actually
     /// done. If an exercise which is marked as done fails, mark it as pending and continue on it.
-    pub fn done_current_exercise(&mut self, stdout: &mut StdoutLock) -> Result<ExercisesProgress> {
+    pub fn done_current_exercise<const CLEAR_BEFORE_FINAL_CHECK: bool>(
+        &mut self,
+        stdout: &mut StdoutLock,
+    ) -> Result<ExercisesProgress> {
         let exercise = &mut self.exercises[self.current_exercise_ind];
         if !exercise.done {
             exercise.done = true;
@@ -451,6 +454,12 @@ impl AppState {
         if let Some(ind) = self.next_pending_exercise_ind() {
             self.set_current_exercise_ind(ind)?;
             return Ok(ExercisesProgress::NewPending);
+        }
+
+        if CLEAR_BEFORE_FINAL_CHECK {
+            clear_terminal(stdout)?;
+        } else {
+            stdout.write_all(b"\n")?;
         }
 
         if let Some(pending_exercise_ind) = self.check_all_exercises(stdout)? {
@@ -482,8 +491,7 @@ impl AppState {
 
 const BAD_INDEX_ERR: &str = "The current exercise index is higher than the number of exercises";
 const STATE_FILE_HEADER: &[u8] = b"DON'T EDIT THIS FILE!\n\n";
-const RERUNNING_ALL_EXERCISES_MSG: &[u8] = b"
-All exercises seem to be done.
+const FINAL_CHECK_MSG: &[u8] = b"All exercises seem to be done.
 Recompiling and running all exercises to make sure that all of them are actually done.
 ";
 const FENISH_LINE: &str = "+----------------------------------------------------+

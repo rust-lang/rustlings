@@ -20,7 +20,7 @@ rust-version = "1.80"
 
 [workspace.dependencies]
 serde = { version = "1.0.210", features = ["derive"] }
-toml_edit = { version = "0.22.21", default-features = false, features = ["parse", "serde"] }
+toml_edit = { version = "0.22.22", default-features = false, features = ["parse", "serde"] }
 
 [package]
 name = "rustlings"
@@ -48,7 +48,7 @@ include = [
 [dependencies]
 ahash = { version = "0.8.11", default-features = false }
 anyhow = "1.0.89"
-clap = { version = "4.5.17", features = ["derive"] }
+clap = { version = "4.5.18", features = ["derive"] }
 crossterm = { version = "0.28.1", default-features = false, features = ["windows", "events"] }
 notify = { version = "6.1.1", default-features = false, features = ["macos_fsevent"] }
 os_pipe = "1.2.1"

@@ -69,11 +69,11 @@ fn run_watch(
     // Prevent dropping the guard until the end of the function.
     // Otherwise, the file watcher exits.
     let _watcher_guard = if let Some(exercise_names) = notify_exercise_names {
+        let notify_event_handler =
+            NotifyEventHandler::build(watch_event_sender.clone(), exercise_names)?;
+
         let mut watcher = RecommendedWatcher::new(
-            NotifyEventHandler {
-                sender: watch_event_sender.clone(),
-                exercise_names,
-            },
+            notify_event_handler,
             Config::default().with_poll_interval(Duration::from_secs(1)),
         )
         .inspect_err(|_| eprintln!("{NOTIFY_ERR}"))?;
@@ -100,13 +100,14 @@ fn run_watch(
                 ExercisesProgress::NewPending => watch_state.run_current_exercise(&mut stdout)?,
                 ExercisesProgress::CurrentPending => (),
             },
+            WatchEvent::Input(InputEvent::Run) => watch_state.run_current_exercise(&mut stdout)?,
             WatchEvent::Input(InputEvent::Hint) => watch_state.show_hint(&mut stdout)?,
             WatchEvent::Input(InputEvent::List) => return Ok(WatchExit::List),
+            WatchEvent::Input(InputEvent::Reset) => watch_state.reset_exercise(&mut stdout)?,
             WatchEvent::Input(InputEvent::Quit) => {
                 stdout.write_all(QUIT_MSG)?;
                 break;
             }
-            WatchEvent::Input(InputEvent::Run) => watch_state.run_current_exercise(&mut stdout)?,
             WatchEvent::FileChange { exercise_ind } => {
                 watch_state.handle_file_change(exercise_ind, &mut stdout)?;
             }
