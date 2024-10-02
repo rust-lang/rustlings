@@ -1,4 +1,9 @@
 use anyhow::{bail, Context, Result};
+use crossterm::{
+    queue,
+    style::{Print, ResetColor, SetForegroundColor},
+    terminal,
+};
 use std::{
     env,
     fs::{File, OpenOptions},
@@ -16,7 +21,7 @@ use crate::{
     embedded::EMBEDDED_FILES,
     exercise::{Exercise, RunnableExercise},
     info_file::ExerciseInfo,
-    term,
+    term::{self, progress_bar_with_success},
 };
 
 const STATE_FILE_NAME: &str = ".rustlings-state.txt";
@@ -428,10 +433,16 @@ impl AppState {
                             // No more exercises
                             break;
                         };
-                        if tx
-                            .send((exercise_ind, exercise.run_exercise(None, &this.cmd_runner)))
-                            .is_err()
-                        {
+
+                        // Notify the progress bar that this exercise is pending
+                        if tx.send((exercise_ind, None)).is_err() {
+                            break;
+                        };
+
+                        let result = exercise.run_exercise(None, &this.cmd_runner);
+
+                        // Notify the progress bar that this exercise is done
+                        if tx.send((exercise_ind, Some(result))).is_err() {
                             break;
                         }
                     }
@@ -443,28 +454,68 @@ impl AppState {
             // there are `tx` clones, i.e. threads)
             drop(tx);
 
-            let mut results = vec![AllExercisesResult::Pending; n_exercises];
-            let mut checked_count = 0;
-            write!(stdout, "\rProgress: {checked_count}/{n_exercises}")?;
-            stdout.flush()?;
-            while let Ok((exercise_ind, result)) = rx.recv() {
-                results[exercise_ind] = result.map_or_else(
-                    |_| AllExercisesResult::Error,
-                    |success| {
-                        checked_count += 1;
-                        if success {
-                            AllExercisesResult::Success
-                        } else {
-                            AllExercisesResult::Failed
-                        }
-                    },
-                );
+            // Print the legend
+            queue!(
+                stdout,
+                Print("Color legend:  "),
+                SetForegroundColor(term::PROGRESS_FAILED_COLOR),
+                Print("Failure"),
+                ResetColor,
+                Print("  -  "),
+                SetForegroundColor(term::PROGRESS_SUCCESS_COLOR),
+                Print("Success"),
+                ResetColor,
+                Print("  -  "),
+                SetForegroundColor(term::PROGRESS_PENDING_COLOR),
+                Print("Checking"),
+                ResetColor,
+                Print("\n"),
+            )
+            .unwrap();
+            // We expect at least a few "pending" notifications shortly, so don't
+            // bother printing the initial state of the progress bar and flushing
+            // stdout
 
-                write!(stdout, "\rProgress: {checked_count}/{n_exercises}")?;
+            let line_width = terminal::size().unwrap().0;
+            let mut results = vec![AllExercisesResult::Pending; n_exercises];
+            let mut pending = 0;
+            let mut success = 0;
+            let mut failed = 0;
+
+            while let Ok((exercise_ind, result)) = rx.recv() {
+                match result {
+                    None => {
+                        pending += 1;
+                    }
+                    Some(Err(_)) => {
+                        results[exercise_ind] = AllExercisesResult::Error;
+                    }
+                    Some(Ok(true)) => {
+                        results[exercise_ind] = AllExercisesResult::Success;
+                        pending -= 1;
+                        success += 1;
+                    }
+                    Some(Ok(false)) => {
+                        results[exercise_ind] = AllExercisesResult::Failed;
+                        pending -= 1;
+                        failed += 1;
+                    }
+                }
+
+                write!(stdout, "\r").unwrap();
+                progress_bar_with_success(
+                    stdout,
+                    pending,
+                    failed,
+                    success,
+                    n_exercises as u16,
+                    line_width,
+                )
+                .unwrap();
                 stdout.flush()?;
             }
 
-            Ok::<_, io::Error>((checked_count, results))
+            Ok::<_, io::Error>((success, results))
         })?;
 
         // If we got an error while checking all exercises in parallel,

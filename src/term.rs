@@ -9,6 +9,10 @@ use std::{
     io::{self, BufRead, StdoutLock, Write},
 };
 
+pub const PROGRESS_FAILED_COLOR: Color = Color::Red;
+pub const PROGRESS_SUCCESS_COLOR: Color = Color::Green;
+pub const PROGRESS_PENDING_COLOR: Color = Color::Blue;
+
 pub struct MaxLenWriter<'a, 'b> {
     pub stdout: &'a mut StdoutLock<'b>,
     len: usize,
@@ -85,15 +89,26 @@ impl<'a> CountedWrite<'a> for StdoutLock<'a> {
     }
 }
 
-/// Terminal progress bar to be used when not using Ratataui.
+/// Simple terminal progress bar
 pub fn progress_bar<'a>(
     writer: &mut impl CountedWrite<'a>,
     progress: u16,
     total: u16,
     line_width: u16,
 ) -> io::Result<()> {
+    progress_bar_with_success(writer, 0, 0, progress, total, line_width)
+}
+/// Terminal progress bar with three states (pending + failed + success)
+pub fn progress_bar_with_success<'a>(
+    writer: &mut impl CountedWrite<'a>,
+    pending: u16,
+    failed: u16,
+    success: u16,
+    total: u16,
+    line_width: u16,
+) -> io::Result<()> {
     debug_assert!(total < 1000);
-    debug_assert!(progress <= total);
+    debug_assert!((pending + failed + success) <= total);
 
     const PREFIX: &[u8] = b"Progress: [";
     const PREFIX_WIDTH: u16 = PREFIX.len() as u16;
@@ -104,25 +119,67 @@ pub fn progress_bar<'a>(
     if line_width < MIN_LINE_WIDTH {
         writer.write_ascii(b"Progress: ")?;
         // Integers are in ASCII.
-        return writer.write_ascii(format!("{progress}/{total}").as_bytes());
+        return writer.write_ascii(format!("{}/{total}", failed + success).as_bytes());
     }
 
     let stdout = writer.stdout();
     stdout.write_all(PREFIX)?;
 
     let width = line_width - WRAPPER_WIDTH;
-    let filled = (width * progress) / total;
+    let mut failed_end = (width * failed) / total;
+    let mut success_end = (width * (failed + success)) / total;
+    let mut pending_end = (width * (failed + success + pending)) / total;
 
-    stdout.queue(SetForegroundColor(Color::Green))?;
-    for _ in 0..filled {
+    // In case the range boundaries overlap, "pending" has priority over both
+    // "failed" and "success" (don't show the bar as "complete" when we are
+    // still checking some things).
+    // "Failed" has priority over "success" (don't show 100% success if we
+    // have some failures, at the risk of showing 100% failures even with
+    // a few successes).
+    //
+    // "Failed" already has priority over "success" because it's displayed
+    // first. But "pending" is last so we need to fix "success"/"failed".
+    if pending > 0 {
+        pending_end = pending_end.max(1);
+        if pending_end == success_end {
+            success_end -= 1;
+        }
+        if pending_end == failed_end {
+            failed_end -= 1;
+        }
+
+        // This will replace the last character of the "pending" range with
+        // the arrow char ('>'). This ensures that even if the progress bar
+        // is filled (everything either done or pending), we'll still see
+        // the '>' as long as we are not fully done.
+        pending_end -= 1;
+    }
+
+    if failed > 0 {
+        stdout.queue(SetForegroundColor(PROGRESS_FAILED_COLOR))?;
+        for _ in 0..failed_end {
+            stdout.write_all(b"#")?;
+        }
+    }
+
+    stdout.queue(SetForegroundColor(PROGRESS_SUCCESS_COLOR))?;
+    for _ in failed_end..success_end {
         stdout.write_all(b"#")?;
     }
 
-    if filled < width {
+    if pending > 0 {
+        stdout.queue(SetForegroundColor(PROGRESS_PENDING_COLOR))?;
+
+        for _ in success_end..pending_end {
+            stdout.write_all(b"#")?;
+        }
+    }
+
+    if pending_end < width {
         stdout.write_all(b">")?;
     }
 
-    let width_minus_filled = width - filled;
+    let width_minus_filled = width - pending_end;
     if width_minus_filled > 1 {
         let red_part_width = width_minus_filled - 1;
         stdout.queue(SetForegroundColor(Color::Red))?;
@@ -133,7 +190,7 @@ pub fn progress_bar<'a>(
 
     stdout.queue(SetForegroundColor(Color::Reset))?;
 
-    write!(stdout, "] {progress:>3}/{total}")
+    write!(stdout, "] {:>3}/{}", failed + success, total)
 }
 
 pub fn clear_terminal(stdout: &mut StdoutLock) -> io::Result<()> {
