@@ -396,8 +396,16 @@ impl AppState {
     }
 
     // Return the exercise index of the first pending exercise found.
-    fn check_all_exercises(&mut self, stdout: &mut StdoutLock) -> Result<Option<usize>> {
-        stdout.write_all(FINAL_CHECK_MSG)?;
+    pub fn check_all_exercises(
+        &mut self,
+        stdout: &mut StdoutLock,
+        final_check: bool,
+    ) -> Result<Option<usize>> {
+        if !final_check {
+            stdout.write_all(INTERMEDIATE_CHECK_MSG)?;
+        } else {
+            stdout.write_all(FINAL_CHECK_MSG)?;
+        }
         let n_exercises = self.exercises.len();
 
         let (mut checked_count, mut results) = thread::scope(|s| {
@@ -513,7 +521,7 @@ impl AppState {
             stdout.write_all(b"\n")?;
         }
 
-        if let Some(pending_exercise_ind) = self.check_all_exercises(stdout)? {
+        if let Some(pending_exercise_ind) = self.check_all_exercises(stdout, true)? {
             stdout.write_all(b"\n\n")?;
 
             self.current_exercise_ind = pending_exercise_ind;
@@ -525,6 +533,12 @@ impl AppState {
         // Write that the last exercise is done.
         self.write()?;
 
+        self.render_final_message(stdout)?;
+
+        Ok(ExercisesProgress::AllDone)
+    }
+
+    pub fn render_final_message(&self, stdout: &mut StdoutLock) -> Result<()> {
         clear_terminal(stdout)?;
         stdout.write_all(FENISH_LINE.as_bytes())?;
 
@@ -534,12 +548,14 @@ impl AppState {
             stdout.write_all(b"\n")?;
         }
 
-        Ok(ExercisesProgress::AllDone)
+        Ok(())
     }
 }
 
 const BAD_INDEX_ERR: &str = "The current exercise index is higher than the number of exercises";
 const STATE_FILE_HEADER: &[u8] = b"DON'T EDIT THIS FILE!\n\n";
+const INTERMEDIATE_CHECK_MSG: &[u8] = b"Checking all exercises
+";
 const FINAL_CHECK_MSG: &[u8] = b"All exercises seem to be done.
 Recompiling and running all exercises to make sure that all of them are actually done.
 ";

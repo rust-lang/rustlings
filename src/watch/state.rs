@@ -196,6 +196,11 @@ impl<'a> WatchState<'a> {
         stdout.write_all(b":list / ")?;
 
         stdout.queue(SetAttribute(Attribute::Bold))?;
+        stdout.write_all(b"c")?;
+        stdout.queue(ResetColor)?;
+        stdout.write_all(b":check all / ")?;
+
+        stdout.queue(SetAttribute(Attribute::Bold))?;
         stdout.write_all(b"x")?;
         stdout.queue(ResetColor)?;
         stdout.write_all(b":reset / ")?;
@@ -272,6 +277,23 @@ impl<'a> WatchState<'a> {
         }
 
         Ok(())
+    }
+
+    pub fn check_all_exercises(&mut self, stdout: &mut StdoutLock) -> Result<ExercisesProgress> {
+        stdout.write_all(b"\n")?;
+
+        if let Some(first_fail) = self.app_state.check_all_exercises(stdout, false)? {
+            // Only change exercise if the current one is done...
+            if self.app_state.current_exercise().done {
+                self.app_state.set_current_exercise_ind(first_fail)?;
+            }
+            // ...but always pretend it's a "new" anyway because that refreshes
+            // the display
+            Ok(ExercisesProgress::NewPending)
+        } else {
+            self.app_state.render_final_message(stdout)?;
+            Ok(ExercisesProgress::AllDone)
+        }
     }
 
     pub fn update_term_width(&mut self, width: u16, stdout: &mut StdoutLock) -> io::Result<()> {
