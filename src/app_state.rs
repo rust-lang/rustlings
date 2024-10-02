@@ -35,10 +35,12 @@ pub enum StateFileStatus {
     NotRead,
 }
 
-enum AllExercisesCheck {
-    Pending(usize),
-    AllDone,
-    CheckedUntil(usize),
+#[derive(Clone, Copy, PartialEq)]
+enum AllExercisesResult {
+    Pending,
+    Success,
+    Failed,
+    Error,
 }
 
 pub struct AppState {
@@ -270,18 +272,32 @@ impl AppState {
         self.write()
     }
 
-    pub fn set_pending(&mut self, exercise_ind: usize) -> Result<()> {
+    // Set the status of an exercise without saving. Returns `true` if the
+    // status actually changed (and thus needs saving later)
+    pub fn set_status(&mut self, exercise_ind: usize, done: bool) -> Result<bool> {
         let exercise = self
             .exercises
             .get_mut(exercise_ind)
             .context(BAD_INDEX_ERR)?;
 
-        if exercise.done {
-            exercise.done = false;
-            self.n_done -= 1;
+        if exercise.done == done {
+            Ok(false)
+        } else {
+            exercise.done = done;
+            if done {
+                self.n_done += 1;
+            } else {
+                self.n_done -= 1;
+            }
+            Ok(true)
+        }
+    }
+
+    // Set the status of an exercise to "pending" and save
+    pub fn set_pending(&mut self, exercise_ind: usize) -> Result<()> {
+        if self.set_status(exercise_ind, false)? {
             self.write()?;
         }
-
         Ok(())
     }
 
@@ -380,11 +396,11 @@ impl AppState {
     }
 
     // Return the exercise index of the first pending exercise found.
-    fn check_all_exercises(&self, stdout: &mut StdoutLock) -> Result<Option<usize>> {
+    fn check_all_exercises(&mut self, stdout: &mut StdoutLock) -> Result<Option<usize>> {
         stdout.write_all(FINAL_CHECK_MSG)?;
         let n_exercises = self.exercises.len();
 
-        let status = thread::scope(|s| {
+        let (mut checked_count, mut results) = thread::scope(|s| {
             let handles = self
                 .exercises
                 .iter()
@@ -394,48 +410,83 @@ impl AppState {
                 })
                 .collect::<Vec<_>>();
 
+            let mut results = vec![AllExercisesResult::Pending; n_exercises];
+            let mut checked_count = 0;
             for (exercise_ind, spawn_res) in handles.into_iter().enumerate() {
-                write!(stdout, "\rProgress: {exercise_ind}/{n_exercises}")?;
+                write!(stdout, "\rProgress: {checked_count}/{n_exercises}")?;
                 stdout.flush()?;
 
-                let Ok(handle) = spawn_res else {
-                    return Ok(AllExercisesCheck::CheckedUntil(exercise_ind));
-                };
-
-                let Ok(success) = handle.join().unwrap() else {
-                    return Ok(AllExercisesCheck::CheckedUntil(exercise_ind));
-                };
-
-                if !success {
-                    return Ok(AllExercisesCheck::Pending(exercise_ind));
-                }
+                results[exercise_ind] = spawn_res
+                    .context("Spawn error")
+                    .and_then(|handle| handle.join().unwrap())
+                    .map_or_else(
+                        |_| AllExercisesResult::Error,
+                        |success| {
+                            checked_count += 1;
+                            if success {
+                                AllExercisesResult::Success
+                            } else {
+                                AllExercisesResult::Failed
+                            }
+                        },
+                    );
             }
 
-            Ok::<_, io::Error>(AllExercisesCheck::AllDone)
+            Ok::<_, io::Error>((checked_count, results))
         })?;
 
-        let mut exercise_ind = match status {
-            AllExercisesCheck::Pending(exercise_ind) => return Ok(Some(exercise_ind)),
-            AllExercisesCheck::AllDone => return Ok(None),
-            AllExercisesCheck::CheckedUntil(ind) => ind,
-        };
+        // If we got an error while checking all exercises in parallel,
+        // it could be because we exceeded the limit of open file descriptors.
+        // Therefore, re-try those one at a time (i.e. sequentially).
+        results
+            .iter_mut()
+            .enumerate()
+            .filter(|(_, result)| {
+                **result == AllExercisesResult::Pending || **result == AllExercisesResult::Error
+            })
+            .try_for_each(|(exercise_ind, result)| {
+                let exercise = self.exercises.get(exercise_ind).context(BAD_INDEX_ERR)?;
+                *result = match exercise
+                    .run_exercise(None, &self.cmd_runner)
+                    .context("Sequential retry")
+                {
+                    Ok(true) => AllExercisesResult::Success,
+                    Ok(false) => AllExercisesResult::Failed,
+                    Err(err) => bail!(err),
+                };
+                checked_count += 1;
+                write!(stdout, "\rProgress: {checked_count}/{n_exercises}")?;
+                stdout.flush()?;
+                Ok(())
+            })?;
 
-        // We got an error while checking all exercises in parallel.
-        // This could be because we exceeded the limit of open file descriptors.
-        // Therefore, try to continue the check sequentially.
-        for exercise in &self.exercises[exercise_ind..] {
-            write!(stdout, "\rProgress: {exercise_ind}/{n_exercises}")?;
-            stdout.flush()?;
+        // Update the state of each exercise and return the first that failed
+        let first_fail = results
+            .iter()
+            .enumerate()
+            .filter_map(|(exercise_ind, result)| {
+                match result {
+                    AllExercisesResult::Success => self
+                        .set_status(exercise_ind, true)
+                        .map_or_else(|err| Some(Err(err)), |_| None),
+                    AllExercisesResult::Failed => self
+                        .set_status(exercise_ind, false)
+                        .map_or_else(|err| Some(Err(err)), |_| Some(Ok(exercise_ind))),
+                    // The sequential check done earlier will have converted all
+                    // exercises to Success/Failed, or bailed, so those are unreachable
+                    AllExercisesResult::Pending | AllExercisesResult::Error => unreachable!(),
+                }
+            })
+            .try_fold(None::<usize>, |current_min, index| {
+                match (current_min, index) {
+                    (_, Err(err)) => Err(err),
+                    (None, Ok(index)) => Ok(Some(index)),
+                    (Some(current_min), Ok(index)) => Ok(Some(current_min.min(index))),
+                }
+            })?;
+        self.write()?;
 
-            let success = exercise.run_exercise(None, &self.cmd_runner)?;
-            if !success {
-                return Ok(Some(exercise_ind));
-            }
-
-            exercise_ind += 1;
-        }
-
-        Ok(None)
+        Ok(first_fail)
     }
 
     /// Mark the current exercise as done and move on to the next pending exercise if one exists.
@@ -467,9 +518,7 @@ impl AppState {
 
             self.current_exercise_ind = pending_exercise_ind;
             self.exercises[pending_exercise_ind].done = false;
-            // All exercises were marked as done.
-            self.n_done -= 1;
-            self.write()?;
+
             return Ok(ExercisesProgress::NewPending);
         }
 
