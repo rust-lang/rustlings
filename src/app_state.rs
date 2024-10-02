@@ -5,6 +5,7 @@ use std::{
     io::{self, Read, Seek, StdoutLock, Write},
     path::{Path, MAIN_SEPARATOR_STR},
     process::{Command, Stdio},
+    sync::mpsc,
     thread,
 };
 
@@ -409,35 +410,43 @@ impl AppState {
         let n_exercises = self.exercises.len();
 
         let (mut checked_count, mut results) = thread::scope(|s| {
-            let handles = self
-                .exercises
+            let (tx, rx) = mpsc::channel();
+
+            self.exercises
                 .iter()
-                .map(|exercise| {
-                    thread::Builder::new()
-                        .spawn_scoped(s, || exercise.run_exercise(None, &self.cmd_runner))
-                })
-                .collect::<Vec<_>>();
+                .enumerate()
+                .for_each(|(index, exercise)| {
+                    let tx = tx.clone();
+                    let cmd_runner = &self.cmd_runner;
+                    let _ = thread::Builder::new().spawn_scoped(s, move || {
+                        tx.send((index, exercise.run_exercise(None, cmd_runner)))
+                    });
+                });
+
+            // Drop this `tx`, since the `rx` loop will not stop while there is
+            // at least one tx alive (i.e. we want the loop to block only while
+            // there are `tx` clones, i.e. threads)
+            drop(tx);
 
             let mut results = vec![AllExercisesResult::Pending; n_exercises];
             let mut checked_count = 0;
-            for (exercise_ind, spawn_res) in handles.into_iter().enumerate() {
+            write!(stdout, "\rProgress: {checked_count}/{n_exercises}")?;
+            stdout.flush()?;
+            while let Ok((exercise_ind, result)) = rx.recv() {
+                results[exercise_ind] = result.map_or_else(
+                    |_| AllExercisesResult::Error,
+                    |success| {
+                        checked_count += 1;
+                        if success {
+                            AllExercisesResult::Success
+                        } else {
+                            AllExercisesResult::Failed
+                        }
+                    },
+                );
+
                 write!(stdout, "\rProgress: {checked_count}/{n_exercises}")?;
                 stdout.flush()?;
-
-                results[exercise_ind] = spawn_res
-                    .context("Spawn error")
-                    .and_then(|handle| handle.join().unwrap())
-                    .map_or_else(
-                        |_| AllExercisesResult::Error,
-                        |success| {
-                            checked_count += 1;
-                            if success {
-                                AllExercisesResult::Success
-                            } else {
-                                AllExercisesResult::Failed
-                            }
-                        },
-                    );
             }
 
             Ok::<_, io::Error>((checked_count, results))
