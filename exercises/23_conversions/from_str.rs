@@ -25,7 +25,7 @@ enum ParsePersonError {
     ParseInt(ParseIntError),
 }
 
-// TODO: Complete this `From` implementation to be able to parse a `Person`
+// TODO: Complete this `FromStr` implementation to be able to parse a `Person`
 // out of a string in the form of "Mark,20".
 // Note that you'll need to parse the age component into a `u8` with something
 // like `"4".parse::<u8>()`.
