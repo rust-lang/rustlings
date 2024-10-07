@@ -9,9 +9,21 @@
 
 use std::fmt::Display;
 
-// Make the struct generic over `T`.
-struct ReportCard<T> {
-    //           ^^^
+// Grade Trait
+trait Grade {}
+//^^^^^^^^^^^^
+
+// Implements the trait for `f32` (numeric, e.g. 1.0 -> 5.5)
+impl Grade for f32 {}
+//^^^^^^^^^^^^^^^^^^^
+
+// Implements the trait for `str` (alphabetic, A+ -> F-)
+impl Grade for &str {}
+//^^^^^^^^^^^^^^^^^^^^
+
+// Make the struct generic over `T: Grade`.
+struct ReportCard<T: Grade> {
+    //           ^^^^^^^^^^
     grade: T,
     //     ^
     student_name: String,
@@ -19,8 +31,8 @@ struct ReportCard<T> {
 }
 
 // To be able to print the grade, it has to implement the `Display` trait.
-impl<T: Display> ReportCard<T> {
-    //  ^^^^^^^ require that `T` implements `Display`.
+impl<T: Display + Grade> ReportCard<T> {
+    //  ^^^^^^^^^^^^^^^ require that `T` implements `Display` and `Grade`.
     fn print(&self) -> String {
         format!(
             "{} ({}) - achieved a grade of {}",
