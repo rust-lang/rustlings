@@ -1,10 +1,16 @@
 use anyhow::{bail, Context, Result};
+use crossterm::{
+    queue,
+    style::{Print, ResetColor, SetForegroundColor},
+    terminal,
+};
 use std::{
     env,
     fs::{File, OpenOptions},
     io::{self, Read, Seek, StdoutLock, Write},
     path::{Path, MAIN_SEPARATOR_STR},
     process::{Command, Stdio},
+    sync::{atomic::AtomicUsize, mpsc, Arc},
     thread,
 };
 
@@ -15,10 +21,11 @@ use crate::{
     embedded::EMBEDDED_FILES,
     exercise::{Exercise, RunnableExercise},
     info_file::ExerciseInfo,
-    term,
+    term::{self, progress_bar_with_success},
 };
 
 const STATE_FILE_NAME: &str = ".rustlings-state.txt";
+const DEFAULT_CHECK_PARALLELISM: usize = 8;
 
 #[must_use]
 pub enum ExercisesProgress {
@@ -35,10 +42,12 @@ pub enum StateFileStatus {
     NotRead,
 }
 
-enum AllExercisesCheck {
-    Pending(usize),
-    AllDone,
-    CheckedUntil(usize),
+#[derive(Clone, Copy, PartialEq)]
+enum AllExercisesResult {
+    Pending,
+    Success,
+    Failed,
+    Error,
 }
 
 pub struct AppState {
@@ -270,18 +279,32 @@ impl AppState {
         self.write()
     }
 
-    pub fn set_pending(&mut self, exercise_ind: usize) -> Result<()> {
+    // Set the status of an exercise without saving. Returns `true` if the
+    // status actually changed (and thus needs saving later)
+    pub fn set_status(&mut self, exercise_ind: usize, done: bool) -> Result<bool> {
         let exercise = self
             .exercises
             .get_mut(exercise_ind)
             .context(BAD_INDEX_ERR)?;
 
-        if exercise.done {
-            exercise.done = false;
-            self.n_done -= 1;
+        if exercise.done == done {
+            Ok(false)
+        } else {
+            exercise.done = done;
+            if done {
+                self.n_done += 1;
+            } else {
+                self.n_done -= 1;
+            }
+            Ok(true)
+        }
+    }
+
+    // Set the status of an exercise to "pending" and save
+    pub fn set_pending(&mut self, exercise_ind: usize) -> Result<()> {
+        if self.set_status(exercise_ind, false)? {
             self.write()?;
         }
-
         Ok(())
     }
 
@@ -380,62 +403,173 @@ impl AppState {
     }
 
     // Return the exercise index of the first pending exercise found.
-    fn check_all_exercises(&self, stdout: &mut StdoutLock) -> Result<Option<usize>> {
-        stdout.write_all(FINAL_CHECK_MSG)?;
+    pub fn check_all_exercises(
+        &mut self,
+        stdout: &mut StdoutLock,
+        final_check: bool,
+    ) -> Result<Option<usize>> {
+        if !final_check {
+            stdout.write_all(INTERMEDIATE_CHECK_MSG)?;
+        } else {
+            stdout.write_all(FINAL_CHECK_MSG)?;
+        }
         let n_exercises = self.exercises.len();
 
-        let status = thread::scope(|s| {
-            let handles = self
-                .exercises
-                .iter()
-                .map(|exercise| {
-                    thread::Builder::new()
-                        .spawn_scoped(s, || exercise.run_exercise(None, &self.cmd_runner))
-                })
-                .collect::<Vec<_>>();
+        let (mut checked_count, mut results) = thread::scope(|s| {
+            let (tx, rx) = mpsc::channel();
+            let exercise_ind = Arc::new(AtomicUsize::default());
 
-            for (exercise_ind, spawn_res) in handles.into_iter().enumerate() {
-                write!(stdout, "\rProgress: {exercise_ind}/{n_exercises}")?;
-                stdout.flush()?;
+            let num_core = thread::available_parallelism()
+                .map_or(DEFAULT_CHECK_PARALLELISM, |count| count.get());
+            (0..num_core).for_each(|_| {
+                let tx = tx.clone();
+                let exercise_ind = exercise_ind.clone();
+                let this = &self;
+                let _ = thread::Builder::new().spawn_scoped(s, move || {
+                    loop {
+                        let exercise_ind =
+                            exercise_ind.fetch_add(1, std::sync::atomic::Ordering::AcqRel);
+                        let Some(exercise) = this.exercises.get(exercise_ind) else {
+                            // No more exercises
+                            break;
+                        };
 
-                let Ok(handle) = spawn_res else {
-                    return Ok(AllExercisesCheck::CheckedUntil(exercise_ind));
-                };
+                        // Notify the progress bar that this exercise is pending
+                        if tx.send((exercise_ind, None)).is_err() {
+                            break;
+                        };
 
-                let Ok(success) = handle.join().unwrap() else {
-                    return Ok(AllExercisesCheck::CheckedUntil(exercise_ind));
-                };
+                        let result = exercise.run_exercise(None, &this.cmd_runner);
 
-                if !success {
-                    return Ok(AllExercisesCheck::Pending(exercise_ind));
+                        // Notify the progress bar that this exercise is done
+                        if tx.send((exercise_ind, Some(result))).is_err() {
+                            break;
+                        }
+                    }
+                });
+            });
+
+            // Drop this `tx`, since the `rx` loop will not stop while there is
+            // at least one tx alive (i.e. we want the loop to block only while
+            // there are `tx` clones, i.e. threads)
+            drop(tx);
+
+            // Print the legend
+            queue!(
+                stdout,
+                Print("Color legend:  "),
+                SetForegroundColor(term::PROGRESS_FAILED_COLOR),
+                Print("Failure"),
+                ResetColor,
+                Print("  -  "),
+                SetForegroundColor(term::PROGRESS_SUCCESS_COLOR),
+                Print("Success"),
+                ResetColor,
+                Print("  -  "),
+                SetForegroundColor(term::PROGRESS_PENDING_COLOR),
+                Print("Checking"),
+                ResetColor,
+                Print("\n"),
+            )
+            .unwrap();
+            // We expect at least a few "pending" notifications shortly, so don't
+            // bother printing the initial state of the progress bar and flushing
+            // stdout
+
+            let line_width = terminal::size().unwrap().0;
+            let mut results = vec![AllExercisesResult::Pending; n_exercises];
+            let mut pending = 0;
+            let mut success = 0;
+            let mut failed = 0;
+
+            while let Ok((exercise_ind, result)) = rx.recv() {
+                match result {
+                    None => {
+                        pending += 1;
+                    }
+                    Some(Err(_)) => {
+                        results[exercise_ind] = AllExercisesResult::Error;
+                    }
+                    Some(Ok(true)) => {
+                        results[exercise_ind] = AllExercisesResult::Success;
+                        pending -= 1;
+                        success += 1;
+                    }
+                    Some(Ok(false)) => {
+                        results[exercise_ind] = AllExercisesResult::Failed;
+                        pending -= 1;
+                        failed += 1;
+                    }
                 }
+
+                write!(stdout, "\r").unwrap();
+                progress_bar_with_success(
+                    stdout,
+                    pending,
+                    failed,
+                    success,
+                    n_exercises as u16,
+                    line_width,
+                )
+                .unwrap();
+                stdout.flush()?;
             }
 
-            Ok::<_, io::Error>(AllExercisesCheck::AllDone)
+            Ok::<_, io::Error>((success, results))
         })?;
 
-        let mut exercise_ind = match status {
-            AllExercisesCheck::Pending(exercise_ind) => return Ok(Some(exercise_ind)),
-            AllExercisesCheck::AllDone => return Ok(None),
-            AllExercisesCheck::CheckedUntil(ind) => ind,
-        };
+        // If we got an error while checking all exercises in parallel,
+        // it could be because we exceeded the limit of open file descriptors.
+        // Therefore, re-try those one at a time (i.e. sequentially).
+        results
+            .iter_mut()
+            .enumerate()
+            .filter(|(_, result)| {
+                **result == AllExercisesResult::Pending || **result == AllExercisesResult::Error
+            })
+            .try_for_each(|(exercise_ind, result)| {
+                let exercise = self.exercises.get(exercise_ind).context(BAD_INDEX_ERR)?;
+                *result = match exercise
+                    .run_exercise(None, &self.cmd_runner)
+                    .context("Sequential retry")
+                {
+                    Ok(true) => AllExercisesResult::Success,
+                    Ok(false) => AllExercisesResult::Failed,
+                    Err(err) => bail!(err),
+                };
+                checked_count += 1;
+                write!(stdout, "\rProgress: {checked_count}/{n_exercises}")?;
+                stdout.flush()?;
+                Ok(())
+            })?;
 
-        // We got an error while checking all exercises in parallel.
-        // This could be because we exceeded the limit of open file descriptors.
-        // Therefore, try to continue the check sequentially.
-        for exercise in &self.exercises[exercise_ind..] {
-            write!(stdout, "\rProgress: {exercise_ind}/{n_exercises}")?;
-            stdout.flush()?;
+        // Update the state of each exercise and return the first that failed
+        let first_fail = results
+            .iter()
+            .enumerate()
+            .filter_map(|(exercise_ind, result)| {
+                match result {
+                    AllExercisesResult::Success => self
+                        .set_status(exercise_ind, true)
+                        .map_or_else(|err| Some(Err(err)), |_| None),
+                    AllExercisesResult::Failed => self
+                        .set_status(exercise_ind, false)
+                        .map_or_else(|err| Some(Err(err)), |_| Some(Ok(exercise_ind))),
+                    // The sequential check done earlier will have converted all
+                    // exercises to Success/Failed, or bailed, so those are unreachable
+                    AllExercisesResult::Pending | AllExercisesResult::Error => unreachable!(),
+                }
+            })
+            .try_fold(None::<usize>, |current_min, index| {
+                match (current_min, index) {
+                    (_, Err(err)) => Err(err),
+                    (None, Ok(index)) => Ok(Some(index)),
+                    (Some(current_min), Ok(index)) => Ok(Some(current_min.min(index))),
+                }
+            })?;
+        self.write()?;
 
-            let success = exercise.run_exercise(None, &self.cmd_runner)?;
-            if !success {
-                return Ok(Some(exercise_ind));
-            }
-
-            exercise_ind += 1;
-        }
-
-        Ok(None)
+        Ok(first_fail)
     }
 
     /// Mark the current exercise as done and move on to the next pending exercise if one exists.
@@ -462,20 +596,24 @@ impl AppState {
             stdout.write_all(b"\n")?;
         }
 
-        if let Some(pending_exercise_ind) = self.check_all_exercises(stdout)? {
+        if let Some(pending_exercise_ind) = self.check_all_exercises(stdout, true)? {
             stdout.write_all(b"\n\n")?;
 
             self.current_exercise_ind = pending_exercise_ind;
             self.exercises[pending_exercise_ind].done = false;
-            // All exercises were marked as done.
-            self.n_done -= 1;
-            self.write()?;
+
             return Ok(ExercisesProgress::NewPending);
         }
 
         // Write that the last exercise is done.
         self.write()?;
 
+        self.render_final_message(stdout)?;
+
+        Ok(ExercisesProgress::AllDone)
+    }
+
+    pub fn render_final_message(&self, stdout: &mut StdoutLock) -> Result<()> {
         clear_terminal(stdout)?;
         stdout.write_all(FENISH_LINE.as_bytes())?;
 
@@ -485,12 +623,14 @@ impl AppState {
             stdout.write_all(b"\n")?;
         }
 
-        Ok(ExercisesProgress::AllDone)
+        Ok(())
     }
 }
 
 const BAD_INDEX_ERR: &str = "The current exercise index is higher than the number of exercises";
 const STATE_FILE_HEADER: &[u8] = b"DON'T EDIT THIS FILE!\n\n";
+const INTERMEDIATE_CHECK_MSG: &[u8] = b"Checking all exercises
+";
 const FINAL_CHECK_MSG: &[u8] = b"All exercises seem to be done.
 Recompiling and running all exercises to make sure that all of them are actually done.
 ";

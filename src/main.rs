@@ -1,6 +1,10 @@
 use anyhow::{bail, Context, Result};
 use app_state::StateFileStatus;
 use clap::{Parser, Subcommand};
+use crossterm::{
+    style::{Color, Print, ResetColor, SetForegroundColor},
+    QueueableCommand,
+};
 use std::{
     io::{self, IsTerminal, Write},
     path::Path,
@@ -47,6 +51,8 @@ enum Subcommands {
         /// The name of the exercise
         name: Option<String>,
     },
+    /// Run all the exercises, marking them as done or pending accordingly.
+    RunAll,
     /// Reset a single exercise
     Reset {
         /// The name of the exercise
@@ -137,6 +143,36 @@ fn main() -> Result<()> {
                 app_state.set_current_exercise_by_name(&name)?;
             }
             run::run(&mut app_state)?;
+        }
+        Some(Subcommands::RunAll) => {
+            let mut stdout = io::stdout().lock();
+            if let Some(first_fail) = app_state.check_all_exercises(&mut stdout, false)? {
+                let pending = app_state
+                    .exercises()
+                    .iter()
+                    .filter(|exercise| !exercise.done)
+                    .count();
+                if app_state.current_exercise().done {
+                    app_state.set_current_exercise_ind(first_fail)?;
+                }
+                stdout
+                    .queue(Print("\n"))?
+                    .queue(SetForegroundColor(Color::Red))?
+                    .queue(Print(format!("{pending}")))?
+                    .queue(ResetColor)?;
+                if pending == 1 {
+                    stdout.queue(Print(" exercise has some errors: "))?;
+                } else {
+                    stdout.queue(Print(" exercises have errors, including "))?;
+                }
+                app_state
+                    .current_exercise()
+                    .terminal_file_link(&mut stdout)?;
+                stdout.write_all(b".\n")?;
+                exit(1);
+            } else {
+                app_state.render_final_message(&mut stdout)?;
+            }
         }
         Some(Subcommands::Reset { name }) => {
             app_state.set_current_exercise_by_name(&name)?;

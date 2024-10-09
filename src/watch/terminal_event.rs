@@ -11,6 +11,7 @@ pub enum InputEvent {
     Run,
     Hint,
     List,
+    CheckAll,
     Reset,
     Quit,
 }
@@ -37,6 +38,7 @@ pub fn terminal_event_handler(
                     KeyCode::Char('r') if manual_run => InputEvent::Run,
                     KeyCode::Char('h') => InputEvent::Hint,
                     KeyCode::Char('l') => break WatchEvent::Input(InputEvent::List),
+                    KeyCode::Char('c') => InputEvent::CheckAll,
                     KeyCode::Char('x') => {
                         if sender.send(WatchEvent::Input(InputEvent::Reset)).is_err() {
                             return;
