@@ -135,13 +135,14 @@ Continue practicing your Rust skills by building your own projects, contributing
 
 ## Third-Party Exercises
 
+Third-party exercises are a set of exercises maintained by the community.
+You can use the same `rustlings` program that you installed with `cargo install rustlings` to run them:
+
+- [日本語版 Rustlings](https://github.com/sotanengel/rustlings-jp)：A Japanese translation of the Rustlings exercises.
+
 Do you want to create your own set of Rustlings exercises to focus on some specific topic?
 Or do you want to translate the original Rustlings exercises?
-Then follow the link to the guide about [third-party exercises](https://github.com/rust-lang/rustlings/blob/main/THIRD_PARTY_EXERCISES.md)!
-
-### Third-Party List
-
-- [日本語版 Rustlings](https://github.com/sotanengel/rustlings-jp)：A Japanese translation of the Rustlings exercise.
+Then follow the the guide about [third-party exercises](https://github.com/rust-lang/rustlings/blob/main/THIRD_PARTY_EXERCISES.md)!
 
 ## Uninstalling Rustlings
 
