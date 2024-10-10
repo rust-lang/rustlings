@@ -157,8 +157,9 @@ impl<'a> WatchState<'a> {
 
     /// Move on to the next exercise if the current one is done.
     pub fn next_exercise(&mut self, stdout: &mut StdoutLock) -> Result<ExercisesProgress> {
-        if self.done_status == DoneStatus::Pending {
-            return Ok(ExercisesProgress::CurrentPending);
+        match self.done_status {
+            DoneStatus::DoneWithSolution(_) | DoneStatus::DoneWithoutSolution => (),
+            DoneStatus::Pending => return Ok(ExercisesProgress::CurrentPending),
         }
 
         self.app_state.done_current_exercise::<true>(stdout)
@@ -282,14 +283,15 @@ impl<'a> WatchState<'a> {
     pub fn check_all_exercises(&mut self, stdout: &mut StdoutLock) -> Result<ExercisesProgress> {
         stdout.write_all(b"\n")?;
 
-        if let Some(first_fail) = self.app_state.check_all_exercises(stdout, false)? {
-            // Only change exercise if the current one is done...
+        if let Some(first_pending_exercise_ind) = self.app_state.check_all_exercises(stdout)? {
+            // Only change exercise if the current one is done.
             if self.app_state.current_exercise().done {
-                self.app_state.set_current_exercise_ind(first_fail)?;
+                self.app_state
+                    .set_current_exercise_ind(first_pending_exercise_ind)?;
+                Ok(ExercisesProgress::NewPending)
+            } else {
+                Ok(ExercisesProgress::CurrentPending)
             }
-            // ...but always pretend it's a "new" anyway because that refreshes
-            // the display
-            Ok(ExercisesProgress::NewPending)
         } else {
             self.app_state.render_final_message(stdout)?;
             Ok(ExercisesProgress::AllDone)

@@ -146,7 +146,7 @@ fn main() -> Result<()> {
         }
         Some(Subcommands::RunAll) => {
             let mut stdout = io::stdout().lock();
-            if let Some(first_fail) = app_state.check_all_exercises(&mut stdout, false)? {
+            if let Some(first_fail) = app_state.check_all_exercises(&mut stdout)? {
                 let pending = app_state
                     .exercises()
                     .iter()
@@ -156,7 +156,6 @@ fn main() -> Result<()> {
                     app_state.set_current_exercise_ind(first_fail)?;
                 }
                 stdout
-                    .queue(Print("\n"))?
                     .queue(SetForegroundColor(Color::Red))?
                     .queue(Print(format!("{pending}")))?
                     .queue(ResetColor)?;

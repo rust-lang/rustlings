@@ -108,7 +108,7 @@ fn run_watch(
             {
                 ExercisesProgress::AllDone => break,
                 ExercisesProgress::NewPending => watch_state.run_current_exercise(&mut stdout)?,
-                ExercisesProgress::CurrentPending => (),
+                ExercisesProgress::CurrentPending => watch_state.render(&mut stdout)?,
             },
             WatchEvent::Input(InputEvent::Reset) => watch_state.reset_exercise(&mut stdout)?,
             WatchEvent::Input(InputEvent::Quit) => {

@@ -89,34 +89,35 @@ impl<'a> CountedWrite<'a> for StdoutLock<'a> {
     }
 }
 
-/// Simple terminal progress bar
+/// Simple terminal progress bar.
 pub fn progress_bar<'a>(
     writer: &mut impl CountedWrite<'a>,
     progress: u16,
     total: u16,
-    line_width: u16,
+    term_width: u16,
 ) -> io::Result<()> {
-    progress_bar_with_success(writer, 0, 0, progress, total, line_width)
+    progress_bar_with_success(writer, 0, 0, progress, total, term_width)
 }
-/// Terminal progress bar with three states (pending + failed + success)
+
+/// Terminal progress bar with three states (pending + failed + success).
 pub fn progress_bar_with_success<'a>(
     writer: &mut impl CountedWrite<'a>,
     pending: u16,
     failed: u16,
     success: u16,
     total: u16,
-    line_width: u16,
+    term_width: u16,
 ) -> io::Result<()> {
     debug_assert!(total < 1000);
-    debug_assert!((pending + failed + success) <= total);
+    debug_assert!(pending + failed + success <= total);
 
     const PREFIX: &[u8] = b"Progress: [";
     const PREFIX_WIDTH: u16 = PREFIX.len() as u16;
     const POSTFIX_WIDTH: u16 = "] xxx/xxx".len() as u16;
     const WRAPPER_WIDTH: u16 = PREFIX_WIDTH + POSTFIX_WIDTH;
-    const MIN_LINE_WIDTH: u16 = WRAPPER_WIDTH + 4;
+    const MIN_TERM_WIDTH: u16 = WRAPPER_WIDTH + 4;
 
-    if line_width < MIN_LINE_WIDTH {
+    if term_width < MIN_TERM_WIDTH {
         writer.write_ascii(b"Progress: ")?;
         // Integers are in ASCII.
         return writer.write_ascii(format!("{}/{total}", failed + success).as_bytes());
@@ -125,7 +126,7 @@ pub fn progress_bar_with_success<'a>(
     let stdout = writer.stdout();
     stdout.write_all(PREFIX)?;
 
-    let width = line_width - WRAPPER_WIDTH;
+    let width = term_width - WRAPPER_WIDTH;
     let mut failed_end = (width * failed) / total;
     let mut success_end = (width * (failed + success)) / total;
     let mut pending_end = (width * (failed + success + pending)) / total;
