@@ -417,8 +417,6 @@ impl AppState {
         clear_terminal(stdout)?;
 
         let mut progresses = vec![ExerciseCheckProgress::None; self.exercises.len()];
-        let mut done = 0;
-        let mut pending = 0;
 
         thread::scope(|s| {
             let (exercise_progress_sender, exercise_progress_receiver) = mpsc::channel();
@@ -468,13 +466,6 @@ impl AppState {
 
             while let Ok((exercise_ind, progress)) = exercise_progress_receiver.recv() {
                 progresses[exercise_ind] = progress;
-
-                match progress {
-                    ExerciseCheckProgress::None | ExerciseCheckProgress::Checking => (),
-                    ExerciseCheckProgress::Done => done += 1,
-                    ExerciseCheckProgress::Pending => pending += 1,
-                }
-
                 show_exercises_check_progress(stdout, &progresses, term_width)?;
             }
 
@@ -503,10 +494,8 @@ impl AppState {
                     let exercise = &self.exercises[exercise_ind];
                     let success = exercise.run_exercise(None, &self.cmd_runner)?;
                     if success {
-                        done += 1;
                         progresses[exercise_ind] = ExerciseCheckProgress::Done;
                     } else {
-                        pending += 1;
                         if first_pending_exercise_ind.is_none() {
                             first_pending_exercise_ind = Some(exercise_ind);
                         }
