@@ -164,26 +164,34 @@ pub fn show_exercises_check_progress(
 
     let mut exercise_num = 1;
     for exercise_progress in progresses {
-        let color = match exercise_progress {
-            ExerciseCheckProgress::None => Color::Reset,
-            ExerciseCheckProgress::Checking => Color::Blue,
-            ExerciseCheckProgress::Done => Color::Green,
-            ExerciseCheckProgress::Pending => Color::Red,
-        };
-
-        stdout.queue(SetForegroundColor(color))?;
-        write!(stdout, "{exercise_num:<3}")?;
-
-        if exercise_num % n_cols == 0 {
-            stdout.write_all(b"\n")?;
-        } else {
-            stdout.write_all(b" ")?;
+        match exercise_progress {
+            ExerciseCheckProgress::None => (),
+            ExerciseCheckProgress::Checking => {
+                stdout.queue(SetForegroundColor(Color::Blue))?;
+            }
+            ExerciseCheckProgress::Done => {
+                stdout.queue(SetForegroundColor(Color::Green))?;
+            }
+            ExerciseCheckProgress::Pending => {
+                stdout.queue(SetForegroundColor(Color::Red))?;
+            }
         }
 
-        exercise_num += 1;
+        write!(stdout, "{exercise_num:<3}")?;
+        stdout.queue(ResetColor)?;
+
+        if exercise_num != progresses.len() {
+            if exercise_num % n_cols == 0 {
+                stdout.write_all(b"\n")?;
+            } else {
+                stdout.write_all(b" ")?;
+            }
+
+            exercise_num += 1;
+        }
     }
 
-    stdout.queue(ResetColor)?.flush()
+    stdout.flush()
 }
 
 pub fn clear_terminal(stdout: &mut StdoutLock) -> io::Result<()> {

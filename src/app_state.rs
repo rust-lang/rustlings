@@ -520,7 +520,6 @@ impl AppState {
         }
 
         self.write()?;
-        stdout.write_all(b"\n")?;
 
         Ok(first_pending_exercise_ind)
     }

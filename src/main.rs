@@ -151,13 +151,15 @@ fn main() -> Result<ExitCode> {
                     app_state.set_current_exercise_ind(first_pending_exercise_ind)?;
                 }
 
+                stdout.write_all(b"\n\n")?;
+
                 let pending = app_state.n_pending();
                 if pending == 1 {
                     stdout.write_all(b"One exercise pending: ")?;
                 } else {
                     write!(
                         stdout,
-                        "{pending}/{} exercises are pending. The first: ",
+                        "{pending}/{} exercises pending. The first: ",
                         app_state.exercises().len(),
                     )?;
                 }
