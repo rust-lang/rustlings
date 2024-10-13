@@ -13,4 +13,6 @@ disallowed-methods = [
   # Use `thread::Builder::spawn` instead and handle the error.
   "std::thread::spawn",
   "std::thread::Scope::spawn",
+  # Return `ExitCode` instead.
+  "std::process::exit",
 ]

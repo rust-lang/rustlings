@@ -8,7 +8,7 @@ use crossterm::{
 use std::{
     io::{self, IsTerminal, Write},
     path::Path,
-    process::exit,
+    process::ExitCode,
 };
 use term::{clear_terminal, press_enter_prompt};
 
@@ -51,8 +51,8 @@ enum Subcommands {
         /// The name of the exercise
         name: Option<String>,
     },
-    /// Run all the exercises, marking them as done or pending accordingly.
-    RunAll,
+    /// Check all the exercises, marking them as done or pending accordingly.
+    CheckAll,
     /// Reset a single exercise
     Reset {
         /// The name of the exercise
@@ -68,22 +68,26 @@ enum Subcommands {
     Dev(DevCommands),
 }
 
-fn main() -> Result<()> {
+fn main() -> Result<ExitCode> {
     let args = Args::parse();
 
     if cfg!(not(debug_assertions)) && Path::new("dev/rustlings-repo.txt").exists() {
         bail!("{OLD_METHOD_ERR}");
     }
 
-    match args.command {
-        Some(Subcommands::Init) => return init::init().context("Initialization failed"),
-        Some(Subcommands::Dev(dev_command)) => return dev_command.run(),
-        _ => (),
+    'priority_cmd: {
+        match args.command {
+            Some(Subcommands::Init) => init::init().context("Initialization failed")?,
+            Some(Subcommands::Dev(dev_command)) => dev_command.run()?,
+            _ => break 'priority_cmd,
+        }
+
+        return Ok(ExitCode::SUCCESS);
     }
 
     if !Path::new("exercises").is_dir() {
         println!("{PRE_INIT_MSG}");
-        exit(1);
+        return Ok(ExitCode::FAILURE);
     }
 
     let info_file = InfoFile::parse()?;
@@ -142,33 +146,29 @@ fn main() -> Result<()> {
             if let Some(name) = name {
                 app_state.set_current_exercise_by_name(&name)?;
             }
-            run::run(&mut app_state)?;
+            return run::run(&mut app_state);
         }
-        Some(Subcommands::RunAll) => {
+        Some(Subcommands::CheckAll) => {
             let mut stdout = io::stdout().lock();
-            if let Some(first_fail) = app_state.check_all_exercises(&mut stdout)? {
-                let pending = app_state
-                    .exercises()
-                    .iter()
-                    .filter(|exercise| !exercise.done)
-                    .count();
+            if let Some(first_pending_exercise_ind) = app_state.check_all_exercises(&mut stdout)? {
                 if app_state.current_exercise().done {
-                    app_state.set_current_exercise_ind(first_fail)?;
+                    app_state.set_current_exercise_ind(first_pending_exercise_ind)?;
                 }
-                stdout
-                    .queue(SetForegroundColor(Color::Red))?
-                    .queue(Print(format!("{pending}")))?
-                    .queue(ResetColor)?;
+
+                let pending = app_state.n_pending();
                 if pending == 1 {
-                    stdout.queue(Print(" exercise has some errors: "))?;
+                    stdout.queue(Print("One exercise pending: "))?;
                 } else {
-                    stdout.queue(Print(" exercises have errors, including "))?;
+                    stdout.queue(SetForegroundColor(Color::Red))?;
+                    write!(stdout, "{pending}")?;
+                    stdout.queue(ResetColor)?;
+                    stdout.queue(Print(" exercises are pending. The first: "))?;
                 }
                 app_state
                     .current_exercise()
                     .terminal_file_link(&mut stdout)?;
-                stdout.write_all(b".\n")?;
-                exit(1);
+                stdout.write_all(b"\n")?;
+                return Ok(ExitCode::FAILURE);
             } else {
                 app_state.render_final_message(&mut stdout)?;
             }
@@ -188,7 +188,7 @@ fn main() -> Result<()> {
         Some(Subcommands::Init | Subcommands::Dev(_)) => (),
     }
 
-    Ok(())
+    Ok(ExitCode::SUCCESS)
 }
 
 const OLD_METHOD_ERR: &str =

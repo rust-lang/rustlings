@@ -212,6 +212,11 @@ impl AppState {
     }
 
     #[inline]
+    pub fn n_pending(&self) -> u16 {
+        self.exercises.len() as u16 - self.n_done
+    }
+
+    #[inline]
     pub fn current_exercise(&self) -> &Exercise {
         &self.exercises[self.current_exercise_ind]
     }
