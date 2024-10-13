@@ -1,6 +1,6 @@
 use crossterm::{
     cursor::MoveTo,
-    style::{Attribute, Color, SetAttribute, SetForegroundColor},
+    style::{Attribute, Color, ResetColor, SetAttribute, SetForegroundColor},
     terminal::{Clear, ClearType},
     Command, QueueableCommand,
 };
@@ -9,9 +9,7 @@ use std::{
     io::{self, BufRead, StdoutLock, Write},
 };
 
-pub const PROGRESS_FAILED_COLOR: Color = Color::Red;
-pub const PROGRESS_SUCCESS_COLOR: Color = Color::Green;
-pub const PROGRESS_PENDING_COLOR: Color = Color::Blue;
+use crate::app_state::ExerciseCheckProgress;
 
 pub struct MaxLenWriter<'a, 'b> {
     pub stdout: &'a mut StdoutLock<'b>,
@@ -89,98 +87,43 @@ impl<'a> CountedWrite<'a> for StdoutLock<'a> {
     }
 }
 
-/// Simple terminal progress bar.
 pub fn progress_bar<'a>(
     writer: &mut impl CountedWrite<'a>,
     progress: u16,
     total: u16,
     term_width: u16,
 ) -> io::Result<()> {
-    progress_bar_with_success(writer, 0, 0, progress, total, term_width)
-}
-
-/// Terminal progress bar with three states (pending + failed + success).
-pub fn progress_bar_with_success<'a>(
-    writer: &mut impl CountedWrite<'a>,
-    pending: u16,
-    failed: u16,
-    success: u16,
-    total: u16,
-    term_width: u16,
-) -> io::Result<()> {
     debug_assert!(total < 1000);
-    debug_assert!(pending + failed + success <= total);
+    debug_assert!(progress <= total);
 
     const PREFIX: &[u8] = b"Progress: [";
     const PREFIX_WIDTH: u16 = PREFIX.len() as u16;
     const POSTFIX_WIDTH: u16 = "] xxx/xxx".len() as u16;
     const WRAPPER_WIDTH: u16 = PREFIX_WIDTH + POSTFIX_WIDTH;
-    const MIN_TERM_WIDTH: u16 = WRAPPER_WIDTH + 4;
+    const MIN_LINE_WIDTH: u16 = WRAPPER_WIDTH + 4;
 
-    if term_width < MIN_TERM_WIDTH {
+    if term_width < MIN_LINE_WIDTH {
         writer.write_ascii(b"Progress: ")?;
         // Integers are in ASCII.
-        return writer.write_ascii(format!("{}/{total}", failed + success).as_bytes());
+        return writer.write_ascii(format!("{progress}/{total}").as_bytes());
     }
 
     let stdout = writer.stdout();
     stdout.write_all(PREFIX)?;
 
     let width = term_width - WRAPPER_WIDTH;
-    let mut failed_end = (width * failed) / total;
-    let mut success_end = (width * (failed + success)) / total;
-    let mut pending_end = (width * (failed + success + pending)) / total;
+    let filled = (width * progress) / total;
 
-    // In case the range boundaries overlap, "pending" has priority over both
-    // "failed" and "success" (don't show the bar as "complete" when we are
-    // still checking some things).
-    // "Failed" has priority over "success" (don't show 100% success if we
-    // have some failures, at the risk of showing 100% failures even with
-    // a few successes).
-    //
-    // "Failed" already has priority over "success" because it's displayed
-    // first. But "pending" is last so we need to fix "success"/"failed".
-    if pending > 0 {
-        pending_end = pending_end.max(1);
-        if pending_end == success_end {
-            success_end -= 1;
-        }
-        if pending_end == failed_end {
-            failed_end -= 1;
-        }
-
-        // This will replace the last character of the "pending" range with
-        // the arrow char ('>'). This ensures that even if the progress bar
-        // is filled (everything either done or pending), we'll still see
-        // the '>' as long as we are not fully done.
-        pending_end -= 1;
-    }
-
-    if failed > 0 {
-        stdout.queue(SetForegroundColor(PROGRESS_FAILED_COLOR))?;
-        for _ in 0..failed_end {
-            stdout.write_all(b"#")?;
-        }
-    }
-
-    stdout.queue(SetForegroundColor(PROGRESS_SUCCESS_COLOR))?;
-    for _ in failed_end..success_end {
+    stdout.queue(SetForegroundColor(Color::Green))?;
+    for _ in 0..filled {
         stdout.write_all(b"#")?;
     }
 
-    if pending > 0 {
-        stdout.queue(SetForegroundColor(PROGRESS_PENDING_COLOR))?;
-
-        for _ in success_end..pending_end {
-            stdout.write_all(b"#")?;
-        }
-    }
-
-    if pending_end < width {
+    if filled < width {
         stdout.write_all(b">")?;
     }
 
-    let width_minus_filled = width - pending_end;
+    let width_minus_filled = width - filled;
     if width_minus_filled > 1 {
         let red_part_width = width_minus_filled - 1;
         stdout.queue(SetForegroundColor(Color::Red))?;
@@ -191,7 +134,56 @@ pub fn progress_bar_with_success<'a>(
 
     stdout.queue(SetForegroundColor(Color::Reset))?;
 
-    write!(stdout, "] {:>3}/{}", failed + success, total)
+    write!(stdout, "] {progress:>3}/{total}")
+}
+
+pub fn show_exercises_check_progress(
+    stdout: &mut StdoutLock,
+    progresses: &[ExerciseCheckProgress],
+    term_width: u16,
+) -> io::Result<()> {
+    stdout.queue(MoveTo(0, 0))?;
+
+    // Legend
+    stdout.write_all(b"Color of exercise number: ")?;
+    stdout.queue(SetForegroundColor(Color::Blue))?;
+    stdout.write_all(b"Checking")?;
+    stdout.queue(ResetColor)?;
+    stdout.write_all(b" - ")?;
+    stdout.queue(SetForegroundColor(Color::Green))?;
+    stdout.write_all(b"Done")?;
+    stdout.queue(ResetColor)?;
+    stdout.write_all(b" - ")?;
+    stdout.queue(SetForegroundColor(Color::Red))?;
+    stdout.write_all(b"Pending")?;
+    stdout.queue(ResetColor)?;
+    stdout.write_all(b"\n")?;
+
+    // Exercise numbers with up to 3 digits.
+    let n_cols = usize::from(term_width + 1) / 4;
+
+    let mut exercise_num = 1;
+    for exercise_progress in progresses {
+        let color = match exercise_progress {
+            ExerciseCheckProgress::None => Color::Reset,
+            ExerciseCheckProgress::Checking => Color::Blue,
+            ExerciseCheckProgress::Done => Color::Green,
+            ExerciseCheckProgress::Pending => Color::Red,
+        };
+
+        stdout.queue(SetForegroundColor(color))?;
+        write!(stdout, "{exercise_num:<3}")?;
+
+        if exercise_num % n_cols == 0 {
+            stdout.write_all(b"\n")?;
+        } else {
+            stdout.write_all(b" ")?;
+        }
+
+        exercise_num += 1;
+    }
+
+    stdout.queue(ResetColor)?.flush()
 }
 
 pub fn clear_terminal(stdout: &mut StdoutLock) -> io::Result<()> {

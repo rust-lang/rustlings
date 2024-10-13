@@ -1,10 +1,6 @@
 use anyhow::{bail, Context, Result};
 use app_state::StateFileStatus;
 use clap::{Parser, Subcommand};
-use crossterm::{
-    style::{Color, Print, ResetColor, SetForegroundColor},
-    QueueableCommand,
-};
 use std::{
     io::{self, IsTerminal, Write},
     path::Path,
@@ -157,12 +153,13 @@ fn main() -> Result<ExitCode> {
 
                 let pending = app_state.n_pending();
                 if pending == 1 {
-                    stdout.queue(Print("One exercise pending: "))?;
+                    stdout.write_all(b"One exercise pending: ")?;
                 } else {
-                    stdout.queue(SetForegroundColor(Color::Red))?;
-                    write!(stdout, "{pending}")?;
-                    stdout.queue(ResetColor)?;
-                    stdout.queue(Print(" exercises are pending. The first: "))?;
+                    write!(
+                        stdout,
+                        "{pending}/{} exercises are pending. The first: ",
+                        app_state.exercises().len(),
+                    )?;
                 }
                 app_state
                     .current_exercise()
