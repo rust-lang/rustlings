@@ -20,7 +20,7 @@ use crate::{
     embedded::EMBEDDED_FILES,
     exercise::{Exercise, RunnableExercise},
     info_file::ExerciseInfo,
-    term::{self, ExercisesCheckProgressVisualizer},
+    term::{self, CheckProgressVisualizer},
 };
 
 const STATE_FILE_NAME: &str = ".rustlings-state.txt";
@@ -42,7 +42,7 @@ pub enum StateFileStatus {
 }
 
 #[derive(Clone, Copy)]
-pub enum ExerciseCheckProgress {
+pub enum CheckProgress {
     None,
     Checking,
     Done,
@@ -412,10 +412,10 @@ impl AppState {
         let term_width = terminal::size()
             .context("Failed to get the terminal size")?
             .0;
-        let mut progress_visualizer = ExercisesCheckProgressVisualizer::build(stdout, term_width)?;
+        let mut progress_visualizer = CheckProgressVisualizer::build(stdout, term_width)?;
 
         let next_exercise_ind = AtomicUsize::new(0);
-        let mut progresses = vec![ExerciseCheckProgress::None; self.exercises.len()];
+        let mut progresses = vec![CheckProgress::None; self.exercises.len()];
 
         thread::scope(|s| {
             let (exercise_progress_sender, exercise_progress_receiver) = mpsc::channel();
@@ -435,7 +435,7 @@ impl AppState {
                         };
 
                         if exercise_progress_sender
-                            .send((exercise_ind, ExerciseCheckProgress::Checking))
+                            .send((exercise_ind, CheckProgress::Checking))
                             .is_err()
                         {
                             break;
@@ -443,9 +443,9 @@ impl AppState {
 
                         let success = exercise.run_exercise(None, &slf.cmd_runner);
                         let progress = match success {
-                            Ok(true) => ExerciseCheckProgress::Done,
-                            Ok(false) => ExerciseCheckProgress::Pending,
-                            Err(_) => ExerciseCheckProgress::None,
+                            Ok(true) => CheckProgress::Done,
+                            Ok(false) => CheckProgress::Pending,
+                            Err(_) => CheckProgress::None,
                         };
 
                         if exercise_progress_sender
@@ -472,34 +472,33 @@ impl AppState {
         let mut first_pending_exercise_ind = None;
         for exercise_ind in 0..progresses.len() {
             match progresses[exercise_ind] {
-                ExerciseCheckProgress::Done => {
+                CheckProgress::Done => {
                     self.set_status(exercise_ind, true)?;
                 }
-                ExerciseCheckProgress::Pending => {
+                CheckProgress::Pending => {
                     self.set_status(exercise_ind, false)?;
                     if first_pending_exercise_ind.is_none() {
                         first_pending_exercise_ind = Some(exercise_ind);
                     }
                 }
-                ExerciseCheckProgress::None | ExerciseCheckProgress::Checking => {
+                CheckProgress::None | CheckProgress::Checking => {
                     // If we got an error while checking all exercises in parallel,
                     // it could be because we exceeded the limit of open file descriptors.
                     // Therefore, try running exercises with errors sequentially.
-                    progresses[exercise_ind] = ExerciseCheckProgress::Checking;
+                    progresses[exercise_ind] = CheckProgress::Checking;
                     progress_visualizer.update(&progresses)?;
 
                     let exercise = &self.exercises[exercise_ind];
                     let success = exercise.run_exercise(None, &self.cmd_runner)?;
                     if success {
-                        progresses[exercise_ind] = ExerciseCheckProgress::Done;
+                        progresses[exercise_ind] = CheckProgress::Done;
                     } else {
+                        progresses[exercise_ind] = CheckProgress::Pending;
                         if first_pending_exercise_ind.is_none() {
                             first_pending_exercise_ind = Some(exercise_ind);
                         }
-                        progresses[exercise_ind] = ExerciseCheckProgress::Pending;
                     }
                     self.set_status(exercise_ind, success)?;
-
                     progress_visualizer.update(&progresses)?;
                 }
             }
