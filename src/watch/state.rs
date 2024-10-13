@@ -157,8 +157,9 @@ impl<'a> WatchState<'a> {
 
     /// Move on to the next exercise if the current one is done.
     pub fn next_exercise(&mut self, stdout: &mut StdoutLock) -> Result<ExercisesProgress> {
-        if self.done_status == DoneStatus::Pending {
-            return Ok(ExercisesProgress::CurrentPending);
+        match self.done_status {
+            DoneStatus::DoneWithSolution(_) | DoneStatus::DoneWithoutSolution => (),
+            DoneStatus::Pending => return Ok(ExercisesProgress::CurrentPending),
         }
 
         self.app_state.done_current_exercise::<true>(stdout)
@@ -194,6 +195,11 @@ impl<'a> WatchState<'a> {
         stdout.write_all(b"l")?;
         stdout.queue(ResetColor)?;
         stdout.write_all(b":list / ")?;
+
+        stdout.queue(SetAttribute(Attribute::Bold))?;
+        stdout.write_all(b"c")?;
+        stdout.queue(ResetColor)?;
+        stdout.write_all(b":check all / ")?;
 
         stdout.queue(SetAttribute(Attribute::Bold))?;
         stdout.write_all(b"x")?;
@@ -272,6 +278,22 @@ impl<'a> WatchState<'a> {
         }
 
         Ok(())
+    }
+
+    pub fn check_all_exercises(&mut self, stdout: &mut StdoutLock) -> Result<ExercisesProgress> {
+        if let Some(first_pending_exercise_ind) = self.app_state.check_all_exercises(stdout)? {
+            // Only change exercise if the current one is done.
+            if self.app_state.current_exercise().done {
+                self.app_state
+                    .set_current_exercise_ind(first_pending_exercise_ind)?;
+                Ok(ExercisesProgress::NewPending)
+            } else {
+                Ok(ExercisesProgress::CurrentPending)
+            }
+        } else {
+            self.app_state.render_final_message(stdout)?;
+            Ok(ExercisesProgress::AllDone)
+        }
     }
 
     pub fn update_term_width(&mut self, width: u16, stdout: &mut StdoutLock) -> io::Result<()> {

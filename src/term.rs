@@ -1,6 +1,6 @@
 use crossterm::{
     cursor::MoveTo,
-    style::{Attribute, Color, SetAttribute, SetForegroundColor},
+    style::{Attribute, Color, ResetColor, SetAttribute, SetForegroundColor},
     terminal::{Clear, ClearType},
     Command, QueueableCommand,
 };
@@ -8,6 +8,8 @@ use std::{
     fmt, fs,
     io::{self, BufRead, StdoutLock, Write},
 };
+
+use crate::app_state::CheckProgress;
 
 pub struct MaxLenWriter<'a, 'b> {
     pub stdout: &'a mut StdoutLock<'b>,
@@ -85,12 +87,84 @@ impl<'a> CountedWrite<'a> for StdoutLock<'a> {
     }
 }
 
-/// Terminal progress bar to be used when not using Ratataui.
+pub struct CheckProgressVisualizer<'a, 'b> {
+    stdout: &'a mut StdoutLock<'b>,
+    n_cols: usize,
+}
+
+impl<'a, 'b> CheckProgressVisualizer<'a, 'b> {
+    const CHECKING_COLOR: Color = Color::Blue;
+    const DONE_COLOR: Color = Color::Green;
+    const PENDING_COLOR: Color = Color::Red;
+
+    pub fn build(stdout: &'a mut StdoutLock<'b>, term_width: u16) -> io::Result<Self> {
+        clear_terminal(stdout)?;
+        stdout.write_all("Checking all exercises…\n".as_bytes())?;
+
+        // Legend
+        stdout.write_all(b"Color of exercise number: ")?;
+        stdout.queue(SetForegroundColor(Self::CHECKING_COLOR))?;
+        stdout.write_all(b"Checking")?;
+        stdout.queue(ResetColor)?;
+        stdout.write_all(b" - ")?;
+        stdout.queue(SetForegroundColor(Self::DONE_COLOR))?;
+        stdout.write_all(b"Done")?;
+        stdout.queue(ResetColor)?;
+        stdout.write_all(b" - ")?;
+        stdout.queue(SetForegroundColor(Self::PENDING_COLOR))?;
+        stdout.write_all(b"Pending")?;
+        stdout.queue(ResetColor)?;
+        stdout.write_all(b"\n")?;
+
+        // Exercise numbers with up to 3 digits.
+        // +1 because the last column doesn't end with a whitespace.
+        let n_cols = usize::from(term_width + 1) / 4;
+
+        Ok(Self { stdout, n_cols })
+    }
+
+    pub fn update(&mut self, progresses: &[CheckProgress]) -> io::Result<()> {
+        self.stdout.queue(MoveTo(0, 2))?;
+
+        let mut exercise_num = 1;
+        for exercise_progress in progresses {
+            match exercise_progress {
+                CheckProgress::None => (),
+                CheckProgress::Checking => {
+                    self.stdout
+                        .queue(SetForegroundColor(Self::CHECKING_COLOR))?;
+                }
+                CheckProgress::Done => {
+                    self.stdout.queue(SetForegroundColor(Self::DONE_COLOR))?;
+                }
+                CheckProgress::Pending => {
+                    self.stdout.queue(SetForegroundColor(Self::PENDING_COLOR))?;
+                }
+            }
+
+            write!(self.stdout, "{exercise_num:<3}")?;
+            self.stdout.queue(ResetColor)?;
+
+            if exercise_num != progresses.len() {
+                if exercise_num % self.n_cols == 0 {
+                    self.stdout.write_all(b"\n")?;
+                } else {
+                    self.stdout.write_all(b" ")?;
+                }
+
+                exercise_num += 1;
+            }
+        }
+
+        self.stdout.flush()
+    }
+}
+
 pub fn progress_bar<'a>(
     writer: &mut impl CountedWrite<'a>,
     progress: u16,
     total: u16,
-    line_width: u16,
+    term_width: u16,
 ) -> io::Result<()> {
     debug_assert!(total < 1000);
     debug_assert!(progress <= total);
@@ -101,7 +175,7 @@ pub fn progress_bar<'a>(
     const WRAPPER_WIDTH: u16 = PREFIX_WIDTH + POSTFIX_WIDTH;
     const MIN_LINE_WIDTH: u16 = WRAPPER_WIDTH + 4;
 
-    if line_width < MIN_LINE_WIDTH {
+    if term_width < MIN_LINE_WIDTH {
         writer.write_ascii(b"Progress: ")?;
         // Integers are in ASCII.
         return writer.write_ascii(format!("{progress}/{total}").as_bytes());
@@ -110,7 +184,7 @@ pub fn progress_bar<'a>(
     let stdout = writer.stdout();
     stdout.write_all(PREFIX)?;
 
-    let width = line_width - WRAPPER_WIDTH;
+    let width = term_width - WRAPPER_WIDTH;
     let filled = (width * progress) / total;
 
     stdout.queue(SetForegroundColor(Color::Green))?;

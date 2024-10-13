@@ -5,7 +5,7 @@ use crossterm::{
 };
 use std::{
     io::{self, Write},
-    process::exit,
+    process::ExitCode,
 };
 
 use crate::{
@@ -13,7 +13,7 @@ use crate::{
     exercise::{solution_link_line, RunnableExercise, OUTPUT_CAPACITY},
 };
 
-pub fn run(app_state: &mut AppState) -> Result<()> {
+pub fn run(app_state: &mut AppState) -> Result<ExitCode> {
     let exercise = app_state.current_exercise();
     let mut output = Vec::with_capacity(OUTPUT_CAPACITY);
     let success = exercise.run_exercise(Some(&mut output), app_state.cmd_runner())?;
@@ -29,7 +29,8 @@ pub fn run(app_state: &mut AppState) -> Result<()> {
             .current_exercise()
             .terminal_file_link(&mut stdout)?;
         stdout.write_all(b" with errors\n")?;
-        exit(1);
+
+        return Ok(ExitCode::FAILURE);
     }
 
     stdout.queue(SetForegroundColor(Color::Green))?;
@@ -55,5 +56,5 @@ pub fn run(app_state: &mut AppState) -> Result<()> {
         ExercisesProgress::AllDone => (),
     }
 
-    Ok(())
+    Ok(ExitCode::SUCCESS)
 }
