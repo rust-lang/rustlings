@@ -152,7 +152,6 @@ fn main() -> Result<ExitCode> {
                 }
 
                 stdout.write_all(b"\n\n")?;
-
                 let pending = app_state.n_pending();
                 if pending == 1 {
                     stdout.write_all(b"One exercise pending: ")?;
@@ -167,6 +166,7 @@ fn main() -> Result<ExitCode> {
                     .current_exercise()
                     .terminal_file_link(&mut stdout)?;
                 stdout.write_all(b"\n")?;
+
                 return Ok(ExitCode::FAILURE);
             } else {
                 app_state.render_final_message(&mut stdout)?;

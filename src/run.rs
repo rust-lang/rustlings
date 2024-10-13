@@ -29,6 +29,7 @@ pub fn run(app_state: &mut AppState) -> Result<ExitCode> {
             .current_exercise()
             .terminal_file_link(&mut stdout)?;
         stdout.write_all(b" with errors\n")?;
+
         return Ok(ExitCode::FAILURE);
     }
 
