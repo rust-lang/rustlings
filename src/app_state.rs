@@ -435,7 +435,6 @@ impl AppState {
                             break;
                         };
 
-                        // Notify the progress bar that this exercise is pending.
                         if exercise_progress_sender
                             .send((exercise_ind, ExerciseCheckProgress::Checking))
                             .is_err()
@@ -450,7 +449,6 @@ impl AppState {
                             Err(_) => ExerciseCheckProgress::None,
                         };
 
-                        // Notify the progress bar that this exercise is done.
                         if exercise_progress_sender
                             .send((exercise_ind, progress))
                             .is_err()
