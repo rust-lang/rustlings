@@ -87,6 +87,74 @@ impl<'a> CountedWrite<'a> for StdoutLock<'a> {
     }
 }
 
+pub struct ExercisesCheckProgressVisualizer<'a, 'b> {
+    stdout: &'a mut StdoutLock<'b>,
+    n_cols: usize,
+}
+
+impl<'a, 'b> ExercisesCheckProgressVisualizer<'a, 'b> {
+    pub fn build(stdout: &'a mut StdoutLock<'b>, term_width: u16) -> io::Result<Self> {
+        clear_terminal(stdout)?;
+        stdout.write_all("Checking all exercises…\n".as_bytes())?;
+
+        // Legend
+        stdout.write_all(b"Color of exercise number: ")?;
+        stdout.queue(SetForegroundColor(Color::Blue))?;
+        stdout.write_all(b"Checking")?;
+        stdout.queue(ResetColor)?;
+        stdout.write_all(b" - ")?;
+        stdout.queue(SetForegroundColor(Color::Green))?;
+        stdout.write_all(b"Done")?;
+        stdout.queue(ResetColor)?;
+        stdout.write_all(b" - ")?;
+        stdout.queue(SetForegroundColor(Color::Red))?;
+        stdout.write_all(b"Pending")?;
+        stdout.queue(ResetColor)?;
+        stdout.write_all(b"\n")?;
+
+        // Exercise numbers with up to 3 digits.
+        // +1 because the last column doesn't end with a whitespace.
+        let n_cols = usize::from(term_width + 1) / 4;
+
+        Ok(Self { stdout, n_cols })
+    }
+
+    pub fn update(&mut self, progresses: &[ExerciseCheckProgress]) -> io::Result<()> {
+        self.stdout.queue(MoveTo(0, 2))?;
+
+        let mut exercise_num = 1;
+        for exercise_progress in progresses {
+            match exercise_progress {
+                ExerciseCheckProgress::None => (),
+                ExerciseCheckProgress::Checking => {
+                    self.stdout.queue(SetForegroundColor(Color::Blue))?;
+                }
+                ExerciseCheckProgress::Done => {
+                    self.stdout.queue(SetForegroundColor(Color::Green))?;
+                }
+                ExerciseCheckProgress::Pending => {
+                    self.stdout.queue(SetForegroundColor(Color::Red))?;
+                }
+            }
+
+            write!(self.stdout, "{exercise_num:<3}")?;
+            self.stdout.queue(ResetColor)?;
+
+            if exercise_num != progresses.len() {
+                if exercise_num % self.n_cols == 0 {
+                    self.stdout.write_all(b"\n")?;
+                } else {
+                    self.stdout.write_all(b" ")?;
+                }
+
+                exercise_num += 1;
+            }
+        }
+
+        self.stdout.flush()
+    }
+}
+
 pub fn progress_bar<'a>(
     writer: &mut impl CountedWrite<'a>,
     progress: u16,
@@ -135,63 +203,6 @@ pub fn progress_bar<'a>(
     stdout.queue(SetForegroundColor(Color::Reset))?;
 
     write!(stdout, "] {progress:>3}/{total}")
-}
-
-pub fn show_exercises_check_progress(
-    stdout: &mut StdoutLock,
-    progresses: &[ExerciseCheckProgress],
-    term_width: u16,
-) -> io::Result<()> {
-    stdout.queue(MoveTo(0, 0))?;
-
-    // Legend
-    stdout.write_all(b"Color of exercise number: ")?;
-    stdout.queue(SetForegroundColor(Color::Blue))?;
-    stdout.write_all(b"Checking")?;
-    stdout.queue(ResetColor)?;
-    stdout.write_all(b" - ")?;
-    stdout.queue(SetForegroundColor(Color::Green))?;
-    stdout.write_all(b"Done")?;
-    stdout.queue(ResetColor)?;
-    stdout.write_all(b" - ")?;
-    stdout.queue(SetForegroundColor(Color::Red))?;
-    stdout.write_all(b"Pending")?;
-    stdout.queue(ResetColor)?;
-    stdout.write_all(b"\n")?;
-
-    // Exercise numbers with up to 3 digits.
-    let n_cols = usize::from(term_width + 1) / 4;
-
-    let mut exercise_num = 1;
-    for exercise_progress in progresses {
-        match exercise_progress {
-            ExerciseCheckProgress::None => (),
-            ExerciseCheckProgress::Checking => {
-                stdout.queue(SetForegroundColor(Color::Blue))?;
-            }
-            ExerciseCheckProgress::Done => {
-                stdout.queue(SetForegroundColor(Color::Green))?;
-            }
-            ExerciseCheckProgress::Pending => {
-                stdout.queue(SetForegroundColor(Color::Red))?;
-            }
-        }
-
-        write!(stdout, "{exercise_num:<3}")?;
-        stdout.queue(ResetColor)?;
-
-        if exercise_num != progresses.len() {
-            if exercise_num % n_cols == 0 {
-                stdout.write_all(b"\n")?;
-            } else {
-                stdout.write_all(b" ")?;
-            }
-
-            exercise_num += 1;
-        }
-    }
-
-    stdout.flush()
 }
 
 pub fn clear_terminal(stdout: &mut StdoutLock) -> io::Result<()> {

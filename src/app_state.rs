@@ -20,7 +20,7 @@ use crate::{
     embedded::EMBEDDED_FILES,
     exercise::{Exercise, RunnableExercise},
     info_file::ExerciseInfo,
-    term::{self, show_exercises_check_progress},
+    term::{self, ExercisesCheckProgressVisualizer},
 };
 
 const STATE_FILE_NAME: &str = ".rustlings-state.txt";
@@ -409,13 +409,12 @@ impl AppState {
     }
 
     fn check_all_exercises_impl(&mut self, stdout: &mut StdoutLock) -> Result<Option<usize>> {
-        stdout.write_all("Checking all exercises…\n".as_bytes())?;
-        let next_exercise_ind = AtomicUsize::new(0);
         let term_width = terminal::size()
             .context("Failed to get the terminal size")?
             .0;
-        clear_terminal(stdout)?;
+        let mut progress_visualizer = ExercisesCheckProgressVisualizer::build(stdout, term_width)?;
 
+        let next_exercise_ind = AtomicUsize::new(0);
         let mut progresses = vec![ExerciseCheckProgress::None; self.exercises.len()];
 
         thread::scope(|s| {
@@ -464,7 +463,7 @@ impl AppState {
 
             while let Ok((exercise_ind, progress)) = exercise_progress_receiver.recv() {
                 progresses[exercise_ind] = progress;
-                show_exercises_check_progress(stdout, &progresses, term_width)?;
+                progress_visualizer.update(&progresses)?;
             }
 
             Ok::<_, Error>(())
@@ -487,7 +486,7 @@ impl AppState {
                     // it could be because we exceeded the limit of open file descriptors.
                     // Therefore, try running exercises with errors sequentially.
                     progresses[exercise_ind] = ExerciseCheckProgress::Checking;
-                    show_exercises_check_progress(stdout, &progresses, term_width)?;
+                    progress_visualizer.update(&progresses)?;
 
                     let exercise = &self.exercises[exercise_ind];
                     let success = exercise.run_exercise(None, &self.cmd_runner)?;
@@ -501,7 +500,7 @@ impl AppState {
                     }
                     self.set_status(exercise_ind, success)?;
 
-                    show_exercises_check_progress(stdout, &progresses, term_width)?;
+                    progress_visualizer.update(&progresses)?;
                 }
             }
         }
