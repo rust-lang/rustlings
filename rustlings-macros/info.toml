@@ -187,6 +187,20 @@ There are two solutions:
 1. Add the `return` keyword before `num * num;`
 2. Remove the semicolon `;` after `num * num`"""
 
+[[exercises]]
+name = "functions6"
+dir = "02_functions"
+test = false
+hint = """
+Hint FIX #1: Closures can capture variables defined in the outer context.
+
+Hint FIX #2: Closures can infer both input and returned types, when they are not
+specified in the signature. But the closure cannot be reused with different
+input types.
+
+Read more about closures in the rust book dedicated section:
+https://doc.rust-lang.org/book/ch13-01-closures.html"""
+
 # IF
 
 [[exercises]]
@@ -390,6 +404,18 @@ The first problem is that `get_char` is taking ownership of the string. So
 
 Once you've fixed that, `string_uppercase`'s function signature will also need
 to be adjusted."""
+
+[[exercises]]
+name = "move_semantics6"
+dir = "06_move_semantics"
+test = false
+hint = """
+When a closure captures a variable to modify it, it actually borrows that variable
+as a mutable reference. In this exercise, the closure mutably borrows the `counter`
+variable, thus, any attempt to borrow `counter` between closure calls leads to an error.
+
+You cannot immutably borrow a variable if a mutable closure is
+called later in the scope."""
 
 # STRUCTS
 
