@@ -5,7 +5,7 @@ disallowed-types = [
 ]
 
 disallowed-methods = [
-  # We use `ahash` instead of the default hasher.
+  # We use `foldhash` instead of the default hasher.
   "std::collections::HashSet::new",
   "std::collections::HashSet::with_capacity",
   # Inefficient. Use `.queue(…)` instead.

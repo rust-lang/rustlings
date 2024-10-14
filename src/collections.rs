@@ -1,10 +1,9 @@
-use ahash::AHasher;
-use std::hash::BuildHasherDefault;
+use foldhash::fast::FixedState;
 
-/// DOS attacks aren't a concern for Rustlings. Therefore, we use `ahash` with fixed seeds.
-pub type HashSet<T> = std::collections::HashSet<T, BuildHasherDefault<AHasher>>;
+/// DOS attacks aren't a concern for Rustlings. Therefore, we use `foldhash` with a fixed state.
+pub type HashSet<T> = std::collections::HashSet<T, FixedState>;
 
 #[inline]
 pub fn hash_set_with_capacity<T>(capacity: usize) -> HashSet<T> {
-    HashSet::with_capacity_and_hasher(capacity, BuildHasherDefault::<AHasher>::default())
+    HashSet::with_capacity_and_hasher(capacity, FixedState::default())
 }
