@@ -82,6 +82,15 @@ rustlings
 Our general recommendation is [VS Code](https://code.visualstudio.com/) with the [rust-analyzer plugin](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer).
 But any editor that supports [rust-analyzer](https://rust-analyzer.github.io/) should be enough for working on the exercises.
 
+<details>
+<summary><strong>If you cloned the repository and <code>rust-analyzer</code> isn't working…</strong> (<em>click to expand</em>)</summary>
+
+The intended way to run Rustlings is to install the binary and run `rustlings init` as described above. This generates a `Cargo.toml` (different than what you see in the repository) that includes the each excersise as a separate binary target which is enough for `rust-analyzer` to work.
+
+If you just clone the repository and try to run and edit the exercises directly, the language server will not work. This is one downside of the current approach. But this only affects developing exercises.
+
+</details>
+
 ### Terminal
 
 While working with Rustlings, please use a modern terminal for the best user experience.
