@@ -17,6 +17,7 @@ use crate::{
     CURRENT_FORMAT_VERSION,
 };
 
+const MAX_N_EXERCISES: usize = 999;
 const MAX_EXERCISE_NAME_LEN: usize = 32;
 
 // Find a char that isn't allowed in the exercise's `name` or `dir`.
@@ -346,6 +347,10 @@ fn check_solutions(
 
 pub fn check(require_solutions: bool) -> Result<()> {
     let info_file = InfoFile::parse()?;
+
+    if info_file.exercises.len() > MAX_N_EXERCISES {
+        bail!("The maximum number of exercises is {MAX_N_EXERCISES}");
+    }
 
     if cfg!(debug_assertions) {
         // A hack to make `cargo run -- dev check` work when developing Rustlings.

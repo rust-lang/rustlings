@@ -166,7 +166,7 @@ pub fn progress_bar<'a>(
     total: u16,
     term_width: u16,
 ) -> io::Result<()> {
-    debug_assert!(total < 1000);
+    debug_assert!(total <= 999);
     debug_assert!(progress <= total);
 
     const PREFIX: &[u8] = b"Progress: [";
