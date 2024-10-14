@@ -202,7 +202,7 @@ fn check_exercises_unsolved(
 
     for (exercise_name, handle) in handles {
         let Ok(result) = handle.join() else {
-            bail!("Panic while trying to run the exericse {exercise_name}");
+            bail!("Panic while trying to run the exercise {exercise_name}");
         };
 
         match result {
@@ -300,7 +300,7 @@ fn check_solutions(
     for (exercise_info, handle) in info_file.exercises.iter().zip(handles) {
         let Ok(check_result) = handle.join() else {
             bail!(
-                "Panic while trying to run the solution of the exericse {}",
+                "Panic while trying to run the solution of the exercise {}",
                 exercise_info.name,
             );
         };

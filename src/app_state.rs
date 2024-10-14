@@ -148,11 +148,11 @@ impl AppState {
 
             let mut done_exercises = hash_set_with_capacity(exercises.len());
 
-            for done_exerise_name in lines {
-                if done_exerise_name.is_empty() {
+            for done_exercise_name in lines {
+                if done_exercise_name.is_empty() {
                     break;
                 }
-                done_exercises.insert(done_exerise_name);
+                done_exercises.insert(done_exercise_name);
             }
 
             for (ind, exercise) in exercises.iter_mut().enumerate() {
