@@ -45,6 +45,18 @@ cargo install rustlings
 
 </details>
 
+> [!CAUTION]
+> Don't try to clone the repository to do the exercises! `rust-analyzer` won't work in that case. Please follow the instructions above instead.
+> 
+> <details>
+> <summary>Why?</summary>
+>
+>The intended way to run Rustlings is to install the binary and run `rustlings init` as described above. This generates a `Cargo.toml` (different than what you see in the repository) that includes each exercise as a separate binary target which is enough for `rust-analyzer` to work.
+>
+>If you just clone the repository and try to run and edit the exercises directly, the language server will not work.
+>
+> </details>
+
 ### Initialization
 
 After installing Rustlings, run the following command to initialize the `rustlings/` directory:
@@ -81,15 +93,6 @@ rustlings
 
 Our general recommendation is [VS Code](https://code.visualstudio.com/) with the [rust-analyzer plugin](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer).
 But any editor that supports [rust-analyzer](https://rust-analyzer.github.io/) should be enough for working on the exercises.
-
-<details>
-<summary><strong>If you cloned the repository and <code>rust-analyzer</code> isn't working…</strong> (<em>click to expand</em>)</summary>
-
-The intended way to run Rustlings is to install the binary and run `rustlings init` as described above. This generates a `Cargo.toml` (different than what you see in the repository) that includes each excersise as a separate binary target which is enough for `rust-analyzer` to work.
-
-If you just clone the repository and try to run and edit the exercises directly, the language server will not work. Please follow the instructions above instead.
-
-</details>
 
 ### Terminal
 
