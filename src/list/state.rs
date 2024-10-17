@@ -105,6 +105,28 @@ impl<'a> ListState<'a> {
         );
     }
 
+    fn draw_exericse_name(&self, writer: &mut MaxLenWriter, exercise: &Exercise) -> io::Result<()> {
+        if !self.search_query.is_empty() {
+            if let Some((pre_highlight, highlight, post_highlight)) = exercise
+                .name
+                .find(&self.search_query)
+                .and_then(|ind| exercise.name.split_at_checked(ind))
+                .and_then(|(pre_highlight, rest)| {
+                    rest.split_at_checked(self.search_query.len())
+                        .map(|x| (pre_highlight, x.0, x.1))
+                })
+            {
+                writer.write_str(pre_highlight)?;
+                writer.stdout.queue(SetForegroundColor(Color::Magenta))?;
+                writer.write_str(highlight)?;
+                writer.stdout.queue(ResetColor)?;
+                return writer.write_str(post_highlight);
+            }
+        }
+
+        writer.write_str(exercise.name)
+    }
+
     fn draw_rows(
         &self,
         stdout: &mut StdoutLock,
@@ -147,10 +169,10 @@ impl<'a> ListState<'a> {
                 writer.stdout.queue(SetForegroundColor(Color::Yellow))?;
                 writer.write_ascii(b"PENDING  ")?;
             }
-
             writer.stdout.queue(SetForegroundColor(Color::Reset))?;
 
-            writer.write_str(exercise.name)?;
+            self.draw_exericse_name(&mut writer, exercise)?;
+
             writer.write_ascii(&self.name_col_padding[exercise.name.len()..])?;
 
             // The list links aren't shown correctly in VS Code on Windows.
