@@ -1,6 +1,7 @@
 use anyhow::{anyhow, bail, Context, Error, Result};
 use std::{
     cmp::Ordering,
+    collections::HashSet,
     fs::{self, read_dir, OpenOptions},
     io::{self, Read, Write},
     path::{Path, PathBuf},
@@ -11,7 +12,6 @@ use std::{
 use crate::{
     cargo_toml::{append_bins, bins_start_end_ind, BINS_BUFFER_CAPACITY},
     cmd::CmdRunner,
-    collections::{hash_set_with_capacity, HashSet},
     exercise::{RunnableExercise, OUTPUT_CAPACITY},
     info_file::{ExerciseInfo, InfoFile},
     CURRENT_FORMAT_VERSION,
@@ -53,8 +53,8 @@ fn check_cargo_toml(
 
 // Check the info of all exercises and return their paths in a set.
 fn check_info_file_exercises(info_file: &InfoFile) -> Result<HashSet<PathBuf>> {
-    let mut names = hash_set_with_capacity(info_file.exercises.len());
-    let mut paths = hash_set_with_capacity(info_file.exercises.len());
+    let mut names = HashSet::with_capacity(info_file.exercises.len());
+    let mut paths = HashSet::with_capacity(info_file.exercises.len());
 
     let mut file_buf = String::with_capacity(1 << 14);
     for exercise_info in &info_file.exercises {
@@ -282,7 +282,7 @@ fn check_solutions(
         .collect::<Result<Vec<_>, _>>()
         .context("Failed to spawn a thread to check a solution")?;
 
-    let mut sol_paths = hash_set_with_capacity(info_file.exercises.len());
+    let mut sol_paths = HashSet::with_capacity(info_file.exercises.len());
     let mut fmt_cmd = Command::new("rustfmt");
     fmt_cmd
         .arg("--check")

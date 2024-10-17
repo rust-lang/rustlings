@@ -5,9 +5,6 @@ disallowed-types = [
 ]
 
 disallowed-methods = [
-  # We use `foldhash` instead of the default hasher.
-  "std::collections::HashSet::new",
-  "std::collections::HashSet::with_capacity",
   # Inefficient. Use `.queue(…)` instead.
   "crossterm::style::style",
   # Use `thread::Builder::spawn` instead and handle the error.

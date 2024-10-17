@@ -1,6 +1,7 @@
 use anyhow::{bail, Context, Error, Result};
 use crossterm::{cursor, terminal, QueueableCommand};
 use std::{
+    collections::HashSet,
     env,
     fs::{File, OpenOptions},
     io::{Read, Seek, StdoutLock, Write},
@@ -16,7 +17,6 @@ use std::{
 use crate::{
     clear_terminal,
     cmd::CmdRunner,
-    collections::hash_set_with_capacity,
     embedded::EMBEDDED_FILES,
     exercise::{Exercise, RunnableExercise},
     info_file::ExerciseInfo,
@@ -146,7 +146,7 @@ impl AppState {
                 break 'block StateFileStatus::NotRead;
             }
 
-            let mut done_exercises = hash_set_with_capacity(exercises.len());
+            let mut done_exercises = HashSet::with_capacity(exercises.len());
 
             for done_exercise_name in lines {
                 if done_exercise_name.is_empty() {
