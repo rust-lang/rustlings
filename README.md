@@ -124,14 +124,13 @@ The list allows you to…
 
 - See the status of all exercises (done or pending)
 - `c`: Continue at another exercise (temporarily skip some exercises or go back to a previous one)
-- `r`: Reset status and file of an exercise (you need to _reload/reopen_ its file in your editor afterwards)
+- `r`: Reset status and file of the selected exercise (you need to _reload/reopen_ its file in your editor afterwards)
 
 See the footer of the list for all possible keys.
 
-## Continuing On
+## Questions?
 
-Once you've completed Rustlings, put your new knowledge to good use!
-Continue practicing your Rust skills by building your own projects, contributing to Rustlings, or finding other open-source projects to contribute to.
+If you need any help while doing the exercises and the builtin-hints aren't helpful, feel free to ask in the [_Q&A_ category of the discussions](https://github.com/rust-lang/rustlings/discussions/categories/q-a?discussions_q=) if your question wasn't asked yet 💡
 
 ## Third-Party Exercises
 
@@ -143,6 +142,11 @@ You can use the same `rustlings` program that you installed with `cargo install 
 Do you want to create your own set of Rustlings exercises to focus on some specific topic?
 Or do you want to translate the original Rustlings exercises?
 Then follow the the guide about [third-party exercises](https://github.com/rust-lang/rustlings/blob/main/THIRD_PARTY_EXERCISES.md)!
+
+## Continuing On
+
+Once you've completed Rustlings, put your new knowledge to good use!
+Continue practicing your Rust skills by building your own projects, contributing to Rustlings, or finding other open-source projects to contribute to.
 
 ## Uninstalling Rustlings
 
