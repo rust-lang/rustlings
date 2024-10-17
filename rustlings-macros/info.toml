@@ -575,12 +575,8 @@ https://doc.rust-lang.org/book/ch08-03-hash-maps.html#only-inserting-a-value-if-
 name = "hashmaps3"
 dir = "11_hashmaps"
 hint = """
-Hint 1: Use the `entry()` and `or_insert()` (or `or_insert_with()`) methods of
-        `HashMap` to insert the default value of `TeamScores` if a team doesn't
-        exist in the table yet.
-
-Learn more in The Book:
-https://doc.rust-lang.org/book/ch08-03-hash-maps.html#only-inserting-a-value-if-the-key-has-no-value
+Hint 1: Use the `entry()` and `or_default()` methods of `HashMap` to insert the
+        default value of `TeamScores` if a team doesn't exist in the table yet.
 
 Hint 2: If there is already an entry for a given key, the value returned by
         `entry()` can be updated based on the existing value.
