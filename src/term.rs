@@ -11,15 +11,15 @@ use std::{
 
 use crate::app_state::CheckProgress;
 
-pub struct MaxLenWriter<'a, 'b> {
-    pub stdout: &'a mut StdoutLock<'b>,
+pub struct MaxLenWriter<'a, 'lock> {
+    pub stdout: &'a mut StdoutLock<'lock>,
     len: usize,
     max_len: usize,
 }
 
-impl<'a, 'b> MaxLenWriter<'a, 'b> {
+impl<'a, 'lock> MaxLenWriter<'a, 'lock> {
     #[inline]
-    pub fn new(stdout: &'a mut StdoutLock<'b>, max_len: usize) -> Self {
+    pub fn new(stdout: &'a mut StdoutLock<'lock>, max_len: usize) -> Self {
         Self {
             stdout,
             len: 0,
@@ -34,13 +34,13 @@ impl<'a, 'b> MaxLenWriter<'a, 'b> {
     }
 }
 
-pub trait CountedWrite<'a> {
+pub trait CountedWrite<'lock> {
     fn write_ascii(&mut self, ascii: &[u8]) -> io::Result<()>;
     fn write_str(&mut self, unicode: &str) -> io::Result<()>;
-    fn stdout(&mut self) -> &mut StdoutLock<'a>;
+    fn stdout(&mut self) -> &mut StdoutLock<'lock>;
 }
 
-impl<'a, 'b> CountedWrite<'b> for MaxLenWriter<'a, 'b> {
+impl<'lock> CountedWrite<'lock> for MaxLenWriter<'_, 'lock> {
     fn write_ascii(&mut self, ascii: &[u8]) -> io::Result<()> {
         let n = ascii.len().min(self.max_len.saturating_sub(self.len));
         if n > 0 {
@@ -65,7 +65,7 @@ impl<'a, 'b> CountedWrite<'b> for MaxLenWriter<'a, 'b> {
     }
 
     #[inline]
-    fn stdout(&mut self) -> &mut StdoutLock<'b> {
+    fn stdout(&mut self) -> &mut StdoutLock<'lock> {
         self.stdout
     }
 }
@@ -87,17 +87,17 @@ impl<'a> CountedWrite<'a> for StdoutLock<'a> {
     }
 }
 
-pub struct CheckProgressVisualizer<'a, 'b> {
-    stdout: &'a mut StdoutLock<'b>,
+pub struct CheckProgressVisualizer<'a, 'lock> {
+    stdout: &'a mut StdoutLock<'lock>,
     n_cols: usize,
 }
 
-impl<'a, 'b> CheckProgressVisualizer<'a, 'b> {
+impl<'a, 'lock> CheckProgressVisualizer<'a, 'lock> {
     const CHECKING_COLOR: Color = Color::Blue;
     const DONE_COLOR: Color = Color::Green;
     const PENDING_COLOR: Color = Color::Red;
 
-    pub fn build(stdout: &'a mut StdoutLock<'b>, term_width: u16) -> io::Result<Self> {
+    pub fn build(stdout: &'a mut StdoutLock<'lock>, term_width: u16) -> io::Result<Self> {
         clear_terminal(stdout)?;
         stdout.write_all("Checking all exercises…\n".as_bytes())?;
 

@@ -125,7 +125,7 @@ pub struct CargoSubcommand<'out> {
     output: Option<&'out mut Vec<u8>>,
 }
 
-impl<'out> CargoSubcommand<'out> {
+impl CargoSubcommand<'_> {
     #[inline]
     pub fn args<'arg, I>(&mut self, args: I) -> &mut Self
     where
