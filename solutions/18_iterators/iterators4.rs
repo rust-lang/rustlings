@@ -1,4 +1,4 @@
-// 3 possible solutions are presented.
+// 4 possible solutions are presented.
 
 // With `for` loop and a mutable variable.
 fn factorial_for(num: u64) -> u64 {
@@ -35,6 +35,14 @@ fn factorial_product(num: u64) -> u64 {
     (2..=num).product()
 }
 
+// Using recursion in conjunction with the `match` to implement factorial
+fn factorial_recursion(num: u64) -> u64 {
+    match num {
+        0..=1 => 1,
+        _ => num * factorial_recursion(num - 1),
+    }
+}
+
 fn main() {
     // You can optionally experiment here.
 }
@@ -48,6 +56,7 @@ mod tests {
         assert_eq!(factorial_for(0), 1);
         assert_eq!(factorial_fold(0), 1);
         assert_eq!(factorial_product(0), 1);
+        assert_eq!(factorial_recursion(0), 1);
     }
 
     #[test]
@@ -55,12 +64,14 @@ mod tests {
         assert_eq!(factorial_for(1), 1);
         assert_eq!(factorial_fold(1), 1);
         assert_eq!(factorial_product(1), 1);
+        assert_eq!(factorial_recursion(1), 1);
     }
     #[test]
     fn factorial_of_2() {
         assert_eq!(factorial_for(2), 2);
         assert_eq!(factorial_fold(2), 2);
         assert_eq!(factorial_product(2), 2);
+        assert_eq!(factorial_recursion(2), 2);
     }
 
     #[test]
@@ -68,5 +79,6 @@ mod tests {
         assert_eq!(factorial_for(4), 24);
         assert_eq!(factorial_fold(4), 24);
         assert_eq!(factorial_product(4), 24);
+        assert_eq!(factorial_recursion(4), 24);
     }
 }
