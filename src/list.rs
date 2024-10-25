@@ -1,90 +1,135 @@
-use anyhow::Result;
+use anyhow::{Context, Result};
 use crossterm::{
-    event::{self, Event, KeyCode, KeyEventKind},
-    terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
-    ExecutableCommand,
+    cursor,
+    event::{
+        self, DisableMouseCapture, EnableMouseCapture, Event, KeyCode, KeyEventKind, MouseEventKind,
+    },
+    terminal::{
+        disable_raw_mode, enable_raw_mode, DisableLineWrap, EnableLineWrap, EnterAlternateScreen,
+        LeaveAlternateScreen,
+    },
+    QueueableCommand,
 };
-use ratatui::{backend::CrosstermBackend, Terminal};
-use std::io;
+use std::io::{self, StdoutLock, Write};
 
 use crate::app_state::AppState;
 
-use self::state::{Filter, UiState};
+use self::state::{Filter, ListState};
 
+mod scroll_state;
 mod state;
+
+fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> {
+    let mut list_state = ListState::build(app_state, stdout)?;
+    let mut is_searching = false;
+
+    loop {
+        match event::read().context("Failed to read terminal event")? {
+            Event::Key(key) => {
+                match key.kind {
+                    KeyEventKind::Release => continue,
+                    KeyEventKind::Press | KeyEventKind::Repeat => (),
+                }
+
+                list_state.message.clear();
+
+                if is_searching {
+                    match key.code {
+                        KeyCode::Esc | KeyCode::Enter => {
+                            is_searching = false;
+                            list_state.search_query.clear();
+                        }
+                        KeyCode::Char(c) => {
+                            list_state.search_query.push(c);
+                            list_state.apply_search_query();
+                        }
+                        KeyCode::Backspace => {
+                            list_state.search_query.pop();
+                            list_state.apply_search_query();
+                        }
+                        _ => continue,
+                    }
+
+                    list_state.draw(stdout)?;
+                    continue;
+                }
+
+                match key.code {
+                    KeyCode::Char('q') => return Ok(()),
+                    KeyCode::Down | KeyCode::Char('j') => list_state.select_next(),
+                    KeyCode::Up | KeyCode::Char('k') => list_state.select_previous(),
+                    KeyCode::Home | KeyCode::Char('g') => list_state.select_first(),
+                    KeyCode::End | KeyCode::Char('G') => list_state.select_last(),
+                    KeyCode::Char('d') => {
+                        if list_state.filter() == Filter::Done {
+                            list_state.set_filter(Filter::None);
+                            list_state.message.push_str("Disabled filter DONE");
+                        } else {
+                            list_state.set_filter(Filter::Done);
+                            list_state.message.push_str(
+                                "Enabled filter DONE │ Press d again to disable the filter",
+                            );
+                        }
+                    }
+                    KeyCode::Char('p') => {
+                        if list_state.filter() == Filter::Pending {
+                            list_state.set_filter(Filter::None);
+                            list_state.message.push_str("Disabled filter PENDING");
+                        } else {
+                            list_state.set_filter(Filter::Pending);
+                            list_state.message.push_str(
+                                "Enabled filter PENDING │ Press p again to disable the filter",
+                            );
+                        }
+                    }
+                    KeyCode::Char('r') => list_state.reset_selected()?,
+                    KeyCode::Char('c') => {
+                        if list_state.selected_to_current_exercise()? {
+                            return Ok(());
+                        }
+                    }
+                    KeyCode::Char('s' | '/') => {
+                        is_searching = true;
+                        list_state.apply_search_query();
+                    }
+                    // Redraw to remove the message.
+                    KeyCode::Esc => (),
+                    _ => continue,
+                }
+            }
+            Event::Mouse(event) => match event.kind {
+                MouseEventKind::ScrollDown => list_state.select_next(),
+                MouseEventKind::ScrollUp => list_state.select_previous(),
+                _ => continue,
+            },
+            Event::Resize(width, height) => list_state.set_term_size(width, height),
+            // Ignore
+            Event::FocusGained | Event::FocusLost => continue,
+        }
+
+        list_state.draw(stdout)?;
+    }
+}
 
 pub fn list(app_state: &mut AppState) -> Result<()> {
     let mut stdout = io::stdout().lock();
-    stdout.execute(EnterAlternateScreen)?;
+    stdout
+        .queue(EnterAlternateScreen)?
+        .queue(cursor::Hide)?
+        .queue(DisableLineWrap)?
+        .queue(EnableMouseCapture)?;
     enable_raw_mode()?;
 
-    let mut terminal = Terminal::new(CrosstermBackend::new(&mut stdout))?;
-    terminal.clear()?;
+    let res = handle_list(app_state, &mut stdout);
 
-    let mut ui_state = UiState::new(app_state);
-
-    'outer: loop {
-        terminal.draw(|frame| ui_state.draw(frame).unwrap())?;
-
-        let key = loop {
-            match event::read()? {
-                Event::Key(key) => match key.kind {
-                    KeyEventKind::Press | KeyEventKind::Repeat => break key,
-                    KeyEventKind::Release => (),
-                },
-                // Redraw
-                Event::Resize(_, _) => continue 'outer,
-                // Ignore
-                Event::FocusGained | Event::FocusLost | Event::Mouse(_) | Event::Paste(_) => (),
-            }
-        };
-
-        ui_state.message.clear();
-
-        match key.code {
-            KeyCode::Char('q') => break,
-            KeyCode::Down | KeyCode::Char('j') => ui_state.select_next(),
-            KeyCode::Up | KeyCode::Char('k') => ui_state.select_previous(),
-            KeyCode::Home | KeyCode::Char('g') => ui_state.select_first(),
-            KeyCode::End | KeyCode::Char('G') => ui_state.select_last(),
-            KeyCode::Char('d') => {
-                let message = if ui_state.filter == Filter::Done {
-                    ui_state.filter = Filter::None;
-                    "Disabled filter DONE"
-                } else {
-                    ui_state.filter = Filter::Done;
-                    "Enabled filter DONE │ Press d again to disable the filter"
-                };
-
-                ui_state = ui_state.with_updated_rows();
-                ui_state.message.push_str(message);
-            }
-            KeyCode::Char('p') => {
-                let message = if ui_state.filter == Filter::Pending {
-                    ui_state.filter = Filter::None;
-                    "Disabled filter PENDING"
-                } else {
-                    ui_state.filter = Filter::Pending;
-                    "Enabled filter PENDING │ Press p again to disable the filter"
-                };
-
-                ui_state = ui_state.with_updated_rows();
-                ui_state.message.push_str(message);
-            }
-            KeyCode::Char('r') => {
-                ui_state = ui_state.with_reset_selected()?;
-            }
-            KeyCode::Char('c') => {
-                ui_state.selected_to_current_exercise()?;
-                ui_state = ui_state.with_updated_rows();
-            }
-            _ => (),
-        }
-    }
-
-    drop(terminal);
-    stdout.execute(LeaveAlternateScreen)?;
+    // Restore the terminal even if we got an error.
+    stdout
+        .queue(LeaveAlternateScreen)?
+        .queue(cursor::Show)?
+        .queue(EnableLineWrap)?
+        .queue(DisableMouseCapture)?
+        .flush()?;
     disable_raw_mode()?;
 
-    Ok(())
+    res
 }

@@ -2,8 +2,6 @@ use anyhow::{bail, Context, Result};
 use clap::Subcommand;
 use std::path::PathBuf;
 
-use crate::DEBUG_PROFILE;
-
 mod check;
 mod new;
 mod update;
@@ -32,7 +30,7 @@ impl DevCommands {
     pub fn run(self) -> Result<()> {
         match self {
             Self::New { path, no_git } => {
-                if DEBUG_PROFILE {
+                if cfg!(debug_assertions) {
                     bail!("Disabled in the debug build");
                 }
 

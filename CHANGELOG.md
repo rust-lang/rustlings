@@ -1,3 +1,62 @@
+<a name="6.3.0"></a>
+
+## 6.3.0 (2024-08-29)
+
+### Added
+
+- Add the following exercise lints:
+  - `forbid(unsafe_code)`: You shouldn't write unsafe code in Rustlings.
+  - `forbid(unstable_features)`: You don't need unstable features in Rustlings and shouldn't rely on them while learning Rust.
+  - `forbid(todo)`: You forgot a `todo!()`.
+  - `forbid(empty_loop)`: This can only happen by mistake in Rustlings.
+  - `deny(infinite_loop)`: No infinite loops are needed in Rustlings.
+  - `deny(mem_forget)`: You shouldn't leak memory while still learning Rust.
+- Show a link to every exercise file in the list.
+- Add scroll padding in the list.
+- Break the help footer of the list into two lines when the terminal width isn't big enough.
+- Enable scrolling with the mouse in the list.
+- `dev check`: Show the progress of checks.
+- `dev check`: Check that the length of all exercise names is lower than 32.
+- `dev check`: Check if exercise contains no tests and isn't marked with `test = false`.
+
+### Changed
+
+- The compilation time when installing Rustlings is reduced.
+- Pressing `c` in the list for "continue on" now quits the list after setting the selected exercise as the current one.
+- Better highlighting of the solution file after an exercise is done.
+- Don't show the output of successful tests anymore. Instead, show the pretty output for tests.
+- Be explicit about `q` only quitting the list and not the whole program in the list.
+- Be explicit about `r` only resetting one exercise (the selected one) in the list.
+- Ignore the standard output of `git init`.
+- `threads3`: Remove the queue length and improve tests.
+- `errors4`: Use match instead of a comparison chain in the solution.
+- `functions3`: Only take `u8` to avoid using a too high number of iterations by mistake.
+- `dev check`: Always check with strict Clippy (warnings to errors) when checking the solutions.
+
+### Fixed
+
+- Fix the error on some systems about too many open files during the final check of all exercises.
+- Fix the list when the terminal height is too low.
+- Restore the terminal after an error in the list.
+
+<a name="6.2.0"></a>
+
+## 6.2.0 (2024-08-09)
+
+### Added
+
+- Show a message before checking and running an exercise. This gives the user instant feedback and avoids confusion if the checks take too long.
+- Show a helpful error message when trying to install Rustlings with a Rust version lower than the minimum one that Rustlings supports.
+- Add a `README.md` file to the `solutions/` directory.
+- Allow initializing Rustlings in a Cargo workspace.
+- `dev check`: Check that all solutions are formatted with `rustfmt`.
+
+### Changed
+
+- Remove the state file and the solutions directory from the generated `.gitignore` file.
+- Run the final check of all exercises in parallel.
+- Small exercise improvements.
+
 <a name="6.1.0"></a>
 
 ## 6.1.0 (2024-07-10)

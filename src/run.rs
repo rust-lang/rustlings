@@ -1,17 +1,22 @@
-use anyhow::{bail, Result};
-use crossterm::style::{style, Stylize};
-use std::io::{self, Write};
+use anyhow::Result;
+use crossterm::{
+    style::{Color, ResetColor, SetForegroundColor},
+    QueueableCommand,
+};
+use std::{
+    io::{self, Write},
+    process::ExitCode,
+};
 
 use crate::{
     app_state::{AppState, ExercisesProgress},
-    exercise::{RunnableExercise, OUTPUT_CAPACITY},
-    terminal_link::TerminalFileLink,
+    exercise::{solution_link_line, RunnableExercise, OUTPUT_CAPACITY},
 };
 
-pub fn run(app_state: &mut AppState) -> Result<()> {
+pub fn run(app_state: &mut AppState) -> Result<ExitCode> {
     let exercise = app_state.current_exercise();
     let mut output = Vec::with_capacity(OUTPUT_CAPACITY);
-    let success = exercise.run_exercise(&mut output, app_state.target_dir())?;
+    let success = exercise.run_exercise(Some(&mut output), app_state.cmd_runner())?;
 
     let mut stdout = io::stdout().lock();
     stdout.write_all(&output)?;
@@ -19,33 +24,37 @@ pub fn run(app_state: &mut AppState) -> Result<()> {
     if !success {
         app_state.set_pending(app_state.current_exercise_ind())?;
 
-        bail!(
-            "Ran {} with errors",
-            app_state.current_exercise().terminal_link(),
-        );
+        stdout.write_all(b"Ran ")?;
+        app_state
+            .current_exercise()
+            .terminal_file_link(&mut stdout)?;
+        stdout.write_all(b" with errors\n")?;
+
+        return Ok(ExitCode::FAILURE);
     }
 
-    writeln!(
-        stdout,
-        "{}{}",
-        "✓ Successfully ran ".green(),
-        exercise.path.green(),
-    )?;
+    stdout.queue(SetForegroundColor(Color::Green))?;
+    stdout.write_all("✓ Successfully ran ".as_bytes())?;
+    stdout.write_all(exercise.path.as_bytes())?;
+    stdout.queue(ResetColor)?;
+    stdout.write_all(b"\n")?;
 
     if let Some(solution_path) = app_state.current_solution_path()? {
-        println!(
-            "\nA solution file can be found at {}\n",
-            style(TerminalFileLink(&solution_path)).underlined().green(),
-        );
+        stdout.write_all(b"\n")?;
+        solution_link_line(&mut stdout, &solution_path)?;
+        stdout.write_all(b"\n")?;
     }
 
-    match app_state.done_current_exercise(&mut stdout)? {
+    match app_state.done_current_exercise::<false>(&mut stdout)? {
+        ExercisesProgress::NewPending | ExercisesProgress::CurrentPending => {
+            stdout.write_all(b"Next exercise: ")?;
+            app_state
+                .current_exercise()
+                .terminal_file_link(&mut stdout)?;
+            stdout.write_all(b"\n")?;
+        }
         ExercisesProgress::AllDone => (),
-        ExercisesProgress::CurrentPending | ExercisesProgress::NewPending => println!(
-            "Next exercise: {}",
-            app_state.current_exercise().terminal_link(),
-        ),
     }
 
-    Ok(())
+    Ok(ExitCode::SUCCESS)
 }

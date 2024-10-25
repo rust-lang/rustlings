@@ -25,6 +25,7 @@ fn factorial_fold(num: u64) -> u64 {
     //              -> 1 * 2 is calculated, then the result 2 is multiplied by
     //                 the second element 3 so the result 6 is returned.
     // And so on…
+    #[allow(clippy::unnecessary_fold)]
     (2..=num).fold(1, |acc, x| acc * x)
 }
 

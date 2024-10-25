@@ -6,6 +6,7 @@ authors.workspace = true
 repository.workspace = true
 license.workspace = true
 edition.workspace = true
+rust-version.workspace = true
 include = [
   "/src/",
   "/info.toml",
@@ -15,6 +16,9 @@ include = [
 proc-macro = true
 
 [dependencies]
-quote = "1.0.36"
+quote = "1.0.37"
 serde.workspace = true
 toml_edit.workspace = true
+
+[lints]
+workspace = true

@@ -24,8 +24,6 @@ jobs:
           globs: "exercises/**/*.md"
       - name: Run cargo fmt
         run: cargo fmt --all --check
-      - name: Run rustfmt on solutions
-        run: rustfmt --check --edition 2021 --color always solutions/**/*.rs
   test:
     runs-on: ${{ matrix.os }}
     strategy:

@@ -17,7 +17,7 @@ It contains code examples and exercises similar to Rustlings, but online.
 
 ### Installing Rust
 
-Before installing Rustlings, you need to have _Rust installed_.
+Before installing Rustlings, you need to have the **latest version of Rust** installed.
 Visit [www.rust-lang.org/tools/install](https://www.rust-lang.org/tools/install) for further instructions on installing Rust.
 This will also install _Cargo_, Rust's package/project manager.
 
@@ -88,8 +88,6 @@ While working with Rustlings, please use a modern terminal for the best user exp
 The default terminal on Linux and Mac should be sufficient.
 On Windows, we recommend the [Windows Terminal](https://aka.ms/terminal).
 
-If you use VS Code, the builtin terminal should also be fine.
-
 ## Doing exercises
 
 The exercises are sorted by topic and can be found in the subdirectory `exercises/<topic>`.
@@ -126,20 +124,29 @@ The list allows you to…
 
 - See the status of all exercises (done or pending)
 - `c`: Continue at another exercise (temporarily skip some exercises or go back to a previous one)
-- `r`: Reset status and file of an exercise (you need to _reload/reopen_ its file in your editor afterwards)
+- `r`: Reset status and file of the selected exercise (you need to _reload/reopen_ its file in your editor afterwards)
 
 See the footer of the list for all possible keys.
+
+## Questions?
+
+If you need any help while doing the exercises and the builtin-hints aren't helpful, feel free to ask in the [_Q&A_ category of the discussions](https://github.com/rust-lang/rustlings/discussions/categories/q-a?discussions_q=) if your question wasn't asked yet 💡
+
+## Third-Party Exercises
+
+Third-party exercises are a set of exercises maintained by the community.
+You can use the same `rustlings` program that you installed with `cargo install rustlings` to run them:
+
+- [日本語版 Rustlings](https://github.com/sotanengel/rustlings-jp)：A Japanese translation of the Rustlings exercises.
+
+Do you want to create your own set of Rustlings exercises to focus on some specific topic?
+Or do you want to translate the original Rustlings exercises?
+Then follow the the guide about [third-party exercises](https://github.com/rust-lang/rustlings/blob/main/THIRD_PARTY_EXERCISES.md)!
 
 ## Continuing On
 
 Once you've completed Rustlings, put your new knowledge to good use!
 Continue practicing your Rust skills by building your own projects, contributing to Rustlings, or finding other open-source projects to contribute to.
-
-## Third-Party Exercises
-
-Do you want to create your own set of Rustlings exercises to focus on some specific topic?
-Or do you want to translate the original Rustlings exercises?
-Then follow the link to the guide about [third-party exercises](https://github.com/rust-lang/rustlings/blob/main/THIRD_PARTY_EXERCISES.md)!
 
 ## Uninstalling Rustlings
 

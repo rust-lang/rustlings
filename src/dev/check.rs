@@ -1,62 +1,69 @@
-use anyhow::{anyhow, bail, Context, Result};
+use anyhow::{anyhow, bail, Context, Error, Result};
 use std::{
     cmp::Ordering,
+    collections::HashSet,
     fs::{self, read_dir, OpenOptions},
     io::{self, Read, Write},
     path::{Path, PathBuf},
-    sync::{
-        atomic::{self, AtomicBool},
-        Mutex,
-    },
+    process::{Command, Stdio},
     thread,
 };
 
 use crate::{
-    app_state::parse_target_dir,
     cargo_toml::{append_bins, bins_start_end_ind, BINS_BUFFER_CAPACITY},
+    cmd::CmdRunner,
     exercise::{RunnableExercise, OUTPUT_CAPACITY},
     info_file::{ExerciseInfo, InfoFile},
-    CURRENT_FORMAT_VERSION, DEBUG_PROFILE,
+    CURRENT_FORMAT_VERSION,
 };
+
+const MAX_N_EXERCISES: usize = 999;
+const MAX_EXERCISE_NAME_LEN: usize = 32;
 
 // Find a char that isn't allowed in the exercise's `name` or `dir`.
 fn forbidden_char(input: &str) -> Option<char> {
     input.chars().find(|c| !c.is_alphanumeric() && *c != '_')
 }
 
-// Check that the Cargo.toml file is up-to-date.
+// Check that the `Cargo.toml` file is up-to-date.
 fn check_cargo_toml(
     exercise_infos: &[ExerciseInfo],
-    current_cargo_toml: &str,
+    cargo_toml_path: &str,
     exercise_path_prefix: &[u8],
 ) -> Result<()> {
-    let (bins_start_ind, bins_end_ind) = bins_start_end_ind(current_cargo_toml)?;
+    let current_cargo_toml = fs::read_to_string(cargo_toml_path)
+        .with_context(|| format!("Failed to read the file `{cargo_toml_path}`"))?;
+
+    let (bins_start_ind, bins_end_ind) = bins_start_end_ind(&current_cargo_toml)?;
 
     let old_bins = &current_cargo_toml.as_bytes()[bins_start_ind..bins_end_ind];
     let mut new_bins = Vec::with_capacity(BINS_BUFFER_CAPACITY);
     append_bins(&mut new_bins, exercise_infos, exercise_path_prefix);
 
     if old_bins != new_bins {
-        if DEBUG_PROFILE {
-            bail!("The file `dev/Cargo.toml` is outdated. Please run `cargo run -- dev update` to update it");
+        if cfg!(debug_assertions) {
+            bail!("The file `dev/Cargo.toml` is outdated. Run `cargo run -- dev update` to update it. Then run `cargo run -- dev check` again");
         }
 
-        bail!("The file `Cargo.toml` is outdated. Please run `rustlings dev update` to update it");
+        bail!("The file `Cargo.toml` is outdated. Run `rustlings dev update` to update it. Then run `rustlings dev check` again");
     }
 
     Ok(())
 }
 
 // Check the info of all exercises and return their paths in a set.
-fn check_info_file_exercises(info_file: &InfoFile) -> Result<hashbrown::HashSet<PathBuf>> {
-    let mut names = hashbrown::HashSet::with_capacity(info_file.exercises.len());
-    let mut paths = hashbrown::HashSet::with_capacity(info_file.exercises.len());
+fn check_info_file_exercises(info_file: &InfoFile) -> Result<HashSet<PathBuf>> {
+    let mut names = HashSet::with_capacity(info_file.exercises.len());
+    let mut paths = HashSet::with_capacity(info_file.exercises.len());
 
     let mut file_buf = String::with_capacity(1 << 14);
     for exercise_info in &info_file.exercises {
         let name = exercise_info.name.as_str();
         if name.is_empty() {
             bail!("Found an empty exercise name in `info.toml`");
+        }
+        if name.len() > MAX_EXERCISE_NAME_LEN {
+            bail!("The length of the exercise name `{name}` is bigger than the maximum {MAX_EXERCISE_NAME_LEN}");
         }
         if let Some(c) = forbidden_char(name) {
             bail!("Char `{c}` in the exercise name `{name}` is not allowed");
@@ -71,7 +78,7 @@ fn check_info_file_exercises(info_file: &InfoFile) -> Result<hashbrown::HashSet<
             }
         }
 
-        if exercise_info.hint.trim().is_empty() {
+        if exercise_info.hint.trim_ascii().is_empty() {
             bail!("The exercise `{name}` has an empty hint. Please provide a hint or at least tell the user why a hint isn't needed for this exercise");
         }
 
@@ -96,7 +103,12 @@ fn check_info_file_exercises(info_file: &InfoFile) -> Result<hashbrown::HashSet<
             bail!("Didn't find any `// TODO` comment in the file `{path}`.\nYou need to have at least one such comment to guide the user.");
         }
 
-        if !exercise_info.test && file_buf.contains("#[test]") {
+        let contains_tests = file_buf.contains("#[test]\n");
+        if exercise_info.test {
+            if !contains_tests {
+                bail!("The file `{path}` doesn't contain any tests. If you don't want to add tests to this exercise, set `test = false` for this exercise in the `info.toml` file");
+            }
+        } else if contains_tests {
             bail!("The file `{path}` contains tests annotated with `#[test]` but the exercise `{name}` has `test = false` in the `info.toml` file");
         }
 
@@ -111,10 +123,7 @@ fn check_info_file_exercises(info_file: &InfoFile) -> Result<hashbrown::HashSet<
 // Check `dir` for unexpected files.
 // Only Rust files in `allowed_rust_files` and `README.md` files are allowed.
 // Only one level of directory nesting is allowed.
-fn check_unexpected_files(
-    dir: &str,
-    allowed_rust_files: &hashbrown::HashSet<PathBuf>,
-) -> Result<()> {
+fn check_unexpected_files(dir: &str, allowed_rust_files: &HashSet<PathBuf>) -> Result<()> {
     let unexpected_file = |path: &Path| {
         anyhow!("Found the file `{}`. Only `README.md` and Rust files related to an exercise in `info.toml` are allowed in the `{dir}` directory", path.display())
     };
@@ -162,135 +171,204 @@ fn check_unexpected_files(
     Ok(())
 }
 
-fn check_exercises_unsolved(info_file: &InfoFile, target_dir: &Path) -> Result<()> {
-    let error_occurred = AtomicBool::new(false);
+fn check_exercises_unsolved(
+    info_file: &'static InfoFile,
+    cmd_runner: &'static CmdRunner,
+) -> Result<()> {
+    let mut stdout = io::stdout().lock();
+    stdout.write_all(b"Running all exercises to check that they aren't already solved...\n")?;
 
-    println!(
-        "Running all exercises to check that they aren't already solved. This may take a while…\n",
-    );
-    thread::scope(|s| {
-        for exercise_info in &info_file.exercises {
+    let handles = info_file
+        .exercises
+        .iter()
+        .filter_map(|exercise_info| {
             if exercise_info.skip_check_unsolved {
-                continue;
+                return None;
             }
 
-            s.spawn(|| {
-                let error = |e| {
-                    let mut stderr = io::stderr().lock();
-                    stderr.write_all(e).unwrap();
-                    stderr.write_all(b"\nProblem with the exercise ").unwrap();
-                    stderr.write_all(exercise_info.name.as_bytes()).unwrap();
-                    stderr.write_all(SEPARATOR).unwrap();
-                    error_occurred.store(true, atomic::Ordering::Relaxed);
-                };
+            Some(
+                thread::Builder::new()
+                    .spawn(|| exercise_info.run_exercise(None, cmd_runner))
+                    .map(|handle| (exercise_info.name.as_str(), handle)),
+            )
+        })
+        .collect::<Result<Vec<_>, _>>()
+        .context("Failed to spawn a thread to check if an exercise is already solved")?;
 
-                let mut output = Vec::with_capacity(OUTPUT_CAPACITY);
-                match exercise_info.run_exercise(&mut output, target_dir) {
-                    Ok(true) => error(b"Already solved!"),
-                    Ok(false) => (),
-                    Err(e) => error(e.to_string().as_bytes()),
-                }
-            });
+    let n_handles = handles.len();
+    write!(stdout, "Progress: 0/{n_handles}")?;
+    stdout.flush()?;
+    let mut handle_num = 1;
+
+    for (exercise_name, handle) in handles {
+        let Ok(result) = handle.join() else {
+            bail!("Panic while trying to run the exercise {exercise_name}");
+        };
+
+        match result {
+            Ok(true) => {
+                bail!("The exercise {exercise_name} is already solved.\n{SKIP_CHECK_UNSOLVED_HINT}",)
+            }
+            Ok(false) => (),
+            Err(e) => return Err(e),
         }
-    });
 
-    if error_occurred.load(atomic::Ordering::Relaxed) {
-        bail!(CHECK_EXERCISES_UNSOLVED_ERR);
+        write!(stdout, "\rProgress: {handle_num}/{n_handles}")?;
+        stdout.flush()?;
+        handle_num += 1;
     }
+    stdout.write_all(b"\n")?;
 
     Ok(())
 }
 
-fn check_exercises(info_file: &InfoFile, target_dir: &Path) -> Result<()> {
+fn check_exercises(info_file: &'static InfoFile, cmd_runner: &'static CmdRunner) -> Result<()> {
     match info_file.format_version.cmp(&CURRENT_FORMAT_VERSION) {
         Ordering::Less => bail!("`format_version` < {CURRENT_FORMAT_VERSION} (supported version)\nPlease migrate to the latest format version"),
         Ordering::Greater => bail!("`format_version` > {CURRENT_FORMAT_VERSION} (supported version)\nTry updating the Rustlings program"),
         Ordering::Equal => (),
     }
 
+    let handle = thread::Builder::new()
+        .spawn(move || check_exercises_unsolved(info_file, cmd_runner))
+        .context("Failed to spawn a thread to check if any exercise is already solved")?;
+
     let info_file_paths = check_info_file_exercises(info_file)?;
     check_unexpected_files("exercises", &info_file_paths)?;
 
-    check_exercises_unsolved(info_file, target_dir)
+    handle.join().unwrap()
 }
 
-fn check_solutions(require_solutions: bool, info_file: &InfoFile, target_dir: &Path) -> Result<()> {
-    let paths = Mutex::new(hashbrown::HashSet::with_capacity(info_file.exercises.len()));
-    let error_occurred = AtomicBool::new(false);
+enum SolutionCheck {
+    Success { sol_path: String },
+    MissingOptional,
+    RunFailure { output: Vec<u8> },
+    Err(Error),
+}
 
-    println!("Running all solutions. This may take a while…\n");
-    thread::scope(|s| {
-        for exercise_info in &info_file.exercises {
-            s.spawn(|| {
-                let error = |e| {
-                    let mut stderr = io::stderr().lock();
-                    stderr.write_all(e).unwrap();
-                    stderr
-                        .write_all(b"\nFailed to run the solution of the exercise ")
-                        .unwrap();
-                    stderr.write_all(exercise_info.name.as_bytes()).unwrap();
-                    stderr.write_all(SEPARATOR).unwrap();
-                    error_occurred.store(true, atomic::Ordering::Relaxed);
-                };
+fn check_solutions(
+    require_solutions: bool,
+    info_file: &'static InfoFile,
+    cmd_runner: &'static CmdRunner,
+) -> Result<()> {
+    let mut stdout = io::stdout().lock();
+    stdout.write_all(b"Running all solutions...\n")?;
 
-                let path = exercise_info.sol_path();
-                if !Path::new(&path).exists() {
+    let handles = info_file
+        .exercises
+        .iter()
+        .map(|exercise_info| {
+            thread::Builder::new().spawn(move || {
+                let sol_path = exercise_info.sol_path();
+                if !Path::new(&sol_path).exists() {
                     if require_solutions {
-                        error(b"Solution missing");
+                        return SolutionCheck::Err(anyhow!(
+                            "The solution of the exercise {} is missing",
+                            exercise_info.name,
+                        ));
                     }
 
-                    // No solution to check.
-                    return;
+                    return SolutionCheck::MissingOptional;
                 }
 
                 let mut output = Vec::with_capacity(OUTPUT_CAPACITY);
-                match exercise_info.run_solution(&mut output, target_dir) {
-                    Ok(true) => {
-                        paths.lock().unwrap().insert(PathBuf::from(path));
-                    }
-                    Ok(false) => error(&output),
-                    Err(e) => error(e.to_string().as_bytes()),
+                match exercise_info.run_solution(Some(&mut output), cmd_runner) {
+                    Ok(true) => SolutionCheck::Success { sol_path },
+                    Ok(false) => SolutionCheck::RunFailure { output },
+                    Err(e) => SolutionCheck::Err(e),
                 }
-            });
-        }
-    });
+            })
+        })
+        .collect::<Result<Vec<_>, _>>()
+        .context("Failed to spawn a thread to check a solution")?;
 
-    if error_occurred.load(atomic::Ordering::Relaxed) {
-        bail!("At least one solution failed. See the output above.");
+    let mut sol_paths = HashSet::with_capacity(info_file.exercises.len());
+    let mut fmt_cmd = Command::new("rustfmt");
+    fmt_cmd
+        .arg("--check")
+        .arg("--edition")
+        .arg("2021")
+        .arg("--color")
+        .arg("always")
+        .stdin(Stdio::null());
+
+    let n_handles = handles.len();
+    write!(stdout, "Progress: 0/{n_handles}")?;
+    stdout.flush()?;
+    let mut handle_num = 1;
+
+    for (exercise_info, handle) in info_file.exercises.iter().zip(handles) {
+        let Ok(check_result) = handle.join() else {
+            bail!(
+                "Panic while trying to run the solution of the exercise {}",
+                exercise_info.name,
+            );
+        };
+
+        match check_result {
+            SolutionCheck::Success { sol_path } => {
+                fmt_cmd.arg(&sol_path);
+                sol_paths.insert(PathBuf::from(sol_path));
+            }
+            SolutionCheck::MissingOptional => (),
+            SolutionCheck::RunFailure { output } => {
+                stdout.write_all(b"\n\n")?;
+                stdout.write_all(&output)?;
+                bail!(
+                    "Running the solution of the exercise {} failed with the error above",
+                    exercise_info.name,
+                );
+            }
+            SolutionCheck::Err(e) => return Err(e),
+        }
+
+        write!(stdout, "\rProgress: {handle_num}/{n_handles}")?;
+        stdout.flush()?;
+        handle_num += 1;
+    }
+    stdout.write_all(b"\n")?;
+
+    let handle = thread::Builder::new()
+        .spawn(move || check_unexpected_files("solutions", &sol_paths))
+        .context(
+            "Failed to spawn a thread to check for unexpected files in the solutions directory",
+        )?;
+
+    if !fmt_cmd
+        .status()
+        .context("Failed to run `rustfmt` on all solution files")?
+        .success()
+    {
+        bail!("Some solutions aren't formatted. Run `rustfmt` on them");
     }
 
-    check_unexpected_files("solutions", &paths.into_inner().unwrap())?;
-
-    Ok(())
+    handle.join().unwrap()
 }
 
 pub fn check(require_solutions: bool) -> Result<()> {
     let info_file = InfoFile::parse()?;
 
-    // A hack to make `cargo run -- dev check` work when developing Rustlings.
-    if DEBUG_PROFILE {
-        check_cargo_toml(
-            &info_file.exercises,
-            include_str!("../../dev-Cargo.toml"),
-            b"../",
-        )?;
-    } else {
-        let current_cargo_toml =
-            fs::read_to_string("Cargo.toml").context("Failed to read the file `Cargo.toml`")?;
-        check_cargo_toml(&info_file.exercises, &current_cargo_toml, b"")?;
+    if info_file.exercises.len() > MAX_N_EXERCISES {
+        bail!("The maximum number of exercises is {MAX_N_EXERCISES}");
     }
 
-    let target_dir = parse_target_dir()?;
-    check_exercises(&info_file, &target_dir)?;
-    check_solutions(require_solutions, &info_file, &target_dir)?;
+    if cfg!(debug_assertions) {
+        // A hack to make `cargo run -- dev check` work when developing Rustlings.
+        check_cargo_toml(&info_file.exercises, "dev/Cargo.toml", b"../")?;
+    } else {
+        check_cargo_toml(&info_file.exercises, "Cargo.toml", b"")?;
+    }
 
-    println!("\nEverything looks fine!");
+    // Leaking is fine since they are used until the end of the program.
+    let cmd_runner = Box::leak(Box::new(CmdRunner::build()?));
+    let info_file = Box::leak(Box::new(info_file));
+
+    check_exercises(info_file, cmd_runner)?;
+    check_solutions(require_solutions, info_file, cmd_runner)?;
+
+    println!("Everything looks fine!");
 
     Ok(())
 }
 
-const SEPARATOR: &[u8] =
-    b"\n========================================================================================\n";
-
-const CHECK_EXERCISES_UNSOLVED_ERR: &str = "At least one exercise is already solved or failed to run. See the output above.
-If this is an intro exercise that is intended to be already solved, add `skip_check_unsolved = true` to the exercise's metadata in the `info.toml` file.";
+const SKIP_CHECK_UNSOLVED_HINT: &str = "If this is an introduction exercise that is intended to be already solved, add `skip_check_unsolved = true` to the exercise's metadata in the `info.toml` file";

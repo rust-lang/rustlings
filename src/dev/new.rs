@@ -6,7 +6,7 @@ use std::{
     process::Command,
 };
 
-use crate::CURRENT_FORMAT_VERSION;
+use crate::{init::RUST_ANALYZER_TOML, CURRENT_FORMAT_VERSION};
 
 // Create a directory relative to the current directory and print its path.
 fn create_rel_dir(dir_name: &str, current_dir: &str) -> Result<()> {
@@ -62,6 +62,8 @@ pub fn new(path: &Path, no_git: bool) -> Result<()> {
 
     write_rel_file("README.md", &dir_path_str, README)?;
 
+    write_rel_file("rust-analyzer.toml", &dir_path_str, RUST_ANALYZER_TOML)?;
+
     create_rel_dir(".vscode", &dir_path_str)?;
     write_rel_file(
         ".vscode/extensions.json",
@@ -76,8 +78,8 @@ pub fn new(path: &Path, no_git: bool) -> Result<()> {
 
 pub const GITIGNORE: &[u8] = b".rustlings-state.txt
 Cargo.lock
-target
-.vscode
+target/
+.vscode/
 !.vscode/extensions.json
 ";
 

@@ -1,7 +1,7 @@
 use anyhow::{Context, Result};
 use std::path::Path;
 
-use crate::info_file::ExerciseInfo;
+use crate::{exercise::RunnableExercise, info_file::ExerciseInfo};
 
 /// Initial capacity of the bins buffer.
 pub const BINS_BUFFER_CAPACITY: usize = 1 << 14;

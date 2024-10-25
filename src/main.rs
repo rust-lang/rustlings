@@ -2,12 +2,13 @@ use anyhow::{bail, Context, Result};
 use app_state::StateFileStatus;
 use clap::{Parser, Subcommand};
 use std::{
-    io::{self, BufRead, IsTerminal, StdoutLock, Write},
+    io::{self, IsTerminal, Write},
     path::Path,
-    process::exit,
+    process::ExitCode,
 };
+use term::{clear_terminal, press_enter_prompt};
 
-use self::{app_state::AppState, dev::DevCommands, info_file::InfoFile, watch::WatchExit};
+use self::{app_state::AppState, dev::DevCommands, info_file::InfoFile};
 
 mod app_state;
 mod cargo_toml;
@@ -18,37 +19,11 @@ mod exercise;
 mod info_file;
 mod init;
 mod list;
-mod progress_bar;
 mod run;
-mod terminal_link;
+mod term;
 mod watch;
 
 const CURRENT_FORMAT_VERSION: u8 = 1;
-const DEBUG_PROFILE: bool = {
-    #[allow(unused_assignments, unused_mut)]
-    let mut debug_profile = false;
-
-    #[cfg(debug_assertions)]
-    {
-        debug_profile = true;
-    }
-
-    debug_profile
-};
-
-// The current directory is the official Rustligns repository.
-fn in_official_repo() -> bool {
-    Path::new("dev/rustlings-repo.txt").exists()
-}
-
-fn clear_terminal(stdout: &mut StdoutLock) -> io::Result<()> {
-    stdout.write_all(b"\x1b[H\x1b[2J\x1b[3J")
-}
-
-fn press_enter_prompt() -> io::Result<()> {
-    io::stdin().lock().read_until(b'\n', &mut Vec::new())?;
-    Ok(())
-}
 
 /// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
 #[derive(Parser)]
@@ -71,6 +46,8 @@ enum Subcommands {
         /// The name of the exercise
         name: Option<String>,
     },
+    /// Check all the exercises, marking them as done or pending accordingly.
+    CheckAll,
     /// Reset a single exercise
     Reset {
         /// The name of the exercise
@@ -86,36 +63,26 @@ enum Subcommands {
     Dev(DevCommands),
 }
 
-fn main() -> Result<()> {
+fn main() -> Result<ExitCode> {
     let args = Args::parse();
 
-    if !DEBUG_PROFILE && in_official_repo() {
+    if cfg!(not(debug_assertions)) && Path::new("dev/rustlings-repo.txt").exists() {
         bail!("{OLD_METHOD_ERR}");
     }
 
-    match args.command {
-        Some(Subcommands::Init) => {
-            if DEBUG_PROFILE {
-                bail!("Disabled in the debug build");
-            }
-
-            {
-                let mut stdout = io::stdout().lock();
-                stdout.write_all(b"This command will create the directory `rustlings/` which will contain the exercises.\nPress ENTER to continue ")?;
-                stdout.flush()?;
-                press_enter_prompt()?;
-                stdout.write_all(b"\n")?;
-            }
-
-            return init::init().context("Initialization failed");
+    'priority_cmd: {
+        match args.command {
+            Some(Subcommands::Init) => init::init().context("Initialization failed")?,
+            Some(Subcommands::Dev(dev_command)) => dev_command.run()?,
+            _ => break 'priority_cmd,
         }
-        Some(Subcommands::Dev(dev_command)) => return dev_command.run(),
-        _ => (),
+
+        return Ok(ExitCode::SUCCESS);
     }
 
     if !Path::new("exercises").is_dir() {
         println!("{PRE_INIT_MSG}");
-        exit(1);
+        return Ok(ExitCode::FAILURE);
     }
 
     let info_file = InfoFile::parse()?;
@@ -136,11 +103,12 @@ fn main() -> Result<()> {
                 let mut stdout = io::stdout().lock();
                 clear_terminal(&mut stdout)?;
 
-                let welcome_message = welcome_message.trim();
+                let welcome_message = welcome_message.trim_ascii();
                 write!(stdout, "{welcome_message}\n\nPress ENTER to continue ")?;
-                stdout.flush()?;
-                press_enter_prompt()?;
+                press_enter_prompt(&mut stdout)?;
                 clear_terminal(&mut stdout)?;
+                // Flush to be able to show errors occurring before printing a newline to stdout.
+                stdout.flush()?;
             }
             StateFileStatus::Read => (),
         }
@@ -167,21 +135,41 @@ fn main() -> Result<()> {
                 )
             };
 
-            loop {
-                match watch::watch(&mut app_state, notify_exercise_names)? {
-                    WatchExit::Shutdown => break,
-                    // It is much easier to exit the watch mode, launch the list mode and then restart
-                    // the watch mode instead of trying to pause the watch threads and correct the
-                    // watch state.
-                    WatchExit::List => list::list(&mut app_state)?,
-                }
-            }
+            watch::watch(&mut app_state, notify_exercise_names)?;
         }
         Some(Subcommands::Run { name }) => {
             if let Some(name) = name {
                 app_state.set_current_exercise_by_name(&name)?;
             }
-            run::run(&mut app_state)?;
+            return run::run(&mut app_state);
+        }
+        Some(Subcommands::CheckAll) => {
+            let mut stdout = io::stdout().lock();
+            if let Some(first_pending_exercise_ind) = app_state.check_all_exercises(&mut stdout)? {
+                if app_state.current_exercise().done {
+                    app_state.set_current_exercise_ind(first_pending_exercise_ind)?;
+                }
+
+                stdout.write_all(b"\n\n")?;
+                let pending = app_state.n_pending();
+                if pending == 1 {
+                    stdout.write_all(b"One exercise pending: ")?;
+                } else {
+                    write!(
+                        stdout,
+                        "{pending}/{} exercises pending. The first: ",
+                        app_state.exercises().len(),
+                    )?;
+                }
+                app_state
+                    .current_exercise()
+                    .terminal_file_link(&mut stdout)?;
+                stdout.write_all(b"\n")?;
+
+                return Ok(ExitCode::FAILURE);
+            } else {
+                app_state.render_final_message(&mut stdout)?;
+            }
         }
         Some(Subcommands::Reset { name }) => {
             app_state.set_current_exercise_by_name(&name)?;
@@ -198,7 +186,7 @@ fn main() -> Result<()> {
         Some(Subcommands::Init | Subcommands::Dev(_)) => (),
     }
 
-    Ok(())
+    Ok(ExitCode::SUCCESS)
 }
 
 const OLD_METHOD_ERR: &str =

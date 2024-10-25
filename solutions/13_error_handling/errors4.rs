@@ -1,4 +1,4 @@
-#![allow(clippy::comparison_chain)]
+use std::cmp::Ordering;
 
 #[derive(PartialEq, Debug)]
 enum CreationError {
@@ -11,12 +11,10 @@ struct PositiveNonzeroInteger(u64);
 
 impl PositiveNonzeroInteger {
     fn new(value: i64) -> Result<Self, CreationError> {
-        if value == 0 {
-            Err(CreationError::Zero)
-        } else if value < 0 {
-            Err(CreationError::Negative)
-        } else {
-            Ok(Self(value as u64))
+        match value.cmp(&0) {
+            Ordering::Less => Err(CreationError::Negative),
+            Ordering::Equal => Err(CreationError::Zero),
+            Ordering::Greater => Ok(Self(value as u64)),
         }
     }
 }

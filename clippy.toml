@@ -1,0 +1,15 @@
+disallowed-types = [
+  # Inefficient. Use `.queue(…)` instead.
+  "crossterm::style::Stylize",
+  "crossterm::style::styled_content::StyledContent",
+]
+
+disallowed-methods = [
+  # Inefficient. Use `.queue(…)` instead.
+  "crossterm::style::style",
+  # Use `thread::Builder::spawn` instead and handle the error.
+  "std::thread::spawn",
+  "std::thread::Scope::spawn",
+  # Return `ExitCode` instead.
+  "std::process::exit",
+]

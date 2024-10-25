@@ -52,36 +52,17 @@ impl ExerciseInfo {
 
         path
     }
-
-    /// Path to the solution file starting with the `solutions/` directory.
-    pub fn sol_path(&self) -> String {
-        let mut path = if let Some(dir) = &self.dir {
-            // 14 = 10 + 1 + 3
-            // solutions/ + / + .rs
-            let mut path = String::with_capacity(14 + dir.len() + self.name.len());
-            path.push_str("solutions/");
-            path.push_str(dir);
-            path.push('/');
-            path
-        } else {
-            // 13 = 10 + 3
-            // solutions/ + .rs
-            let mut path = String::with_capacity(13 + self.name.len());
-            path.push_str("solutions/");
-            path
-        };
-
-        path.push_str(&self.name);
-        path.push_str(".rs");
-
-        path
-    }
 }
 
 impl RunnableExercise for ExerciseInfo {
     #[inline]
     fn name(&self) -> &str {
         &self.name
+    }
+
+    #[inline]
+    fn dir(&self) -> Option<&str> {
+        self.dir.as_deref()
     }
 
     #[inline]
@@ -135,4 +116,4 @@ impl InfoFile {
 }
 
 const NO_EXERCISES_ERR: &str = "There are no exercises yet!
-If you are developing third-party exercises, add at least one exercise before testing.";
+Add at least one exercise before testing.";

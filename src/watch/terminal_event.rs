@@ -1,86 +1,73 @@
-use crossterm::event::{self, Event, KeyCode, KeyEventKind, KeyModifiers};
-use std::sync::mpsc::Sender;
+use crossterm::event::{self, Event, KeyCode, KeyEventKind};
+use std::sync::{
+    atomic::Ordering::Relaxed,
+    mpsc::{Receiver, Sender},
+};
 
-use super::WatchEvent;
+use super::{WatchEvent, EXERCISE_RUNNING};
 
 pub enum InputEvent {
-    Run,
     Next,
+    Run,
     Hint,
     List,
+    CheckAll,
+    Reset,
     Quit,
-    Unrecognized,
 }
 
-pub fn terminal_event_handler(tx: Sender<WatchEvent>, manual_run: bool) {
-    // Only send `Unrecognized` on ENTER if the last input wasn't valid.
-    let mut last_input_valid = false;
-
-    let last_input_event = loop {
-        let terminal_event = match event::read() {
-            Ok(v) => v,
-            Err(e) => {
-                // If `send` returns an error, then the receiver is dropped and
-                // a shutdown has been already initialized.
-                let _ = tx.send(WatchEvent::TerminalEventErr(e));
-                return;
-            }
-        };
-
-        match terminal_event {
-            Event::Key(key) => {
+pub fn terminal_event_handler(
+    sender: Sender<WatchEvent>,
+    unpause_receiver: Receiver<()>,
+    manual_run: bool,
+) {
+    let last_watch_event = loop {
+        match event::read() {
+            Ok(Event::Key(key)) => {
                 match key.kind {
                     KeyEventKind::Release | KeyEventKind::Repeat => continue,
                     KeyEventKind::Press => (),
                 }
 
-                if key.modifiers != KeyModifiers::NONE {
-                    last_input_valid = false;
+                if EXERCISE_RUNNING.load(Relaxed) {
                     continue;
                 }
 
                 let input_event = match key.code {
-                    KeyCode::Enter => {
-                        if last_input_valid {
-                            continue;
+                    KeyCode::Char('n') => InputEvent::Next,
+                    KeyCode::Char('r') if manual_run => InputEvent::Run,
+                    KeyCode::Char('h') => InputEvent::Hint,
+                    KeyCode::Char('l') => break WatchEvent::Input(InputEvent::List),
+                    KeyCode::Char('c') => InputEvent::CheckAll,
+                    KeyCode::Char('x') => {
+                        if sender.send(WatchEvent::Input(InputEvent::Reset)).is_err() {
+                            return;
                         }
 
-                        InputEvent::Unrecognized
-                    }
-                    KeyCode::Char(c) => {
-                        let input_event = match c {
-                            'n' => InputEvent::Next,
-                            'h' => InputEvent::Hint,
-                            'l' => break InputEvent::List,
-                            'q' => break InputEvent::Quit,
-                            'r' if manual_run => InputEvent::Run,
-                            _ => {
-                                last_input_valid = false;
-                                continue;
-                            }
+                        // Pause input until quitting the confirmation prompt.
+                        if unpause_receiver.recv().is_err() {
+                            return;
                         };
 
-                        last_input_valid = true;
-                        input_event
-                    }
-                    _ => {
-                        last_input_valid = false;
                         continue;
                     }
+                    KeyCode::Char('q') => break WatchEvent::Input(InputEvent::Quit),
+                    _ => continue,
                 };
 
-                if tx.send(WatchEvent::Input(input_event)).is_err() {
+                if sender.send(WatchEvent::Input(input_event)).is_err() {
                     return;
                 }
             }
-            Event::Resize(_, _) => {
-                if tx.send(WatchEvent::TerminalResize).is_err() {
+            Ok(Event::Resize(width, _)) => {
+                if sender.send(WatchEvent::TerminalResize { width }).is_err() {
                     return;
                 }
             }
-            Event::FocusGained | Event::FocusLost | Event::Mouse(_) | Event::Paste(_) => continue,
+            Ok(Event::FocusGained | Event::FocusLost | Event::Mouse(_)) => continue,
+            Err(e) => break WatchEvent::TerminalEventErr(e),
         }
     };
 
-    let _ = tx.send(WatchEvent::Input(last_input_event));
+    let _ = sender.send(last_watch_event);
 }
