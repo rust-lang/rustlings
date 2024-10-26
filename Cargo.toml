@@ -19,7 +19,7 @@ edition = "2021" # On Update: Update the edition of the `rustfmt` command that c
 rust-version = "1.80"
 
 [workspace.dependencies]
-serde = { version = "1.0.210", features = ["derive"] }
+serde = { version = "1.0.213", features = ["derive"] }
 toml_edit = { version = "0.22.22", default-features = false, features = ["parse", "serde"] }
 
 [package]
@@ -46,13 +46,13 @@ include = [
 ]
 
 [dependencies]
-anyhow = "1.0.89"
+anyhow = "1.0.91"
 clap = { version = "4.5.20", features = ["derive"] }
 crossterm = { version = "0.28.1", default-features = false, features = ["windows", "events"] }
 notify = { version = "6.1.1", default-features = false, features = ["macos_fsevent"] }
 os_pipe = "1.2.1"
 rustlings-macros = { path = "rustlings-macros", version = "=6.3.0" }
-serde_json = "1.0.128"
+serde_json = "1.0.132"
 serde.workspace = true
 toml_edit.workspace = true
 
