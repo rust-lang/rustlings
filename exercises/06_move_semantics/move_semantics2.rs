@@ -14,7 +14,7 @@ fn main() {
 mod tests {
     use super::*;
 
-    // TODO: Make both vectors `vec0` and `vec1` accessible at the same time to
+    // TODO: Make both vectors `vec0` and `vec1` are accessible at the same time to
     // fix the compiler error in the test.
     #[test]
     fn move_semantics2() {
