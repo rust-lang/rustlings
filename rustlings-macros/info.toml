@@ -881,8 +881,7 @@ https://doc.rust-lang.org/book/ch11-01-writing-tests.html#checking-for-panics-wi
 
 [[exercises]]
 name = "closures1"
-path = "exercises/18_closures/closures1.rs"
-mode = "compile"
+dir = "18_closures"
 hint = """
 Self is a concept that is only used in struct/enum methods.
 
