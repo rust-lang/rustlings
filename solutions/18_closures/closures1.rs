@@ -10,7 +10,6 @@
 //
 // Execute `rustlings hint closures1` or use the `hint` watch subcommand for a hint.
 
-
 trait Doorman {
     fn greet_customer(&self, customer_name: &str);
 }
@@ -57,6 +56,6 @@ fn main() {
     // This makes things much cleaner with less clutter, but
     // we are forgetting something very important.
     greet_customers_closure(|customer_name| {
-        println!("{}, {}?", self.greeting, customer_name); // TODO: Only modify this line
+        println!("{}, {}?", greeting, customer_name); // Capture greeting by reference
     })
 }
