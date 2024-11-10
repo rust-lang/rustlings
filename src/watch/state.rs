@@ -177,39 +177,25 @@ impl<'a> WatchState<'a> {
             stdout.write_all(b" / ")?;
         }
 
-        if self.manual_run {
+        let mut show_key = |key, postfix| {
             stdout.queue(SetAttribute(Attribute::Bold))?;
-            stdout.write_all(b"r")?;
+            stdout.write_all(&[key])?;
             stdout.queue(ResetColor)?;
-            stdout.write_all(b":run / ")?;
+            stdout.write_all(postfix)
+        };
+
+        if self.manual_run {
+            show_key(b'r', b":run / ")?;
         }
 
         if !self.show_hint {
-            stdout.queue(SetAttribute(Attribute::Bold))?;
-            stdout.write_all(b"h")?;
-            stdout.queue(ResetColor)?;
-            stdout.write_all(b":hint / ")?;
+            show_key(b'h', b":hint / ")?;
         }
 
-        stdout.queue(SetAttribute(Attribute::Bold))?;
-        stdout.write_all(b"l")?;
-        stdout.queue(ResetColor)?;
-        stdout.write_all(b":list / ")?;
-
-        stdout.queue(SetAttribute(Attribute::Bold))?;
-        stdout.write_all(b"c")?;
-        stdout.queue(ResetColor)?;
-        stdout.write_all(b":check all / ")?;
-
-        stdout.queue(SetAttribute(Attribute::Bold))?;
-        stdout.write_all(b"x")?;
-        stdout.queue(ResetColor)?;
-        stdout.write_all(b":reset / ")?;
-
-        stdout.queue(SetAttribute(Attribute::Bold))?;
-        stdout.write_all(b"q")?;
-        stdout.queue(ResetColor)?;
-        stdout.write_all(b":quit ? ")?;
+        show_key(b'l', b":list / ")?;
+        show_key(b'c', b":check all / ")?;
+        show_key(b'x', b":reset / ")?;
+        show_key(b'q', b":quit ? ")?;
 
         stdout.flush()
     }
