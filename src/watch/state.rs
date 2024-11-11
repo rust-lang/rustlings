@@ -20,6 +20,10 @@ use crate::{
 
 use super::{terminal_event::terminal_event_handler, InputPauseGuard, WatchEvent};
 
+const HEADING_ATTRIBUTES: Attributes = Attributes::none()
+    .with(Attribute::Bold)
+    .with(Attribute::Underlined);
+
 #[derive(PartialEq, Eq)]
 enum DoneStatus {
     DoneWithSolution(String),
@@ -209,9 +213,7 @@ impl<'a> WatchState<'a> {
 
         if self.show_hint {
             stdout
-                .queue(SetAttributes(
-                    Attributes::from(Attribute::Bold).with(Attribute::Underlined),
-                ))?
+                .queue(SetAttributes(HEADING_ATTRIBUTES))?
                 .queue(SetForegroundColor(Color::Cyan))?;
             stdout.write_all(b"Hint")?;
             stdout.queue(ResetColor)?;
