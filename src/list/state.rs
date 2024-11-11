@@ -117,7 +117,7 @@ impl<'a> ListState<'a> {
         );
     }
 
-    fn draw_exericse_name(&self, writer: &mut MaxLenWriter, exercise: &Exercise) -> io::Result<()> {
+    fn draw_exercise_name(&self, writer: &mut MaxLenWriter, exercise: &Exercise) -> io::Result<()> {
         if !self.search_query.is_empty() {
             if let Some((pre_highlight, highlight, post_highlight)) = exercise
                 .name
@@ -182,7 +182,7 @@ impl<'a> ListState<'a> {
             writer.stdout.queue(SetForegroundColor(Color::Reset))?;
             writer.write_ascii(b"  ")?;
 
-            self.draw_exericse_name(&mut writer, exercise)?;
+            self.draw_exercise_name(&mut writer, exercise)?;
 
             writer.write_ascii(&self.name_col_padding[exercise.name.len()..])?;
 
