@@ -269,6 +269,9 @@ impl<'a> WatchState<'a> {
     }
 
     pub fn check_all_exercises(&mut self, stdout: &mut StdoutLock) -> Result<ExercisesProgress> {
+        // Ignore any input until checking all exercises is done.
+        let _input_pause_guard = InputPauseGuard::scoped_pause();
+
         if let Some(first_pending_exercise_ind) = self.app_state.check_all_exercises(stdout)? {
             // Only change exercise if the current one is done.
             if self.app_state.current_exercise().done {
