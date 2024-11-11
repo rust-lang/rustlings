@@ -451,7 +451,7 @@ dependencies = [
 
 [[package]]
 name = "rustlings"
-version = "6.3.0"
+version = "6.4.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -468,7 +468,7 @@ dependencies = [
 
 [[package]]
 name = "rustlings-macros"
-version = "6.3.0"
+version = "6.4.0"
 dependencies = [
  "quote",
  "serde",

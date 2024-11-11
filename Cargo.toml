@@ -6,7 +6,7 @@ exclude = [
 ]
 
 [workspace.package]
-version = "6.3.0"
+version = "6.4.0"
 authors = [
   "Mo Bitar <mo8it@proton.me>", # https://github.com/mo8it
   "Liv <mokou@fastmail.com>", # https://github.com/shadows-withal
@@ -51,7 +51,7 @@ clap = { version = "4.5.20", features = ["derive"] }
 crossterm = { version = "0.28.1", default-features = false, features = ["windows", "events"] }
 notify = "7.0.0"
 os_pipe = "1.2.1"
-rustlings-macros = { path = "rustlings-macros", version = "=6.3.0" }
+rustlings-macros = { path = "rustlings-macros", version = "=6.4.0" }
 serde_json = "1.0.132"
 serde.workspace = true
 toml_edit.workspace = true
