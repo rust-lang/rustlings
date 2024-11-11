@@ -70,6 +70,7 @@ panic = "abort"
 
 [package.metadata.release]
 pre-release-hook = ["./release-hook.sh"]
+pre-release-commit-message = "Release 🎉"
 
 [workspace.lints.rust]
 unsafe_code = "forbid"
