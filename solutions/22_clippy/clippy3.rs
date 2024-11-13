@@ -3,11 +3,11 @@ use std::mem;
 #[rustfmt::skip]
 #[allow(unused_variables, unused_assignments)]
 fn main() {
-    let my_option: Option<()> = None;
+    let my_option: Option<&str> = None;
     // `unwrap` of an `Option` after checking if it is `None` will panic.
     // Use `if-let` instead.
     if let Some(value) = my_option {
-        println!("{value:?}");
+        println!("{value}");
     }
 
     // A comma was missing.
