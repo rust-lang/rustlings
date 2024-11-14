@@ -877,6 +877,28 @@ To handle that, you need to add a special attribute to the test function.
 You can refer to the docs:
 https://doc.rust-lang.org/book/ch11-01-writing-tests.html#checking-for-panics-with-should_panic"""
 
+# CLOSURES
+
+[[exercises]]
+name = "closures1"
+dir = "18_closures"
+test = false
+hint = """
+Self is a concept that is only used in struct/enum methods.
+
+Closures in Rust do not have a self to refer to, unlike other languages that might use this or self."""
+
+[[exercises]]
+name = "closures2"
+dir = "18_closures"
+test = false
+hint = """
+Capturing a mutable reference manually will also force the closure to capture s by mutable reference.
+
+The println macro only requires a shared reference.
+
+Also make sure that you don't declare s or the closure with mut when it is no longer necessary."""
+
 # STANDARD LIBRARY TYPES
 
 [[exercises]]
