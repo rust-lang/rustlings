@@ -10,5 +10,5 @@ of exercises to Rustlings, but is all about learning to write Macros.
 
 ## Further information
 
-- [Macros](https://doc.rust-lang.org/book/ch19-06-macros.html)
+- [Macros](https://doc.rust-lang.org/stable/book/ch19-06-macros.html)
 - [The Little Book of Rust Macros](https://veykril.github.io/tlborm/)

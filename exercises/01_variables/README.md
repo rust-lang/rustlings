@@ -6,4 +6,4 @@ You can make them mutable by adding `mut` in front of the variable name.
 
 ## Further information
 
-- [Variables and Mutability](https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html)
+- [Variables and Mutability](https://doc.rust-lang.org/stable/book/ch03-01-variables-and-mutability.html)

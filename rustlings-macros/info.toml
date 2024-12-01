@@ -112,7 +112,7 @@ you are just converting values to different types like in this exercise.
 Fortunately Rust has a powerful solution to this problem: 'Shadowing'!
 You can read more about 'Shadowing' in the book's section 'Variables and
 Mutability':
-https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html#shadowing
+https://doc.rust-lang.org/stable/book/ch03-01-variables-and-mutability.html#shadowing
 
 Try to solve this exercise afterwards using this technique."""
 
@@ -131,7 +131,7 @@ The type of Constants must always be annotated.
 
 Read more about constants and the differences between variables and constants
 under 'Constants' in the book's section 'Variables and Mutability':
-https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html#constants"""
+https://doc.rust-lang.org/stable/book/ch03-01-variables-and-mutability.html#constants"""
 
 # FUNCTIONS
 
@@ -266,7 +266,7 @@ name = "primitive_types4"
 dir = "04_primitive_types"
 hint = """
 Take a look at the 'Understanding Ownership -> Slices -> Other Slices' section
-of the book: https://doc.rust-lang.org/book/ch04-03-slices.html and use the
+of the book: https://doc.rust-lang.org/stable/book/ch04-03-slices.html and use the
 starting and ending (plus one) indices of the items in the array that you want
 to end up in the slice.
 
@@ -281,7 +281,7 @@ dir = "04_primitive_types"
 test = false
 hint = """
 Take a look at the 'Data Types -> The Tuple Type' section of the book:
-https://doc.rust-lang.org/book/ch03-02-data-types.html#the-tuple-type
+https://doc.rust-lang.org/stable/book/ch03-02-data-types.html#the-tuple-type
 Particularly the part about destructuring (second to last example in the
 section).
 
@@ -295,7 +295,7 @@ hint = """
 While you could use a destructuring `let` for the tuple here, try
 indexing into it instead, as explained in the last example of the
 'Data Types -> The Tuple Type' section of the book:
-https://doc.rust-lang.org/book/ch03-02-data-types.html#the-tuple-type
+https://doc.rust-lang.org/stable/book/ch03-02-data-types.html#the-tuple-type
 Now, you have another tool in your toolbox!"""
 
 # VECS
@@ -311,7 +311,7 @@ In Rust, there are two ways to define a Vector.
    inside the square brackets. This way is simpler when you exactly know
    the initial values.
 
-Check this chapter: https://doc.rust-lang.org/book/ch08-01-vectors.html
+Check this chapter: https://doc.rust-lang.org/stable/book/ch08-01-vectors.html
 of the Rust book to learn more."""
 
 [[exercises]]
@@ -374,7 +374,7 @@ scope. Does it help to update the value of `x` immediately after
 the mutable reference is taken?
 Read more about 'Mutable References' in the book's section 'References and
 Borrowing':
-https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html#mutable-references."""
+https://doc.rust-lang.org/stable/book/ch04-02-references-and-borrowing.html#mutable-references."""
 
 [[exercises]]
 name = "move_semantics5"
@@ -382,7 +382,7 @@ dir = "06_move_semantics"
 test = false
 hint = """
 To find the answer, you can consult the book section "References and Borrowing":
-https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html
+https://doc.rust-lang.org/stable/book/ch04-02-references-and-borrowing.html
 
 The first problem is that `get_char` is taking ownership of the string. So
 `data` is moved and can't be used for `string_uppercase`. `data` is moved to
@@ -409,7 +409,7 @@ Finally, unit structs. These don't have any fields and are useful for generics.
 
 In this exercise, you need to complete and implement one of each kind.
 Read more about structs in The Book:
-https://doc.rust-lang.org/book/ch05-01-defining-structs.html"""
+https://doc.rust-lang.org/stable/book/ch05-01-defining-structs.html"""
 
 [[exercises]]
 name = "structs2"
@@ -420,7 +420,7 @@ to its fields.
 
 There are however some shortcuts that can be taken when instantiating structs.
 Have a look in The Book to find out more:
-https://doc.rust-lang.org/book/ch05-01-defining-structs.html#creating-instances-from-other-instances-with-struct-update-syntax"""
+https://doc.rust-lang.org/stable/book/ch05-01-defining-structs.html#creating-instances-from-other-instances-with-struct-update-syntax"""
 
 [[exercises]]
 name = "structs3"
@@ -433,7 +433,7 @@ For `get_fees`: This method takes an additional argument, is there a field in
 the `Package` struct that this relates to?
 
 Have a look in The Book to find out more about method implementations:
-https://doc.rust-lang.org/book/ch05-03-method-syntax.html"""
+https://doc.rust-lang.org/stable/book/ch05-03-method-syntax.html"""
 
 # ENUMS
 
@@ -491,7 +491,7 @@ to add one character to the `if` statement, though, that will coerce the
 Side note: If you're interested in learning about how this kind of reference
 conversion works, you can jump ahead in the book and read this part in the
 smart pointers chapter:
-https://doc.rust-lang.org/book/ch15-02-deref.html#implicit-deref-coercions-with-functions-and-methods"""
+https://doc.rust-lang.org/stable/book/ch15-02-deref.html#implicit-deref-coercions-with-functions-and-methods"""
 
 [[exercises]]
 name = "strings3"
@@ -542,7 +542,7 @@ and associated constants). Complete the `use` statements to fit the uses in
 `main` and find the one keyword missing for both constants.
 
 Learn more in The Book:
-https://doc.rust-lang.org/book/ch07-04-bringing-paths-into-scope-with-the-use-keyword.html#re-exporting-names-with-pub-use"""
+https://doc.rust-lang.org/stable/book/ch07-04-bringing-paths-into-scope-with-the-use-keyword.html#re-exporting-names-with-pub-use"""
 
 [[exercises]]
 name = "modules3"
@@ -569,7 +569,7 @@ hint = """
 Use the `entry()` and `or_insert()` methods of `HashMap` to achieve this.
 
 Learn more in The Book:
-https://doc.rust-lang.org/book/ch08-03-hash-maps.html#only-inserting-a-value-if-the-key-has-no-value"""
+https://doc.rust-lang.org/stable/book/ch08-03-hash-maps.html#only-inserting-a-value-if-the-key-has-no-value"""
 
 [[exercises]]
 name = "hashmaps3"
@@ -582,7 +582,7 @@ Hint 2: If there is already an entry for a given key, the value returned by
         `entry()` can be updated based on the existing value.
 
 Learn more in The Book:
-https://doc.rust-lang.org/book/ch08-03-hash-maps.html#updating-a-value-based-on-the-old-value"""
+https://doc.rust-lang.org/stable/book/ch08-03-hash-maps.html#updating-a-value-based-on-the-old-value"""
 
 # QUIZ 2
 
@@ -660,7 +660,7 @@ This pattern is very common in Rust, though, so there's the `?` operator that
 does pretty much what you would make that match statement do for you!
 
 Take a look at this section of the "Error Handling" chapter:
-https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator"""
+https://doc.rust-lang.org/stable/book/ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator"""
 
 [[exercises]]
 name = "errors3"
@@ -698,7 +698,7 @@ is polymorphic, and since all errors implement the `Error` trait, we can capture
 lots of different errors in one `Box` object.
 
 Check out this section of The Book:
-https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator
+https://doc.rust-lang.org/stable/book/ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator
 
 Read more about boxing errors:
 https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/boxing_errors.html
@@ -743,7 +743,7 @@ name = "generics2"
 dir = "14_generics"
 hint = """
 Related section in The Book:
-https://doc.rust-lang.org/book/ch10-01-syntax.html#in-method-definitions"""
+https://doc.rust-lang.org/stable/book/ch10-01-syntax.html#in-method-definitions"""
 
 # TRAITS
 
@@ -752,7 +752,7 @@ name = "traits1"
 dir = "15_traits"
 hint = """
 More about traits in The Book:
-https://doc.rust-lang.org/book/ch10-02-traits.html
+https://doc.rust-lang.org/stable/book/ch10-02-traits.html
 
 The `+` operator can concatenate a `String` with a `&str`."""
 
@@ -775,7 +775,7 @@ implement the trait can then use the default version of these functions
 if they choose not to implement the function themselves.
 
 Related section in The Book:
-https://doc.rust-lang.org/book/ch10-02-traits.html#default-implementations"""
+https://doc.rust-lang.org/stable/book/ch10-02-traits.html#default-implementations"""
 
 [[exercises]]
 name = "traits4"
@@ -785,7 +785,7 @@ Instead of using concrete types as parameters you can use traits. Try replacing
 `???` with `impl [what goes here?]`.
 
 Related section in The Book:
-https://doc.rust-lang.org/book/ch10-02-traits.html#traits-as-parameters"""
+https://doc.rust-lang.org/stable/book/ch10-02-traits.html#traits-as-parameters"""
 
 [[exercises]]
 name = "traits5"
@@ -795,7 +795,7 @@ To ensure a parameter implements multiple traits use the '+ syntax'. Try
 replacing `???` with 'impl [what goes here?] + [what goes here?]'.
 
 Related section in The Book:
-https://doc.rust-lang.org/book/ch10-02-traits.html#specifying-multiple-trait-bounds-with-the--syntax"""
+https://doc.rust-lang.org/stable/book/ch10-02-traits.html#specifying-multiple-trait-bounds-with-the--syntax"""
 
 # QUIZ 3
 
@@ -805,7 +805,7 @@ dir = "quizzes"
 hint = """
 To find the best solution to this challenge, you need to recall your knowledge
 of traits, specifically "Trait Bound Syntax":
-https://doc.rust-lang.org/book/ch10-02-traits.html#trait-bound-syntax
+https://doc.rust-lang.org/stable/book/ch10-02-traits.html#trait-bound-syntax
 
 Here is how to specify a trait bound for an implementation block:
 `impl<T: Trait1 + Trait2 + …> for Foo<T> { … }`
@@ -820,7 +820,7 @@ name = "lifetimes1"
 dir = "16_lifetimes"
 hint = """
 Let the compiler guide you. Also take a look at The Book if you need help:
-https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html"""
+https://doc.rust-lang.org/stable/book/ch10-03-lifetime-syntax.html"""
 
 [[exercises]]
 name = "lifetimes2"
@@ -875,7 +875,7 @@ We expect the method `Rectangle::new` to panic for negative values.
 To handle that, you need to add a special attribute to the test function.
 
 You can refer to the docs:
-https://doc.rust-lang.org/book/ch11-01-writing-tests.html#checking-for-panics-with-should_panic"""
+https://doc.rust-lang.org/stable/book/ch11-01-writing-tests.html#checking-for-panics-with-should_panic"""
 
 # STANDARD LIBRARY TYPES
 
@@ -971,7 +971,7 @@ actual type when working with recursive types, we need to store a reference
 (pointer) to its value.
 
 We should, therefore, place our `List` inside a `Box`. More details in The Book:
-https://doc.rust-lang.org/book/ch15-01-box.html#enabling-recursive-types-with-boxes
+https://doc.rust-lang.org/stable/book/ch15-01-box.html#enabling-recursive-types-with-boxes
 
 Creating an empty list should be fairly straightforward (Hint: Read the tests).
 
@@ -992,7 +992,7 @@ reference count goes down.
 
 In the end, the `Sun` only has one reference again, to itself.
 
-See more at: https://doc.rust-lang.org/book/ch15-04-rc.html
+See more at: https://doc.rust-lang.org/stable/book/ch15-04-rc.html
 
 Unfortunately, Pluto is no longer considered a planet :("""
 
@@ -1011,7 +1011,7 @@ thread-local copy of the numbers.
 This is a simple exercise if you understand the underlying concepts, but if this
 is too much of a struggle, consider reading through all of Chapter 16 in The
 Book:
-https://doc.rust-lang.org/book/ch16-00-concurrency.html"""
+https://doc.rust-lang.org/stable/book/ch16-00-concurrency.html"""
 
 [[exercises]]
 name = "cow1"
@@ -1035,7 +1035,7 @@ https://doc.rust-lang.org/std/thread/fn.spawn.html
 
 A challenge with multi-threaded applications is that the main thread can
 finish before the spawned threads are done.
-https://doc.rust-lang.org/book/ch16-01-threads.html#waiting-for-all-threads-to-finish-using-join-handles
+https://doc.rust-lang.org/stable/book/ch16-01-threads.html#waiting-for-all-threads-to-finish-using-join-handles
 
 Use the `JoinHandle`s to wait for each thread to finish and collect their
 results.
@@ -1051,7 +1051,7 @@ hint = """
 to **immutable** data. But we want to *change* the number of `jobs_done` so
 we'll need to also use another type that will only allow one thread to mutate
 the data at a time. Take a look at this section of the book:
-https://doc.rust-lang.org/book/ch16-03-shared-state.html#atomic-reference-counting-with-arct
+https://doc.rust-lang.org/stable/book/ch16-03-shared-state.html#atomic-reference-counting-with-arct
 
 Keep reading if you'd like more hints :)
 
@@ -1061,7 +1061,7 @@ let status = Arc::new(Mutex::new(JobStatus { jobs_done: 0 }));
 ```
 
 Similar to the code in the following example in The Book:
-https://doc.rust-lang.org/book/ch16-03-shared-state.html#sharing-a-mutext-between-multiple-threads"""
+https://doc.rust-lang.org/stable/book/ch16-03-shared-state.html#sharing-a-mutext-between-multiple-threads"""
 
 [[exercises]]
 name = "threads3"
@@ -1077,7 +1077,7 @@ Multiple producers are possible by using `clone()` to create a duplicate of the
 original sending end.
 
 Related section in The Book:
-https://doc.rust-lang.org/book/ch16-02-message-passing.html"""
+https://doc.rust-lang.org/stable/book/ch16-02-message-passing.html"""
 
 # MACROS
 
