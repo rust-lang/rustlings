@@ -35,6 +35,10 @@ struct Args {
     /// Only use this if Rustlings fails to detect exercise file changes.
     #[arg(long)]
     manual_run: bool,
+
+    /// Change rustbook url to passed one.
+    #[arg(long)]
+    base_url: Option<String>,
 }
 
 #[derive(Subcommand)]
