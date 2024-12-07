@@ -101,8 +101,6 @@ fn main() -> Result<ExitCode> {
         info_file.final_message.unwrap_or_default(),
     )?;
 
-    let replacer = UrlReplacer::new(&args.base_url);
-
     // Show the welcome message if the state file doesn't exist yet.
     if let Some(welcome_message) = info_file.welcome_message {
         match state_file_status {
@@ -187,9 +185,14 @@ fn main() -> Result<ExitCode> {
             if let Some(name) = name {
                 app_state.set_current_exercise_by_name(&name)?;
             }
-            
+
             let hint = app_state.current_exercise().hint;
-            println!("{}", replacer.replace(hint));
+            if let Some(base_url) = args.base_url {
+                let replacer = UrlReplacer::new(base_url);
+                println!("{}", replacer.replace(hint));
+            } else {
+                println!("{}", hint);
+            };
         }
         // Handled in an earlier match.
         Some(Subcommands::Init | Subcommands::Dev(_)) => (),
