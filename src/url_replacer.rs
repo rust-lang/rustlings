@@ -23,23 +23,21 @@ mod test {
     const TEST_DOMAIN: &str = "https://doc.rust-kr.org";
 
     #[test]
-    fn non_url() {
+    fn non_rustbook_url() {
         let replacer = UrlReplacer {
             base_url: String::from(TEST_DOMAIN)
         };
 
         let hint = "\
 hints (...) lines (...)
-link: https://doc.rust-lang.org/book/ch03-02-data-types.html";
+link: https://example.com/ch03-02-data-types.html";
 
-        assert_eq!("\
-hints (...) lines (...)
-link: https://doc.rust-kr.org/ch03-02-data-types.html", replacer.replace(hint));
+        assert_eq!(hint, replacer.replace(hint));
     }
 
 
     #[test]
-    fn replace_url() {
+    fn replace_rustbook_url() {
         let replacer = UrlReplacer {
             base_url: String::from(TEST_DOMAIN)
         };
