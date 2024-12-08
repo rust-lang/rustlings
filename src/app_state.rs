@@ -20,7 +20,8 @@ use crate::{
     embedded::EMBEDDED_FILES,
     exercise::{Exercise, RunnableExercise},
     info_file::ExerciseInfo,
-    term::{self, CheckProgressVisualizer}, url_replacer::UrlReplacer,
+    term::{self, CheckProgressVisualizer},
+    url_replacer::UrlReplacer,
 };
 
 const STATE_FILE_NAME: &str = ".rustlings-state.txt";

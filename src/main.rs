@@ -186,7 +186,6 @@ fn main() -> Result<ExitCode> {
             if let Some(name) = name {
                 app_state.set_current_exercise_by_name(&name)?;
             }
-
             println!("{}", app_state.current_exercise().hint);
         }
         // Handled in an earlier match.
