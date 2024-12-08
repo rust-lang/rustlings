@@ -15,3 +15,41 @@ impl UrlReplacer {
         hint.replace(EN_BASE_URL, &self.base_url)
     }
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    const TEST_DOMAIN: &str = "https://doc.rust-kr.org";
+
+    #[test]
+    fn non_url() {
+        let replacer = UrlReplacer {
+            base_url: String::from(TEST_DOMAIN)
+        };
+
+        let hint = "\
+hints (...) lines (...)
+link: https://doc.rust-lang.org/book/ch03-02-data-types.html";
+
+        assert_eq!("\
+hints (...) lines (...)
+link: https://doc.rust-kr.org/ch03-02-data-types.html", replacer.replace(hint));
+    }
+
+
+    #[test]
+    fn replace_url() {
+        let replacer = UrlReplacer {
+            base_url: String::from(TEST_DOMAIN)
+        };
+
+        let hint = "\
+hints (...) lines (...)
+link: https://doc.rust-lang.org/book/ch03-02-data-types.html";
+
+        assert_eq!("\
+hints (...) lines (...)
+link: https://doc.rust-kr.org/ch03-02-data-types.html", replacer.replace(hint));
+    }
+}
