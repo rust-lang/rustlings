@@ -1,5 +1,5 @@
 pub struct UrlReplacer {
-    base_url: String
+    base_url: String,
 }
 
 const EN_BASE_URL: &str = "https://doc.rust-lang.org/book";
@@ -13,9 +13,7 @@ impl UrlReplacer {
             base_url.to_owned()
         };
 
-        Self {
-            base_url: url
-        }
+        Self { base_url: url }
     }
 
     /// replace rustbook url
@@ -41,7 +39,6 @@ link: https://example.com/ch03-02-data-types.html";
         assert_eq!(hint, replacer.replace(hint));
     }
 
-
     #[test]
     fn replace_rustbook_url() {
         let replacer = UrlReplacer::new(&String::from(TEST_DOMAIN));
@@ -50,9 +47,12 @@ link: https://example.com/ch03-02-data-types.html";
 hints (...) lines (...)
 link: https://doc.rust-lang.org/book/ch03-02-data-types.html";
 
-        assert_eq!("\
+        assert_eq!(
+            "\
 hints (...) lines (...)
-link: https://doc.rust-kr.org/ch03-02-data-types.html", replacer.replace(hint));
+link: https://doc.rust-kr.org/ch03-02-data-types.html",
+            replacer.replace(hint)
+        );
     }
 
     #[test]

@@ -83,9 +83,7 @@ impl AppState {
             })?;
 
         // replacer for rustbook url
-        let url_replacer = base_url.as_ref().map(|url| {
-            UrlReplacer::new(url)
-        });
+        let url_replacer = base_url.as_ref().map(|url| UrlReplacer::new(url));
 
         let dir_canonical_path = term::canonicalize("exercises");
         let mut exercises = exercise_infos
