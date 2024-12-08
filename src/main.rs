@@ -8,7 +8,7 @@ use std::{
 };
 use term::{clear_terminal, press_enter_prompt};
 
-use self::{app_state::AppState, dev::DevCommands, info_file::InfoFile, url_replacer::UrlReplacer};
+use self::{app_state::AppState, dev::DevCommands, info_file::InfoFile};
 
 mod app_state;
 mod cargo_toml;
@@ -99,6 +99,7 @@ fn main() -> Result<ExitCode> {
     let (mut app_state, state_file_status) = AppState::new(
         info_file.exercises,
         info_file.final_message.unwrap_or_default(),
+        args.base_url,
     )?;
 
     // Show the welcome message if the state file doesn't exist yet.
@@ -186,13 +187,7 @@ fn main() -> Result<ExitCode> {
                 app_state.set_current_exercise_by_name(&name)?;
             }
 
-            let hint = app_state.current_exercise().hint;
-            if let Some(base_url) = args.base_url {
-                let replacer = UrlReplacer::new(base_url);
-                println!("{}", replacer.replace(hint));
-            } else {
-                println!("{}", hint);
-            };
+            println!("{}", app_state.current_exercise().hint);
         }
         // Handled in an earlier match.
         Some(Subcommands::Init | Subcommands::Dev(_)) => (),
