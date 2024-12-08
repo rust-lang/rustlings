@@ -83,11 +83,9 @@ impl AppState {
             })?;
 
         // replacer for rustbook url
-        let url_replacer = if let Some(url) = &base_url {
-            Some(UrlReplacer::new(&url))
-        } else {
-            None
-        };
+        let url_replacer = base_url.as_ref().map(|url| {
+            UrlReplacer::new(url)
+        });
 
         let dir_canonical_path = term::canonicalize("exercises");
         let mut exercises = exercise_infos
@@ -102,7 +100,7 @@ impl AppState {
                 let mut hint = exercise_info.hint.leak().trim_ascii();
 
                 if let Some(replacer) = &url_replacer {
-                    hint = replacer.replace(&hint).leak();
+                    hint = replacer.replace(hint).leak();
                 }
 
                 let canonical_path = dir_canonical_path.as_deref().map(|dir_canonical_path| {

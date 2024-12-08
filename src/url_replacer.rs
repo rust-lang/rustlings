@@ -6,11 +6,11 @@ const EN_BASE_URL: &str = "https://doc.rust-lang.org/book";
 
 impl UrlReplacer {
     /// this fn will trim url end with '/'
-    pub fn new(base_url: &String) -> Self {
+    pub fn new(base_url: &str) -> Self {
         let url = if base_url.ends_with('/') {
             base_url.trim_end_matches('/').to_owned()
         } else {
-            base_url.clone()
+            base_url.to_owned()
         };
 
         Self {
