@@ -5,7 +5,13 @@ pub struct UrlReplacer {
 const EN_BASE_URL: &str = "https://doc.rust-lang.org/book";
 
 impl UrlReplacer {
-    pub fn new(base_url: String) -> Self {
+    pub fn new(mut base_url: String) -> Self {
+        base_url = if base_url.ends_with('/') {
+            base_url.trim_end_matches('/').to_owned()
+        } else {
+            base_url
+        };
+
         Self {
             base_url
         }
@@ -24,9 +30,7 @@ mod test {
 
     #[test]
     fn non_rustbook_url() {
-        let replacer = UrlReplacer {
-            base_url: String::from(TEST_DOMAIN)
-        };
+        let replacer = UrlReplacer::new(String::from(TEST_DOMAIN));
 
         let hint = "\
 hints (...) lines (...)
@@ -38,9 +42,7 @@ link: https://example.com/ch03-02-data-types.html";
 
     #[test]
     fn replace_rustbook_url() {
-        let replacer = UrlReplacer {
-            base_url: String::from(TEST_DOMAIN)
-        };
+        let replacer = UrlReplacer::new(String::from(TEST_DOMAIN));
 
         let hint = "\
 hints (...) lines (...)
@@ -49,5 +51,12 @@ link: https://doc.rust-lang.org/book/ch03-02-data-types.html";
         assert_eq!("\
 hints (...) lines (...)
 link: https://doc.rust-kr.org/ch03-02-data-types.html", replacer.replace(hint));
+    }
+
+    #[test]
+    fn trim_end_with_slash() {
+        let replacer = UrlReplacer::new(String::from(TEST_DOMAIN));
+
+        assert_eq!(TEST_DOMAIN, replacer.base_url);
     }
 }
