@@ -6,10 +6,11 @@ struct Package {
     sender_country: String,
     recipient_country: String,
     weight_in_grams: u32,
+    cents_per_gram: u32,
 }
 
 impl Package {
-    fn new(sender_country: String, recipient_country: String, weight_in_grams: u32) -> Self {
+    fn new(sender_country: String, recipient_country: String, weight_in_grams: u32, cents_per_gram: u32) -> Self {
         if weight_in_grams < 10 {
             // This isn't how you should handle errors in Rust, but we will
             // learn about error handling later.
@@ -20,6 +21,7 @@ impl Package {
             sender_country,
             recipient_country,
             weight_in_grams,
+            cents_per_gram,
         }
     }
 
@@ -30,7 +32,7 @@ impl Package {
     }
 
     // TODO: Add the correct return type to the function signature.
-    fn get_fees(&self, cents_per_gram: u32) {
+    fn get_fees(&self) {
         // TODO: Calculate the package's fees.
     }
 }
@@ -49,7 +51,7 @@ mod tests {
         let sender_country = String::from("Spain");
         let recipient_country = String::from("Austria");
 
-        Package::new(sender_country, recipient_country, 5);
+        Package::new(sender_country, recipient_country, 5, 0);
     }
 
     #[test]
@@ -57,7 +59,7 @@ mod tests {
         let sender_country = String::from("Spain");
         let recipient_country = String::from("Russia");
 
-        let package = Package::new(sender_country, recipient_country, 1200);
+        let package = Package::new(sender_country, recipient_country, 1200, 0);
 
         assert!(package.is_international());
     }
@@ -67,7 +69,7 @@ mod tests {
         let sender_country = String::from("Canada");
         let recipient_country = sender_country.clone();
 
-        let package = Package::new(sender_country, recipient_country, 1200);
+        let package = Package::new(sender_country, recipient_country, 1200, 0);
 
         assert!(!package.is_international());
     }
@@ -77,11 +79,8 @@ mod tests {
         let sender_country = String::from("Spain");
         let recipient_country = String::from("Spain");
 
-        let cents_per_gram = 3;
+        let package = Package::new(sender_country, recipient_country, 1500, 3);
 
-        let package = Package::new(sender_country, recipient_country, 1500);
-
-        assert_eq!(package.get_fees(cents_per_gram), 4500);
-        assert_eq!(package.get_fees(cents_per_gram * 2), 9000);
+        assert_eq!(package.get_fees(), 4500);
     }
 }
