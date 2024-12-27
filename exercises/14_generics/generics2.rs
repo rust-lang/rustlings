@@ -1,18 +1,22 @@
+// generics2.rs
+//
 // This powerful wrapper provides the ability to store a positive integer value.
-// TODO: Rewrite it using a generic so that it supports wrapping ANY type.
-struct Wrapper {
-    value: u32,
+// Rewrite it using generics so that it supports wrapping ANY type.
+//
+
+struct Wrapper<T> {
+    value: T
 }
 
-// TODO: Adapt the struct's implementation to be generic over the wrapped value.
-impl Wrapper {
-    fn new(value: u32) -> Self {
+impl <T> Wrapper<T> {
+    pub fn new(value: T) -> Self {
         Wrapper { value }
     }
 }
 
 fn main() {
-    // You can optionally experiment here.
+    // This empty main function is needed, because the compiler expects it,
+    // while rustlings don't use this function for execution.
 }
 
 #[cfg(test)]
@@ -21,11 +25,17 @@ mod tests {
 
     #[test]
     fn store_u32_in_wrapper() {
-        assert_eq!(Wrapper::new(42).value, 42);
+        assert_eq!(Wrapper::new(42u32).value, 42u32);
     }
 
     #[test]
-    fn store_str_in_wrapper() {
-        assert_eq!(Wrapper::new("Foo").value, "Foo");
+    fn store_string_in_wrapper() {
+      let x = Wrapper::new(String::from("Foo"));
+      assert_eq!(x.value, String::from("Foo"));
+    }
+
+    #[test]
+    fn store_f64_in_wrapper() {
+      assert_eq!(Wrapper::new(42.0_f64).value, 42.0_f64);
     }
 }
