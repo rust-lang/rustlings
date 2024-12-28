@@ -137,7 +137,8 @@ If you need any help while doing the exercises and the builtin-hints aren't help
 Third-party exercises are a set of exercises maintained by the community.
 You can use the same `rustlings` program that you installed with `cargo install rustlings` to run them:
 
-- [日本語版 Rustlings](https://github.com/sotanengel/rustlings-jp)：A Japanese translation of the Rustlings exercises.
+- 🇯🇵 [Japanese Translation](https://github.com/sotanengel/rustlings-jp)：A Japanese translation of the Rustlings exercises.
+- 🇨🇳 [Simplified Chinese Translation](https://github.com/SandmeyerX/rustlings-zh-cn): A simplified Chinese translation of the Rustlings exercises.
 
 Do you want to create your own set of Rustlings exercises to focus on some specific topic?
 Or do you want to translate the original Rustlings exercises?
