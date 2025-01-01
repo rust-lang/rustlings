@@ -1,6 +1,6 @@
 DON'T EDIT THIS FILE!
 
-move_semantics5
+errors4
 
 intro1
 intro2
@@ -31,3 +31,27 @@ move_semantics1
 move_semantics2
 move_semantics3
 move_semantics4
+move_semantics5
+structs1
+structs2
+structs3
+enums1
+enums2
+enums3
+strings1
+strings2
+strings3
+strings4
+modules1
+modules2
+modules3
+hashmaps1
+hashmaps2
+hashmaps3
+quiz2
+options1
+options2
+options3
+errors1
+errors2
+errors3
