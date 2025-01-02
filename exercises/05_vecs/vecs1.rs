@@ -4,7 +4,7 @@ fn array_and_vec() -> ([i32; 4], Vec<i32>) {
     let a = [10, 20, 30, 40]; // Array. Do not change!
 
     // There is a similar way you can define a vector with initial values:
-    let v = vec![20, 30, 40]; // Vector. Needs to be fixed
+    // let v = vec![10, 20, ???]; // Vector. Needs to be fixed
 
     // TODO: Adjust the vector definition above so that `a` and `v` have the
     // same contents.
