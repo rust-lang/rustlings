@@ -725,7 +725,7 @@ https://doc.rust-lang.org/std/result/enum.Result.html#method.map_err"""
 name = "errors7"
 dir = "13_error_handling"
 hint = """
-TODO
+TODO Add hint and place after traits exercise
 """
 
 # Generics
