@@ -721,6 +721,13 @@ can then use the `?` operator to return early.
 Read more about `map_err()` in the `std::result` documentation:
 https://doc.rust-lang.org/std/result/enum.Result.html#method.map_err"""
 
+[[exercises]]
+name = "errors7"
+dir = "13_error_handling"
+hint = """
+TODO
+"""
+
 # Generics
 
 [[exercises]]
