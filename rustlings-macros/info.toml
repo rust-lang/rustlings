@@ -721,13 +721,6 @@ can then use the `?` operator to return early.
 Read more about `map_err()` in the `std::result` documentation:
 https://doc.rust-lang.org/std/result/enum.Result.html#method.map_err"""
 
-[[exercises]]
-name = "errors7"
-dir = "13_error_handling"
-hint = """
-TODO Add hint and place after traits exercise
-"""
-
 # Generics
 
 [[exercises]]
@@ -762,6 +755,13 @@ More about traits in The Book:
 https://doc.rust-lang.org/book/ch10-02-traits.html
 
 The `+` operator can concatenate a `String` with a `&str`."""
+
+[[exercises]]
+name = "errors7"
+dir = "13_error_handling"
+hint = """
+More about relatio between try operator and From Trait:
+https://doc.rust-lang.org/std/convert/trait.From.html#examples"""
 
 [[exercises]]
 name = "traits2"
