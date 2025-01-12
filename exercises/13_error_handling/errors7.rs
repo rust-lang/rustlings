@@ -1,8 +1,8 @@
-// TODOUsing catch-all error types like `Box<dyn Error>` isn't recommended for
-// library code where callers might want to make decisions based on the error
-// content instead of printing it out or propagating it further. Here, we define
-// a custom error type to make it possible for callers to decide what to do next
-// when our function returns an error.
+// While defining and using a custom error type in library code is recomended
+// the ergonomics of the map_err approach presented in errors6 is suboptimal.
+// The growing codebase could quickly become obfuscated by error conversions
+// sprinkled here and there. Fortunetly, using traits we just learned about,
+// we can use one more Rust feature to fix that.
 
 use std::num::ParseIntError;
 
@@ -29,12 +29,15 @@ impl ParsePosNonzeroError {
     }
 }
 
-// TODO Implement From trait for ParseIntError and CreationError
+// TODO Implement From trait for ParseIntError
 // impl From<ParseIntError> for ParsePosNonzeroError {
 //     fn from(err: ParseIntError) -> Self {
 //        ???
 //     }
 // }
+
+// TODO Implement From trait for CreationError
+// ...
 
 #[derive(PartialEq, Debug)]
 struct PositiveNonzeroInteger(u64);
@@ -49,9 +52,9 @@ impl PositiveNonzeroInteger {
     }
 
     fn parse(s: &str) -> Result<Self, ParsePosNonzeroError> {
-        // Return an appropriate error instead of panicking when `parse()`
-        // returns an error.
+        // Don't change this line
         let x: i64 = s.parse()?;
+        // Don't change this line
         Self::new(x)?
     }
 }

@@ -760,7 +760,7 @@ The `+` operator can concatenate a `String` with a `&str`."""
 name = "errors7"
 dir = "13_error_handling"
 hint = """
-More about relatio between try operator and From Trait:
+More about relation between try operator and the From trait:
 https://doc.rust-lang.org/std/convert/trait.From.html#examples"""
 
 [[exercises]]
