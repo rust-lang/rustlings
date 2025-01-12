@@ -57,7 +57,7 @@ impl PositiveNonzeroInteger {
         // Don't change this line
         let x: i64 = s.parse()?;
         // Don't change this line
-        Self::new(x)?
+        Ok(Self::new(x)?)
     }
 }
 
