@@ -74,7 +74,9 @@ fn run_watch(
 
         let mut watcher = RecommendedWatcher::new(
             notify_event_handler,
-            Config::default().with_poll_interval(Duration::from_secs(1)),
+            Config::default()
+                .with_follow_symlinks(false)
+                .with_poll_interval(Duration::from_secs(1)),
         )
         .inspect_err(|_| eprintln!("{NOTIFY_ERR}"))?;
 
