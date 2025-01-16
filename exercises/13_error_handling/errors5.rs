@@ -1,4 +1,4 @@
-// This exercise is an altered version of the `errors4` exercise. It uses some
+// This exercise is an altered version of the `errors3` exercise. It uses some
 // concepts that we won't get to until later in the course, like `Box` and the
 // `From` trait. It's not important to understand them in detail right now, but
 // you can read ahead if you like. For now, think of the `Box<dyn ???>` type as
