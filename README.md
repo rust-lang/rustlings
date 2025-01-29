@@ -110,9 +110,9 @@ It will rerun the current exercise automatically every time you change the exerc
 You can specify an editor command with the `--editor` option to open exercises directly from watch mode:
 
 ```bash
-rustlings --editor code     # For VS Code
-rustlings --editor vim      # For Vim
-rustlings --editor "code --wait" # For VS Code with wait option
+rustlings --editor code           # For VS Code
+rustlings --editor vim            # For Vim
+rustlings --editor "code --wait"  # For VS Code with wait argument
 ```
 
 Then press `e` in watch mode to open the current exercise in your editor.
