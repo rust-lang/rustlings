@@ -83,8 +83,6 @@ impl Exercise {
 
     /// Open the exercise file in the specified editor
     pub fn open_in_editor(&self, editor: &str) -> io::Result<bool> {
-        dbg!(editor);
-        dbg!(self.path);
         let status = Command::new(editor).arg(self.path).status()?;
         Ok(status.success())
     }
