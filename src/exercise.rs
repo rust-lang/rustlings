@@ -83,7 +83,21 @@ impl Exercise {
 
     /// Open the exercise file in the specified editor
     pub fn open_in_editor(&self, editor: &str) -> io::Result<bool> {
-        let status = Command::new(editor).arg(self.path).status()?;
+        let parts: Vec<&str> = editor.split_whitespace().collect();
+        if parts.is_empty() {
+            return Ok(false);
+        }
+
+        let mut cmd = Command::new(parts[0]);
+
+        // If the editor command has arguments, add them to the command
+        if parts.len() > 1 {
+            cmd.args(&parts[1..]);
+        }
+
+        cmd.arg(self.path);
+
+        let status = cmd.status()?;
         Ok(status.success())
     }
 }
