@@ -272,16 +272,16 @@ impl<'a> WatchState<'a> {
     pub fn edit_exercise(
         &mut self,
         stdout: &mut StdoutLock,
-        editor_cmd: Option<&str>,
+        editor: Option<&str>,
     ) -> io::Result<()> {
-        if let Some(editor_cmd) = editor_cmd {
-            if let Err(e) = self.app_state.current_exercise().open_in_editor(editor_cmd) {
+        if let Some(editor) = editor {
+            if let Err(e) = self.app_state.current_exercise().open_in_editor(editor) {
                 writeln!(stdout, "Failed to open editor: {}", e)?;
             }
         } else {
             writeln!(
                 stdout,
-                "No editor command specified. Use --edit-cmd to specify an editor."
+                "No editor command specified. Use --editor to specify an editor."
             )?;
         }
         Ok(())

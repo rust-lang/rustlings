@@ -37,7 +37,7 @@ struct Args {
     manual_run: bool,
     /// Command to open exercise files in an editor (e.g. "code" for VS Code)
     #[arg(long)]
-    edit_cmd: Option<String>,
+    editor: Option<String>,
 }
 
 #[derive(Subcommand)]
@@ -141,7 +141,7 @@ fn main() -> Result<ExitCode> {
             watch::watch(
                 &mut app_state,
                 notify_exercise_names,
-                args.edit_cmd.as_deref(),
+                args.editor.as_deref(),
             )?;
         }
         Some(Subcommands::Run { name }) => {
