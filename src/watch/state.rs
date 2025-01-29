@@ -199,6 +199,7 @@ impl<'a> WatchState<'a> {
         show_key(b'l', b":list / ")?;
         show_key(b'c', b":check all / ")?;
         show_key(b'x', b":reset / ")?;
+        show_key(b'e', b":edit / ")?;
         show_key(b'q', b":quit ? ")?;
 
         stdout.flush()
@@ -265,6 +266,24 @@ impl<'a> WatchState<'a> {
             self.render(stdout)?;
         }
 
+        Ok(())
+    }
+
+    pub fn edit_exercise(
+        &mut self,
+        stdout: &mut StdoutLock,
+        editor_cmd: Option<&str>,
+    ) -> io::Result<()> {
+        if let Some(editor_cmd) = editor_cmd {
+            if let Err(e) = self.app_state.current_exercise().open_in_editor(editor_cmd) {
+                writeln!(stdout, "Failed to open editor: {}", e)?;
+            }
+        } else {
+            writeln!(
+                stdout,
+                "No editor command specified. Use --edit-cmd to specify an editor."
+            )?;
+        }
         Ok(())
     }
 

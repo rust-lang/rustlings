@@ -4,6 +4,7 @@ use crossterm::{
     QueueableCommand,
 };
 use std::io::{self, StdoutLock, Write};
+use std::process::Command;
 
 use crate::{
     cmd::CmdRunner,
@@ -78,6 +79,14 @@ impl Exercise {
         }
 
         writer.write_str(self.path)
+    }
+
+    /// Open the exercise file in the specified editor
+    pub fn open_in_editor(&self, editor_cmd: &str) -> io::Result<bool> {
+        dbg!(editor_cmd);
+        dbg!(self.path);
+        let status = Command::new(editor_cmd).arg(self.path).status()?;
+        Ok(status.success())
     }
 }
 
