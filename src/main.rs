@@ -1,4 +1,4 @@
-use anyhow::{bail, Context, Result};
+use anyhow::{Context, Result, bail};
 use app_state::StateFileStatus;
 use clap::{Parser, Subcommand};
 use std::{

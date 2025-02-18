@@ -1,11 +1,11 @@
 use anyhow::{Context, Result};
 use crossterm::{
+    QueueableCommand,
     cursor::{MoveTo, MoveToNextLine},
     style::{
         Attribute, Attributes, Color, ResetColor, SetAttribute, SetAttributes, SetForegroundColor,
     },
     terminal::{self, BeginSynchronizedUpdate, Clear, ClearType, EndSynchronizedUpdate},
-    QueueableCommand,
 };
 use std::{
     fmt::Write as _,
@@ -15,7 +15,7 @@ use std::{
 use crate::{
     app_state::AppState,
     exercise::Exercise,
-    term::{progress_bar, CountedWrite, MaxLenWriter},
+    term::{CountedWrite, MaxLenWriter, progress_bar},
 };
 
 use super::scroll_state::ScrollState;

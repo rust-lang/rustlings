@@ -1,11 +1,11 @@
-use anyhow::{bail, Context, Error, Result};
-use crossterm::{cursor, terminal, QueueableCommand};
+use anyhow::{Context, Error, Result, bail};
+use crossterm::{QueueableCommand, cursor, terminal};
 use std::{
     collections::HashSet,
     env,
     fs::{File, OpenOptions},
     io::{Read, Seek, StdoutLock, Write},
-    path::{Path, MAIN_SEPARATOR_STR},
+    path::{MAIN_SEPARATOR_STR, Path},
     process::{Command, Stdio},
     sync::{
         atomic::{AtomicUsize, Ordering::Relaxed},
@@ -427,32 +427,34 @@ impl AppState {
                 let next_exercise_ind = &next_exercise_ind;
                 let slf = &self;
                 thread::Builder::new()
-                    .spawn_scoped(s, move || loop {
-                        let exercise_ind = next_exercise_ind.fetch_add(1, Relaxed);
-                        let Some(exercise) = slf.exercises.get(exercise_ind) else {
-                            // No more exercises.
-                            break;
-                        };
+                    .spawn_scoped(s, move || {
+                        loop {
+                            let exercise_ind = next_exercise_ind.fetch_add(1, Relaxed);
+                            let Some(exercise) = slf.exercises.get(exercise_ind) else {
+                                // No more exercises.
+                                break;
+                            };
 
-                        if exercise_progress_sender
-                            .send((exercise_ind, CheckProgress::Checking))
-                            .is_err()
-                        {
-                            break;
-                        };
+                            if exercise_progress_sender
+                                .send((exercise_ind, CheckProgress::Checking))
+                                .is_err()
+                            {
+                                break;
+                            };
 
-                        let success = exercise.run_exercise(None, &slf.cmd_runner);
-                        let progress = match success {
-                            Ok(true) => CheckProgress::Done,
-                            Ok(false) => CheckProgress::Pending,
-                            Err(_) => CheckProgress::None,
-                        };
+                            let success = exercise.run_exercise(None, &slf.cmd_runner);
+                            let progress = match success {
+                                Ok(true) => CheckProgress::Done,
+                                Ok(false) => CheckProgress::Pending,
+                                Err(_) => CheckProgress::None,
+                            };
 
-                        if exercise_progress_sender
-                            .send((exercise_ind, progress))
-                            .is_err()
-                        {
-                            break;
+                            if exercise_progress_sender
+                                .send((exercise_ind, progress))
+                                .is_err()
+                            {
+                                break;
+                            }
                         }
                     })
                     .context("Failed to spawn a thread to check all exercises")?;

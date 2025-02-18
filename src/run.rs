@@ -1,7 +1,7 @@
 use anyhow::Result;
 use crossterm::{
-    style::{Color, ResetColor, SetForegroundColor},
     QueueableCommand,
+    style::{Color, ResetColor, SetForegroundColor},
 };
 use std::{
     io::{self, Write},
@@ -10,7 +10,7 @@ use std::{
 
 use crate::{
     app_state::{AppState, ExercisesProgress},
-    exercise::{solution_link_line, RunnableExercise, OUTPUT_CAPACITY},
+    exercise::{OUTPUT_CAPACITY, RunnableExercise, solution_link_line},
 };
 
 pub fn run(app_state: &mut AppState) -> Result<ExitCode> {

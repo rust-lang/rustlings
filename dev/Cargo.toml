@@ -192,7 +192,7 @@ bin = [
 
 [package]
 name = "exercises"
-edition = "2021"
+edition = "2024"
 # Don't publish the exercises on crates.io!
 publish = false
 

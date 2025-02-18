@@ -1,13 +1,13 @@
 use anyhow::Result;
 use crossterm::{
-    style::{Attribute, Color, ResetColor, SetAttribute, SetForegroundColor},
     QueueableCommand,
+    style::{Attribute, Color, ResetColor, SetAttribute, SetForegroundColor},
 };
 use std::io::{self, StdoutLock, Write};
 
 use crate::{
     cmd::CmdRunner,
-    term::{self, terminal_file_link, write_ansi, CountedWrite},
+    term::{self, CountedWrite, terminal_file_link, write_ansi},
 };
 
 /// The initial capacity of the output buffer.

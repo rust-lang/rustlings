@@ -1,14 +1,13 @@
 use anyhow::{Context, Result};
 use crossterm::{
-    cursor,
+    QueueableCommand, cursor,
     event::{
         self, DisableMouseCapture, EnableMouseCapture, Event, KeyCode, KeyEventKind, MouseEventKind,
     },
     terminal::{
-        disable_raw_mode, enable_raw_mode, DisableLineWrap, EnableLineWrap, EnterAlternateScreen,
-        LeaveAlternateScreen,
+        DisableLineWrap, EnableLineWrap, EnterAlternateScreen, LeaveAlternateScreen,
+        disable_raw_mode, enable_raw_mode,
     },
-    QueueableCommand,
 };
 use std::io::{self, StdoutLock, Write};
 

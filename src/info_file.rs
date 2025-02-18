@@ -1,4 +1,4 @@
-use anyhow::{bail, Context, Error, Result};
+use anyhow::{Context, Error, Result, bail};
 use serde::Deserialize;
 use std::{fs, io::ErrorKind};
 

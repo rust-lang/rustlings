@@ -1,8 +1,8 @@
-use anyhow::{anyhow, bail, Context, Error, Result};
+use anyhow::{Context, Error, Result, anyhow, bail};
 use std::{
     cmp::Ordering,
     collections::HashSet,
-    fs::{self, read_dir, OpenOptions},
+    fs::{self, OpenOptions, read_dir},
     io::{self, Read, Write},
     path::{Path, PathBuf},
     process::{Command, Stdio},
@@ -10,11 +10,11 @@ use std::{
 };
 
 use crate::{
-    cargo_toml::{append_bins, bins_start_end_ind, BINS_BUFFER_CAPACITY},
-    cmd::CmdRunner,
-    exercise::{RunnableExercise, OUTPUT_CAPACITY},
-    info_file::{ExerciseInfo, InfoFile},
     CURRENT_FORMAT_VERSION,
+    cargo_toml::{BINS_BUFFER_CAPACITY, append_bins, bins_start_end_ind},
+    cmd::CmdRunner,
+    exercise::{OUTPUT_CAPACITY, RunnableExercise},
+    info_file::{ExerciseInfo, InfoFile},
 };
 
 const MAX_N_EXERCISES: usize = 999;
@@ -42,10 +42,14 @@ fn check_cargo_toml(
 
     if old_bins != new_bins {
         if cfg!(debug_assertions) {
-            bail!("The file `dev/Cargo.toml` is outdated. Run `cargo run -- dev update` to update it. Then run `cargo run -- dev check` again");
+            bail!(
+                "The file `dev/Cargo.toml` is outdated. Run `cargo run -- dev update` to update it. Then run `cargo run -- dev check` again"
+            );
         }
 
-        bail!("The file `Cargo.toml` is outdated. Run `rustlings dev update` to update it. Then run `rustlings dev check` again");
+        bail!(
+            "The file `Cargo.toml` is outdated. Run `rustlings dev update` to update it. Then run `rustlings dev check` again"
+        );
     }
 
     Ok(())
@@ -63,7 +67,9 @@ fn check_info_file_exercises(info_file: &InfoFile) -> Result<HashSet<PathBuf>> {
             bail!("Found an empty exercise name in `info.toml`");
         }
         if name.len() > MAX_EXERCISE_NAME_LEN {
-            bail!("The length of the exercise name `{name}` is bigger than the maximum {MAX_EXERCISE_NAME_LEN}");
+            bail!(
+                "The length of the exercise name `{name}` is bigger than the maximum {MAX_EXERCISE_NAME_LEN}"
+            );
         }
         if let Some(c) = forbidden_char(name) {
             bail!("Char `{c}` in the exercise name `{name}` is not allowed");
@@ -79,7 +85,9 @@ fn check_info_file_exercises(info_file: &InfoFile) -> Result<HashSet<PathBuf>> {
         }
 
         if exercise_info.hint.trim_ascii().is_empty() {
-            bail!("The exercise `{name}` has an empty hint. Please provide a hint or at least tell the user why a hint isn't needed for this exercise");
+            bail!(
+                "The exercise `{name}` has an empty hint. Please provide a hint or at least tell the user why a hint isn't needed for this exercise"
+            );
         }
 
         if !names.insert(name) {
@@ -96,20 +104,28 @@ fn check_info_file_exercises(info_file: &InfoFile) -> Result<HashSet<PathBuf>> {
             .with_context(|| format!("Failed to read the file {path}"))?;
 
         if !file_buf.contains("fn main()") {
-            bail!("The `main` function is missing in the file `{path}`.\nCreate at least an empty `main` function to avoid language server errors");
+            bail!(
+                "The `main` function is missing in the file `{path}`.\nCreate at least an empty `main` function to avoid language server errors"
+            );
         }
 
         if !file_buf.contains("// TODO") {
-            bail!("Didn't find any `// TODO` comment in the file `{path}`.\nYou need to have at least one such comment to guide the user.");
+            bail!(
+                "Didn't find any `// TODO` comment in the file `{path}`.\nYou need to have at least one such comment to guide the user."
+            );
         }
 
         let contains_tests = file_buf.contains("#[test]\n");
         if exercise_info.test {
             if !contains_tests {
-                bail!("The file `{path}` doesn't contain any tests. If you don't want to add tests to this exercise, set `test = false` for this exercise in the `info.toml` file");
+                bail!(
+                    "The file `{path}` doesn't contain any tests. If you don't want to add tests to this exercise, set `test = false` for this exercise in the `info.toml` file"
+                );
             }
         } else if contains_tests {
-            bail!("The file `{path}` contains tests annotated with `#[test]` but the exercise `{name}` has `test = false` in the `info.toml` file");
+            bail!(
+                "The file `{path}` contains tests annotated with `#[test]` but the exercise `{name}` has `test = false` in the `info.toml` file"
+            );
         }
 
         file_buf.clear();
@@ -125,7 +141,10 @@ fn check_info_file_exercises(info_file: &InfoFile) -> Result<HashSet<PathBuf>> {
 // Only one level of directory nesting is allowed.
 fn check_unexpected_files(dir: &str, allowed_rust_files: &HashSet<PathBuf>) -> Result<()> {
     let unexpected_file = |path: &Path| {
-        anyhow!("Found the file `{}`. Only `README.md` and Rust files related to an exercise in `info.toml` are allowed in the `{dir}` directory", path.display())
+        anyhow!(
+            "Found the file `{}`. Only `README.md` and Rust files related to an exercise in `info.toml` are allowed in the `{dir}` directory",
+            path.display()
+        )
     };
 
     for entry in read_dir(dir).with_context(|| format!("Failed to open the `{dir}` directory"))? {
@@ -154,7 +173,10 @@ fn check_unexpected_files(dir: &str, allowed_rust_files: &HashSet<PathBuf>) -> R
             let path = entry.path();
 
             if !entry.file_type().unwrap().is_file() {
-                bail!("Found `{}` but expected only files. Only one level of exercise nesting is allowed", path.display());
+                bail!(
+                    "Found `{}` but expected only files. Only one level of exercise nesting is allowed",
+                    path.display()
+                );
             }
 
             let file_name = path.file_name().unwrap();
@@ -224,8 +246,12 @@ fn check_exercises_unsolved(
 
 fn check_exercises(info_file: &'static InfoFile, cmd_runner: &'static CmdRunner) -> Result<()> {
     match info_file.format_version.cmp(&CURRENT_FORMAT_VERSION) {
-        Ordering::Less => bail!("`format_version` < {CURRENT_FORMAT_VERSION} (supported version)\nPlease migrate to the latest format version"),
-        Ordering::Greater => bail!("`format_version` > {CURRENT_FORMAT_VERSION} (supported version)\nTry updating the Rustlings program"),
+        Ordering::Less => bail!(
+            "`format_version` < {CURRENT_FORMAT_VERSION} (supported version)\nPlease migrate to the latest format version"
+        ),
+        Ordering::Greater => bail!(
+            "`format_version` > {CURRENT_FORMAT_VERSION} (supported version)\nTry updating the Rustlings program"
+        ),
         Ordering::Equal => (),
     }
 

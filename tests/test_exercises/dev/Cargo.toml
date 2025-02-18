@@ -7,5 +7,5 @@ bin = [
 
 [package]
 name = "test_exercises"
-edition = "2021"
+edition = "2024"
 publish = false

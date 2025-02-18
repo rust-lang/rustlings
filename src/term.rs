@@ -1,8 +1,8 @@
 use crossterm::{
+    Command, QueueableCommand,
     cursor::MoveTo,
     style::{Attribute, Color, ResetColor, SetAttribute, SetForegroundColor},
     terminal::{Clear, ClearType},
-    Command, QueueableCommand,
 };
 use std::{
     fmt, fs,

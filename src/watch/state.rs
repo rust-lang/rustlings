@@ -1,24 +1,25 @@
 use anyhow::{Context, Result};
 use crossterm::{
+    QueueableCommand,
     style::{
         Attribute, Attributes, Color, ResetColor, SetAttribute, SetAttributes, SetForegroundColor,
     },
-    terminal, QueueableCommand,
+    terminal,
 };
 use std::{
     io::{self, Read, StdoutLock, Write},
-    sync::mpsc::{sync_channel, Sender, SyncSender},
+    sync::mpsc::{Sender, SyncSender, sync_channel},
     thread,
 };
 
 use crate::{
     app_state::{AppState, ExercisesProgress},
     clear_terminal,
-    exercise::{solution_link_line, RunnableExercise, OUTPUT_CAPACITY},
+    exercise::{OUTPUT_CAPACITY, RunnableExercise, solution_link_line},
     term::progress_bar,
 };
 
-use super::{terminal_event::terminal_event_handler, InputPauseGuard, WatchEvent};
+use super::{InputPauseGuard, WatchEvent, terminal_event::terminal_event_handler};
 
 const HEADING_ATTRIBUTES: Attributes = Attributes::none()
     .with(Attribute::Bold)
