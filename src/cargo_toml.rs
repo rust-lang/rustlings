@@ -74,13 +74,13 @@ pub fn updated_cargo_toml(
     let (bins_start_ind, bins_end_ind) = bins_start_end_ind(current_cargo_toml)?;
 
     let mut updated_cargo_toml = Vec::with_capacity(BINS_BUFFER_CAPACITY);
-    updated_cargo_toml.extend_from_slice(current_cargo_toml[..bins_start_ind].as_bytes());
+    updated_cargo_toml.extend_from_slice(&current_cargo_toml.as_bytes()[..bins_start_ind]);
     append_bins(
         &mut updated_cargo_toml,
         exercise_infos,
         exercise_path_prefix,
     );
-    updated_cargo_toml.extend_from_slice(current_cargo_toml[bins_end_ind..].as_bytes());
+    updated_cargo_toml.extend_from_slice(&current_cargo_toml.as_bytes()[bins_end_ind..]);
 
     Ok(updated_cargo_toml)
 }
