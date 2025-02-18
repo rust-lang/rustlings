@@ -20,7 +20,7 @@ rust-version = "1.80"
 
 [workspace.dependencies]
 serde = { version = "1.0.217", features = ["derive"] }
-toml_edit = { version = "0.22.22", default-features = false, features = ["parse", "serde"] }
+toml_edit = { version = "0.22.24", default-features = false, features = ["parse", "serde"] }
 
 [package]
 name = "rustlings"
@@ -47,20 +47,20 @@ include = [
 
 [dependencies]
 anyhow = "1.0.95"
-clap = { version = "4.5.26", features = ["derive"] }
+clap = { version = "4.5.30", features = ["derive"] }
 crossterm = { version = "0.28.1", default-features = false, features = ["windows", "events"] }
 notify = "8.0.0"
 os_pipe = "1.2.1"
 rustlings-macros = { path = "rustlings-macros", version = "=6.4.0" }
-serde_json = "1.0.135"
+serde_json = "1.0.138"
 serde.workspace = true
 toml_edit.workspace = true
 
 [target.'cfg(not(windows))'.dependencies]
-rustix = { version = "0.38.43", default-features = false, features = ["std", "stdio", "termios"] }
+rustix = { version = "0.38.44", default-features = false, features = ["std", "stdio", "termios"] }
 
 [dev-dependencies]
-tempfile = "3.15.0"
+tempfile = "3.17.1"
 
 [profile.release]
 panic = "abort"
