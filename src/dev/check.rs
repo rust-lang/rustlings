@@ -313,7 +313,7 @@ fn check_solutions(
     fmt_cmd
         .arg("--check")
         .arg("--edition")
-        .arg("2021")
+        .arg("2024")
         .arg("--color")
         .arg("always")
         .stdin(Stdio::null());

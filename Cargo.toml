@@ -15,7 +15,7 @@ authors = [
 ]
 repository = "https://github.com/rust-lang/rustlings"
 license = "MIT"
-edition = "2024" # On Update: Update the edition of the `rustfmt` command that checks the solutions.
+edition = "2024" # On Update: Update the edition of `rustfmt` in `dev check` and `CARGO_TOML` in `dev new`.
 rust-version = "1.85"
 
 [workspace.dependencies]
