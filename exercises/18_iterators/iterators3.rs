@@ -72,11 +72,11 @@ mod tests {
             Err(DivisionError::NotDivisible)
         );
         assert_eq!(
-            result_with_list(vec![27, 297, 38502, 28], 0),
+            result_with_list(vec![27, 297, 38502, 81], 0),
             Err(DivisionError::DivideByZero)
         );
         assert_eq!(
-            result_with_list(vec![27, 297, i64::MIN, 28], -1),
+            result_with_list(vec![27, 297, i64::MIN, 81], -1),
             Err(DivisionError::IntegerOverflow)
         );
     }
