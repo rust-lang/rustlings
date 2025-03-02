@@ -62,6 +62,7 @@ enum WatchExit {
 fn run_watch(
     app_state: &mut AppState,
     notify_exercise_names: Option<&'static [&'static [u8]]>,
+    editor: Option<&str>,
 ) -> Result<WatchExit> {
     let (watch_event_sender, watch_event_receiver) = channel();
 
@@ -113,6 +114,9 @@ fn run_watch(
                 ExercisesProgress::CurrentPending => watch_state.render(&mut stdout)?,
             },
             WatchEvent::Input(InputEvent::Reset) => watch_state.reset_exercise(&mut stdout)?,
+            WatchEvent::Input(InputEvent::Edit) => {
+                watch_state.edit_exercise(&mut stdout, editor)?
+            }
             WatchEvent::Input(InputEvent::Quit) => {
                 stdout.write_all(QUIT_MSG)?;
                 break;
@@ -136,9 +140,10 @@ fn run_watch(
 fn watch_list_loop(
     app_state: &mut AppState,
     notify_exercise_names: Option<&'static [&'static [u8]]>,
+    editor: Option<&str>,
 ) -> Result<()> {
     loop {
-        match run_watch(app_state, notify_exercise_names)? {
+        match run_watch(app_state, notify_exercise_names, editor)? {
             WatchExit::Shutdown => break Ok(()),
             // It is much easier to exit the watch mode, launch the list mode and then restart
             // the watch mode instead of trying to pause the watch threads and correct the
@@ -152,6 +157,7 @@ fn watch_list_loop(
 pub fn watch(
     app_state: &mut AppState,
     notify_exercise_names: Option<&'static [&'static [u8]]>,
+    editor: Option<&str>,
 ) -> Result<()> {
     #[cfg(not(windows))]
     {
@@ -163,7 +169,7 @@ pub fn watch(
             rustix::termios::LocalModes::ICANON | rustix::termios::LocalModes::ECHO;
         rustix::termios::tcsetattr(stdin_fd, rustix::termios::OptionalActions::Now, &termios)?;
 
-        let res = watch_list_loop(app_state, notify_exercise_names);
+        let res = watch_list_loop(app_state, notify_exercise_names, editor);
 
         termios.local_modes = original_local_modes;
         rustix::termios::tcsetattr(stdin_fd, rustix::termios::OptionalActions::Now, &termios)?;
@@ -172,7 +178,7 @@ pub fn watch(
     }
 
     #[cfg(windows)]
-    watch_list_loop(app_state, notify_exercise_names)
+    watch_list_loop(app_state, notify_exercise_names, editor)
 }
 
 const QUIT_MSG: &[u8] = b"
