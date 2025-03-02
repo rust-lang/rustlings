@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" id="oranda" class="dark">
+    <head>
+        <title>rustlings</title>
+        
+            <meta property="og:url" content="https://rustlings.cool" />
+        
+        
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+            <meta name="description" content="Small exercises to get you used to reading and writing Rust code!" />
+            <meta property="og:description" content="Small exercises to get you used to reading and writing Rust code!" />
+        
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="rustlings" />
+        
+        
+        
+        <meta http-equiv="Permissions-Policy" content="interest-cohort=()" />
+        <link rel="stylesheet" href="/oranda-v0.3.1.css" />
+        
+        
+    </head>
+    <body>
+        <div class="container">
+            <div class="page-body">
+                
+                    <div class="repo_banner">
+                        <a href="https://github.com/rust-lang/rustlings">
+                            <div class="github-icon" aria-hidden="true"></div>
+                            Check out our GitHub!
+                        </a>
+                    </div>
+                
+
+                <main>
+                    <header>
+                        
+                        <h1 class="title">rustlings</h1>
+                        
+    <nav class="nav">
+        <ul>
+            <li><a href="/">Home</a></li>
+
+            
+
+            
+
+            
+
+            
+
+            
+                <li><a href="/changelog/">Changelog</a></li>
+            
+        </ul>
+    </nav>
+
+                    </header>
+
+                    
+<div>
+    <h1>Rustlings 5.0.0</h1>
+    <div class="releases-body">
+        
+        
+        <section class="release ">
+    
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            5.0.0
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Jul 16 2022 at 12:36 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h4>Features</h4>
+<ul>
+<li>Hint comments in exercises now also include a reference to the
+<code>hint</code> watch mode subcommand.</li>
+<li><strong>intro1</strong>: Added more hints to point the user to the source file.</li>
+<li><strong>variables</strong>: Switched variables3 and variables4.</li>
+<li>Moved <code>vec</code> and <code>primitive_types</code> exercises before <code>move_semantics</code>.</li>
+<li>Renamed <code>vec</code> to <code>vecs</code> to be more in line with the naming in general.</li>
+<li>Split up the <code>collections</code> exercises in their own folders.</li>
+<li><strong>vec2</strong>: Added a second part of the function that provides an alternative,
+immutable way of modifying vec values.</li>
+<li><strong>enums3</strong>: Added a hint.</li>
+<li>Moved <code>strings</code> before <code>modules</code>.</li>
+<li>Added a <code>strings3</code> exercise to teach modifying strings.</li>
+<li>Added a <code>hashmaps3</code> exercise for some advanced usage of hashmaps.</li>
+<li>Moved the original <code>quiz2</code> to be <code>strings4</code>, since it only tested strings
+anyways.</li>
+<li>Reworked <code>quiz2</code> into a new exercise that tests more chapters.</li>
+<li>Renamed <code>option</code> to <code>options</code>.</li>
+<li><strong>options1</strong>: Rewrote parts of the exercise to remove the weird array
+iteration stuff.</li>
+<li>Moved <code>generics3</code> to be <code>quiz3</code>.</li>
+<li>Moved box/arc exercises behind <code>iterators</code>.</li>
+<li><strong>iterators4</strong>: Added a test for factorials of zero.</li>
+<li>Split <code>threads1</code> between two exercises, the first one focusing more on
+<code>JoinHandle</code>s.</li>
+<li>Added a <code>threads3</code> exercises that uses <code>std::sync::mpsc</code>.</li>
+<li>Added a <code>clippy3</code> exercises with some more interesting checks.</li>
+<li><strong>as_ref_mut</strong>: Added a section that actually tests <code>AsMut</code>.</li>
+<li>Added 3 new lifetimes exercises.</li>
+<li>Added 3 new traits exercises.</li>
+</ul>
+<h4>Bug Fixes</h4>
+<ul>
+<li><strong>variables2</strong>: Made output messages more verbose.</li>
+<li><strong>variables5</strong>: Added a nudging hint about shadowing.</li>
+<li><strong>variables6</strong>: Fixed link to book.</li>
+<li><strong>functions</strong>: Clarified the README wording. Generally cleaned up
+some hints and added some extra comments.</li>
+<li><strong>if2</strong>: Renamed function name to <code>foo_if_fizz</code>.</li>
+<li><strong>move_semantics</strong>: Clarified some hints.</li>
+<li><strong>quiz1</strong>: Renamed the function name to be more verbose.</li>
+<li><strong>structs1</strong>: Use an integer type instead of strings. Renamed "unit structs"
+to "unit-like structs", as is used in the book.</li>
+<li><strong>structs3</strong>: Added the <code>panic!</code> statement in from the beginning.</li>
+<li><strong>errors1</strong>: Use <code>is_empty()</code> instead of <code>len() &gt; 0</code></li>
+<li><strong>errors3</strong>: Improved the hint.</li>
+<li><strong>errors5</strong>: Improved exercise instructions and the hint.</li>
+<li><strong>errors6</strong>: Provided the skeleton of one of the functions that's supposed
+to be implemented.</li>
+<li><strong>iterators3</strong>: Inserted <code>todo!</code> into <code>divide()</code> to keep a compiler error
+from happening.</li>
+<li><strong>from_str</strong>: Added a hint comment about string error message conversion with
+<code>Box&lt;dyn Error&gt;</code>.</li>
+<li><strong>try_from_into</strong>: Fixed the function name in comment.</li>
+</ul>
+<h4>Removed</h4>
+<ul>
+<li>Removed the legacy LSP feature that was using <code>mod.rs</code> files.</li>
+<li>Removed <code>quiz4</code>.</li>
+<li>Removed <code>advanced_errs</code>. These were the last exercises in the recommended
+order, and I've always felt like they didn't quite fit in with the mostly
+simple, book-following style we've had in Rustlings.</li>
+</ul>
+<h4>Housekeeping</h4>
+<ul>
+<li>Added missing exercises to the book index.</li>
+<li>Updated spacing in Cargo.toml.</li>
+<li>Added a GitHub actions config so that tests run on every PR/commit.</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+    </div>
+</div>
+
+                </main>
+            </div>
+
+            <footer>
+                
+                    <a href="https://github.com/rust-lang/rustlings"><div class="github-icon" aria-hidden="true"></div></a>
+                
+                <span>
+                    rustlings, MIT
+                </span>
+            </footer>
+        </div>
+
+        
+            <script defer="true" data-domain="rustlings.cool" src="https://plausible.io/js/script.js"></script>
+        
+        
+
+        
+    </body>
+</html>

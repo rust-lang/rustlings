@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" id="oranda" class="dark">
+    <head>
+        <title>rustlings</title>
+        
+            <meta property="og:url" content="https://rustlings.cool" />
+        
+        
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+            <meta name="description" content="Small exercises to get you used to reading and writing Rust code!" />
+            <meta property="og:description" content="Small exercises to get you used to reading and writing Rust code!" />
+        
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="rustlings" />
+        
+        
+        
+        <meta http-equiv="Permissions-Policy" content="interest-cohort=()" />
+        <link rel="stylesheet" href="/oranda-v0.3.1.css" />
+        
+        
+    </head>
+    <body>
+        <div class="container">
+            <div class="page-body">
+                
+                    <div class="repo_banner">
+                        <a href="https://github.com/rust-lang/rustlings">
+                            <div class="github-icon" aria-hidden="true"></div>
+                            Check out our GitHub!
+                        </a>
+                    </div>
+                
+
+                <main>
+                    <header>
+                        
+                        <h1 class="title">rustlings</h1>
+                        
+    <nav class="nav">
+        <ul>
+            <li><a href="/">Home</a></li>
+
+            
+
+            
+
+            
+
+            
+
+            
+                <li><a href="/changelog/">Changelog</a></li>
+            
+        </ul>
+    </nav>
+
+                    </header>
+
+                    
+<div>
+    <h1>Rustlings 6.3.0</h1>
+    <div class="releases-body">
+        
+        
+        <section class="release ">
+    
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            v6.3.0
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Aug 29 2024 at 15:24 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h3>Added</h3>
+<ul>
+<li>Add the following exercise lints:
+<ul>
+<li><code>forbid(unsafe_code)</code>: You shouldn't write unsafe code in Rustlings.</li>
+<li><code>forbid(unstable_features)</code>: You don't need unstable features in Rustlings and shouldn't rely on them while learning Rust.</li>
+<li><code>forbid(todo)</code>: You forgot a <code>todo!()</code>.</li>
+<li><code>forbid(empty_loop)</code>: This can only happen by mistake in Rustlings.</li>
+<li><code>deny(infinite_loop)</code>: No infinite loops are needed in Rustlings.</li>
+<li><code>deny(mem_forget)</code>: You shouldn't leak memory while still learning Rust.</li>
+</ul>
+</li>
+<li>Show a link to every exercise file in the list.</li>
+<li>Add scroll padding in the list.</li>
+<li>Break the help footer of the list into two lines when the terminal width isn't big enough.</li>
+<li>Enable scrolling with the mouse in the list.</li>
+<li><code>dev check</code>: Show the progress of checks.</li>
+<li><code>dev check</code>: Check that the length of all exercise names is lower than 32.</li>
+<li><code>dev check</code>: Check if exercise contains no tests and isn't marked with <code>test = false</code>.</li>
+</ul>
+<h3>Changed</h3>
+<ul>
+<li>The compilation time when installing Rustlings is reduced.</li>
+<li>Pressing <code>c</code> in the list for "continue on" now quits the list after setting the selected exercise as the current one.</li>
+<li>Better highlighting of the solution file after an exercise is done.</li>
+<li>Don't show the output of successful tests anymore. Instead, show the pretty output for tests.</li>
+<li>Be explicit about <code>q</code> only quitting the list and not the whole program in the list.</li>
+<li>Be explicit about <code>r</code> only resetting one exercise (the selected one) in the list.</li>
+<li>Ignore the standard output of <code>git init</code>.</li>
+<li><code>threads3</code>: Remove the queue length and improve tests.</li>
+<li><code>errors4</code>: Use match instead of a comparison chain in the solution.</li>
+<li><code>functions3</code>: Only take <code>u8</code> to avoid using a too high number of iterations by mistake.</li>
+<li><code>dev check</code>: Always check with strict Clippy (warnings to errors) when checking the solutions.</li>
+</ul>
+<h3>Fixed</h3>
+<ul>
+<li>Fix the error on some systems about too many open files during the final check of all exercises.</li>
+<li>Fix the list when the terminal height is too low.</li>
+<li>Restore the terminal after an error in the list.</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+    </div>
+</div>
+
+                </main>
+            </div>
+
+            <footer>
+                
+                    <a href="https://github.com/rust-lang/rustlings"><div class="github-icon" aria-hidden="true"></div></a>
+                
+                <span>
+                    rustlings, MIT
+                </span>
+            </footer>
+        </div>
+
+        
+            <script defer="true" data-domain="rustlings.cool" src="https://plausible.io/js/script.js"></script>
+        
+        
+
+        
+    </body>
+</html>

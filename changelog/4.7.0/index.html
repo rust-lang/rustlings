@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" id="oranda" class="dark">
+    <head>
+        <title>rustlings</title>
+        
+            <meta property="og:url" content="https://rustlings.cool" />
+        
+        
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+            <meta name="description" content="Small exercises to get you used to reading and writing Rust code!" />
+            <meta property="og:description" content="Small exercises to get you used to reading and writing Rust code!" />
+        
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="rustlings" />
+        
+        
+        
+        <meta http-equiv="Permissions-Policy" content="interest-cohort=()" />
+        <link rel="stylesheet" href="/oranda-v0.3.1.css" />
+        
+        
+    </head>
+    <body>
+        <div class="container">
+            <div class="page-body">
+                
+                    <div class="repo_banner">
+                        <a href="https://github.com/rust-lang/rustlings">
+                            <div class="github-icon" aria-hidden="true"></div>
+                            Check out our GitHub!
+                        </a>
+                    </div>
+                
+
+                <main>
+                    <header>
+                        
+                        <h1 class="title">rustlings</h1>
+                        
+    <nav class="nav">
+        <ul>
+            <li><a href="/">Home</a></li>
+
+            
+
+            
+
+            
+
+            
+
+            
+                <li><a href="/changelog/">Changelog</a></li>
+            
+        </ul>
+    </nav>
+
+                    </header>
+
+                    
+<div>
+    <h1>Rustlings 4.7.0</h1>
+    <div class="releases-body">
+        
+        
+        <section class="release ">
+    
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            4.7.0
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Apr 14 2022 at 09:23 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h4>Features</h4>
+<ul>
+<li>Add move_semantics6.rs exercise (#908) (<a href="https://github.com/rust-lang/rustlings/commit/3f0e1303e0b3bf3fecc0baced3c8b8a37f83c184" rel="noopener noreferrer">3f0e1303</a>)</li>
+<li><strong>intro:</strong> Add intro section. (<a href="https://github.com/rust-lang/rustlings/commit/21c9f44168394e08338fd470b5f49b1fd235986f" rel="noopener noreferrer">21c9f441</a>)</li>
+<li>Include exercises folder in the project structure behind a feature, enabling rust-analyzer to work (#917) (<a href="https://github.com/rust-lang/rustlings/commit/179a75a68d03ac9518dec2297fb17f91a4fc506b" rel="noopener noreferrer">179a75a6</a>)</li>
+</ul>
+<h4>Bug Fixes</h4>
+<ul>
+<li>Fix a few spelling mistakes (<a href="https://github.com/rust-lang/rustlings/commit/1c0fe3cbcca85f90b3985985b8e265ee872a2ab2" rel="noopener noreferrer">1c0fe3cb</a>)</li>
+<li><strong>cli:</strong>
+<ul>
+<li>Move long text strings into constants. (<a href="https://github.com/rust-lang/rustlings/commit/f78c48020830d7900dd8d81f355606581670446d" rel="noopener noreferrer">f78c4802</a>)</li>
+<li>Replace <code>filter_map()</code> with <code>find_map()</code> (<a href="https://github.com/rust-lang/rustlings/commit/9b27e8d993ca20232fe38a412750c3f845a83b65" rel="noopener noreferrer">9b27e8d</a>)</li>
+</ul>
+</li>
+<li><strong>clippy1:</strong>
+<ul>
+<li>Set clippy::float_cmp lint to deny (#907) (<a href="https://github.com/rust-lang/rustlings/commit/71a06044e6a96ff756dc31d7b0ed665ae4badb57" rel="noopener noreferrer">71a06044</a>)</li>
+<li>Updated code to test correctness clippy lint with approx_constant lint rule (<a href="https://github.com/rust-lang/rustlings/commit/f2650de369810867d2763e935ac0963c32ec420e" rel="noopener noreferrer">f2650de3</a>)</li>
+</ul>
+</li>
+<li><strong>errors1:</strong>
+<ul>
+<li>Add a comment to make the purpose more clear (#486) (<a href="https://github.com/rust-lang/rustlings/commit/cbcde345409c3e550112e449242848eaa3391bb6" rel="noopener noreferrer">cbcde345</a>)</li>
+<li>Don't modify tests (#958) (<a href="https://github.com/rust-lang/rustlings/commit/60bb7cc3931d21d3986ad52b2b302e632a93831c" rel="noopener noreferrer">60bb7cc</a>)</li>
+</ul>
+</li>
+<li><strong>errors6:</strong> Remove existing answer code (<a href="https://github.com/rust-lang/rustlings/commit/43d0623086edbc46fe896ba59c7afa22c3da9f7a" rel="noopener noreferrer">43d0623</a>)</li>
+<li><strong>functions5:</strong> Remove wrong new line and small English improvements (#885) (<a href="https://github.com/rust-lang/rustlings/commit/8ef4869b264094e5a9b50452b4534823a9df19c3" rel="noopener noreferrer">8ef4869b</a>)</li>
+<li><strong>install:</strong> protect path with whitespaces using quotes and stop at the first error (<a href="https://github.com/rust-lang/rustlings/commit/d114847f256c5f571c0b4c87e04b04bce3435509" rel="noopener noreferrer">d114847f</a>)</li>
+<li><strong>intro1:</strong> Add compiler error explanation. (<a href="https://github.com/rust-lang/rustlings/commit/9b8de65525a5576b78cf0c8e4098cdd34296338f" rel="noopener noreferrer">9b8de655</a>)</li>
+<li><strong>iterators1:</strong> reorder TODO steps (<a href="https://github.com/rust-lang/rustlings/commit/0bd7a0631a17a9d69af5746795a30efc9cf64e6e" rel="noopener noreferrer">0bd7a063</a>)</li>
+<li><strong>move_semantics2:</strong> Add comment (<a href="https://github.com/rust-lang/rustlings/commit/89650f808af23a32c9a2c6d46592b77547a6a464" rel="noopener noreferrer">89650f80</a>)</li>
+<li><strong>move_semantics5:</strong> correct typo (#857) (<a href="https://github.com/rust-lang/rustlings/commit/46c28d5cef3d8446b5a356b19d8dbc725f91a3a0" rel="noopener noreferrer">46c28d5c</a>)</li>
+<li><strong>quiz1:</strong> update to say quiz covers "If" (<a href="https://github.com/rust-lang/rustlings/commit/1622e8c198d89739765c915203efff0091bdeb78" rel="noopener noreferrer">1622e8c1</a>)</li>
+<li><strong>structs3:</strong>
+<ul>
+<li>Add a hint for panic (#608) (<a href="https://github.com/rust-lang/rustlings/commit/4f7ff5d9c7b2d8b045194c1a9469d37e30257c4a" rel="noopener noreferrer">4f7ff5d9</a>)</li>
+<li>remove redundant 'return' (#852) (<a href="https://github.com/rust-lang/rustlings/commit/bf33829da240375d086f96267fc2e02fa6b07001" rel="noopener noreferrer">bf33829d</a>)</li>
+<li>Assigned value to <code>cents_per_gram</code> in test (<a href="https://github.com/rust-lang/rustlings/commit/d1ee2daf14f19105e6db3f9c610f44293d688532" rel="noopener noreferrer">d1ee2da</a>)</li>
+</ul>
+</li>
+<li><strong>structs3.rs:</strong> assigned value to cents_per_gram in test (<a href="https://github.com/rust-lang/rustlings/commit/d1ee2daf14f19105e6db3f9c610f44293d688532" rel="noopener noreferrer">d1ee2daf</a>)</li>
+<li><strong>traits1:</strong> rename test functions to snake case (#854) (<a href="https://github.com/rust-lang/rustlings/commit/1663a16eade6ca646b6ed061735f7982434d530d" rel="noopener noreferrer">1663a16e</a>)</li>
+</ul>
+<h4>Documentation improvements</h4>
+<ul>
+<li>Add hints on how to get GCC installed (#741) (<a href="https://github.com/rust-lang/rustlings/commit/bc5686174463ad6f4f6b824b0e9b97c3039d4886" rel="noopener noreferrer">bc56861</a>)</li>
+<li>Fix some code blocks that were not highlighted (<a href="https://github.com/rust-lang/rustlings/commit/17f9d7429ccd133a72e815fb5618e0ce79560929" rel="noopener noreferrer">17f9d74</a>)</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+    </div>
+</div>
+
+                </main>
+            </div>
+
+            <footer>
+                
+                    <a href="https://github.com/rust-lang/rustlings"><div class="github-icon" aria-hidden="true"></div></a>
+                
+                <span>
+                    rustlings, MIT
+                </span>
+            </footer>
+        </div>
+
+        
+            <script defer="true" data-domain="rustlings.cool" src="https://plausible.io/js/script.js"></script>
+        
+        
+
+        
+    </body>
+</html>

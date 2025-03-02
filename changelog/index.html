@@ -1,0 +1,1859 @@
+<!DOCTYPE html>
+<html lang="en" id="oranda" class="dark">
+    <head>
+        <title>rustlings</title>
+        
+            <meta property="og:url" content="https://rustlings.cool" />
+        
+        
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+            <meta name="description" content="Small exercises to get you used to reading and writing Rust code!" />
+            <meta property="og:description" content="Small exercises to get you used to reading and writing Rust code!" />
+        
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="rustlings" />
+        
+        
+        
+        <meta http-equiv="Permissions-Policy" content="interest-cohort=()" />
+        <link rel="stylesheet" href="/oranda-v0.3.1.css" />
+        
+        
+    </head>
+    <body>
+        <div class="container">
+            <div class="page-body">
+                
+                    <div class="repo_banner">
+                        <a href="https://github.com/rust-lang/rustlings">
+                            <div class="github-icon" aria-hidden="true"></div>
+                            Check out our GitHub!
+                        </a>
+                    </div>
+                
+
+                <main>
+                    <header>
+                        
+                        <h1 class="title">rustlings</h1>
+                        
+    <nav class="nav">
+        <ul>
+            <li><a href="/">Home</a></li>
+
+            
+
+            
+
+            
+
+            
+
+            
+                <li><a href="/changelog/">Changelog</a></li>
+            
+        </ul>
+    </nav>
+
+                    </header>
+
+                    
+<div>
+    <h1>Releases</h1>
+    <div class="releases-wrapper">
+        <nav class="releases-nav">
+            
+
+            
+            <ul>
+                
+                     <li class="">
+                         <a href="v6.4.0/">v6.4.0</a>
+                     </li>
+                
+                     <li class="">
+                         <a href="v6.3.0/">v6.3.0</a>
+                     </li>
+                
+                     <li class="">
+                         <a href="v6.2.0/">v6.2.0</a>
+                     </li>
+                
+                     <li class="">
+                         <a href="v6.1.0/">v6.1.0</a>
+                     </li>
+                
+                     <li class="">
+                         <a href="v6.0.1/">v6.0.1</a>
+                     </li>
+                
+                     <li class="">
+                         <a href="v6.0.0/">v6.0.0</a>
+                     </li>
+                
+                     <li class="">
+                         <a href="5.6.1/">5.6.1</a>
+                     </li>
+                
+                     <li class="">
+                         <a href="5.6.0/">5.6.0</a>
+                     </li>
+                
+                     <li class="">
+                         <a href="5.5.1/">5.5.1</a>
+                     </li>
+                
+                     <li class="">
+                         <a href="5.5.0/">5.5.0</a>
+                     </li>
+                
+                     <li class="">
+                         <a href="5.4.1/">5.4.1</a>
+                     </li>
+                
+                     <li class="">
+                         <a href="5.4.0/">5.4.0</a>
+                     </li>
+                
+                     <li class="">
+                         <a href="5.3.0/">5.3.0</a>
+                     </li>
+                
+                     <li class="">
+                         <a href="5.2.1/">5.2.1</a>
+                     </li>
+                
+                     <li class="">
+                         <a href="5.2.0/">5.2.0</a>
+                     </li>
+                
+                     <li class="">
+                         <a href="5.1.1/">5.1.1</a>
+                     </li>
+                
+                     <li class="">
+                         <a href="5.1.0/">5.1.0</a>
+                     </li>
+                
+                     <li class="">
+                         <a href="5.0.0/">5.0.0</a>
+                     </li>
+                
+                     <li class="">
+                         <a href="4.8.0/">4.8.0</a>
+                     </li>
+                
+                     <li class="">
+                         <a href="4.7.1/">4.7.1</a>
+                     </li>
+                
+                     <li class="">
+                         <a href="4.7.0/">4.7.0</a>
+                     </li>
+                
+                     <li class="">
+                         <a href="4.6.0/">4.6.0</a>
+                     </li>
+                
+                     <li class="">
+                         <a href="4.5.0/">4.5.0</a>
+                     </li>
+                
+                     <li class="">
+                         <a href="4.4.0/">4.4.0</a>
+                     </li>
+                
+                     <li class="">
+                         <a href="4.3.0/">4.3.0</a>
+                     </li>
+                
+                     <li class="">
+                         <a href="4.2.0/">4.2.0</a>
+                     </li>
+                
+                     <li class="">
+                         <a href="4.1.0/">4.1.0</a>
+                     </li>
+                
+                     <li class="">
+                         <a href="4.0.0/">4.0.0</a>
+                     </li>
+                
+                     <li class="">
+                         <a href="3.0.0/">3.0.0</a>
+                     </li>
+                
+                     <li class="">
+                         <a href="2.2.1/">2.2.1</a>
+                     </li>
+                
+            </ul>
+        </nav>
+
+        <div class="releases-list">
+            
+                
+                <section class="release ">
+    <h2 id="tag-v6.4.0">
+        <a href="v6.4.0/">
+            
+                Rustlings 6.4.0
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            v6.4.0
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Nov 11 2024 at 14:58 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h3>Added</h3>
+<ul>
+<li>The list of exercises is now searchable by pressing <code>s</code> or <code>/</code> 🔍️ (thanks to <a href="https://github.com/frroossst" rel="noopener noreferrer">@frroossst</a>)</li>
+<li>New option <code>c</code> in the prompt to manually check all exercises ✅ (thanks to <a href="https://github.com/Nahor" rel="noopener noreferrer">@Nahor</a>)</li>
+<li>New command <code>check-all</code> to manually check all exercises ✅ (thanks to <a href="https://github.com/Nahor" rel="noopener noreferrer">@Nahor</a>)</li>
+<li>Addictive animation for showing the progress of checking all exercises. A nice showcase of parallelism in Rust ✨</li>
+<li>New option <code>x</code> in the prompt to reset the file of the current exercise 🔄</li>
+<li>Allow <code>dead_code</code> for all exercises and solutions ⚰️ (thanks to <a href="https://github.com/huss4in" rel="noopener noreferrer">@huss4in</a>)</li>
+<li>Pause input while running an exercise to avoid unexpected prompt interactions ⏸️</li>
+<li>Limit the maximum number of exercises to 999. Any third-party exercises willing to reach that limit? 🔝</li>
+</ul>
+<h3>Changed</h3>
+<ul>
+<li><code>enums3</code>: Remove redundant enum definition task (thanks to <a href="https://github.com/senekor" rel="noopener noreferrer">@senekor</a>)</li>
+<li><code>if2</code>: Make the exercise less confusing by avoiding "fizz", "fuzz", "foo", "bar" and "baz" (thanks to <a href="https://github.com/senekor" rel="noopener noreferrer">@senekor</a>)</li>
+<li><code>hashmap3</code>: Use the method <code>Entry::or_default</code>.</li>
+<li>Update the state of all exercises when checking all of them (thanks to <a href="https://github.com/Nahor" rel="noopener noreferrer">@Nahor</a>)</li>
+<li>The main prompt doesn't need a confirmation with ENTER on Unix-like systems anymore.</li>
+<li>No more jumping back to a previous exercise when its file is changed. Use the list to jump between exercises.</li>
+<li>Dump the solution file after an exercise is done even if the solution's directory doesn't exist.</li>
+<li>Rework the footer in the list.</li>
+<li>Optimize the file watcher.</li>
+</ul>
+<h3>Fixed</h3>
+<ul>
+<li>Fix bad contrast in the list on terminals with a light theme.</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+            
+                
+                <section class="release ">
+    <h2 id="tag-v6.3.0">
+        <a href="v6.3.0/">
+            
+                Rustlings 6.3.0
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            v6.3.0
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Aug 29 2024 at 15:24 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h3>Added</h3>
+<ul>
+<li>Add the following exercise lints:
+<ul>
+<li><code>forbid(unsafe_code)</code>: You shouldn't write unsafe code in Rustlings.</li>
+<li><code>forbid(unstable_features)</code>: You don't need unstable features in Rustlings and shouldn't rely on them while learning Rust.</li>
+<li><code>forbid(todo)</code>: You forgot a <code>todo!()</code>.</li>
+<li><code>forbid(empty_loop)</code>: This can only happen by mistake in Rustlings.</li>
+<li><code>deny(infinite_loop)</code>: No infinite loops are needed in Rustlings.</li>
+<li><code>deny(mem_forget)</code>: You shouldn't leak memory while still learning Rust.</li>
+</ul>
+</li>
+<li>Show a link to every exercise file in the list.</li>
+<li>Add scroll padding in the list.</li>
+<li>Break the help footer of the list into two lines when the terminal width isn't big enough.</li>
+<li>Enable scrolling with the mouse in the list.</li>
+<li><code>dev check</code>: Show the progress of checks.</li>
+<li><code>dev check</code>: Check that the length of all exercise names is lower than 32.</li>
+<li><code>dev check</code>: Check if exercise contains no tests and isn't marked with <code>test = false</code>.</li>
+</ul>
+<h3>Changed</h3>
+<ul>
+<li>The compilation time when installing Rustlings is reduced.</li>
+<li>Pressing <code>c</code> in the list for "continue on" now quits the list after setting the selected exercise as the current one.</li>
+<li>Better highlighting of the solution file after an exercise is done.</li>
+<li>Don't show the output of successful tests anymore. Instead, show the pretty output for tests.</li>
+<li>Be explicit about <code>q</code> only quitting the list and not the whole program in the list.</li>
+<li>Be explicit about <code>r</code> only resetting one exercise (the selected one) in the list.</li>
+<li>Ignore the standard output of <code>git init</code>.</li>
+<li><code>threads3</code>: Remove the queue length and improve tests.</li>
+<li><code>errors4</code>: Use match instead of a comparison chain in the solution.</li>
+<li><code>functions3</code>: Only take <code>u8</code> to avoid using a too high number of iterations by mistake.</li>
+<li><code>dev check</code>: Always check with strict Clippy (warnings to errors) when checking the solutions.</li>
+</ul>
+<h3>Fixed</h3>
+<ul>
+<li>Fix the error on some systems about too many open files during the final check of all exercises.</li>
+<li>Fix the list when the terminal height is too low.</li>
+<li>Restore the terminal after an error in the list.</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+            
+                
+                <section class="release ">
+    <h2 id="tag-v6.2.0">
+        <a href="v6.2.0/">
+            
+                Rustlings 6.2.0
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            v6.2.0
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Aug  9 2024 at 09:59 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h3>Added</h3>
+<ul>
+<li>Show a message before checking and running an exercise. This gives the user instant feedback and avoids confusion if the checks take too long.</li>
+<li>Show a helpful error message when trying to install Rustlings with a Rust version lower than the minimum one that Rustlings supports.</li>
+<li>Add a <code>README.md</code> file to the <code>solutions/</code> directory.</li>
+<li>Allow initializing Rustlings in a Cargo workspace.</li>
+<li><code>dev check</code>: Check that all solutions are formatted with <code>rustfmt</code>.</li>
+</ul>
+<h3>Changed</h3>
+<ul>
+<li>Remove the state file and the solutions directory from the generated <code>.gitignore</code> file.</li>
+<li>Run the final check of all exercises in parallel.</li>
+<li>Small exercise improvements.</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+            
+                
+                <section class="release ">
+    <h2 id="tag-v6.1.0">
+        <a href="v6.1.0/">
+            
+                Rustlings 6.1.0
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            v6.1.0
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Jul 10 2024 at 14:55 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h4>Added</h4>
+<ul>
+<li><code>dev check</code>: Check that all exercises (including third-party ones) include at least one <code>TODO</code> comment.</li>
+<li><code>dev check</code>: Check that all exercises actually fail to run (not already solved).</li>
+</ul>
+<h4>Changed</h4>
+<ul>
+<li>Make enum variants more consistent between enum exercises.</li>
+<li><code>iterators3</code>: Teach about the possible case of integer overflow during division.</li>
+</ul>
+<h4>Fixed</h4>
+<ul>
+<li>Exit with a helpful error message on missing/unsupported terminal/TTY.</li>
+<li>Mark the last exercise as done.</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+            
+                
+                <section class="release ">
+    <h2 id="tag-v6.0.1">
+        <a href="v6.0.1/">
+            
+                Rustlings 6.0.1
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            v6.0.1
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Jul  4 2024 at 18:04 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <p>Small exercise improvements and fixes.
+Most importantly, fixed that the exercise <code>clippy1</code> was already solved 😅</p>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+            
+                
+                <section class="release ">
+    <h2 id="tag-v6.0.0">
+        <a href="v6.0.0/">
+            
+                Rustlings 6.0.0
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            v6.0.0
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Jul  3 2024 at 13:43 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <p>This release is the result of a complete rewrite to deliver a ton of new features and improvements ✨
+The most important changes are highlighted below.</p>
+<h3>Installation</h3>
+<p>The installation has been simplified a lot!
+To install Rustlings after installing Rust, all what you need to do now is running the following command:</p>
+<pre style="background-color:#263238;"><span style="color:#82aaff;">cargo install rustlings
+</span></pre>
+
+<p>Yes, this means that Rustlings is now on <a href="https://crates.io/crates/rustlings" rel="noopener noreferrer">crates.io</a> 🎉</p>
+<p>You can read about the motivations of this change in <a href="https://github.com/rust-lang/rustlings/issues/1919" rel="noopener noreferrer">this issue</a>.</p>
+<h3>UI/UX</h3>
+<ul>
+<li>The UI is now responsive when the terminal is resized.</li>
+<li>The progress bar was moved to the bottom so that you can always see your progress and the current exercise to work on.</li>
+<li>The current exercise path is now a terminal link. It will open the exercise file in your default editor when you click on it.</li>
+<li>A small prompt is now always shown at the bottom. It allows you to choose an action by entering a character. For example, entering <code>h</code> will show you the hint of the current exercise.</li>
+<li>The comment "I AM NOT DONE!" doesn't exist anymore. Instead of needing to remove it to go to the next exercise, you need to enter <code>n</code> in the terminal.</li>
+</ul>
+<h3>List mode</h3>
+<p>A new list mode was added!
+You can enter it by entering <code>l</code> in the watch mode.
+It offers the following features:</p>
+<ul>
+<li>Browse all exercises and see their state (pending/done).</li>
+<li>Filter exercises based on their state (pending/done).</li>
+<li>Continue at another exercise. This allows you to skip some exercises or go back to previous ones.</li>
+<li>Reset an exercise so you can start over and revert your changes.</li>
+</ul>
+<h3>Solutions</h3>
+<p>After finishing an exercise, a solution file will be available and Rustlings will show you its path in green.
+This allows you to compare your solution with an idiomatic solution and maybe learn about other ways to solve a problem.</p>
+<p>While writing the solutions, all exercises have been polished 🌟
+For example, every exercise now contains <code>TODO</code> comments to highlight what the user needs to change and where.</p>
+<h3>LSP support out of the box</h3>
+<p>Instead of creating a <code>project.json</code> file using <code>rustlings lsp</code>, Rustlings now works with a <code>Cargo.toml</code> file out of the box.
+No actions are needed to activate the language server <code>rust-analyzer</code>.</p>
+<p>This should avoid issues related to the language server or to running exercises, especially the ones with Clippy.</p>
+<h3>Clippy</h3>
+<p>Clippy lints are now shown on all exercises, not only the Clippy exercises 📎
+Make Clippy your friend from early on 🥰</p>
+<h3>Third-party exercises</h3>
+<p>Rustlings now supports third-party exercises!</p>
+<p>Do you want to create your own set of Rustlings exercises to focus on some specific topic?
+Or do you want to translate the original Rustlings exercises?
+Then follow the link to the guide about <a href="THIRD_PARTY_EXERCISES.md" rel="noopener noreferrer">third-party exercises</a>!</p>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+            
+                
+                <section class="release ">
+    <h2 id="tag-5.6.1">
+        <a href="5.6.1/">
+            
+                Rustlings 5.6.1
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            5.6.1
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Sep 18 2023 at 08:18 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h4>Changed</h4>
+<ul>
+<li>Converted all exercises with assertions to test mode.</li>
+</ul>
+<h4>Fixed</h4>
+<ul>
+<li><code>cow1</code>: Reverted regression introduced by calling <code>to_mut</code> where it
+shouldn't have been called, and clarified comment.</li>
+<li><code>primitive_types3</code>: Require at least an array of 100 elements.</li>
+<li>Removed hint comments when no hint exists for the exercise.</li>
+<li><code>as_ref_mut</code>: Fixed a typo in a test function name.</li>
+<li><code>enums3</code>: Fixed formatting with <code>rustfmt</code>.</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+            
+                
+                <section class="release ">
+    <h2 id="tag-5.6.0">
+        <a href="5.6.0/">
+            
+                Rustlings 5.6.0
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            5.6.0
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Sep  4 2023 at 13:24 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h4>Added</h4>
+<ul>
+<li>New exercise: <code>if3</code>, teaching the user about <code>if let</code> statements.</li>
+<li><code>hashmaps2</code>: Added an extra test function to check if the amount of fruits is higher than zero.</li>
+<li><code>enums3</code>: Added a test for <code>Message</code>.</li>
+<li><code>if1</code>: Added a test case to check equal values.</li>
+<li><code>if3</code>: Added a note specifying that there are no test changes needed.</li>
+</ul>
+<h4>Changed</h4>
+<ul>
+<li>Swapped the order of threads and smart pointer exercises.</li>
+<li>Rewrote the CLI to use <code>clap</code> - it's matured much since we switched to <code>argh</code> :)</li>
+<li><code>structs3</code>: Switched from i32 to u32.</li>
+<li><code>move_semantics</code>: Switched 1-4 to tests, and rewrote them to be way simpler, while still teaching about the same
+concepts.</li>
+</ul>
+<h4>Fixed</h4>
+<ul>
+<li><code>iterators5</code>:
+<ul>
+<li>Removed an outdated part of the hint.</li>
+<li>Renamed variables to use snake_case.</li>
+</ul>
+</li>
+<li><code>vecs2</code>: Updated the hint to reference the renamed loop variable.</li>
+<li><code>enums3</code>: Changed message string in test so that it gets properly tested.</li>
+<li><code>strings2</code>: Corrected line number in hint, then removed it (this both happened as part of this release cycle).</li>
+<li><code>primitive_types4</code>: Updated hint to the correct ending index.</li>
+<li><code>quiz1</code>: Removed duplicated sentence from exercise comments.</li>
+<li><code>errors4</code>: Improved comment.</li>
+<li><code>from_into</code>: Fixed test values.</li>
+<li><code>cow1</code>: Added <code>.to_mut()</code> to distinguish from the previous test case.</li>
+<li><code>threads2</code>: Updated hint text to reference the correct book heading.</li>
+</ul>
+<h4>Housekeeping</h4>
+<ul>
+<li>Cleaned up the explanation paragraphs at the start of each exercise.</li>
+<li>Lots of Nix housekeeping that I don't feel qualified to write about!</li>
+<li>Improved CI workflows, we're now testing on multiple platforms at once.</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+            
+                
+                <section class="release ">
+    <h2 id="tag-5.5.1">
+        <a href="5.5.1/">
+            
+                Rustlings 5.5.1
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            5.5.1
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                May 17 2023 at 19:07 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h4>Fixed</h4>
+<ul>
+<li>Reverted <code>rust-project.json</code> path generation due to an upstream <code>rust-analyzer</code> fix.</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+            
+                
+                <section class="release ">
+    <h2 id="tag-5.5.0">
+        <a href="5.5.0/">
+            
+                Rustlings 5.5.0
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            5.5.0
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                May 17 2023 at 14:31 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h4>Added</h4>
+<ul>
+<li><code>strings2</code>: Added a reference to the book chapter for reference conversion</li>
+<li><code>lifetimes</code>: Added a link to the lifetimekata project</li>
+<li>Added a new <code>tests4</code> exercises, which teaches about testing for panics</li>
+<li>Added a <code>!</code> prefix command to watch mode that runs an external command</li>
+<li>Added a <code>--success-hints</code> option to watch mode that shows hints on exercise success</li>
+</ul>
+<h4>Changed</h4>
+<ul>
+<li><code>vecs2</code>: Renamed iterator variable bindings for clarify</li>
+<li><code>lifetimes</code>: Changed order of book references</li>
+<li><code>hashmaps2</code>: Clarified instructions in the todo block</li>
+<li>Moved lifetime exercises before test exercises (via the recommended book ordering)</li>
+<li><code>options2</code>: Improved tests for layering options</li>
+<li><code>modules2</code>: Added more information to the hint</li>
+</ul>
+<h4>Fixed</h4>
+<ul>
+<li><code>errors2</code>: Corrected a comment wording</li>
+<li><code>iterators2</code>: Fixed a spelling mistake in the hint text</li>
+<li><code>variables</code>: Wrapped the mut keyword with backticks for readability</li>
+<li><code>move_semantics2</code>: Removed references to line numbers</li>
+<li><code>cow1</code>: Clarified the <code>owned_no_mutation</code> comments</li>
+<li><code>options3</code>: Changed exercise to panic when no match is found</li>
+<li><code>rustlings lsp</code> now generates absolute paths, which should fix VSCode <code>rust-analyzer</code> usage on Windows</li>
+</ul>
+<h4>Housekeeping</h4>
+<ul>
+<li>Added a markdown linter to run on GitHub actions</li>
+<li>Split quick installation section into two code blocks</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+            
+                
+                <section class="release ">
+    <h2 id="tag-5.4.1">
+        <a href="5.4.1/">
+            
+                Rustlings 5.4.1
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            5.4.1
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Mar 10 2023 at 16:40 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h4>Changed</h4>
+<ul>
+<li><code>vecs</code>: Added links to <code>iter_mut</code> and <code>map</code> to README.md</li>
+<li><code>cow1</code>: Changed main to tests</li>
+<li><code>iterators1</code>: Formatted according to rustfmt</li>
+</ul>
+<h4>Fixed</h4>
+<ul>
+<li><code>errors5</code>: Unified undisclosed type notation</li>
+<li><code>arc1</code>: Improved readability by avoiding implicit dereference</li>
+<li><code>macros4</code>: Prevented auto-fix by adding <code>#[rustfmt::skip]</code></li>
+<li><code>cli</code>: Actually show correct progress percentages</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+            
+                
+                <section class="release ">
+    <h2 id="tag-5.4.0">
+        <a href="5.4.0/">
+            
+                Rustlings 5.4.0
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            5.4.0
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Feb 12 2023 at 17:03 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h4>Changed</h4>
+<ul>
+<li>Reordered exercises
+<ul>
+<li>Unwrapped <code>standard_library_types</code> into <code>iterators</code> and <code>smart_pointers</code></li>
+<li>Moved smart pointer exercises behind threads</li>
+<li>Ordered <code>rc1</code> before <code>arc1</code></li>
+</ul>
+</li>
+<li><strong>intro1</strong>: Added a note on <code>rustlings lsp</code></li>
+<li><strong>threads1</strong>: Panic if threads are not joined</li>
+<li><strong>cli</strong>:
+<ul>
+<li>Made progress bar update proportional to amount of files verified</li>
+<li>Decreased <code>watch</code> delay from 2 to 1 second</li>
+</ul>
+</li>
+</ul>
+<h4>Fixed</h4>
+<ul>
+<li>Capitalized "Rust" in exercise hints</li>
+<li><strong>enums3</strong>: Removed superfluous tuple brackets</li>
+<li><strong>quiz2, clippy1, iterators1</strong>: Fixed a typo</li>
+<li><strong>rc1</strong>: Fixed a prompt error</li>
+<li><strong>cli</strong>:
+<ul>
+<li>Fixed a typo in a method name</li>
+<li>Specified the edition in <code>rustc</code> commands</li>
+</ul>
+</li>
+</ul>
+<h4>Housekeeping</h4>
+<ul>
+<li>Bumped min Rust version to 1.58 in installation script</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+            
+                
+                <section class="release ">
+    <h2 id="tag-5.3.0">
+        <a href="5.3.0/">
+            
+                Rustlings 5.3.0
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            5.3.0
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Dec 23 2022 at 16:10 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h4>Added</h4>
+<ul>
+<li><strong>cli</strong>: Added a percentage display in watch mode</li>
+<li>Added a <code>flake.nix</code> for Nix users</li>
+</ul>
+<h4>Changed</h4>
+<ul>
+<li><strong>structs3</strong>: Added an additional test</li>
+<li><strong>macros</strong>: Added a link to MacroKata in the README</li>
+</ul>
+<h4>Fixed</h4>
+<ul>
+<li><strong>strings3</strong>: Added a link to <code>std</code> in the hint</li>
+<li><strong>threads1</strong>: Corrected a hint link</li>
+<li><strong>iterators1</strong>: Clarified hint steps</li>
+<li><strong>errors5</strong>: Fix a typo in the hint</li>
+<li><strong>options1</strong>: Clarified on the usage of the 24-hour system</li>
+<li><strong>threads2, threads3</strong>: Explicitly use <code>Arc::clone</code></li>
+<li><strong>structs3</strong>: Clarifed the hint</li>
+<li><strong>quiz2, as_ref_mut, options1, traits1, traits2</strong>: Clarified hints</li>
+<li><strong>traits1, traits2, cli</strong>: Tidied up unmatching backticks</li>
+<li><strong>enums2</strong>: Removed unnecessary indirection of self</li>
+<li><strong>enums3</strong>: Added an extra tuple comment</li>
+</ul>
+<h4>Housekeeping</h4>
+<ul>
+<li>Added a VSCode extension recommendation</li>
+<li>Applied some Clippy and rustfmt formatting</li>
+<li>Added a note on Windows PowerShell and other shell compatibility</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+            
+                
+                <section class="release ">
+    <h2 id="tag-5.2.1">
+        <a href="5.2.1/">
+            
+                Rustlings 5.2.1
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            5.2.1
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Sep  6 2022 at 10:23 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h4>Fixed</h4>
+<ul>
+<li><strong>quiz1</strong>: Reworded the comment to actually reflect what's going on in the tests.
+Also added another assert just to make sure.</li>
+<li><strong>rc1</strong>: Fixed a typo in the hint.</li>
+<li><strong>lifetimes</strong>: Add quotes to the <code>println!</code> output, for readability.</li>
+</ul>
+<h4>Housekeeping</h4>
+<ul>
+<li>Fixed a typo in README.md</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+            
+                
+                <section class="release ">
+    <h2 id="tag-5.2.0">
+        <a href="5.2.0/">
+            
+                Rustlings 5.2.0
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            5.2.0
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Aug 27 2022 at 18:50 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h4>Added</h4>
+<ul>
+<li>Added a <code>reset</code> command</li>
+</ul>
+<h4>Changed</h4>
+<ul>
+<li><strong>options2</strong>: Convert the exercise to use tests</li>
+</ul>
+<h4>Fixed</h4>
+<ul>
+<li><strong>threads3</strong>: Fixed a typo</li>
+<li><strong>quiz1</strong>: Adjusted the explanations to be consistent with
+the tests</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+            
+                
+                <section class="release ">
+    <h2 id="tag-5.1.1">
+        <a href="5.1.1/">
+            
+                Rustlings 5.1.1
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            5.1.1
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Aug 17 2022 at 08:44 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h4>Bug Fixes</h4>
+<ul>
+<li>Fixed an incorrect assertion in options1</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+            
+                
+                <section class="release ">
+    <h2 id="tag-5.1.0">
+        <a href="5.1.0/">
+            
+                Rustlings 5.1.0
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            5.1.0
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Aug 16 2022 at 07:56 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h4>Features</h4>
+<ul>
+<li>Added a new <code>rc1</code> exercise.</li>
+<li>Added a new <code>cow1</code> exercise.</li>
+</ul>
+<h4>Bug Fixes</h4>
+<ul>
+<li><strong>variables5</strong>: Corrected reference to previous exercise</li>
+<li><strong>functions4</strong>: Fixed line number reference</li>
+<li><strong>strings3</strong>: Clarified comment wording</li>
+<li><strong>traits4, traits5</strong>: Fixed line number reference</li>
+<li><strong>traits5</strong>:
+<ul>
+<li>Fixed typo in "parameter"</li>
+<li>Made exercise prefer a traits-based solution</li>
+</ul>
+</li>
+<li><strong>lifetimes2</strong>: Improved hint</li>
+<li><strong>threads3</strong>: Fixed typo in hint</li>
+<li><strong>box1</strong>: Replaced <code>unimplemented!</code> with <code>todo!</code></li>
+<li><strong>errors5</strong>: Provided an explanation for usage of <code>Box&lt;dyn Error&gt;</code></li>
+<li><strong>quiz2</strong>: Fixed a typo</li>
+<li><strong>macros</strong>: Updated the macros book link</li>
+<li><strong>options1</strong>:
+<ul>
+<li>Removed unused code</li>
+<li>Added more granular tests</li>
+</ul>
+</li>
+<li>Fixed some comment syntax shenanigans in info.toml</li>
+</ul>
+<h4>Housekeeping</h4>
+<ul>
+<li>Fixed a typo in .editorconfig</li>
+<li>Fixed a typo in integration_tests.rs</li>
+<li>Clarified manual installation instructions using <code>cargo install --path .</code></li>
+<li>Added a link to our Zulip in the readme file</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+            
+                
+                <section class="release ">
+    <h2 id="tag-5.0.0">
+        <a href="5.0.0/">
+            
+                Rustlings 5.0.0
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            5.0.0
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Jul 16 2022 at 12:36 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h4>Features</h4>
+<ul>
+<li>Hint comments in exercises now also include a reference to the
+<code>hint</code> watch mode subcommand.</li>
+<li><strong>intro1</strong>: Added more hints to point the user to the source file.</li>
+<li><strong>variables</strong>: Switched variables3 and variables4.</li>
+<li>Moved <code>vec</code> and <code>primitive_types</code> exercises before <code>move_semantics</code>.</li>
+<li>Renamed <code>vec</code> to <code>vecs</code> to be more in line with the naming in general.</li>
+<li>Split up the <code>collections</code> exercises in their own folders.</li>
+<li><strong>vec2</strong>: Added a second part of the function that provides an alternative,
+immutable way of modifying vec values.</li>
+<li><strong>enums3</strong>: Added a hint.</li>
+<li>Moved <code>strings</code> before <code>modules</code>.</li>
+<li>Added a <code>strings3</code> exercise to teach modifying strings.</li>
+<li>Added a <code>hashmaps3</code> exercise for some advanced usage of hashmaps.</li>
+<li>Moved the original <code>quiz2</code> to be <code>strings4</code>, since it only tested strings
+anyways.</li>
+<li>Reworked <code>quiz2</code> into a new exercise that tests more chapters.</li>
+<li>Renamed <code>option</code> to <code>options</code>.</li>
+<li><strong>options1</strong>: Rewrote parts of the exercise to remove the weird array
+iteration stuff.</li>
+<li>Moved <code>generics3</code> to be <code>quiz3</code>.</li>
+<li>Moved box/arc exercises behind <code>iterators</code>.</li>
+<li><strong>iterators4</strong>: Added a test for factorials of zero.</li>
+<li>Split <code>threads1</code> between two exercises, the first one focusing more on
+<code>JoinHandle</code>s.</li>
+<li>Added a <code>threads3</code> exercises that uses <code>std::sync::mpsc</code>.</li>
+<li>Added a <code>clippy3</code> exercises with some more interesting checks.</li>
+<li><strong>as_ref_mut</strong>: Added a section that actually tests <code>AsMut</code>.</li>
+<li>Added 3 new lifetimes exercises.</li>
+<li>Added 3 new traits exercises.</li>
+</ul>
+<h4>Bug Fixes</h4>
+<ul>
+<li><strong>variables2</strong>: Made output messages more verbose.</li>
+<li><strong>variables5</strong>: Added a nudging hint about shadowing.</li>
+<li><strong>variables6</strong>: Fixed link to book.</li>
+<li><strong>functions</strong>: Clarified the README wording. Generally cleaned up
+some hints and added some extra comments.</li>
+<li><strong>if2</strong>: Renamed function name to <code>foo_if_fizz</code>.</li>
+<li><strong>move_semantics</strong>: Clarified some hints.</li>
+<li><strong>quiz1</strong>: Renamed the function name to be more verbose.</li>
+<li><strong>structs1</strong>: Use an integer type instead of strings. Renamed "unit structs"
+to "unit-like structs", as is used in the book.</li>
+<li><strong>structs3</strong>: Added the <code>panic!</code> statement in from the beginning.</li>
+<li><strong>errors1</strong>: Use <code>is_empty()</code> instead of <code>len() &gt; 0</code></li>
+<li><strong>errors3</strong>: Improved the hint.</li>
+<li><strong>errors5</strong>: Improved exercise instructions and the hint.</li>
+<li><strong>errors6</strong>: Provided the skeleton of one of the functions that's supposed
+to be implemented.</li>
+<li><strong>iterators3</strong>: Inserted <code>todo!</code> into <code>divide()</code> to keep a compiler error
+from happening.</li>
+<li><strong>from_str</strong>: Added a hint comment about string error message conversion with
+<code>Box&lt;dyn Error&gt;</code>.</li>
+<li><strong>try_from_into</strong>: Fixed the function name in comment.</li>
+</ul>
+<h4>Removed</h4>
+<ul>
+<li>Removed the legacy LSP feature that was using <code>mod.rs</code> files.</li>
+<li>Removed <code>quiz4</code>.</li>
+<li>Removed <code>advanced_errs</code>. These were the last exercises in the recommended
+order, and I've always felt like they didn't quite fit in with the mostly
+simple, book-following style we've had in Rustlings.</li>
+</ul>
+<h4>Housekeeping</h4>
+<ul>
+<li>Added missing exercises to the book index.</li>
+<li>Updated spacing in Cargo.toml.</li>
+<li>Added a GitHub actions config so that tests run on every PR/commit.</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+            
+                
+                <section class="release ">
+    <h2 id="tag-4.8.0">
+        <a href="4.8.0/">
+            
+                Rustlings 4.8.0
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            4.8.0
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Jul  1 2022 at 14:50 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h4>Features</h4>
+<ul>
+<li>Added a progress indicator for <code>rustlings watch</code>.</li>
+<li>The installation script now checks for Rustup being installed.</li>
+<li>Added a <code>rustlings lsp</code> command to enable <code>rust-analyzer</code>.</li>
+</ul>
+<h4>Bug Fixes</h4>
+<ul>
+<li><strong>move_semantics5</strong>: Replaced "in vogue" with "in scope" in hint.</li>
+<li><strong>if2</strong>: Fixed a typo in the hint.</li>
+<li><strong>variables1</strong>: Fixed an incorrect line reference in the hint.</li>
+<li>Fixed an out of bounds check in the installation Bash script.</li>
+</ul>
+<h4>Housekeeping</h4>
+<ul>
+<li>Replaced the git.io URL with the fully qualified URL because of git.io's sunsetting.</li>
+<li>Removed the deprecated Rust GitPod extension.</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+            
+                
+                <section class="release ">
+    <h2 id="tag-4.7.1">
+        <a href="4.7.1/">
+            
+                Rustlings 4.7.1
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            4.7.1
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Apr 20 2022 at 07:46 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h4>Features</h4>
+<ul>
+<li>The amount of dependency crates that need to be compiled went down from ~65 to
+~45 by bumping dependency versions.</li>
+<li>The minimum Rust version in the install scripts has been bumped to 1.56.0 (this isn't in
+the release itself, since install scripts don't really get versioned)</li>
+</ul>
+<h4>Bug Fixes</h4>
+<ul>
+<li><strong>arc1</strong>: A small part has been rewritten using a more functional code style (#968).</li>
+<li><strong>using_as</strong>: A small part has been refactored to use <code>sum</code> instead of <code>fold</code>, resulting
+in better readability.</li>
+</ul>
+<h4>Housekeeping</h4>
+<ul>
+<li>The changelog will now be manually written instead of being automatically generated by the
+Git log.</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+            
+                
+                <section class="release ">
+    <h2 id="tag-4.7.0">
+        <a href="4.7.0/">
+            
+                Rustlings 4.7.0
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            4.7.0
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Apr 14 2022 at 09:23 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h4>Features</h4>
+<ul>
+<li>Add move_semantics6.rs exercise (#908) (<a href="https://github.com/rust-lang/rustlings/commit/3f0e1303e0b3bf3fecc0baced3c8b8a37f83c184" rel="noopener noreferrer">3f0e1303</a>)</li>
+<li><strong>intro:</strong> Add intro section. (<a href="https://github.com/rust-lang/rustlings/commit/21c9f44168394e08338fd470b5f49b1fd235986f" rel="noopener noreferrer">21c9f441</a>)</li>
+<li>Include exercises folder in the project structure behind a feature, enabling rust-analyzer to work (#917) (<a href="https://github.com/rust-lang/rustlings/commit/179a75a68d03ac9518dec2297fb17f91a4fc506b" rel="noopener noreferrer">179a75a6</a>)</li>
+</ul>
+<h4>Bug Fixes</h4>
+<ul>
+<li>Fix a few spelling mistakes (<a href="https://github.com/rust-lang/rustlings/commit/1c0fe3cbcca85f90b3985985b8e265ee872a2ab2" rel="noopener noreferrer">1c0fe3cb</a>)</li>
+<li><strong>cli:</strong>
+<ul>
+<li>Move long text strings into constants. (<a href="https://github.com/rust-lang/rustlings/commit/f78c48020830d7900dd8d81f355606581670446d" rel="noopener noreferrer">f78c4802</a>)</li>
+<li>Replace <code>filter_map()</code> with <code>find_map()</code> (<a href="https://github.com/rust-lang/rustlings/commit/9b27e8d993ca20232fe38a412750c3f845a83b65" rel="noopener noreferrer">9b27e8d</a>)</li>
+</ul>
+</li>
+<li><strong>clippy1:</strong>
+<ul>
+<li>Set clippy::float_cmp lint to deny (#907) (<a href="https://github.com/rust-lang/rustlings/commit/71a06044e6a96ff756dc31d7b0ed665ae4badb57" rel="noopener noreferrer">71a06044</a>)</li>
+<li>Updated code to test correctness clippy lint with approx_constant lint rule (<a href="https://github.com/rust-lang/rustlings/commit/f2650de369810867d2763e935ac0963c32ec420e" rel="noopener noreferrer">f2650de3</a>)</li>
+</ul>
+</li>
+<li><strong>errors1:</strong>
+<ul>
+<li>Add a comment to make the purpose more clear (#486) (<a href="https://github.com/rust-lang/rustlings/commit/cbcde345409c3e550112e449242848eaa3391bb6" rel="noopener noreferrer">cbcde345</a>)</li>
+<li>Don't modify tests (#958) (<a href="https://github.com/rust-lang/rustlings/commit/60bb7cc3931d21d3986ad52b2b302e632a93831c" rel="noopener noreferrer">60bb7cc</a>)</li>
+</ul>
+</li>
+<li><strong>errors6:</strong> Remove existing answer code (<a href="https://github.com/rust-lang/rustlings/commit/43d0623086edbc46fe896ba59c7afa22c3da9f7a" rel="noopener noreferrer">43d0623</a>)</li>
+<li><strong>functions5:</strong> Remove wrong new line and small English improvements (#885) (<a href="https://github.com/rust-lang/rustlings/commit/8ef4869b264094e5a9b50452b4534823a9df19c3" rel="noopener noreferrer">8ef4869b</a>)</li>
+<li><strong>install:</strong> protect path with whitespaces using quotes and stop at the first error (<a href="https://github.com/rust-lang/rustlings/commit/d114847f256c5f571c0b4c87e04b04bce3435509" rel="noopener noreferrer">d114847f</a>)</li>
+<li><strong>intro1:</strong> Add compiler error explanation. (<a href="https://github.com/rust-lang/rustlings/commit/9b8de65525a5576b78cf0c8e4098cdd34296338f" rel="noopener noreferrer">9b8de655</a>)</li>
+<li><strong>iterators1:</strong> reorder TODO steps (<a href="https://github.com/rust-lang/rustlings/commit/0bd7a0631a17a9d69af5746795a30efc9cf64e6e" rel="noopener noreferrer">0bd7a063</a>)</li>
+<li><strong>move_semantics2:</strong> Add comment (<a href="https://github.com/rust-lang/rustlings/commit/89650f808af23a32c9a2c6d46592b77547a6a464" rel="noopener noreferrer">89650f80</a>)</li>
+<li><strong>move_semantics5:</strong> correct typo (#857) (<a href="https://github.com/rust-lang/rustlings/commit/46c28d5cef3d8446b5a356b19d8dbc725f91a3a0" rel="noopener noreferrer">46c28d5c</a>)</li>
+<li><strong>quiz1:</strong> update to say quiz covers "If" (<a href="https://github.com/rust-lang/rustlings/commit/1622e8c198d89739765c915203efff0091bdeb78" rel="noopener noreferrer">1622e8c1</a>)</li>
+<li><strong>structs3:</strong>
+<ul>
+<li>Add a hint for panic (#608) (<a href="https://github.com/rust-lang/rustlings/commit/4f7ff5d9c7b2d8b045194c1a9469d37e30257c4a" rel="noopener noreferrer">4f7ff5d9</a>)</li>
+<li>remove redundant 'return' (#852) (<a href="https://github.com/rust-lang/rustlings/commit/bf33829da240375d086f96267fc2e02fa6b07001" rel="noopener noreferrer">bf33829d</a>)</li>
+<li>Assigned value to <code>cents_per_gram</code> in test (<a href="https://github.com/rust-lang/rustlings/commit/d1ee2daf14f19105e6db3f9c610f44293d688532" rel="noopener noreferrer">d1ee2da</a>)</li>
+</ul>
+</li>
+<li><strong>structs3.rs:</strong> assigned value to cents_per_gram in test (<a href="https://github.com/rust-lang/rustlings/commit/d1ee2daf14f19105e6db3f9c610f44293d688532" rel="noopener noreferrer">d1ee2daf</a>)</li>
+<li><strong>traits1:</strong> rename test functions to snake case (#854) (<a href="https://github.com/rust-lang/rustlings/commit/1663a16eade6ca646b6ed061735f7982434d530d" rel="noopener noreferrer">1663a16e</a>)</li>
+</ul>
+<h4>Documentation improvements</h4>
+<ul>
+<li>Add hints on how to get GCC installed (#741) (<a href="https://github.com/rust-lang/rustlings/commit/bc5686174463ad6f4f6b824b0e9b97c3039d4886" rel="noopener noreferrer">bc56861</a>)</li>
+<li>Fix some code blocks that were not highlighted (<a href="https://github.com/rust-lang/rustlings/commit/17f9d7429ccd133a72e815fb5618e0ce79560929" rel="noopener noreferrer">17f9d74</a>)</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+            
+                
+                <section class="release ">
+    <h2 id="tag-4.6.0">
+        <a href="4.6.0/">
+            
+                Rustlings 4.6.0
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            4.6.0
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Sep 25 2021 at 09:27 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h4>Features</h4>
+<ul>
+<li>add advanced_errs2 (<a href="https://github.com/rust-lang/rustlings/commit/abd6b70c72dc6426752ff41f09160b839e5c449e" rel="noopener noreferrer">abd6b70c</a>)</li>
+<li>add advanced_errs1 (<a href="https://github.com/rust-lang/rustlings/commit/882d535ba8628d5e0b37e8664b3e2f26260b2671" rel="noopener noreferrer">882d535b</a>)</li>
+<li>Add a farewell message when quitting <code>watch</code> (<a href="https://github.com/rust-lang/rustlings/commit/1caef0b43494c8b8cdd6c9260147e70d510f1aca" rel="noopener noreferrer">1caef0b4</a>)</li>
+<li>add more watch commands (<a href="https://github.com/rust-lang/rustlings/commit/a7dc080b95e49146fbaafe6922a6de2f8cb1582a" rel="noopener noreferrer">a7dc080b</a>, closes <a href="https://github.com/rust-lang/rustlings/issues/842" rel="noopener noreferrer">#842</a>)</li>
+<li><strong>modules:</strong> update exercises, add modules3 (#822) (<a href="https://github.com/rust-lang/rustlings/commit/dfd2fab4f33d1bf59e2e5ee03123c0c9a67a9481" rel="noopener noreferrer">dfd2fab4</a>)</li>
+<li><strong>quiz1:</strong> add default function name in comment (#838) (<a href="https://github.com/rust-lang/rustlings/commit/0a11bad71402b5403143d642f439f57931278c07" rel="noopener noreferrer">0a11bad7</a>)</li>
+</ul>
+<h4>Bug Fixes</h4>
+<ul>
+<li>Correct small typo in exercises/conversions/from_str.rs (<a href="https://github.com/rust-lang/rustlings/commit/86cc85295ae36948963ae52882e285d7e3e29323" rel="noopener noreferrer">86cc8529</a>)</li>
+<li><strong>cli:</strong> typo in exercise.rs (#848) (<a href="https://github.com/rust-lang/rustlings/commit/06d5c0973a3dffa3c6c6f70acb775d4c6630323c" rel="noopener noreferrer">06d5c097</a>)</li>
+<li><strong>from_str, try_from_into:</strong> custom error types (<a href="https://github.com/rust-lang/rustlings/commit/2dc93caddad43821743e4903d89b355df58d7a49" rel="noopener noreferrer">2dc93cad</a>)</li>
+<li><strong>modules2:</strong> fix typo (#835) (<a href="https://github.com/rust-lang/rustlings/commit/1c3beb0a59178c950dc05fe8ee2346b017429ae0" rel="noopener noreferrer">1c3beb0a</a>)</li>
+<li><strong>move_semantics5:</strong>
+<ul>
+<li>change &amp;mut *y to &amp;mut x (#814) (<a href="https://github.com/rust-lang/rustlings/commit/d75759e829fdcd64ef071cf4b6eae2a011a7718b" rel="noopener noreferrer">d75759e8</a>)</li>
+<li>Clarify instructions (<a href="https://github.com/rust-lang/rustlings/commit/df25684cb79f8413915e00b5efef29369849cef1" rel="noopener noreferrer">df25684c</a>)</li>
+</ul>
+</li>
+<li><strong>quiz1:</strong> Fix inconsistent wording (#826) (<a href="https://github.com/rust-lang/rustlings/commit/03131a3d35d9842598150f9da817f7cc26e2669a" rel="noopener noreferrer">03131a3d</a>)</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+            
+                
+                <section class="release ">
+    <h2 id="tag-4.5.0">
+        <a href="4.5.0/">
+            
+                Rustlings 4.5.0
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            4.5.0
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Jul  7 2021 at 20:30 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h4>Features</h4>
+<ul>
+<li>Add move_semantics5 exercise. (#746) (<a href="https://github.com/rust-lang/rustlings/commit/399ab328d8d407265c09563aa4ef4534b2503ff2" rel="noopener noreferrer">399ab328</a>)</li>
+<li><strong>cli:</strong> Add "next" to run the next unsolved exercise. (#785) (<a href="https://github.com/rust-lang/rustlings/commit/d20e413a68772cd493561f2651cf244e822b7ca5" rel="noopener noreferrer">d20e413a</a>)</li>
+</ul>
+<h4>Bug Fixes</h4>
+<ul>
+<li>rename result1 to errors4 (<a href="https://github.com/rust-lang/rustlings/commit/50ab289da6b9eb19a7486c341b00048c516b88c0" rel="noopener noreferrer">50ab289d</a>)</li>
+<li>move_semantics5 hints (<a href="https://github.com/rust-lang/rustlings/commit/1b85828548f46f58b622b5e0c00f8c989f928807" rel="noopener noreferrer">1b858285</a>)</li>
+<li>remove trailing whitespaces from iterators1 (<a href="https://github.com/rust-lang/rustlings/commit/4d4fa77459392acd3581c6068aa8be9a02de12fc" rel="noopener noreferrer">4d4fa774</a>)</li>
+<li>add hints to generics1 and generics2 exercises (<a href="https://github.com/rust-lang/rustlings/commit/31457940846b3844d78d4a4d2b074bc8d6aaf1eb" rel="noopener noreferrer">31457940</a>)</li>
+<li>remove trailing whitespace (<a href="https://github.com/rust-lang/rustlings/commit/d9b69bd1a0a7a99f2c0d80933ad2eea44c8c71b2" rel="noopener noreferrer">d9b69bd1</a>)</li>
+<li><strong>installation:</strong> first PowerShell command (<a href="https://github.com/rust-lang/rustlings/commit/aa9a943ddf3ae260782e73c26bcc9db60e5894b6" rel="noopener noreferrer">aa9a943d</a>)</li>
+<li><strong>iterators5:</strong> derive Clone, Copy (<a href="https://github.com/rust-lang/rustlings/commit/91fc9e3118f4af603c9911698cc2a234725cb032" rel="noopener noreferrer">91fc9e31</a>)</li>
+<li><strong>quiz1:</strong> Updated question description (#794) (<a href="https://github.com/rust-lang/rustlings/commit/d876649616cc8a8dd5f539f8bc1a5434b960b1e9" rel="noopener noreferrer">d8766496</a>)</li>
+<li><strong>try_from_into, from_str:</strong> hints for dyn Error (<a href="https://github.com/rust-lang/rustlings/commit/11d2cf0d604dee3f5023c17802d69438e69fa50e" rel="noopener noreferrer">11d2cf0d</a>)</li>
+<li><strong>variables5:</strong> confine the answer further (<a href="https://github.com/rust-lang/rustlings/commit/48ffcbd2c4cc4d936c2c7480019190f179813cc5" rel="noopener noreferrer">48ffcbd2</a>)</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+            
+                
+                <section class="release ">
+    <h2 id="tag-4.4.0">
+        <a href="4.4.0/">
+            
+                Rustlings 4.4.0
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            4.4.0
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Apr 24 2021 at 10:04 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h4>Bug Fixes</h4>
+<ul>
+<li>Fix spelling error in main.rs (<a href="https://github.com/rust-lang/rustlings/commit/91ee27f22bd3797a9db57e5fd430801c170c5db8" rel="noopener noreferrer">91ee27f2</a>)</li>
+<li>typo in default out text (<a href="https://github.com/rust-lang/rustlings/commit/644c49f1e04cbb24e95872b3a52b07d692ae3bc8" rel="noopener noreferrer">644c49f1</a>)</li>
+<li><strong>collections:</strong> Naming exercises for vectors and hashmap (<a href="https://github.com/rust-lang/rustlings/commit/bef39b125961310b34b34871e480a82e82af4678" rel="noopener noreferrer">bef39b12</a>)</li>
+<li><strong>from_str:</strong>
+<ul>
+<li>Correct typos (<a href="https://github.com/rust-lang/rustlings/commit/5f7c89f85db1f33da01911eaa479c3a2d4721678" rel="noopener noreferrer">5f7c89f8</a>)</li>
+<li>test for error instead of unwrap/should_panic (<a href="https://github.com/rust-lang/rustlings/commit/15e71535f37cfaed36e22eb778728d186e2104ab" rel="noopener noreferrer">15e71535</a>)</li>
+<li>use trait objects for from_str (<a href="https://github.com/rust-lang/rustlings/commit/c3e7b831786c9172ed8bd5d150f3c432f242fba9" rel="noopener noreferrer">c3e7b831</a>)</li>
+</ul>
+</li>
+<li><strong>functions3:</strong> improve function argument type (#687) (<a href="https://github.com/rust-lang/rustlings/commit/a6509cc4d545d8825f01ddf7ee37823b372154dd" rel="noopener noreferrer">a6509cc4</a>)</li>
+<li><strong>hashmap2:</strong> Update incorrect assertion (#660) (<a href="https://github.com/rust-lang/rustlings/commit/72aaa15e6ab4b72b3422f1c6356396e20a2a2bb8" rel="noopener noreferrer">72aaa15e</a>)</li>
+<li><strong>info:</strong> Fix typo (#635) (<a href="https://github.com/rust-lang/rustlings/commit/cddc1e86e7ec744ee644cc774a4887b1a0ded3e8" rel="noopener noreferrer">cddc1e86</a>)</li>
+<li><strong>iterators2:</strong> Moved errors out of tests. (<a href="https://github.com/rust-lang/rustlings/commit/baf4ba175ba6eb92989e3dd54ecbec4bedc9a863" rel="noopener noreferrer">baf4ba17</a>, closes <a href="https://github.com/rust-lang/rustlings/issues/359" rel="noopener noreferrer">#359</a>)</li>
+<li><strong>iterators3:</strong> Enabled iterators3.rs to run without commented out tests. (<a href="https://github.com/rust-lang/rustlings/commit/c6712dfccd1a093e590ad22bbc4f49edc417dac0" rel="noopener noreferrer">c6712dfc</a>)</li>
+<li><strong>main:</strong> Let find_exercise work with borrows (<a href="https://github.com/rust-lang/rustlings/commit/347f30bd867343c5ace1097e085a1f7e356553f7" rel="noopener noreferrer">347f30bd</a>)</li>
+<li><strong>move_semantics4:</strong>
+<ul>
+<li>Remove redundant "instead" (#640) (<a href="https://github.com/rust-lang/rustlings/commit/cc266d7d80b91e79df3f61984f231b7f1587218e" rel="noopener noreferrer">cc266d7d</a>)</li>
+<li>Small readbility improvement (#617) (<a href="https://github.com/rust-lang/rustlings/commit/10965920fbdf8a1efc85bed869e55a1787006404" rel="noopener noreferrer">10965920</a>)</li>
+</ul>
+</li>
+<li><strong>option2:</strong> Rename uninformative variables (#675) (<a href="https://github.com/rust-lang/rustlings/commit/b4de6594380636817d13c2677ec6f472a964cf43" rel="noopener noreferrer">b4de6594</a>)</li>
+<li><strong>quiz3:</strong> Force an answer to Q2 (#672) (<a href="https://github.com/rust-lang/rustlings/commit/0d894e6ff739943901e1ae8c904582e5c2f843bd" rel="noopener noreferrer">0d894e6f</a>)</li>
+<li><strong>structs:</strong> Add 5.3 to structs/README (#652) (<a href="https://github.com/rust-lang/rustlings/commit/6bd791f2f44aa7f0ad926df767f6b1fa8f12a9a9" rel="noopener noreferrer">6bd791f2</a>)</li>
+<li><strong>structs2:</strong> correct grammar in hint (#663) (<a href="https://github.com/rust-lang/rustlings/commit/ebdb66c7bfb6d687a14cc511a559a222e6fc5de4" rel="noopener noreferrer">ebdb66c7</a>)</li>
+<li><strong>structs3:</strong>
+<ul>
+<li>reword heading comment (#664) (<a href="https://github.com/rust-lang/rustlings/commit/9f3e8c2dde645e5264c2d2200e68842b5f47bfa3" rel="noopener noreferrer">9f3e8c2d</a>)</li>
+<li>add check to prevent naive implementation of is_international (<a href="https://github.com/rust-lang/rustlings/commit/05a753fe6333d36dbee5f68c21dec04eacdc75df" rel="noopener noreferrer">05a753fe</a>)</li>
+</ul>
+</li>
+<li><strong>threads1:</strong> line number correction (<a href="https://github.com/rust-lang/rustlings/commit/7857b0a689b0847f48d8c14cbd1865e3b812d5ca" rel="noopener noreferrer">7857b0a6</a>)</li>
+<li><strong>try_from_into:</strong> use trait objects (<a href="https://github.com/rust-lang/rustlings/commit/2e93a588e0abe8badb7eafafb9e7d073c2be5df8" rel="noopener noreferrer">2e93a588</a>)</li>
+</ul>
+<h4>Features</h4>
+<ul>
+<li>Replace clap with argh (<a href="https://github.com/rust-lang/rustlings/commit/7928122fcef9ca7834d988b1ec8ca0687478beeb" rel="noopener noreferrer">7928122f</a>)</li>
+<li>Replace emojis when NO_EMOJI env variable present (<a href="https://github.com/rust-lang/rustlings/commit/8d62a9963708dbecd9312e8bcc4b47049c72d155" rel="noopener noreferrer">8d62a996</a>)</li>
+<li>Added iterators5.rs exercise. (<a href="https://github.com/rust-lang/rustlings/commit/b29ea17ea94d1862114af2cf5ced0e09c197dc35" rel="noopener noreferrer">b29ea17e</a>)</li>
+<li><strong>arc1:</strong> Add more details to description and hint (#710) (<a href="https://github.com/rust-lang/rustlings/commit/81be40448777fa338ebced3b0bfc1b32d6370313" rel="noopener noreferrer">81be4044</a>)</li>
+<li><strong>cli:</strong> Improve the list command with options, and then some (<a href="https://github.com/rust-lang/rustlings/commit/8bbe4ff1385c5c169c90cd3ff9253f9a91daaf8e" rel="noopener noreferrer">8bbe4ff1</a>)</li>
+<li><strong>list:</strong>
+<ul>
+<li>updated progress percentage (<a href="https://github.com/rust-lang/rustlings/commit/1c6f7e4b7b9b3bd36f4da2bb2b69c549cc8bd913" rel="noopener noreferrer">1c6f7e4b</a>)</li>
+<li>added progress info (<a href="https://github.com/rust-lang/rustlings/commit/c0e3daacaf6850811df5bc57fa43e0f249d5cfa4" rel="noopener noreferrer">c0e3daac</a>)</li>
+</ul>
+</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+            
+                
+                <section class="release ">
+    <h2 id="tag-4.3.0">
+        <a href="4.3.0/">
+            
+                Rustlings 4.3.0
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            4.3.0
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Dec 29 2020 at 10:41 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h4>Features</h4>
+<ul>
+<li>Rewrite default out text (<a href="https://github.com/rust-lang/rustlings/commit/44d39112ff122b29c9793fe52e605df1612c6490" rel="noopener noreferrer">44d39112</a>)</li>
+<li>match exercise order to book chapters (#541) (<a href="https://github.com/rust-lang/rustlings/commit/033bf1198fc8bfce1b570e49da7cde010aa552e3" rel="noopener noreferrer">033bf119</a>)</li>
+<li>Crab? (#586) (<a href="https://github.com/rust-lang/rustlings/commit/fa9f522b7f043d7ef73a39f003a9272dfe72c4f4" rel="noopener noreferrer">fa9f522b</a>)</li>
+<li>add "rustlings list" command (<a href="https://github.com/rust-lang/rustlings/commit/838f9f30083d0b23fd67503dcf0fbeca498e6647" rel="noopener noreferrer">838f9f30</a>)</li>
+<li><strong>try_from_into:</strong> remove duplicate annotation (<a href="https://github.com/rust-lang/rustlings/commit/04f1d079aa42a2f49af694bc92c67d731d31a53f" rel="noopener noreferrer">04f1d079</a>)</li>
+</ul>
+<h4>Bug Fixes</h4>
+<ul>
+<li>update structs README (<a href="https://github.com/rust-lang/rustlings/commit/bcf14cf677adb3a38a3ac3ca53f3c69f61153025" rel="noopener noreferrer">bcf14cf6</a>)</li>
+<li>added missing exercises to info.toml (<a href="https://github.com/rust-lang/rustlings/commit/90cfb6ff28377531bfc34acb70547bdb13374f6b" rel="noopener noreferrer">90cfb6ff</a>)</li>
+<li>gives a bit more context to magic number (<a href="https://github.com/rust-lang/rustlings/commit/30644c9a062b825c0ea89435dc59f0cad86b110e" rel="noopener noreferrer">30644c9a</a>)</li>
+<li><strong>functions2:</strong> Change signature to trigger precise error message: (#605) (<a href="https://github.com/rust-lang/rustlings/commit/0ef95947cc30482e63a7045be6cc2fb6f6dcb4cc" rel="noopener noreferrer">0ef95947</a>)</li>
+<li><strong>structs1:</strong> Adjust wording (#573) (<a href="https://github.com/rust-lang/rustlings/commit/9334783da31d821cc59174fbe8320df95828926c" rel="noopener noreferrer">9334783d</a>)</li>
+<li><strong>try_from_into:</strong>
+<ul>
+<li>type error (<a href="https://github.com/rust-lang/rustlings/commit/4f4cfcf3c36c8718c7c170c9c3a6935e6ef0618c" rel="noopener noreferrer">4f4cfcf3</a>)</li>
+<li>Update description (#584) (<a href="https://github.com/rust-lang/rustlings/commit/96347df9df294f01153b29d9ad4ba361f665c755" rel="noopener noreferrer">96347df9</a>)</li>
+</ul>
+</li>
+<li><strong>vec1:</strong> Have test compare every element in a and v (<a href="https://github.com/rust-lang/rustlings/commit/9b6c629397b24b944f484f5b2bbd8144266b5695" rel="noopener noreferrer">9b6c6293</a>)</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+            
+                
+                <section class="release ">
+    <h2 id="tag-4.2.0">
+        <a href="4.2.0/">
+            
+                Rustlings 4.2.0
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            4.2.0
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Nov  7 2020 at 13:22 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h4>Features</h4>
+<ul>
+<li>Add HashMap exercises (<a href="https://github.com/rust-lang/rustlings/commit/633c00cf8071e1e82959a3010452a32f34f29fc9" rel="noopener noreferrer">633c00cf</a>)</li>
+<li>Add Vec exercises (<a href="https://github.com/rust-lang/rustlings/commit/0c12fa31c57c03c6287458a0a8aca7afd057baf6" rel="noopener noreferrer">0c12fa31</a>)</li>
+<li><strong>primitive_types6:</strong> Add a test (#548) (<a href="https://github.com/rust-lang/rustlings/commit/2b1fb2b739bf9ad8d6b7b12af25fee173011bfc4" rel="noopener noreferrer">2b1fb2b7</a>)</li>
+<li><strong>try_from_into:</strong> Add tests (#571) (<a href="https://github.com/rust-lang/rustlings/commit/95ccd92616ae79ba287cce221101e0bbe4f68cdc" rel="noopener noreferrer">95ccd926</a>)</li>
+</ul>
+<h4>Bug Fixes</h4>
+<ul>
+<li>log error output when inotify limit is exceeded (<a href="https://github.com/rust-lang/rustlings/commit/d61b4e5a13b44d72d004082f523fa1b6b24c1aca" rel="noopener noreferrer">d61b4e5a</a>)</li>
+<li>more unique temp_file (<a href="https://github.com/rust-lang/rustlings/commit/5643ef05bc81e4a840e9456f4406a769abbe1392" rel="noopener noreferrer">5643ef05</a>)</li>
+<li><strong>installation:</strong> Update the MinRustVersion (<a href="https://github.com/rust-lang/rustlings/commit/21bfb2d4777429c87d8d3b5fbf0ce66006dcd034" rel="noopener noreferrer">21bfb2d4</a>)</li>
+<li><strong>iterators2:</strong> Update description (#578) (<a href="https://github.com/rust-lang/rustlings/commit/197d3a3d8961b2465579218a6749b2b2cefa8ddd" rel="noopener noreferrer">197d3a3d</a>)</li>
+<li><strong>primitive_types6:</strong>
+<ul>
+<li>remove 'unused doc comment' warning (<a href="https://github.com/rust-lang/rustlings/commit/472d8592d65c8275332a20dfc269e7ac0d41bc88" rel="noopener noreferrer">472d8592</a>)</li>
+<li>missing comma in test (<a href="https://github.com/rust-lang/rustlings/commit/4fb230daf1251444fcf29e085cee222a91f8a37e" rel="noopener noreferrer">4fb230da</a>)</li>
+</ul>
+</li>
+<li><strong>quiz3:</strong> Second test is for odd numbers, not even. (#553) (<a href="https://github.com/rust-lang/rustlings/commit/18e0bfef1de53071e353ba1ec5837002ff7290e6" rel="noopener noreferrer">18e0bfef</a>)</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+            
+                
+                <section class="release ">
+    <h2 id="tag-4.1.0">
+        <a href="4.1.0/">
+            
+                Rustlings 4.1.0
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            4.1.0
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Oct  5 2020 at 16:45 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h4>Bug Fixes</h4>
+<ul>
+<li>Update rustlings version in Cargo.lock (<a href="https://github.com/rust-lang/rustlings/commit/1cc40bc9ce95c23d56f6d91fa1c4deb646231fef" rel="noopener noreferrer">1cc40bc9</a>)</li>
+<li><strong>arc1:</strong> index mod should equal thread count (<a href="https://github.com/rust-lang/rustlings/commit/b4062ef6993e80dac107c4093ea85166ad3ee0fa" rel="noopener noreferrer">b4062ef6</a>)</li>
+<li><strong>enums3:</strong> Update Message::ChangeColor to take a tuple. (#457) (<a href="https://github.com/rust-lang/rustlings/commit/4b6540c71adabad647de8a09e57295e7c7c7d794" rel="noopener noreferrer">4b6540c7</a>)</li>
+<li><strong>exercises:</strong> adding question mark to quiz2 (<a href="https://github.com/rust-lang/rustlings/commit/101072ab9f8c80b40b8b88cb06cbe38aca2481c5" rel="noopener noreferrer">101072ab</a>)</li>
+<li><strong>generics3:</strong> clarify grade change (<a href="https://github.com/rust-lang/rustlings/commit/47f7672c0307732056e7426e81d351f0dd7e22e5" rel="noopener noreferrer">47f7672c</a>)</li>
+<li><strong>structs3:</strong> Small adjustment of variable name (<a href="https://github.com/rust-lang/rustlings/commit/114b54cbdb977234b39e5f180d937c14c78bb8b2" rel="noopener noreferrer">114b54cb</a>)</li>
+<li><strong>using_as:</strong> Add test so that proper type is returned. (#512) (<a href="https://github.com/rust-lang/rustlings/commit/3286c5ec19ea5fb7ded81d047da5f8594108a490" rel="noopener noreferrer">3286c5ec</a>)</li>
+</ul>
+<h4>Features</h4>
+<ul>
+<li>Added iterators1.rs exercise (<a href="https://github.com/rust-lang/rustlings/commit/9642f5a3f686270a4f8f6ba969919ddbbc4f7fdd" rel="noopener noreferrer">9642f5a3</a>)</li>
+<li>Add ability to run rustlings on repl.it (#471) (<a href="https://github.com/rust-lang/rustlings/commit/8f7b5bd00eb83542b959830ef55192d2d76db90a" rel="noopener noreferrer">8f7b5bd0</a>)</li>
+<li>Add gitpod support (#473) (<a href="https://github.com/rust-lang/rustlings/commit/4821a8be94af4f669042a06ab917934cfacd032f" rel="noopener noreferrer">4821a8be</a>)</li>
+<li>Remind the user of the hint option (#425) (<a href="https://github.com/rust-lang/rustlings/commit/816b1f5e85d6cc6e72673813a85d0ada2a8f84af" rel="noopener noreferrer">816b1f5e</a>)</li>
+<li>Remind the user of the hint option (#425) (<a href="https://github.com/rust-lang/rustlings/commit/9f61db5dbe38538cf06571fcdd5f806e7901e83a" rel="noopener noreferrer">9f61db5d</a>)</li>
+<li><strong>cli:</strong> Added 'cls' command to 'watch' mode (#474) (<a href="https://github.com/rust-lang/rustlings/commit/4f2468e14f574a93a2e9b688367b5752ed96ae7b" rel="noopener noreferrer">4f2468e1</a>)</li>
+<li><strong>try_from_into:</strong> Add insufficient length test (#469) (<a href="https://github.com/rust-lang/rustlings/commit/523d18b873a319f7c09262f44bd40e2fab1830e5" rel="noopener noreferrer">523d18b8</a>)</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+            
+                
+                <section class="release ">
+    <h2 id="tag-4.0.0">
+        <a href="4.0.0/">
+            
+                Rustlings 4.0.0
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            4.0.0
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Jul  8 2020 at 09:41 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h4>Breaking Changes</h4>
+<ul>
+<li>Add a --nocapture option to display test harnesses' outputs (<a href="https://github.com/rust-lang/rustlings/commit/8ad5f9bf531a4848b1104b7b389a20171624c82f" rel="noopener noreferrer">8ad5f9bf</a>)</li>
+<li>Rename test to quiz, fixes #244 (<a href="https://github.com/rust-lang/rustlings/commit/010a04569282149cea7f7a76fc4d7f4c9f0f08dd" rel="noopener noreferrer">010a0456</a>)</li>
+</ul>
+<h4>Features</h4>
+<ul>
+<li>Add traits README (<a href="https://github.com/rust-lang/rustlings/commit/173bb14140c5530cbdb59e53ace3991a99d804af" rel="noopener noreferrer">173bb141</a>)</li>
+<li>Add box1.rs exercise (<a href="https://github.com/rust-lang/rustlings/commit/7479a4737bdcac347322ad0883ca528c8675e720" rel="noopener noreferrer">7479a473</a>)</li>
+<li>Rewrite try_from_into (#393) (<a href="https://github.com/rust-lang/rustlings/commit/763aa6e378a586caae2d8d63755a85eeba227933" rel="noopener noreferrer">763aa6e3</a>)</li>
+<li>Add if2 exercise (<a href="https://github.com/rust-lang/rustlings/commit/1da84b5f7c489f65bd683c244f13c7d1ee812df0" rel="noopener noreferrer">1da84b5f</a>)</li>
+<li>Added exercise structs3.rs (<a href="https://github.com/rust-lang/rustlings/commit/b66e2e09622243e086a0f1258dd27e1a2d61c891" rel="noopener noreferrer">b66e2e09</a>)</li>
+<li>Add exercise variables6 covering const (#352) (<a href="https://github.com/rust-lang/rustlings/commit/5999acd24a4f203292be36e0fd18d385887ec481" rel="noopener noreferrer">5999acd2</a>)</li>
+</ul>
+<h4>Bug Fixes</h4>
+<ul>
+<li>Change then to than (<a href="https://github.com/rust-lang/rustlings/commit/ddd98ad75d3668fbb10eff74374148aa5ed2344d" rel="noopener noreferrer">ddd98ad7</a>)</li>
+<li>rename quiz1 to tests1 in info (#420) (<a href="https://github.com/rust-lang/rustlings/commit/0dd1c6ca6b389789e0972aa955fe17aa15c95f29" rel="noopener noreferrer">0dd1c6ca</a>)</li>
+<li>fix quiz naming inconsistency (#421) (<a href="https://github.com/rust-lang/rustlings/commit/5563adbb890587fc48fbbc9c4028642687f1e85b" rel="noopener noreferrer">5563adbb</a>)</li>
+<li>confine the user further in variable exercises (<a href="https://github.com/rust-lang/rustlings/commit/06ef4cc654e75d22a526812919ee49b8956280bf" rel="noopener noreferrer">06ef4cc6</a>)</li>
+<li>update iterator and macro text for typos and clarity (<a href="https://github.com/rust-lang/rustlings/commit/959008284834bece0196a01e17ac69a7e3590116" rel="noopener noreferrer">95900828</a>)</li>
+<li>update generics2 closes #362 (<a href="https://github.com/rust-lang/rustlings/commit/964c974a0274199d755073b917c2bc5da0c9b4f1" rel="noopener noreferrer">964c974a</a>)</li>
+<li>confusing comment in conversions/try_from_into.rs (<a href="https://github.com/rust-lang/rustlings/commit/c9e4f2cfb4c48d0b7451263cfb43b9426438122d" rel="noopener noreferrer">c9e4f2cf</a>)</li>
+<li><strong>arc1:</strong> Passively introduce attributes (#429) (<a href="https://github.com/rust-lang/rustlings/commit/113cdae2d4e4c55905e8056ad326ede7fd7de356" rel="noopener noreferrer">113cdae2</a>)</li>
+<li><strong>box1:</strong> fix comment typo (#426) (<a href="https://github.com/rust-lang/rustlings/commit/bb2ca251106b27a7272d9a30872904dd1376654c" rel="noopener noreferrer">bb2ca251</a>)</li>
+<li><strong>errorsn:</strong> Try harder to confine the user. (#388) (<a href="https://github.com/rust-lang/rustlings/commit/2b20c8a0f5774d07c58d110d75879f33fc6273b5" rel="noopener noreferrer">2b20c8a0</a>)</li>
+<li><strong>from_into.rs:</strong> typo (<a href="https://github.com/rust-lang/rustlings/commit/a901499ededd3ce1995164700514fe4e9a0373ea" rel="noopener noreferrer">a901499e</a>)</li>
+<li><strong>generics2:</strong> Guide students to the answer (#430) (<a href="https://github.com/rust-lang/rustlings/commit/e6bd8021d9a7dd06feebc30c9d5f953901d7b419" rel="noopener noreferrer">e6bd8021</a>)</li>
+<li><strong>installation:</strong>
+<ul>
+<li>Provide a backup git reference when tag can't be curl (<a href="https://github.com/rust-lang/rustlings/commit/9e4fb1009f1c9e3433915c03e22c2af422e5c5fe" rel="noopener noreferrer">9e4fb100</a>)</li>
+<li>Check if python is available while checking for git,rustc and cargo (<a href="https://github.com/rust-lang/rustlings/commit/9cfb617d5b0451b4b51644a1298965390cda9884" rel="noopener noreferrer">9cfb617d</a>)</li>
+</ul>
+</li>
+<li><strong>option1:</strong>
+<ul>
+<li>Don't add only zeros to the numbers array (<a href="https://github.com/rust-lang/rustlings/commit/cce6a4427718724a9096800754cd3abeca6a1580" rel="noopener noreferrer">cce6a442</a>)</li>
+<li>Add cast to usize, as it is confusing in the context of an exercise about Option (<a href="https://github.com/rust-lang/rustlings/commit/f6cffc7e487b42f15a6f958e49704c93a8d4465b" rel="noopener noreferrer">f6cffc7e</a>)</li>
+</ul>
+</li>
+<li><strong>option2:</strong> Add TODO to comments (#400) (<a href="https://github.com/rust-lang/rustlings/commit/10967bce57682812dc0891a9f9757da1a9d87404" rel="noopener noreferrer">10967bce</a>)</li>
+<li><strong>options1:</strong> Add hint about Array Initialization (#389) (<a href="https://github.com/rust-lang/rustlings/commit/9f75554f2a30295996f03f0160b98c0458305502" rel="noopener noreferrer">9f75554f</a>)</li>
+<li><strong>test2:</strong> name of type String and &amp;str (#394) (<a href="https://github.com/rust-lang/rustlings/commit/d6c0a688e6a96f93ad60d540d4b326f342fc0d45" rel="noopener noreferrer">d6c0a688</a>)</li>
+<li><strong>variables6:</strong> minor typo (#419) (<a href="https://github.com/rust-lang/rustlings/commit/524e17df10db95f7b90a0f75cc8997182a8a4094" rel="noopener noreferrer">524e17df</a>)</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+            
+                
+                <section class="release ">
+    <h2 id="tag-3.0.0">
+        <a href="3.0.0/">
+            
+                Rustlings 3.0.0
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            3.0.0
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Apr 11 2020 at 22:04 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <h4>Breaking Changes</h4>
+<ul>
+<li>make "compile" exercises print output (#278) (<a href="https://github.com/fmoko/rustlings/commit/3b6d5c3aaa27a242a832799eb66e96897d26fde3" rel="noopener noreferrer">3b6d5c</a>)</li>
+</ul>
+<h4>Bug Fixes</h4>
+<ul>
+<li><strong>primitive_types:</strong> revert primitive_types4 (#296) (<a href="https://github.com/rust-lang/rustlings/commit/b3a3351e8e6a0bdee07077d7b0382953821649ae" rel="noopener noreferrer">b3a3351e</a>)</li>
+<li><strong>run:</strong> compile clippy exercise files (#295) (<a href="https://github.com/rust-lang/rustlings/commit/3ab084a421c0f140ae83bf1fc3f47b39342e7373" rel="noopener noreferrer">3ab084a4</a>)</li>
+<li><strong>conversions:</strong>
+<ul>
+<li>add additional test to meet exercise rules (#284) (<a href="https://github.com/fmoko/rustlings/commit/bc22ec382f843347333ef1301fc1bad773657f38" rel="noopener noreferrer">bc22ec3</a>)</li>
+<li>remove duplicate not done comment (#292) (<a href="https://github.com/fmoko/rustlings/commit/dab90f7b91a6000fe874e3d664f244048e5fa342" rel="noopener noreferrer">dab90f</a>)</li>
+</ul>
+</li>
+<li>don't hardcode documentation version for traits (#288) (<a href="https://github.com/fmoko/rustlings/commit/30e6af60690c326fb5d3a9b7335f35c69c09137d" rel="noopener noreferrer">30e6af</a>)</li>
+</ul>
+<h4>Features</h4>
+<ul>
+<li>add Option2 exercise (#290) (<a href="https://github.com/rust-lang/rustlings/commit/86b5c08b9bea1576127a7c5f599f5752072c087d" rel="noopener noreferrer">86b5c08b</a>)</li>
+<li>add exercise for option (#282) (<a href="https://github.com/rust-lang/rustlings/commit/135e5d47a7c395aece6f6022117fb20c82f2d3d4" rel="noopener noreferrer">135e5d47</a>)</li>
+<li>add new exercises for generics (#280) (<a href="https://github.com/rust-lang/rustlings/commit/76be5e4e991160f5fd9093f03ee2ba260e8f7229" rel="noopener noreferrer">76be5e4e</a>)</li>
+<li><strong>ci:</strong> add buildkite config (<a href="https://github.com/rust-lang/rustlings/commit/b049fa2c84dba0f0c8906ac44e28fd45fba51a71" rel="noopener noreferrer">b049fa2c</a>)</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+<h3>2.2.1 (2020-02-27)</h3>
+<h4>Bug Fixes</h4>
+<ul>
+<li>Re-add cloning the repo to install scripts (<a href="https://github.com/rust-lang/rustlings/commit/3d9b03c52b8dc51b140757f6fd25ad87b5782ef5" rel="noopener noreferrer">3d9b03c5</a>)</li>
+</ul>
+<h4>Features</h4>
+<ul>
+<li>Add clippy lints (#269) (<a href="https://github.com/rust-lang/rustlings/commit/1e2fd9c92f8cd6e389525ca1a999fca4c90b5921" rel="noopener noreferrer">1e2fd9c9</a>)</li>
+</ul>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+            
+                
+                <section class="release ">
+    <h2 id="tag-2.2.1">
+        <a href="2.2.1/">
+            
+                Rustlings 2.2.1
+            
+        </a>
+    </h2>
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            2.2.1
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Feb 27 2020 at 18:24 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        
+    </div>
+</section>
+            
+        </div>
+    </div>
+</div>
+
+                </main>
+            </div>
+
+            <footer>
+                
+                    <a href="https://github.com/rust-lang/rustlings"><div class="github-icon" aria-hidden="true"></div></a>
+                
+                <span>
+                    rustlings, MIT
+                </span>
+            </footer>
+        </div>
+
+        
+            <script defer="true" data-domain="rustlings.cool" src="https://plausible.io/js/script.js"></script>
+        
+        
+
+        
+<script src="/artifacts.js"></script>
+
+    </body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" id="oranda" class="dark">
+    <head>
+        <title>rustlings</title>
+        
+            <meta property="og:url" content="https://rustlings.cool" />
+        
+        
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+            <meta name="description" content="Small exercises to get you used to reading and writing Rust code!" />
+            <meta property="og:description" content="Small exercises to get you used to reading and writing Rust code!" />
+        
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="rustlings" />
+        
+        
+        
+        <meta http-equiv="Permissions-Policy" content="interest-cohort=()" />
+        <link rel="stylesheet" href="/oranda-v0.3.1.css" />
+        
+        
+    </head>
+    <body>
+        <div class="container">
+            <div class="page-body">
+                
+                    <div class="repo_banner">
+                        <a href="https://github.com/rust-lang/rustlings">
+                            <div class="github-icon" aria-hidden="true"></div>
+                            Check out our GitHub!
+                        </a>
+                    </div>
+                
+
+                <main>
+                    <header>
+                        
+                        <h1 class="title">rustlings</h1>
+                        
+    <nav class="nav">
+        <ul>
+            <li><a href="/">Home</a></li>
+
+            
+
+            
+
+            
+
+            
+
+            
+                <li><a href="/changelog/">Changelog</a></li>
+            
+        </ul>
+    </nav>
+
+                    </header>
+
+                    
+<div>
+    <h1>Rustlings 6.0.0</h1>
+    <div class="releases-body">
+        
+        
+        <section class="release ">
+    
+    <div class="release-info">
+        <span class="flex items-center gap-2">
+            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'>
+    <path stroke-linecap='round' stroke-linejoin='round' d='M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z' />
+    <path stroke-linecap='round' stroke-linejoin='round' d='M6 6h.008v.008H6V6z' /></svg>
+            v6.0.0
+        </span>
+        <span class="flex items-center gap-2">
+            
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'><path stroke-linecap='round' stroke-linejoin='round' d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5' /></svg>
+                Jul  3 2024 at 13:43 UTC
+            
+        </span>
+    </div>
+    <div class="release-body">
+        <p>This release is the result of a complete rewrite to deliver a ton of new features and improvements ✨
+The most important changes are highlighted below.</p>
+<h3>Installation</h3>
+<p>The installation has been simplified a lot!
+To install Rustlings after installing Rust, all what you need to do now is running the following command:</p>
+<pre style="background-color:#263238;"><span style="color:#82aaff;">cargo install rustlings
+</span></pre>
+
+<p>Yes, this means that Rustlings is now on <a href="https://crates.io/crates/rustlings" rel="noopener noreferrer">crates.io</a> 🎉</p>
+<p>You can read about the motivations of this change in <a href="https://github.com/rust-lang/rustlings/issues/1919" rel="noopener noreferrer">this issue</a>.</p>
+<h3>UI/UX</h3>
+<ul>
+<li>The UI is now responsive when the terminal is resized.</li>
+<li>The progress bar was moved to the bottom so that you can always see your progress and the current exercise to work on.</li>
+<li>The current exercise path is now a terminal link. It will open the exercise file in your default editor when you click on it.</li>
+<li>A small prompt is now always shown at the bottom. It allows you to choose an action by entering a character. For example, entering <code>h</code> will show you the hint of the current exercise.</li>
+<li>The comment "I AM NOT DONE!" doesn't exist anymore. Instead of needing to remove it to go to the next exercise, you need to enter <code>n</code> in the terminal.</li>
+</ul>
+<h3>List mode</h3>
+<p>A new list mode was added!
+You can enter it by entering <code>l</code> in the watch mode.
+It offers the following features:</p>
+<ul>
+<li>Browse all exercises and see their state (pending/done).</li>
+<li>Filter exercises based on their state (pending/done).</li>
+<li>Continue at another exercise. This allows you to skip some exercises or go back to previous ones.</li>
+<li>Reset an exercise so you can start over and revert your changes.</li>
+</ul>
+<h3>Solutions</h3>
+<p>After finishing an exercise, a solution file will be available and Rustlings will show you its path in green.
+This allows you to compare your solution with an idiomatic solution and maybe learn about other ways to solve a problem.</p>
+<p>While writing the solutions, all exercises have been polished 🌟
+For example, every exercise now contains <code>TODO</code> comments to highlight what the user needs to change and where.</p>
+<h3>LSP support out of the box</h3>
+<p>Instead of creating a <code>project.json</code> file using <code>rustlings lsp</code>, Rustlings now works with a <code>Cargo.toml</code> file out of the box.
+No actions are needed to activate the language server <code>rust-analyzer</code>.</p>
+<p>This should avoid issues related to the language server or to running exercises, especially the ones with Clippy.</p>
+<h3>Clippy</h3>
+<p>Clippy lints are now shown on all exercises, not only the Clippy exercises 📎
+Make Clippy your friend from early on 🥰</p>
+<h3>Third-party exercises</h3>
+<p>Rustlings now supports third-party exercises!</p>
+<p>Do you want to create your own set of Rustlings exercises to focus on some specific topic?
+Or do you want to translate the original Rustlings exercises?
+Then follow the link to the guide about <a href="THIRD_PARTY_EXERCISES.md" rel="noopener noreferrer">third-party exercises</a>!</p>
+<p><a rel="noopener noreferrer"></a></p>
+
+    </div>
+</section>
+    </div>
+</div>
+
+                </main>
+            </div>
+
+            <footer>
+                
+                    <a href="https://github.com/rust-lang/rustlings"><div class="github-icon" aria-hidden="true"></div></a>
+                
+                <span>
+                    rustlings, MIT
+                </span>
+            </footer>
+        </div>
+
+        
+            <script defer="true" data-domain="rustlings.cool" src="https://plausible.io/js/script.js"></script>
+        
+        
+
+        
+    </body>
+</html>

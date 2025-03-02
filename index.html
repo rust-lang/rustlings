@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" id="oranda" class="dark">
+    <head>
+        <title>rustlings</title>
+        
+            <meta property="og:url" content="https://rustlings.cool" />
+        
+        
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+            <meta name="description" content="Small exercises to get you used to reading and writing Rust code!" />
+            <meta property="og:description" content="Small exercises to get you used to reading and writing Rust code!" />
+        
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="rustlings" />
+        
+        
+        
+        <meta http-equiv="Permissions-Policy" content="interest-cohort=()" />
+        <link rel="stylesheet" href="/oranda-v0.3.1.css" />
+        
+        
+    </head>
+    <body>
+        <div class="container">
+            <div class="page-body">
+                
+                    <div class="repo_banner">
+                        <a href="https://github.com/rust-lang/rustlings">
+                            <div class="github-icon" aria-hidden="true"></div>
+                            Check out our GitHub!
+                        </a>
+                    </div>
+                
+
+                <main>
+                    <header>
+                        
+                        <h1 class="title">rustlings</h1>
+                        
+    <nav class="nav">
+        <ul>
+            <li><a href="/">Home</a></li>
+
+            
+
+            
+
+            
+
+            
+
+            
+                <li><a href="/changelog/">Changelog</a></li>
+            
+        </ul>
+    </nav>
+
+                    </header>
+
+                    
+
+<div class="oranda-hide">
+<h1>Rustlings 🦀❤️</h1>
+</div>
+<p>Greetings and welcome to Rustlings.
+This project contains small exercises to get you used to reading and writing Rust code.
+This includes reading and responding to compiler messages!</p>
+<p>It is recommended to do the Rustlings exercises in parallel to reading <a href="https://doc.rust-lang.org/book/" rel="noopener noreferrer">the official Rust book</a>, the most comprehensive resource for learning Rust 📚️</p>
+<p><a href="https://doc.rust-lang.org/rust-by-example/" rel="noopener noreferrer">Rust By Example</a> is another recommended resource that you might find helpful.
+It contains code examples and exercises similar to Rustlings, but online.</p>
+<h2>Getting Started</h2>
+<h3>Installing Rust</h3>
+<p>Before installing Rustlings, you need to have the <strong>latest version of Rust</strong> installed.
+Visit <a href="https://www.rust-lang.org/tools/install" rel="noopener noreferrer">www.rust-lang.org/tools/install</a> for further instructions on installing Rust.
+This will also install <em>Cargo</em>, Rust's package/project manager.</p>
+<blockquote>
+<p>🐧 If you're on Linux, make sure you've installed <code>gcc</code> (for a linker).</p>
+<p>Deb: <code>sudo apt install gcc</code>.
+Dnf: <code>sudo dnf install gcc</code>.</p>
+</blockquote>
+<blockquote>
+<p>🍎 If you're on MacOS, make sure you've installed Xcode and its developer tools by running <code>xcode-select --install</code>.</p>
+</blockquote>
+<h3>Installing Rustlings</h3>
+<p>The following command will download and compile Rustlings:</p>
+<pre style="background-color:#263238;"><span style="color:#82aaff;">cargo install rustlings
+</span></pre>
+
+<details>
+<summary><strong>If the installation fails…</strong> (<em>click to expand</em>)</summary>
+<ul>
+<li>Make sure you have the latest Rust version by running <code>rustup update</code></li>
+<li>Try adding the <code>--locked</code> flag: <code>cargo install rustlings --locked</code></li>
+<li>Otherwise, please <a href="https://github.com/rust-lang/rustlings/issues/new" rel="noopener noreferrer">report the issue</a></li>
+</ul>
+</details>
+<h3>Initialization</h3>
+<p>After installing Rustlings, run the following command to initialize the <code>rustlings/</code> directory:</p>
+<pre style="background-color:#263238;"><span style="color:#82aaff;">rustlings init
+</span></pre>
+
+<details>
+<summary><strong>If the command <code>rustlings</code> can't be found…</strong> (<em>click to expand</em>)</summary>
+<p>You are probably using Linux and installed Rust using your package manager.</p>
+<p>Cargo installs binaries to the directory <code>~/.cargo/bin</code>.
+Sadly, package managers often don't add <code>~/.cargo/bin</code> to your <code>PATH</code> environment variable.</p>
+<p>The solution is to …</p>
+<ul>
+<li>either add <code>~/.cargo/bin</code> manually to <code>PATH</code></li>
+<li>or to uninstall Rust from the package manager and install it using the official way with <code>rustup</code>: <a href="https://www.rust-lang.org/tools/install" rel="noopener noreferrer">https://www.rust-lang.org/tools/install</a></li>
+</ul>
+</details>
+<p>Now, go into the newly initialized directory and launch Rustlings for further instructions on getting started with the exercises:</p>
+<pre style="background-color:#263238;"><span style="color:#82aaff;">cd rustlings/
+</span><span style="color:#82aaff;">rustlings
+</span></pre>
+
+<h2>Working environment</h2>
+<h3>Editor</h3>
+<p>Our general recommendation is <a href="https://code.visualstudio.com/" rel="noopener noreferrer">VS Code</a> with the <a href="https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer" rel="noopener noreferrer">rust-analyzer plugin</a>.
+But any editor that supports <a href="https://rust-analyzer.github.io/" rel="noopener noreferrer">rust-analyzer</a> should be enough for working on the exercises.</p>
+<h3>Terminal</h3>
+<p>While working with Rustlings, please use a modern terminal for the best user experience.
+The default terminal on Linux and Mac should be sufficient.
+On Windows, we recommend the <a href="https://aka.ms/terminal" rel="noopener noreferrer">Windows Terminal</a>.</p>
+<h2>Doing exercises</h2>
+<p>The exercises are sorted by topic and can be found in the subdirectory <code>exercises/&lt;topic&gt;</code>.
+For every topic, there is an additional <code>README.md</code> file with some resources to get you started on the topic.
+We highly recommend that you have a look at them before you start 📚️</p>
+<p>Most exercises contain an error that keeps them from compiling, and it's up to you to fix it!
+Some exercises contain tests that need to pass for the exercise to be done ✅</p>
+<p>Search for <code>TODO</code> and <code>todo!()</code> to find out what you need to change.
+Ask for hints by entering <code>h</code> in the <em>watch mode</em> 💡</p>
+<h3>Watch Mode</h3>
+<p>After <a href="#initialization" rel="noopener noreferrer">initialization</a>, Rustlings can be launched by simply running the command <code>rustlings</code>.</p>
+<p>This will start the <em>watch mode</em> which walks you through the exercises in a predefined order (what we think is best for newcomers).
+It will rerun the current exercise automatically every time you change the exercise's file in the <code>exercises/</code> directory.</p>
+<details>
+<summary><strong>If detecting file changes in the <code>exercises/</code> directory fails…</strong> (<em>click to expand</em>)</summary>
+<blockquote>
+<p>You can add the <strong><code>--manual-run</code></strong> flag (<code>rustlings --manual-run</code>) to manually rerun the current exercise by entering <code>r</code> in the watch mode.</p>
+<p>Please <a href="https://github.com/rust-lang/rustlings/issues/new" rel="noopener noreferrer">report the issue</a> with some information about your operating system and whether you run Rustlings in a container or virtual machine (e.g. WSL).</p>
+</blockquote>
+</details>
+<h3>Exercise List</h3>
+<p>In the <a href="#watch-mode" rel="noopener noreferrer">watch mode</a> (after launching <code>rustlings</code>), you can enter <code>l</code> to open the interactive exercise list.</p>
+<p>The list allows you to…</p>
+<ul>
+<li>See the status of all exercises (done or pending)</li>
+<li><code>c</code>: Continue at another exercise (temporarily skip some exercises or go back to a previous one)</li>
+<li><code>r</code>: Reset status and file of the selected exercise (you need to <em>reload/reopen</em> its file in your editor afterwards)</li>
+</ul>
+<p>See the footer of the list for all possible keys.</p>
+<h2>Questions?</h2>
+<p>If you need any help while doing the exercises and the builtin-hints aren't helpful, feel free to ask in the <a href="https://github.com/rust-lang/rustlings/discussions/categories/q-a?discussions_q=" rel="noopener noreferrer"><em>Q&amp;A</em> category of the discussions</a> if your question wasn't asked yet 💡</p>
+<h2>Third-Party Exercises</h2>
+<p>Third-party exercises are a set of exercises maintained by the community.
+You can use the same <code>rustlings</code> program that you installed with <code>cargo install rustlings</code> to run them:</p>
+<ul>
+<li>🇯🇵 <a href="https://github.com/sotanengel/rustlings-jp" rel="noopener noreferrer">Japanese Rustlings</a>：A Japanese translation of the Rustlings exercises.</li>
+<li>🇨🇳 <a href="https://github.com/SandmeyerX/rustlings-zh-cn" rel="noopener noreferrer">Simplified Chinese Rustlings</a>: A simplified Chinese translation of the Rustlings exercises.</li>
+</ul>
+<p>Do you want to create your own set of Rustlings exercises to focus on some specific topic?
+Or do you want to translate the original Rustlings exercises?
+Then follow the the guide about <a href="https://github.com/rust-lang/rustlings/blob/main/THIRD_PARTY_EXERCISES.md" rel="noopener noreferrer">third-party exercises</a>!</p>
+<h2>Continuing On</h2>
+<p>Once you've completed Rustlings, put your new knowledge to good use!
+Continue practicing your Rust skills by building your own projects, contributing to Rustlings, or finding other open-source projects to contribute to.</p>
+<h2>Uninstalling Rustlings</h2>
+<p>If you want to remove Rustlings from your system, run the following command:</p>
+<pre style="background-color:#263238;"><span style="color:#82aaff;">cargo uninstall rustlings
+</span></pre>
+
+<h2>Contributing</h2>
+<p>See <a href="https://github.com/rust-lang/rustlings/blob/main/CONTRIBUTING.md" rel="noopener noreferrer">CONTRIBUTING.md</a> 🔗</p>
+<h2>Contributors ✨</h2>
+<p>Thanks to <a href="https://github.com/rust-lang/rustlings/graphs/contributors" rel="noopener noreferrer">all the wonderful contributors</a> 🎉</p>
+
+
+                </main>
+            </div>
+
+            <footer>
+                
+                    <a href="https://github.com/rust-lang/rustlings"><div class="github-icon" aria-hidden="true"></div></a>
+                
+                <span>
+                    rustlings, MIT
+                </span>
+            </footer>
+        </div>
+
+        
+            <script defer="true" data-domain="rustlings.cool" src="https://plausible.io/js/script.js"></script>
+        
+        
+
+        
+
+
+    </body>
+</html>
