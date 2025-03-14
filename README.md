@@ -21,12 +21,13 @@ Before installing Rustlings, you need to have the **latest version of Rust** ins
 Visit [www.rust-lang.org/tools/install](https://www.rust-lang.org/tools/install) for further instructions on installing Rust.
 This will also install _Cargo_, Rust's package/project manager.
 
-> 🐧 If you're on Linux, make sure you've installed `gcc` (for a linker).
+> 🐧 If you are on Linux, make sure you have installed `gcc` (for a linker).
 >
-> Deb: `sudo apt install gcc`.
-> Dnf: `sudo dnf install gcc`.
+> Deb: `sudo apt install gcc`
+>
+> Dnf: `sudo dnf install gcc`
 
-> 🍎 If you're on MacOS, make sure you've installed Xcode and its developer tools by running `xcode-select --install`.
+> 🍎 If you are on MacOS, make sure you have installed Xcode and its developer tools by running `xcode-select --install`.
 
 ### Installing Rustlings
 
@@ -102,7 +103,7 @@ Ask for hints by entering `h` in the _watch mode_ 💡
 
 ### Watch Mode
 
-After [initialization](#initialization), Rustlings can be launched by simply running the command `rustlings`.
+After the [initialization](#initialization), Rustlings can be launched by simply running the command `rustlings`.
 
 This will start the _watch mode_ which walks you through the exercises in a predefined order (what we think is best for newcomers).
 It will rerun the current exercise automatically every time you change the exercise's file in the `exercises/` directory.
@@ -161,6 +162,4 @@ cargo uninstall rustlings
 
 See [CONTRIBUTING.md](https://github.com/rust-lang/rustlings/blob/main/CONTRIBUTING.md) 🔗
 
-## Contributors ✨
-
-Thanks to [all the wonderful contributors](https://github.com/rust-lang/rustlings/graphs/contributors) 🎉
+Thanks to [all the wonderful contributors](https://github.com/rust-lang/rustlings/graphs/contributors) ✨
