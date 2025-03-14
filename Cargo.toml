@@ -19,7 +19,7 @@ edition = "2024" # On Update: Update the edition of `rustfmt` in `dev check` and
 rust-version = "1.85"
 
 [workspace.dependencies]
-serde = { version = "1.0.218", features = ["derive"] }
+serde = { version = "1.0.219", features = ["derive"] }
 toml_edit = { version = "0.22.24", default-features = false, features = ["parse", "serde"] }
 
 [package]
@@ -46,21 +46,21 @@ include = [
 ]
 
 [dependencies]
-anyhow = "1.0.96"
-clap = { version = "4.5.31", features = ["derive"] }
+anyhow = "1.0.97"
+clap = { version = "4.5.32", features = ["derive"] }
 crossterm = { version = "0.28.1", default-features = false, features = ["windows", "events"] }
 notify = "8.0.0"
 os_pipe = "1.2.1"
 rustlings-macros = { path = "rustlings-macros", version = "=6.4.0" }
-serde_json = "1.0.139"
+serde_json = "1.0.140"
 serde.workspace = true
 toml_edit.workspace = true
 
 [target.'cfg(not(windows))'.dependencies]
-rustix = { version = "0.38.44", default-features = false, features = ["std", "stdio", "termios"] }
+rustix = { version = "1.0.2", default-features = false, features = ["std", "stdio", "termios"] }
 
 [dev-dependencies]
-tempfile = "3.17.1"
+tempfile = "3.19.0"
 
 [profile.release]
 panic = "abort"
