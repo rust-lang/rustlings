@@ -22,22 +22,22 @@ jobs:
       - uses: DavidAnson/markdownlint-cli2-action@v16
         with:
           globs: "exercises/**/*.md"
-      - name: Run cargo fmt
+      - name: rustfmt
         run: cargo fmt --all --check
   test:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+        os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
       - uses: actions/checkout@v4
       - uses: swatinem/rust-cache@v2
-      - name: Run cargo test
+      - name: cargo test
         run: cargo test --workspace
   dev-check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: swatinem/rust-cache@v2
-      - name: Run rustlings dev check
+      - name: rustlings dev check
         run: cargo run -- dev check --require-solutions
