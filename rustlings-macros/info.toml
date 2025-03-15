@@ -1079,11 +1079,27 @@ original sending end.
 Related section in The Book:
 https://doc.rust-lang.org/book/ch16-02-message-passing.html"""
 
+# ASYNC
+
+[[exercises]]
+name = "async1"
+dir = "21_async"
+hint = """
+Remember what keyword is used to define an asynchronous function. The function
+returns a `Future` that can be awaited.
+
+A keyword is used to wait for the result of a `Future`. It can only
+be used inside an asyncronous function.
+
+For documentation on 'tokio::sleep', see:
+https://docs.rs/tokio/latest/tokio/time/fn.sleep.html"""
+
+
 # MACROS
 
 [[exercises]]
 name = "macros1"
-dir = "21_macros"
+dir = "22_macros"
 test = false
 hint = """
 When you call a macro, you need to add something special compared to a regular
@@ -1091,7 +1107,7 @@ function call."""
 
 [[exercises]]
 name = "macros2"
-dir = "21_macros"
+dir = "22_macros"
 test = false
 hint = """
 Macros don't quite play by the same rules as the rest of Rust, in terms of
@@ -1102,7 +1118,7 @@ Unlike other things in Rust, the order of "where you define a macro" versus
 
 [[exercises]]
 name = "macros3"
-dir = "21_macros"
+dir = "22_macros"
 test = false
 hint = """
 In order to use a macro outside of its module, you need to do something
@@ -1110,7 +1126,7 @@ special to the module to lift the macro out into its parent."""
 
 [[exercises]]
 name = "macros4"
-dir = "21_macros"
+dir = "22_macros"
 test = false
 hint = """
 You only need to add a single character to make this compile.
@@ -1127,7 +1143,7 @@ https://veykril.github.io/tlborm/"""
 
 [[exercises]]
 name = "clippy1"
-dir = "22_clippy"
+dir = "23_clippy"
 test = false
 strict_clippy = true
 hint = """
@@ -1144,7 +1160,7 @@ appropriate replacement constant from `std::f32::consts`."""
 
 [[exercises]]
 name = "clippy2"
-dir = "22_clippy"
+dir = "23_clippy"
 test = false
 strict_clippy = true
 hint = """
@@ -1157,7 +1173,7 @@ https://doc.rust-lang.org/std/option/#iterating-over-option"""
 
 [[exercises]]
 name = "clippy3"
-dir = "22_clippy"
+dir = "23_clippy"
 test = false
 strict_clippy = true
 hint = "No hints this time!"
@@ -1166,20 +1182,20 @@ hint = "No hints this time!"
 
 [[exercises]]
 name = "using_as"
-dir = "23_conversions"
+dir = "24_conversions"
 hint = """
 Use the `as` operator to cast one of the operands in the last line of the
 `average` function into the expected return type."""
 
 [[exercises]]
 name = "from_into"
-dir = "23_conversions"
+dir = "24_conversions"
 hint = """
 Follow the steps provided right before the `From` implementation."""
 
 [[exercises]]
 name = "from_str"
-dir = "23_conversions"
+dir = "24_conversions"
 hint = """
 The implementation of `FromStr` should return an `Ok` with a `Person` object,
 or an `Err` with an error if the string is not valid.
@@ -1196,7 +1212,7 @@ https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/reen
 
 [[exercises]]
 name = "try_from_into"
-dir = "23_conversions"
+dir = "24_conversions"
 hint = """
 Is there an implementation of `TryFrom` in the standard library that can both do
 the required integer conversion and check the range of the input?
@@ -1206,6 +1222,6 @@ types?"""
 
 [[exercises]]
 name = "as_ref_mut"
-dir = "23_conversions"
+dir = "24_conversions"
 hint = """
 Add `AsRef<str>` or `AsMut<u32>` as a trait bound to the functions."""
