@@ -254,7 +254,9 @@ pub fn terminal_file_link<'a>(
         .queue(SetForegroundColor(color))?
         .queue(SetAttribute(Attribute::Underlined))?;
     writer.stdout().write_all(b"\x1b]8;;file://")?;
-    writer.stdout().write_all(encoded_spaces_canonical_path.as_bytes())?;
+    writer
+        .stdout()
+        .write_all(encoded_spaces_canonical_path.as_bytes())?;
     writer.stdout().write_all(b"\x1b\\")?;
     // Only this part is visible.
     writer.write_str(path)?;
@@ -270,7 +272,6 @@ pub fn terminal_file_link<'a>(
 fn encode_spaces(path: &str) -> String {
     path.replace(" ", "%20")
 }
-
 
 pub fn write_ansi(output: &mut Vec<u8>, command: impl Command) {
     struct FmtWriter<'a>(&'a mut Vec<u8>);
