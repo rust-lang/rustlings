@@ -16,7 +16,7 @@ include = [
 proc-macro = true
 
 [dependencies]
-quote = "1.0.37"
+quote = "1.0"
 serde.workspace = true
 toml_edit.workspace = true
 
