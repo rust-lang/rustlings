@@ -15,17 +15,17 @@ fn divide(a: i64, b: i64) -> Result<i64, DivisionError> {
 }
 
 // TODO: Add the correct return type and complete the function body.
-// Desired output: `Ok([1, 11, 1426, 3])`
-fn result_with_list() {
-    let numbers = [27, 297, 38502, 81];
-    let division_results = numbers.into_iter().map(|n| divide(n, 27));
+// For numbers = [27, 297, 38502, 81] and divisor = 27,
+// the desired output is: `Ok([1, 11, 1426, 3])`
+fn result_with_list(numbers: Vec<i64>, divisor: i64) {
+    let division_results = numbers.into_iter().map(|n| divide(n, divisor));
 }
 
 // TODO: Add the correct return type and complete the function body.
-// Desired output: `[Ok(1), Ok(11), Ok(1426), Ok(3)]`
-fn list_of_results() {
-    let numbers = [27, 297, 38502, 81];
-    let division_results = numbers.into_iter().map(|n| divide(n, 27));
+// For numbers = [27, 297, 38502, 81] and divisor = 27,
+// the desired output is: `[Ok(1), Ok(11), Ok(1426), Ok(3)]`
+fn list_of_results(numbers: Vec<i64>, divisor: i64) {
+    let division_results = numbers.into_iter().map(|n| divide(n, divisor));
 }
 
 fn main() {
@@ -63,11 +63,51 @@ mod tests {
 
     #[test]
     fn test_result_with_list() {
-        assert_eq!(result_with_list().unwrap(), [1, 11, 1426, 3]);
+        assert_eq!(
+            result_with_list(vec![27, 297, 38502, 81], 27),
+            Ok(vec![1, 11, 1426, 3])
+        );
+        assert_eq!(
+            result_with_list(vec![27, 297, 38502, 28], 27),
+            Err(DivisionError::NotDivisible)
+        );
+        assert_eq!(
+            result_with_list(vec![27, 297, 38502, 81], 0),
+            Err(DivisionError::DivideByZero)
+        );
+        assert_eq!(
+            result_with_list(vec![27, 297, i64::MIN, 81], -1),
+            Err(DivisionError::IntegerOverflow)
+        );
     }
 
     #[test]
     fn test_list_of_results() {
-        assert_eq!(list_of_results(), [Ok(1), Ok(11), Ok(1426), Ok(3)]);
+        assert_eq!(
+            list_of_results(vec![27, 297, 38502, 81], 27),
+            vec![Ok(1), Ok(11), Ok(1426), Ok(3)]
+        );
+        assert_eq!(
+            list_of_results(vec![27, 297, 38502, 28], 27),
+            vec![Ok(1), Ok(11), Ok(1426), Err(DivisionError::NotDivisible)]
+        );
+        assert_eq!(
+            list_of_results(vec![27, 297, 38502, 81], 0),
+            vec![
+                Err(DivisionError::DivideByZero),
+                Err(DivisionError::DivideByZero),
+                Err(DivisionError::DivideByZero),
+                Err(DivisionError::DivideByZero)
+            ]
+        );
+        assert_eq!(
+            list_of_results(vec![27, 297, i64::MIN, 81], -1),
+            vec![
+                Ok(-27),
+                Ok(-297),
+                Err(DivisionError::IntegerOverflow),
+                Ok(-81)
+            ]
+        );
     }
 }
