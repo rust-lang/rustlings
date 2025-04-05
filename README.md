@@ -108,6 +108,16 @@ After the [initialization](#initialization), Rustlings can be launched by simply
 This will start the _watch mode_ which walks you through the exercises in a predefined order (what we think is best for newcomers).
 It will rerun the current exercise automatically every time you change the exercise's file in the `exercises/` directory.
 
+You can specify an editor command with the `--editor` option to open exercises directly from watch mode:
+
+```bash
+rustlings --editor code           # For VS Code
+rustlings --editor vim            # For Vim
+rustlings --editor "code --wait"  # For VS Code with wait argument
+```
+
+Then press `e` in watch mode to open the current exercise in your editor.
+
 <details>
 <summary><strong>If detecting file changes in the <code>exercises/</code> directory fails…</strong> (<em>click to expand</em>)</summary>
 
