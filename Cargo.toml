@@ -48,7 +48,7 @@ include = [
 [dependencies]
 anyhow = "1.0"
 clap = { version = "4.5", features = ["derive"] }
-crossterm = { version = "0.28", default-features = false, features = ["windows", "events"] }
+crossterm = { version = "0.29", default-features = false, features = ["windows", "events"] }
 notify = "8.0"
 os_pipe = "1.2"
 rustlings-macros = { path = "rustlings-macros", version = "=6.4.0" }
