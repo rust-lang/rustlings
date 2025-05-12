@@ -15,7 +15,7 @@ fn main() {
         -1, -2, -3,
         -4, -5, -6,
     ];
-    println!("My array! Here it is: {:?}", my_arr);
+    println!("My array! Here it is: {my_arr:?}");
 
     let mut my_empty_vec = vec![1, 2, 3, 4, 5];
     // `resize` mutates a vector instead of returning a new one.
@@ -27,5 +27,5 @@ fn main() {
     let mut value_b = 66;
     // Use `mem::swap` to correctly swap two values.
     mem::swap(&mut value_a, &mut value_b);
-    println!("value a: {}; value b: {}", value_a, value_b);
+    println!("value a: {value_a}; value b: {value_b}");
 }
