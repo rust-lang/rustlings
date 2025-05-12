@@ -178,6 +178,7 @@ const INIT_SOLUTION_FILE: &[u8] = b"fn main() {
 
 pub const RUST_ANALYZER_TOML: &[u8] = br#"check.command = "clippy"
 check.extraArgs = ["--profile", "test"]
+cargo.targetDir = true
 "#;
 
 const GITIGNORE: &[u8] = b"Cargo.lock
