@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% import "macros.html" as macros %}
+
+{% block content %}
+    <div class="m-3">
+        <h1>Rustlings</h1>
+
+        {{ section.content | replace(from="<!-- toc -->", to=macros::toc() ) | safe }}
+    </div>
+{% endblock %}

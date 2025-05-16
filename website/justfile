@@ -2,4 +2,4 @@ zola:
 	zola serve --open
 
 tailwind:
-	fnm exec --using latest npx @tailwindcss/cli -i input.css -o static/main.css
+	fnm exec --using latest npx @tailwindcss/cli -w -i input.css -o static/main.css

@@ -2,22 +2,22 @@
 
 @layer base {
   h1 {
-    @apply text-4xl mt-3 mb-3 text-gray-50 font-bold;
+    @apply text-4xl mt-3 mb-3 font-bold;
   }
   h2 {
-    @apply text-3xl mt-4 mb-1.5 text-gray-50 font-bold;
+    @apply text-3xl mt-4 mb-1.5 font-bold;
   }
   h3 {
-    @apply text-2xl mt-5 mb-1.5 text-gray-50 font-bold;
+    @apply text-2xl mt-5 mb-1.5 font-bold;
   }
   h4 {
-    @apply text-xl mt-6 mb-1.5 text-gray-50 font-bold;
+    @apply text-xl mt-6 mb-1.5 font-bold;
   }
   p {
     @apply mb-2;
   }
   a {
-    @apply text-[#F74C00] underline hover:decoration-orange-400 transition duration-300;
+    @apply text-[#FFC832] underline hover:decoration-orange-400 transition duration-300;
   }
   ul {
     @apply mt-2 mb-3 ml-1 list-disc list-inside marker:text-sky-600;
@@ -41,11 +41,11 @@
     @apply max-w-full w-full h-full mx-auto my-5 object-contain md:w-3/4 lg:w-3/5 rounded-sm shadow-sm;
   }
   blockquote {
-    @apply p-4 my-3 border-s-4 border-gray-300 bg-gray-800 italic;
+    @apply px-3 pt-2 pb-0.5 my-4 border-s-4 border-white/80 bg-white/7 rounded-sm italic;
   }
 
   pre {
-    @apply px-2 pt-2 pb-px overflow-x-auto text-sm sm:text-base rounded-sm mt-2 mb-4 after:content-[attr(data-lang)] after:text-[8px] after:opacity-40 selection:bg-gray-500/75;
+    @apply px-2 pt-2 pb-px overflow-x-auto text-sm sm:text-base rounded-sm mt-2 mb-4 after:content-[attr(data-lang)] after:text-[8px] after:opacity-40 selection:bg-white/15;
   }
   pre code mark {
     @apply pb-0.5 pt-1 pr-px text-inherit rounded-xs;

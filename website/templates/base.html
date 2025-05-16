@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        {%- set timestamp = now(timestamp=true) -%}
+
+        {%- if page.title -%}
+            {% set_global title = page.title %}
+        {%- elif section.title -%}
+            {% set_global title = section.title %}
+        {%- else -%}
+            {% set_global title = config.title %}
+        {%- endif -%}
+
+        {%- if page.description -%}
+            {% set_global description = page.description %}
+        {%- elif section.description -%}
+            {% set_global description = section.description %}
+        {%- else -%}
+            {% set_global description = config.description %}
+        {%- endif -%}
+
+        {%- if page.permalink -%}
+            {% set_global permalink = page.permalink %}
+        {%- elif section.permalink -%}
+            {% set_global permalink = section.permalink %}
+        {%- endif %}
+
+        <title>{%- block title -%}{{- title -}}{%- endblock -%}</title>
+
+        <meta name="description"
+              content="{%- block description -%}{{- description -}}{%- endblock -%}">
+
+        <link rel="icon"
+              type="image/x-icon"
+              href="{{ get_url(path=config.extra.logo_path) | safe }}?v={{ timestamp }}">
+
+        <link href="{{ get_url(path='main.css') | safe }}?v={{ timestamp }}"
+              rel="stylesheet">
+
+        <meta property="og:title" content="{{ title }}">
+        <meta property="og:description" content="{{ description }}">
+        <meta property="og:image"
+              content="{{ get_url(path=config.extra.logo_path) | safe }}?v={{ timestamp }}">
+        {% if permalink %}<meta property="og:url" content="{{ permalink | safe }}">{% endif %}
+    </head>
+
+    <body class="flex flex-col p-3 mx-auto min-h-screen text-lg text-white break-words bg-[#2A3439] lg:px-5 2xl:container">
+        <header class="flex gap-x-6 items-center py-2 px-2.5 mb-1 bg-black/30 rounded-full">
+            <a class="transition duration-500 hover:scale-110"
+               href="{{ get_url(path='/') | safe }}"
+               aria-hidden="true">
+                <img class="m-0 w-12 h-12 rounded-full"
+                     src="{{ get_url(path=config.extra.logo_path) | safe }}"
+                     alt="">
+            </a>
+
+            <nav class="flex gap-x-6 items-center font-bold">
+                {% for menu_item in config.extra.menu_items %}
+                    <a class="p-1 no-underline" href="{{ menu_item.url | safe }}">{{ menu_item.name }}</a>
+                {% endfor %}
+            </nav>
+        </header>
+
+        <main class="leading-relaxed">
+            {% block content %}{% endblock %}
+        </main>
+
+        <footer class="pt-2 pb-3 mt-auto">
+            <img class="m-0 mx-auto w-20 h-20"
+                 src="{{ get_url(path='images/happy_ferris.svg') | safe }}"
+                 alt="">
+
+            <nav class="flex flex-col gap-y-3 justify-around py-3 text-center bg-black/30 rounded-sm sm:flex-row sm:rounded-full">
+                {% for footer_item in config.extra.footer_items %}
+                    <a class="text-sm no-underline" href="{{ footer_item.url | safe }}">{{ footer_item.name }}</a>
+                {% endfor %}
+            </nav>
+        </footer>
+    </body>
+</html>

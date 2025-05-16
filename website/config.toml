@@ -7,6 +7,12 @@ build_search_index = false
 
 [markdown]
 highlight_code = true
+highlight_theme = "ayu-mirage"
+
+insert_anchor_links = "heading"
+
+[extra]
+logo_path = "images/happy_ferris.svg"
 
 [[extra.menu_items]]
 name = "Home"
