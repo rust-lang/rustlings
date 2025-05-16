@@ -1,0 +1,7 @@
+{
+  "devDependencies": {
+    "rustywind": "^0.24",
+    "tailwindcss": "^4.1",
+    "@tailwindcss/cli": "^4.1"
+  }
+}
