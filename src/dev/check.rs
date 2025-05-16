@@ -43,7 +43,7 @@ fn check_cargo_toml(
     if old_bins != new_bins {
         if cfg!(debug_assertions) {
             bail!(
-                "The file `dev/Cargo.toml` is outdated. Run `cargo run -- dev update` to update it. Then run `cargo run -- dev check` again"
+                "The file `dev/Cargo.toml` is outdated. Run `cargo dev update` to update it. Then run `cargo run -- dev check` again"
             );
         }
 
@@ -379,7 +379,7 @@ pub fn check(require_solutions: bool) -> Result<()> {
     }
 
     if cfg!(debug_assertions) {
-        // A hack to make `cargo run -- dev check` work when developing Rustlings.
+        // A hack to make `cargo dev check` work when developing Rustlings.
         check_cargo_toml(&info_file.exercises, "dev/Cargo.toml", b"../")?;
     } else {
         check_cargo_toml(&info_file.exercises, "Cargo.toml", b"")?;

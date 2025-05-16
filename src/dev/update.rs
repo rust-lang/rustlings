@@ -28,7 +28,7 @@ pub fn update() -> Result<()> {
     let info_file = InfoFile::parse()?;
 
     if cfg!(debug_assertions) {
-        // A hack to make `cargo run -- dev update` work when developing Rustlings.
+        // A hack to make `cargo dev update` work when developing Rustlings.
         update_cargo_toml(&info_file.exercises, "dev/Cargo.toml", b"../")
             .context("Failed to update the file `dev/Cargo.toml`")?;
 

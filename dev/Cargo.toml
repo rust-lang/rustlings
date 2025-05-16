@@ -1,4 +1,4 @@
-# Don't edit the `bin` list manually! It is updated by `cargo run -- dev update`. This comment line will be stripped in `rustlings init`.
+# Don't edit the `bin` list manually! It is updated by `cargo dev update`. This comment line will be stripped in `rustlings init`.
 bin = [
   { name = "intro1", path = "../exercises/00_intro/intro1.rs" },
   { name = "intro1_sol", path = "../solutions/00_intro/intro1.rs" },
