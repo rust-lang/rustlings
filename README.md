@@ -1,8 +1,4 @@
-<div class="oranda-hide">
-
 # Rustlings 🦀❤️
-
-</div>
 
 Greetings and welcome to Rustlings.
 This project contains small exercises to get you used to reading and writing Rust code.

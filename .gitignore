@@ -6,10 +6,6 @@ Cargo.lock
 # State file
 .rustlings-state.txt
 
-# oranda
-public/
-.netlify
-
 # OS
 .DS_Store
 .direnv/
