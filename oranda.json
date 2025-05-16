@@ -1,4 +1,7 @@
 {
+  "build": {
+    "path_prefix": "rustlings"
+  },
   "project": {
     "homepage": "https://rustlings.cool",
     "repository": "https://github.com/rust-lang/rustlings"
