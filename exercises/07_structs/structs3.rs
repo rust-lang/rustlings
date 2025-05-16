@@ -29,7 +29,7 @@ impl Package {
         // is considered international.
     }
 
-    // TODO: Add the correct return type to the function signature.
+    // TODO: Add the correct return type to the function fees.
     fn get_fees(&self, cents_per_gram: u32) {
         // TODO: Calculate the package's fees.
     }
