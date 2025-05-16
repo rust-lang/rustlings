@@ -3,7 +3,7 @@
 ### Changed
 
 - Upgrade to Rust edition 2024
-- Raise the minimum supported Rust version to `1.85`
+- Raise the minimum supported Rust version to `1.87`
 
 <a name="6.4.0"></a>
 
