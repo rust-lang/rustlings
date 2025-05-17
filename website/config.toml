@@ -16,16 +16,16 @@ logo_path = "images/happy_ferris.svg"
 
 [[extra.menu_items]]
 name = "Rustlings"
-url = "/"
+url = "@/_index.md"
 [[extra.menu_items]]
 name = "Setup"
-url = "/setup"
+url = "@/setup/index.md"
 [[extra.menu_items]]
 name = "Usage"
-url = "/usage"
+url = "@/usage/index.md"
 [[extra.menu_items]]
 name = "Community Exercises"
-url = "/community-exercises"
+url = "@/community-exercises/index.md"
 [[extra.menu_items]]
 name = "Q&A"
 url = "https://github.com/rust-lang/rustlings/discussions/categories/q-a?discussions_q="
