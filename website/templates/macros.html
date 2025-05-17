@@ -1,6 +1,4 @@
 {% macro toc() %}
-    <p class="p-1 my-4 text-base rounded-sm sm:hidden bg-yellow-200/20">Landscape mode recommended on mobile devices</p>
-
     {%- if page.toc -%}
         {% set_global toc = page.toc %}
     {%- else -%}
