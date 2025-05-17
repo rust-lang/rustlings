@@ -47,8 +47,8 @@
         {% if permalink %}<meta property="og:url" content="{{ permalink | safe }}">{% endif %}
     </head>
 
-    <body class="flex flex-col p-2 mx-auto min-h-screen text-lg text-white break-words bg-[#2A3439] lg:px-5 2xl:container">
-        <header class="flex flex-col gap-x-4 items-center py-2 px-4 mb-1 bg-black/30 rounded-sm sm:flex-row sm:rounded-full">
+    <body class="flex flex-col p-2 mx-auto min-h-screen text-lg text-white break-words lg:px-5 2xl:container bg-[#2A3439]">
+        <header class="flex flex-col gap-x-4 items-center py-2 px-4 mb-1 rounded-sm sm:flex-row sm:rounded-full bg-black/30">
             <a class="transition duration-500 hover:scale-110"
                href="{{ get_url(path='@/_index.md') | safe }}"
                aria-hidden="true">
@@ -74,15 +74,15 @@
             {% block content %}{% endblock %}
         </main>
 
-        <footer class="pt-2 pb-1 mt-auto text-center text-sm">
-            <div class="mt-2 mx-auto inline-flex gap-x-1.5 items-center">
+        <footer class="pt-2 pb-1 mt-auto text-sm text-center">
+            <div class="inline-flex gap-x-1.5 items-center mx-auto mt-2">
                 <img class="w-8 h-8"
                      src="{{ get_url(path='images/rust_logo.svg') | safe }}"
                      alt="">
                 <div class="italic">Rustlings is an official Rust project</div>
             </div>
 
-            <nav class="mt-3 flex flex-col gap-y-3 justify-around py-3 bg-black/30 rounded-sm sm:flex-row sm:rounded-full">
+            <nav class="flex flex-col gap-y-3 justify-around py-3 mt-3 rounded-sm sm:flex-row sm:rounded-full bg-black/30">
                 {% for footer_item in config.extra.footer_items %}
                     <a class="no-underline" href="{{ footer_item.url | safe }}">{{ footer_item.name }}</a>
                 {% endfor %}
