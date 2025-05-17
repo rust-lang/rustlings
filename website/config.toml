@@ -7,7 +7,7 @@ build_search_index = false
 
 [markdown]
 highlight_code = true
-highlight_theme = "ayu-mirage"
+highlight_theme = "dracula"
 
 insert_anchor_links = "heading"
 
