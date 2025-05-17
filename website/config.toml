@@ -27,7 +27,7 @@ url = "/usage"
 name = "Custom Exercises"
 url = "/custom-exercises"
 [[extra.menu_items]]
-name = "Q/A"
+name = "Q&A"
 url = "https://github.com/rust-lang/rustlings/discussions/categories/q-a?discussions_q="
 
 [[extra.footer_items]]
