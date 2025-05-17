@@ -1,11 +1,7 @@
 +++
 +++
 
-Greetings and welcome to Rustlings.
-This project contains small exercises to get you used to reading and writing Rust code.
-This includes reading and responding to compiler messages!
-
-It is recommended to do the Rustlings exercises in parallel to reading [the official Rust book](https://doc.rust-lang.org/book/), the most comprehensive resource for learning Rust 📚️
+Small exercises to get you used to reading and writing [Rust](https://www.rust-lang.org) code - _Recommended in parallel to reading [the official Rust book](https://doc.rust-lang.org/book) 📚️_
 
 <!-- toc -->
 
