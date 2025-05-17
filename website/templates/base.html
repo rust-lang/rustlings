@@ -47,7 +47,7 @@
         {% if permalink %}<meta property="og:url" content="{{ permalink | safe }}">{% endif %}
     </head>
 
-    <body class="flex flex-col p-3 mx-auto min-h-screen text-lg text-white break-words bg-[#2A3439] lg:px-5 2xl:container">
+    <body class="flex flex-col p-2 mx-auto min-h-screen text-lg text-white break-words bg-[#2A3439] lg:px-5 2xl:container">
         <header class="flex flex-col gap-x-4 items-center py-2 px-4 mb-1 bg-black/30 rounded-sm sm:flex-row sm:rounded-full">
             <a class="transition duration-500 hover:scale-110"
                href="{{ get_url(path='/') | safe }}"
@@ -68,7 +68,7 @@
             {% block content %}{% endblock %}
         </main>
 
-        <footer class="pt-2 pb-3 mt-auto text-center">
+        <footer class="pt-2 pb-1 mt-auto text-center">
             <div class="mx-auto inline-flex gap-x-1.5 items-center">
                 <img class="w-8 h-8"
                      src="{{ get_url(path='images/rust_logo.svg') | safe }}"
