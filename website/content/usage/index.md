@@ -27,7 +27,7 @@ It will rerun the current exercise automatically every time you change the exerc
 
 You can add the **`--manual-run`** flag (`rustlings --manual-run`) to manually rerun the current exercise by entering `r` in the watch mode.
 
-Please [report the issue](https://github.com/rust-lang/rustlings/issues/new) with some information about your operating system and whether you run Rustlings in a container or virtual machine (e.g. WSL).
+Please [report the issue](https://github.com/rust-lang/rustlings/issues/new) with some information about your operating system and whether you run Rustlings in a container or a virtual machine (e.g. WSL).
 
 {% end %}
 
@@ -45,17 +45,11 @@ See the footer of the list for all possible keys.
 
 ## Questions?
 
-If you need any help while doing the exercises and the builtin-hints aren't helpful, feel free to ask in the [_Q&A_ category of the discussions](https://github.com/rust-lang/rustlings/discussions/categories/q-a?discussions_q=) if your question wasn't asked yet 💡
+If you need any help while doing the exercises and the builtin hints aren't helpful, feel free to ask in the [_Q&A_ discussions](https://github.com/rust-lang/rustlings/discussions/categories/q-a?discussions_q=) if your question isn't answered there 💡
 
 ## Continuing On
 
 Once you've completed Rustlings, put your new knowledge to good use!
 Continue practicing your Rust skills by building your own projects, contributing to Rustlings, or finding other open-source projects to contribute to.
 
-## Uninstalling Rustlings
-
-If you want to remove Rustlings from your system, run the following command:
-
-```bash
-cargo uninstall rustlings
-```
+> If you want to create your own custom Rustlings exercises, visit the [**custom exercises**](@/custom-exercises/index.md) page 🏗️
