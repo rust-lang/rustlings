@@ -52,4 +52,4 @@ If you need any help while doing the exercises and the builtin hints aren't help
 Once you've completed Rustlings, put your new knowledge to good use!
 Continue practicing your Rust skills by building your own projects, contributing to Rustlings, or finding other open-source projects to contribute to.
 
-> If you want to create your own custom Rustlings exercises, visit the [**custom exercises**](@/custom-exercises/index.md) page 🏗️
+> If you want to create your own Rustlings exercises, visit the [**community exercises**](@/community-exercises/index.md) page 🏗️

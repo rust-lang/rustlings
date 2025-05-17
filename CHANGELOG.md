@@ -16,7 +16,7 @@
 - New option `x` in the prompt to reset the file of the current exercise 🔄
 - Allow `dead_code` for all exercises and solutions ⚰️ (thanks to [@huss4in](https://github.com/huss4in))
 - Pause input while running an exercise to avoid unexpected prompt interactions ⏸️
-- Limit the maximum number of exercises to 999. Any third-party exercises willing to reach that limit? 🔝
+- Limit the maximum number of exercises to 999. Any community exercises willing to reach that limit? 🔝
 
 ### Changed
 
@@ -93,7 +93,7 @@
 
 #### Added
 
-- `dev check`: Check that all exercises (including third-party ones) include at least one `TODO` comment.
+- `dev check`: Check that all exercises (including community ones) include at least one `TODO` comment.
 - `dev check`: Check that all exercises actually fail to run (not already solved).
 
 #### Changed
@@ -168,13 +168,13 @@ This should avoid issues related to the language server or to running exercises,
 Clippy lints are now shown on all exercises, not only the Clippy exercises 📎
 Make Clippy your friend from early on 🥰
 
-### Third-party exercises
+### Community Exercises
 
-Rustlings now supports third-party exercises!
+Rustlings now supports community exercises!
 
 Do you want to create your own set of Rustlings exercises to focus on some specific topic?
 Or do you want to translate the original Rustlings exercises?
-Then follow the link to the guide about [third-party exercises](THIRD_PARTY_EXERCISES.md)!
+Then follow the link to the guide about [community exercises](https://rustlings.rust-lang.org/community-exercises)!
 
 ## 5.6.1 (2023-09-18)
 

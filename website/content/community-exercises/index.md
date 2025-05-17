@@ -1,24 +1,23 @@
 +++
-title = "Custom Exercises"
+title = "Community Exercises"
 +++
-
-Custom exercises are a set of exercises maintained by the community.
-You can use the same `rustlings` program that you installed with `cargo install rustlings` to run them:
-
-- 🇯🇵 [Japanese Rustlings](https://github.com/sotanengel/rustlings-jp)：A Japanese translation of the Rustlings exercises.
-- 🇨🇳 [Simplified Chinese Rustlings](https://github.com/SandmeyerX/rustlings-zh-cn): A simplified Chinese translation of the Rustlings exercises.
 
 Do you want to create your own set of Rustlings exercises to focus on some specific topic?
 Or do you want to translate the original Rustlings exercises?
 
-<!-- toc -->
+## List of Community Exercises
 
-The support of Rustlings for custom exercises allows you to create your own set of Rustlings exercises to focus on some specific topic.
-You could also offer a translation of the original Rustlings exercises as custom exercises.
+- 🇯🇵 [Japanese Rustlings](https://github.com/sotanengel/rustlings-jp)：A Japanese translation of the Rustlings exercises.
+- 🇨🇳 [Simplified Chinese Rustlings](https://github.com/SandmeyerX/rustlings-zh-cn): A simplified Chinese translation of the Rustlings exercises.
+
+You can use the same `rustlings` program that you installed with `cargo install rustlings` to run them
+
+The support of Rustlings for community exercises allows you to create your own set of Rustlings exercises to focus on some specific topic.
+You could also offer a translation of the original Rustlings exercises as community exercises.
 
 ## Getting started
 
-To create custom exercises, install Rustlings and run `rustlings dev new PROJECT_NAME`.
+To create community exercises, install Rustlings and run `rustlings dev new PROJECT_NAME`.
 This command will, similar to `cargo new PROJECT_NAME`, create a template directory called `PROJECT_NAME` with all what you need to get started.
 
 Read the comments in the generated `info.toml` file to understand its format.

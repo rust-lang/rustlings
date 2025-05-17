@@ -24,8 +24,8 @@ url = "/setup"
 name = "Usage"
 url = "/usage"
 [[extra.menu_items]]
-name = "Custom Exercises"
-url = "/custom-exercises"
+name = "Community Exercises"
+url = "/community-exercises"
 [[extra.menu_items]]
 name = "Q&A"
 url = "https://github.com/rust-lang/rustlings/discussions/categories/q-a?discussions_q="

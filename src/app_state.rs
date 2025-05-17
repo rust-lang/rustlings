@@ -315,7 +315,7 @@ impl AppState {
     }
 
     // Official exercises: Dump the original file from the binary.
-    // Third-party exercises: Reset the exercise file with `git stash`.
+    // Community exercises: Reset the exercise file with `git stash`.
     fn reset(&self, exercise_ind: usize, path: &str) -> Result<()> {
         if self.official_exercises {
             return EMBEDDED_FILES
@@ -385,7 +385,7 @@ impl AppState {
     }
 
     /// Official exercises: Dump the solution file from the binary and return its path.
-    /// Third-party exercises: Check if a solution file exists and return its path in that case.
+    /// Community exercises: Check if a solution file exists and return its path in that case.
     pub fn current_solution_path(&self) -> Result<Option<String>> {
         if cfg!(debug_assertions) {
             return Ok(None);

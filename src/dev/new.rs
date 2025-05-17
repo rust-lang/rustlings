@@ -86,10 +86,10 @@ target/
 ";
 
 const INFO_FILE_BEFORE_FORMAT_VERSION: &str =
-    "# The format version is an indicator of the compatibility of third-party exercises with the
+    "# The format version is an indicator of the compatibility of community exercises with the
 # Rustlings program.
 # The format version is not the same as the version of the Rustlings program.
-# In case Rustlings makes an unavoidable breaking change to the expected format of third-party
+# In case Rustlings makes an unavoidable breaking change to the expected format of community
 # exercises, you would need to raise this version and adapt to the new format.
 # Otherwise, the newest version of the Rustlings program won't be able to run these exercises.
 format_version = ";
@@ -97,7 +97,7 @@ format_version = ";
 const INFO_FILE_AFTER_FORMAT_VERSION: &str = r#"
 
 # Optional multi-line message to be shown to users when just starting with the exercises.
-welcome_message = """Welcome to these third-party Rustlings exercises."""
+welcome_message = """Welcome to these community Rustlings exercises."""
 
 # Optional multi-line message to be shown to users after finishing all exercises.
 final_message = """We hope that you found the exercises helpful :D"""
@@ -141,7 +141,7 @@ publish = false
 
 const README: &str = "# Rustlings 🦀
 
-Welcome to these third-party Rustlings exercises 😃
+Welcome to these community Rustlings exercises 😃
 
 First, [install Rustlings using the official instructions](https://github.com/rust-lang/rustlings) ✅
 
