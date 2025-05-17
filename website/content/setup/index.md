@@ -10,12 +10,12 @@ Before installing Rustlings, you must have the **latest version of Rust** instal
 Visit [www.rust-lang.org/tools/install](https://www.rust-lang.org/tools/install) for further instructions.
 This will also install _Cargo_, Rust's package/project manager.
 
-> 🐧 If you are on Linux, make sure you have `gcc` installed (_for a linker_).
+> 🐧 If you are on **Linux**, make sure you have `gcc` installed (_for a linker_).
 >
 > Debian: `sudo apt install gcc`\
 > Fedora: `sudo dnf install gcc`
 
-> 🍎 If you are on MacOS, make sure you have _Xcode and its developer tools_ installed: `xcode-select --install`
+> 🍎 If you are on **MacOS**, make sure you have _Xcode and its developer tools_ installed: `xcode-select --install`
 
 ## Installing Rustlings
 
