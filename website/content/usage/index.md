@@ -16,7 +16,7 @@ Some exercises contain tests that need to pass for the exercise to be done ✅
 Search for `TODO` and `todo!()` to find out what you need to change.
 Ask for hints by entering `h` in the _watch mode_ 💡
 
-### Watch Mode
+## Watch Mode
 
 After the [initialization](@/setup/index.md#initialization), Rustlings can be launched by simply running the command `rustlings`.
 
@@ -32,7 +32,7 @@ It will rerun the current exercise automatically every time you change the exerc
 
 </details>
 
-### Exercise List
+## Exercise List
 
 In the [watch mode](#watch-mode) (after launching `rustlings`), you can enter `l` to open the interactive exercise list.
 
