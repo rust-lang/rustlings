@@ -24,31 +24,31 @@ fn divide(a: i64, b: i64) -> Result<i64, DivisionError> {
     Ok(a / b)
 }
 
-fn result_with_list(numbers:Vec<i64>,b:i64) -> Result<Vec<i64>, DivisionError> {
+fn result_with_list(numbers: Vec<i64>, b: i64) -> Result<Vec<i64>, DivisionError> {
     //                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    let division_results = numbers.into_iter().map(|n| divide(n,b));
+    let division_results = numbers.into_iter().map(|n| divide(n, b));
     // Collects to the expected return type. Returns the first error in the
     // division results (if one exists).
-    match division_results.find(|n|{
-        match n {
-                Ok(num)=> return false,
-                Err(e)=> return true
+    match division_results.find(|n| match n {
+        Ok(num) => return false,
+        Err(e) => return true,
+    }) {
+        Some(r) => return Err(r.unwrap_err()),
+        None => {
+            let ans: Vec<i64> = division_results
+                .map(|n| {
+                    return match n {
+                        Ok(num) => return num,
+                        Err(e) => return -1,
+                    };
+                })
+                .collect();
+            return Ok(ans);
         }
-}) {
-        Some(r)=> return Err(r.unwrap_err()),
-        None=>{
-                let ans:Vec<i64>=division_results.map(|n|{
-                        return match n {
-                                Ok(num)=> return num,
-                                Err(e)=> return -1
-                        }
-                }).collect();
-                return Ok(ans);
-        }
-}
+    }
 }
 
-fn list_of_results(numbers:Vec<i64>,b:i64) -> Vec<Result<i64, DivisionError>> {
+fn list_of_results(numbers: Vec<i64>, b: i64) -> Vec<Result<i64, DivisionError>> {
     //               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     let division_results = numbers.into_iter().map(|n| divide(n, b));
     // Collects to the expected return type.
@@ -90,11 +90,17 @@ mod tests {
 
     #[test]
     fn test_result_with_list() {
-        assert_eq!(result_with_list(vec![27, 297, 38502, 81],27), [1, 11, 1426, 3]);
+        assert_eq!(
+            result_with_list(vec![27, 297, 38502, 81], 27).unwrap(),
+            [1, 11, 1426, 3]
+        );
     }
 
     #[test]
     fn test_list_of_results() {
-        assert_eq!(list_of_results(vec![27, 297, 38502, 81],27), [Ok(1), Ok(11), Ok(1426), Ok(3)]);
+        assert_eq!(
+            list_of_results(vec![27, 297, 38502, 81], 27),
+            [Ok(1), Ok(11), Ok(1426), Ok(3)]
+        );
     }
 }
