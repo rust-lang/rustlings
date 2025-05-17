@@ -1,0 +1,9 @@
+<details>
+    <summary>
+        <strong>{{ summary | safe }}</strong> (<em>click to expand</em>)
+    </summary>
+
+    <blockquote>
+        {{ body | markdown | safe }}
+    </blockquote>
+</details>

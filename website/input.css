@@ -41,7 +41,7 @@
     @apply md:w-3/4 lg:w-3/5;
   }
   blockquote {
-    @apply px-3 pt-2 pb-0.5 my-4 border-s-4 border-white/80 bg-white/7 rounded-sm italic;
+    @apply px-3 pt-2 pb-0.5 my-4 border-s-4 border-white/80 bg-white/7 rounded-sm;
   }
 
   pre {
