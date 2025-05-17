@@ -6,6 +6,6 @@
     <div class="m-3">
         <h1>Rustlings</h1>
 
-        {{ section.content | replace(from="<!-- toc -->", to=macros::toc() ) | safe }}
+        {{ section.content | safe }}
     </div>
 {% endblock %}

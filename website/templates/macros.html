@@ -1,15 +1,9 @@
 {% macro toc() %}
-    {%- if page.toc -%}
-        {% set_global toc = page.toc %}
-    {%- else -%}
-        {% set_global toc = section.toc %}
-    {%- endif -%}
-
-    {% if toc %}
+    {% if page.toc %}
         <div class="px-4 py-0.5 my-3 border-s-4 rounded-xl border-double">
             <nav>
                 <ul class="ml-0 list-none">
-                    {% for parent in toc %}
+                    {% for parent in page.toc %}
                         {% if parent.level == 2 %}
                             <li>
                                 {#- -#}
