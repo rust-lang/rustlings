@@ -38,7 +38,7 @@
     @apply my-5 rounded-full;
   }
   img {
-    @apply max-w-full w-full h-full mx-auto my-5 object-contain md:w-3/4 lg:w-3/5 rounded-sm shadow-sm;
+    @apply md:w-3/4 lg:w-3/5;
   }
   blockquote {
     @apply px-3 pt-2 pb-0.5 my-4 border-s-4 border-white/80 bg-white/7 rounded-sm italic;

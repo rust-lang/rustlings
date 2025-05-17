@@ -1,16 +1,14 @@
 {% extends "base.html" %}
 
-{% import "macros.html" as macros %}
-
 {% block content %}
     <div class="flex flex-col mx-auto text-center">
         <h1>DON'T PANIC!</h1>
         <h2>404: Page not found!</h2>
 
-        <img class="max-h-[50vh]"
+        <img class="max-h-[50vh] mx-auto"
              src="{{ get_url(path='images/panic.svg') | safe }}"
              alt="">
 
-        {{ macros::btn(link=get_url(path="/") , content="Back to the homepage") }}
+        <a class="text-2xl font-bold" href="{{ get_url(path='/') }}">Back to homepage</a>
     </div>
 {% endblock %}
