@@ -1,4 +1,4 @@
-base_url = "https://rust-lang.github.io/rustlings"
+base_url = "https://rustlings.rust-lang.org"
 title = "Rustlings"
 description = "Small exercises to get you used to reading and writing Rust code!"
 
