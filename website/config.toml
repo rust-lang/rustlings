@@ -15,7 +15,7 @@ insert_anchor_links = "heading"
 logo_path = "images/happy_ferris.svg"
 
 [[extra.menu_items]]
-name = "Home"
+name = "Rustlings"
 url = "/"
 [[extra.menu_items]]
 name = "Setup"

@@ -48,16 +48,16 @@
     </head>
 
     <body class="flex flex-col p-3 mx-auto min-h-screen text-lg text-white break-words bg-[#2A3439] lg:px-5 2xl:container">
-        <header class="flex gap-x-6 items-center py-2 px-2.5 mb-1 bg-black/30 rounded-full">
+        <header class="flex flex-col gap-x-4 items-center py-2 px-4 mb-1 bg-black/30 rounded-sm sm:flex-row sm:rounded-full">
             <a class="transition duration-500 hover:scale-110"
                href="{{ get_url(path='/') | safe }}"
                aria-hidden="true">
-                <img class="m-0 w-12 h-12 rounded-full"
+                <img class="m-0 w-12 h-12"
                      src="{{ get_url(path=config.extra.logo_path) | safe }}"
                      alt="">
             </a>
 
-            <nav class="flex gap-x-6 items-center font-bold">
+            <nav class="flex flex-col gap-x-6 items-center font-bold sm:flex-row">
                 {% for menu_item in config.extra.menu_items %}
                     <a class="p-1 no-underline" href="{{ menu_item.url | safe }}">{{ menu_item.name }}</a>
                 {% endfor %}
@@ -68,12 +68,15 @@
             {% block content %}{% endblock %}
         </main>
 
-        <footer class="pt-2 pb-3 mt-auto">
-            <img class="m-0 mx-auto w-20 h-20"
-                 src="{{ get_url(path='images/happy_ferris.svg') | safe }}"
-                 alt="">
+        <footer class="pt-2 pb-3 mt-auto text-center">
+            <div class="mx-auto inline-flex gap-x-1.5 items-center">
+                <img class="w-8 h-8"
+                     src="{{ get_url(path='images/rust_logo.svg') | safe }}"
+                     alt="">
+                <div class="text-sm italic">Rustlings is an official Rust project</div>
+            </div>
 
-            <nav class="flex flex-col gap-y-3 justify-around py-3 text-center bg-black/30 rounded-sm sm:flex-row sm:rounded-full">
+            <nav class="flex flex-col gap-y-3 justify-around py-3 bg-black/30 rounded-sm sm:flex-row sm:rounded-full">
                 {% for footer_item in config.extra.footer_items %}
                     <a class="text-sm no-underline" href="{{ footer_item.url | safe }}">{{ footer_item.name }}</a>
                 {% endfor %}
