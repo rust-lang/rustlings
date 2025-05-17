@@ -79,7 +79,7 @@ impl RunnableExercise for ExerciseInfo {
 /// The deserialized `info.toml` file.
 #[derive(Deserialize)]
 pub struct InfoFile {
-    /// For possible breaking changes in the future for third-party exercises.
+    /// For possible breaking changes in the future for community exercises.
     pub format_version: u8,
     /// Shown to users when starting with the exercises.
     pub welcome_message: Option<String>,
@@ -91,7 +91,7 @@ pub struct InfoFile {
 
 impl InfoFile {
     /// Official exercises: Parse the embedded `info.toml` file.
-    /// Third-party exercises: Parse the `info.toml` file in the current directory.
+    /// Community exercises: Parse the `info.toml` file in the current directory.
     pub fn parse() -> Result<Self> {
         // Read a local `info.toml` if it exists.
         let slf = match fs::read_to_string("info.toml") {

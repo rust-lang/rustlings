@@ -58,7 +58,7 @@ enum Subcommands {
         /// The name of the exercise
         name: Option<String>,
     },
-    /// Commands for developing (third-party) Rustlings exercises
+    /// Commands for developing (community) Rustlings exercises
     #[command(subcommand)]
     Dev(DevCommands),
 }
