@@ -18,9 +18,24 @@ logo_path = "images/happy_ferris.svg"
 name = "Home"
 url = "/"
 [[extra.menu_items]]
+name = "Setup"
+url = "/setup"
+[[extra.menu_items]]
+name = "Usage"
+url = "/usage"
+[[extra.menu_items]]
+name = "Q/A"
+url = "https://github.com/rust-lang/rustlings/discussions/categories/q-a?discussions_q="
+[[extra.menu_items]]
 name = "Custom Exercises"
 url = "/custom-exercises"
 
 [[extra.footer_items]]
 name = "Repository"
 url = "https://github.com/rust-lang/rustlings"
+[[extra.footer_items]]
+name = "Changelog"
+url = "https://github.com/rust-lang/rustlings/blob/main/CHANGELOG.md"
+[[extra.footer_items]]
+name = "MIT License"
+url = "https://github.com/rust-lang/rustlings/blob/main/LICENSE"
