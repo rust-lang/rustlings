@@ -2,37 +2,36 @@
 title = "Community Exercises"
 +++
 
-Do you want to create your own set of Rustlings exercises to focus on some specific topic?
-Or do you want to translate the original Rustlings exercises?
-
 ## List of Community Exercises
 
 - 🇯🇵 [Japanese Rustlings](https://github.com/sotanengel/rustlings-jp)：A Japanese translation of the Rustlings exercises.
 - 🇨🇳 [Simplified Chinese Rustlings](https://github.com/SandmeyerX/rustlings-zh-cn): A simplified Chinese translation of the Rustlings exercises.
 
-You can use the same `rustlings` program that you installed with `cargo install rustlings` to run them
+> You can use the same `rustlings` program that you installed with `cargo install rustlings` to run community exercises.
 
-The support of Rustlings for community exercises allows you to create your own set of Rustlings exercises to focus on some specific topic.
+## Creating Community Exercises
+
+Rustling's support for community exercises allows you to create your own exercises to focus on some specific topic.
 You could also offer a translation of the original Rustlings exercises as community exercises.
 
-## Getting started
+### Getting Started
 
 To create community exercises, install Rustlings and run `rustlings dev new PROJECT_NAME`.
-This command will, similar to `cargo new PROJECT_NAME`, create a template directory called `PROJECT_NAME` with all what you need to get started.
+This command will, similar to `cargo new PROJECT_NAME`, create the template directory `PROJECT_NAME` with all what you need to get started.
 
-Read the comments in the generated `info.toml` file to understand its format.
+_Read the comments_ in the generated `info.toml` file to understand its format.
 It allows you to set a custom welcome and final message and specify the metadata of every exercise.
 
-## Create an exercise
+### Creating an Exercise
 
-Here is an example of the metadata of one file:
+Here is an example of the metadata of one exercise:
 
 ```toml
 [[exercises]]
 name = "intro1"
 hint = """
 To finish this exercise, you need to …
-This link might help you …"""
+These links might help you …"""
 ```
 
 After entering this in `info.toml`, create the file `intro1.rs` in the `exercises/` directory.
@@ -51,15 +50,24 @@ For example, it will tell you to run `rustlings dev update` to update the `Cargo
 That's it!
 You finished your first exercise 🎉
 
-## Publish
+### Cargo.toml
+
+Except of the `bin` list, you can modify the `Cargo.toml` file as you want.
+
+> The `bin` list is automatically updated by running `rustlings dev update`
+
+- You can add dependencies in the `[dependencies]` table.
+- You might want to [configure some lints](https://doc.rust-lang.org/cargo/reference/manifest.html#the-lints-section) for all exercises. You can do so in the `[lints.rust]` and `[lints.clippy]` tables.
+
+### Publishing
 
 Now, add more exercises and publish them as a Git repository.
 
-Users just have to clone that repository and run `rustlings` in it to start working on your set of exercises just like the official ones.
+Users just have to clone that repository and run `rustlings` in it to start working on your exercises (just like the official ones).
 
 One difference to the official exercises is that the solution files will not be hidden until the user finishes an exercise.
-But you can trust the users to not look at the solution too early 😉
+But you can trust your users to not open the solution too early 😉
 
-## Share
+### Sharing
 
-After publishing your set of exercises, open an issue or a pull request in the official Rustlings repository to link to your project in the README 😃
+After publishing your community exercises, open an issue or a pull request in the [official Rustlings repository](https://github.com/rust-lang/rustlings) to add your project to the [list of community exercises](#list-of-community-exercises) 😃
