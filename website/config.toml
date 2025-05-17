@@ -24,11 +24,11 @@ url = "/setup"
 name = "Usage"
 url = "/usage"
 [[extra.menu_items]]
-name = "Q/A"
-url = "https://github.com/rust-lang/rustlings/discussions/categories/q-a?discussions_q="
-[[extra.menu_items]]
 name = "Custom Exercises"
 url = "/custom-exercises"
+[[extra.menu_items]]
+name = "Q/A"
+url = "https://github.com/rust-lang/rustlings/discussions/categories/q-a?discussions_q="
 
 [[extra.footer_items]]
 name = "Repository"
