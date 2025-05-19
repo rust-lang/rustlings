@@ -1,3 +1,1 @@
-# Rustlings 🦀❤️
-
-➡️ [**rustlings.rust-lang.org**](https://rustlings.rust-lang.org) ⬅️
+# ➡️ [rustlings.rust-lang.org](https://rustlings.rust-lang.org) ⬅️
