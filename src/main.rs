@@ -35,6 +35,9 @@ struct Args {
     /// Only use this if Rustlings fails to detect exercise file changes.
     #[arg(long)]
     manual_run: bool,
+    /// Command to open exercise files in an editor (e.g. "code" for VS Code)
+    #[arg(long)]
+    editor: Option<String>,
 }
 
 #[derive(Subcommand)]
@@ -135,7 +138,11 @@ fn main() -> Result<ExitCode> {
                 )
             };
 
-            watch::watch(&mut app_state, notify_exercise_names)?;
+            watch::watch(
+                &mut app_state,
+                notify_exercise_names,
+                args.editor.as_deref(),
+            )?;
         }
         Some(Subcommands::Run { name }) => {
             if let Some(name) = name {
