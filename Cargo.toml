@@ -54,6 +54,7 @@ rustlings-macros = { path = "rustlings-macros", version = "=6.4.0" }
 serde_json = "1.0"
 serde.workspace = true
 toml_edit.workspace = true
+tokio = { version = "1.36", features = ["full"] }
 
 [target.'cfg(not(windows))'.dependencies]
 rustix = { version = "1.0", default-features = false, features = ["std", "stdio", "termios"] }
