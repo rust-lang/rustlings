@@ -1,0 +1,42 @@
+name: Website
+
+on:
+  push:
+    branches: [main]
+    paths: [website]
+
+jobs:
+  build:
+    defaults:
+      run:
+        working-directory: website
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install TailwindCSS
+        run: npm install
+      - name: Build CSS
+        run: npx @tailwindcss/cli -m -i input.css -o static/main.css
+      - name: Download Zola
+        run: curl -fsSL https://github.com/getzola/zola/releases/download/v0.20.0/zola-v0.20.0-x86_64-unknown-linux-gnu.tar.gz | tar xz
+      - name: Build site
+        run: ./zola build
+      - name: Upload static files as artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public/
+
+  deploy:
+    needs: build
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write    # to deploy to Pages
+      id-token: write # to verify the deployment originates from an appropriate source
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4

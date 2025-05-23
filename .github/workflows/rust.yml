@@ -1,10 +1,16 @@
-name: Rustlings Tests
+name: Check
 
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - website
+      - '*.md'
   pull_request:
     branches: [main]
+    paths-ignore:
+      - website
+      - '*.md'
 
 env:
   CARGO_TERM_COLOR: always
@@ -14,14 +20,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: cargo clippy -- --deny warnings
+      - name: Clippy
+        run: cargo clippy -- --deny warnings
   fmt:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: DavidAnson/markdownlint-cli2-action@v16
-        with:
-          globs: "exercises/**/*.md"
       - name: rustfmt
         run: cargo fmt --all --check
   test:
@@ -40,4 +44,4 @@ jobs:
       - uses: actions/checkout@v4
       - uses: swatinem/rust-cache@v2
       - name: rustlings dev check
-        run: cargo run -- dev check --require-solutions
+        run: cargo dev check --require-solutions

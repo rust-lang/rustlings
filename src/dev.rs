@@ -8,7 +8,7 @@ mod update;
 
 #[derive(Subcommand)]
 pub enum DevCommands {
-    /// Create a new project for third-party Rustlings exercises
+    /// Create a new project for community exercises
     New {
         /// The path to create the project in
         path: PathBuf,
