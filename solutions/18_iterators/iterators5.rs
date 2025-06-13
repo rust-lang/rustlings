@@ -64,6 +64,17 @@ fn count_collection_iterator_flat(
         .count()
 }
 
+// Equivalent to `count_collection_iterator`, `count_collection_iterator_flat` and `count_iterator`
+// iterating over the collection with an accumulator in order to avoid the sum step after.
+fn count_collection_iterator_fold(
+    collection: &[HashMap<String, Progress>],
+    value: Progress,
+) -> usize {
+    collection
+        .iter()
+        .fold(0, |acc, map| acc + count_iterator(map, value))
+}
+
 fn main() {
     // You can optionally experiment here.
 }
@@ -133,6 +144,7 @@ mod tests {
         let collection = get_vec_map();
         assert_eq!(count_collection_iterator(&collection, Complete), 6);
         assert_eq!(count_collection_iterator_flat(&collection, Complete), 6);
+        assert_eq!(count_collection_iterator_fold(&collection, Complete), 6);
     }
 
     #[test]
@@ -140,6 +152,7 @@ mod tests {
         let collection = get_vec_map();
         assert_eq!(count_collection_iterator(&collection, Some), 1);
         assert_eq!(count_collection_iterator_flat(&collection, Some), 1);
+        assert_eq!(count_collection_iterator_fold(&collection, Some), 1);
     }
 
     #[test]
@@ -147,6 +160,7 @@ mod tests {
         let collection = get_vec_map();
         assert_eq!(count_collection_iterator(&collection, None), 4);
         assert_eq!(count_collection_iterator_flat(&collection, None), 4);
+        assert_eq!(count_collection_iterator_fold(&collection, None), 4);
     }
 
     #[test]
