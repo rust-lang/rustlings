@@ -354,16 +354,18 @@ fn check_solutions(
     }
     stdout.write_all(b"\n")?;
 
+    let n_solutions = sol_paths.len();
     let handle = thread::Builder::new()
         .spawn(move || check_unexpected_files("solutions", &sol_paths))
         .context(
             "Failed to spawn a thread to check for unexpected files in the solutions directory",
         )?;
 
-    if !fmt_cmd
-        .status()
-        .context("Failed to run `rustfmt` on all solution files")?
-        .success()
+    if n_solutions > 0
+        && !fmt_cmd
+            .status()
+            .context("Failed to run `rustfmt` on all solution files")?
+            .success()
     {
         bail!("Some solutions aren't formatted. Run `rustfmt` on them");
     }
