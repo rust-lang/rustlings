@@ -160,6 +160,38 @@ impl<'a, 'lock> CheckProgressVisualizer<'a, 'lock> {
     }
 }
 
+pub struct ProgressCounter<'a, 'lock> {
+    stdout: &'a mut StdoutLock<'lock>,
+    total: usize,
+    counter: usize,
+}
+
+impl<'a, 'lock> ProgressCounter<'a, 'lock> {
+    pub fn new(stdout: &'a mut StdoutLock<'lock>, total: usize) -> io::Result<Self> {
+        write!(stdout, "Progress: 0/{total}")?;
+        stdout.flush()?;
+
+        Ok(Self {
+            stdout,
+            total,
+            counter: 0,
+        })
+    }
+
+    pub fn increment(&mut self) -> io::Result<()> {
+        self.counter += 1;
+        write!(self.stdout, "\rProgress: {}/{}", self.counter, self.total)?;
+        self.stdout.flush()
+    }
+}
+
+impl Drop for ProgressCounter<'_, '_> {
+    fn drop(&mut self) {
+        let _ = self.stdout.write_all(b"\n\n");
+        let _ = self.stdout.flush();
+    }
+}
+
 pub fn progress_bar<'a>(
     writer: &mut impl CountedWrite<'a>,
     progress: u16,

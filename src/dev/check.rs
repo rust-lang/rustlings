@@ -15,6 +15,7 @@ use crate::{
     cmd::CmdRunner,
     exercise::{OUTPUT_CAPACITY, RunnableExercise},
     info_file::{ExerciseInfo, InfoFile},
+    term::ProgressCounter,
 };
 
 const MAX_N_EXERCISES: usize = 999;
@@ -217,10 +218,7 @@ fn check_exercises_unsolved(
         .collect::<Result<Vec<_>, _>>()
         .context("Failed to spawn a thread to check if an exercise is already solved")?;
 
-    let n_handles = handles.len();
-    write!(stdout, "Progress: 0/{n_handles}")?;
-    stdout.flush()?;
-    let mut handle_num = 1;
+    let mut progress_counter = ProgressCounter::new(&mut stdout, handles.len())?;
 
     for (exercise_name, handle) in handles {
         let Ok(result) = handle.join() else {
@@ -235,11 +233,8 @@ fn check_exercises_unsolved(
             Err(e) => return Err(e),
         }
 
-        write!(stdout, "\rProgress: {handle_num}/{n_handles}")?;
-        stdout.flush()?;
-        handle_num += 1;
+        progress_counter.increment()?;
     }
-    stdout.write_all(b"\n")?;
 
     Ok(())
 }
@@ -318,10 +313,7 @@ fn check_solutions(
         .arg("always")
         .stdin(Stdio::null());
 
-    let n_handles = handles.len();
-    write!(stdout, "Progress: 0/{n_handles}")?;
-    stdout.flush()?;
-    let mut handle_num = 1;
+    let mut progress_counter = ProgressCounter::new(&mut stdout, handles.len())?;
 
     for (exercise_info, handle) in info_file.exercises.iter().zip(handles) {
         let Ok(check_result) = handle.join() else {
@@ -338,7 +330,7 @@ fn check_solutions(
             }
             SolutionCheck::MissingOptional => (),
             SolutionCheck::RunFailure { output } => {
-                stdout.write_all(b"\n\n")?;
+                drop(progress_counter);
                 stdout.write_all(&output)?;
                 bail!(
                     "Running the solution of the exercise {} failed with the error above",
@@ -348,11 +340,8 @@ fn check_solutions(
             SolutionCheck::Err(e) => return Err(e),
         }
 
-        write!(stdout, "\rProgress: {handle_num}/{n_handles}")?;
-        stdout.flush()?;
-        handle_num += 1;
+        progress_counter.increment()?;
     }
-    stdout.write_all(b"\n")?;
 
     let n_solutions = sol_paths.len();
     let handle = thread::Builder::new()
