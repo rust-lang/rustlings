@@ -188,7 +188,6 @@ impl<'a, 'lock> ProgressCounter<'a, 'lock> {
 impl Drop for ProgressCounter<'_, '_> {
     fn drop(&mut self) {
         let _ = self.stdout.write_all(b"\n\n");
-        let _ = self.stdout.flush();
     }
 }
 
