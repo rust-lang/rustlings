@@ -58,11 +58,13 @@ pub fn init() -> Result<()> {
             && !workspace_manifest_content.contains("workspace.")
         {
             bail!(
-                "The current directory is already part of a Cargo project.\nPlease initialize Rustlings in a different directory"
+                "The current directory is already part of a Cargo project.\n\
+                 Please initialize Rustlings in a different directory"
             );
         }
 
-        stdout.write_all(b"This command will create the directory `rustlings/` as a member of this Cargo workspace.\nPress ENTER to continue ")?;
+        stdout.write_all(b"This command will create the directory `rustlings/` as a member of this Cargo workspace.\n\
+                           Press ENTER to continue ")?;
         press_enter_prompt(&mut stdout)?;
 
         // Make sure "rustlings" is added to `workspace.members` by making
@@ -78,7 +80,8 @@ pub fn init() -> Result<()> {
             .status()?;
         if !status.success() {
             bail!(
-                "Failed to initialize a new Cargo workspace member.\nPlease initialize Rustlings in a different directory"
+                "Failed to initialize a new Cargo workspace member.\n\
+                 Please initialize Rustlings in a different directory"
             );
         }
 
@@ -87,7 +90,8 @@ pub fn init() -> Result<()> {
             .context("Failed to remove the temporary directory `rustlings/`")?;
         init_git = false;
     } else {
-        stdout.write_all(b"This command will create the directory `rustlings/` which will contain the exercises.\nPress ENTER to continue ")?;
+        stdout.write_all(b"This command will create the directory `rustlings/` which will contain the exercises.\n\
+                           Press ENTER to continue ")?;
         press_enter_prompt(&mut stdout)?;
     }
 

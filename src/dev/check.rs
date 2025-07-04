@@ -106,13 +106,15 @@ fn check_info_file_exercises(info_file: &InfoFile) -> Result<HashSet<PathBuf>> {
 
         if !file_buf.contains("fn main()") {
             bail!(
-                "The `main` function is missing in the file `{path}`.\nCreate at least an empty `main` function to avoid language server errors"
+                "The `main` function is missing in the file `{path}`.\n\
+                 Create at least an empty `main` function to avoid language server errors"
             );
         }
 
         if !file_buf.contains("// TODO") {
             bail!(
-                "Didn't find any `// TODO` comment in the file `{path}`.\nYou need to have at least one such comment to guide the user."
+                "Didn't find any `// TODO` comment in the file `{path}`.\n\
+                 You need to have at least one such comment to guide the user."
             );
         }
 
@@ -227,7 +229,10 @@ fn check_exercises_unsolved(
 
         match result {
             Ok(true) => {
-                bail!("The exercise {exercise_name} is already solved.\n{SKIP_CHECK_UNSOLVED_HINT}",)
+                bail!(
+                    "The exercise {exercise_name} is already solved.\n\
+                     {SKIP_CHECK_UNSOLVED_HINT}",
+                )
             }
             Ok(false) => (),
             Err(e) => return Err(e),
@@ -242,10 +247,12 @@ fn check_exercises_unsolved(
 fn check_exercises(info_file: &'static InfoFile, cmd_runner: &'static CmdRunner) -> Result<()> {
     match info_file.format_version.cmp(&CURRENT_FORMAT_VERSION) {
         Ordering::Less => bail!(
-            "`format_version` < {CURRENT_FORMAT_VERSION} (supported version)\nPlease migrate to the latest format version"
+            "`format_version` < {CURRENT_FORMAT_VERSION} (supported version)\n\
+             Please migrate to the latest format version"
         ),
         Ordering::Greater => bail!(
-            "`format_version` > {CURRENT_FORMAT_VERSION} (supported version)\nTry updating the Rustlings program"
+            "`format_version` > {CURRENT_FORMAT_VERSION} (supported version)\n\
+             Try updating the Rustlings program"
         ),
         Ordering::Equal => (),
     }

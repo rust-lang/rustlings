@@ -134,7 +134,14 @@ mod tests {
         );
 
         assert_eq!(
-            updated_cargo_toml(&exercise_infos, "abc\nbin = [xxx]\n123", b"../").unwrap(),
+            updated_cargo_toml(
+                &exercise_infos,
+                "abc\n\
+                 bin = [xxx]\n\
+                 123",
+                b"../"
+            )
+            .unwrap(),
             br#"abc
 bin = [
   { name = "1", path = "../exercises/1.rs" },
