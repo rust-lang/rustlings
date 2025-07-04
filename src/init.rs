@@ -35,7 +35,27 @@ pub fn init() -> Result<()> {
         .stdin(Stdio::null())
         .stderr(Stdio::null())
         .output()
-        .context(CARGO_LOCATE_PROJECT_ERR)?;
+        .context(
+            "Failed to run the command `cargo locate-project …`\n\
+             Did you already install Rust?\n\
+             Try running `cargo --version` to diagnose the problem.",
+        )?;
+
+    if !Command::new("cargo")
+        .arg("clippy")
+        .arg("--version")
+        .stdin(Stdio::null())
+        .stdout(Stdio::null())
+        .stderr(Stdio::null())
+        .status()
+        .context("Failed to run the command `cargo clippy --version`")?
+        .success()
+    {
+        bail!(
+            "Clippy, the official Rust linter, is missing.\n\
+             Please install it first before initializing Rustlings."
+        )
+    }
 
     let mut stdout = io::stdout().lock();
     let mut init_git = true;
@@ -169,10 +189,6 @@ pub fn init() -> Result<()> {
 
     Ok(())
 }
-
-const CARGO_LOCATE_PROJECT_ERR: &str = "Failed to run the command `cargo locate-project …`
-Did you already install Rust?
-Try running `cargo --version` to diagnose the problem.";
 
 const INIT_SOLUTION_FILE: &[u8] = b"fn main() {
     // DON'T EDIT THIS SOLUTION FILE!
