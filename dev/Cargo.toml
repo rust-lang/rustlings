@@ -118,6 +118,8 @@ bin = [
   { name = "generics2_sol", path = "../solutions/14_generics/generics2.rs" },
   { name = "traits1", path = "../exercises/15_traits/traits1.rs" },
   { name = "traits1_sol", path = "../solutions/15_traits/traits1.rs" },
+  { name = "errors7", path = "../exercises/13_error_handling/errors7.rs" },
+  { name = "errors7_sol", path = "../solutions/13_error_handling/errors7.rs" },
   { name = "traits2", path = "../exercises/15_traits/traits2.rs" },
   { name = "traits2_sol", path = "../solutions/15_traits/traits2.rs" },
   { name = "traits3", path = "../exercises/15_traits/traits3.rs" },
