@@ -15,7 +15,7 @@ impl Package {
             // learn about error handling later.
             panic!("Can't ship a package with weight below 10 grams");
         }
-
+        
         Self {
             sender_country,
             recipient_country,
@@ -24,14 +24,17 @@ impl Package {
     }
 
     // TODO: Add the correct return type to the function signature.
-    fn is_international(&self) {
+    fn is_international(&self)->bool {
         // TODO: Read the tests that use this method to find out when a package
         // is considered international.
+        self.recipient_country != self.sender_country
     }
 
     // TODO: Add the correct return type to the function signature.
-    fn get_fees(&self, cents_per_gram: u32) {
+    fn get_fees(&self, cents_per_gram: u32)->u32 {
         // TODO: Calculate the package's fees.
+
+        self.weight_in_grams*cents_per_gram 
     }
 }
 

@@ -8,18 +8,26 @@ use std::collections::HashMap;
 
 fn fruit_basket() -> HashMap<String, u32> {
     // TODO: Declare the hash map.
-    // let mut basket =
+    let mut basket =HashMap::new();
 
     // Two bananas are already given for you :)
-    basket.insert(String::from("banana"), 2);
+    basket.insert("banana".to_string(), 2);
 
     // TODO: Put more fruits in your basket.
+    basket.insert("apples".to_string(), 2);
+    basket.insert("watermelon".to_string(), 2);
+    basket.insert("pinapple".to_string(), 2);
+    basket.insert("papaya".to_string(), 2);
 
     basket
 }
 
 fn main() {
     // You can optionally experiment here.
+    let a=vec![1,2,3];
+    let b = a.into_iter().sum::<u64>();
+
+    print!("{b}")
 }
 
 #[cfg(test)]
@@ -35,6 +43,6 @@ mod tests {
     #[test]
     fn at_least_five_fruits() {
         let basket = fruit_basket();
-        assert!(basket.values().sum::<u32>() >= 5);
+        assert!(basket.into_values().sum::<u32>() >= 5);
     }
 }

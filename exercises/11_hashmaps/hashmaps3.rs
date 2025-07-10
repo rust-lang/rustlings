@@ -6,10 +6,10 @@
 // number of goals the team scored, and the total number of goals the team
 // conceded.
 
-use std::collections::HashMap;
+use std::{collections::HashMap};
 
 // A structure to store the goal details of a team.
-#[derive(Default)]
+#[derive(Default,Debug)]
 struct TeamScores {
     goals_scored: u8,
     goals_conceded: u8,
@@ -31,6 +31,14 @@ fn build_scores_table(results: &str) -> HashMap<&str, TeamScores> {
         // Keep in mind that goals scored by team 1 will be the number of goals
         // conceded by team 2. Similarly, goals scored by team 2 will be the
         // number of goals conceded by team 1.
+        scores.entry(team_1_name)
+            .and_modify(|a|
+                {a.goals_scored+=team_1_score ; a.goals_conceded+=team_2_score}
+            ).or_insert(TeamScores { goals_scored: team_1_score, goals_conceded: team_2_score });
+        scores.entry(team_2_name)
+            .and_modify(|a|
+                {a.goals_scored+=team_2_score ; a.goals_conceded+= team_1_score})
+            .or_insert(TeamScores { goals_scored: team_2_score, goals_conceded: team_1_score });
     }
 
     scores
@@ -38,6 +46,19 @@ fn build_scores_table(results: &str) -> HashMap<&str, TeamScores> {
 
 fn main() {
     // You can optionally experiment here.
+
+    const RESULTS: &str = "England,France,4,2
+    France,Italy,3,1
+    Poland,Spain,2,0
+    Germany,England,2,1
+    England,Spain,1,0";
+
+    let mut scores = HashMap::<&str, TeamScores>::new();
+
+    scores.entry("test").or_default();
+     scores.entry("test2").and_modify(|a| { a.goals_conceded += 1; });
+    print!("{scores:?}")
+   
 }
 
 #[cfg(test)]

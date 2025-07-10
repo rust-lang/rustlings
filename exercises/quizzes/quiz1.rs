@@ -16,6 +16,13 @@ fn main() {
     // You can optionally experiment here.
 }
 
+fn calculate_price_of_apples(cant:u32)->u32{
+    if cant>40{
+        return cant;
+    }
+    cant*2
+}
+
 // Don't change the tests!
 #[cfg(test)]
 mod tests {
