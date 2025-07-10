@@ -1,5 +1,0 @@
-zola:
-	zola serve --open
-
-tailwind:
-	npx @tailwindcss/cli -w -i input.css -o static/main.css

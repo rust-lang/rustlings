@@ -1,7 +1,0 @@
-[default.extend-words]
-"earch" = "earch" # Because of <s>earch in the list footer
-
-[files]
-extend-exclude = [
-  "CHANGELOG.md",
-]

@@ -60,11 +60,9 @@ England,Spain,1,0";
     fn build_scores() {
         let scores = build_scores_table(RESULTS);
 
-        assert!(
-            ["England", "France", "Germany", "Italy", "Poland", "Spain"]
-                .into_iter()
-                .all(|team_name| scores.contains_key(team_name))
-        );
+        assert!(["England", "France", "Germany", "Italy", "Poland", "Spain"]
+            .into_iter()
+            .all(|team_name| scores.contains_key(team_name)));
     }
 
     #[test]

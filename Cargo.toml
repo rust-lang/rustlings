@@ -1,65 +1,199 @@
-[workspace]
-resolver = "2"
-exclude = [
-  "tests/test_exercises",
-  "dev",
+bin = [
+  { name = "intro1", path = "exercises/00_intro/intro1.rs" },
+  { name = "intro1_sol", path = "solutions/00_intro/intro1.rs" },
+  { name = "intro2", path = "exercises/00_intro/intro2.rs" },
+  { name = "intro2_sol", path = "solutions/00_intro/intro2.rs" },
+  { name = "variables1", path = "exercises/01_variables/variables1.rs" },
+  { name = "variables1_sol", path = "solutions/01_variables/variables1.rs" },
+  { name = "variables2", path = "exercises/01_variables/variables2.rs" },
+  { name = "variables2_sol", path = "solutions/01_variables/variables2.rs" },
+  { name = "variables3", path = "exercises/01_variables/variables3.rs" },
+  { name = "variables3_sol", path = "solutions/01_variables/variables3.rs" },
+  { name = "variables4", path = "exercises/01_variables/variables4.rs" },
+  { name = "variables4_sol", path = "solutions/01_variables/variables4.rs" },
+  { name = "variables5", path = "exercises/01_variables/variables5.rs" },
+  { name = "variables5_sol", path = "solutions/01_variables/variables5.rs" },
+  { name = "variables6", path = "exercises/01_variables/variables6.rs" },
+  { name = "variables6_sol", path = "solutions/01_variables/variables6.rs" },
+  { name = "functions1", path = "exercises/02_functions/functions1.rs" },
+  { name = "functions1_sol", path = "solutions/02_functions/functions1.rs" },
+  { name = "functions2", path = "exercises/02_functions/functions2.rs" },
+  { name = "functions2_sol", path = "solutions/02_functions/functions2.rs" },
+  { name = "functions3", path = "exercises/02_functions/functions3.rs" },
+  { name = "functions3_sol", path = "solutions/02_functions/functions3.rs" },
+  { name = "functions4", path = "exercises/02_functions/functions4.rs" },
+  { name = "functions4_sol", path = "solutions/02_functions/functions4.rs" },
+  { name = "functions5", path = "exercises/02_functions/functions5.rs" },
+  { name = "functions5_sol", path = "solutions/02_functions/functions5.rs" },
+  { name = "if1", path = "exercises/03_if/if1.rs" },
+  { name = "if1_sol", path = "solutions/03_if/if1.rs" },
+  { name = "if2", path = "exercises/03_if/if2.rs" },
+  { name = "if2_sol", path = "solutions/03_if/if2.rs" },
+  { name = "if3", path = "exercises/03_if/if3.rs" },
+  { name = "if3_sol", path = "solutions/03_if/if3.rs" },
+  { name = "quiz1", path = "exercises/quizzes/quiz1.rs" },
+  { name = "quiz1_sol", path = "solutions/quizzes/quiz1.rs" },
+  { name = "primitive_types1", path = "exercises/04_primitive_types/primitive_types1.rs" },
+  { name = "primitive_types1_sol", path = "solutions/04_primitive_types/primitive_types1.rs" },
+  { name = "primitive_types2", path = "exercises/04_primitive_types/primitive_types2.rs" },
+  { name = "primitive_types2_sol", path = "solutions/04_primitive_types/primitive_types2.rs" },
+  { name = "primitive_types3", path = "exercises/04_primitive_types/primitive_types3.rs" },
+  { name = "primitive_types3_sol", path = "solutions/04_primitive_types/primitive_types3.rs" },
+  { name = "primitive_types4", path = "exercises/04_primitive_types/primitive_types4.rs" },
+  { name = "primitive_types4_sol", path = "solutions/04_primitive_types/primitive_types4.rs" },
+  { name = "primitive_types5", path = "exercises/04_primitive_types/primitive_types5.rs" },
+  { name = "primitive_types5_sol", path = "solutions/04_primitive_types/primitive_types5.rs" },
+  { name = "primitive_types6", path = "exercises/04_primitive_types/primitive_types6.rs" },
+  { name = "primitive_types6_sol", path = "solutions/04_primitive_types/primitive_types6.rs" },
+  { name = "vecs1", path = "exercises/05_vecs/vecs1.rs" },
+  { name = "vecs1_sol", path = "solutions/05_vecs/vecs1.rs" },
+  { name = "vecs2", path = "exercises/05_vecs/vecs2.rs" },
+  { name = "vecs2_sol", path = "solutions/05_vecs/vecs2.rs" },
+  { name = "move_semantics1", path = "exercises/06_move_semantics/move_semantics1.rs" },
+  { name = "move_semantics1_sol", path = "solutions/06_move_semantics/move_semantics1.rs" },
+  { name = "move_semantics2", path = "exercises/06_move_semantics/move_semantics2.rs" },
+  { name = "move_semantics2_sol", path = "solutions/06_move_semantics/move_semantics2.rs" },
+  { name = "move_semantics3", path = "exercises/06_move_semantics/move_semantics3.rs" },
+  { name = "move_semantics3_sol", path = "solutions/06_move_semantics/move_semantics3.rs" },
+  { name = "move_semantics4", path = "exercises/06_move_semantics/move_semantics4.rs" },
+  { name = "move_semantics4_sol", path = "solutions/06_move_semantics/move_semantics4.rs" },
+  { name = "move_semantics5", path = "exercises/06_move_semantics/move_semantics5.rs" },
+  { name = "move_semantics5_sol", path = "solutions/06_move_semantics/move_semantics5.rs" },
+  { name = "structs1", path = "exercises/07_structs/structs1.rs" },
+  { name = "structs1_sol", path = "solutions/07_structs/structs1.rs" },
+  { name = "structs2", path = "exercises/07_structs/structs2.rs" },
+  { name = "structs2_sol", path = "solutions/07_structs/structs2.rs" },
+  { name = "structs3", path = "exercises/07_structs/structs3.rs" },
+  { name = "structs3_sol", path = "solutions/07_structs/structs3.rs" },
+  { name = "enums1", path = "exercises/08_enums/enums1.rs" },
+  { name = "enums1_sol", path = "solutions/08_enums/enums1.rs" },
+  { name = "enums2", path = "exercises/08_enums/enums2.rs" },
+  { name = "enums2_sol", path = "solutions/08_enums/enums2.rs" },
+  { name = "enums3", path = "exercises/08_enums/enums3.rs" },
+  { name = "enums3_sol", path = "solutions/08_enums/enums3.rs" },
+  { name = "strings1", path = "exercises/09_strings/strings1.rs" },
+  { name = "strings1_sol", path = "solutions/09_strings/strings1.rs" },
+  { name = "strings2", path = "exercises/09_strings/strings2.rs" },
+  { name = "strings2_sol", path = "solutions/09_strings/strings2.rs" },
+  { name = "strings3", path = "exercises/09_strings/strings3.rs" },
+  { name = "strings3_sol", path = "solutions/09_strings/strings3.rs" },
+  { name = "strings4", path = "exercises/09_strings/strings4.rs" },
+  { name = "strings4_sol", path = "solutions/09_strings/strings4.rs" },
+  { name = "modules1", path = "exercises/10_modules/modules1.rs" },
+  { name = "modules1_sol", path = "solutions/10_modules/modules1.rs" },
+  { name = "modules2", path = "exercises/10_modules/modules2.rs" },
+  { name = "modules2_sol", path = "solutions/10_modules/modules2.rs" },
+  { name = "modules3", path = "exercises/10_modules/modules3.rs" },
+  { name = "modules3_sol", path = "solutions/10_modules/modules3.rs" },
+  { name = "hashmaps1", path = "exercises/11_hashmaps/hashmaps1.rs" },
+  { name = "hashmaps1_sol", path = "solutions/11_hashmaps/hashmaps1.rs" },
+  { name = "hashmaps2", path = "exercises/11_hashmaps/hashmaps2.rs" },
+  { name = "hashmaps2_sol", path = "solutions/11_hashmaps/hashmaps2.rs" },
+  { name = "hashmaps3", path = "exercises/11_hashmaps/hashmaps3.rs" },
+  { name = "hashmaps3_sol", path = "solutions/11_hashmaps/hashmaps3.rs" },
+  { name = "quiz2", path = "exercises/quizzes/quiz2.rs" },
+  { name = "quiz2_sol", path = "solutions/quizzes/quiz2.rs" },
+  { name = "options1", path = "exercises/12_options/options1.rs" },
+  { name = "options1_sol", path = "solutions/12_options/options1.rs" },
+  { name = "options2", path = "exercises/12_options/options2.rs" },
+  { name = "options2_sol", path = "solutions/12_options/options2.rs" },
+  { name = "options3", path = "exercises/12_options/options3.rs" },
+  { name = "options3_sol", path = "solutions/12_options/options3.rs" },
+  { name = "errors1", path = "exercises/13_error_handling/errors1.rs" },
+  { name = "errors1_sol", path = "solutions/13_error_handling/errors1.rs" },
+  { name = "errors2", path = "exercises/13_error_handling/errors2.rs" },
+  { name = "errors2_sol", path = "solutions/13_error_handling/errors2.rs" },
+  { name = "errors3", path = "exercises/13_error_handling/errors3.rs" },
+  { name = "errors3_sol", path = "solutions/13_error_handling/errors3.rs" },
+  { name = "errors4", path = "exercises/13_error_handling/errors4.rs" },
+  { name = "errors4_sol", path = "solutions/13_error_handling/errors4.rs" },
+  { name = "errors5", path = "exercises/13_error_handling/errors5.rs" },
+  { name = "errors5_sol", path = "solutions/13_error_handling/errors5.rs" },
+  { name = "errors6", path = "exercises/13_error_handling/errors6.rs" },
+  { name = "errors6_sol", path = "solutions/13_error_handling/errors6.rs" },
+  { name = "generics1", path = "exercises/14_generics/generics1.rs" },
+  { name = "generics1_sol", path = "solutions/14_generics/generics1.rs" },
+  { name = "generics2", path = "exercises/14_generics/generics2.rs" },
+  { name = "generics2_sol", path = "solutions/14_generics/generics2.rs" },
+  { name = "traits1", path = "exercises/15_traits/traits1.rs" },
+  { name = "traits1_sol", path = "solutions/15_traits/traits1.rs" },
+  { name = "traits2", path = "exercises/15_traits/traits2.rs" },
+  { name = "traits2_sol", path = "solutions/15_traits/traits2.rs" },
+  { name = "traits3", path = "exercises/15_traits/traits3.rs" },
+  { name = "traits3_sol", path = "solutions/15_traits/traits3.rs" },
+  { name = "traits4", path = "exercises/15_traits/traits4.rs" },
+  { name = "traits4_sol", path = "solutions/15_traits/traits4.rs" },
+  { name = "traits5", path = "exercises/15_traits/traits5.rs" },
+  { name = "traits5_sol", path = "solutions/15_traits/traits5.rs" },
+  { name = "quiz3", path = "exercises/quizzes/quiz3.rs" },
+  { name = "quiz3_sol", path = "solutions/quizzes/quiz3.rs" },
+  { name = "lifetimes1", path = "exercises/16_lifetimes/lifetimes1.rs" },
+  { name = "lifetimes1_sol", path = "solutions/16_lifetimes/lifetimes1.rs" },
+  { name = "lifetimes2", path = "exercises/16_lifetimes/lifetimes2.rs" },
+  { name = "lifetimes2_sol", path = "solutions/16_lifetimes/lifetimes2.rs" },
+  { name = "lifetimes3", path = "exercises/16_lifetimes/lifetimes3.rs" },
+  { name = "lifetimes3_sol", path = "solutions/16_lifetimes/lifetimes3.rs" },
+  { name = "tests1", path = "exercises/17_tests/tests1.rs" },
+  { name = "tests1_sol", path = "solutions/17_tests/tests1.rs" },
+  { name = "tests2", path = "exercises/17_tests/tests2.rs" },
+  { name = "tests2_sol", path = "solutions/17_tests/tests2.rs" },
+  { name = "tests3", path = "exercises/17_tests/tests3.rs" },
+  { name = "tests3_sol", path = "solutions/17_tests/tests3.rs" },
+  { name = "iterators1", path = "exercises/18_iterators/iterators1.rs" },
+  { name = "iterators1_sol", path = "solutions/18_iterators/iterators1.rs" },
+  { name = "iterators2", path = "exercises/18_iterators/iterators2.rs" },
+  { name = "iterators2_sol", path = "solutions/18_iterators/iterators2.rs" },
+  { name = "iterators3", path = "exercises/18_iterators/iterators3.rs" },
+  { name = "iterators3_sol", path = "solutions/18_iterators/iterators3.rs" },
+  { name = "iterators4", path = "exercises/18_iterators/iterators4.rs" },
+  { name = "iterators4_sol", path = "solutions/18_iterators/iterators4.rs" },
+  { name = "iterators5", path = "exercises/18_iterators/iterators5.rs" },
+  { name = "iterators5_sol", path = "solutions/18_iterators/iterators5.rs" },
+  { name = "box1", path = "exercises/19_smart_pointers/box1.rs" },
+  { name = "box1_sol", path = "solutions/19_smart_pointers/box1.rs" },
+  { name = "rc1", path = "exercises/19_smart_pointers/rc1.rs" },
+  { name = "rc1_sol", path = "solutions/19_smart_pointers/rc1.rs" },
+  { name = "arc1", path = "exercises/19_smart_pointers/arc1.rs" },
+  { name = "arc1_sol", path = "solutions/19_smart_pointers/arc1.rs" },
+  { name = "cow1", path = "exercises/19_smart_pointers/cow1.rs" },
+  { name = "cow1_sol", path = "solutions/19_smart_pointers/cow1.rs" },
+  { name = "threads1", path = "exercises/20_threads/threads1.rs" },
+  { name = "threads1_sol", path = "solutions/20_threads/threads1.rs" },
+  { name = "threads2", path = "exercises/20_threads/threads2.rs" },
+  { name = "threads2_sol", path = "solutions/20_threads/threads2.rs" },
+  { name = "threads3", path = "exercises/20_threads/threads3.rs" },
+  { name = "threads3_sol", path = "solutions/20_threads/threads3.rs" },
+  { name = "macros1", path = "exercises/21_macros/macros1.rs" },
+  { name = "macros1_sol", path = "solutions/21_macros/macros1.rs" },
+  { name = "macros2", path = "exercises/21_macros/macros2.rs" },
+  { name = "macros2_sol", path = "solutions/21_macros/macros2.rs" },
+  { name = "macros3", path = "exercises/21_macros/macros3.rs" },
+  { name = "macros3_sol", path = "solutions/21_macros/macros3.rs" },
+  { name = "macros4", path = "exercises/21_macros/macros4.rs" },
+  { name = "macros4_sol", path = "solutions/21_macros/macros4.rs" },
+  { name = "clippy1", path = "exercises/22_clippy/clippy1.rs" },
+  { name = "clippy1_sol", path = "solutions/22_clippy/clippy1.rs" },
+  { name = "clippy2", path = "exercises/22_clippy/clippy2.rs" },
+  { name = "clippy2_sol", path = "solutions/22_clippy/clippy2.rs" },
+  { name = "clippy3", path = "exercises/22_clippy/clippy3.rs" },
+  { name = "clippy3_sol", path = "solutions/22_clippy/clippy3.rs" },
+  { name = "using_as", path = "exercises/23_conversions/using_as.rs" },
+  { name = "using_as_sol", path = "solutions/23_conversions/using_as.rs" },
+  { name = "from_into", path = "exercises/23_conversions/from_into.rs" },
+  { name = "from_into_sol", path = "solutions/23_conversions/from_into.rs" },
+  { name = "from_str", path = "exercises/23_conversions/from_str.rs" },
+  { name = "from_str_sol", path = "solutions/23_conversions/from_str.rs" },
+  { name = "try_from_into", path = "exercises/23_conversions/try_from_into.rs" },
+  { name = "try_from_into_sol", path = "solutions/23_conversions/try_from_into.rs" },
+  { name = "as_ref_mut", path = "exercises/23_conversions/as_ref_mut.rs" },
+  { name = "as_ref_mut_sol", path = "solutions/23_conversions/as_ref_mut.rs" },
 ]
-
-[workspace.package]
-version = "6.4.0"
-authors = [
-  "Mo Bitar <mo8it@proton.me>", # https://github.com/mo8it
-  "Liv <mokou@fastmail.com>", # https://github.com/shadows-withal
-  # Alumni
-  "Carol (Nichols || Goulding) <carol.nichols@gmail.com>", # https://github.com/carols10cents
-]
-repository = "https://github.com/rust-lang/rustlings"
-license = "MIT"
-edition = "2024" # On Update: Update the edition of `rustfmt` in `dev check` and `CARGO_TOML` in `dev new`.
-rust-version = "1.87"
-
-[workspace.dependencies]
-serde = { version = "1.0", features = ["derive"] }
-toml_edit = { version = "0.22", default-features = false, features = ["parse", "serde"] }
 
 [package]
-name = "rustlings"
-description = "Small exercises to get you used to reading and writing Rust code!"
-version.workspace = true
-authors.workspace = true
-repository.workspace = true
-license.workspace = true
-edition.workspace = true
-rust-version.workspace = true
-keywords = [
-  "exercise",
-  "learning",
-]
-include = [
-  "/src/",
-  "/exercises/",
-  "/solutions/",
-  # A symlink to be able to include `dev/Cargo.toml` although `dev` is excluded.
-  "/dev-Cargo.toml",
-  "/README.md",
-  "/LICENSE",
-]
-
-[dependencies]
-anyhow = "1.0"
-clap = { version = "4.5", features = ["derive"] }
-crossterm = { version = "0.29", default-features = false, features = ["windows", "events"] }
-notify = "8.0"
-rustlings-macros = { path = "rustlings-macros", version = "=6.4.0" }
-serde_json = "1.0"
-serde.workspace = true
-toml_edit.workspace = true
-
-[target.'cfg(not(windows))'.dependencies]
-rustix = { version = "1.0", default-features = false, features = ["std", "stdio", "termios"] }
-
-[dev-dependencies]
-tempfile = "3.19"
+name = "exercises"
+edition = "2021"
+# Don't publish the exercises on crates.io!
+publish = false
 
 [profile.release]
 panic = "abort"
@@ -67,22 +201,22 @@ panic = "abort"
 [profile.dev]
 panic = "abort"
 
-[package.metadata.release]
-pre-release-hook = ["./release-hook.sh"]
-pre-release-commit-message = "Release 🎉"
-
-[workspace.lints.rust]
+[lints.rust]
+# You shouldn't write unsafe code in Rustlings!
 unsafe_code = "forbid"
+# You don't need unstable features in Rustlings and shouldn't rely on them while learning Rust.
 unstable_features = "forbid"
+# Dead code warnings can't be avoided in some exercises and might distract while learning.
+dead_code = "allow"
 
-[workspace.lints.clippy]
+[lints.clippy]
+# You forgot a `todo!()`!
+todo = "forbid"
+# This can only happen by mistake in Rustlings.
 empty_loop = "forbid"
-disallowed-types = "deny"
-disallowed-methods = "deny"
+# No infinite loops are needed in Rustlings.
 infinite_loop = "deny"
+# You shouldn't leak memory while still learning Rust!
 mem_forget = "deny"
-dbg_macro = "warn"
-todo = "warn"
-
-[lints]
-workspace = true
+# Currently, there are no disallowed methods. This line avoids problems when developing Rustlings.
+disallowed_methods = "allow"

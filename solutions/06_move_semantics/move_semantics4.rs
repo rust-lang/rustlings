@@ -4,6 +4,8 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
+    // TODO: Fix the compiler errors only by reordering the lines in the test.
+    // Don't add, change or remove any line.
     #[test]
     fn move_semantics4() {
         let mut x = Vec::new();

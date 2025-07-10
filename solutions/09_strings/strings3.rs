@@ -26,7 +26,6 @@ mod tests {
         assert_eq!(trim_me("Hello!     "), "Hello!");
         assert_eq!(trim_me("  What's up!"), "What's up!");
         assert_eq!(trim_me("   Hola!  "), "Hola!");
-        assert_eq!(trim_me("Hi!"), "Hi!");
     }
 
     #[test]

@@ -62,8 +62,8 @@ mod tests {
     // Import `transformer`.
     use super::my_module::transformer;
 
-    use super::Command;
     use super::my_module::transformer_iter;
+    use super::Command;
 
     #[test]
     fn it_works() {
