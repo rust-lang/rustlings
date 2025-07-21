@@ -39,6 +39,8 @@ mod tests {
     #[test]
     fn test_success() {
         assert_eq!(divide(81, 9), Ok(9));
+        assert_eq!(divide(81, -1), Ok(-81));
+        assert_eq!(divide(i64::MIN, i64::MIN), Ok(1));
     }
 
     #[test]
