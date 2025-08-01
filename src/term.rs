@@ -5,7 +5,7 @@ use crossterm::{
     terminal::{Clear, ClearType},
 };
 use std::{
-    fmt, fs,
+    env, fmt, fs,
     io::{self, BufRead, StdoutLock, Write},
 };
 
@@ -282,7 +282,13 @@ pub fn terminal_file_link<'a>(
         .stdout()
         .queue(SetForegroundColor(color))?
         .queue(SetAttribute(Attribute::Underlined))?;
-    writer.stdout().write_all(b"\x1b]8;;file://")?;
+    let protocol = if env::var("TERM_PROGRAM") == Ok("vscode".to_string()) {
+        "vscode://file"
+    } else {
+        "file://"
+    };
+    writer.stdout().write_all(b"\x1b]8;;")?;
+    writer.stdout().write_all(protocol.as_bytes())?;
     writer.stdout().write_all(canonical_path.as_bytes())?;
     writer.stdout().write_all(b"\x1b\\")?;
     // Only this part is visible.
