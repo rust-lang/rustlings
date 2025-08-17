@@ -4,11 +4,11 @@
 // not own their own data. What if their owner goes out of scope?
 
 // TODO: Fix the compiler error by updating the function signature.
-fn longest(x: &str, y: &str) -> &str {
+fn longest(x: &str, y: &str) -> String {
     if x.len() > y.len() {
-        x
+        x.to_string()
     } else {
-        y
+        y.to_string()
     }
 }
 
