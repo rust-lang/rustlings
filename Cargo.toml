@@ -1,5 +1,4 @@
 [workspace]
-resolver = "2"
 exclude = [
   "tests/test_exercises",
   "dev",
@@ -20,7 +19,7 @@ rust-version = "1.87"
 
 [workspace.dependencies]
 serde = { version = "1.0", features = ["derive"] }
-toml_edit = { version = "0.22", default-features = false, features = ["parse", "serde"] }
+toml = { version = "0.9", default-features = false, features = ["std", "parse", "serde"] }
 
 [package]
 name = "rustlings"
@@ -53,7 +52,7 @@ notify = "8.0"
 rustlings-macros = { path = "rustlings-macros", version = "=6.4.0" }
 serde_json = "1.0"
 serde.workspace = true
-toml_edit.workspace = true
+toml.workspace = true
 
 [target.'cfg(not(windows))'.dependencies]
 rustix = { version = "1.0", default-features = false, features = ["std", "stdio", "termios"] }

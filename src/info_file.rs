@@ -95,11 +95,11 @@ impl InfoFile {
     pub fn parse() -> Result<Self> {
         // Read a local `info.toml` if it exists.
         let slf = match fs::read_to_string("info.toml") {
-            Ok(file_content) => toml_edit::de::from_str::<Self>(&file_content)
+            Ok(file_content) => toml::de::from_str::<Self>(&file_content)
                 .context("Failed to parse the `info.toml` file")?,
             Err(e) => {
                 if e.kind() == ErrorKind::NotFound {
-                    return toml_edit::de::from_str(EMBEDDED_FILES.info_file)
+                    return toml::de::from_str(EMBEDDED_FILES.info_file)
                         .context("Failed to parse the embedded `info.toml` file");
                 }
 
