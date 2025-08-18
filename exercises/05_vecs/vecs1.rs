@@ -1,9 +1,13 @@
 fn array_and_vec() -> ([i32; 4], Vec<i32>) {
-    let a = [10, 20, 30, 40]; // Array
+    // You can define an array with the intitial values 10, 20, 30 and 40 like
+    // this:
+    let a = [10, 20, 30, 40]; // Array. Do not change!
 
-    // TODO: Create a vector called `v` which contains the exact same elements as in the array `a`.
-    // Use the vector macro.
-    // let v = ???;
+    // There is a similar way you can define a vector with initial values:
+    // let v = vec![10, 20, ???]; // Vector. Needs to be fixed
+
+    // TODO: Adjust the vector definition above so that `a` and `v` have the
+    // same contents.
 
     (a, v)
 }
