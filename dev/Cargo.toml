@@ -164,30 +164,34 @@ bin = [
   { name = "threads2_sol", path = "../solutions/20_threads/threads2.rs" },
   { name = "threads3", path = "../exercises/20_threads/threads3.rs" },
   { name = "threads3_sol", path = "../solutions/20_threads/threads3.rs" },
-  { name = "macros1", path = "../exercises/21_macros/macros1.rs" },
-  { name = "macros1_sol", path = "../solutions/21_macros/macros1.rs" },
-  { name = "macros2", path = "../exercises/21_macros/macros2.rs" },
-  { name = "macros2_sol", path = "../solutions/21_macros/macros2.rs" },
-  { name = "macros3", path = "../exercises/21_macros/macros3.rs" },
-  { name = "macros3_sol", path = "../solutions/21_macros/macros3.rs" },
-  { name = "macros4", path = "../exercises/21_macros/macros4.rs" },
-  { name = "macros4_sol", path = "../solutions/21_macros/macros4.rs" },
-  { name = "clippy1", path = "../exercises/22_clippy/clippy1.rs" },
-  { name = "clippy1_sol", path = "../solutions/22_clippy/clippy1.rs" },
-  { name = "clippy2", path = "../exercises/22_clippy/clippy2.rs" },
-  { name = "clippy2_sol", path = "../solutions/22_clippy/clippy2.rs" },
-  { name = "clippy3", path = "../exercises/22_clippy/clippy3.rs" },
-  { name = "clippy3_sol", path = "../solutions/22_clippy/clippy3.rs" },
-  { name = "using_as", path = "../exercises/23_conversions/using_as.rs" },
-  { name = "using_as_sol", path = "../solutions/23_conversions/using_as.rs" },
-  { name = "from_into", path = "../exercises/23_conversions/from_into.rs" },
-  { name = "from_into_sol", path = "../solutions/23_conversions/from_into.rs" },
-  { name = "from_str", path = "../exercises/23_conversions/from_str.rs" },
-  { name = "from_str_sol", path = "../solutions/23_conversions/from_str.rs" },
-  { name = "try_from_into", path = "../exercises/23_conversions/try_from_into.rs" },
-  { name = "try_from_into_sol", path = "../solutions/23_conversions/try_from_into.rs" },
-  { name = "as_ref_mut", path = "../exercises/23_conversions/as_ref_mut.rs" },
-  { name = "as_ref_mut_sol", path = "../solutions/23_conversions/as_ref_mut.rs" },
+  { name = "async1", path = "../exercises/21_async/async1.rs" },
+  { name = "async1_sol", path = "../solutions/21_async/async1.rs" },
+  { name = "async2", path = "../exercises/21_async/async2.rs" },
+  { name = "async2_sol", path = "../solutions/21_async/async2.rs" },
+  { name = "macros1", path = "../exercises/22_macros/macros1.rs" },
+  { name = "macros1_sol", path = "../solutions/22_macros/macros1.rs" },
+  { name = "macros2", path = "../exercises/22_macros/macros2.rs" },
+  { name = "macros2_sol", path = "../solutions/22_macros/macros2.rs" },
+  { name = "macros3", path = "../exercises/22_macros/macros3.rs" },
+  { name = "macros3_sol", path = "../solutions/22_macros/macros3.rs" },
+  { name = "macros4", path = "../exercises/22_macros/macros4.rs" },
+  { name = "macros4_sol", path = "../solutions/22_macros/macros4.rs" },
+  { name = "clippy1", path = "../exercises/23_clippy/clippy1.rs" },
+  { name = "clippy1_sol", path = "../solutions/23_clippy/clippy1.rs" },
+  { name = "clippy2", path = "../exercises/23_clippy/clippy2.rs" },
+  { name = "clippy2_sol", path = "../solutions/23_clippy/clippy2.rs" },
+  { name = "clippy3", path = "../exercises/23_clippy/clippy3.rs" },
+  { name = "clippy3_sol", path = "../solutions/23_clippy/clippy3.rs" },
+  { name = "using_as", path = "../exercises/24_conversions/using_as.rs" },
+  { name = "using_as_sol", path = "../solutions/24_conversions/using_as.rs" },
+  { name = "from_into", path = "../exercises/24_conversions/from_into.rs" },
+  { name = "from_into_sol", path = "../solutions/24_conversions/from_into.rs" },
+  { name = "from_str", path = "../exercises/24_conversions/from_str.rs" },
+  { name = "from_str_sol", path = "../solutions/24_conversions/from_str.rs" },
+  { name = "try_from_into", path = "../exercises/24_conversions/try_from_into.rs" },
+  { name = "try_from_into_sol", path = "../solutions/24_conversions/try_from_into.rs" },
+  { name = "as_ref_mut", path = "../exercises/24_conversions/as_ref_mut.rs" },
+  { name = "as_ref_mut_sol", path = "../solutions/24_conversions/as_ref_mut.rs" },
 ]
 
 [package]
@@ -195,6 +199,9 @@ name = "exercises"
 edition = "2024"
 # Don't publish the exercises on crates.io!
 publish = false
+
+[dependencies]
+tokio = { version = "1.45.0", features = ["rt-multi-thread", "macros"] }
 
 [profile.release]
 panic = "abort"
