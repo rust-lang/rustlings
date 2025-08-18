@@ -2,6 +2,8 @@ fn animal_habitat(animal: &str) -> &str {
     let identifier = if animal == "crab" {
         1
     } else if animal == "gopher" {
+        // all branches of an if expression must return the same type
+        // so we change from f64 to i32
         2
     } else if animal == "snake" {
         3
