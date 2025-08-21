@@ -20,10 +20,10 @@ struct ExerciseFiles {
 }
 
 fn create_dir_if_not_exists(path: &str) -> Result<()> {
-    if let Err(e) = create_dir(path) {
-        if e.kind() != io::ErrorKind::AlreadyExists {
-            return Err(Error::from(e).context(format!("Failed to create the directory {path}")));
-        }
+    if let Err(e) = create_dir(path)
+        && e.kind() != io::ErrorKind::AlreadyExists
+    {
+        return Err(Error::from(e).context(format!("Failed to create the directory {path}")));
     }
 
     Ok(())

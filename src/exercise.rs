@@ -48,17 +48,17 @@ fn run_bin(
 
     let success = cmd_runner.run_debug_bin(bin_name, output.as_deref_mut())?;
 
-    if let Some(output) = output {
-        if !success {
-            // This output is important to show the user that something went wrong.
-            // Otherwise, calling something like `exit(1)` in an exercise without further output
-            // leaves the user confused about why the exercise isn't done yet.
-            write_ansi(output, SetAttribute(Attribute::Bold));
-            write_ansi(output, SetForegroundColor(Color::Red));
-            output.extend_from_slice(b"The exercise didn't run successfully (nonzero exit code)");
-            write_ansi(output, ResetColor);
-            output.push(b'\n');
-        }
+    if let Some(output) = output
+        && !success
+    {
+        // This output is important to show the user that something went wrong.
+        // Otherwise, calling something like `exit(1)` in an exercise without further output
+        // leaves the user confused about why the exercise isn't done yet.
+        write_ansi(output, SetAttribute(Attribute::Bold));
+        write_ansi(output, SetForegroundColor(Color::Red));
+        output.extend_from_slice(b"The exercise didn't run successfully (nonzero exit code)");
+        write_ansi(output, ResetColor);
+        output.push(b'\n');
     }
 
     Ok(success)
