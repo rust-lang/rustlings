@@ -9,7 +9,7 @@
 ### Changed
 
 - Upgrade to Rust edition 2024
-- Raise the minimum supported Rust version to `1.87`
+- Raise the minimum supported Rust version to `1.88`
 - Don't follow symlinks in the file watcher
 - `dev new`: Don't add `.rustlings-state.txt` to `.gitignore`
 

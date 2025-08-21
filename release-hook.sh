@@ -13,4 +13,4 @@ cargo test --workspace
 cargo dev check --require-solutions
 
 # MSRV
-cargo +1.87 dev check --require-solutions
+cargo +1.88 dev check --require-solutions
