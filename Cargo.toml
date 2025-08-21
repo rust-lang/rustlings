@@ -58,7 +58,7 @@ toml.workspace = true
 rustix = { version = "1.0", default-features = false, features = ["std", "stdio", "termios"] }
 
 [dev-dependencies]
-tempfile = "3.19"
+tempfile = "3.21"
 
 [profile.release]
 panic = "abort"

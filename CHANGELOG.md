@@ -1,9 +1,23 @@
 ## Unreleased
 
+## 6.5.0 (2025-08-21)
+
+### Added
+
+- Check that Clippy is installed before initialization
+
 ### Changed
 
 - Upgrade to Rust edition 2024
 - Raise the minimum supported Rust version to `1.87`
+- Don't follow symlinks in the file watcher
+- `dev new`: Don't add `.rustlings-state.txt` to `.gitignore`
+
+### Fixed
+
+- Fix file links in VS Code
+- Fix error printing when the progress bar is shown
+- `dev check`: Don't check formatting if there are no solution files
 
 ## 6.4.0 (2024-11-11)
 
