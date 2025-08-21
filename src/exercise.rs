@@ -7,22 +7,28 @@ use std::io::{self, StdoutLock, Write};
 
 use crate::{
     cmd::CmdRunner,
-    term::{self, CountedWrite, terminal_file_link, write_ansi},
+    term::{self, CountedWrite, file_path, terminal_file_link, write_ansi},
 };
 
 /// The initial capacity of the output buffer.
 pub const OUTPUT_CAPACITY: usize = 1 << 14;
 
-pub fn solution_link_line(stdout: &mut StdoutLock, solution_path: &str) -> io::Result<()> {
+pub fn solution_link_line(
+    stdout: &mut StdoutLock,
+    solution_path: &str,
+    emit_file_links: bool,
+) -> io::Result<()> {
     stdout.queue(SetAttribute(Attribute::Bold))?;
     stdout.write_all(b"Solution")?;
     stdout.queue(ResetColor)?;
     stdout.write_all(b" for comparison: ")?;
-    if let Some(canonical_path) = term::canonicalize(solution_path) {
-        terminal_file_link(stdout, solution_path, &canonical_path, Color::Cyan)?;
-    } else {
-        stdout.write_all(solution_path.as_bytes())?;
-    }
+    file_path(stdout, Color::Cyan, |writer| {
+        if emit_file_links && let Some(canonical_path) = term::canonicalize(solution_path) {
+            terminal_file_link(writer, solution_path, &canonical_path)
+        } else {
+            writer.stdout().write_all(solution_path.as_bytes())
+        }
+    })?;
     stdout.write_all(b"\n")
 }
 
@@ -72,12 +78,18 @@ pub struct Exercise {
 }
 
 impl Exercise {
-    pub fn terminal_file_link<'a>(&self, writer: &mut impl CountedWrite<'a>) -> io::Result<()> {
-        if let Some(canonical_path) = self.canonical_path.as_deref() {
-            return terminal_file_link(writer, self.path, canonical_path, Color::Blue);
-        }
-
-        writer.write_str(self.path)
+    pub fn terminal_file_link<'a>(
+        &self,
+        writer: &mut impl CountedWrite<'a>,
+        emit_file_links: bool,
+    ) -> io::Result<()> {
+        file_path(writer, Color::Blue, |writer| {
+            if emit_file_links && let Some(canonical_path) = self.canonical_path.as_deref() {
+                terminal_file_link(writer, self.path, canonical_path)
+            } else {
+                writer.write_str(self.path)
+            }
+        })
     }
 }
 

@@ -27,7 +27,7 @@ pub fn run(app_state: &mut AppState) -> Result<ExitCode> {
         stdout.write_all(b"Ran ")?;
         app_state
             .current_exercise()
-            .terminal_file_link(&mut stdout)?;
+            .terminal_file_link(&mut stdout, app_state.emit_file_links())?;
         stdout.write_all(b" with errors\n")?;
 
         return Ok(ExitCode::FAILURE);
@@ -41,7 +41,7 @@ pub fn run(app_state: &mut AppState) -> Result<ExitCode> {
 
     if let Some(solution_path) = app_state.current_solution_path()? {
         stdout.write_all(b"\n")?;
-        solution_link_line(&mut stdout, &solution_path)?;
+        solution_link_line(&mut stdout, &solution_path, app_state.emit_file_links())?;
         stdout.write_all(b"\n")?;
     }
 
@@ -50,7 +50,7 @@ pub fn run(app_state: &mut AppState) -> Result<ExitCode> {
             stdout.write_all(b"Next exercise: ")?;
             app_state
                 .current_exercise()
-                .terminal_file_link(&mut stdout)?;
+                .terminal_file_link(&mut stdout, app_state.emit_file_links())?;
             stdout.write_all(b"\n")?;
         }
         ExercisesProgress::AllDone => (),

@@ -233,7 +233,7 @@ impl<'a> WatchState<'a> {
             stdout.write_all(b"\n")?;
 
             if let DoneStatus::DoneWithSolution(solution_path) = &self.done_status {
-                solution_link_line(stdout, solution_path)?;
+                solution_link_line(stdout, solution_path, self.app_state.emit_file_links())?;
             }
 
             stdout.write_all(
@@ -252,7 +252,7 @@ impl<'a> WatchState<'a> {
         stdout.write_all(b"\nCurrent exercise: ")?;
         self.app_state
             .current_exercise()
-            .terminal_file_link(stdout)?;
+            .terminal_file_link(stdout, self.app_state.emit_file_links())?;
         stdout.write_all(b"\n\n")?;
 
         self.show_prompt(stdout)?;

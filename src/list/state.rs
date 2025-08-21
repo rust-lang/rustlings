@@ -186,13 +186,7 @@ impl<'a> ListState<'a> {
 
             writer.write_ascii(&self.name_col_padding[exercise.name.len()..])?;
 
-            // The list links aren't shown correctly in VS Code on Windows.
-            // But VS Code shows its own links anyway.
-            if self.app_state.vs_code() {
-                writer.write_str(exercise.path)?;
-            } else {
-                exercise.terminal_file_link(&mut writer)?;
-            }
+            exercise.terminal_file_link(&mut writer, self.app_state.emit_file_links())?;
 
             writer.write_ascii(&self.path_col_padding[exercise.path.len()..])?;
 

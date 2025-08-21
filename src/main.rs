@@ -167,7 +167,7 @@ fn main() -> Result<ExitCode> {
                 }
                 app_state
                     .current_exercise()
-                    .terminal_file_link(&mut stdout)?;
+                    .terminal_file_link(&mut stdout, app_state.emit_file_links())?;
                 stdout.write_all(b"\n")?;
 
                 return Ok(ExitCode::FAILURE);

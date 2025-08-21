@@ -272,28 +272,37 @@ pub fn canonicalize(path: &str) -> Option<String> {
         })
 }
 
-pub fn terminal_file_link<'a>(
-    writer: &mut impl CountedWrite<'a>,
-    path: &str,
-    canonical_path: &str,
+pub fn file_path<'a, W: CountedWrite<'a>>(
+    writer: &mut W,
     color: Color,
+    f: impl FnOnce(&mut W) -> io::Result<()>,
 ) -> io::Result<()> {
     writer
         .stdout()
         .queue(SetForegroundColor(color))?
         .queue(SetAttribute(Attribute::Underlined))?;
-    writer.stdout().write_all(b"\x1b]8;;file://")?;
-    writer.stdout().write_all(canonical_path.as_bytes())?;
-    writer.stdout().write_all(b"\x1b\\")?;
-    // Only this part is visible.
-    writer.write_str(path)?;
-    writer.stdout().write_all(b"\x1b]8;;\x1b\\")?;
+
+    f(writer)?;
+
     writer
         .stdout()
         .queue(SetForegroundColor(Color::Reset))?
         .queue(SetAttribute(Attribute::NoUnderline))?;
 
     Ok(())
+}
+
+pub fn terminal_file_link<'a>(
+    writer: &mut impl CountedWrite<'a>,
+    path: &str,
+    canonical_path: &str,
+) -> io::Result<()> {
+    writer.stdout().write_all(b"\x1b]8;;file://")?;
+    writer.stdout().write_all(canonical_path.as_bytes())?;
+    writer.stdout().write_all(b"\x1b\\")?;
+    // Only this part is visible.
+    writer.write_str(path)?;
+    writer.stdout().write_all(b"\x1b]8;;\x1b\\")
 }
 
 pub fn write_ansi(output: &mut Vec<u8>, command: impl Command) {
