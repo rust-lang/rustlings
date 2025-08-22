@@ -1209,3 +1209,17 @@ name = "as_ref_mut"
 dir = "23_conversions"
 hint = """
 Add `AsRef<str>` or `AsMut<u32>` as a trait bound to the functions."""
+
+[[exercises]]
+name = "fileIO1"
+dir = "24_fileIO"
+hint = """
+The `read` function should return a `Result` with the `String` as the success
+"""
+
+[[exercises]]
+name = "fileIO2"
+dir = "24_fileIO"
+hint = """
+The `create` function will create a file with the given name
+"""
