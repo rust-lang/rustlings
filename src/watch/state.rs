@@ -93,12 +93,7 @@ impl<'a> WatchState<'a> {
             .run_exercise(Some(&mut self.output), self.app_state.cmd_runner())?;
         self.output.push(b'\n');
         if success {
-            self.done_status =
-                if let Some(solution_path) = self.app_state.current_solution_path()? {
-                    DoneStatus::DoneWithSolution(solution_path)
-                } else {
-                    DoneStatus::DoneWithoutSolution
-                };
+            self.done_status = self.completed_exercise_status()?;
         } else {
             self.app_state
                 .set_pending(self.app_state.current_exercise_ind())?;
@@ -171,6 +166,17 @@ impl<'a> WatchState<'a> {
     }
 
     fn show_prompt(&self, stdout: &mut StdoutLock) -> io::Result<()> {
+        if self.app_state.current_exercise_ind() != 0 {
+            stdout.queue(SetAttribute(Attribute::Bold))?;
+            stdout.write_all(b"p")?;
+            stdout.queue(ResetColor)?;
+            stdout.write_all(b":")?;
+            stdout.queue(SetAttribute(Attribute::Underlined))?;
+            stdout.write_all(b"previous")?;
+            stdout.queue(ResetColor)?;
+            stdout.write_all(b" / ")?;
+        }
+
         if self.done_status != DoneStatus::Pending {
             stdout.queue(SetAttribute(Attribute::Bold))?;
             stdout.write_all(b"n")?;
@@ -293,6 +299,33 @@ impl<'a> WatchState<'a> {
             self.term_width = width;
             self.render(stdout)?;
         }
+
+        Ok(())
+    }
+
+    fn completed_exercise_status(&self) -> Result<DoneStatus> {
+        if let Some(solution_path) = self.app_state.current_solution_path()? {
+            Ok(DoneStatus::DoneWithSolution(solution_path))
+        } else {
+            Ok(DoneStatus::DoneWithoutSolution)
+        }
+    }
+
+    pub fn previous_exercise(&mut self, stdout: &mut StdoutLock) -> Result<()> {
+        let current_exercise_ind = self.app_state.current_exercise_ind();
+
+        if current_exercise_ind == 0 {
+            return Ok(());
+        }
+
+        self.app_state
+            .set_current_exercise_ind(current_exercise_ind - 1)?;
+        self.done_status = if self.app_state.current_exercise().done {
+            self.completed_exercise_status()?
+        } else {
+            DoneStatus::Pending
+        };
+        self.render(stdout)?;
 
         Ok(())
     }

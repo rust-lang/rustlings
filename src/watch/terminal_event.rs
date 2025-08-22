@@ -7,6 +7,7 @@ use std::sync::{
 use super::{EXERCISE_RUNNING, WatchEvent};
 
 pub enum InputEvent {
+    Previous,
     Next,
     Run,
     Hint,
@@ -34,6 +35,7 @@ pub fn terminal_event_handler(
                 }
 
                 let input_event = match key.code {
+                    KeyCode::Char('p') => InputEvent::Previous,
                     KeyCode::Char('n') => InputEvent::Next,
                     KeyCode::Char('r') if manual_run => InputEvent::Run,
                     KeyCode::Char('h') => InputEvent::Hint,
