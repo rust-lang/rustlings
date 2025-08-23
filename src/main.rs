@@ -21,6 +21,7 @@ mod init;
 mod list;
 mod run;
 mod term;
+mod url_replacer;
 mod watch;
 
 const CURRENT_FORMAT_VERSION: u8 = 1;
@@ -35,6 +36,10 @@ struct Args {
     /// Only use this if Rustlings fails to detect exercise file changes.
     #[arg(long)]
     manual_run: bool,
+
+    /// Change rustbook url to passed one.
+    #[arg(long)]
+    base_url: Option<String>,
 }
 
 #[derive(Subcommand)]
@@ -94,6 +99,7 @@ fn main() -> Result<ExitCode> {
     let (mut app_state, state_file_status) = AppState::new(
         info_file.exercises,
         info_file.final_message.unwrap_or_default(),
+        args.base_url,
     )?;
 
     // Show the welcome message if the state file doesn't exist yet.
