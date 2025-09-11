@@ -793,6 +793,16 @@ replacing `???` with 'impl [what goes here?] + [what goes here?]'.
 Related section in The Book:
 https://doc.rust-lang.org/book/ch10-02-traits.html#specifying-multiple-trait-bounds-with-the--syntax"""
 
+[[exercises]]
+name = "traits6"
+dir = "15_traits"
+hint = """
+Remember that you can implement a trait you defined yourself on foreign types,
+i.e. ones from the standard library or third-party libraries. A trait that only
+serves the purpose of adding additional functionality to foreign types is often
+referred to as an "extension trait". Define such a trait and implement it for
+`usize` and `&str`."""
+
 # QUIZ 3
 
 [[exercises]]
