@@ -9,6 +9,7 @@
 - New argument `--no-editor` to disable automatic opening of the current file in VS Code or Zellij
 - New argument `--edit-cmd` to communicate with an editor running in a different process to open the current exercise
 - Show the file link of the current exercise when running `rustlings hint` and `rustlings reset`
+- Add a new `traits6` exercise.
 
 ### Fixed
 

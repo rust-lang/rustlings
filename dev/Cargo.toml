@@ -126,6 +126,8 @@ bin = [
   { name = "traits4_sol", path = "../solutions/15_traits/traits4.rs" },
   { name = "traits5", path = "../exercises/15_traits/traits5.rs" },
   { name = "traits5_sol", path = "../solutions/15_traits/traits5.rs" },
+  { name = "traits6", path = "../exercises/15_traits/traits6.rs" },
+  { name = "traits6_sol", path = "../solutions/15_traits/traits6.rs" },
   { name = "quiz3", path = "../exercises/quizzes/quiz3.rs" },
   { name = "quiz3_sol", path = "../solutions/quizzes/quiz3.rs" },
   { name = "lifetimes1", path = "../exercises/16_lifetimes/lifetimes1.rs" },
