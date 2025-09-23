@@ -1209,3 +1209,8 @@ name = "as_ref_mut"
 dir = "23_conversions"
 hint = """
 Add `AsRef<str>` or `AsMut<u32>` as a trait bound to the functions."""
+
+[[exercises]]
+name = "two_sum"
+dir = "leetcode"
+hint = "Use a HashMap to check if the complement exists."
