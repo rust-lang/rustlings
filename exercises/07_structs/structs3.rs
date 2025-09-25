@@ -1,37 +1,33 @@
 // Structs contain data, but can also have logic. In this exercise, we have
-// defined the `Package` struct, and we want to test some logic attached to it.
+// defined the `Fireworks` struct and a couple of functions that work with it.
+// Turn these free-standing functions into methods and associated functions
+// to express that relationship more clearly in the code.
+
+#![deny(clippy::use_self)] // practice using the `Self` type
 
 #[derive(Debug)]
-struct Package {
-    sender_country: String,
-    recipient_country: String,
-    weight_in_grams: u32,
+struct Fireworks {
+    rockets: usize,
 }
 
-impl Package {
-    fn new(sender_country: String, recipient_country: String, weight_in_grams: u32) -> Self {
-        if weight_in_grams < 10 {
-            // This isn't how you should handle errors in Rust, but we will
-            // learn about error handling later.
-            panic!("Can't ship a package with weight below 10 grams");
-        }
+// TODO: Turn this function into an associated function on `Fireworks`.
+fn new_fireworks() -> Fireworks {
+    Fireworks { rockets: 0 }
+}
 
-        Self {
-            sender_country,
-            recipient_country,
-            weight_in_grams,
-        }
-    }
+// TODO: Turn this function into a method on `Fireworks`.
+fn add_rockets(fireworks: &mut Fireworks, rockets: usize) {
+    fireworks.rockets += rockets
+}
 
-    // TODO: Add the correct return type to the function signature.
-    fn is_international(&self) {
-        // TODO: Read the tests that use this method to find out when a package
-        // is considered international.
-    }
-
-    // TODO: Add the correct return type to the function signature.
-    fn get_fees(&self, cents_per_gram: u32) {
-        // TODO: Calculate the package's fees.
+// TODO: Turn this function into a method on `Fireworks`.
+fn start(fireworks: Fireworks) -> String {
+    if fireworks.rockets < 5 {
+        String::from("small")
+    } else if fireworks.rockets < 20 {
+        String::from("medium")
+    } else {
+        String::from("big")
     }
 }
 
@@ -44,44 +40,19 @@ mod tests {
     use super::*;
 
     #[test]
-    #[should_panic]
-    fn fail_creating_weightless_package() {
-        let sender_country = String::from("Spain");
-        let recipient_country = String::from("Austria");
+    fn start_some_fireworks() {
+        let mut f = Fireworks::new();
+        f.add_rockets(3);
+        assert_eq!(f.start(), "small");
 
-        Package::new(sender_country, recipient_country, 5);
-    }
+        let mut f = Fireworks::new();
+        f.add_rockets(15);
+        assert_eq!(f.start(), "medium");
 
-    #[test]
-    fn create_international_package() {
-        let sender_country = String::from("Spain");
-        let recipient_country = String::from("Russia");
-
-        let package = Package::new(sender_country, recipient_country, 1200);
-
-        assert!(package.is_international());
-    }
-
-    #[test]
-    fn create_local_package() {
-        let sender_country = String::from("Canada");
-        let recipient_country = sender_country.clone();
-
-        let package = Package::new(sender_country, recipient_country, 1200);
-
-        assert!(!package.is_international());
-    }
-
-    #[test]
-    fn calculate_transport_fees() {
-        let sender_country = String::from("Spain");
-        let recipient_country = String::from("Spain");
-
-        let cents_per_gram = 3;
-
-        let package = Package::new(sender_country, recipient_country, 1500);
-
-        assert_eq!(package.get_fees(cents_per_gram), 4500);
-        assert_eq!(package.get_fees(cents_per_gram * 2), 9000);
+        let mut f = Fireworks::new();
+        f.add_rockets(100);
+        assert_eq!(Fireworks::start(f), "big");
+        // We don't use method syntax in the last test to ensure the `start`
+        // function takes ownership of the fireworks.
     }
 }
