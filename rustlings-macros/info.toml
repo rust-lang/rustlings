@@ -457,7 +457,7 @@ to get the variant's values."""
 
 [[exercises]]
 name = "strings1"
-dir = "09_strings"
+dir = "10_strings"
 test = false
 hint = """
 The `current_favorite_color` function is currently returning a string slice
@@ -471,7 +471,7 @@ another way that uses the `From` trait."""
 
 [[exercises]]
 name = "strings2"
-dir = "09_strings"
+dir = "10_strings"
 test = false
 hint = """
 Yes, it would be really easy to fix this by just changing the value bound to
@@ -486,7 +486,7 @@ https://doc.rust-lang.org/book/ch15-02-deref.html#implicit-deref-coercions-with-
 
 [[exercises]]
 name = "strings3"
-dir = "09_strings"
+dir = "10_strings"
 hint = """
 There are many useful standard library functions for strings. Let's try and use
 some of them:
@@ -500,7 +500,7 @@ https://doc.rust-lang.org/std/string/struct.String.html#method.replace"""
 
 [[exercises]]
 name = "strings4"
-dir = "09_strings"
+dir = "10_strings"
 test = false
 hint = """
 Replace `placeholder` with either `string` or `string_slice` in the `main`
@@ -516,7 +516,7 @@ because "blue" is `&str`, not `String`."""
 
 [[exercises]]
 name = "modules1"
-dir = "10_modules"
+dir = "09_modules"
 test = false
 hint = """
 Everything is private in Rust by default. But there's a keyword we can use
@@ -524,7 +524,7 @@ to make something public!"""
 
 [[exercises]]
 name = "modules2"
-dir = "10_modules"
+dir = "09_modules"
 test = false
 hint = """
 The `delicious_snacks` module is trying to present an external interface that
@@ -537,7 +537,7 @@ https://doc.rust-lang.org/book/ch07-04-bringing-paths-into-scope-with-the-use-ke
 
 [[exercises]]
 name = "modules3"
-dir = "10_modules"
+dir = "09_modules"
 test = false
 hint = """
 `UNIX_EPOCH` and `SystemTime` are declared in the `std::time` module. Add a
