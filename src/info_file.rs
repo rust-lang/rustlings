@@ -11,6 +11,9 @@ pub struct ExerciseInfo {
     pub name: String,
     /// Exercise's directory name inside the `exercises/` directory.
     pub dir: Option<String>,
+    /// Extra one Aditional Module file
+    #[serde(default)]
+    pub module_file: Option<String>,
     /// Run `cargo test` on the exercise.
     #[serde(default = "default_true")]
     pub test: bool,
@@ -51,6 +54,33 @@ impl ExerciseInfo {
         path.push_str(".rs");
 
         path
+    }
+
+    pub fn module_file_path(&self) -> Option<String> {
+        if let Some(module_path) = &self.module_file {
+            let mut path = if let Some(dir) = &self.dir {
+                // 14 = 10 + 1 + 3
+                // exercises/ + / + .rs
+                let mut path = String::with_capacity(14 + dir.len() + module_path.len());
+                path.push_str("exercises/");
+                path.push_str(dir);
+                path.push('/');
+                path
+            } else {
+                // 13 = 10 + 3
+                // exercises/ + .rs
+                let mut path = String::with_capacity(13 + module_path.len());
+                path.push_str("exercises/");
+                path
+            };
+
+            path.push_str(&module_path);
+            path.push_str(".rs");
+
+            Some(path)
+        } else {
+            None
+        }
     }
 }
 

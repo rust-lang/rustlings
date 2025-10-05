@@ -108,6 +108,7 @@ mod tests {
             ExerciseInfo {
                 name: String::from("1"),
                 dir: None,
+                module_file: None,
                 test: true,
                 strict_clippy: true,
                 hint: String::new(),
@@ -116,6 +117,7 @@ mod tests {
             ExerciseInfo {
                 name: String::from("2"),
                 dir: Some(String::from("d")),
+                module_file: None,
                 test: false,
                 strict_clippy: false,
                 hint: String::new(),
