@@ -544,6 +544,18 @@ hint = """
 `use` statement for these two to bring them into scope. You can use nested
 paths to bring these two in using only one line."""
 
+[[exercises]]
+name = "modules4"
+dir = "09_modules"
+test = false
+hint = """
+The mod.rs is trying to use the modules from the file cake.rs and fruit directory.
+Complete the `mod` statements to fit the use in `main`.
+
+Learn more in The Book:
+https://doc.rust-lang.org/book/ch07-05-separating-modules-into-different-files.html
+"""
+
 # HASHMAPS
 
 [[exercises]]

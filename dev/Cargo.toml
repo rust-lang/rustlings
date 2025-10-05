@@ -86,6 +86,8 @@ bin = [
   { name = "modules2_sol", path = "../solutions/09_modules/modules2.rs" },
   { name = "modules3", path = "../exercises/09_modules/modules3.rs" },
   { name = "modules3_sol", path = "../solutions/09_modules/modules3.rs" },
+  { name = "modules4", path = "../exercises/09_modules/modules4.rs" },
+  { name = "modules4_sol", path = "../solutions/09_modules/modules4.rs" },
   { name = "hashmaps1", path = "../exercises/11_hashmaps/hashmaps1.rs" },
   { name = "hashmaps1_sol", path = "../solutions/11_hashmaps/hashmaps1.rs" },
   { name = "hashmaps2", path = "../exercises/11_hashmaps/hashmaps2.rs" },
