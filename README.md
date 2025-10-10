@@ -15,7 +15,6 @@ Visit the **website** for a demo, info about setup and more:
 
 ## ➡️ [rustlings.rust-lang.org](https://rustlings.rust-lang.org) ⬅️
 
-  
 
 ## Quick start
 
