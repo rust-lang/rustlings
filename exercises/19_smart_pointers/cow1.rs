@@ -57,9 +57,9 @@ mod tests {
 
     #[test]
     fn owned_mutation() {
-        // Of course this is also the case if a mutation does occur (not all
-        // numbers are absolute). In this case, the call to `to_mut()` in the
-        // `abs_all` function returns a reference to the same data as before.
+        // When the data is already owned, even if a mutation occurs, `to_mut()`
+        // simply returns a mutable reference to the existing owned data without
+        // performing any clone.
         let vec = vec![-1, 0, 1];
         let mut input = Cow::from(vec);
         abs_all(&mut input);
