@@ -15,28 +15,20 @@ impl Queue {
 }
 
 fn send_tx(q: Queue, tx: mpsc::Sender<u32>) {
-    // Destructure the Queue to move first_half and second_half independently
-    let Queue {
-        first_half,
-        second_half,
-    } = q;
-
-    // Clone the sender so both threads can send to the same receiver
-    let tx1 = tx.clone();
-    let tx2 = tx;
-
+    // TODO: We want to send `tx` to both threads. But currently, it is moved
+    // into the first thread. How could you solve this problem?
     thread::spawn(move || {
-        for val in first_half {
+        for val in q.first_half {
             println!("Sending {val:?}");
-            tx1.send(val).unwrap();
+            tx.send(val).unwrap();
             thread::sleep(Duration::from_millis(250));
         }
     });
 
     thread::spawn(move || {
-        for val in second_half {
+        for val in q.second_half {
             println!("Sending {val:?}");
-            tx2.send(val).unwrap();
+            tx.send(val).unwrap();
             thread::sleep(Duration::from_millis(250));
         }
     });
