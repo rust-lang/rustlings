@@ -736,6 +736,20 @@ hint = """
 Related section in The Book:
 https://doc.rust-lang.org/book/ch10-01-syntax.html#in-method-definitions"""
 
+[[exercises]]
+name = "generics3"
+dir = "14_generics"
+hint = """
+The fuction should have the required traits for the division,
+eg Div to divide the total and size of slice, Sum to sum over the slice
+and TryFrom as `as T` is disallowed in generic contexs
+
+You may find the following links usefull:
+https://doc.rust-lang.org/std/ops/trait.Div.html
+https://doc.rust-lang.org/std/iter/trait.Sum.html
+https://doc.rust-lang.org/std/convert/trait.TryFrom.html
+"""
+
 # TRAITS
 
 [[exercises]]
