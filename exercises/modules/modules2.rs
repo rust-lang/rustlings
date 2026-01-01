@@ -8,8 +8,14 @@
 // hint.
 
 mod delicious_snacks {
+<<<<<<< HEAD
     pub use self::fruits::PEAR as fruit;
     pub use self::veggies::CUCUMBER as veggie;
+=======
+    // TODO: Fix these use statements
+    use self::fruits::PEAR as ???
+    use self::veggies::CUCUMBER as ???
+>>>>>>> 11d8aea96f2c744d970ed1ffb38785cf5b511e5e
 
     mod fruits {
         pub const PEAR: &'static str = "Pear";

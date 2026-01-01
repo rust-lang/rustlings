@@ -17,8 +17,12 @@ struct Package {
 impl Package {
     fn new(sender_country: String, recipient_country: String, weight_in_grams: i32) -> Package {
         if weight_in_grams <= 0 {
+<<<<<<< HEAD
             // Something goes here...
             panic!("Package is lighter then air!")
+=======
+            panic!("Can not ship a weightless package.")
+>>>>>>> 11d8aea96f2c744d970ed1ffb38785cf5b511e5e
         } else {
             Package {
                 sender_country,
@@ -33,9 +37,14 @@ impl Package {
         self.recipient_country != self.sender_country
     }
 
+<<<<<<< HEAD
     fn get_fees(&self, cents_per_kg: i32) -> i32 {
         // Something goes here... (beware of grams to kg conversion)
         (self.weight_in_grams * cents_per_kg) / 100
+=======
+    fn get_fees(&self, cents_per_gram: i32) -> ??? {
+        // Something goes here...
+>>>>>>> 11d8aea96f2c744d970ed1ffb38785cf5b511e5e
     }
 }
 
@@ -77,8 +86,13 @@ mod tests {
         let sender_country = String::from("Spain");
         let recipient_country = String::from("Spain");
 
+<<<<<<< HEAD
         let cents_per_kg = 300;
         
+=======
+        let cents_per_gram = 3;
+
+>>>>>>> 11d8aea96f2c744d970ed1ffb38785cf5b511e5e
         let package = Package::new(sender_country, recipient_country, 1500);
 
         assert_eq!(package.get_fees(cents_per_gram), 4500);

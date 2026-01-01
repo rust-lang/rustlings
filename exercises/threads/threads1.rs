@@ -1,16 +1,17 @@
 // threads1.rs
-//
-// This program spawns multiple threads that each run for at least 250ms, and
-// each thread returns how much time they took to complete. The program should
-// wait until all the spawned threads have finished and should collect their
-// return values into a vector.
-//
-// Execute `rustlings hint threads1` or use the `hint` watch subcommand for a
-// hint.
+// Make this compile! Execute `rustlings hint threads1` for hints :)
+// The idea is the thread spawned on line 21 is completing jobs while the main thread is
+// monitoring progress until 10 jobs are completed. If you see 6 lines
+// of "waiting..." and the program ends without timing out when running,
+// you've got it :)
 
 use std::sync::{Arc, Mutex};
 use std::thread;
-use std::time::{Duration, Instant};
+use std::time::Duration;
+
+struct JobStatus {
+    jobs_completed: u32,
+}
 
 fn main() {
     // Introduce Mutex

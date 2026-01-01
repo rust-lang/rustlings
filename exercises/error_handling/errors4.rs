@@ -8,7 +8,7 @@ struct PositiveNonzeroInteger(u64);
 
 #[derive(PartialEq, Debug)]
 enum CreationError {
-    Negative,
+    Negative, 
     Zero,
 }
 
