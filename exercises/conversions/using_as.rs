@@ -10,20 +10,12 @@
 // Execute `rustlings hint using_as` or use the `hint` watch subcommand for a
 // hint.
 
-<<<<<<< HEAD
 // The goal is to make sure that the division does not fail to compile
 fn average(values: &[f64]) -> f64 {
     let total = values
         .iter()
         .fold(0.0, |a, b| a + b);
     total / (values.len() as f64)
-=======
-// I AM NOT DONE
-
-fn average(values: &[f64]) -> f64 {
-    let total = values.iter().sum::<f64>();
-    total / values.len()
->>>>>>> 11d8aea96f2c744d970ed1ffb38785cf5b511e5e
 }
 
 fn main() {

@@ -33,19 +33,11 @@ fn main() {
 }
 
 pub fn create_empty_list() -> List {
-<<<<<<< HEAD:exercises/standard_library_types/box1.rs
     List::Nil
 }
 
 pub fn create_non_empty_list() -> List {
     List::Cons(1, Box::new(List::Nil))
-=======
-    todo!()
-}
-
-pub fn create_non_empty_list() -> List {
-    todo!()
->>>>>>> 11d8aea96f2c744d970ed1ffb38785cf5b511e5e:exercises/smart_pointers/box1.rs
 }
 
 #[cfg(test)]

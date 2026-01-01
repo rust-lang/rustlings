@@ -14,7 +14,6 @@ enum CreationError {
 
 impl PositiveNonzeroInteger {
     fn new(value: i64) -> Result<PositiveNonzeroInteger, CreationError> {
-<<<<<<< HEAD:exercises/error_handling/result1.rs
         if value > 1 {
             Ok(PositiveNonzeroInteger(value as u64))
         } else if value == 0 {
@@ -23,10 +22,6 @@ impl PositiveNonzeroInteger {
             Err(CreationError::Negative)
         }
         
-=======
-        // Hmm... Why is this always returning an Ok value?
-        Ok(PositiveNonzeroInteger(value as u64))
->>>>>>> 11d8aea96f2c744d970ed1ffb38785cf5b511e5e:exercises/error_handling/errors4.rs
     }
 }
 
