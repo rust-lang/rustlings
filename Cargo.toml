@@ -3,6 +3,7 @@ exclude = [
   "tests/test_exercises",
   "dev",
 ]
+members = ["src"]
 
 [workspace.package]
 version = "6.5.0"
