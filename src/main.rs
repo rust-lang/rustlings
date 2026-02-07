@@ -62,21 +62,32 @@ enum Subcommands {
     #[command(subcommand)]
     Dev(DevCommands),
 }
-
+    // Main function
 fn main() -> Result<ExitCode> {
-    let args = Args::parse();
-
+    // Parse command-line arguments using the Clap derive macro
+    let args = Args::parse();       
+    // Safety check: Prevent running with the legacy repository structure.
+    // This triggers only in non-debug (release) builds if the old repo path is detected.
     if cfg!(not(debug_assertions)) && Path::new("dev/rustlings-repo.txt").exists() {
         bail!("{OLD_METHOD_ERR}");
     }
-
+    // Labeled block to handle high-priority subcommands that should terminate
+    // execution early upon completion.
     'priority_cmd: {
         match args.command {
+            // Handle environment initialization
             Some(Subcommands::Init) => init::init().context("Initialization failed")?,
+
+            // Handle internal developer-specific commands
             Some(Subcommands::Dev(dev_command)) => dev_command.run()?,
+
+            // If the command is not a priority, break out of the labeled block
+            // to proceed with the normal execution flow (e.g., running exercises)
+
             _ => break 'priority_cmd,
         }
-
+        
+        // Successfully executed a priority command; exit the program
         return Ok(ExitCode::SUCCESS);
     }
 
