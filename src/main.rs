@@ -63,13 +63,17 @@ enum Subcommands {
     Dev(DevCommands),
 }
 
+/// Main entry point for the Rustlings application.
 fn main() -> Result<ExitCode> {
+    // Parse command-line arguments
     let args = Args::parse();
 
+    // Check for legacy installation method to prevent conflicts
     if cfg!(not(debug_assertions)) && Path::new("dev/rustlings-repo.txt").exists() {
         bail!("{OLD_METHOD_ERR}");
     }
 
+    // Handle priority subcommands that exit early (like 'init' or 'dev')
     'priority_cmd: {
         match args.command {
             Some(Subcommands::Init) => init::init().context("Initialization failed")?,
@@ -80,17 +84,21 @@ fn main() -> Result<ExitCode> {
         return Ok(ExitCode::SUCCESS);
     }
 
+    // Ensure the exercises directory exists before proceeding
     if !Path::new("exercises").is_dir() {
         println!("{PRE_INIT_MSG}");
         return Ok(ExitCode::FAILURE);
     }
 
+    // Load and parse the exercises configuration file (info.toml)
     let info_file = InfoFile::parse()?;
 
+    // Validate that the info file format version is supported
     if info_file.format_version > CURRENT_FORMAT_VERSION {
         bail!(FORMAT_VERSION_HIGHER_ERR);
     }
 
+    // Initialize the global application state
     let (mut app_state, state_file_status) = AppState::new(
         info_file.exercises,
         info_file.final_message.unwrap_or_default(),
