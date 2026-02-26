@@ -62,11 +62,7 @@ impl<'a> Cmd<'a> {
         cmd.args(self.args).stdin(Stdio::null());
 
         let status = match self.output {
-            None => cmd
-                .stdout(Stdio::null())
-                .stderr(Stdio::null())
-                .status()
-                .unwrap(),
+            None => cmd.status().unwrap(),
             Some(FullStdout(stdout)) => {
                 let output = cmd.stderr(Stdio::null()).output().unwrap();
                 assert_eq!(from_utf8(&output.stdout).unwrap(), stdout);
