@@ -33,6 +33,21 @@ cargo install rustlings
 
 {% end %}
 
+**Warning:** Don't try to clone the repository to do the exercises! `rust-analyzer` won't
+work in that case. Please follow the instructions above instead.
+
+{% details(summary="Why?") %}
+
+The intended way to run Rustlings is to install the binary and run `rustlings init` as
+described in the installation/initialization sections. This generates a `Cargo.toml`
+(different than what you see in the repository) that includes each exercise as a
+separate binary target which is enough for `rust-analyzer` to work.
+
+If you just clone the repository and try to run and edit the exercises directly, the
+language server will not work.
+
+{% end %}
+
 ## Initialization
 
 After installing Rustlings, run the following command to initialize the `rustlings/` directory:
