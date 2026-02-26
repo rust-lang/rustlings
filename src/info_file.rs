@@ -94,10 +94,17 @@ impl InfoFile {
     /// Community exercises: Parse the `info.toml` file in the current directory.
     pub fn parse() -> Result<Self> {
         // Read a local `info.toml` if it exists.
-        let slf = match fs::read_to_string("info.toml") {
-            // Leaking is fine since the info file is used until the end of the program.
-            Ok(file_content) => toml::de::from_str::<Self>(file_content.leak())
-                .context("Failed to parse the `info.toml` file")?,
+        let slf = match fs::read("info.toml") {
+            Ok(file_content) => {
+                // Remove `\r` on Windows.
+                // Leaking is fine since the info file is used until the end of the program.
+                let file_content =
+                    String::from_utf8(file_content.into_iter().filter(|c| *c != b'\r').collect())
+                        .context("Failed to parse `info.toml` as UTF8")?
+                        .leak();
+                toml::de::from_str::<Self>(file_content)
+                    .context("Failed to parse the `info.toml` file")?
+            }
             Err(e) => {
                 if e.kind() == ErrorKind::NotFound {
                     return toml::de::from_str(EMBEDDED_FILES.info_file)

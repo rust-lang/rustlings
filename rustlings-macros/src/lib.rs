@@ -16,8 +16,16 @@ struct InfoFile<'a> {
 
 #[proc_macro]
 pub fn include_files(_: TokenStream) -> TokenStream {
-    let info_file = include_str!("../info.toml");
-    let exercises = toml::de::from_str::<InfoFile>(info_file)
+    // Remove `\r` on Windows
+    let info_file = String::from_utf8(
+        include_bytes!("../info.toml")
+            .iter()
+            .copied()
+            .filter(|c| *c != b'\r')
+            .collect(),
+    )
+    .expect("Failed to parse `info.toml` as UTF8");
+    let exercises = toml::de::from_str::<InfoFile>(&info_file)
         .expect("Failed to parse `info.toml`")
         .exercises;
 
