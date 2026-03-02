@@ -6,4 +6,6 @@ to identify and create them, as well as use them.
 
 ## Further information
 
-- [Strings](https://doc.rust-lang.org/book/ch08-02-strings.html)
+- [Strings (Rust Book)](https://doc.rust-lang.org/book/ch08-02-strings.html)
+- [`str` methods](https://doc.rust-lang.org/std/primitive.str.html)
+- [`String` methods](https://doc.rust-lang.org/std/string/struct.String.html)
