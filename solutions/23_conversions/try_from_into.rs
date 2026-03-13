@@ -52,13 +52,12 @@ impl TryFrom<&[i16]> for Color {
     type Error = IntoColorError;
 
     fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {
-        // Check the length.
-        if slice.len() != 3 {
-            return Err(IntoColorError::BadLen);
+        if let &[red, green, blue] = slice {
+            // Reuse the implementation for a tuple.
+            Self::try_from((red, green, blue))
+        } else {
+            Err(IntoColorError::BadLen)
         }
-
-        // Reuse the implementation for a tuple.
-        Self::try_from((slice[0], slice[1], slice[2]))
     }
 }
 
