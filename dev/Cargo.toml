@@ -188,6 +188,12 @@ bin = [
   { name = "try_from_into_sol", path = "../solutions/23_conversions/try_from_into.rs" },
   { name = "as_ref_mut", path = "../exercises/23_conversions/as_ref_mut.rs" },
   { name = "as_ref_mut_sol", path = "../solutions/23_conversions/as_ref_mut.rs" },
+  { name = "file_io1", path = "../exercises/24_file_io/file_io1.rs" },
+  { name = "file_io1_sol", path = "../solutions/24_file_io/file_io1.rs" },
+  { name = "file_io2", path = "../exercises/24_file_io/file_io2.rs" },
+  { name = "file_io2_sol", path = "../solutions/24_file_io/file_io2.rs" },
+  { name = "file_io3", path = "../exercises/24_file_io/file_io3.rs" },
+  { name = "file_io3_sol", path = "../solutions/24_file_io/file_io3.rs" },
 ]
 
 [package]
