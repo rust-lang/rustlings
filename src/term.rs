@@ -216,7 +216,9 @@ pub fn progress_bar<'a>(
     stdout.write_all(PREFIX)?;
 
     let width = term_width - WRAPPER_WIDTH;
-    let filled = (width * progress) / total;
+    // Use u32 to prevent the intermediate multiplication from overflowing u16
+    let filled = (width as u32 * progress as u32) / total as u32;
+    let filled = filled as u16;
 
     stdout.queue(SetForegroundColor(Color::Green))?;
     for _ in 0..filled {
