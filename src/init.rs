@@ -29,6 +29,21 @@ pub fn init() -> Result<()> {
         bail!(RUSTLINGS_DIR_ALREADY_EXISTS_ERR);
     }
 
+    let is_inside_vcs_repository = 'detect_repo: {
+        let Ok(mut dir) = std::env::current_dir() else {
+            break 'detect_repo false;
+        };
+        loop {
+            if dir.join(".git").exists() || dir.join(".jj").exists() {
+                break 'detect_repo true;
+            }
+            match dir.parent() {
+                Some(parent) => dir = parent.into(),
+                None => break 'detect_repo false,
+            }
+        }
+    };
+
     let locate_project_output = Command::new("cargo")
         .arg("locate-project")
         .arg("-q")
@@ -59,7 +74,7 @@ pub fn init() -> Result<()> {
     }
 
     let mut stdout = io::stdout().lock();
-    let mut init_git = true;
+    let mut init_git = !is_inside_vcs_repository;
 
     if locate_project_output.status.success() {
         if Path::new("exercises").exists() && Path::new("solutions").exists() {
