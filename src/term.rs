@@ -227,14 +227,13 @@ pub fn progress_bar<'a>(
 
     if filled < width {
         stdout.write_all(b">")?;
-    }
 
-    let width_minus_filled = width - filled;
-    if width_minus_filled > 1 {
-        let red_part_width = width_minus_filled - 1;
-        stdout.queue(SetForegroundColor(Color::Red))?;
-        for _ in 0..red_part_width {
-            stdout.write_all(b"-")?;
+        let width_minus_filled = width - filled;
+        if width_minus_filled > 1 {
+            stdout.queue(SetForegroundColor(Color::Red))?;
+            for _ in 1..width_minus_filled {
+                stdout.write_all(b"-")?;
+            }
         }
     }
 
