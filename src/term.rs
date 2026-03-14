@@ -197,14 +197,14 @@ pub fn progress_bar<'a>(
     total: u16,
     term_width: u16,
 ) -> io::Result<()> {
-    debug_assert!(total <= 999);
-    debug_assert!(progress <= total);
-
     const PREFIX: &[u8] = b"Progress: [";
     const PREFIX_WIDTH: u16 = PREFIX.len() as u16;
     const POSTFIX_WIDTH: u16 = "] xxx/xxx".len() as u16;
     const WRAPPER_WIDTH: u16 = PREFIX_WIDTH + POSTFIX_WIDTH;
     const MIN_LINE_WIDTH: u16 = WRAPPER_WIDTH + 4;
+
+    debug_assert!(total <= 999);
+    debug_assert!(progress <= total);
 
     if term_width < MIN_LINE_WIDTH {
         writer.write_ascii(b"Progress: ")?;

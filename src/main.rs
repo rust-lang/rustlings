@@ -171,9 +171,9 @@ fn main() -> Result<ExitCode> {
                 stdout.write_all(b"\n")?;
 
                 return Ok(ExitCode::FAILURE);
-            } else {
-                app_state.render_final_message(&mut stdout)?;
             }
+
+            app_state.render_final_message(&mut stdout)?;
         }
         Some(Subcommands::Reset { name }) => {
             app_state.set_current_exercise_by_name(&name)?;

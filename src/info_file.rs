@@ -23,7 +23,7 @@ pub struct ExerciseInfo {
     #[serde(default)]
     pub skip_check_unsolved: bool,
 }
-#[inline(always)]
+#[inline]
 const fn default_true() -> bool {
     true
 }

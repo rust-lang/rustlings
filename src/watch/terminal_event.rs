@@ -47,7 +47,7 @@ pub fn terminal_event_handler(
                         // Pause input until quitting the confirmation prompt.
                         if unpause_receiver.recv().is_err() {
                             return;
-                        };
+                        }
 
                         continue;
                     }
@@ -64,7 +64,7 @@ pub fn terminal_event_handler(
                     return;
                 }
             }
-            Ok(Event::FocusGained | Event::FocusLost | Event::Mouse(_)) => continue,
+            Ok(Event::FocusGained | Event::FocusLost | Event::Mouse(_)) => (),
             Err(e) => break WatchEvent::TerminalEventErr(e),
         }
     };

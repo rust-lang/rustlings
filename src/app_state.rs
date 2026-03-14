@@ -433,7 +433,7 @@ impl AppState {
                                 .is_err()
                             {
                                 break;
-                            };
+                            }
 
                             let success = exercise.run_exercise(None, &slf.cmd_runner);
                             let progress = match success {

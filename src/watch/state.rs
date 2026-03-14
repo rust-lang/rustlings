@@ -60,7 +60,7 @@ impl<'a> WatchState<'a> {
                     watch_event_sender,
                     terminal_event_unpause_receiver,
                     manual_run,
-                )
+                );
             })
             .context("Failed to spawn a thread to handle terminal events")?;
 
