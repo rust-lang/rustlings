@@ -417,11 +417,10 @@ https://doc.rust-lang.org/book/ch05-01-defining-structs.html#creating-instances-
 name = "structs3"
 dir = "07_structs"
 hint = """
-For `is_international`: What makes a package international? Seems related to
-the places it goes through right?
-
-For `get_fees`: This method takes an additional argument, is there a field in
-the `Package` struct that this relates to?
+Methods and associated functions are both declared in an `impl MyType {}`
+block. Methods have a `self`, `&self` or `&mut self` parameter, where `self`
+implicitly has the type of the impl block. Associated functions do not have
+a `self` parameter.
 
 Have a look in The Book to find out more about method implementations:
 https://doc.rust-lang.org/book/ch05-03-method-syntax.html"""
