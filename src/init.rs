@@ -5,7 +5,7 @@ use crossterm::{
 };
 use serde::Deserialize;
 use std::{
-    env::set_current_dir,
+    env::{current_dir, set_current_dir},
     fs::{self, create_dir},
     io::{self, Write},
     path::Path,
@@ -28,21 +28,6 @@ pub fn init() -> Result<()> {
     if rustlings_dir.exists() {
         bail!(RUSTLINGS_DIR_ALREADY_EXISTS_ERR);
     }
-
-    let is_inside_vcs_repository = 'detect_repo: {
-        let Ok(mut dir) = std::env::current_dir() else {
-            break 'detect_repo false;
-        };
-        loop {
-            if dir.join(".git").exists() || dir.join(".jj").exists() {
-                break 'detect_repo true;
-            }
-            match dir.parent() {
-                Some(parent) => dir = parent.into(),
-                None => break 'detect_repo false,
-            }
-        }
-    };
 
     let locate_project_output = Command::new("cargo")
         .arg("locate-project")
@@ -74,7 +59,7 @@ pub fn init() -> Result<()> {
     }
 
     let mut stdout = io::stdout().lock();
-    let mut init_git = !is_inside_vcs_repository;
+    let mut init_git = true;
 
     if locate_project_output.status.success() {
         if Path::new("exercises").exists() && Path::new("solutions").exists() {
@@ -184,14 +169,27 @@ pub fn init() -> Result<()> {
     fs::write(".vscode/extensions.json", VS_CODE_EXTENSIONS_JSON)
         .context("Failed to create the file `rustlings/.vscode/extensions.json`")?;
 
-    if init_git {
-        // Ignore any Git error because Git initialization is not required.
-        let _ = Command::new("git")
-            .arg("init")
-            .stdin(Stdio::null())
-            .stdout(Stdio::null())
-            .stderr(Stdio::null())
-            .status();
+    if init_git && let Ok(dir) = current_dir() {
+        let mut dir = dir.as_path();
+
+        loop {
+            if dir.join(".git").exists() || dir.join(".jj").exists() {
+                break;
+            }
+
+            if let Some(parent) = dir.parent() {
+                dir = parent;
+            } else {
+                // Ignore any Git error because Git initialization is not required.
+                let _ = Command::new("git")
+                    .arg("init")
+                    .stdin(Stdio::null())
+                    .stdout(Stdio::null())
+                    .stderr(Stdio::null())
+                    .status();
+                break;
+            }
+        }
     }
 
     stdout.queue(SetForegroundColor(Color::Green))?;
