@@ -193,8 +193,8 @@ impl Drop for ProgressCounter<'_, '_> {
 
 pub fn progress_bar<'a>(
     writer: &mut impl CountedWrite<'a>,
-    progress: u16,
-    total: u16,
+    progress: u32,
+    total: u32,
     term_width: u16,
 ) -> io::Result<()> {
     const PREFIX: &[u8] = b"Progress: [";
@@ -215,10 +215,9 @@ pub fn progress_bar<'a>(
     let stdout = writer.stdout();
     stdout.write_all(PREFIX)?;
 
-    let width = term_width - WRAPPER_WIDTH;
-    // Use u32 to prevent the intermediate multiplication from overflowing u16
-    let filled = (width as u32 * progress as u32) / total as u32;
-    let filled = filled as u16;
+    // Use u32 to prevent the intermediate multiplication from overflowing
+    let width = u32::from(term_width - WRAPPER_WIDTH);
+    let filled = (width * progress) / total;
 
     stdout.queue(SetForegroundColor(Color::Green))?;
     for _ in 0..filled {

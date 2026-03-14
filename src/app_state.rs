@@ -52,8 +52,8 @@ pub enum CheckProgress {
 pub struct AppState {
     current_exercise_ind: usize,
     exercises: Vec<Exercise>,
-    // Caches the number of done exercises to avoid iterating over all exercises every time.
-    n_done: u16,
+    // Cache the number of done exercises to avoid iterating over all exercises every time.
+    n_done: u32,
     final_message: &'static str,
     state_file: File,
     // Preallocated buffer for reading and writing the state file.
@@ -191,13 +191,13 @@ impl AppState {
     }
 
     #[inline]
-    pub fn n_done(&self) -> u16 {
+    pub fn n_done(&self) -> u32 {
         self.n_done
     }
 
     #[inline]
-    pub fn n_pending(&self) -> u16 {
-        self.exercises.len() as u16 - self.n_done
+    pub fn n_pending(&self) -> u32 {
+        self.exercises.len() as u32 - self.n_done
     }
 
     #[inline]

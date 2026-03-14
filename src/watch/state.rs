@@ -245,7 +245,7 @@ impl<'a> WatchState<'a> {
         progress_bar(
             stdout,
             self.app_state.n_done(),
-            self.app_state.exercises().len() as u16,
+            self.app_state.exercises().len() as u32,
             self.term_width,
         )?;
 

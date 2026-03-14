@@ -229,7 +229,7 @@ impl<'a> ListState<'a> {
             progress_bar(
                 &mut MaxLenWriter::new(stdout, self.term_width as usize),
                 self.app_state.n_done(),
-                self.app_state.exercises().len() as u16,
+                self.app_state.exercises().len() as u32,
                 self.term_width,
             )?;
             next_ln(stdout)?;
