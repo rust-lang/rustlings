@@ -19,11 +19,11 @@ jobs:
       - name: Build CSS
         run: npx @tailwindcss/cli -m -i input.css -o static/main.css
       - name: Download Zola
-        run: curl -fsSL https://github.com/getzola/zola/releases/download/v0.20.0/zola-v0.20.0-x86_64-unknown-linux-gnu.tar.gz | tar xz
+        run: curl -fsSL https://github.com/getzola/zola/releases/download/v0.22.1/zola-v0.22.1-x86_64-unknown-linux-gnu.tar.gz | tar xz
       - name: Build site
         run: ./zola build
       - name: Upload static files as artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: website/public/
 
