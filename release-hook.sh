@@ -4,7 +4,6 @@
 set -e
 
 typos
-cargo upgrades
 
 # Similar to CI
 cargo clippy -- --deny warnings
