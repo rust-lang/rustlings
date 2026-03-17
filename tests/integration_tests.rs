@@ -1,5 +1,4 @@
 use std::{
-    env::{self, consts::EXE_SUFFIX},
     process::{Command, Stdio},
     str::from_utf8,
 };
@@ -40,20 +39,7 @@ impl<'a> Cmd<'a> {
 
     #[track_caller]
     fn assert(&self, success: bool) {
-        let rustlings_bin = {
-            let mut path = env::current_exe().unwrap();
-            // Pop test binary name
-            path.pop();
-            // Pop `/deps`
-            path.pop();
-
-            path.push("rustlings");
-            let mut path = path.into_os_string();
-            path.push(EXE_SUFFIX);
-            path
-        };
-
-        let mut cmd = Command::new(rustlings_bin);
+        let mut cmd = Command::new(env!("CARGO_BIN_EXE_rustlings"));
 
         if let Some(current_dir) = self.current_dir {
             cmd.current_dir(current_dir);
