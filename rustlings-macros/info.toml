@@ -517,7 +517,7 @@ because "blue" is `&str`, not `String`."""
 [[exercises]]
 name = "modules1"
 dir = "10_modules"
-test = false
+test = true
 hint = """
 Everything is private in Rust by default. But there's a keyword we can use
 to make something public!"""
