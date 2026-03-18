@@ -14,3 +14,13 @@ mod sausage_factory {
 fn main() {
     sausage_factory::make_sausage();
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_make_sausage() {
+        sausage_factory::make_sausage();
+    }
+}
