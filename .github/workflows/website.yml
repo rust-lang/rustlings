@@ -4,7 +4,9 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: [website]
+    paths:
+      - website
+      - .github/workflows/website.yml
 
 jobs:
   build:

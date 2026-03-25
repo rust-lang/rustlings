@@ -5,11 +5,13 @@ on:
     branches: [main]
     paths-ignore:
       - website
+      - .github/workflows/website.yml
       - '*.md'
   pull_request:
     branches: [main]
     paths-ignore:
       - website
+      - .github/workflows/website.yml
       - '*.md'
 
 env:
