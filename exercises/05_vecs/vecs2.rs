@@ -2,8 +2,9 @@ fn vec_loop(input: &[i32]) -> Vec<i32> {
     let mut output = Vec::new();
 
     for element in input {
-        // TODO: Multiply each element in the `input` slice by 2 and push it to
-        // the `output` vector.
+        // TODO: Loop through each number in `input`,
+       // multiply it by 2, and add it to the `output` vector.
+      // Hint: Use a `for` loop and the `push` method.
     }
 
     output
