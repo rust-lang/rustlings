@@ -1,3 +1,7 @@
+// Helpful documentation:
+// https://doc.rust-lang.org/book/ch08-02-strings.html
+// https://doc.rust-lang.org/std/string/struct.String.html
+// https://doc.rust-lang.org/std/primitive.str.html
 fn trim_me(input: &str) -> &str {
     // TODO: Remove whitespace from both ends of a string.
 }
