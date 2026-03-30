@@ -9,7 +9,13 @@ on:
       - .github/workflows/website.yml
 
 jobs:
+  rumdl:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v6
+        - uses: rvben/rumdl@v0
   build:
+    needs: rumdl
     defaults:
       run:
         working-directory: website
@@ -28,7 +34,6 @@ jobs:
         uses: actions/upload-pages-artifact@v4
         with:
           path: website/public/
-
   deploy:
     needs: build
     # Grant GITHUB_TOKEN the permissions required to make a Pages deployment

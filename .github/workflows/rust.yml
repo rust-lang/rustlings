@@ -49,3 +49,8 @@ jobs:
       - uses: swatinem/rust-cache@v2
       - name: rustlings dev check
         run: cargo dev check --require-solutions
+  rumdl:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v6
+        - uses: rvben/rumdl@v0

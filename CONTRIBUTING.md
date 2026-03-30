@@ -14,7 +14,7 @@ I want to …
 
 ## Issues
 
-You can open an issue [here](https://github.com/rust-lang/rustlings/issues/new).
+You can [open an issue](https://github.com/rust-lang/rustlings/issues/new).
 If you're reporting a bug, please include the output of the following commands:
 
 - `cargo --version`

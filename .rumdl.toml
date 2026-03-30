@@ -1,0 +1,7 @@
+[global]
+output-format = "full"
+disable = ["MD013", "MD057"]
+
+[per-file-ignores]
+"website/content/_index.md" = ["MD041"]
+"website/content/**/*.md" = ["MD028", "MD033"]
