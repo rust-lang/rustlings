@@ -1,5 +1,6 @@
 use anyhow::{Context, Error, Result, bail};
 use crossterm::{QueueableCommand, cursor, terminal};
+use serde::Deserialize;
 use std::{
     collections::HashSet,
     env,
@@ -11,7 +12,7 @@ use std::{
         atomic::{AtomicUsize, Ordering::Relaxed},
         mpsc,
     },
-    thread,
+    thread::{self, JoinHandle},
 };
 
 use crate::{
@@ -49,6 +50,44 @@ pub enum CheckProgress {
     Pending,
 }
 
+#[derive(Deserialize)]
+struct Pane {
+    id: u32,
+}
+
+#[must_use]
+pub struct EditCmdJoinHandle(Option<JoinHandle<Result<(String, u32)>>>);
+
+fn parse_pane_id(b: &[u8]) -> Option<(String, u32)> {
+    // Remove newline
+    let b = b.get("terminal_".len()..b.len().saturating_sub(1))?;
+    let id_str = str::from_utf8(b).ok()?;
+
+    let (first, rest) = b.split_first()?;
+    let mut id = u32::from(first - b'0');
+
+    for c in rest {
+        id = 10 * id + u32::from(c - b'0');
+    }
+
+    Some((id_str.to_owned(), id))
+}
+
+fn close_pane(pane_id: &str) -> Result<()> {
+    Command::new("zellij")
+        .arg("action")
+        .arg("close-pane")
+        .arg("-p")
+        .arg(pane_id)
+        .stdin(Stdio::null())
+        .stdout(Stdio::null())
+        .stderr(Stdio::null())
+        .status()
+        .context("Failed to run `zellij action close-pane -p ID`")?;
+
+    Ok(())
+}
+
 pub struct AppState {
     current_exercise_ind: usize,
     exercises: Vec<Exercise>,
@@ -61,12 +100,15 @@ pub struct AppState {
     official_exercises: bool,
     cmd_runner: CmdRunner,
     emit_file_links: bool,
+    zellij: bool,
+    open_pane: Option<(String, u32, usize)>,
 }
 
 impl AppState {
     pub fn new(
         exercise_infos: Vec<ExerciseInfo>,
         final_message: &'static str,
+        zellij: bool,
     ) -> Result<(Self, StateFileStatus)> {
         let cmd_runner = CmdRunner::build()?;
         let mut state_file = OpenOptions::new()
@@ -175,6 +217,8 @@ impl AppState {
             cmd_runner,
             // VS Code has its own file link handling
             emit_file_links: env::var_os("TERM_PROGRAM").is_none_or(|v| v != "vscode"),
+            zellij,
+            open_pane: None,
         };
 
         Ok((slf, state_file_status))
@@ -553,6 +597,86 @@ impl AppState {
 
         Ok(())
     }
+
+    pub fn close_pane(&mut self) -> Result<()> {
+        if let Some((pane_id_str, _, _)) = self.open_pane.take() {
+            close_pane(&pane_id_str)?;
+        }
+
+        Ok(())
+    }
+
+    pub fn edit_cmd(&mut self) -> Result<EditCmdJoinHandle> {
+        if !self.zellij {
+            return Ok(EditCmdJoinHandle(None));
+        }
+
+        let open_pane = self.open_pane.take();
+        let current_exercise_ind = self.current_exercise_ind;
+        let mut edit_cmd = Command::new("zellij");
+        edit_cmd
+            .arg("action")
+            .arg("edit")
+            .arg(&self.current_exercise().path)
+            .stdin(Stdio::null())
+            .stderr(Stdio::null());
+
+        let handle = thread::Builder::new()
+            .spawn(move || {
+                if let Some((pane_id_str, pane_id, exercise_ind)) = open_pane {
+                    if exercise_ind == current_exercise_ind {
+                        // Check if the pane is still open
+                        let mut output = Command::new("zellij")
+                            .arg("action")
+                            .arg("list-panes")
+                            .arg("-j")
+                            .stdin(Stdio::null())
+                            .stderr(Stdio::null())
+                            .output()
+                            .context("Failed to run `zellij action list-panes -j`")?;
+
+                        if !output.status.success() {
+                            bail!("`zellij action list-panes -j` didn't exit successfully");
+                        }
+
+                        // Remove newline
+                        output.stdout.pop();
+
+                        let panes = serde_json::de::from_slice::<Vec<Pane>>(&output.stdout)
+                            .context(
+                                "Failed to parse the output of `zellij action list-panes -j`",
+                            )?;
+
+                        if panes.iter().any(|pane| pane.id == pane_id) {
+                            return Ok((pane_id_str, pane_id));
+                        }
+                    } else {
+                        close_pane(&pane_id_str)?;
+                    }
+                }
+
+                let output = edit_cmd.output()?;
+
+                if !output.status.success() {
+                    bail!("Failed to open a new Zellij editor pane");
+                }
+
+                parse_pane_id(&output.stdout)
+                    .context("Failed to parse the ID of the new Zellij pane")
+            })
+            .context("Failed to spawn a thread to open and close Zellij panes")?;
+
+        Ok(EditCmdJoinHandle(Some(handle)))
+    }
+
+    pub fn join_edit_cmd(&mut self, handle: EditCmdJoinHandle) -> Result<()> {
+        if let Some(handle) = handle.0 {
+            let (pane_id_str, pane_id) = handle.join().unwrap()?;
+            self.open_pane = Some((pane_id_str, pane_id, self.current_exercise_ind));
+        }
+
+        Ok(())
+    }
 }
 
 const BAD_INDEX_ERR: &str = "The current exercise index is higher than the number of exercises";
@@ -608,6 +732,8 @@ mod tests {
             official_exercises: true,
             cmd_runner: CmdRunner::build().unwrap(),
             emit_file_links: true,
+            zellij: false,
+            open_pane: None,
         };
 
         let mut assert = |done: [bool; 3], expected: [Option<usize>; 3]| {

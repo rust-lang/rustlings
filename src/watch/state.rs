@@ -78,13 +78,15 @@ impl<'a> WatchState<'a> {
         // Ignore any input until running the exercise is done.
         let _input_pause_guard = InputPauseGuard::scoped_pause();
 
-        self.show_hint = false;
-
         writeln!(
             stdout,
             "\nChecking the exercise `{}`. Please wait…",
             self.app_state.current_exercise().name,
         )?;
+
+        let edit_cmd_handle = self.app_state.edit_cmd()?;
+
+        self.show_hint = false;
 
         let success = self
             .app_state
@@ -105,7 +107,9 @@ impl<'a> WatchState<'a> {
             self.done_status = DoneStatus::Pending;
         }
 
+        self.app_state.join_edit_cmd(edit_cmd_handle)?;
         self.render(stdout)?;
+
         Ok(())
     }
 
@@ -127,9 +131,10 @@ impl<'a> WatchState<'a> {
 
                 match answer[0] {
                     b'y' | b'Y' => {
+                        self.app_state.close_pane()?;
                         self.app_state.reset_current_exercise()?;
 
-                        // The file watcher reruns the exercise otherwise.
+                        // The file watcher reruns the exercise otherwise
                         if self.manual_run {
                             self.run_current_exercise(stdout)?;
                         }
