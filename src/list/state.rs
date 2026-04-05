@@ -303,7 +303,6 @@ impl<'a> ListState<'a> {
         self.scroll_state.set_n_rows(n_rows);
     }
 
-    #[inline]
     pub fn filter(&self) -> Filter {
         self.filter
     }
@@ -313,22 +312,18 @@ impl<'a> ListState<'a> {
         self.update_rows();
     }
 
-    #[inline]
     pub fn select_next(&mut self) {
         self.scroll_state.select_next();
     }
 
-    #[inline]
     pub fn select_previous(&mut self) {
         self.scroll_state.select_previous();
     }
 
-    #[inline]
     pub fn select_first(&mut self) {
         self.scroll_state.select_first();
     }
 
-    #[inline]
     pub fn select_last(&mut self) {
         self.scroll_state.select_last();
     }

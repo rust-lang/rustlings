@@ -158,7 +158,6 @@ pub trait RunnableExercise {
 
     /// Compile, check and run the exercise.
     /// The output is written to the `output` buffer after clearing it.
-    #[inline]
     fn run_exercise(&self, output: Option<&mut Vec<u8>>, cmd_runner: &CmdRunner) -> Result<bool> {
         self.run::<false>(self.name(), output, cmd_runner)
     }
@@ -201,22 +200,18 @@ pub trait RunnableExercise {
 }
 
 impl RunnableExercise for Exercise {
-    #[inline]
     fn name(&self) -> &str {
         self.name
     }
 
-    #[inline]
     fn dir(&self) -> Option<&str> {
         self.dir
     }
 
-    #[inline]
     fn strict_clippy(&self) -> bool {
         self.strict_clippy
     }
 
-    #[inline]
     fn test(&self) -> bool {
         self.test
     }

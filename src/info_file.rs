@@ -23,7 +23,6 @@ pub struct ExerciseInfo {
     #[serde(default)]
     pub skip_check_unsolved: bool,
 }
-#[inline]
 const fn default_true() -> bool {
     true
 }
@@ -55,22 +54,18 @@ impl ExerciseInfo {
 }
 
 impl RunnableExercise for ExerciseInfo {
-    #[inline]
     fn name(&self) -> &str {
         self.name
     }
 
-    #[inline]
     fn dir(&self) -> Option<&str> {
         self.dir
     }
 
-    #[inline]
     fn strict_clippy(&self) -> bool {
         self.strict_clippy
     }
 
-    #[inline]
     fn test(&self) -> bool {
         self.test
     }

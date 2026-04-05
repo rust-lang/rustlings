@@ -27,7 +27,6 @@ static EXERCISE_RUNNING: AtomicBool = AtomicBool::new(false);
 pub struct InputPauseGuard(());
 
 impl InputPauseGuard {
-    #[inline]
     pub fn scoped_pause() -> Self {
         EXERCISE_RUNNING.store(true, Relaxed);
         Self(())
@@ -35,7 +34,6 @@ impl InputPauseGuard {
 }
 
 impl Drop for InputPauseGuard {
-    #[inline]
     fn drop(&mut self) {
         EXERCISE_RUNNING.store(false, Relaxed);
     }

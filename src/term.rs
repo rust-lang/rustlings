@@ -18,7 +18,6 @@ pub struct MaxLenWriter<'a, 'lock> {
 }
 
 impl<'a, 'lock> MaxLenWriter<'a, 'lock> {
-    #[inline]
     pub fn new(stdout: &'a mut StdoutLock<'lock>, max_len: usize) -> Self {
         Self {
             stdout,
@@ -28,7 +27,6 @@ impl<'a, 'lock> MaxLenWriter<'a, 'lock> {
     }
 
     // Additional is for emojis that take more space.
-    #[inline]
     pub fn add_to_len(&mut self, additional: usize) {
         self.len += additional;
     }
@@ -64,24 +62,20 @@ impl<'lock> CountedWrite<'lock> for MaxLenWriter<'_, 'lock> {
         Ok(())
     }
 
-    #[inline]
     fn stdout(&mut self) -> &mut StdoutLock<'lock> {
         self.stdout
     }
 }
 
 impl<'a> CountedWrite<'a> for StdoutLock<'a> {
-    #[inline]
     fn write_ascii(&mut self, ascii: &[u8]) -> io::Result<()> {
         self.write_all(ascii)
     }
 
-    #[inline]
     fn write_str(&mut self, unicode: &str) -> io::Result<()> {
         self.write_all(unicode.as_bytes())
     }
 
-    #[inline]
     fn stdout(&mut self) -> &mut StdoutLock<'a> {
         self
     }

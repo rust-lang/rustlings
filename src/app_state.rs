@@ -180,37 +180,30 @@ impl AppState {
         Ok((slf, state_file_status))
     }
 
-    #[inline]
     pub fn current_exercise_ind(&self) -> usize {
         self.current_exercise_ind
     }
 
-    #[inline]
     pub fn exercises(&self) -> &[Exercise] {
         &self.exercises
     }
 
-    #[inline]
     pub fn n_done(&self) -> u32 {
         self.n_done
     }
 
-    #[inline]
     pub fn n_pending(&self) -> u32 {
         self.exercises.len() as u32 - self.n_done
     }
 
-    #[inline]
     pub fn current_exercise(&self) -> &Exercise {
         &self.exercises[self.current_exercise_ind]
     }
 
-    #[inline]
     pub fn cmd_runner(&self) -> &CmdRunner {
         &self.cmd_runner
     }
 
-    #[inline]
     pub fn emit_file_links(&self) -> bool {
         self.emit_file_links
     }

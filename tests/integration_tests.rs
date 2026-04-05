@@ -19,19 +19,16 @@ struct Cmd<'a> {
 }
 
 impl<'a> Cmd<'a> {
-    #[inline]
     fn current_dir(&mut self, current_dir: &'a str) -> &mut Self {
         self.current_dir = Some(current_dir);
         self
     }
 
-    #[inline]
     fn args(&mut self, args: &'a [&'a str]) -> &mut Self {
         self.args = args;
         self
     }
 
-    #[inline]
     fn output(&mut self, output: Output<'a>) -> &mut Self {
         self.output = Some(output);
         self
@@ -70,13 +67,11 @@ impl<'a> Cmd<'a> {
         }
     }
 
-    #[inline]
     #[track_caller]
     fn success(&self) {
         self.assert(true);
     }
 
-    #[inline]
     #[track_caller]
     fn fail(&self) {
         self.assert(false);
