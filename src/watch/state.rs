@@ -17,9 +17,8 @@ use crate::{
     clear_terminal,
     exercise::{OUTPUT_CAPACITY, RunnableExercise, solution_link_line},
     term::progress_bar,
+    watch::{InputPauseGuard, WatchEvent, terminal_event::terminal_event_handler},
 };
-
-use super::{InputPauseGuard, WatchEvent, terminal_event::terminal_event_handler};
 
 const HEADING_ATTRIBUTES: Attributes = Attributes::none()
     .with(Attribute::Bold)

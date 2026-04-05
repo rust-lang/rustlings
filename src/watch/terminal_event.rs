@@ -4,7 +4,7 @@ use std::sync::{
     mpsc::{Receiver, Sender},
 };
 
-use super::{EXERCISE_RUNNING, WatchEvent};
+use crate::watch::{EXERCISE_RUNNING, WatchEvent};
 
 pub enum InputEvent {
     Next,

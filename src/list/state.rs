@@ -15,10 +15,9 @@ use std::{
 use crate::{
     app_state::AppState,
     exercise::Exercise,
+    list::scroll_state::ScrollState,
     term::{CountedWrite, MaxLenWriter, progress_bar},
 };
-
-use super::scroll_state::ScrollState;
 
 const COL_SPACING: usize = 2;
 const SELECTED_ROW_ATTRIBUTES: Attributes = Attributes::none()

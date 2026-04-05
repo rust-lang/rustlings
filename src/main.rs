@@ -1,6 +1,6 @@
 use anyhow::{Context, Result, bail};
 use app_state::StateFileStatus;
-use clap::{Parser, Subcommand};
+use clap::Parser;
 use std::{
     io::{self, IsTerminal, Write},
     path::Path,
@@ -8,10 +8,15 @@ use std::{
 };
 use term::{clear_terminal, press_enter_prompt};
 
-use self::{app_state::AppState, dev::DevCommands, info_file::InfoFile};
+use crate::{
+    app_state::AppState,
+    cli::{Args, Command},
+    info_file::InfoFile,
+};
 
 mod app_state;
 mod cargo_toml;
+mod cli;
 mod cmd;
 mod dev;
 mod embedded;
@@ -25,44 +30,6 @@ mod watch;
 
 const CURRENT_FORMAT_VERSION: u8 = 1;
 
-/// Rustlings is a collection of small exercises to get you used to writing and reading Rust code
-#[derive(Parser)]
-#[command(version)]
-struct Args {
-    #[command(subcommand)]
-    command: Option<Subcommands>,
-    /// Manually run the current exercise using `r` in the watch mode.
-    /// Only use this if Rustlings fails to detect exercise file changes.
-    #[arg(long)]
-    manual_run: bool,
-}
-
-#[derive(Subcommand)]
-enum Subcommands {
-    /// Initialize the official Rustlings exercises
-    Init,
-    /// Run a single exercise. Runs the next pending exercise if the exercise name is not specified
-    Run {
-        /// The name of the exercise
-        name: Option<String>,
-    },
-    /// Check all the exercises, marking them as done or pending accordingly.
-    CheckAll,
-    /// Reset a single exercise
-    Reset {
-        /// The name of the exercise
-        name: String,
-    },
-    /// Show a hint. Shows the hint of the next pending exercise if the exercise name is not specified
-    Hint {
-        /// The name of the exercise
-        name: Option<String>,
-    },
-    /// Commands for developing (community) Rustlings exercises
-    #[command(subcommand)]
-    Dev(DevCommands),
-}
-
 fn main() -> Result<ExitCode> {
     let args = Args::parse();
 
@@ -72,8 +39,8 @@ fn main() -> Result<ExitCode> {
 
     'priority_cmd: {
         match args.command {
-            Some(Subcommands::Init) => init::init().context("Initialization failed")?,
-            Some(Subcommands::Dev(dev_command)) => dev_command.run()?,
+            Some(Command::Init) => init::init().context("Initialization failed")?,
+            Some(Command::Dev(dev_command)) => dev_command.run()?,
             _ => break 'priority_cmd,
         }
 
@@ -141,13 +108,13 @@ fn main() -> Result<ExitCode> {
 
             watch::watch(&mut app_state, notify_exercise_names)?;
         }
-        Some(Subcommands::Run { name }) => {
+        Some(Command::Run { name }) => {
             if let Some(name) = name {
                 app_state.set_current_exercise_by_name(&name)?;
             }
             return run::run(&mut app_state);
         }
-        Some(Subcommands::CheckAll) => {
+        Some(Command::CheckAll) => {
             let mut stdout = io::stdout().lock();
             if let Some(first_pending_exercise_ind) = app_state.check_all_exercises(&mut stdout)? {
                 if app_state.current_exercise().done {
@@ -175,19 +142,19 @@ fn main() -> Result<ExitCode> {
 
             app_state.render_final_message(&mut stdout)?;
         }
-        Some(Subcommands::Reset { name }) => {
+        Some(Command::Reset { name }) => {
             app_state.set_current_exercise_by_name(&name)?;
             let exercise_path = app_state.reset_current_exercise()?;
             println!("The exercise {exercise_path} has been reset");
         }
-        Some(Subcommands::Hint { name }) => {
+        Some(Command::Hint { name }) => {
             if let Some(name) = name {
                 app_state.set_current_exercise_by_name(&name)?;
             }
             println!("{}", app_state.current_exercise().hint);
         }
         // Handled in an earlier match.
-        Some(Subcommands::Init | Subcommands::Dev(_)) => (),
+        Some(Command::Init | Command::Dev(_)) => (),
     }
 
     Ok(ExitCode::SUCCESS)

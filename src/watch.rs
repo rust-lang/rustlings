@@ -13,9 +13,8 @@ use std::{
 use crate::{
     app_state::{AppState, ExercisesProgress},
     list,
+    watch::{notify_event::NotifyEventHandler, state::WatchState, terminal_event::InputEvent},
 };
-
-use self::{notify_event::NotifyEventHandler, state::WatchState, terminal_event::InputEvent};
 
 mod notify_event;
 mod state;

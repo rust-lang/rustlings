@@ -7,7 +7,7 @@ mod new;
 mod update;
 
 #[derive(Subcommand)]
-pub enum DevCommands {
+pub enum DevCommand {
     /// Create a new project for community exercises
     New {
         /// The path to create the project in
@@ -26,7 +26,7 @@ pub enum DevCommands {
     Update,
 }
 
-impl DevCommands {
+impl DevCommand {
     pub fn run(self) -> Result<()> {
         match self {
             Self::New { path, no_git } => {

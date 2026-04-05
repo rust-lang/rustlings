@@ -11,9 +11,10 @@ use crossterm::{
 };
 use std::io::{self, StdoutLock, Write};
 
-use crate::app_state::AppState;
-
-use self::state::{Filter, ListState};
+use crate::{
+    app_state::AppState,
+    list::state::{Filter, ListState},
+};
 
 mod scroll_state;
 mod state;
