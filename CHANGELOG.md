@@ -2,8 +2,14 @@
 
 ## Unreleased
 
+### Fixed
+
+- Fix integer overflow on big terminal widths [@gabfec](https://github.com/gabfec)
+- Fix workspace detection on Windows [@senekor](https://github.com/senekor)
+
 ### Changed
 
+- Avoid initializing a nested Git repository [@senekor](https://github.com/senekor)
 - `vecs2`: Removed the use of `map` and `collect`, which are only taught later.
 
 ## 6.5.0 (2025-08-21)
