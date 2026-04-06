@@ -334,12 +334,10 @@ impl AppState {
         Ok(())
     }
 
-    pub fn reset_current_exercise(&mut self) -> Result<&str> {
+    pub fn reset_current_exercise(&mut self) -> Result<()> {
         self.set_pending(self.current_exercise_ind)?;
         let exercise = self.current_exercise();
-        self.reset(self.current_exercise_ind, exercise.path)?;
-
-        Ok(exercise.path)
+        self.reset(self.current_exercise_ind, exercise.path)
     }
 
     // Reset the exercise by index and return its name.

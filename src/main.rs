@@ -149,8 +149,13 @@ fn main() -> Result<ExitCode> {
         }
         Some(Command::Reset { name }) => {
             app_state.set_current_exercise_by_name(&name)?;
-            let exercise_path = app_state.reset_current_exercise()?;
-            println!("The exercise {exercise_path} has been reset");
+            app_state.reset_current_exercise()?;
+
+            let current_exercise = app_state.current_exercise();
+            let mut stdout = io::stdout().lock();
+            stdout.write_all(b"The exercise ")?;
+            current_exercise.terminal_file_link(&mut stdout, app_state.emit_file_links())?;
+            stdout.write_all(b" has been reset\n")?;
         }
         Some(Command::Hint { name }) => {
             if let Some(name) = name {

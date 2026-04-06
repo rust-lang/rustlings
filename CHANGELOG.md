@@ -4,7 +4,7 @@
 
 ### Added
 
-- Show the file link of the current exercise when running `rustlings hint`
+- Show the file link of the current exercise when running `rustlings hint` and `rustlings reset`
 
 ### Fixed
 
