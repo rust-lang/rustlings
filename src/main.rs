@@ -2,6 +2,7 @@ use anyhow::{Context, Result, bail};
 use app_state::StateFileStatus;
 use clap::Parser;
 use std::{
+    env,
     io::{self, IsTerminal, Write},
     path::Path,
     process::ExitCode,
@@ -60,11 +61,13 @@ fn main() -> Result<ExitCode> {
         bail!(FORMAT_VERSION_HIGHER_ERR);
     }
 
-    let editor = Editor::new(args.edit_cmd)?;
+    let vs_code_term = env::var_os("TERM_PROGRAM").is_some_and(|v| v == "vscode");
+    let editor = Editor::new(args.edit_cmd, vs_code_term)?;
     let (mut app_state, state_file_status) = AppState::new(
         info_file.exercises,
         info_file.final_message.unwrap_or_default(),
         editor,
+        vs_code_term,
     )?;
 
     // Show the welcome message if the state file doesn't exist yet.

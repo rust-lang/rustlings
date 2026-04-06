@@ -69,6 +69,7 @@ impl AppState {
         exercise_infos: Vec<ExerciseInfo>,
         final_message: &'static str,
         editor: Option<Editor>,
+        vs_code_term: bool,
     ) -> Result<(Self, StateFileStatus)> {
         let cmd_runner = CmdRunner::build()?;
         let mut state_file = OpenOptions::new()
@@ -178,7 +179,7 @@ impl AppState {
             official_exercises: !Path::new("info.toml").exists(),
             cmd_runner,
             // VS Code has its own file link handling
-            emit_file_links: !matches!(editor, Some(Editor::VSCode)),
+            emit_file_links: !vs_code_term,
             editor,
         };
 

@@ -1,4 +1,5 @@
 use std::{
+    borrow::Cow,
     env,
     process::{Command, Stdio},
     thread::{self, JoinHandle},
@@ -28,16 +29,29 @@ fn run_cmd(cmd: &mut Command) -> Result<Vec<u8>> {
     Ok(output.stdout)
 }
 
+fn program_exists(program: &str) -> bool {
+    Command::new(program)
+        .arg("--version")
+        .stdin(Stdio::null())
+        .stdout(Stdio::null())
+        .stderr(Stdio::null())
+        .status()
+        .is_ok_and(|status| status.success())
+}
+
 pub enum Editor {
-    VSCode,
-    Cmd(String, Vec<String>),
+    Cmd(Cow<'static, str>, Vec<String>),
     Zellij(Option<(String, u32, usize)>),
 }
 
 impl Editor {
-    pub fn new(cmd: Option<String>) -> Result<Option<Self>> {
-        if env::var_os("TERM_PROGRAM").is_some_and(|v| v == "vscode") {
-            return Ok(Some(Self::VSCode));
+    pub fn new(cmd: Option<String>, vs_code_term: bool) -> Result<Option<Self>> {
+        if vs_code_term {
+            for program in ["code", "codium"] {
+                if program_exists(program) {
+                    return Ok(Some(Self::Cmd(Cow::Borrowed(program), Vec::new())));
+                }
+            }
         }
 
         if let Some(cmd) = cmd {
@@ -47,10 +61,10 @@ impl Editor {
             if shlex.had_error {
                 bail!("Failed to parse the command in `--edit-cmd`");
             }
-            return Ok(Some(Self::Cmd(program, args)));
+            return Ok(Some(Self::Cmd(Cow::Owned(program), args)));
         }
 
-        if env::var_os("ZELLIJ").is_some() {
+        if env::var_os("ZELLIJ").is_some() && program_exists("zellij") {
             return Ok(Some(Self::Zellij(None)));
         }
 
@@ -65,11 +79,8 @@ impl Editor {
         let handle = thread::Builder::new()
             .spawn(move || {
                 match &mut self {
-                    Editor::VSCode => {
-                        run_cmd(Command::new("code").arg(exercise_path))?;
-                    }
                     Editor::Cmd(program, args) => {
-                        run_cmd(Command::new(program).args(args).arg(exercise_path))?;
+                        run_cmd(Command::new(&**program).args(args).arg(exercise_path))?;
                     }
                     Editor::Zellij(open_pane) => {
                         if let Some((pane_id_str, pane_id, open_exercise_ind)) = open_pane {
@@ -105,7 +116,7 @@ impl Editor {
 
     pub fn close(&mut self) -> Result<()> {
         match self {
-            Editor::VSCode | Editor::Cmd(_, _) => (),
+            Editor::Cmd(_, _) => (),
             Editor::Zellij(open_pane) => {
                 if let Some((pane_id_str, _, _)) = open_pane.take() {
                     zellij::close_pane(&pane_id_str)?;
