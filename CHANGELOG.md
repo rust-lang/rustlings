@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Added
+
+- Show the file link of the current exercise when running `rustlings hint`
+
 ### Fixed
 
 - Fix integer overflow on big terminal widths [@gabfec](https://github.com/gabfec)

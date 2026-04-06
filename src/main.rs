@@ -156,7 +156,15 @@ fn main() -> Result<ExitCode> {
             if let Some(name) = name {
                 app_state.set_current_exercise_by_name(&name)?;
             }
-            println!("{}", app_state.current_exercise().hint);
+
+            let current_exercise = app_state.current_exercise();
+            let mut stdout = io::stdout().lock();
+            stdout.write_all(b"Current exercise: ")?;
+            current_exercise.terminal_file_link(&mut stdout, app_state.emit_file_links())?;
+
+            stdout.write_all(b"\n\nHint:\n")?;
+            stdout.write_all(current_exercise.hint.as_bytes())?;
+            stdout.write_all(b"\n")?;
         }
         // Handled in an earlier match.
         Some(Command::Init | Command::Dev(_)) => (),
