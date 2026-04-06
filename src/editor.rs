@@ -8,6 +8,25 @@ use anyhow::{Context, Result, bail};
 
 mod zellij;
 
+fn run_cmd(cmd: &mut Command) -> Result<Vec<u8>> {
+    let output = cmd
+        .stdin(Stdio::null())
+        .output()
+        .with_context(|| format!("Failed to run the command {cmd:?}"))?;
+
+    if !output.status.success() {
+        bail!(
+            "The command {cmd:?} didn't run successfully\n\n\
+            stdout:\n{}\n\n\
+            stderr:\n{}",
+            str::from_utf8(&output.stdout).unwrap_or_default(),
+            str::from_utf8(&output.stderr).unwrap_or_default(),
+        );
+    }
+
+    Ok(output.stdout)
+}
+
 pub enum Editor {
     VSCode,
     Cmd(String, Vec<String>),
@@ -39,32 +58,12 @@ impl Editor {
         let handle = thread::Builder::new()
             .spawn(move || match self {
                 Editor::VSCode => {
-                    if !Command::new("code")
-                        .arg(exercise_path)
-                        .stdin(Stdio::null())
-                        .stdout(Stdio::null())
-                        .stderr(Stdio::null())
-                        .status()
-                        .context("Failed to run `code` to open the current exercise file")?
-                        .success()
-                    {
-                        bail!("Failed to run `code PATH` to open the current exercise file");
-                    }
+                    run_cmd(Command::new("code").arg(exercise_path))?;
 
                     Ok(Self::VSCode)
                 }
                 Editor::Cmd(program, args) => {
-                    if !Command::new("code")
-                        .arg(exercise_path)
-                        .stdin(Stdio::null())
-                        .stdout(Stdio::null())
-                        .stderr(Stdio::null())
-                        .status()
-                        .context("Failed to run the command from `--edit-cmd`")
-                        .is_ok_and(|status| status.success())
-                    {
-                        bail!("Failed to run the command from `--edit-cmd`");
-                    }
+                    run_cmd(Command::new(&program).args(&args).arg(exercise_path))?;
 
                     Ok(Self::Cmd(program, args))
                 }
@@ -83,20 +82,14 @@ impl Editor {
                         }
                     }
 
-                    let output = Command::new("zellij")
-                        .arg("action")
-                        .arg("edit")
-                        .arg(exercise_path)
-                        .stdin(Stdio::null())
-                        .stderr(Stdio::null())
-                        .output()
-                        .context("Failed to run `zellij`")?;
+                    let stdout = run_cmd(
+                        Command::new("zellij")
+                            .arg("action")
+                            .arg("edit")
+                            .arg(exercise_path),
+                    )?;
 
-                    if !output.status.success() {
-                        bail!("Failed to open a new Zellij editor pane");
-                    }
-
-                    let (pane_id_str, pane_id) = zellij::parse_pane_id(&output.stdout)
+                    let (pane_id_str, pane_id) = zellij::parse_pane_id(&stdout)
                         .context("Failed to parse the ID of the new Zellij pane")?;
 
                     Ok(Self::Zellij(Some((pane_id_str, pane_id, exercise_ind))))

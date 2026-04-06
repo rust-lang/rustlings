@@ -1,7 +1,9 @@
-use std::process::{Command, Stdio};
+use std::process::Command;
 
-use anyhow::{Context, Result, bail};
+use anyhow::{Context, Result};
 use serde::Deserialize;
+
+use crate::editor::run_cmd;
 
 #[derive(Deserialize)]
 struct Pane {
@@ -24,39 +26,30 @@ pub fn parse_pane_id(b: &[u8]) -> Option<(String, u32)> {
 }
 
 pub fn pane_open(pane_id: u32) -> Result<bool> {
-    let mut output = Command::new("zellij")
-        .arg("action")
-        .arg("list-panes")
-        .arg("-j")
-        .stdin(Stdio::null())
-        .stderr(Stdio::null())
-        .output()
-        .context("Failed to run `zellij action list-panes -j`")?;
-
-    if !output.status.success() {
-        bail!("`zellij action list-panes -j` didn't exit successfully");
-    }
+    let mut stdout = run_cmd(
+        Command::new("zellij")
+            .arg("action")
+            .arg("list-panes")
+            .arg("-j"),
+    )?;
 
     // Remove newline
-    output.stdout.pop();
+    stdout.pop();
 
-    let panes = serde_json::de::from_slice::<Vec<Pane>>(&output.stdout)
+    let panes = serde_json::de::from_slice::<Vec<Pane>>(&stdout)
         .context("Failed to parse the output of `zellij action list-panes -j`")?;
 
     Ok(panes.iter().any(|pane| pane.id == pane_id))
 }
 
 pub fn close_pane(pane_id: &str) -> Result<()> {
-    Command::new("zellij")
-        .arg("action")
-        .arg("close-pane")
-        .arg("-p")
-        .arg(pane_id)
-        .stdin(Stdio::null())
-        .stdout(Stdio::null())
-        .stderr(Stdio::null())
-        .status()
-        .context("Failed to run `zellij action close-pane -p ID`")?;
+    run_cmd(
+        Command::new("zellij")
+            .arg("action")
+            .arg("close-pane")
+            .arg("-p")
+            .arg(pane_id),
+    )?;
 
     Ok(())
 }
