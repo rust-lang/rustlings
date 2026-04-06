@@ -62,7 +62,12 @@ fn main() -> Result<ExitCode> {
     }
 
     let vs_code_term = env::var_os("TERM_PROGRAM").is_some_and(|v| v == "vscode");
-    let editor = Editor::new(args.edit_cmd, vs_code_term)?;
+    let editor = if args.no_editor {
+        None
+    } else {
+        Editor::new(args.edit_cmd, vs_code_term)?
+    };
+
     let (mut app_state, state_file_status) = AppState::new(
         info_file.exercises,
         info_file.final_message.unwrap_or_default(),

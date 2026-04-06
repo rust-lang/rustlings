@@ -8,6 +8,10 @@ use crate::dev::DevCommand;
 pub struct Args {
     #[command(subcommand)]
     pub command: Option<Command>,
+    /// Disable automatic opening of the current file in VS Code or Zellij.
+    /// Ignores `--edit-cmd`
+    #[arg(long)]
+    pub no_editor: bool,
     /// Open the current exercise by running `EDIT_CMD EXERCISE_PATH`.
     /// The command is not allowed to block (e.g. `vim`).
     /// It should communicate with an editor in a different process.
