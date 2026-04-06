@@ -111,6 +111,7 @@ fn main() -> Result<ExitCode> {
             };
 
             watch::watch(&mut app_state, notify_exercise_names)?;
+            app_state.close_editor()?;
         }
         Some(Command::Run { name }) => {
             if let Some(name) = name {

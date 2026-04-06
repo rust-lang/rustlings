@@ -172,8 +172,7 @@ pub fn watch(
     watch_list_loop(app_state, notify_exercise_names)
 }
 
-const QUIT_MSG: &[u8] = b"
-
+const QUIT_MSG: &[u8] = b"q\n
 We hope you're enjoying learning Rust!
 If you want to continue working on the exercises at a later point, you can simply run `rustlings` again in this directory.
 ";
