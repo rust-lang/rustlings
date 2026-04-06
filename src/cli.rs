@@ -8,8 +8,14 @@ use crate::dev::DevCommand;
 pub struct Args {
     #[command(subcommand)]
     pub command: Option<Command>,
-    /// Open the current exercise by running the provided `EDIT_CMD EXERCISE_NAME`.
-    /// Ignored in VS Code
+    /// Open the current exercise by running `EDIT_CMD EXERCISE_PATH`.
+    /// The command is not allowed to block (e.g. `vim`).
+    /// It should communicate with an editor in a different process.
+    /// `EDIT_CMD` can contain arguments like `--edit-cmd "PROGRAM -x --arg1"`.
+    /// The current exercise's path is added by Rustlings as the last argument.
+    /// `--edit-cmd` is ignored in VS Code.
+    ///
+    /// Example: `--edit-cmd "code"` (default behavior if running in a VS Code terminal)
     #[arg(long)]
     pub edit_cmd: Option<String>,
     /// Manually run the current exercise using `r` in the watch mode.
