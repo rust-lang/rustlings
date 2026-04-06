@@ -52,6 +52,7 @@ notify = "8"
 rustlings-macros = { path = "rustlings-macros", version = "=6.5.0" }
 serde_json = "1"
 serde.workspace = true
+shlex = "1"
 toml.workspace = true
 
 [target.'cfg(not(windows))'.dependencies]

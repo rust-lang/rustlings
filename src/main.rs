@@ -60,10 +60,11 @@ fn main() -> Result<ExitCode> {
         bail!(FORMAT_VERSION_HIGHER_ERR);
     }
 
+    let editor = Editor::new(args.edit_cmd)?;
     let (mut app_state, state_file_status) = AppState::new(
         info_file.exercises,
         info_file.final_message.unwrap_or_default(),
-        Editor::new(args.edit_cmd),
+        editor,
     )?;
 
     // Show the welcome message if the state file doesn't exist yet.

@@ -5,6 +5,7 @@ use std::{
 };
 
 use anyhow::{Context, Result, bail};
+use shlex::Shlex;
 
 mod zellij;
 
@@ -34,20 +35,26 @@ pub enum Editor {
 }
 
 impl Editor {
-    pub fn new(cmd: Option<String>) -> Option<Self> {
+    pub fn new(cmd: Option<String>) -> Result<Option<Self>> {
         if env::var_os("TERM_PROGRAM").is_some_and(|v| v == "vscode") {
-            return Some(Self::VSCode);
+            return Ok(Some(Self::VSCode));
         }
 
         if let Some(cmd) = cmd {
-            todo!()
+            let shlex = &mut Shlex::new(&cmd);
+            let program = shlex.next().context("Program missing in `--edit-cmd`")?;
+            let args = shlex.collect();
+            if shlex.had_error {
+                bail!("Failed to parse the command in `--edit-cmd`");
+            }
+            return Ok(Some(Self::Cmd(program, args)));
         }
 
         if env::var_os("ZELLIJ").is_some() {
-            return Some(Self::Zellij(None));
+            return Ok(Some(Self::Zellij(None)));
         }
 
-        None
+        Ok(None)
     }
 
     pub fn open(
