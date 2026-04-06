@@ -84,7 +84,7 @@ impl<'a> WatchState<'a> {
             self.app_state.current_exercise().name,
         )?;
 
-        let edit_cmd_handle = self.app_state.edit_cmd()?;
+        let editor_handle = self.app_state.open_editor()?;
 
         self.show_hint = false;
 
@@ -107,7 +107,7 @@ impl<'a> WatchState<'a> {
             self.done_status = DoneStatus::Pending;
         }
 
-        self.app_state.join_edit_cmd(edit_cmd_handle)?;
+        self.app_state.join_editor_handle(editor_handle)?;
         self.render(stdout)?;
 
         Ok(())
@@ -131,7 +131,7 @@ impl<'a> WatchState<'a> {
 
                 match answer[0] {
                     b'y' | b'Y' => {
-                        self.app_state.close_pane()?;
+                        self.app_state.close_editor()?;
                         self.app_state.reset_current_exercise()?;
 
                         // The file watcher reruns the exercise otherwise

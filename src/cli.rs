@@ -8,13 +8,14 @@ use crate::dev::DevCommand;
 pub struct Args {
     #[command(subcommand)]
     pub command: Option<Command>,
+    /// Open the current exercise by running the provided `EDIT_CMD EXERCISE_NAME`.
+    /// Ignored in VS Code
+    #[arg(long)]
+    pub edit_cmd: Option<String>,
     /// Manually run the current exercise using `r` in the watch mode.
     /// Only use this if Rustlings fails to detect exercise file changes
     #[arg(long)]
     pub manual_run: bool,
-    /// Open the current exercise in a new Zellij pane and close the last one if exists
-    #[arg(long)]
-    pub zellij: bool,
 }
 
 #[derive(Subcommand)]

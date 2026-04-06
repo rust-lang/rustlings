@@ -11,6 +11,7 @@ use term::{clear_terminal, press_enter_prompt};
 use crate::{
     app_state::AppState,
     cli::{Args, Command},
+    editor::Editor,
     info_file::InfoFile,
 };
 
@@ -19,6 +20,7 @@ mod cargo_toml;
 mod cli;
 mod cmd;
 mod dev;
+mod editor;
 mod embedded;
 mod exercise;
 mod info_file;
@@ -61,7 +63,7 @@ fn main() -> Result<ExitCode> {
     let (mut app_state, state_file_status) = AppState::new(
         info_file.exercises,
         info_file.final_message.unwrap_or_default(),
-        args.zellij,
+        Editor::new(args.edit_cmd),
     )?;
 
     // Show the welcome message if the state file doesn't exist yet.

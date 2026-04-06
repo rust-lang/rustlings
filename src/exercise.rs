@@ -69,7 +69,7 @@ pub struct Exercise {
     pub name: &'static str,
     pub dir: Option<&'static str>,
     /// Path of the exercise file starting with the `exercises/` directory.
-    pub path: String,
+    pub path: &'static str,
     pub canonical_path: Option<String>,
     pub test: bool,
     pub strict_clippy: bool,
@@ -85,9 +85,9 @@ impl Exercise {
     ) -> io::Result<()> {
         file_path(writer, Color::Blue, |writer| {
             if emit_file_links && let Some(canonical_path) = self.canonical_path.as_deref() {
-                terminal_file_link(writer, &self.path, canonical_path)
+                terminal_file_link(writer, self.path, canonical_path)
             } else {
-                writer.write_str(&self.path)
+                writer.write_str(self.path)
             }
         })
     }

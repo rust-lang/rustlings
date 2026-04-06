@@ -1,9 +1,7 @@
 use anyhow::{Context, Error, Result, bail};
 use crossterm::{QueueableCommand, cursor, terminal};
-use serde::Deserialize;
 use std::{
     collections::HashSet,
-    env,
     fs::{File, OpenOptions},
     io::{Read, Seek, StdoutLock, Write},
     path::{MAIN_SEPARATOR_STR, Path},
@@ -12,12 +10,13 @@ use std::{
         atomic::{AtomicUsize, Ordering::Relaxed},
         mpsc,
     },
-    thread::{self, JoinHandle},
+    thread,
 };
 
 use crate::{
     clear_terminal,
     cmd::CmdRunner,
+    editor::{Editor, EditorJoinHandle},
     embedded::EMBEDDED_FILES,
     exercise::{Exercise, RunnableExercise},
     info_file::ExerciseInfo,
@@ -50,44 +49,6 @@ pub enum CheckProgress {
     Pending,
 }
 
-#[derive(Deserialize)]
-struct Pane {
-    id: u32,
-}
-
-#[must_use]
-pub struct EditCmdJoinHandle(Option<JoinHandle<Result<(String, u32)>>>);
-
-fn parse_pane_id(b: &[u8]) -> Option<(String, u32)> {
-    // Remove newline
-    let b = b.get("terminal_".len()..b.len().saturating_sub(1))?;
-    let id_str = str::from_utf8(b).ok()?;
-
-    let (first, rest) = b.split_first()?;
-    let mut id = u32::from(first - b'0');
-
-    for c in rest {
-        id = 10 * id + u32::from(c - b'0');
-    }
-
-    Some((id_str.to_owned(), id))
-}
-
-fn close_pane(pane_id: &str) -> Result<()> {
-    Command::new("zellij")
-        .arg("action")
-        .arg("close-pane")
-        .arg("-p")
-        .arg(pane_id)
-        .stdin(Stdio::null())
-        .stdout(Stdio::null())
-        .stderr(Stdio::null())
-        .status()
-        .context("Failed to run `zellij action close-pane -p ID`")?;
-
-    Ok(())
-}
-
 pub struct AppState {
     current_exercise_ind: usize,
     exercises: Vec<Exercise>,
@@ -100,15 +61,14 @@ pub struct AppState {
     official_exercises: bool,
     cmd_runner: CmdRunner,
     emit_file_links: bool,
-    zellij: bool,
-    open_pane: Option<(String, u32, usize)>,
+    editor: Option<Editor>,
 }
 
 impl AppState {
     pub fn new(
         exercise_infos: Vec<ExerciseInfo>,
         final_message: &'static str,
-        zellij: bool,
+        editor: Option<Editor>,
     ) -> Result<(Self, StateFileStatus)> {
         let cmd_runner = CmdRunner::build()?;
         let mut state_file = OpenOptions::new()
@@ -150,7 +110,9 @@ impl AppState {
                 Exercise {
                     name: exercise_info.name,
                     dir: exercise_info.dir,
-                    path: exercise_info.path(),
+                    // Leaking for `Editor::open`.
+                    // Leaking is fine since the app state exists until the end of the program.
+                    path: exercise_info.path().leak(),
                     canonical_path,
                     test: exercise_info.test,
                     strict_clippy: exercise_info.strict_clippy,
@@ -216,9 +178,8 @@ impl AppState {
             official_exercises: !Path::new("info.toml").exists(),
             cmd_runner,
             // VS Code has its own file link handling
-            emit_file_links: env::var_os("TERM_PROGRAM").is_none_or(|v| v != "vscode"),
-            zellij,
-            open_pane: None,
+            emit_file_links: !matches!(editor, Some(Editor::VSCode)),
+            editor,
         };
 
         Ok((slf, state_file_status))
@@ -376,9 +337,9 @@ impl AppState {
     pub fn reset_current_exercise(&mut self) -> Result<&str> {
         self.set_pending(self.current_exercise_ind)?;
         let exercise = self.current_exercise();
-        self.reset(self.current_exercise_ind, &exercise.path)?;
+        self.reset(self.current_exercise_ind, exercise.path)?;
 
-        Ok(&exercise.path)
+        Ok(exercise.path)
     }
 
     // Reset the exercise by index and return its name.
@@ -389,7 +350,7 @@ impl AppState {
 
         self.set_pending(exercise_ind)?;
         let exercise = &self.exercises[exercise_ind];
-        self.reset(exercise_ind, &exercise.path)?;
+        self.reset(exercise_ind, exercise.path)?;
 
         Ok(exercise.name)
     }
@@ -598,81 +559,23 @@ impl AppState {
         Ok(())
     }
 
-    pub fn close_pane(&mut self) -> Result<()> {
-        if let Some((pane_id_str, _, _)) = self.open_pane.take() {
-            close_pane(&pane_id_str)?;
+    pub fn open_editor(&mut self) -> Result<EditorJoinHandle> {
+        if let Some(editor) = self.editor.take() {
+            return editor.open(self.current_exercise_ind, self.current_exercise().path);
         }
+
+        Ok(EditorJoinHandle::default())
+    }
+
+    pub fn join_editor_handle(&mut self, handle: EditorJoinHandle) -> Result<()> {
+        self.editor = handle.join()?;
 
         Ok(())
     }
 
-    pub fn edit_cmd(&mut self) -> Result<EditCmdJoinHandle> {
-        if !self.zellij {
-            return Ok(EditCmdJoinHandle(None));
-        }
-
-        let open_pane = self.open_pane.take();
-        let current_exercise_ind = self.current_exercise_ind;
-        let mut edit_cmd = Command::new("zellij");
-        edit_cmd
-            .arg("action")
-            .arg("edit")
-            .arg(&self.current_exercise().path)
-            .stdin(Stdio::null())
-            .stderr(Stdio::null());
-
-        let handle = thread::Builder::new()
-            .spawn(move || {
-                if let Some((pane_id_str, pane_id, exercise_ind)) = open_pane {
-                    if exercise_ind == current_exercise_ind {
-                        // Check if the pane is still open
-                        let mut output = Command::new("zellij")
-                            .arg("action")
-                            .arg("list-panes")
-                            .arg("-j")
-                            .stdin(Stdio::null())
-                            .stderr(Stdio::null())
-                            .output()
-                            .context("Failed to run `zellij action list-panes -j`")?;
-
-                        if !output.status.success() {
-                            bail!("`zellij action list-panes -j` didn't exit successfully");
-                        }
-
-                        // Remove newline
-                        output.stdout.pop();
-
-                        let panes = serde_json::de::from_slice::<Vec<Pane>>(&output.stdout)
-                            .context(
-                                "Failed to parse the output of `zellij action list-panes -j`",
-                            )?;
-
-                        if panes.iter().any(|pane| pane.id == pane_id) {
-                            return Ok((pane_id_str, pane_id));
-                        }
-                    } else {
-                        close_pane(&pane_id_str)?;
-                    }
-                }
-
-                let output = edit_cmd.output()?;
-
-                if !output.status.success() {
-                    bail!("Failed to open a new Zellij editor pane");
-                }
-
-                parse_pane_id(&output.stdout)
-                    .context("Failed to parse the ID of the new Zellij pane")
-            })
-            .context("Failed to spawn a thread to open and close Zellij panes")?;
-
-        Ok(EditCmdJoinHandle(Some(handle)))
-    }
-
-    pub fn join_edit_cmd(&mut self, handle: EditCmdJoinHandle) -> Result<()> {
-        if let Some(handle) = handle.0 {
-            let (pane_id_str, pane_id) = handle.join().unwrap()?;
-            self.open_pane = Some((pane_id_str, pane_id, self.current_exercise_ind));
+    pub fn close_editor(&mut self) -> Result<()> {
+        if let Some(editor) = &mut self.editor {
+            editor.close()?;
         }
 
         Ok(())
@@ -711,7 +614,7 @@ mod tests {
         Exercise {
             name: "0",
             dir: None,
-            path: String::from("exercises/0.rs"),
+            path: "exercises/0.rs",
             canonical_path: None,
             test: false,
             strict_clippy: false,
@@ -732,8 +635,7 @@ mod tests {
             official_exercises: true,
             cmd_runner: CmdRunner::build().unwrap(),
             emit_file_links: true,
-            zellij: false,
-            open_pane: None,
+            editor: None,
         };
 
         let mut assert = |done: [bool; 3], expected: [Option<usize>; 3]| {
