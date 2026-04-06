@@ -4,7 +4,6 @@ use std::{
 };
 
 enum Output<'a> {
-    FullStdout(&'a [u8]),
     PartialStdout(&'a str),
     PartialStderr(&'a str),
 }
@@ -47,9 +46,6 @@ impl<'a> Cmd<'a> {
         let output = cmd.output().unwrap();
         match self.output {
             None => (),
-            Some(FullStdout(stdout)) => {
-                assert_eq!(output.stdout, stdout);
-            }
             Some(PartialStdout(stdout)) => {
                 assert!(from_utf8(&output.stdout).unwrap().contains(stdout));
             }
@@ -129,7 +125,7 @@ fn hint() {
     Cmd::default()
         .current_dir("tests/test_exercises")
         .args(&["hint", "test_failure"])
-        .output(FullStdout(b"The answer to everything: 42\n"))
+        .output(PartialStdout("\n\nHint:\nThe answer to everything: 42\n"))
         .success();
 }
 
