@@ -832,6 +832,21 @@ dir = "16_lifetimes"
 test = false
 hint = """Let the compiler guide you :)"""
 
+[[exercises]]
+name = "lifetimes4"
+dir = "16_lifetimes"
+test = false
+hint = """
+Lifetimes can be elided if the compiler can infer a sensible default choice:
+https://doc.rust-lang.org/reference/lifetime-elision.html
+
+In most cases, the default choice is correct.
+But occasionally, the default choice does not follow our intent.
+Can you spot an elided lifetime which might not be correct?
+You can think about what the compiler's default choice is for every elided lifetime.
+Where could you add an explicit lifetime annotation to better express what we want?
+"""
+
 # TESTS
 
 [[exercises]]
