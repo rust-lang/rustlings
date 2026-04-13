@@ -19,6 +19,7 @@
 
 - Avoid initializing a nested Git repository [@senekor](https://github.com/senekor)
 - `vecs2`: Removed the use of `map` and `collect`, which are only taught later.
+- `structs3`: Rewrote the exercise to make users type method syntax themselves.
 
 ## 6.5.0 (2025-08-21)
 
