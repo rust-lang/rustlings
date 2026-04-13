@@ -22,13 +22,7 @@ fn add_rockets(fireworks: &mut Fireworks, rockets: usize) {
 
 // TODO: Turn this function into a method on `Fireworks`.
 fn start(fireworks: Fireworks) -> String {
-    if fireworks.rockets < 5 {
-        String::from("small")
-    } else if fireworks.rockets < 20 {
-        String::from("medium")
-    } else {
-        String::from("big")
-    }
+    "🚀".repeat(fireworks.rockets)
 }
 
 fn main() {
@@ -41,18 +35,17 @@ mod tests {
 
     #[test]
     fn start_some_fireworks() {
+        let f = Fireworks::new();
+        assert_eq!(f.start(), "");
+
         let mut f = Fireworks::new();
         f.add_rockets(3);
-        assert_eq!(f.start(), "small");
+        assert_eq!(f.start(), "🚀🚀🚀");
 
         let mut f = Fireworks::new();
-        f.add_rockets(15);
-        assert_eq!(f.start(), "medium");
-
-        let mut f = Fireworks::new();
-        f.add_rockets(100);
+        f.add_rockets(7);
         // We don't use method syntax in the last test to ensure the `start`
         // function takes ownership of the fireworks.
-        assert_eq!(Fireworks::start(f), "big");
+        assert_eq!(Fireworks::start(f), "🚀🚀🚀🚀🚀🚀🚀");
     }
 }
