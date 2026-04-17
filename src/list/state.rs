@@ -233,15 +233,38 @@ impl<'a> ListState<'a> {
             )?;
             next_ln(stdout)?;
 
+            let hotkey = |writer: &mut MaxLenWriter, hotkey| -> io::Result<()> {
+                writer
+                    .stdout
+                    .queue(SetForegroundColor(Color::Yellow))?
+                    .queue(SetAttribute(Attribute::Bold))?;
+                writer.write_ascii(hotkey)?;
+                writer.stdout.queue(ResetColor)?;
+                Ok(())
+            };
+
             let mut writer = MaxLenWriter::new(stdout, self.term_width as usize);
             if self.message.is_empty() {
                 // Help footer message
                 if self.scroll_state.selected().is_some() {
-                    writer.write_str("↓/j ↑/k home/g end/G | <c>ontinue at | <r>eset exercise")?;
+                    writer.write_str("↓/")?;
+                    hotkey(&mut writer, b"j")?;
+                    writer.write_str(" ↑/")?;
+                    hotkey(&mut writer, b"k")?;
+                    writer.write_ascii(b" home/")?;
+                    hotkey(&mut writer, b"g")?;
+                    writer.write_ascii(b" end/")?;
+                    hotkey(&mut writer, b"G")?;
+                    writer.write_ascii(b" | ")?;
+                    hotkey(&mut writer, b"c")?;
+                    writer.write_ascii(b"ontinue at | ")?;
+                    hotkey(&mut writer, b"r")?;
+                    writer.write_ascii(b"eset exercise")?;
                     next_ln(stdout)?;
                     writer = MaxLenWriter::new(stdout, self.term_width as usize);
 
-                    writer.write_ascii(b"<s>earch | filter ")?;
+                    hotkey(&mut writer, b"s")?;
+                    writer.write_ascii(b"earch | filter ")?;
                 } else {
                     // Nothing selected (and nothing shown), so only display filter and quit.
                     writer.write_ascii(b"filter ")?;
@@ -249,27 +272,41 @@ impl<'a> ListState<'a> {
 
                 match self.filter {
                     Filter::Done => {
+                        writer.stdout.queue(SetAttribute(Attribute::Underlined))?;
+                        hotkey(&mut writer, b"d")?;
                         writer
                             .stdout
                             .queue(SetForegroundColor(Color::Magenta))?
                             .queue(SetAttribute(Attribute::Underlined))?;
-                        writer.write_ascii(b"<d>one")?;
+                        writer.write_str("one")?;
                         writer.stdout.queue(ResetColor)?;
-                        writer.write_ascii(b"/<p>ending")?;
+                        writer.write_ascii(b"/")?;
+                        hotkey(&mut writer, b"p")?;
+                        writer.write_ascii(b"ending")?;
                     }
                     Filter::Pending => {
-                        writer.write_ascii(b"<d>one/")?;
+                        hotkey(&mut writer, b"d")?;
+                        writer.write_ascii(b"one/")?;
+                        writer.stdout.queue(SetAttribute(Attribute::Underlined))?;
+                        hotkey(&mut writer, b"p")?;
                         writer
                             .stdout
                             .queue(SetForegroundColor(Color::Magenta))?
                             .queue(SetAttribute(Attribute::Underlined))?;
-                        writer.write_ascii(b"<p>ending")?;
+                        writer.write_ascii(b"ending")?;
                         writer.stdout.queue(ResetColor)?;
                     }
-                    Filter::None => writer.write_ascii(b"<d>one/<p>ending")?,
+                    Filter::None => {
+                        hotkey(&mut writer, b"d")?;
+                        writer.write_ascii(b"one/")?;
+                        hotkey(&mut writer, b"p")?;
+                        writer.write_ascii(b"ending")?;
+                    }
                 }
 
-                writer.write_ascii(b" | <q>uit list")?;
+                writer.write_ascii(b" | ")?;
+                hotkey(&mut writer, b"q")?;
+                writer.write_ascii(b"uit list")?;
             } else {
                 writer.stdout.queue(SetForegroundColor(Color::Magenta))?;
                 writer.write_str(&self.message)?;
