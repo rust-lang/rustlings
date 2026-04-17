@@ -188,6 +188,8 @@ bin = [
   { name = "conversions4_sol", path = "../solutions/23_conversions/conversions4.rs" },
   { name = "conversions5", path = "../exercises/23_conversions/conversions5.rs" },
   { name = "conversions5_sol", path = "../solutions/23_conversions/conversions5.rs" },
+  { name = "async1", path = "../exercises/24_async/async1.rs" },
+  { name = "async1_sol", path = "../solutions/24_async/async1.rs" },
 ]
 
 [package]
@@ -195,6 +197,9 @@ name = "exercises"
 edition = "2024"
 # Don't publish the exercises on crates.io!
 publish = false
+
+[dependencies]
+tokio = { version = "1.52.1", features = ["rt"] }
 
 [profile.release]
 panic = "abort"
