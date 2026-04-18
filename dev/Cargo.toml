@@ -190,6 +190,8 @@ bin = [
   { name = "as_ref_mut_sol", path = "../solutions/23_conversions/as_ref_mut.rs" },
   { name = "async1", path = "../exercises/24_async/async1.rs" },
   { name = "async1_sol", path = "../solutions/24_async/async1.rs" },
+  { name = "async2", path = "../exercises/24_async/async2.rs" },
+  { name = "async2_sol", path = "../solutions/24_async/async2.rs" },
 ]
 
 [package]
@@ -199,7 +201,7 @@ edition = "2024"
 publish = false
 
 [dependencies]
-tokio = { version = "1.52.1", features = ["rt"] }
+tokio = { version = "1.52.1", features = ["rt", "sync", "time"] }
 
 [profile.release]
 panic = "abort"
