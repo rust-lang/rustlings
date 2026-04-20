@@ -233,7 +233,7 @@ impl<'a> ListState<'a> {
             )?;
             next_ln(stdout)?;
 
-            let hotkey = |writer: &mut MaxLenWriter, hotkey| -> io::Result<()> {
+            fn hotkey(writer: &mut MaxLenWriter, hotkey: &[u8]) -> io::Result<()> {
                 writer
                     .stdout
                     .queue(SetForegroundColor(Color::Yellow))?
@@ -241,7 +241,7 @@ impl<'a> ListState<'a> {
                 writer.write_ascii(hotkey)?;
                 writer.stdout.queue(ResetColor)?;
                 Ok(())
-            };
+            }
 
             let mut writer = MaxLenWriter::new(stdout, self.term_width as usize);
             if self.message.is_empty() {
