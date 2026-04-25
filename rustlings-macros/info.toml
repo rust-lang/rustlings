@@ -1199,3 +1199,24 @@ name = "as_ref_mut"
 dir = "23_conversions"
 hint = """
 Add `AsRef<str>` or `AsMut<u32>` as a trait bound to the functions."""
+
+# ASYNC
+
+[[exercises]]
+name = "async1"
+dir = "24_async"
+test = false
+hint = """
+Asynchronous runtimes like tokio can only spawn tasks that are defined as async
+functions, not regular ones. Add the "async" keyword before the "fn" keyword of
+the functions "tim", "carl" and "nick".
+
+An async task can wait for another one to complete by "awaiting" it. Add
+".await" after the three "task_name" variables in the "block_on" call."""
+
+[[exercises]]
+name = "async2"
+dir = "24_async"
+test = false
+hint = """
+TODO"""
