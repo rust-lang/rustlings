@@ -237,7 +237,8 @@ impl<'a> ListState<'a> {
             if self.message.is_empty() {
                 // Help footer message
                 if self.scroll_state.selected().is_some() {
-                    writer.write_str("↓/j ↑/k home/g end/G | <c>ontinue at | <r>eset exercise")?;
+                    writer
+                        .write_str("↓/j ↑/k home/g end/G | ↩️/<c>ontinue at | <r>eset exercise")?;
                     next_ln(stdout)?;
                     writer = MaxLenWriter::new(stdout, self.term_width as usize);
 
