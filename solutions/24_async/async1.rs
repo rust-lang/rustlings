@@ -1,15 +1,11 @@
-// Tim has to complete a few chores today, before he's allowed to play soccer
-// with his friends. His friends decide to help him. Working together, they
-// finish the chores earlier and have more time left to play soccer.
+// Alice is an elementary school teacher who needs to calculate the mean test
+// score for three classes she teaches. Instead of calculating them one after
+// the other, she decides to ask her friends Bob and Catherine for help. Working
+// together, they can finish the job much faster.
 //
-// Let's simulate this using asynchronous programming. Each boy is represented
-// as an asynchronous task, which can be executed concurrently (they can be
-// working at the same time).
-
-use std::sync::atomic::{AtomicU8, Ordering};
-
-// Used by "mom" to check that all chores are done before Tim plays soccer :-)
-static CHORES_DONE: AtomicU8 = AtomicU8::new(0);
+// Let's simulate this using asynchronous programming. Each person is
+// represented as an asynchronous task, which can be executed concurrently (i.e.
+// they can be doing the calculations at the same time).
 
 fn main() {
     // Async tasks need to be executed by a "runtime", which is not provided by
@@ -18,36 +14,29 @@ fn main() {
         .build()
         .unwrap();
 
-    let task_tim = rt.spawn(tim());
-    let task_carl = rt.spawn(carl());
-    let task_nick = rt.spawn(nick());
+    let scores_class_a = &[83, 77, 92];
+    let scores_class_b = &[84, 88, 96];
+    let scores_class_c = &[71, 83, 76];
 
-    // Block the runtime on a task that waits for all boys to finish the chores.
-    rt.block_on(async {
-        task_tim.await.unwrap();
-        task_carl.await.unwrap();
-        task_nick.await.unwrap();
+    let alice = rt.spawn(calculate_mean_score(scores_class_a));
+    let bob = rt.spawn(calculate_mean_score(scores_class_b));
+    let catherine = rt.spawn(calculate_mean_score(scores_class_c));
+
+    // Block the runtime on a task that awaits all three calculations.
+    let [mean_score_a, mean_score_b, mean_score_c]: [usize; _] = rt.block_on(async {
+        [
+            alice.await.unwrap(),
+            bob.await.unwrap(),
+            catherine.await.unwrap(),
+        ]
     });
 
-    assert_eq!(
-        CHORES_DONE.load(Ordering::SeqCst),
-        3,
-        "Did you (a)wait for all the boys to finish the chores?"
-    );
-    println!("Ready to play soccer!");
+    assert_eq!(mean_score_a, 84);
+    assert_eq!(mean_score_b, 89);
+    assert_eq!(mean_score_c, 76);
 }
 
-async fn tim() {
-    println!("Cleaning my room...");
-    CHORES_DONE.fetch_add(1, Ordering::SeqCst);
-}
-
-async fn carl() {
-    println!("Washing the dishes...");
-    CHORES_DONE.fetch_add(1, Ordering::SeqCst);
-}
-
-async fn nick() {
-    println!("Mowing the lawn...");
-    CHORES_DONE.fetch_add(1, Ordering::SeqCst);
+async fn calculate_mean_score(score_list: &[usize]) -> usize {
+    let score_sum: usize = score_list.iter().sum();
+    score_sum / score_list.len()
 }
