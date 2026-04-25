@@ -245,7 +245,7 @@ impl<'a> ListState<'a> {
                     hotkey(&mut writer, b"g")?;
                     writer.write_ascii(b" end/")?;
                     hotkey(&mut writer, b"G")?;
-                    writer.write_ascii(b" | ")?;
+                    writer.write_str(" | ↩️/")?;
                     hotkey(&mut writer, b"c")?;
                     writer.write_ascii(b"ontinue at | ")?;
                     hotkey(&mut writer, b"r")?;
