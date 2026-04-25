@@ -188,6 +188,8 @@ bin = [
   { name = "try_from_into_sol", path = "../solutions/23_conversions/try_from_into.rs" },
   { name = "as_ref_mut", path = "../exercises/23_conversions/as_ref_mut.rs" },
   { name = "as_ref_mut_sol", path = "../solutions/23_conversions/as_ref_mut.rs" },
+  { name = "async1", path = "../exercises/24_async/async1.rs" },
+  { name = "async1_sol", path = "../solutions/24_async/async1.rs" },
 ]
 
 [package]
@@ -195,6 +197,9 @@ name = "exercises"
 edition = "2024"
 # Don't publish the exercises on crates.io!
 publish = false
+
+[dependencies]
+tokio = { version = "1", features = ["rt"] }
 
 [profile.release]
 panic = "abort"
