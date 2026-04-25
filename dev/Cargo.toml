@@ -199,7 +199,7 @@ edition = "2024"
 publish = false
 
 [dependencies]
-tokio = { version = "1.52.1", features = ["rt"] }
+tokio = { version = "1", features = ["rt"] }
 
 [profile.release]
 panic = "abort"
