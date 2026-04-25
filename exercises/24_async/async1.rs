@@ -13,7 +13,7 @@ static CHORES_DONE: AtomicU8 = AtomicU8::new(0);
 
 fn main() {
     // Async tasks need to be executed by a "runtime", which is not provided by
-    // Rust's standard library. We use the popular "tokio" runtime here.
+    // Rust's standard library. Here, we use the mainstream runtime `tokio`.
     let rt = tokio::runtime::Builder::new_current_thread()
         .build()
         .unwrap();
