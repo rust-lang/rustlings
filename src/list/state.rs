@@ -233,16 +233,6 @@ impl<'a> ListState<'a> {
             )?;
             next_ln(stdout)?;
 
-            fn hotkey(writer: &mut MaxLenWriter, hotkey: &[u8]) -> io::Result<()> {
-                writer
-                    .stdout
-                    .queue(SetForegroundColor(Color::Yellow))?
-                    .queue(SetAttribute(Attribute::Bold))?;
-                writer.write_ascii(hotkey)?;
-                writer.stdout.queue(ResetColor)?;
-                Ok(())
-            }
-
             let mut writer = MaxLenWriter::new(stdout, self.term_width as usize);
             if self.message.is_empty() {
                 // Help footer message
@@ -445,4 +435,15 @@ impl<'a> ListState<'a> {
 
         Ok(true)
     }
+}
+
+/// Draw an emphasized hotkey in the list footer.
+fn hotkey(writer: &mut MaxLenWriter, hotkey: &[u8]) -> io::Result<()> {
+    writer
+        .stdout
+        .queue(SetForegroundColor(Color::Yellow))?
+        .queue(SetAttribute(Attribute::Bold))?;
+    writer.write_ascii(hotkey)?;
+    writer.stdout.queue(ResetColor)?;
+    Ok(())
 }
