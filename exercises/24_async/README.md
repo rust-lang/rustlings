@@ -5,7 +5,7 @@ It is particularly efficient for applications where many independent IO-operatio
 
 Rust provides the necessary primitives to do asynchronous programming in the language.
 However, Rust's standard library does not include a runtime.
-For these exercises, we will use the popular runtime called `tokio`.
+For these exercises, we will use the mainstream runtime called `tokio`.
 
 ## Further information
 
