@@ -9,7 +9,8 @@ mod tests {
         let target = "rustlings";
         let optional_target = Some(target);
 
-        // TODO: Make this an if-let statement whose value is `Some`.
+        // TODO: Complete this if-let statement by adding the missing keywords.
+        // The pattern should match oon 'Some'.
         word = optional_target {
             assert_eq!(word, target);
         }
@@ -26,9 +27,9 @@ mod tests {
 
         let mut cursor = range;
 
-        // TODO: Make this a while-let statement. Remember that `Vec::pop()`
-        // adds another layer of `Option`. You can do nested pattern matching
-        // in if-let and while-let statements.
+        // TODO: Complete this while-let statement by adding the missing keywords.
+        // Remember that `Vec::pop()` adds another layer of `Option`. 
+        // You can do nested pattern matching in if-let and while-let statements.
         integer = optional_integers.pop() {
             assert_eq!(integer, cursor);
             cursor -= 1;
