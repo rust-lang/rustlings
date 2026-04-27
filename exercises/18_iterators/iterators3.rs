@@ -15,17 +15,21 @@ fn divide(a: i64, b: i64) -> Result<i64, DivisionError> {
 }
 
 // TODO: Add the correct return type and complete the function body.
-// Desired output: `Ok([1, 11, 1426, 3])`
-fn result_with_list() {
-    let numbers = [27, 297, 38502, 81];
-    let division_results = numbers.into_iter().map(|n| divide(n, 27));
+// NOTE: collect() on Iterator<Item = Result<T, E>> returns Result<Vec<T>, E>
+// - If all Results are Ok: returns Ok(Vec<T>) with unwrapped values
+// - If any Result is Err: stops immediately and returns that Err (fail-fast)
+// Example: [9, 12, 18, 6] returns Ok([3, 4, 6, 2])
+// Example: [9, 7, 12] returns Err(NotDivisible) - stops at 7, never processes 12
+fn result_with_list(numbers: &[i64]) {
+    let division_results = numbers.iter().map(|&n| divide(n, 3));
 }
 
 // TODO: Add the correct return type and complete the function body.
-// Desired output: `[Ok(1), Ok(11), Ok(1426), Ok(3)]`
-fn list_of_results() {
-    let numbers = [27, 297, 38502, 81];
-    let division_results = numbers.into_iter().map(|n| divide(n, 27));
+// NOTE: collect() into Vec<Result<T, E>> processes all items regardless of errors
+// Example: [9, 12, 18, 6] returns [Ok(3), Ok(4), Ok(6), Ok(2)]
+// Example: [9, 7, 12] returns [Ok(3), Err(NotDivisible), Ok(4)] - all processed
+fn list_of_results(numbers: &[i64]) {
+    let division_results = numbers.iter().map(|&n| divide(n, 3));
 }
 
 fn main() {
@@ -65,11 +69,34 @@ mod tests {
 
     #[test]
     fn test_result_with_list() {
-        assert_eq!(result_with_list().unwrap(), [1, 11, 1426, 3]);
+        // All numbers divisible by 3 - should succeed
+        assert_eq!(result_with_list(&[9, 12, 18, 6]).unwrap(), [3, 4, 6, 2]);
+    }
+
+    #[test]
+    fn test_result_with_list_error() {
+        // 7 is not divisible by 3 - should fail fast at second element
+        assert_eq!(
+            result_with_list(&[9, 7, 12]),
+            Err(DivisionError::NotDivisible)
+        );
     }
 
     #[test]
     fn test_list_of_results() {
-        assert_eq!(list_of_results(), [Ok(1), Ok(11), Ok(1426), Ok(3)]);
+        // All numbers divisible by 3 - all Ok
+        assert_eq!(
+            list_of_results(&[9, 12, 18, 6]),
+            [Ok(3), Ok(4), Ok(6), Ok(2)]
+        );
+    }
+
+    #[test]
+    fn test_list_of_results_with_errors() {
+        // 7 is not divisible by 3 - processes all, keeps both successes and errors
+        assert_eq!(
+            list_of_results(&[9, 7, 12]),
+            [Ok(3), Err(DivisionError::NotDivisible), Ok(4)]
+        );
     }
 }
