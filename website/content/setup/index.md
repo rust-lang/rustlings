@@ -73,6 +73,10 @@ While working with Rustlings, please use a modern terminal for the best user exp
 The default terminal on Linux and Mac should be sufficient.
 On Windows, we recommend the [Windows Terminal](https://aka.ms/terminal).
 
+### Offline documentation
+
+Whenever you're working on Rustlings offline, you can access a local copy of the standard library documentation by running `rustup doc --std`.
+
 ## Usage
 
 After being done with the setup, visit the [**usage**](@/usage/index.md) page for some info about using Rustlings 🚀
