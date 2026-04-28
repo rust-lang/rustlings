@@ -21,5 +21,8 @@ mod tests {
         assert_eq!(fav_fruits_iterator.next(), todo!()); // TODO: Replace `todo!()`
         assert_eq!(fav_fruits_iterator.next(), Some(&"raspberry"));
         assert_eq!(fav_fruits_iterator.next(), todo!()); // TODO: Replace `todo!()`
+
+        // Ensures `my_fav_fruits` is not consumed by the iterator.
+        assert_eq!(my_fav_fruits.len(), 5);
     }
 }
