@@ -165,6 +165,8 @@ pub fn init() -> Result<()> {
     fs::write(".gitignore", GITIGNORE)
         .context("Failed to create the file `rustlings/.gitignore`")?;
 
+    fs::write("README.md", README).context("Failed to create the file `rustlings/README.md`")?;
+
     create_dir(".vscode").context("Failed to create the directory `rustlings/.vscode`")?;
     fs::write(".vscode/extensions.json", VS_CODE_EXTENSIONS_JSON)
         .context("Failed to create the file `rustlings/.vscode/extensions.json`")?;
@@ -218,6 +220,14 @@ cargo.targetDir = true
 const GITIGNORE: &[u8] = b"Cargo.lock
 target/
 .vscode/
+";
+
+const README: &[u8] = b"# Rustlings
+
+This is your space to solve Rustlings exercises.
+Simply run `rustlings` in this directory to get started!
+Learn more about using Rustlings here:
+<https://rustlings.rust-lang.org/usage/>
 ";
 
 pub const VS_CODE_EXTENSIONS_JSON: &[u8] = br#"{"recommendations":["rust-lang.rust-analyzer"]}"#;
