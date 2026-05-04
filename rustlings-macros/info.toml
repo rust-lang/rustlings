@@ -954,7 +954,7 @@ a different method that could make your code more compact than using `fold`."""
 # SMART POINTERS
 
 [[exercises]]
-name = "box1"
+name = "1_box1"
 dir = "19_smart_pointers"
 hint = """
 The compiler's message should help: Since we cannot store the value of the
@@ -971,7 +971,7 @@ Although the current list is one of integers (`i32`), feel free to change the
 definition and try other types!"""
 
 [[exercises]]
-name = "rc1"
+name = "2_rc1"
 dir = "19_smart_pointers"
 hint = """
 This is a straightforward exercise to use the `Rc<T>` type. Each `Planet` has
@@ -988,7 +988,7 @@ See more at: https://doc.rust-lang.org/book/ch15-04-rc.html
 Unfortunately, Pluto is no longer considered a planet :("""
 
 [[exercises]]
-name = "arc1"
+name = "3_arc1"
 dir = "19_smart_pointers"
 test = false
 hint = """
@@ -1005,7 +1005,7 @@ Book:
 https://doc.rust-lang.org/book/ch16-00-concurrency.html"""
 
 [[exercises]]
-name = "cow1"
+name = "4_cow1"
 dir = "19_smart_pointers"
 hint = """
 If `Cow` already owns the data, it doesn't need to clone it when `to_mut()` is
@@ -1156,20 +1156,20 @@ hint = "No hints this time!"
 # TYPE CONVERSIONS
 
 [[exercises]]
-name = "using_as"
+name = "1_using_as"
 dir = "23_conversions"
 hint = """
 Use the `as` operator to cast one of the operands in the last line of the
 `average` function into the expected return type."""
 
 [[exercises]]
-name = "from_into"
+name = "2_from_into"
 dir = "23_conversions"
 hint = """
 Follow the steps provided right before the `From` implementation."""
 
 [[exercises]]
-name = "from_str"
+name = "3_from_str"
 dir = "23_conversions"
 hint = """
 The implementation of `FromStr` should return an `Ok` with a `Person` object,
@@ -1186,7 +1186,7 @@ operator in your solution, you might want to look at
 https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/reenter_question_mark.html"""
 
 [[exercises]]
-name = "try_from_into"
+name = "4_try_from_into"
 dir = "23_conversions"
 hint = """
 Is there an implementation of `TryFrom` in the standard library that can both do
@@ -1196,7 +1196,7 @@ Challenge: Can you make the `TryFrom` implementations generic over many integer
 types?"""
 
 [[exercises]]
-name = "as_ref_mut"
+name = "5_as_ref_mut"
 dir = "23_conversions"
 hint = """
 Add `AsRef<str>` or `AsMut<u32>` as a trait bound to the functions."""
