@@ -1,0 +1,36 @@
+name: Enable auto-merge for open PRs
+
+on:
+  workflow_dispatch: {}
+  pull_request:
+    types: [opened, reopened,ready_for_review]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  enable:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enable auto-merge for all open PRs (and the current one)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          echo "Listing open PRs in $REPO..."
+          prs=$(gh pr list --repo "$REPO" --state open --json number --jq '.[].number')
+
+          if [ -z "$prs" ]; then
+            echo "No open PRs."
+            exit 0
+          fi
+
+          for pr in $prs; do
+            echo "Enabling auto-merge for PR #$pr"
+            # Choose merge strategy: --merge | --squash | --rebase
+            # Use --merge here; change if you prefer squash:
+            gh pr merge "$pr" --repo "$REPO" --auto --merge || true
+          done
