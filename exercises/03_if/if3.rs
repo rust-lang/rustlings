@@ -1,5 +1,10 @@
 fn animal_habitat(animal: &str) -> &str {
     // TODO: Fix the compiler error in the statement below.
+    //
+    // Hint: every `if` / `else if` / `else` branch must produce the same type.
+    // A floating-point literal, a string, and integers cannot be mixed in one chain.
+    // For unknown animals, use another integer identifier (for example `4`) instead of
+    // a string, then keep the habitat checks below unchanged.
     let identifier = if animal == "crab" {
         1
     } else if animal == "gopher" {
