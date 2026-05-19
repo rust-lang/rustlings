@@ -21,8 +21,6 @@ fn main() {
 
     placeholder("rust is fun!".to_owned());
 
-    placeholder("nice weather".into());
-
     placeholder(format!("Interpolation {}", "Station"));
 
     // WARNING: This is byte indexing, not character indexing.
