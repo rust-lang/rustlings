@@ -91,15 +91,62 @@ mod tests {
 
     #[test]
     fn test_bins_start_end_ind() {
-        assert_eq!(bins_start_end_ind("").ok(), None);
-        assert_eq!(bins_start_end_ind("[]").ok(), None);
-        assert_eq!(bins_start_end_ind("bin = [").ok(), None);
-        assert_eq!(bins_start_end_ind("bin = ]").ok(), None);
-        assert_eq!(bins_start_end_ind("bin = []").ok(), Some((7, 7)));
-        assert_eq!(bins_start_end_ind("bin= []").ok(), None);
-        assert_eq!(bins_start_end_ind("bin =[]").ok(), None);
-        assert_eq!(bins_start_end_ind("bin=[]").ok(), None);
-        assert_eq!(bins_start_end_ind("bin = [\nxxx\n]").ok(), Some((7, 12)));
+        assert_eq!(bins_start_end_ind("bin = []").unwrap(), (7, 7));
+        assert_eq!(bins_start_end_ind("bin = [\nxxx\n]").unwrap(), (7, 12));
+
+        assert_eq!(
+            bins_start_end_ind("").unwrap_err().to_string(),
+            "Failed to find the start of the `bin` list (`bin = [`)"
+        );
+        assert_eq!(
+            bins_start_end_ind("[]").unwrap_err().to_string(),
+            "Failed to find the start of the `bin` list (`bin = [`)"
+        );
+        assert_eq!(
+            bins_start_end_ind("bin = [").unwrap_err().to_string(),
+            "Failed to find the end of the `bin` list (`]`)",
+        );
+        assert_eq!(
+            bins_start_end_ind("bin = ]").unwrap_err().to_string(),
+            "Failed to find the start of the `bin` list (`bin = [`)"
+        );
+        assert_eq!(
+            bins_start_end_ind("bin= []").unwrap_err().to_string(),
+            "Failed to find the start of the `bin` list (`bin = [`)"
+        );
+        assert_eq!(
+            bins_start_end_ind("bin =[]").unwrap_err().to_string(),
+            "Failed to find the start of the `bin` list (`bin = [`)"
+        );
+        assert_eq!(
+            bins_start_end_ind("bin=[]").unwrap_err().to_string(),
+            "Failed to find the start of the `bin` list (`bin = [`)"
+        );
+    }
+
+    #[test]
+    fn test_updated_cargo_toml_errors() {
+        let exercise_infos = [ExerciseInfo {
+            name: "test",
+            dir: None,
+            test: false,
+            strict_clippy: false,
+            hint: "",
+            skip_check_unsolved: false,
+        }];
+
+        assert_eq!(
+            updated_cargo_toml(&exercise_infos, "", b"").unwrap_err().to_string(),
+            "Failed to find the start of the `bin` list (`bin = [`)"
+        );
+        assert_eq!(
+            updated_cargo_toml(&exercise_infos, "bin = [", b"").unwrap_err().to_string(),
+            "Failed to find the end of the `bin` list (`]`)",
+        );
+        assert_eq!(
+            updated_cargo_toml(&exercise_infos, "bin = ]", b"").unwrap_err().to_string(),
+            "Failed to find the start of the `bin` list (`bin = [`)"
+        );
     }
 
     #[test]
