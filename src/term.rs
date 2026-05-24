@@ -1,8 +1,8 @@
 use crossterm::{
+    Command, QueueableCommand,
     cursor::MoveTo,
     style::{Attribute, Color, ResetColor, SetAttribute, SetForegroundColor},
     terminal::{Clear, ClearType},
-    Command, QueueableCommand,
 };
 use std::{
     fmt, fs,
@@ -18,7 +18,6 @@ pub struct MaxLenWriter<'a, 'lock> {
 }
 
 impl<'a, 'lock> MaxLenWriter<'a, 'lock> {
-    #[inline]
     pub fn new(stdout: &'a mut StdoutLock<'lock>, max_len: usize) -> Self {
         Self {
             stdout,
@@ -28,7 +27,6 @@ impl<'a, 'lock> MaxLenWriter<'a, 'lock> {
     }
 
     // Additional is for emojis that take more space.
-    #[inline]
     pub fn add_to_len(&mut self, additional: usize) {
         self.len += additional;
     }
@@ -64,24 +62,20 @@ impl<'lock> CountedWrite<'lock> for MaxLenWriter<'_, 'lock> {
         Ok(())
     }
 
-    #[inline]
     fn stdout(&mut self) -> &mut StdoutLock<'lock> {
         self.stdout
     }
 }
 
 impl<'a> CountedWrite<'a> for StdoutLock<'a> {
-    #[inline]
     fn write_ascii(&mut self, ascii: &[u8]) -> io::Result<()> {
         self.write_all(ascii)
     }
 
-    #[inline]
     fn write_str(&mut self, unicode: &str) -> io::Result<()> {
         self.write_all(unicode.as_bytes())
     }
 
-    #[inline]
     fn stdout(&mut self) -> &mut StdoutLock<'a> {
         self
     }
@@ -160,20 +154,51 @@ impl<'a, 'lock> CheckProgressVisualizer<'a, 'lock> {
     }
 }
 
+pub struct ProgressCounter<'a, 'lock> {
+    stdout: &'a mut StdoutLock<'lock>,
+    total: usize,
+    counter: usize,
+}
+
+impl<'a, 'lock> ProgressCounter<'a, 'lock> {
+    pub fn new(stdout: &'a mut StdoutLock<'lock>, total: usize) -> io::Result<Self> {
+        write!(stdout, "Progress: 0/{total}")?;
+        stdout.flush()?;
+
+        Ok(Self {
+            stdout,
+            total,
+            counter: 0,
+        })
+    }
+
+    pub fn increment(&mut self) -> io::Result<()> {
+        self.counter += 1;
+        write!(self.stdout, "\rProgress: {}/{}", self.counter, self.total)?;
+        self.stdout.flush()
+    }
+}
+
+impl Drop for ProgressCounter<'_, '_> {
+    fn drop(&mut self) {
+        let _ = self.stdout.write_all(b"\n\n");
+    }
+}
+
 pub fn progress_bar<'a>(
     writer: &mut impl CountedWrite<'a>,
-    progress: u16,
-    total: u16,
+    progress: u32,
+    total: u32,
     term_width: u16,
 ) -> io::Result<()> {
-    debug_assert!(total <= 999);
-    debug_assert!(progress <= total);
-
     const PREFIX: &[u8] = b"Progress: [";
     const PREFIX_WIDTH: u16 = PREFIX.len() as u16;
     const POSTFIX_WIDTH: u16 = "] xxx/xxx".len() as u16;
     const WRAPPER_WIDTH: u16 = PREFIX_WIDTH + POSTFIX_WIDTH;
     const MIN_LINE_WIDTH: u16 = WRAPPER_WIDTH + 4;
+
+    debug_assert!(total <= 999);
+    debug_assert!(progress <= total);
 
     if term_width < MIN_LINE_WIDTH {
         writer.write_ascii(b"Progress: ")?;
@@ -184,7 +209,8 @@ pub fn progress_bar<'a>(
     let stdout = writer.stdout();
     stdout.write_all(PREFIX)?;
 
-    let width = term_width - WRAPPER_WIDTH;
+    // Use u32 to prevent the intermediate multiplication from overflowing
+    let width = u32::from(term_width - WRAPPER_WIDTH);
     let filled = (width * progress) / total;
 
     stdout.queue(SetForegroundColor(Color::Green))?;
@@ -194,14 +220,13 @@ pub fn progress_bar<'a>(
 
     if filled < width {
         stdout.write_all(b">")?;
-    }
 
-    let width_minus_filled = width - filled;
-    if width_minus_filled > 1 {
-        let red_part_width = width_minus_filled - 1;
-        stdout.queue(SetForegroundColor(Color::Red))?;
-        for _ in 0..red_part_width {
-            stdout.write_all(b"-")?;
+        let width_minus_filled = width - filled;
+        if width_minus_filled > 1 {
+            stdout.queue(SetForegroundColor(Color::Red))?;
+            for _ in 1..width_minus_filled {
+                stdout.write_all(b"-")?;
+            }
         }
     }
 
@@ -241,28 +266,37 @@ pub fn canonicalize(path: &str) -> Option<String> {
         })
 }
 
-pub fn terminal_file_link<'a>(
-    writer: &mut impl CountedWrite<'a>,
-    path: &str,
-    canonical_path: &str,
+pub fn file_path<'a, W: CountedWrite<'a>>(
+    writer: &mut W,
     color: Color,
+    f: impl FnOnce(&mut W) -> io::Result<()>,
 ) -> io::Result<()> {
     writer
         .stdout()
         .queue(SetForegroundColor(color))?
         .queue(SetAttribute(Attribute::Underlined))?;
-    writer.stdout().write_all(b"\x1b]8;;file://")?;
-    writer.stdout().write_all(canonical_path.as_bytes())?;
-    writer.stdout().write_all(b"\x1b\\")?;
-    // Only this part is visible.
-    writer.write_str(path)?;
-    writer.stdout().write_all(b"\x1b]8;;\x1b\\")?;
+
+    f(writer)?;
+
     writer
         .stdout()
         .queue(SetForegroundColor(Color::Reset))?
         .queue(SetAttribute(Attribute::NoUnderline))?;
 
     Ok(())
+}
+
+pub fn terminal_file_link<'a>(
+    writer: &mut impl CountedWrite<'a>,
+    path: &str,
+    canonical_path: &str,
+) -> io::Result<()> {
+    writer.stdout().write_all(b"\x1b]8;;file://")?;
+    writer.stdout().write_all(canonical_path.as_bytes())?;
+    writer.stdout().write_all(b"\x1b\\")?;
+    // Only this part is visible.
+    writer.write_str(path)?;
+    writer.stdout().write_all(b"\x1b]8;;\x1b\\")
 }
 
 pub fn write_ansi(output: &mut Vec<u8>, command: impl Command) {

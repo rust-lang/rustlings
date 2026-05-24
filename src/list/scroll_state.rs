@@ -19,7 +19,6 @@ impl ScrollState {
         }
     }
 
-    #[inline]
     pub fn offset(&self) -> usize {
         self.offset
     }
@@ -41,7 +40,6 @@ impl ScrollState {
             .min(global_max_offset);
     }
 
-    #[inline]
     pub fn selected(&self) -> Option<usize> {
         self.selected
     }
@@ -86,12 +84,10 @@ impl ScrollState {
         self.set_selected(self.selected.map_or(0, |selected| selected.min(n_rows - 1)));
     }
 
-    #[inline]
     fn update_scroll_padding(&mut self) {
         self.scroll_padding = (self.max_n_rows_to_display / 4).min(self.max_scroll_padding);
     }
 
-    #[inline]
     pub fn max_n_rows_to_display(&self) -> usize {
         self.max_n_rows_to_display
     }

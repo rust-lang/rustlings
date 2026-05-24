@@ -1,11 +1,6 @@
-fn array_and_vec() -> ([i32; 4], Vec<i32>) {
-    let a = [10, 20, 30, 40]; // Array
-
-    // TODO: Create a vector called `v` which contains the exact same elements as in the array `a`.
-    // Use the vector macro.
-    // let v = ???;
-
-    (a, v)
+fn elems_to_vec(a: i32, b: i32, c: i32) -> Vec<i32> {
+    // TODO: Return a vector containing the elements a, b and c (in this order).
+    // Use the "vec!" macro.
 }
 
 fn main() {
@@ -17,8 +12,11 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_array_and_vec_similarity() {
-        let (a, v) = array_and_vec();
-        assert_eq!(a, *v);
+    fn test_elems_to_vec() {
+        let (a, b, c) = (2, 7, 12);
+        let v = elems_to_vec(a, b, c);
+        assert_eq!(v[0], a);
+        assert_eq!(v[1], b);
+        assert_eq!(v[2], c);
     }
 }

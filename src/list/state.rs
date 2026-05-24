@@ -1,11 +1,11 @@
 use anyhow::{Context, Result};
 use crossterm::{
+    QueueableCommand,
     cursor::{MoveTo, MoveToNextLine},
     style::{
         Attribute, Attributes, Color, ResetColor, SetAttribute, SetAttributes, SetForegroundColor,
     },
     terminal::{self, BeginSynchronizedUpdate, Clear, ClearType, EndSynchronizedUpdate},
-    QueueableCommand,
 };
 use std::{
     fmt::Write as _,
@@ -15,10 +15,9 @@ use std::{
 use crate::{
     app_state::AppState,
     exercise::Exercise,
-    term::{progress_bar, CountedWrite, MaxLenWriter},
+    list::scroll_state::ScrollState,
+    term::{CountedWrite, MaxLenWriter, progress_bar},
 };
-
-use super::scroll_state::ScrollState;
 
 const COL_SPACING: usize = 2;
 const SELECTED_ROW_ATTRIBUTES: Attributes = Attributes::none()
@@ -118,8 +117,8 @@ impl<'a> ListState<'a> {
     }
 
     fn draw_exercise_name(&self, writer: &mut MaxLenWriter, exercise: &Exercise) -> io::Result<()> {
-        if !self.search_query.is_empty() {
-            if let Some((pre_highlight, highlight, post_highlight)) = exercise
+        if !self.search_query.is_empty()
+            && let Some((pre_highlight, highlight, post_highlight)) = exercise
                 .name
                 .find(&self.search_query)
                 .and_then(|ind| exercise.name.split_at_checked(ind))
@@ -127,13 +126,12 @@ impl<'a> ListState<'a> {
                     rest.split_at_checked(self.search_query.len())
                         .map(|x| (pre_highlight, x.0, x.1))
                 })
-            {
-                writer.write_str(pre_highlight)?;
-                writer.stdout.queue(SetForegroundColor(Color::Magenta))?;
-                writer.write_str(highlight)?;
-                writer.stdout.queue(SetForegroundColor(Color::Reset))?;
-                return writer.write_str(post_highlight);
-            }
+        {
+            writer.write_str(pre_highlight)?;
+            writer.stdout.queue(SetForegroundColor(Color::Magenta))?;
+            writer.write_str(highlight)?;
+            writer.stdout.queue(SetForegroundColor(Color::Reset))?;
+            return writer.write_str(post_highlight);
         }
 
         writer.write_str(exercise.name)
@@ -186,13 +184,7 @@ impl<'a> ListState<'a> {
 
             writer.write_ascii(&self.name_col_padding[exercise.name.len()..])?;
 
-            // The list links aren't shown correctly in VS Code on Windows.
-            // But VS Code shows its own links anyway.
-            if self.app_state.vs_code() {
-                writer.write_str(exercise.path)?;
-            } else {
-                exercise.terminal_file_link(&mut writer)?;
-            }
+            exercise.terminal_file_link(&mut writer, self.app_state.emit_file_links())?;
 
             writer.write_ascii(&self.path_col_padding[exercise.path.len()..])?;
 
@@ -236,7 +228,7 @@ impl<'a> ListState<'a> {
             progress_bar(
                 &mut MaxLenWriter::new(stdout, self.term_width as usize),
                 self.app_state.n_done(),
-                self.app_state.exercises().len() as u16,
+                self.app_state.exercises().len() as u32,
                 self.term_width,
             )?;
             next_ln(stdout)?;
@@ -245,11 +237,24 @@ impl<'a> ListState<'a> {
             if self.message.is_empty() {
                 // Help footer message
                 if self.scroll_state.selected().is_some() {
-                    writer.write_str("↓/j ↑/k home/g end/G | <c>ontinue at | <r>eset exercise")?;
+                    writer.write_str("↓/")?;
+                    hotkey(&mut writer, b"j")?;
+                    writer.write_str(" ↑/")?;
+                    hotkey(&mut writer, b"k")?;
+                    writer.write_ascii(b" home/")?;
+                    hotkey(&mut writer, b"g")?;
+                    writer.write_ascii(b" end/")?;
+                    hotkey(&mut writer, b"G")?;
+                    writer.write_str(" | ↩️/")?;
+                    hotkey(&mut writer, b"c")?;
+                    writer.write_ascii(b"ontinue at | ")?;
+                    hotkey(&mut writer, b"r")?;
+                    writer.write_ascii(b"eset exercise")?;
                     next_ln(stdout)?;
                     writer = MaxLenWriter::new(stdout, self.term_width as usize);
 
-                    writer.write_ascii(b"<s>earch | filter ")?;
+                    hotkey(&mut writer, b"s")?;
+                    writer.write_ascii(b"earch | filter ")?;
                 } else {
                     // Nothing selected (and nothing shown), so only display filter and quit.
                     writer.write_ascii(b"filter ")?;
@@ -257,27 +262,41 @@ impl<'a> ListState<'a> {
 
                 match self.filter {
                     Filter::Done => {
+                        writer.stdout.queue(SetAttribute(Attribute::Underlined))?;
+                        hotkey(&mut writer, b"d")?;
                         writer
                             .stdout
                             .queue(SetForegroundColor(Color::Magenta))?
                             .queue(SetAttribute(Attribute::Underlined))?;
-                        writer.write_ascii(b"<d>one")?;
+                        writer.write_str("one")?;
                         writer.stdout.queue(ResetColor)?;
-                        writer.write_ascii(b"/<p>ending")?;
+                        writer.write_ascii(b"/")?;
+                        hotkey(&mut writer, b"p")?;
+                        writer.write_ascii(b"ending")?;
                     }
                     Filter::Pending => {
-                        writer.write_ascii(b"<d>one/")?;
+                        hotkey(&mut writer, b"d")?;
+                        writer.write_ascii(b"one/")?;
+                        writer.stdout.queue(SetAttribute(Attribute::Underlined))?;
+                        hotkey(&mut writer, b"p")?;
                         writer
                             .stdout
                             .queue(SetForegroundColor(Color::Magenta))?
                             .queue(SetAttribute(Attribute::Underlined))?;
-                        writer.write_ascii(b"<p>ending")?;
+                        writer.write_ascii(b"ending")?;
                         writer.stdout.queue(ResetColor)?;
                     }
-                    Filter::None => writer.write_ascii(b"<d>one/<p>ending")?,
+                    Filter::None => {
+                        hotkey(&mut writer, b"d")?;
+                        writer.write_ascii(b"one/")?;
+                        hotkey(&mut writer, b"p")?;
+                        writer.write_ascii(b"ending")?;
+                    }
                 }
 
-                writer.write_ascii(b" | <q>uit list")?;
+                writer.write_ascii(b" | ")?;
+                hotkey(&mut writer, b"q")?;
+                writer.write_ascii(b"uit list")?;
             } else {
                 writer.stdout.queue(SetForegroundColor(Color::Magenta))?;
                 writer.write_str(&self.message)?;
@@ -311,7 +330,6 @@ impl<'a> ListState<'a> {
         self.scroll_state.set_n_rows(n_rows);
     }
 
-    #[inline]
     pub fn filter(&self) -> Filter {
         self.filter
     }
@@ -321,22 +339,18 @@ impl<'a> ListState<'a> {
         self.update_rows();
     }
 
-    #[inline]
     pub fn select_next(&mut self) {
         self.scroll_state.select_next();
     }
 
-    #[inline]
     pub fn select_previous(&mut self) {
         self.scroll_state.select_previous();
     }
 
-    #[inline]
     pub fn select_first(&mut self) {
         self.scroll_state.select_first();
     }
 
-    #[inline]
     pub fn select_last(&mut self) {
         self.scroll_state.select_last();
     }
@@ -373,11 +387,11 @@ impl<'a> ListState<'a> {
 
         let exercise_ind = self.selected_to_exercise_ind(selected)?;
         let exercise_name = self.app_state.reset_exercise_by_ind(exercise_ind)?;
-        self.update_rows();
         write!(
             self.message,
             "The exercise `{exercise_name}` has been reset",
         )?;
+        self.update_rows();
 
         Ok(())
     }
@@ -421,4 +435,15 @@ impl<'a> ListState<'a> {
 
         Ok(true)
     }
+}
+
+/// Draw an emphasized hotkey in the list footer.
+fn hotkey(writer: &mut MaxLenWriter, hotkey: &[u8]) -> io::Result<()> {
+    writer
+        .stdout
+        .queue(SetForegroundColor(Color::Yellow))?
+        .queue(SetAttribute(Attribute::Bold))?;
+    writer.write_ascii(hotkey)?;
+    writer.stdout.queue(ResetColor)?;
+    Ok(())
 }

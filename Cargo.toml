@@ -1,12 +1,11 @@
 [workspace]
-resolver = "2"
 exclude = [
   "tests/test_exercises",
   "dev",
 ]
 
 [workspace.package]
-version = "6.4.0"
+version = "6.5.0"
 authors = [
   "Mo Bitar <mo8it@proton.me>", # https://github.com/mo8it
   "Liv <mokou@fastmail.com>", # https://github.com/shadows-withal
@@ -15,12 +14,12 @@ authors = [
 ]
 repository = "https://github.com/rust-lang/rustlings"
 license = "MIT"
-edition = "2021" # On Update: Update the edition of the `rustfmt` command that checks the solutions.
-rust-version = "1.80"
+edition = "2024" # On Update: Update the edition of `rustfmt` in `dev check` and `CARGO_TOML` in `dev new`.
+rust-version = "1.88"
 
 [workspace.dependencies]
-serde = { version = "1.0.214", features = ["derive"] }
-toml_edit = { version = "0.22.22", default-features = false, features = ["parse", "serde"] }
+serde = { version = "1", features = ["derive"] }
+toml = { version = "1", default-features = false, features = ["std", "parse", "serde"] }
 
 [package]
 name = "rustlings"
@@ -46,21 +45,21 @@ include = [
 ]
 
 [dependencies]
-anyhow = "1.0.93"
-clap = { version = "4.5.20", features = ["derive"] }
-crossterm = { version = "0.28.1", default-features = false, features = ["windows", "events"] }
-notify = "7.0.0"
-os_pipe = "1.2.1"
-rustlings-macros = { path = "rustlings-macros", version = "=6.4.0" }
-serde_json = "1.0.132"
+anyhow = "1"
+clap = { version = "4", features = ["derive"] }
+crossterm = { version = "0.29", default-features = false, features = ["windows", "events"] }
+notify = "8"
+rustlings-macros = { path = "rustlings-macros", version = "=6.5.0" }
+serde_json = "1"
 serde.workspace = true
-toml_edit.workspace = true
+shlex = "1"
+toml.workspace = true
 
 [target.'cfg(not(windows))'.dependencies]
-rustix = { version = "0.38.38", default-features = false, features = ["std", "stdio", "termios"] }
+rustix = { version = "1.0", default-features = false, features = ["std", "stdio", "termios"] }
 
 [dev-dependencies]
-tempfile = "3.14.0"
+tempfile = "3"
 
 [profile.release]
 panic = "abort"
@@ -84,8 +83,6 @@ infinite_loop = "deny"
 mem_forget = "deny"
 dbg_macro = "warn"
 todo = "warn"
-# TODO: Remove after the following fix is released: https://github.com/rust-lang/rust-clippy/pull/13102
-needless_option_as_deref = "allow"
 
 [lints]
 workspace = true

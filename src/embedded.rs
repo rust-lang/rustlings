@@ -20,10 +20,10 @@ struct ExerciseFiles {
 }
 
 fn create_dir_if_not_exists(path: &str) -> Result<()> {
-    if let Err(e) = create_dir(path) {
-        if e.kind() != io::ErrorKind::AlreadyExists {
-            return Err(Error::from(e).context(format!("Failed to create the directory {path}")));
-        }
+    if let Err(e) = create_dir(path)
+        && e.kind() != io::ErrorKind::AlreadyExists
+    {
+        return Err(Error::from(e).context(format!("Failed to create the directory {path}")));
     }
 
     Ok(())
@@ -85,7 +85,7 @@ impl EmbeddedFiles {
             exercise_path.truncate(prefix.len());
             exercise_path.push_str(dir.name);
             exercise_path.push('/');
-            exercise_path.push_str(&exercise_info.name);
+            exercise_path.push_str(exercise_info.name);
             exercise_path.push_str(".rs");
 
             fs::write(&exercise_path, exercise_files.exercise)
@@ -141,18 +141,19 @@ mod tests {
     use super::*;
 
     #[derive(Deserialize)]
-    struct ExerciseInfo {
-        dir: String,
+    struct ExerciseInfo<'a> {
+        dir: &'a str,
     }
 
     #[derive(Deserialize)]
-    struct InfoFile {
-        exercises: Vec<ExerciseInfo>,
+    struct InfoFile<'a> {
+        #[serde(borrow)]
+        exercises: Vec<ExerciseInfo<'a>>,
     }
 
     #[test]
     fn dirs() {
-        let exercises = toml_edit::de::from_str::<InfoFile>(EMBEDDED_FILES.info_file)
+        let exercises = toml::de::from_str::<InfoFile>(EMBEDDED_FILES.info_file)
             .expect("Failed to parse `info.toml`")
             .exercises;
 

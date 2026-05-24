@@ -1,24 +1,24 @@
 use anyhow::{Context, Result};
 use crossterm::{
+    QueueableCommand,
     style::{
         Attribute, Attributes, Color, ResetColor, SetAttribute, SetAttributes, SetForegroundColor,
     },
-    terminal, QueueableCommand,
+    terminal,
 };
 use std::{
     io::{self, Read, StdoutLock, Write},
-    sync::mpsc::{sync_channel, Sender, SyncSender},
+    sync::mpsc::{Sender, SyncSender, sync_channel},
     thread,
 };
 
 use crate::{
     app_state::{AppState, ExercisesProgress},
     clear_terminal,
-    exercise::{solution_link_line, RunnableExercise, OUTPUT_CAPACITY},
+    exercise::{OUTPUT_CAPACITY, RunnableExercise, solution_link_line},
     term::progress_bar,
+    watch::{InputPauseGuard, WatchEvent, terminal_event::terminal_event_handler},
 };
-
-use super::{terminal_event::terminal_event_handler, InputPauseGuard, WatchEvent};
 
 const HEADING_ATTRIBUTES: Attributes = Attributes::none()
     .with(Attribute::Bold)
@@ -59,7 +59,7 @@ impl<'a> WatchState<'a> {
                     watch_event_sender,
                     terminal_event_unpause_receiver,
                     manual_run,
-                )
+                );
             })
             .context("Failed to spawn a thread to handle terminal events")?;
 
@@ -78,13 +78,15 @@ impl<'a> WatchState<'a> {
         // Ignore any input until running the exercise is done.
         let _input_pause_guard = InputPauseGuard::scoped_pause();
 
-        self.show_hint = false;
-
         writeln!(
             stdout,
             "\nChecking the exercise `{}`. Please wait…",
             self.app_state.current_exercise().name,
         )?;
+
+        let editor_handle = self.app_state.open_editor()?;
+
+        self.show_hint = false;
 
         let success = self
             .app_state
@@ -105,7 +107,9 @@ impl<'a> WatchState<'a> {
             self.done_status = DoneStatus::Pending;
         }
 
+        self.app_state.join_editor_handle(editor_handle)?;
         self.render(stdout)?;
+
         Ok(())
     }
 
@@ -127,9 +131,10 @@ impl<'a> WatchState<'a> {
 
                 match answer[0] {
                     b'y' | b'Y' => {
+                        self.app_state.close_editor()?;
                         self.app_state.reset_current_exercise()?;
 
-                        // The file watcher reruns the exercise otherwise.
+                        // The file watcher reruns the exercise otherwise
                         if self.manual_run {
                             self.run_current_exercise(stdout)?;
                         }
@@ -232,7 +237,7 @@ impl<'a> WatchState<'a> {
             stdout.write_all(b"\n")?;
 
             if let DoneStatus::DoneWithSolution(solution_path) = &self.done_status {
-                solution_link_line(stdout, solution_path)?;
+                solution_link_line(stdout, solution_path, self.app_state.emit_file_links())?;
             }
 
             stdout.write_all(
@@ -244,14 +249,14 @@ impl<'a> WatchState<'a> {
         progress_bar(
             stdout,
             self.app_state.n_done(),
-            self.app_state.exercises().len() as u16,
+            self.app_state.exercises().len() as u32,
             self.term_width,
         )?;
 
         stdout.write_all(b"\nCurrent exercise: ")?;
         self.app_state
             .current_exercise()
-            .terminal_file_link(stdout)?;
+            .terminal_file_link(stdout, self.app_state.emit_file_links())?;
         stdout.write_all(b"\n\n")?;
 
         self.show_prompt(stdout)?;

@@ -1,4 +1,4 @@
-# Don't edit the `bin` list manually! It is updated by `cargo run -- dev update`. This comment line will be stripped in `rustlings init`.
+# Don't edit the `bin` list manually! It is updated by `cargo dev update`. This comment line will be stripped in `rustlings init`.
 bin = [
   { name = "intro1", path = "../exercises/00_intro/intro1.rs" },
   { name = "intro1_sol", path = "../solutions/00_intro/intro1.rs" },
@@ -150,14 +150,14 @@ bin = [
   { name = "iterators4_sol", path = "../solutions/18_iterators/iterators4.rs" },
   { name = "iterators5", path = "../exercises/18_iterators/iterators5.rs" },
   { name = "iterators5_sol", path = "../solutions/18_iterators/iterators5.rs" },
-  { name = "box1", path = "../exercises/19_smart_pointers/box1.rs" },
-  { name = "box1_sol", path = "../solutions/19_smart_pointers/box1.rs" },
-  { name = "rc1", path = "../exercises/19_smart_pointers/rc1.rs" },
-  { name = "rc1_sol", path = "../solutions/19_smart_pointers/rc1.rs" },
-  { name = "arc1", path = "../exercises/19_smart_pointers/arc1.rs" },
-  { name = "arc1_sol", path = "../solutions/19_smart_pointers/arc1.rs" },
-  { name = "cow1", path = "../exercises/19_smart_pointers/cow1.rs" },
-  { name = "cow1_sol", path = "../solutions/19_smart_pointers/cow1.rs" },
+  { name = "smart_pointers1", path = "../exercises/19_smart_pointers/smart_pointers1.rs" },
+  { name = "smart_pointers1_sol", path = "../solutions/19_smart_pointers/smart_pointers1.rs" },
+  { name = "smart_pointers2", path = "../exercises/19_smart_pointers/smart_pointers2.rs" },
+  { name = "smart_pointers2_sol", path = "../solutions/19_smart_pointers/smart_pointers2.rs" },
+  { name = "smart_pointers3", path = "../exercises/19_smart_pointers/smart_pointers3.rs" },
+  { name = "smart_pointers3_sol", path = "../solutions/19_smart_pointers/smart_pointers3.rs" },
+  { name = "smart_pointers4", path = "../exercises/19_smart_pointers/smart_pointers4.rs" },
+  { name = "smart_pointers4_sol", path = "../solutions/19_smart_pointers/smart_pointers4.rs" },
   { name = "threads1", path = "../exercises/20_threads/threads1.rs" },
   { name = "threads1_sol", path = "../solutions/20_threads/threads1.rs" },
   { name = "threads2", path = "../exercises/20_threads/threads2.rs" },
@@ -178,21 +178,21 @@ bin = [
   { name = "clippy2_sol", path = "../solutions/22_clippy/clippy2.rs" },
   { name = "clippy3", path = "../exercises/22_clippy/clippy3.rs" },
   { name = "clippy3_sol", path = "../solutions/22_clippy/clippy3.rs" },
-  { name = "using_as", path = "../exercises/23_conversions/using_as.rs" },
-  { name = "using_as_sol", path = "../solutions/23_conversions/using_as.rs" },
-  { name = "from_into", path = "../exercises/23_conversions/from_into.rs" },
-  { name = "from_into_sol", path = "../solutions/23_conversions/from_into.rs" },
-  { name = "from_str", path = "../exercises/23_conversions/from_str.rs" },
-  { name = "from_str_sol", path = "../solutions/23_conversions/from_str.rs" },
-  { name = "try_from_into", path = "../exercises/23_conversions/try_from_into.rs" },
-  { name = "try_from_into_sol", path = "../solutions/23_conversions/try_from_into.rs" },
-  { name = "as_ref_mut", path = "../exercises/23_conversions/as_ref_mut.rs" },
-  { name = "as_ref_mut_sol", path = "../solutions/23_conversions/as_ref_mut.rs" },
+  { name = "conversions1", path = "../exercises/23_conversions/conversions1.rs" },
+  { name = "conversions1_sol", path = "../solutions/23_conversions/conversions1.rs" },
+  { name = "conversions2", path = "../exercises/23_conversions/conversions2.rs" },
+  { name = "conversions2_sol", path = "../solutions/23_conversions/conversions2.rs" },
+  { name = "conversions3", path = "../exercises/23_conversions/conversions3.rs" },
+  { name = "conversions3_sol", path = "../solutions/23_conversions/conversions3.rs" },
+  { name = "conversions4", path = "../exercises/23_conversions/conversions4.rs" },
+  { name = "conversions4_sol", path = "../solutions/23_conversions/conversions4.rs" },
+  { name = "conversions5", path = "../exercises/23_conversions/conversions5.rs" },
+  { name = "conversions5_sol", path = "../solutions/23_conversions/conversions5.rs" },
 ]
 
 [package]
 name = "exercises"
-edition = "2021"
+edition = "2024"
 # Don't publish the exercises on crates.io!
 publish = false
 

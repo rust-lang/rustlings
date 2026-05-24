@@ -38,7 +38,7 @@ pub fn append_bins(
         buf.extend_from_slice(b"\", path = \"");
         buf.extend_from_slice(exercise_path_prefix);
         buf.extend_from_slice(b"exercises/");
-        if let Some(dir) = &exercise_info.dir {
+        if let Some(dir) = exercise_info.dir {
             buf.extend_from_slice(dir.as_bytes());
             buf.push(b'/');
         }
@@ -56,7 +56,7 @@ pub fn append_bins(
         buf.extend_from_slice(b"\", path = \"");
         buf.extend_from_slice(exercise_path_prefix);
         buf.extend_from_slice(b"solutions/");
-        if let Some(dir) = &exercise_info.dir {
+        if let Some(dir) = exercise_info.dir {
             buf.extend_from_slice(dir.as_bytes());
             buf.push(b'/');
         }
@@ -74,13 +74,13 @@ pub fn updated_cargo_toml(
     let (bins_start_ind, bins_end_ind) = bins_start_end_ind(current_cargo_toml)?;
 
     let mut updated_cargo_toml = Vec::with_capacity(BINS_BUFFER_CAPACITY);
-    updated_cargo_toml.extend_from_slice(current_cargo_toml[..bins_start_ind].as_bytes());
+    updated_cargo_toml.extend_from_slice(&current_cargo_toml.as_bytes()[..bins_start_ind]);
     append_bins(
         &mut updated_cargo_toml,
         exercise_infos,
         exercise_path_prefix,
     );
-    updated_cargo_toml.extend_from_slice(current_cargo_toml[bins_end_ind..].as_bytes());
+    updated_cargo_toml.extend_from_slice(&current_cargo_toml.as_bytes()[bins_end_ind..]);
 
     Ok(updated_cargo_toml)
 }
@@ -106,19 +106,19 @@ mod tests {
     fn test_bins() {
         let exercise_infos = [
             ExerciseInfo {
-                name: String::from("1"),
+                name: "1",
                 dir: None,
                 test: true,
                 strict_clippy: true,
-                hint: String::new(),
+                hint: "",
                 skip_check_unsolved: false,
             },
             ExerciseInfo {
-                name: String::from("2"),
-                dir: Some(String::from("d")),
+                name: "2",
+                dir: Some("d"),
                 test: false,
                 strict_clippy: false,
-                hint: String::new(),
+                hint: "",
                 skip_check_unsolved: false,
             },
         ];
@@ -134,7 +134,14 @@ mod tests {
         );
 
         assert_eq!(
-            updated_cargo_toml(&exercise_infos, "abc\nbin = [xxx]\n123", b"../").unwrap(),
+            updated_cargo_toml(
+                &exercise_infos,
+                "abc\n\
+                 bin = [xxx]\n\
+                 123",
+                b"../"
+            )
+            .unwrap(),
             br#"abc
 bin = [
   { name = "1", path = "../exercises/1.rs" },

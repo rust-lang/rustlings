@@ -1,28 +1,34 @@
 use anyhow::Result;
 use crossterm::{
-    style::{Attribute, Color, ResetColor, SetAttribute, SetForegroundColor},
     QueueableCommand,
+    style::{Attribute, Color, ResetColor, SetAttribute, SetForegroundColor},
 };
 use std::io::{self, StdoutLock, Write};
 
 use crate::{
     cmd::CmdRunner,
-    term::{self, terminal_file_link, write_ansi, CountedWrite},
+    term::{self, CountedWrite, file_path, terminal_file_link, write_ansi},
 };
 
 /// The initial capacity of the output buffer.
 pub const OUTPUT_CAPACITY: usize = 1 << 14;
 
-pub fn solution_link_line(stdout: &mut StdoutLock, solution_path: &str) -> io::Result<()> {
+pub fn solution_link_line(
+    stdout: &mut StdoutLock,
+    solution_path: &str,
+    emit_file_links: bool,
+) -> io::Result<()> {
     stdout.queue(SetAttribute(Attribute::Bold))?;
     stdout.write_all(b"Solution")?;
     stdout.queue(ResetColor)?;
     stdout.write_all(b" for comparison: ")?;
-    if let Some(canonical_path) = term::canonicalize(solution_path) {
-        terminal_file_link(stdout, solution_path, &canonical_path, Color::Cyan)?;
-    } else {
-        stdout.write_all(solution_path.as_bytes())?;
-    }
+    file_path(stdout, Color::Cyan, |writer| {
+        if emit_file_links && let Some(canonical_path) = term::canonicalize(solution_path) {
+            terminal_file_link(writer, solution_path, &canonical_path)
+        } else {
+            writer.stdout().write_all(solution_path.as_bytes())
+        }
+    })?;
     stdout.write_all(b"\n")
 }
 
@@ -42,17 +48,17 @@ fn run_bin(
 
     let success = cmd_runner.run_debug_bin(bin_name, output.as_deref_mut())?;
 
-    if let Some(output) = output {
-        if !success {
-            // This output is important to show the user that something went wrong.
-            // Otherwise, calling something like `exit(1)` in an exercise without further output
-            // leaves the user confused about why the exercise isn't done yet.
-            write_ansi(output, SetAttribute(Attribute::Bold));
-            write_ansi(output, SetForegroundColor(Color::Red));
-            output.extend_from_slice(b"The exercise didn't run successfully (nonzero exit code)");
-            write_ansi(output, ResetColor);
-            output.push(b'\n');
-        }
+    if let Some(output) = output
+        && !success
+    {
+        // This output is important to show the user that something went wrong.
+        // Otherwise, calling something like `exit(1)` in an exercise without further output
+        // leaves the user confused about why the exercise isn't done yet.
+        write_ansi(output, SetAttribute(Attribute::Bold));
+        write_ansi(output, SetForegroundColor(Color::Red));
+        output.extend_from_slice(b"The exercise didn't run successfully (nonzero exit code)");
+        write_ansi(output, ResetColor);
+        output.push(b'\n');
     }
 
     Ok(success)
@@ -60,8 +66,8 @@ fn run_bin(
 
 /// See `info_file::ExerciseInfo`
 pub struct Exercise {
-    pub dir: Option<&'static str>,
     pub name: &'static str,
+    pub dir: Option<&'static str>,
     /// Path of the exercise file starting with the `exercises/` directory.
     pub path: &'static str,
     pub canonical_path: Option<String>,
@@ -72,12 +78,18 @@ pub struct Exercise {
 }
 
 impl Exercise {
-    pub fn terminal_file_link<'a>(&self, writer: &mut impl CountedWrite<'a>) -> io::Result<()> {
-        if let Some(canonical_path) = self.canonical_path.as_deref() {
-            return terminal_file_link(writer, self.path, canonical_path, Color::Blue);
-        }
-
-        writer.write_str(self.path)
+    pub fn terminal_file_link<'a>(
+        &self,
+        writer: &mut impl CountedWrite<'a>,
+        emit_file_links: bool,
+    ) -> io::Result<()> {
+        file_path(writer, Color::Blue, |writer| {
+            if emit_file_links && let Some(canonical_path) = self.canonical_path.as_deref() {
+                terminal_file_link(writer, self.path, canonical_path)
+            } else {
+                writer.write_str(self.path)
+            }
+        })
     }
 }
 
@@ -146,7 +158,6 @@ pub trait RunnableExercise {
 
     /// Compile, check and run the exercise.
     /// The output is written to the `output` buffer after clearing it.
-    #[inline]
     fn run_exercise(&self, output: Option<&mut Vec<u8>>, cmd_runner: &CmdRunner) -> Result<bool> {
         self.run::<false>(self.name(), output, cmd_runner)
     }
@@ -189,22 +200,18 @@ pub trait RunnableExercise {
 }
 
 impl RunnableExercise for Exercise {
-    #[inline]
     fn name(&self) -> &str {
         self.name
     }
 
-    #[inline]
     fn dir(&self) -> Option<&str> {
         self.dir
     }
 
-    #[inline]
     fn strict_clippy(&self) -> bool {
         self.strict_clippy
     }
 
-    #[inline]
     fn test(&self) -> bool {
         self.test
     }

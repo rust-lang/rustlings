@@ -1,4 +1,4 @@
-use anyhow::{bail, Context, Result};
+use anyhow::{Context, Result, bail};
 use clap::Subcommand;
 use std::path::PathBuf;
 
@@ -7,8 +7,8 @@ mod new;
 mod update;
 
 #[derive(Subcommand)]
-pub enum DevCommands {
-    /// Create a new project for third-party Rustlings exercises
+pub enum DevCommand {
+    /// Create a new project for community exercises
     New {
         /// The path to create the project in
         path: PathBuf,
@@ -26,7 +26,7 @@ pub enum DevCommands {
     Update,
 }
 
-impl DevCommands {
+impl DevCommand {
     pub fn run(self) -> Result<()> {
         match self {
             Self::New { path, no_git } => {

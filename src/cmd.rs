@@ -1,7 +1,7 @@
-use anyhow::{bail, Context, Result};
+use anyhow::{Context, Result, bail};
 use serde::Deserialize;
 use std::{
-    io::Read,
+    io::{Read, pipe},
     path::PathBuf,
     process::{Command, Stdio},
 };
@@ -17,7 +17,7 @@ fn run_cmd(mut cmd: Command, description: &str, output: Option<&mut Vec<u8>>) ->
     };
 
     let mut handle = if let Some(output) = output {
-        let (mut reader, writer) = os_pipe::pipe().with_context(|| {
+        let (mut reader, writer) = pipe().with_context(|| {
             format!("Failed to create a pipe to run the command `{description}``")
         })?;
 
@@ -126,7 +126,6 @@ pub struct CargoSubcommand<'out> {
 }
 
 impl CargoSubcommand<'_> {
-    #[inline]
     pub fn args<'arg, I>(&mut self, args: I) -> &mut Self
     where
         I: IntoIterator<Item = &'arg str>,
@@ -136,7 +135,6 @@ impl CargoSubcommand<'_> {
     }
 
     /// The boolean in the returned `Result` is true if the command's exit status is success.
-    #[inline]
     pub fn run(self, description: &str) -> Result<bool> {
         run_cmd(self.cmd, description, self.output)
     }

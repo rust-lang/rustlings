@@ -1,14 +1,14 @@
-use anyhow::{bail, Context, Result};
+use anyhow::{Context, Result, bail};
 use crossterm::{
-    style::{Attribute, Color, ResetColor, SetAttribute, SetForegroundColor},
     QueueableCommand,
+    style::{Attribute, Color, ResetColor, SetAttribute, SetForegroundColor},
 };
 use serde::Deserialize;
 use std::{
-    env::set_current_dir,
+    env::{current_dir, set_current_dir},
     fs::{self, create_dir},
     io::{self, Write},
-    path::{Path, PathBuf},
+    path::Path,
     process::{Command, Stdio},
 };
 
@@ -18,8 +18,9 @@ use crate::{
 };
 
 #[derive(Deserialize)]
-struct CargoLocateProject {
-    root: PathBuf,
+struct CargoLocateProject<'a> {
+    #[serde(borrow)]
+    root: &'a Path,
 }
 
 pub fn init() -> Result<()> {
@@ -35,7 +36,27 @@ pub fn init() -> Result<()> {
         .stdin(Stdio::null())
         .stderr(Stdio::null())
         .output()
-        .context(CARGO_LOCATE_PROJECT_ERR)?;
+        .context(
+            "Failed to run the command `cargo locate-project …`\n\
+             Did you already install Rust?\n\
+             Try running `cargo --version` to diagnose the problem.",
+        )?;
+
+    if !Command::new("cargo")
+        .arg("clippy")
+        .arg("--version")
+        .stdin(Stdio::null())
+        .stdout(Stdio::null())
+        .stderr(Stdio::null())
+        .status()
+        .context("Failed to run the command `cargo clippy --version`")?
+        .success()
+    {
+        bail!(
+            "Clippy, the official Rust linter, is missing.\n\
+             Please install it first before initializing Rustlings."
+        )
+    }
 
     let mut stdout = io::stdout().lock();
     let mut init_git = true;
@@ -52,15 +73,19 @@ pub fn init() -> Result<()> {
                 )?
                 .root;
 
-        let workspace_manifest_content = fs::read_to_string(&workspace_manifest)
+        let workspace_manifest_content = fs::read_to_string(workspace_manifest)
             .with_context(|| format!("Failed to read the file {}", workspace_manifest.display()))?;
-        if !workspace_manifest_content.contains("[workspace]\n")
+        if !workspace_manifest_content.contains("[workspace]")
             && !workspace_manifest_content.contains("workspace.")
         {
-            bail!("The current directory is already part of a Cargo project.\nPlease initialize Rustlings in a different directory");
+            bail!(
+                "The current directory is already part of a Cargo project.\n\
+                 Please initialize Rustlings in a different directory"
+            );
         }
 
-        stdout.write_all(b"This command will create the directory `rustlings/` as a member of this Cargo workspace.\nPress ENTER to continue ")?;
+        stdout.write_all(b"This command will create the directory `rustlings/` as a member of this Cargo workspace.\n\
+                           Press ENTER to continue ")?;
         press_enter_prompt(&mut stdout)?;
 
         // Make sure "rustlings" is added to `workspace.members` by making
@@ -75,15 +100,19 @@ pub fn init() -> Result<()> {
             .stdout(Stdio::null())
             .status()?;
         if !status.success() {
-            bail!("Failed to initialize a new Cargo workspace member.\nPlease initialize Rustlings in a different directory");
+            bail!(
+                "Failed to initialize a new Cargo workspace member.\n\
+                 Please initialize Rustlings in a different directory"
+            );
         }
 
         stdout.write_all(b"The directory `rustlings` has been added to `workspace.members` in the `Cargo.toml` file of this Cargo workspace.\n")?;
-        fs::remove_dir_all("rustlings")
+        fs::remove_dir_all(rustlings_dir)
             .context("Failed to remove the temporary directory `rustlings/`")?;
         init_git = false;
     } else {
-        stdout.write_all(b"This command will create the directory `rustlings/` which will contain the exercises.\nPress ENTER to continue ")?;
+        stdout.write_all(b"This command will create the directory `rustlings/` which will contain the exercises.\n\
+                           Press ENTER to continue ")?;
         press_enter_prompt(&mut stdout)?;
     }
 
@@ -140,14 +169,27 @@ pub fn init() -> Result<()> {
     fs::write(".vscode/extensions.json", VS_CODE_EXTENSIONS_JSON)
         .context("Failed to create the file `rustlings/.vscode/extensions.json`")?;
 
-    if init_git {
-        // Ignore any Git error because Git initialization is not required.
-        let _ = Command::new("git")
-            .arg("init")
-            .stdin(Stdio::null())
-            .stdout(Stdio::null())
-            .stderr(Stdio::null())
-            .status();
+    if init_git && let Ok(dir) = current_dir() {
+        let mut dir = dir.as_path();
+
+        loop {
+            if dir.join(".git").exists() || dir.join(".jj").exists() {
+                break;
+            }
+
+            if let Some(parent) = dir.parent() {
+                dir = parent;
+            } else {
+                // Ignore any Git error because Git initialization is not required.
+                let _ = Command::new("git")
+                    .arg("init")
+                    .stdin(Stdio::null())
+                    .stdout(Stdio::null())
+                    .stderr(Stdio::null())
+                    .status();
+                break;
+            }
+        }
     }
 
     stdout.queue(SetForegroundColor(Color::Green))?;
@@ -162,10 +204,6 @@ pub fn init() -> Result<()> {
     Ok(())
 }
 
-const CARGO_LOCATE_PROJECT_ERR: &str = "Failed to run the command `cargo locate-project …`
-Did you already install Rust?
-Try running `cargo --version` to diagnose the problem.";
-
 const INIT_SOLUTION_FILE: &[u8] = b"fn main() {
     // DON'T EDIT THIS SOLUTION FILE!
     // It will be automatically filled after you finish the exercise.
@@ -174,6 +212,7 @@ const INIT_SOLUTION_FILE: &[u8] = b"fn main() {
 
 pub const RUST_ANALYZER_TOML: &[u8] = br#"check.command = "clippy"
 check.extraArgs = ["--profile", "test"]
+cargo.targetDir = true
 "#;
 
 const GITIGNORE: &[u8] = b"Cargo.lock

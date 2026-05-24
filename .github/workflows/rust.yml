@@ -1,10 +1,18 @@
-name: Rustlings Tests
+name: Check
 
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - website
+      - .github/workflows/website.yml
+      - '*.md'
   pull_request:
     branches: [main]
+    paths-ignore:
+      - website
+      - .github/workflows/website.yml
+      - '*.md'
 
 env:
   CARGO_TERM_COLOR: always
@@ -13,31 +21,36 @@ jobs:
   clippy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - run: cargo clippy -- --deny warnings
+      - uses: actions/checkout@v6
+      - name: Clippy
+        run: cargo clippy -- --deny warnings
   fmt:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: DavidAnson/markdownlint-cli2-action@v16
-        with:
-          globs: "exercises/**/*.md"
-      - name: Run cargo fmt
+      - uses: actions/checkout@v6
+      - name: rustfmt
         run: cargo fmt --all --check
   test:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+        os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: swatinem/rust-cache@v2
-      - name: Run cargo test
+      - name: cargo test
+        env:
+          RUST_BACKTRACE: 1
         run: cargo test --workspace
   dev-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: swatinem/rust-cache@v2
-      - name: Run rustlings dev check
-        run: cargo run -- dev check --require-solutions
+      - name: rustlings dev check
+        run: cargo dev check --require-solutions
+  rumdl:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v6
+        - uses: rvben/rumdl@v0

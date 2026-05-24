@@ -19,7 +19,7 @@ mod tests {
 
     #[test]
     fn yummy_food() {
-        // This means that calling `picky_eater` with the argument "food" should return "Yummy!".
+        // This means that calling `picky_eater` with the argument "strawberry" should return "Yummy!".
         assert_eq!(picky_eater("strawberry"), "Yummy!");
     }
 

@@ -16,7 +16,7 @@
 
 use std::num::ParseIntError;
 
-#[allow(unused_variables)]
+#[allow(unused_variables, clippy::question_mark)]
 fn total_cost(item_quantity: &str) -> Result<i32, ParseIntError> {
     let processing_fee = 1;
     let cost_per_item = 5;

@@ -1,4 +1,4 @@
-use anyhow::{bail, Context, Result};
+use anyhow::{Context, Result, bail};
 use std::{
     env::set_current_dir,
     fs::{self, create_dir},
@@ -6,7 +6,7 @@ use std::{
     process::Command,
 };
 
-use crate::{init::RUST_ANALYZER_TOML, CURRENT_FORMAT_VERSION};
+use crate::{CURRENT_FORMAT_VERSION, init::RUST_ANALYZER_TOML};
 
 // Create a directory relative to the current directory and print its path.
 fn create_rel_dir(dir_name: &str, current_dir: &str) -> Result<()> {
@@ -55,7 +55,9 @@ pub fn new(path: &Path, no_git: bool) -> Result<()> {
     write_rel_file(
         "info.toml",
         &dir_path_str,
-        format!("{INFO_FILE_BEFORE_FORMAT_VERSION}{CURRENT_FORMAT_VERSION}{INFO_FILE_AFTER_FORMAT_VERSION}"),
+        format!(
+            "{INFO_FILE_BEFORE_FORMAT_VERSION}{CURRENT_FORMAT_VERSION}{INFO_FILE_AFTER_FORMAT_VERSION}"
+        ),
     )?;
 
     write_rel_file("Cargo.toml", &dir_path_str, CARGO_TOML)?;
@@ -76,18 +78,17 @@ pub fn new(path: &Path, no_git: bool) -> Result<()> {
     Ok(())
 }
 
-pub const GITIGNORE: &[u8] = b".rustlings-state.txt
-Cargo.lock
+pub const GITIGNORE: &[u8] = b"Cargo.lock
 target/
 .vscode/
 !.vscode/extensions.json
 ";
 
 const INFO_FILE_BEFORE_FORMAT_VERSION: &str =
-    "# The format version is an indicator of the compatibility of third-party exercises with the
+    "# The format version is an indicator of the compatibility of community exercises with the
 # Rustlings program.
 # The format version is not the same as the version of the Rustlings program.
-# In case Rustlings makes an unavoidable breaking change to the expected format of third-party
+# In case Rustlings makes an unavoidable breaking change to the expected format of community
 # exercises, you would need to raise this version and adapt to the new format.
 # Otherwise, the newest version of the Rustlings program won't be able to run these exercises.
 format_version = ";
@@ -95,7 +96,7 @@ format_version = ";
 const INFO_FILE_AFTER_FORMAT_VERSION: &str = r#"
 
 # Optional multi-line message to be shown to users when just starting with the exercises.
-welcome_message = """Welcome to these third-party Rustlings exercises."""
+welcome_message = """Welcome to these community Rustlings exercises."""
 
 # Optional multi-line message to be shown to users after finishing all exercises.
 final_message = """We hope that you found the exercises helpful :D"""
@@ -130,7 +131,7 @@ bin = []
 
 [package]
 name = "exercises"
-edition = "2021"
+edition = "2024"
 # Don't publish the exercises on crates.io!
 publish = false
 
@@ -139,7 +140,7 @@ publish = false
 
 const README: &str = "# Rustlings 🦀
 
-Welcome to these third-party Rustlings exercises 😃
+Welcome to these community Rustlings exercises 😃
 
 First, [install Rustlings using the official instructions](https://github.com/rust-lang/rustlings) ✅
 
