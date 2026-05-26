@@ -26,7 +26,7 @@ pub struct Args {
     /// Only use this if Rustlings fails to detect exercise file changes
     #[arg(long)]
     pub manual_run: bool,
-    /// Change rustbook url to passed one.
+    /// Replace the rustbook URL with the provided base URL.
     #[arg(long)]
     pub base_url: Option<String>,
 }
