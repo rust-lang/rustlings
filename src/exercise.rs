@@ -73,7 +73,7 @@ pub struct Exercise {
     pub canonical_path: Option<String>,
     pub test: bool,
     pub strict_clippy: bool,
-    pub hint: &'static str,
+    pub hint: String,
     pub done: bool,
 }
 

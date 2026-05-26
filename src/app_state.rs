@@ -92,9 +92,9 @@ impl AppState {
             .into_iter()
             .map(|exercise_info| {
                 let hint = if let Some(replacer) = &url_replacer {
-                    replacer.replace(exercise_info.hint.trim_ascii()).leak()
+                    replacer.replace(exercise_info.hint.trim_ascii())
                 } else {
-                    exercise_info.hint.trim_ascii()
+                    exercise_info.hint.trim_ascii().to_string()
                 };
 
                 let canonical_path = dir_canonical_path.as_deref().map(|dir_canonical_path| {
@@ -628,7 +628,7 @@ mod tests {
             canonical_path: None,
             test: false,
             strict_clippy: false,
-            hint: "",
+            hint: String::new(),
             done: false,
         }
     }
