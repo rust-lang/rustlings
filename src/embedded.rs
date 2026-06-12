@@ -85,7 +85,7 @@ impl EmbeddedFiles {
             exercise_path.truncate(prefix.len());
             exercise_path.push_str(dir.name);
             exercise_path.push('/');
-            exercise_path.push_str(&exercise_info.name);
+            exercise_path.push_str(exercise_info.name);
             exercise_path.push_str(".rs");
 
             fs::write(&exercise_path, exercise_files.exercise)
@@ -141,13 +141,14 @@ mod tests {
     use super::*;
 
     #[derive(Deserialize)]
-    struct ExerciseInfo {
-        dir: String,
+    struct ExerciseInfo<'a> {
+        dir: &'a str,
     }
 
     #[derive(Deserialize)]
-    struct InfoFile {
-        exercises: Vec<ExerciseInfo>,
+    struct InfoFile<'a> {
+        #[serde(borrow)]
+        exercises: Vec<ExerciseInfo<'a>>,
     }
 
     #[test]

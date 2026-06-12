@@ -14,7 +14,7 @@ This will also install _Cargo_, Rust's package/project manager.
 >
 > Debian: `sudo apt install gcc`\
 > Fedora: `sudo dnf install gcc`
-
+>
 > 🍎 If you are on **MacOS**, make sure you have _Xcode and its developer tools_ installed: `xcode-select --install`
 
 ## Installing Rustlings
@@ -72,6 +72,10 @@ But any editor that supports [rust-analyzer](https://rust-analyzer.github.io/) s
 While working with Rustlings, please use a modern terminal for the best user experience.
 The default terminal on Linux and Mac should be sufficient.
 On Windows, we recommend the [Windows Terminal](https://aka.ms/terminal).
+
+### Offline documentation
+
+Whenever you're working on Rustlings offline, you can access a local copy of the book or the standard library documentation by running `rustup doc --book` or `rustup doc --std`.
 
 ## Usage
 

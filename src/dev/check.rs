@@ -63,7 +63,7 @@ fn check_info_file_exercises(info_file: &InfoFile) -> Result<HashSet<PathBuf>> {
 
     let mut file_buf = String::with_capacity(1 << 14);
     for exercise_info in &info_file.exercises {
-        let name = exercise_info.name.as_str();
+        let name = exercise_info.name;
         if name.is_empty() {
             bail!("Found an empty exercise name in `info.toml`");
         }
@@ -76,7 +76,7 @@ fn check_info_file_exercises(info_file: &InfoFile) -> Result<HashSet<PathBuf>> {
             bail!("Char `{c}` in the exercise name `{name}` is not allowed");
         }
 
-        if let Some(dir) = &exercise_info.dir {
+        if let Some(dir) = exercise_info.dir {
             if dir.is_empty() {
                 bail!("The exercise `{name}` has an empty dir name in `info.toml`");
             }
@@ -214,7 +214,7 @@ fn check_exercises_unsolved(
             Some(
                 thread::Builder::new()
                     .spawn(|| exercise_info.run_exercise(None, cmd_runner))
-                    .map(|handle| (exercise_info.name.as_str(), handle)),
+                    .map(|handle| (exercise_info.name, handle)),
             )
         })
         .collect::<Result<Vec<_>, _>>()

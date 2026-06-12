@@ -21,7 +21,7 @@ get started, here are some notes about how Rustlings operates:
 
 final_message = """
 We hope you enjoyed learning about the various aspects of Rust!
-If you noticed any issues, don't hesitate to report them on Github.
+If you noticed any issues, don't hesitate to report them on GitHub.
 You can also contribute your own exercises to help the greater community!
 
 Before reporting an issue or contributing, please read our guidelines:
@@ -265,10 +265,10 @@ for `a.len() >= 100`?"""
 name = "primitive_types4"
 dir = "04_primitive_types"
 hint = """
-Take a look at the 'Understanding Ownership -> Slices -> Other Slices' section
-of the book: https://doc.rust-lang.org/book/ch04-03-slices.html and use the
-starting and ending (plus one) indices of the items in the array that you want
-to end up in the slice.
+Take a look at the 'Understanding Ownership -> The Slice Type -> Other Slices'
+section of the book: https://doc.rust-lang.org/book/ch04-03-slices.html and use
+the starting and ending (plus one) indices of the items in the array that you
+want to end up in the slice.
 
 If you're curious why the first argument of `assert_eq!` does not have an
 ampersand for a reference since the second argument is a reference, take a look
@@ -417,11 +417,10 @@ https://doc.rust-lang.org/book/ch05-01-defining-structs.html#creating-instances-
 name = "structs3"
 dir = "07_structs"
 hint = """
-For `is_international`: What makes a package international? Seems related to
-the places it goes through right?
-
-For `get_fees`: This method takes an additional argument, is there a field in
-the `Package` struct that this relates to?
+Methods and associated functions are both declared in an `impl MyType {}`
+block. Methods have a `self`, `&self` or `&mut self` parameter, where `self`
+implicitly has the type of the impl block. Associated functions do not have
+a `self` parameter.
 
 Have a look in The Book to find out more about method implementations:
 https://doc.rust-lang.org/book/ch05-03-method-syntax.html"""
@@ -439,8 +438,14 @@ name = "enums2"
 dir = "08_enums"
 test = false
 hint = """
-You can create enumerations that have different variants with different types
-such as anonymous structs, structs, a single string, tuples, no data, etc."""
+Enum variants can be defined using three different forms: struct-, tuple- and
+unit-like. Here's an example enum definition, which uses all three forms:
+
+enum EnumUsingAllVariantForms {
+    StructLike { named_field: bool },
+    TupleLike(bool),
+    UnitLike,
+}"""
 
 [[exercises]]
 name = "enums3"
@@ -954,7 +959,7 @@ a different method that could make your code more compact than using `fold`."""
 # SMART POINTERS
 
 [[exercises]]
-name = "box1"
+name = "smart_pointers1"
 dir = "19_smart_pointers"
 hint = """
 The compiler's message should help: Since we cannot store the value of the
@@ -971,7 +976,7 @@ Although the current list is one of integers (`i32`), feel free to change the
 definition and try other types!"""
 
 [[exercises]]
-name = "rc1"
+name = "smart_pointers2"
 dir = "19_smart_pointers"
 hint = """
 This is a straightforward exercise to use the `Rc<T>` type. Each `Planet` has
@@ -988,7 +993,7 @@ See more at: https://doc.rust-lang.org/book/ch15-04-rc.html
 Unfortunately, Pluto is no longer considered a planet :("""
 
 [[exercises]]
-name = "arc1"
+name = "smart_pointers3"
 dir = "19_smart_pointers"
 test = false
 hint = """
@@ -1005,7 +1010,7 @@ Book:
 https://doc.rust-lang.org/book/ch16-00-concurrency.html"""
 
 [[exercises]]
-name = "cow1"
+name = "smart_pointers4"
 dir = "19_smart_pointers"
 hint = """
 If `Cow` already owns the data, it doesn't need to clone it when `to_mut()` is
@@ -1156,20 +1161,26 @@ hint = "No hints this time!"
 # TYPE CONVERSIONS
 
 [[exercises]]
-name = "using_as"
+name = "conversions1"
 dir = "23_conversions"
 hint = """
 Use the `as` operator to cast one of the operands in the last line of the
 `average` function into the expected return type."""
 
 [[exercises]]
-name = "from_into"
+name = "conversions2"
 dir = "23_conversions"
 hint = """
-Follow the steps provided right before the `From` implementation."""
+The formula for converting from Fahrenheit to Celsius is: C = (F - 32) / 1.8
+This can be derived from the first formula:
+
+             F = C * 1.8 + 32   // now subtract 32 on both sides
+        F - 32 = C * 1.8        // then divide by 1.8
+(F - 32) / 1.8 = C
+"""
 
 [[exercises]]
-name = "from_str"
+name = "conversions3"
 dir = "23_conversions"
 hint = """
 The implementation of `FromStr` should return an `Ok` with a `Person` object,
@@ -1186,7 +1197,7 @@ operator in your solution, you might want to look at
 https://doc.rust-lang.org/stable/rust-by-example/error/multiple_error_types/reenter_question_mark.html"""
 
 [[exercises]]
-name = "try_from_into"
+name = "conversions4"
 dir = "23_conversions"
 hint = """
 Is there an implementation of `TryFrom` in the standard library that can both do
@@ -1196,7 +1207,7 @@ Challenge: Can you make the `TryFrom` implementations generic over many integer
 types?"""
 
 [[exercises]]
-name = "as_ref_mut"
+name = "conversions5"
 dir = "23_conversions"
 hint = """
 Add `AsRef<str>` or `AsMut<u32>` as a trait bound to the functions."""

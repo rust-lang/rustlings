@@ -2,7 +2,6 @@ use anyhow::{Context, Error, Result, bail};
 use crossterm::{QueueableCommand, cursor, terminal};
 use std::{
     collections::HashSet,
-    env,
     fs::{File, OpenOptions},
     io::{Read, Seek, StdoutLock, Write},
     path::{MAIN_SEPARATOR_STR, Path},
@@ -17,6 +16,7 @@ use std::{
 use crate::{
     clear_terminal,
     cmd::CmdRunner,
+    editor::{Editor, EditorJoinHandle},
     embedded::EMBEDDED_FILES,
     exercise::{Exercise, RunnableExercise},
     info_file::ExerciseInfo,
@@ -52,21 +52,24 @@ pub enum CheckProgress {
 pub struct AppState {
     current_exercise_ind: usize,
     exercises: Vec<Exercise>,
-    // Caches the number of done exercises to avoid iterating over all exercises every time.
-    n_done: u16,
-    final_message: String,
+    // Cache the number of done exercises to avoid iterating over all exercises every time.
+    n_done: u32,
+    final_message: &'static str,
     state_file: File,
     // Preallocated buffer for reading and writing the state file.
     file_buf: Vec<u8>,
     official_exercises: bool,
     cmd_runner: CmdRunner,
     emit_file_links: bool,
+    editor: Option<Editor>,
 }
 
 impl AppState {
     pub fn new(
         exercise_infos: Vec<ExerciseInfo>,
-        final_message: String,
+        final_message: &'static str,
+        editor: Option<Editor>,
+        vs_code_term: bool,
     ) -> Result<(Self, StateFileStatus)> {
         let cmd_runner = CmdRunner::build()?;
         let mut state_file = OpenOptions::new()
@@ -83,43 +86,38 @@ impl AppState {
         let mut exercises = exercise_infos
             .into_iter()
             .map(|exercise_info| {
-                // Leaking to be able to borrow in the watch mode `Table`.
-                // Leaking is not a problem because the `AppState` instance lives until
-                // the end of the program.
-                let path = exercise_info.path().leak();
-                let name = exercise_info.name.leak();
-                let dir = exercise_info.dir.map(|dir| &*dir.leak());
-                let hint = exercise_info.hint.leak().trim_ascii();
-
                 let canonical_path = dir_canonical_path.as_deref().map(|dir_canonical_path| {
                     let mut canonical_path;
-                    if let Some(dir) = dir {
+                    if let Some(dir) = exercise_info.dir {
                         canonical_path = String::with_capacity(
-                            2 + dir_canonical_path.len() + dir.len() + name.len(),
+                            2 + dir_canonical_path.len() + dir.len() + exercise_info.name.len(),
                         );
                         canonical_path.push_str(dir_canonical_path);
                         canonical_path.push_str(MAIN_SEPARATOR_STR);
                         canonical_path.push_str(dir);
                     } else {
-                        canonical_path =
-                            String::with_capacity(1 + dir_canonical_path.len() + name.len());
+                        canonical_path = String::with_capacity(
+                            1 + dir_canonical_path.len() + exercise_info.name.len(),
+                        );
                         canonical_path.push_str(dir_canonical_path);
                     }
 
                     canonical_path.push_str(MAIN_SEPARATOR_STR);
-                    canonical_path.push_str(name);
+                    canonical_path.push_str(exercise_info.name);
                     canonical_path.push_str(".rs");
                     canonical_path
                 });
 
                 Exercise {
-                    dir,
-                    name,
-                    path,
+                    name: exercise_info.name,
+                    dir: exercise_info.dir,
+                    // Leaking for `Editor::open`.
+                    // Leaking is fine since the app state exists until the end of the program.
+                    path: exercise_info.path().leak(),
                     canonical_path,
                     test: exercise_info.test,
                     strict_clippy: exercise_info.strict_clippy,
-                    hint,
+                    hint: exercise_info.hint.trim_ascii(),
                     // Updated below.
                     done: false,
                 }
@@ -181,43 +179,37 @@ impl AppState {
             official_exercises: !Path::new("info.toml").exists(),
             cmd_runner,
             // VS Code has its own file link handling
-            emit_file_links: env::var_os("TERM_PROGRAM").is_none_or(|v| v != "vscode"),
+            emit_file_links: !vs_code_term,
+            editor,
         };
 
         Ok((slf, state_file_status))
     }
 
-    #[inline]
     pub fn current_exercise_ind(&self) -> usize {
         self.current_exercise_ind
     }
 
-    #[inline]
     pub fn exercises(&self) -> &[Exercise] {
         &self.exercises
     }
 
-    #[inline]
-    pub fn n_done(&self) -> u16 {
+    pub fn n_done(&self) -> u32 {
         self.n_done
     }
 
-    #[inline]
-    pub fn n_pending(&self) -> u16 {
-        self.exercises.len() as u16 - self.n_done
+    pub fn n_pending(&self) -> u32 {
+        self.exercises.len() as u32 - self.n_done
     }
 
-    #[inline]
     pub fn current_exercise(&self) -> &Exercise {
         &self.exercises[self.current_exercise_ind]
     }
 
-    #[inline]
     pub fn cmd_runner(&self) -> &CmdRunner {
         &self.cmd_runner
     }
 
-    #[inline]
     pub fn emit_file_links(&self) -> bool {
         self.emit_file_links
     }
@@ -343,12 +335,10 @@ impl AppState {
         Ok(())
     }
 
-    pub fn reset_current_exercise(&mut self) -> Result<&'static str> {
+    pub fn reset_current_exercise(&mut self) -> Result<()> {
         self.set_pending(self.current_exercise_ind)?;
         let exercise = self.current_exercise();
-        self.reset(self.current_exercise_ind, exercise.path)?;
-
-        Ok(exercise.path)
+        self.reset(self.current_exercise_ind, exercise.path)
     }
 
     // Reset the exercise by index and return its name.
@@ -440,7 +430,7 @@ impl AppState {
                                 .is_err()
                             {
                                 break;
-                            };
+                            }
 
                             let success = exercise.run_exercise(None, &slf.cmd_runner);
                             let progress = match success {
@@ -557,7 +547,7 @@ impl AppState {
 
     pub fn render_final_message(&self, stdout: &mut StdoutLock) -> Result<()> {
         clear_terminal(stdout)?;
-        stdout.write_all(FENISH_LINE.as_bytes())?;
+        stdout.write_all(FINISH_LINE.as_bytes())?;
 
         let final_message = self.final_message.trim_ascii();
         if !final_message.is_empty() {
@@ -567,29 +557,51 @@ impl AppState {
 
         Ok(())
     }
+
+    pub fn open_editor(&mut self) -> Result<EditorJoinHandle> {
+        if let Some(editor) = self.editor.take() {
+            return editor.open(self.current_exercise_ind, self.current_exercise().path);
+        }
+
+        Ok(EditorJoinHandle::default())
+    }
+
+    pub fn join_editor_handle(&mut self, handle: EditorJoinHandle) -> Result<()> {
+        self.editor = handle.join()?;
+
+        Ok(())
+    }
+
+    pub fn close_editor(&mut self) -> Result<()> {
+        if let Some(editor) = &mut self.editor {
+            editor.close()?;
+        }
+
+        Ok(())
+    }
 }
 
 const BAD_INDEX_ERR: &str = "The current exercise index is higher than the number of exercises";
 const STATE_FILE_HEADER: &[u8] = b"DON'T EDIT THIS FILE!\n\n";
-const FENISH_LINE: &str = "+----------------------------------------------------+
-|          You made it to the Fe-nish line!          |
+const FINISH_LINE: &str = "+----------------------------------------------------+
+|          You made it to the finish line!           |
 +--------------------------  ------------------------+
-                           \\/\x1b[31m
-     ▒▒          ▒▒▒▒▒▒▒▒      ▒▒▒▒▒▒▒▒          ▒▒
-   ▒▒▒▒  ▒▒    ▒▒        ▒▒  ▒▒        ▒▒    ▒▒  ▒▒▒▒
-   ▒▒▒▒  ▒▒  ▒▒            ▒▒            ▒▒  ▒▒  ▒▒▒▒
- ░░▒▒▒▒░░▒▒  ▒▒            ▒▒            ▒▒  ▒▒░░▒▒▒▒
-   ▓▓▓▓▓▓▓▓  ▓▓      ▓▓██  ▓▓  ▓▓██      ▓▓  ▓▓▓▓▓▓▓▓
-     ▒▒▒▒    ▒▒      ████  ▒▒  ████      ▒▒░░  ▒▒▒▒
-       ▒▒  ▒▒▒▒▒▒        ▒▒▒▒▒▒        ▒▒▒▒▒▒  ▒▒
-         ▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▒▒▒▒▒▒▒▒▓▓▓▓▓▓▒▒▒▒▒▒▒▒
-           ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-             ▒▒▒▒▒▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒▒▒▒▒▒
-           ▒▒  ▒▒▒▒▒▒▒▒▒▒██████▒▒▒▒▒▒▒▒▒▒  ▒▒
-         ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒
-       ▒▒    ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒    ▒▒
-       ▒▒  ▒▒    ▒▒                  ▒▒    ▒▒  ▒▒
-           ▒▒  ▒▒                      ▒▒  ▒▒\x1b[0m
+                          \\/\x1b[31m
+    ▒▒          ▒▒▒▒▒▒▒▒      ▒▒▒▒▒▒▒▒          ▒▒
+  ▒▒▒▒  ▒▒    ▒▒        ▒▒  ▒▒        ▒▒    ▒▒  ▒▒▒▒
+  ▒▒▒▒  ▒▒  ▒▒            ▒▒            ▒▒  ▒▒  ▒▒▒▒
+  ▒▒▒▒░░▒▒  ▒▒            ▒▒            ▒▒  ▒▒░░▒▒▒▒
+  ▓▓▓▓▓▓▓▓  ▓▓      ▓▓██  ▓▓  ▓▓██      ▓▓  ▓▓▓▓▓▓▓▓
+    ▒▒▒▒    ▒▒      ████  ▒▒  ████      ▒▒    ▒▒▒▒
+      ▒▒  ▒▒▒▒▒▒        ▒▒▒▒▒▒        ▒▒▒▒▒▒  ▒▒
+        ▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▒▒▒▒▒▒▒▒▓▓▓▓▓▓▒▒▒▒▒▒▒▒
+          ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+            ▒▒▒▒▒▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒▒▒▒▒▒
+          ▒▒  ▒▒▒▒▒▒▒▒▒▒██████▒▒▒▒▒▒▒▒▒▒  ▒▒
+        ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒
+      ▒▒    ▒▒    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ▒▒    ▒▒
+      ▒▒  ▒▒    ▒▒                  ▒▒    ▒▒  ▒▒
+          ▒▒  ▒▒                      ▒▒  ▒▒\x1b[0m
 
 ";
 
@@ -599,8 +611,8 @@ mod tests {
 
     fn dummy_exercise() -> Exercise {
         Exercise {
-            dir: None,
             name: "0",
+            dir: None,
             path: "exercises/0.rs",
             canonical_path: None,
             test: false,
@@ -616,12 +628,13 @@ mod tests {
             current_exercise_ind: 0,
             exercises: vec![dummy_exercise(), dummy_exercise(), dummy_exercise()],
             n_done: 0,
-            final_message: String::new(),
+            final_message: "",
             state_file: tempfile::tempfile().unwrap(),
             file_buf: Vec::new(),
             official_exercises: true,
             cmd_runner: CmdRunner::build().unwrap(),
             emit_file_links: true,
+            editor: None,
         };
 
         let mut assert = |done: [bool; 3], expected: [Option<usize>; 3]| {

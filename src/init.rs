@@ -5,10 +5,10 @@ use crossterm::{
 };
 use serde::Deserialize;
 use std::{
-    env::set_current_dir,
+    env::{current_dir, set_current_dir},
     fs::{self, create_dir},
     io::{self, Write},
-    path::{Path, PathBuf},
+    path::Path,
     process::{Command, Stdio},
 };
 
@@ -18,8 +18,9 @@ use crate::{
 };
 
 #[derive(Deserialize)]
-struct CargoLocateProject {
-    root: PathBuf,
+struct CargoLocateProject<'a> {
+    #[serde(borrow)]
+    root: &'a Path,
 }
 
 pub fn init() -> Result<()> {
@@ -72,7 +73,7 @@ pub fn init() -> Result<()> {
                 )?
                 .root;
 
-        let workspace_manifest_content = fs::read_to_string(&workspace_manifest)
+        let workspace_manifest_content = fs::read_to_string(workspace_manifest)
             .with_context(|| format!("Failed to read the file {}", workspace_manifest.display()))?;
         if !workspace_manifest_content.contains("[workspace]")
             && !workspace_manifest_content.contains("workspace.")
@@ -106,7 +107,7 @@ pub fn init() -> Result<()> {
         }
 
         stdout.write_all(b"The directory `rustlings` has been added to `workspace.members` in the `Cargo.toml` file of this Cargo workspace.\n")?;
-        fs::remove_dir_all("rustlings")
+        fs::remove_dir_all(rustlings_dir)
             .context("Failed to remove the temporary directory `rustlings/`")?;
         init_git = false;
     } else {
@@ -168,14 +169,27 @@ pub fn init() -> Result<()> {
     fs::write(".vscode/extensions.json", VS_CODE_EXTENSIONS_JSON)
         .context("Failed to create the file `rustlings/.vscode/extensions.json`")?;
 
-    if init_git {
-        // Ignore any Git error because Git initialization is not required.
-        let _ = Command::new("git")
-            .arg("init")
-            .stdin(Stdio::null())
-            .stdout(Stdio::null())
-            .stderr(Stdio::null())
-            .status();
+    if init_git && let Ok(dir) = current_dir() {
+        let mut dir = dir.as_path();
+
+        loop {
+            if dir.join(".git").exists() || dir.join(".jj").exists() {
+                break;
+            }
+
+            if let Some(parent) = dir.parent() {
+                dir = parent;
+            } else {
+                // Ignore any Git error because Git initialization is not required.
+                let _ = Command::new("git")
+                    .arg("init")
+                    .stdin(Stdio::null())
+                    .stdout(Stdio::null())
+                    .stderr(Stdio::null())
+                    .status();
+                break;
+            }
+        }
     }
 
     stdout.queue(SetForegroundColor(Color::Green))?;

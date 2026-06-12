@@ -2,6 +2,7 @@ fn animal_habitat(animal: &str) -> &str {
     let identifier = if animal == "crab" {
         1
     } else if animal == "gopher" {
+        // Integer, so that every branch has the same type.
         2
     } else if animal == "snake" {
         3

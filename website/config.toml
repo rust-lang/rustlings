@@ -6,10 +6,10 @@ compile_sass = false
 build_search_index = false
 
 [markdown]
-highlight_code = true
-highlight_theme = "dracula"
-
 insert_anchor_links = "heading"
+
+[markdown.highlighting]
+theme = "dracula"
 
 [extra]
 logo_path = "images/happy_ferris.svg"

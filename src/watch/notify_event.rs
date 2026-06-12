@@ -12,7 +12,7 @@ use std::{
     time::Duration,
 };
 
-use super::{EXERCISE_RUNNING, WatchEvent};
+use crate::watch::{EXERCISE_RUNNING, WatchEvent};
 
 const DEBOUNCE_DURATION: Duration = Duration::from_millis(200);
 

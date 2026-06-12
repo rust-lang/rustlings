@@ -4,7 +4,7 @@ fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
 
 fn main() {
     let string1 = String::from("long string is long");
-    // Solution1: You can move `strings2` out of the inner block so that it is
+    // Solution 1: You can move `strings2` out of the inner block so that it is
     // not dropped before the print statement.
     let string2 = String::from("xyz");
     let result;
@@ -21,7 +21,7 @@ fn main() {
     {
         let string2 = String::from("xyz");
         result = longest(&string1, &string2);
-        // Solution2: You can move the print statement into the inner block so
+        // Solution 2: You can move the print statement into the inner block so
         // that it is executed before `string2` is dropped.
         println!("The longest string is '{result}'");
         // `string2` dropped here (end of the inner scope).

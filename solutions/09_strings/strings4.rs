@@ -15,15 +15,6 @@ fn main() {
 
     string("rust is fun!".to_owned());
 
-    // Here, both answers work.
-    // `.into()` converts a type into an expected type.
-    // If it is called where `String` is expected, it will convert `&str` to `String`.
-    string("nice weather".into());
-    // But if it is called where `&str` is expected, then `&str` is kept `&str` since no conversion is needed.
-    // If you remove the `#[allow(…)]` line, then Clippy will tell you to remove `.into()` below since it is a useless conversion.
-    #[allow(clippy::useless_conversion)]
-    string_slice("nice weather".into());
-
     string(format!("Interpolation {}", "Station"));
 
     // WARNING: This is byte indexing, not character indexing.

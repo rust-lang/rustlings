@@ -17,9 +17,8 @@ use crate::{
     clear_terminal,
     exercise::{OUTPUT_CAPACITY, RunnableExercise, solution_link_line},
     term::progress_bar,
+    watch::{InputPauseGuard, WatchEvent, terminal_event::terminal_event_handler},
 };
-
-use super::{InputPauseGuard, WatchEvent, terminal_event::terminal_event_handler};
 
 const HEADING_ATTRIBUTES: Attributes = Attributes::none()
     .with(Attribute::Bold)
@@ -60,7 +59,7 @@ impl<'a> WatchState<'a> {
                     watch_event_sender,
                     terminal_event_unpause_receiver,
                     manual_run,
-                )
+                );
             })
             .context("Failed to spawn a thread to handle terminal events")?;
 
@@ -79,13 +78,15 @@ impl<'a> WatchState<'a> {
         // Ignore any input until running the exercise is done.
         let _input_pause_guard = InputPauseGuard::scoped_pause();
 
-        self.show_hint = false;
-
         writeln!(
             stdout,
             "\nChecking the exercise `{}`. Please wait…",
             self.app_state.current_exercise().name,
         )?;
+
+        let editor_handle = self.app_state.open_editor()?;
+
+        self.show_hint = false;
 
         let success = self
             .app_state
@@ -106,7 +107,9 @@ impl<'a> WatchState<'a> {
             self.done_status = DoneStatus::Pending;
         }
 
+        self.app_state.join_editor_handle(editor_handle)?;
         self.render(stdout)?;
+
         Ok(())
     }
 
@@ -128,9 +131,10 @@ impl<'a> WatchState<'a> {
 
                 match answer[0] {
                     b'y' | b'Y' => {
+                        self.app_state.close_editor()?;
                         self.app_state.reset_current_exercise()?;
 
-                        // The file watcher reruns the exercise otherwise.
+                        // The file watcher reruns the exercise otherwise
                         if self.manual_run {
                             self.run_current_exercise(stdout)?;
                         }
@@ -245,7 +249,7 @@ impl<'a> WatchState<'a> {
         progress_bar(
             stdout,
             self.app_state.n_done(),
-            self.app_state.exercises().len() as u16,
+            self.app_state.exercises().len() as u32,
             self.term_width,
         )?;
 

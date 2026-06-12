@@ -126,7 +126,6 @@ pub struct CargoSubcommand<'out> {
 }
 
 impl CargoSubcommand<'_> {
-    #[inline]
     pub fn args<'arg, I>(&mut self, args: I) -> &mut Self
     where
         I: IntoIterator<Item = &'arg str>,
@@ -136,7 +135,6 @@ impl CargoSubcommand<'_> {
     }
 
     /// The boolean in the returned `Result` is true if the command's exit status is success.
-    #[inline]
     pub fn run(self, description: &str) -> Result<bool> {
         run_cmd(self.cmd, description, self.output)
     }

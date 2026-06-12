@@ -1,11 +1,9 @@
 use std::{
-    env::{self, consts::EXE_SUFFIX},
     process::{Command, Stdio},
     str::from_utf8,
 };
 
 enum Output<'a> {
-    FullStdout(&'a str),
     PartialStdout(&'a str),
     PartialStderr(&'a str),
 }
@@ -20,39 +18,24 @@ struct Cmd<'a> {
 }
 
 impl<'a> Cmd<'a> {
-    #[inline]
     fn current_dir(&mut self, current_dir: &'a str) -> &mut Self {
         self.current_dir = Some(current_dir);
         self
     }
 
-    #[inline]
     fn args(&mut self, args: &'a [&'a str]) -> &mut Self {
         self.args = args;
         self
     }
 
-    #[inline]
     fn output(&mut self, output: Output<'a>) -> &mut Self {
         self.output = Some(output);
         self
     }
 
+    #[track_caller]
     fn assert(&self, success: bool) {
-        let rustlings_bin = {
-            let mut path = env::current_exe().unwrap();
-            // Pop test binary name
-            path.pop();
-            // Pop `/deps`
-            path.pop();
-
-            path.push("rustlings");
-            let mut path = path.into_os_string();
-            path.push(EXE_SUFFIX);
-            path
-        };
-
-        let mut cmd = Command::new(rustlings_bin);
+        let mut cmd = Command::new(env!("CARGO_BIN_EXE_rustlings"));
 
         if let Some(current_dir) = self.current_dir {
             cmd.current_dir(current_dir);
@@ -60,38 +43,32 @@ impl<'a> Cmd<'a> {
 
         cmd.args(self.args).stdin(Stdio::null());
 
-        let status = match self.output {
-            None => cmd
-                .stdout(Stdio::null())
-                .stderr(Stdio::null())
-                .status()
-                .unwrap(),
-            Some(FullStdout(stdout)) => {
-                let output = cmd.stderr(Stdio::null()).output().unwrap();
-                assert_eq!(from_utf8(&output.stdout).unwrap(), stdout);
-                output.status
-            }
+        let output = cmd.output().unwrap();
+        match self.output {
+            None => (),
             Some(PartialStdout(stdout)) => {
-                let output = cmd.stderr(Stdio::null()).output().unwrap();
                 assert!(from_utf8(&output.stdout).unwrap().contains(stdout));
-                output.status
             }
             Some(PartialStderr(stderr)) => {
-                let output = cmd.stdout(Stdio::null()).output().unwrap();
                 assert!(from_utf8(&output.stderr).unwrap().contains(stderr));
-                output.status
             }
         };
 
-        assert_eq!(status.success(), success, "{cmd:?}");
+        if output.status.success() != success {
+            panic!(
+                "{cmd:?}\n\nstdout:\n{}\n\nstderr:\n{}",
+                from_utf8(&output.stdout).unwrap(),
+                from_utf8(&output.stderr).unwrap(),
+            );
+        }
     }
 
-    #[inline]
+    #[track_caller]
     fn success(&self) {
         self.assert(true);
     }
 
-    #[inline]
+    #[track_caller]
     fn fail(&self) {
         self.assert(false);
     }
@@ -148,7 +125,7 @@ fn hint() {
     Cmd::default()
         .current_dir("tests/test_exercises")
         .args(&["hint", "test_failure"])
-        .output(FullStdout("The answer to everything: 42\n"))
+        .output(PartialStdout("\n\nHint:\nThe answer to everything: 42\n"))
         .success();
 }
 

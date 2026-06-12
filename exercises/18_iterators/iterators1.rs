@@ -10,9 +10,9 @@ fn main() {
 mod tests {
     #[test]
     fn iterators() {
-        let my_fav_fruits = ["banana", "custard apple", "avocado", "peach", "raspberry"];
+        let my_fav_fruits = &["banana", "custard apple", "avocado", "peach", "raspberry"];
 
-        // TODO: Create an iterator over the array.
+        // TODO: Create an iterator over the slice.
         let mut fav_fruits_iterator = todo!();
 
         assert_eq!(fav_fruits_iterator.next(), Some(&"banana"));

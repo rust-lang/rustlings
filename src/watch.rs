@@ -13,9 +13,8 @@ use std::{
 use crate::{
     app_state::{AppState, ExercisesProgress},
     list,
+    watch::{notify_event::NotifyEventHandler, state::WatchState, terminal_event::InputEvent},
 };
-
-use self::{notify_event::NotifyEventHandler, state::WatchState, terminal_event::InputEvent};
 
 mod notify_event;
 mod state;
@@ -28,7 +27,6 @@ static EXERCISE_RUNNING: AtomicBool = AtomicBool::new(false);
 pub struct InputPauseGuard(());
 
 impl InputPauseGuard {
-    #[inline]
     pub fn scoped_pause() -> Self {
         EXERCISE_RUNNING.store(true, Relaxed);
         Self(())
@@ -36,7 +34,6 @@ impl InputPauseGuard {
 }
 
 impl Drop for InputPauseGuard {
-    #[inline]
     fn drop(&mut self) {
         EXERCISE_RUNNING.store(false, Relaxed);
     }
@@ -153,6 +150,7 @@ pub fn watch(
     app_state: &mut AppState,
     notify_exercise_names: Option<&'static [&'static [u8]]>,
 ) -> Result<()> {
+    // TODO: Use cfg_select! after bumping MSRV to at least 1.95
     #[cfg(not(windows))]
     {
         let stdin_fd = rustix::stdio::stdin();
@@ -175,8 +173,7 @@ pub fn watch(
     watch_list_loop(app_state, notify_exercise_names)
 }
 
-const QUIT_MSG: &[u8] = b"
-
+const QUIT_MSG: &[u8] = b"q\n
 We hope you're enjoying learning Rust!
 If you want to continue working on the exercises at a later point, you can simply run `rustlings` again in this directory.
 ";

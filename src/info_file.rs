@@ -8,9 +8,9 @@ use crate::{embedded::EMBEDDED_FILES, exercise::RunnableExercise};
 #[derive(Deserialize)]
 pub struct ExerciseInfo {
     /// Exercise's unique name.
-    pub name: String,
+    pub name: &'static str,
     /// Exercise's directory name inside the `exercises/` directory.
-    pub dir: Option<String>,
+    pub dir: Option<&'static str>,
     /// Run `cargo test` on the exercise.
     #[serde(default = "default_true")]
     pub test: bool,
@@ -18,12 +18,11 @@ pub struct ExerciseInfo {
     #[serde(default)]
     pub strict_clippy: bool,
     /// The exercise's hint to be shown to the user on request.
-    pub hint: String,
+    pub hint: &'static str,
     /// The exercise is already solved. Ignore it when checking that all exercises are unsolved.
     #[serde(default)]
     pub skip_check_unsolved: bool,
 }
-#[inline(always)]
 const fn default_true() -> bool {
     true
 }
@@ -31,7 +30,7 @@ const fn default_true() -> bool {
 impl ExerciseInfo {
     /// Path to the exercise file starting with the `exercises/` directory.
     pub fn path(&self) -> String {
-        let mut path = if let Some(dir) = &self.dir {
+        let mut path = if let Some(dir) = self.dir {
             // 14 = 10 + 1 + 3
             // exercises/ + / + .rs
             let mut path = String::with_capacity(14 + dir.len() + self.name.len());
@@ -47,7 +46,7 @@ impl ExerciseInfo {
             path
         };
 
-        path.push_str(&self.name);
+        path.push_str(self.name);
         path.push_str(".rs");
 
         path
@@ -55,22 +54,18 @@ impl ExerciseInfo {
 }
 
 impl RunnableExercise for ExerciseInfo {
-    #[inline]
     fn name(&self) -> &str {
-        &self.name
+        self.name
     }
 
-    #[inline]
     fn dir(&self) -> Option<&str> {
-        self.dir.as_deref()
+        self.dir
     }
 
-    #[inline]
     fn strict_clippy(&self) -> bool {
         self.strict_clippy
     }
 
-    #[inline]
     fn test(&self) -> bool {
         self.test
     }
@@ -82,9 +77,9 @@ pub struct InfoFile {
     /// For possible breaking changes in the future for community exercises.
     pub format_version: u8,
     /// Shown to users when starting with the exercises.
-    pub welcome_message: Option<String>,
+    pub welcome_message: Option<&'static str>,
     /// Shown to users after finishing all exercises.
-    pub final_message: Option<String>,
+    pub final_message: Option<&'static str>,
     /// List of all exercises.
     pub exercises: Vec<ExerciseInfo>,
 }
@@ -94,9 +89,17 @@ impl InfoFile {
     /// Community exercises: Parse the `info.toml` file in the current directory.
     pub fn parse() -> Result<Self> {
         // Read a local `info.toml` if it exists.
-        let slf = match fs::read_to_string("info.toml") {
-            Ok(file_content) => toml::de::from_str::<Self>(&file_content)
-                .context("Failed to parse the `info.toml` file")?,
+        let slf = match fs::read("info.toml") {
+            Ok(file_content) => {
+                // Remove `\r` on Windows.
+                // Leaking is fine since the info file is used until the end of the program.
+                let file_content =
+                    String::from_utf8(file_content.into_iter().filter(|c| *c != b'\r').collect())
+                        .context("Failed to parse `info.toml` as UTF8")?
+                        .leak();
+                toml::de::from_str::<Self>(file_content)
+                    .context("Failed to parse the `info.toml` file")?
+            }
             Err(e) => {
                 if e.kind() == ErrorKind::NotFound {
                     return toml::de::from_str(EMBEDDED_FILES.info_file)

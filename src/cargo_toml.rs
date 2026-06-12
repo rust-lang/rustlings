@@ -38,7 +38,7 @@ pub fn append_bins(
         buf.extend_from_slice(b"\", path = \"");
         buf.extend_from_slice(exercise_path_prefix);
         buf.extend_from_slice(b"exercises/");
-        if let Some(dir) = &exercise_info.dir {
+        if let Some(dir) = exercise_info.dir {
             buf.extend_from_slice(dir.as_bytes());
             buf.push(b'/');
         }
@@ -56,7 +56,7 @@ pub fn append_bins(
         buf.extend_from_slice(b"\", path = \"");
         buf.extend_from_slice(exercise_path_prefix);
         buf.extend_from_slice(b"solutions/");
-        if let Some(dir) = &exercise_info.dir {
+        if let Some(dir) = exercise_info.dir {
             buf.extend_from_slice(dir.as_bytes());
             buf.push(b'/');
         }
@@ -106,19 +106,19 @@ mod tests {
     fn test_bins() {
         let exercise_infos = [
             ExerciseInfo {
-                name: String::from("1"),
+                name: "1",
                 dir: None,
                 test: true,
                 strict_clippy: true,
-                hint: String::new(),
+                hint: "",
                 skip_check_unsolved: false,
             },
             ExerciseInfo {
-                name: String::from("2"),
-                dir: Some(String::from("d")),
+                name: "2",
+                dir: Some("d"),
                 test: false,
                 strict_clippy: false,
-                hint: String::new(),
+                hint: "",
                 skip_check_unsolved: false,
             },
         ];

@@ -41,14 +41,10 @@
     @apply md:w-3/4 lg:w-3/5;
   }
   blockquote {
-    @apply px-3 pt-2 pb-0.5 mb-4 mt-2 border-s-4 border-white/80 bg-white/7 rounded-sm;
+    @apply px-3 pt-2 pb-px mb-4 mt-2 border-s-4 border-white/80 bg-white/7 rounded-sm;
   }
 
   pre {
-    @apply px-2 pt-2 pb-px overflow-x-auto text-sm sm:text-base rounded-sm mt-2 mb-4 after:content-[attr(data-lang)] after:text-[8px] after:opacity-40 selection:bg-white/15;
-  }
-  pre code mark {
-    @apply pb-0.5 pt-1 pr-px text-inherit rounded-xs;
+    @apply px-2 pt-2 pb-1.5 overflow-x-auto text-sm sm:text-base rounded-sm mt-2 mb-4 selection:bg-white/15;
   }
 }
-

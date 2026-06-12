@@ -11,9 +11,10 @@ use crossterm::{
 };
 use std::io::{self, StdoutLock, Write};
 
-use crate::app_state::AppState;
-
-use self::state::{Filter, ListState};
+use crate::{
+    app_state::AppState,
+    list::state::{Filter, ListState},
+};
 
 mod scroll_state;
 mod state;
@@ -82,7 +83,7 @@ fn handle_list(app_state: &mut AppState, stdout: &mut StdoutLock) -> Result<()> 
                         }
                     }
                     KeyCode::Char('r') => list_state.reset_selected()?,
-                    KeyCode::Char('c') => {
+                    KeyCode::Char('c') | KeyCode::Enter => {
                         if list_state.selected_to_current_exercise()? {
                             return Ok(());
                         }

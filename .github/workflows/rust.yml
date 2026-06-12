@@ -5,11 +5,13 @@ on:
     branches: [main]
     paths-ignore:
       - website
+      - .github/workflows/website.yml
       - '*.md'
   pull_request:
     branches: [main]
     paths-ignore:
       - website
+      - .github/workflows/website.yml
       - '*.md'
 
 env:
@@ -19,13 +21,13 @@ jobs:
   clippy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Clippy
         run: cargo clippy -- --deny warnings
   fmt:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: rustfmt
         run: cargo fmt --all --check
   test:
@@ -34,14 +36,21 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: swatinem/rust-cache@v2
       - name: cargo test
+        env:
+          RUST_BACKTRACE: 1
         run: cargo test --workspace
   dev-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: swatinem/rust-cache@v2
       - name: rustlings dev check
         run: cargo dev check --require-solutions
+  rumdl:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v6
+        - uses: rvben/rumdl@v0

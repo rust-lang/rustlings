@@ -6,6 +6,8 @@ title = "Community Exercises"
 
 - 🇯🇵 [Japanese Rustlings](https://github.com/sotanengel/rustlings-jp)：A Japanese translation of the Rustlings exercises.
 - 🇨🇳 [Simplified Chinese Rustlings](https://github.com/SandmeyerX/rustlings-zh-cn): A simplified Chinese translation of the Rustlings exercises.
+- 🇺🇦 [Rustlings in Ukrainian](https://github.com/noroutine/rustlings-ua): Translation of the Rustlings exercises in Ukrainian.
+- 🇰🇷 [Korean Rustlings](https://github.com/eoncheole/rustlings-kr): A Korean translation of the Rustlings exercises.
 
 > You can use the same `rustlings` program that you installed with `cargo install rustlings` to run community exercises.
 
