@@ -14,6 +14,7 @@ pub enum InputEvent {
     CheckAll,
     Reset,
     Quit,
+    ToggleAutoMove,
 }
 
 pub fn terminal_event_handler(
@@ -39,6 +40,7 @@ pub fn terminal_event_handler(
                     KeyCode::Char('h') => InputEvent::Hint,
                     KeyCode::Char('l') => break WatchEvent::Input(InputEvent::List),
                     KeyCode::Char('c') => InputEvent::CheckAll,
+                    KeyCode::Char('a') => InputEvent::ToggleAutoMove,
                     KeyCode::Char('x') => {
                         if sender.send(WatchEvent::Input(InputEvent::Reset)).is_err() {
                             return;

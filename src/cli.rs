@@ -26,6 +26,10 @@ pub struct Args {
     /// Only use this if Rustlings fails to detect exercise file changes
     #[arg(long)]
     pub manual_run: bool,
+    /// Automatically move on to the next exercise after a correct solution.
+    /// Can be toggled at runtime with `a` in the watch mode
+    #[arg(long)]
+    pub auto_move: bool,
 }
 
 #[derive(Subcommand)]

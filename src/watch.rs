@@ -59,6 +59,7 @@ enum WatchExit {
 fn run_watch(
     app_state: &mut AppState,
     notify_exercise_names: Option<&'static [&'static [u8]]>,
+    auto_move: bool,
 ) -> Result<WatchExit> {
     let (watch_event_sender, watch_event_receiver) = channel();
 
@@ -87,7 +88,7 @@ fn run_watch(
         None
     };
 
-    let mut watch_state = WatchState::build(app_state, watch_event_sender, manual_run)?;
+    let mut watch_state = WatchState::build(app_state, watch_event_sender, manual_run, auto_move)?;
     let mut stdout = io::stdout().lock();
 
     watch_state.run_current_exercise(&mut stdout)?;
@@ -110,6 +111,9 @@ fn run_watch(
                 ExercisesProgress::CurrentPending => watch_state.render(&mut stdout)?,
             },
             WatchEvent::Input(InputEvent::Reset) => watch_state.reset_exercise(&mut stdout)?,
+            WatchEvent::Input(InputEvent::ToggleAutoMove) => {
+                watch_state.toggle_auto_move(&mut stdout)?;
+            }
             WatchEvent::Input(InputEvent::Quit) => {
                 stdout.write_all(QUIT_MSG)?;
                 break;
@@ -133,9 +137,10 @@ fn run_watch(
 fn watch_list_loop(
     app_state: &mut AppState,
     notify_exercise_names: Option<&'static [&'static [u8]]>,
+    auto_move: bool,
 ) -> Result<()> {
     loop {
-        match run_watch(app_state, notify_exercise_names)? {
+        match run_watch(app_state, notify_exercise_names, auto_move)? {
             WatchExit::Shutdown => break Ok(()),
             // It is much easier to exit the watch mode, launch the list mode and then restart
             // the watch mode instead of trying to pause the watch threads and correct the
@@ -149,6 +154,7 @@ fn watch_list_loop(
 pub fn watch(
     app_state: &mut AppState,
     notify_exercise_names: Option<&'static [&'static [u8]]>,
+    auto_move: bool,
 ) -> Result<()> {
     // TODO: Use cfg_select! after bumping MSRV to at least 1.95
     #[cfg(not(windows))]
@@ -161,7 +167,7 @@ pub fn watch(
             rustix::termios::LocalModes::ICANON | rustix::termios::LocalModes::ECHO;
         rustix::termios::tcsetattr(stdin_fd, rustix::termios::OptionalActions::Now, &termios)?;
 
-        let res = watch_list_loop(app_state, notify_exercise_names);
+        let res = watch_list_loop(app_state, notify_exercise_names, auto_move);
 
         termios.local_modes = original_local_modes;
         rustix::termios::tcsetattr(stdin_fd, rustix::termios::OptionalActions::Now, &termios)?;
@@ -170,7 +176,7 @@ pub fn watch(
     }
 
     #[cfg(windows)]
-    watch_list_loop(app_state, notify_exercise_names)
+    watch_list_loop(app_state, notify_exercise_names, auto_move)
 }
 
 const QUIT_MSG: &[u8] = b"q\n

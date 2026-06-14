@@ -10,6 +10,7 @@ use std::{
     io::{self, Read, StdoutLock, Write},
     sync::mpsc::{Sender, SyncSender, sync_channel},
     thread,
+    time::Duration,
 };
 
 use crate::{
@@ -17,7 +18,7 @@ use crate::{
     clear_terminal,
     exercise::{OUTPUT_CAPACITY, RunnableExercise, solution_link_line},
     term::progress_bar,
-    watch::{InputPauseGuard, WatchEvent, terminal_event::terminal_event_handler},
+    watch::{InputPauseGuard, WatchEvent, terminal_event::InputEvent, terminal_event::terminal_event_handler},
 };
 
 const HEADING_ATTRIBUTES: Attributes = Attributes::none()
@@ -37,8 +38,10 @@ pub struct WatchState<'a> {
     show_hint: bool,
     done_status: DoneStatus,
     manual_run: bool,
+    auto_move: bool,
     term_width: u16,
     terminal_event_unpause_sender: SyncSender<()>,
+    watch_event_sender: Sender<WatchEvent>,
 }
 
 impl<'a> WatchState<'a> {
@@ -46,6 +49,7 @@ impl<'a> WatchState<'a> {
         app_state: &'a mut AppState,
         watch_event_sender: Sender<WatchEvent>,
         manual_run: bool,
+        auto_move: bool,
     ) -> Result<Self> {
         let term_width = terminal::size()
             .context("Failed to get the terminal size")?
@@ -53,10 +57,12 @@ impl<'a> WatchState<'a> {
 
         let (terminal_event_unpause_sender, terminal_event_unpause_receiver) = sync_channel(0);
 
+        let event_sender_for_handler = watch_event_sender.clone();
+
         thread::Builder::new()
             .spawn(move || {
                 terminal_event_handler(
-                    watch_event_sender,
+                    event_sender_for_handler,
                     terminal_event_unpause_receiver,
                     manual_run,
                 );
@@ -69,8 +75,10 @@ impl<'a> WatchState<'a> {
             show_hint: false,
             done_status: DoneStatus::Pending,
             manual_run,
+            auto_move,
             term_width,
             terminal_event_unpause_sender,
+            watch_event_sender,
         })
     }
 
@@ -109,6 +117,18 @@ impl<'a> WatchState<'a> {
 
         self.app_state.join_editor_handle(editor_handle)?;
         self.render(stdout)?;
+
+        // Auto-move: if the exercise is done and auto_move is enabled,
+        // spawn a thread that sends a Next event after 2 seconds.
+        if self.auto_move && self.done_status != DoneStatus::Pending {
+            let sender = self.watch_event_sender.clone();
+            thread::Builder::new()
+                .spawn(move || {
+                    thread::sleep(Duration::from_secs(2));
+                    let _ = sender.send(WatchEvent::Input(InputEvent::Next));
+                })
+                .context("Failed to spawn auto-move thread")?;
+        }
 
         Ok(())
     }
@@ -204,6 +224,7 @@ impl<'a> WatchState<'a> {
         show_key(b'l', b":list / ")?;
         show_key(b'c', b":check all / ")?;
         show_key(b'x', b":reset / ")?;
+        show_key(b'a', b":auto move / ")?;
         show_key(b'q', b":quit ? ")?;
 
         stdout.flush()
@@ -240,10 +261,17 @@ impl<'a> WatchState<'a> {
                 solution_link_line(stdout, solution_path, self.app_state.emit_file_links())?;
             }
 
-            stdout.write_all(
-                "When done experimenting, enter `n` to move on to the next exercise 🦀\n\n"
-                    .as_bytes(),
-            )?;
+            if self.auto_move {
+                stdout.write_all(
+                    "Auto-moving to the next exercise in 2 seconds…\n\n"
+                        .as_bytes(),
+                )?;
+            } else {
+                stdout.write_all(
+                    "When done experimenting, enter `n` to move on to the next exercise 🦀\n\n"
+                        .as_bytes(),
+                )?;
+            }
         }
 
         progress_bar(
@@ -258,6 +286,14 @@ impl<'a> WatchState<'a> {
             .current_exercise()
             .terminal_file_link(stdout, self.app_state.emit_file_links())?;
         stdout.write_all(b"\n\n")?;
+
+        // Show auto-move status
+        if self.auto_move {
+            stdout.queue(SetForegroundColor(Color::Cyan))?;
+            stdout.write_all(b"Auto-move: ON")?;
+            stdout.queue(ResetColor)?;
+            stdout.write_all(b"\n\n")?;
+        }
 
         self.show_prompt(stdout)?;
 
@@ -299,5 +335,10 @@ impl<'a> WatchState<'a> {
         }
 
         Ok(())
+    }
+
+    pub fn toggle_auto_move(&mut self, stdout: &mut StdoutLock) -> io::Result<()> {
+        self.auto_move = !self.auto_move;
+        self.render(stdout)
     }
 }
