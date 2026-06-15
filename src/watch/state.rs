@@ -18,7 +18,10 @@ use crate::{
     clear_terminal,
     exercise::{OUTPUT_CAPACITY, RunnableExercise, solution_link_line},
     term::progress_bar,
-    watch::{InputPauseGuard, WatchEvent, terminal_event::InputEvent, terminal_event::terminal_event_handler},
+    watch::{
+        InputPauseGuard, WatchEvent, terminal_event::InputEvent,
+        terminal_event::terminal_event_handler,
+    },
 };
 
 const HEADING_ATTRIBUTES: Attributes = Attributes::none()
@@ -262,10 +265,8 @@ impl<'a> WatchState<'a> {
             }
 
             if self.auto_move {
-                stdout.write_all(
-                    "Auto-moving to the next exercise in 2 seconds…\n\n"
-                        .as_bytes(),
-                )?;
+                stdout
+                    .write_all("Auto-moving to the next exercise in 2 seconds…\n\n".as_bytes())?;
             } else {
                 stdout.write_all(
                     "When done experimenting, enter `n` to move on to the next exercise 🦀\n\n"
