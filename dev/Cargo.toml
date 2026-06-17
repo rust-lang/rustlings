@@ -196,6 +196,9 @@ edition = "2024"
 # Don't publish the exercises on crates.io!
 publish = false
 
+[dependencies]
+trpl = "0.3.0"
+
 [profile.release]
 panic = "abort"
 

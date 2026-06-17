@@ -1211,3 +1211,57 @@ name = "conversions5"
 dir = "23_conversions"
 hint = """
 Add `AsRef<str>` or `AsMut<u32>` as a trait bound to the functions."""
+
+# ASYNC/AWAIT
+
+[[exercises]]
+name = "async_await1"
+dir = "24_async_await"
+hint = """
+An `async fn` returns a `Future`, not the final value. Use `.await` to run the
+future to completion and get the result.
+
+Rust doesn't ship with an async runtime in the standard library. `Tokio` is a popular
+async runtime for Rust that provides an event loop and task scheduling.
+The `trpl::block_on()` function runs a single future to completion on the Tokio `Runtime`.
+Every time it's called, a new instance of `tokio::runtime::Runtime` is created.
+
+See the Async Programming chapter of the Rust book:
+https://doc.rust-lang.org/book/ch17-01-futures-and-syntax.html"""
+
+[[exercises]]
+name = "async_await2"
+dir = "24_async_await"
+hint = """
+`trpl::join!` takes multiple futures and polls them concurrently. It returns a
+tuple with all results once every future has completed.
+
+Example:
+```rust
+let (a, b) = trpl::join!(future_a(), future_b());
+```
+
+Resource: https://doc.rust-lang.org/book/ch17-02-concurrency-with-async.html"""
+
+[[exercises]]
+name = "async_await3"
+dir = "24_async_await"
+hint = """
+Use `trpl::spawn_task` to run a future as an independent task on the runtime.
+It returns a `JoinHandle` which you can `.await` to get the task's output.
+
+This is the async equivalent of spawning threads and calling `join` on them.
+
+Resource: https://doc.rust-lang.org/book/ch17-02-concurrency-with-async.html"""
+
+[[exercises]]
+name = "async_await4"
+dir = "24_async_await"
+hint = """
+The async channel is a multiple-producer channel, so we can send multiple messages
+from multiple futures.
+
+Then we can use `trpl::join!` to await multiple futures to complete. `trpl::join!`
+cooperatively polls futures on the same executor thread.
+
+Resource: https://doc.rust-lang.org/book/ch17-02-concurrency-with-async.html"""
