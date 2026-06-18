@@ -188,6 +188,14 @@ bin = [
   { name = "conversions4_sol", path = "../solutions/23_conversions/conversions4.rs" },
   { name = "conversions5", path = "../exercises/23_conversions/conversions5.rs" },
   { name = "conversions5_sol", path = "../solutions/23_conversions/conversions5.rs" },
+  { name = "async_await1", path = "../exercises/24_async_await/async_await1.rs" },
+  { name = "async_await1_sol", path = "../solutions/24_async_await/async_await1.rs" },
+  { name = "async_await2", path = "../exercises/24_async_await/async_await2.rs" },
+  { name = "async_await2_sol", path = "../solutions/24_async_await/async_await2.rs" },
+  { name = "async_await3", path = "../exercises/24_async_await/async_await3.rs" },
+  { name = "async_await3_sol", path = "../solutions/24_async_await/async_await3.rs" },
+  { name = "async_await4", path = "../exercises/24_async_await/async_await4.rs" },
+  { name = "async_await4_sol", path = "../solutions/24_async_await/async_await4.rs" },
 ]
 
 [package]
