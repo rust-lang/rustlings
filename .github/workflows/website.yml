@@ -12,7 +12,7 @@ jobs:
   rumdl:
       runs-on: ubuntu-latest
       steps:
-        - uses: actions/checkout@v6
+        - uses: actions/checkout@v7
         - uses: rvben/rumdl@v0
   build:
     needs: rumdl
@@ -21,7 +21,7 @@ jobs:
         working-directory: website
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Install TailwindCSS
         run: npm install
       - name: Build CSS
