@@ -3,6 +3,7 @@
 
 mod delicious_snacks {
     // TODO: Add the following two `use` statements after fixing them.
+    // Hint: private imports require re-exporting.
     // use self::fruits::PEAR as ???;
     // use self::veggies::CUCUMBER as ???;
 
