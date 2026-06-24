@@ -29,6 +29,7 @@ mod init;
 mod list;
 mod run;
 mod term;
+mod url_replacer;
 mod watch;
 
 const CURRENT_FORMAT_VERSION: u8 = 1;
@@ -71,6 +72,7 @@ fn main() -> Result<ExitCode> {
     let (mut app_state, state_file_status) = AppState::new(
         info_file.exercises,
         info_file.final_message.unwrap_or_default(),
+        args.base_url,
         editor,
         vs_code_term,
     )?;
