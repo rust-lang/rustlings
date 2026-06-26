@@ -41,7 +41,8 @@ When updating an exercise, check if its solution needs to be updated.
 - In the exercise, add a `// TODO: …` comment where user changes are required.
 - Add a solution at `solutions/yourTopic/yourTopicN.rs` with comments explaining it.
 - Add the [metadata for your exercise](#exercise-metadata) in the `rustlings-macros/info.toml` file.
-- Make sure your exercise runs with `rustlings run yourTopicN`.
+- Make sure your exercise runs with `cargo run --bin rustlings --run yourTopicN`.
+To run all tests locally, `use cargo run --bin rustlings -- dev check`.
 - [Open a pull request](#pull-requests).
 
 ### Exercise Metadata
