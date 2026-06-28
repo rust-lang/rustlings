@@ -11,6 +11,3 @@ Here is the documentation for these functions in the standard library.
 - [BufWriter](https://doc.rust-lang.org/std/io/struct.BufWriter.html)
 - [Path](https://doc.rust-lang.org/stable/std/path/struct.Path.html)
 - [PathBuf](https://doc.rust-lang.org/std/path/struct.PathBuf.html)
-
-
-
