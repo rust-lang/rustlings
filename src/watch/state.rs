@@ -10,6 +10,7 @@ use std::{
     io::{self, Read, StdoutLock, Write},
     sync::mpsc::{Sender, SyncSender, sync_channel},
     thread,
+    time::Duration,
 };
 
 use crate::{
@@ -24,6 +25,9 @@ const HEADING_ATTRIBUTES: Attributes = Attributes::none()
     .with(Attribute::Bold)
     .with(Attribute::Underlined);
 
+// How long to show the "Exercise done" screen before auto-advancing.
+const AUTO_NEXT_DELAY: Duration = Duration::from_millis(1500);
+
 #[derive(PartialEq, Eq)]
 enum DoneStatus {
     DoneWithSolution(String),
@@ -37,6 +41,7 @@ pub struct WatchState<'a> {
     show_hint: bool,
     done_status: DoneStatus,
     manual_run: bool,
+    auto_next: bool,
     term_width: u16,
     terminal_event_unpause_sender: SyncSender<()>,
 }
@@ -46,6 +51,7 @@ impl<'a> WatchState<'a> {
         app_state: &'a mut AppState,
         watch_event_sender: Sender<WatchEvent>,
         manual_run: bool,
+        auto_next: bool,
     ) -> Result<Self> {
         let term_width = terminal::size()
             .context("Failed to get the terminal size")?
@@ -69,6 +75,7 @@ impl<'a> WatchState<'a> {
             show_hint: false,
             done_status: DoneStatus::Pending,
             manual_run,
+            auto_next,
             term_width,
             terminal_event_unpause_sender,
         })
@@ -110,7 +117,20 @@ impl<'a> WatchState<'a> {
         self.app_state.join_editor_handle(editor_handle)?;
         self.render(stdout)?;
 
-        Ok(())
+        // If `--auto-next` is on and the exercise passed, briefly show the
+        // "done" screen, then advance to the next pending exercise and run it.
+        // The recursion bottoms out when we hit a failing exercise
+        // (rendering leaves the user at the prompt) or when everything is done.
+        if self.auto_next && self.done_status != DoneStatus::Pending {
+            thread::sleep(AUTO_NEXT_DELAY);
+            match self.next_exercise(stdout)? {
+                ExercisesProgress::AllDone => Ok(()),
+                ExercisesProgress::NewPending => self.run_current_exercise(stdout),
+                ExercisesProgress::CurrentPending => Ok(()),
+            }
+        } else {
+            Ok(())
+        }
     }
 
     pub fn reset_exercise(&mut self, stdout: &mut StdoutLock) -> Result<()> {
@@ -175,7 +195,7 @@ impl<'a> WatchState<'a> {
     }
 
     fn show_prompt(&self, stdout: &mut StdoutLock) -> io::Result<()> {
-        if self.done_status != DoneStatus::Pending {
+        if !self.auto_next && self.done_status != DoneStatus::Pending {
             stdout.queue(SetAttribute(Attribute::Bold))?;
             stdout.write_all(b"n")?;
             stdout.queue(ResetColor)?;

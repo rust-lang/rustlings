@@ -8,6 +8,7 @@
 - Automatically open the current file with `$EDITOR` in a new pane if Rustlings is running in [Zellij](https://zellij.dev)
 - New argument `--no-editor` to disable automatic opening of the current file in VS Code or Zellij
 - New argument `--edit-cmd` to communicate with an editor running in a different process to open the current exercise
+- New argument `--auto-next` to automatically move on to the next pending exercise after it passes, without waiting for `n`
 - Show the file link of the current exercise when running `rustlings hint` and `rustlings reset`
 
 ### Fixed

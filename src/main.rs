@@ -118,7 +118,7 @@ fn main() -> Result<ExitCode> {
                 )
             };
 
-            watch::watch(&mut app_state, notify_exercise_names)?;
+            watch::watch(&mut app_state, notify_exercise_names, args.auto_next)?;
             app_state.close_editor()?;
         }
         Some(Command::Run { name }) => {

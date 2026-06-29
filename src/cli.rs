@@ -26,6 +26,10 @@ pub struct Args {
     /// Only use this if Rustlings fails to detect exercise file changes
     #[arg(long)]
     pub manual_run: bool,
+    /// Automatically move on to the next pending exercise after it passes,
+    /// without waiting for `n`. Useful for learners who want a continuous flow.
+    #[arg(long)]
+    pub auto_next: bool,
 }
 
 #[derive(Subcommand)]
