@@ -9,7 +9,8 @@ mod tests {
         let target = "rustlings";
         let optional_target = Some(target);
 
-        // TODO: Make this an if-let statement whose value is `Some`.
+        // TODO: Use an if-let statement to bind the value inside
+        // `optional_target` to `word`.
         word = optional_target {
             assert_eq!(word, target);
         }
@@ -26,9 +27,16 @@ mod tests {
 
         let mut cursor = range;
 
-        // TODO: Make this a while-let statement. Remember that `Vec::pop()`
-        // adds another layer of `Option`. You can do nested pattern matching
-        // in if-let and while-let statements.
+        // TODO: Make this a while-let statement. The loop should keep popping
+        // integers from the end of the vector until there is no integer left to
+        // check.
+        //
+        // `Vec::pop()` removes the last element from the vector and returns it,
+        // or returns `None` if the vector is empty. Since this vector stores
+        // `Option<i8>` values, a successful pop returns the vector's inner
+        // `Option<i8>` wrapped in another `Option`.
+        // You can use nested pattern matching in if-let and while-let
+        // statements.
         integer = optional_integers.pop() {
             assert_eq!(integer, cursor);
             cursor -= 1;
