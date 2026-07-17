@@ -24,7 +24,7 @@ impl<T: Display> ReportCard<T> {
     fn print(&self) -> String {
         format!(
             "{} ({}) - achieved a grade of {}",
-            &self.student_name, &self.student_age, &self.grade,
+            self.student_name, self.student_age, self.grade,
         )
     }
 }
