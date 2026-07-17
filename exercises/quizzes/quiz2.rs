@@ -10,7 +10,7 @@
 // is going to be applied to the string. It can either be:
 // - Uppercase the string
 // - Trim the string
-// - Append "bar" to the string a specified amount of times
+// - Append "bar" to the end of the string a specified amount of times
 //
 // The exact form of this will be:
 // - The input is going to be a Vector of 2-length tuples,
@@ -48,6 +48,7 @@ mod tests {
             ("foo".to_string(), Command::Append(1)),
             ("bar".to_string(), Command::Append(5)),
         ];
+
         let output = transformer(input);
 
         assert_eq!(
