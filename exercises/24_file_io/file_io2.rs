@@ -4,6 +4,9 @@ use std::path::Path;
 
 const TEST_INPUT_FILE_NAME: &str = "MultiLineTextFile.txt";
 const TEST_OUTPUT_FILE_NAME: &str = "MultiLineOutputFile.txt";
+const SAMPLE_TEXT: &str = "This is the first line of the text.
+        This is the second line.
+        And this is the third and the last line.";
 
 fn main() -> Result<(), std::io::Error> {
     create_required_files()?;
@@ -45,10 +48,7 @@ fn create_required_files() -> Result<(), std::io::Error> {
     let file_path = Path::new(TEST_INPUT_FILE_NAME);
 
     if !file_path.exists() {
-        let text = "This is the first line of the text.
-        This is the second line.
-        And this is the third and the last line.";
-        fs::write(file_path, text).inspect_err(|err| {
+        fs::write(file_path, SAMPLE_TEXT).inspect_err(|err| {
             eprintln!("Couldn't create the test file : {}", err);
         })?;
     }

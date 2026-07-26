@@ -2,6 +2,8 @@ use std::fs;
 use std::path::Path;
 
 const TEST_FILE_NAME: &str = "SampleTextFile.txt";
+const SAMPLE_TEXT: &str = "This is the file content.";
+
 fn main() -> Result<(), std::io::Error> {
     create_required_files()?;
 
@@ -9,7 +11,7 @@ fn main() -> Result<(), std::io::Error> {
 
     match read_str_result {
         Ok(contents) => {
-            assert_eq!("This is the file content.", contents);
+            assert_eq!(SAMPLE_TEXT, contents);
         }
         Err(err) => {
             eprintln!("File read error. {}", err);
@@ -24,7 +26,7 @@ fn create_required_files() -> Result<(), std::io::Error> {
     let file_path = Path::new(TEST_FILE_NAME);
 
     if !file_path.exists() {
-        fs::write(file_path, "This is the file content.")?;
+        fs::write(file_path, SAMPLE_TEXT)?;
     } else {
         println!("File already exist.");
     }
