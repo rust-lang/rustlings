@@ -66,12 +66,12 @@ fn file_cleanup() -> Result<(), std::io::Error> {
         })?;
     }
 
-    if let Some(dir_path) = path_buffer.parent() {
-        if dir_path.exists() {
-            fs::remove_dir(dir_path).inspect(|_| {
-                println!("Test dir removed");
-            })?;
-        }
+    if let Some(dir_path) = path_buffer.parent()
+        && dir_path.exists()
+    {
+        fs::remove_dir(dir_path).inspect(|_| {
+            println!("Test dir removed");
+        })?;
     }
 
     Ok(())
