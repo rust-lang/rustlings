@@ -304,7 +304,7 @@ Now, you have another tool in your toolbox!"""
 name = "vecs1"
 dir = "05_vecs"
 hint = """
-In Rust, there are two basic ways to define a Vector.
+In Rust, there are two ways to define a Vector.
 1. One way is to use the `Vec::new()` function to create a new vector
    and fill it with the `push()` method.
 2. The second way is to use the `vec![]` macro and define your elements
@@ -1211,3 +1211,43 @@ name = "conversions5"
 dir = "23_conversions"
 hint = """
 Add `AsRef<str>` or `AsMut<u32>` as a trait bound to the functions."""
+
+# File IO Exercises
+
+[[exercises]]
+name = "file_io1"
+dir = "24_file_io"
+test = false
+hint = """
+Learning goal: read a whole file into memory and handle the Result it
+produces, rather than unwrapping it.
+
+`fs::read_to_string` returns a `Result<String, std::io::Error>`. Match on
+it (or use `?`) to get the file's contents out of the `Ok` variant, and
+compare that to the text that `create_required_files` wrote to the file.
+"""
+
+[[exercises]]
+name = "file_io2"
+dir = "24_file_io"
+test = false
+hint = """
+Learning goal: read a file efficiently, line by line, using a BufReader,
+and understand why buffering matters for I/O performance.
+
+`BufReader::new(input_file)` wraps a `File` so you can call `.lines()` on
+it, which yields each line as a `Result<String, std::io::Error>`.
+"""
+
+[[exercises]]
+name = "file_io3"
+dir = "24_file_io"
+test = false
+hint = """
+Learning goal: build a filesystem path with PathBuf and inspect the file
+it points to without hardcoding platform-specific path separators.
+
+`Path`/`PathBuf` expose a `.metadata()` method that returns a
+`Result<Metadata, std::io::Error>`, giving you access to creation time,
+size (`.len()`), and permissions.
+"""

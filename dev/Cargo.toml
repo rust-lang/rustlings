@@ -188,6 +188,12 @@ bin = [
   { name = "conversions4_sol", path = "../solutions/23_conversions/conversions4.rs" },
   { name = "conversions5", path = "../exercises/23_conversions/conversions5.rs" },
   { name = "conversions5_sol", path = "../solutions/23_conversions/conversions5.rs" },
+  { name = "file_io1", path = "../exercises/24_file_io/file_io1.rs" },
+  { name = "file_io1_sol", path = "../solutions/24_file_io/file_io1.rs" },
+  { name = "file_io2", path = "../exercises/24_file_io/file_io2.rs" },
+  { name = "file_io2_sol", path = "../solutions/24_file_io/file_io2.rs" },
+  { name = "file_io3", path = "../exercises/24_file_io/file_io3.rs" },
+  { name = "file_io3_sol", path = "../solutions/24_file_io/file_io3.rs" },
 ]
 
 [package]
