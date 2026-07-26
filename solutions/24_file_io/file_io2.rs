@@ -23,23 +23,22 @@ fn main() -> Result<(), std::io::Error> {
 
     let mut buffered_file_writer = BufWriter::new(output_file);
 
-    let mut line_number = 1;
+    let mut lines_processed = 0;
 
-    for line in buffered_input_file.lines() {
+    for (index, line) in buffered_input_file.lines().enumerate() {
         let line = line.inspect_err(|err| {
             eprintln!("{} line parse error {:?}", TEST_INPUT_FILE_NAME, err);
         })?;
 
-        buffered_file_writer
-            .write(format!("Line {} : {}\n", line_number, line).as_bytes())
-            .inspect_err(|err| {
-                eprintln!("{} line write error {:?}", TEST_INPUT_FILE_NAME, err);
-            })?;
+        let line_number = index + 1;
+        writeln!(buffered_file_writer, "Line {} : {}", line_number, line).inspect_err(|err| {
+            eprintln!("{} line write error {:?}", TEST_INPUT_FILE_NAME, err);
+        })?;
 
-        line_number += 1;
+        lines_processed = line_number;
     }
 
-    println!("{} : lines processed", line_number - 1);
+    println!("{} : lines processed", lines_processed);
     file_cleanup()
 }
 

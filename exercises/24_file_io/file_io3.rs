@@ -38,10 +38,9 @@ fn main() -> Result<(), std::io::Error> {
 fn create_required_files() -> Result<(), std::io::Error> {
     let file_path = sample_file_path();
 
-    let dir_path = match file_path.parent() {
-        Some(parent) => parent,
-        None => return Err(Error::other("Could not get parent path")),
-    };
+    let dir_path = file_path
+        .parent()
+        .ok_or_else(|| Error::other("Could not get parent path"))?;
 
     if !dir_path.exists() {
         fs::create_dir_all(dir_path).inspect_err(|x| {
