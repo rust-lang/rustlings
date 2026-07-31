@@ -416,7 +416,8 @@ mod tests {
 
     #[test]
     fn detects_tests_in_files_with_lf_line_endings() {
-        let content = "fn main() {}\n\n#[cfg(test)]\nmod tests {\n    #[test]\n    fn it_works() {}\n}\n";
+        let content =
+            "fn main() {}\n\n#[cfg(test)]\nmod tests {\n    #[test]\n    fn it_works() {}\n}\n";
         assert!(exercise_has_tests(content));
     }
 }
