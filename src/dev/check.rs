@@ -118,7 +118,7 @@ fn check_info_file_exercises(info_file: &InfoFile) -> Result<HashSet<PathBuf>> {
             );
         }
 
-        let contains_tests = file_buf.contains("#[test]\n");
+        let contains_tests = exercise_has_tests(&file_buf);
         if exercise_info.test {
             if !contains_tests {
                 bail!(
@@ -137,6 +137,13 @@ fn check_info_file_exercises(info_file: &InfoFile) -> Result<HashSet<PathBuf>> {
     }
 
     Ok(paths)
+}
+
+// Check if the exercise contains `#[test]`-annotated tests.
+// CRLF line endings are normalized first so that the check doesn't fail
+// on files with Windows line endings (e.g. `#[test]\r\n`).
+fn exercise_has_tests(file_content: &str) -> bool {
+    file_content.replace("\r\n", "\n").contains("#[test]\n")
 }
 
 // Check `dir` for unexpected files.
@@ -396,3 +403,20 @@ pub fn check(require_solutions: bool) -> Result<()> {
 }
 
 const SKIP_CHECK_UNSOLVED_HINT: &str = "If this is an introduction exercise that is intended to be already solved, add `skip_check_unsolved = true` to the exercise's metadata in the `info.toml` file";
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn detects_tests_in_files_with_crlf_line_endings() {
+        let content = "fn main() {}\r\n\r\n#[cfg(test)]\r\nmod tests {\r\n    #[test]\r\n    fn it_works() {}\r\n}\r\n";
+        assert!(exercise_has_tests(content));
+    }
+
+    #[test]
+    fn detects_tests_in_files_with_lf_line_endings() {
+        let content = "fn main() {}\n\n#[cfg(test)]\nmod tests {\n    #[test]\n    fn it_works() {}\n}\n";
+        assert!(exercise_has_tests(content));
+    }
+}
