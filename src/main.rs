@@ -70,24 +70,22 @@ fn main() -> Result<ExitCode> {
 
     let (mut app_state, state_file_status) = AppState::new(
         info_file.exercises,
-        info_file.final_message.unwrap_or_default(),
+        info_file.final_message,
         editor,
         vs_code_term,
     )?;
 
     // Show the welcome message if the state file doesn't exist yet.
-    if let Some(welcome_message) = info_file.welcome_message {
+    let welcome_message = info_file.welcome_message.as_bytes().trim_ascii();
+    if !welcome_message.is_empty() {
         match state_file_status {
             StateFileStatus::NotRead => {
                 let mut stdout = io::stdout().lock();
                 clear_terminal(&mut stdout)?;
 
                 let welcome_message = welcome_message.trim_ascii();
-                write!(
-                    stdout,
-                    "{welcome_message}\n\n\
-                     Press ENTER to continue "
-                )?;
+                stdout.write_all(welcome_message)?;
+                stdout.write_all(b"\n\nPress ENTER to continue ")?;
                 press_enter_prompt(&mut stdout)?;
                 clear_terminal(&mut stdout)?;
                 // Flush to be able to show errors occurring before printing a newline to stdout.
@@ -106,8 +104,7 @@ fn main() -> Result<ExitCode> {
             let notify_exercise_names = if args.manual_run {
                 None
             } else {
-                // For the notify event handler thread.
-                // Leaking is fine since the slice is used until the end of the program.
+                // LEAKING: For the notify event handler thread. The slice is used until the end of the program.
                 Some(
                     &*app_state
                         .exercises()
@@ -176,7 +173,7 @@ fn main() -> Result<ExitCode> {
             current_exercise.terminal_file_link(&mut stdout, app_state.emit_file_links())?;
 
             stdout.write_all(b"\n\nHint:\n")?;
-            stdout.write_all(current_exercise.hint.as_bytes())?;
+            stdout.write_all(current_exercise.hint.as_bytes().trim_ascii())?;
             stdout.write_all(b"\n")?;
         }
         // Handled in an earlier match.

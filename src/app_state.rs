@@ -54,7 +54,7 @@ pub struct AppState {
     exercises: Vec<Exercise>,
     // Cache the number of done exercises to avoid iterating over all exercises every time.
     n_done: u32,
-    final_message: &'static str,
+    final_message: String,
     state_file: File,
     // Preallocated buffer for reading and writing the state file.
     file_buf: Vec<u8>,
@@ -66,8 +66,8 @@ pub struct AppState {
 
 impl AppState {
     pub fn new(
-        exercise_infos: Vec<ExerciseInfo>,
-        final_message: &'static str,
+        exercise_infos: Vec<ExerciseInfo<'static>>,
+        final_message: String,
         editor: Option<Editor>,
         vs_code_term: bool,
     ) -> Result<(Self, StateFileStatus)> {
@@ -111,13 +111,12 @@ impl AppState {
                 Exercise {
                     name: exercise_info.name,
                     dir: exercise_info.dir,
-                    // Leaking for `Editor::open`.
-                    // Leaking is fine since the app state exists until the end of the program.
+                    // LEAKING: For `Editor::open`. The app state is used until the end of the program.
                     path: exercise_info.path().leak(),
                     canonical_path,
                     test: exercise_info.test,
                     strict_clippy: exercise_info.strict_clippy,
-                    hint: exercise_info.hint.trim_ascii(),
+                    hint: exercise_info.hint,
                     // Updated below.
                     done: false,
                 }
@@ -549,9 +548,9 @@ impl AppState {
         clear_terminal(stdout)?;
         stdout.write_all(FINISH_LINE.as_bytes())?;
 
-        let final_message = self.final_message.trim_ascii();
+        let final_message = self.final_message.as_bytes().trim_ascii();
         if !final_message.is_empty() {
-            stdout.write_all(final_message.as_bytes())?;
+            stdout.write_all(final_message)?;
             stdout.write_all(b"\n")?;
         }
 
@@ -617,7 +616,7 @@ mod tests {
             canonical_path: None,
             test: false,
             strict_clippy: false,
-            hint: "",
+            hint: String::new(),
             done: false,
         }
     }
@@ -628,7 +627,7 @@ mod tests {
             current_exercise_ind: 0,
             exercises: vec![dummy_exercise(), dummy_exercise(), dummy_exercise()],
             n_done: 0,
-            final_message: "",
+            final_message: String::new(),
             state_file: tempfile::tempfile().unwrap(),
             file_buf: Vec::new(),
             official_exercises: true,

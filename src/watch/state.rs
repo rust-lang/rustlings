@@ -224,7 +224,13 @@ impl<'a> WatchState<'a> {
             stdout.queue(ResetColor)?;
             stdout.write_all(b"\n")?;
 
-            stdout.write_all(self.app_state.current_exercise().hint.as_bytes())?;
+            stdout.write_all(
+                self.app_state
+                    .current_exercise()
+                    .hint
+                    .as_bytes()
+                    .trim_ascii(),
+            )?;
             stdout.write_all(b"\n\n")?;
         }
 

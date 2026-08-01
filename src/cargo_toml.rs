@@ -110,7 +110,7 @@ mod tests {
                 dir: None,
                 test: true,
                 strict_clippy: true,
-                hint: "",
+                hint: String::new(),
                 skip_check_unsolved: false,
             },
             ExerciseInfo {
@@ -118,7 +118,7 @@ mod tests {
                 dir: Some("d"),
                 test: false,
                 strict_clippy: false,
-                hint: "",
+                hint: String::new(),
                 skip_check_unsolved: false,
             },
         ];
