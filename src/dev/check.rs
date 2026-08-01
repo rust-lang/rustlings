@@ -383,7 +383,7 @@ pub fn check(require_solutions: bool) -> Result<()> {
         check_cargo_toml(&info_file.exercises, "Cargo.toml", b"")?;
     }
 
-    // Leaking is fine since they are used until the end of the program.
+    // LEAKING: Used until the end of the program.
     let cmd_runner = Box::leak(Box::new(CmdRunner::build()?));
     let info_file = Box::leak(Box::new(info_file));
 
