@@ -21,6 +21,7 @@ use crate::{
     exercise::{Exercise, RunnableExercise},
     info_file::ExerciseInfo,
     term::{self, CheckProgressVisualizer},
+    url_replacer::UrlReplacer,
 };
 
 const STATE_FILE_NAME: &str = ".rustlings-state.txt";
@@ -68,6 +69,7 @@ impl AppState {
     pub fn new(
         exercise_infos: Vec<ExerciseInfo>,
         final_message: &'static str,
+        base_url: Option<String>,
         editor: Option<Editor>,
         vs_code_term: bool,
     ) -> Result<(Self, StateFileStatus)> {
@@ -82,10 +84,19 @@ impl AppState {
                 format!("Failed to open or create the state file {STATE_FILE_NAME}")
             })?;
 
+        // replacer for rustbook url
+        let url_replacer = base_url.as_ref().map(|url| UrlReplacer::new(url));
+
         let dir_canonical_path = term::canonicalize("exercises");
         let mut exercises = exercise_infos
             .into_iter()
             .map(|exercise_info| {
+                let hint = if let Some(replacer) = &url_replacer {
+                    replacer.replace(exercise_info.hint.trim_ascii())
+                } else {
+                    exercise_info.hint.trim_ascii().to_string()
+                };
+
                 let canonical_path = dir_canonical_path.as_deref().map(|dir_canonical_path| {
                     let mut canonical_path;
                     if let Some(dir) = exercise_info.dir {
@@ -117,7 +128,7 @@ impl AppState {
                     canonical_path,
                     test: exercise_info.test,
                     strict_clippy: exercise_info.strict_clippy,
-                    hint: exercise_info.hint.trim_ascii(),
+                    hint,
                     // Updated below.
                     done: false,
                 }
@@ -617,7 +628,7 @@ mod tests {
             canonical_path: None,
             test: false,
             strict_clippy: false,
-            hint: "",
+            hint: String::new(),
             done: false,
         }
     }
