@@ -9,8 +9,6 @@ use std::{
     io::{self, BufRead, StdoutLock, Write},
 };
 
-use crate::app_state::CheckProgress;
-
 pub struct MaxLenWriter<'a, 'lock> {
     pub stdout: &'a mut StdoutLock<'lock>,
     len: usize,
@@ -81,79 +79,6 @@ impl<'a> CountedWrite<'a> for StdoutLock<'a> {
     }
 }
 
-pub struct CheckProgressVisualizer<'a, 'lock> {
-    stdout: &'a mut StdoutLock<'lock>,
-    n_cols: usize,
-}
-
-impl<'a, 'lock> CheckProgressVisualizer<'a, 'lock> {
-    const CHECKING_COLOR: Color = Color::Blue;
-    const DONE_COLOR: Color = Color::Green;
-    const PENDING_COLOR: Color = Color::Red;
-
-    pub fn build(stdout: &'a mut StdoutLock<'lock>, term_width: u16) -> io::Result<Self> {
-        clear_terminal(stdout)?;
-        stdout.write_all("Checking all exercises…\n".as_bytes())?;
-
-        // Legend
-        stdout.write_all(b"Color of exercise number: ")?;
-        stdout.queue(SetForegroundColor(Self::CHECKING_COLOR))?;
-        stdout.write_all(b"Checking")?;
-        stdout.queue(ResetColor)?;
-        stdout.write_all(b" - ")?;
-        stdout.queue(SetForegroundColor(Self::DONE_COLOR))?;
-        stdout.write_all(b"Done")?;
-        stdout.queue(ResetColor)?;
-        stdout.write_all(b" - ")?;
-        stdout.queue(SetForegroundColor(Self::PENDING_COLOR))?;
-        stdout.write_all(b"Pending")?;
-        stdout.queue(ResetColor)?;
-        stdout.write_all(b"\n")?;
-
-        // Exercise numbers with up to 3 digits.
-        // +1 because the last column doesn't end with a whitespace.
-        let n_cols = usize::from(term_width + 1) / 4;
-
-        Ok(Self { stdout, n_cols })
-    }
-
-    pub fn update(&mut self, progresses: &[CheckProgress]) -> io::Result<()> {
-        self.stdout.queue(MoveTo(0, 2))?;
-
-        let mut exercise_num = 1;
-        for exercise_progress in progresses {
-            match exercise_progress {
-                CheckProgress::None => (),
-                CheckProgress::Checking => {
-                    self.stdout
-                        .queue(SetForegroundColor(Self::CHECKING_COLOR))?;
-                }
-                CheckProgress::Done => {
-                    self.stdout.queue(SetForegroundColor(Self::DONE_COLOR))?;
-                }
-                CheckProgress::Pending => {
-                    self.stdout.queue(SetForegroundColor(Self::PENDING_COLOR))?;
-                }
-            }
-
-            write!(self.stdout, "{exercise_num:<3}")?;
-            self.stdout.queue(ResetColor)?;
-
-            if exercise_num != progresses.len() {
-                if exercise_num % self.n_cols == 0 {
-                    self.stdout.write_all(b"\n")?;
-                } else {
-                    self.stdout.write_all(b" ")?;
-                }
-
-                exercise_num += 1;
-            }
-        }
-
-        self.stdout.flush()
-    }
-}
-
 pub struct ProgressCounter<'a, 'lock> {
     stdout: &'a mut StdoutLock<'lock>,
     total: usize,
@@ -182,6 +107,38 @@ impl<'a, 'lock> ProgressCounter<'a, 'lock> {
 impl Drop for ProgressCounter<'_, '_> {
     fn drop(&mut self) {
         let _ = self.stdout.write_all(b"\n\n");
+    }
+}
+
+pub struct CheckProgressVisualizer<'a, 'lock>(ProgressCounter<'a, 'lock>);
+
+impl<'a, 'lock> CheckProgressVisualizer<'a, 'lock> {
+    pub fn build(stdout: &'a mut StdoutLock<'lock>, total: usize) -> io::Result<Self> {
+        clear_terminal(stdout)?;
+        stdout.write_all("Checking all exercises…\n".as_bytes())?;
+
+        Ok(Self(ProgressCounter::new(stdout, total)?))
+    }
+
+    fn checked(&mut self, exercise_name: &str) -> io::Result<()> {
+        self.0.stdout.queue(ResetColor)?;
+        self.0.stdout.write_all(exercise_name.as_bytes())?;
+        self.0.stdout.queue(Clear(ClearType::UntilNewLine))?;
+
+        self.0.stdout.write_all(b"\n")?;
+        self.0.increment()
+    }
+
+    pub fn done(&mut self, exercise_name: &str) -> io::Result<()> {
+        self.0.stdout.queue(SetForegroundColor(Color::Green))?;
+        self.0.stdout.write_all(b"\r   DONE ")?;
+        self.checked(exercise_name)
+    }
+
+    pub fn pending(&mut self, exercise_name: &str) -> io::Result<()> {
+        self.0.stdout.queue(SetForegroundColor(Color::Red))?;
+        self.0.stdout.write_all(b"\rPENDING ")?;
+        self.checked(exercise_name)
     }
 }
 
