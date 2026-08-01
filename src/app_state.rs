@@ -1,5 +1,5 @@
 use anyhow::{Context, Error, Result, bail};
-use crossterm::{QueueableCommand, cursor, terminal};
+use crossterm::{QueueableCommand, cursor};
 use std::{
     collections::HashSet,
     fs::{File, OpenOptions},
@@ -43,8 +43,6 @@ pub enum StateFileStatus {
 
 #[derive(Clone, Copy)]
 pub enum CheckProgress {
-    None,
-    Checking,
     Done,
     Pending,
 }
@@ -398,22 +396,18 @@ impl AppState {
     }
 
     fn check_all_exercises_impl(&mut self, stdout: &mut StdoutLock) -> Result<Option<usize>> {
-        let term_width = terminal::size()
-            .context("Failed to get the terminal size")?
-            .0;
-        let mut progress_visualizer = CheckProgressVisualizer::build(stdout, term_width)?;
+        let mut progress_visualizer = CheckProgressVisualizer::build(stdout, self.exercises.len())?;
 
-        let next_exercise_ind = AtomicUsize::new(0);
-        let mut progresses = vec![CheckProgress::None; self.exercises.len()];
+        let next_exercise_ind = &AtomicUsize::new(0);
+        let mut progresses = vec![None; self.exercises.len()];
 
         thread::scope(|s| {
-            let (exercise_progress_sender, exercise_progress_receiver) = mpsc::channel();
+            let (progress_sender, progress_receiver) = mpsc::channel();
             let n_threads = thread::available_parallelism()
                 .map_or(DEFAULT_CHECK_PARALLELISM, |count| count.get());
 
             for _ in 0..n_threads {
-                let exercise_progress_sender = exercise_progress_sender.clone();
-                let next_exercise_ind = &next_exercise_ind;
+                let progress_sender = progress_sender.clone();
                 let slf = &self;
                 thread::Builder::new()
                     .spawn_scoped(s, move || {
@@ -424,25 +418,16 @@ impl AppState {
                                 break;
                             };
 
-                            if exercise_progress_sender
-                                .send((exercise_ind, CheckProgress::Checking))
-                                .is_err()
-                            {
-                                break;
-                            }
+                            if let Ok(success) = exercise.run_exercise(None, &slf.cmd_runner) {
+                                let progress = if success {
+                                    CheckProgress::Done
+                                } else {
+                                    CheckProgress::Pending
+                                };
 
-                            let success = exercise.run_exercise(None, &slf.cmd_runner);
-                            let progress = match success {
-                                Ok(true) => CheckProgress::Done,
-                                Ok(false) => CheckProgress::Pending,
-                                Err(_) => CheckProgress::None,
-                            };
-
-                            if exercise_progress_sender
-                                .send((exercise_ind, progress))
-                                .is_err()
-                            {
-                                break;
+                                if progress_sender.send((exercise_ind, progress)).is_err() {
+                                    break;
+                                }
                             }
                         }
                     })
@@ -450,47 +435,48 @@ impl AppState {
             }
 
             // Drop this sender to detect when the last thread is done.
-            drop(exercise_progress_sender);
+            drop(progress_sender);
 
-            while let Ok((exercise_ind, progress)) = exercise_progress_receiver.recv() {
-                progresses[exercise_ind] = progress;
-                progress_visualizer.update(&progresses)?;
+            // TODO: Timeout
+            while let Ok((exercise_ind, progress)) = progress_receiver.recv() {
+                let name = self.exercises[exercise_ind].name;
+                match progress {
+                    CheckProgress::Done => progress_visualizer.done(name)?,
+                    CheckProgress::Pending => progress_visualizer.pending(name)?,
+                }
+                progresses[exercise_ind] = Some(progress);
             }
 
             Ok::<_, Error>(())
         })?;
 
         let mut first_pending_exercise_ind = None;
-        for exercise_ind in 0..progresses.len() {
-            match progresses[exercise_ind] {
-                CheckProgress::Done => {
+        for (exercise_ind, progress) in progresses.into_iter().enumerate() {
+            match progress {
+                Some(CheckProgress::Done) => {
                     self.set_status(exercise_ind, true)?;
                 }
-                CheckProgress::Pending => {
+                Some(CheckProgress::Pending) => {
                     self.set_status(exercise_ind, false)?;
                     if first_pending_exercise_ind.is_none() {
                         first_pending_exercise_ind = Some(exercise_ind);
                     }
                 }
-                CheckProgress::None | CheckProgress::Checking => {
+                None => {
                     // If we got an error while checking all exercises in parallel,
                     // it could be because we exceeded the limit of open file descriptors.
                     // Therefore, try running exercises with errors sequentially.
-                    progresses[exercise_ind] = CheckProgress::Checking;
-                    progress_visualizer.update(&progresses)?;
-
                     let exercise = &self.exercises[exercise_ind];
                     let success = exercise.run_exercise(None, &self.cmd_runner)?;
                     if success {
-                        progresses[exercise_ind] = CheckProgress::Done;
+                        progress_visualizer.done(exercise.name)?;
                     } else {
-                        progresses[exercise_ind] = CheckProgress::Pending;
+                        progress_visualizer.pending(exercise.name)?;
                         if first_pending_exercise_ind.is_none() {
                             first_pending_exercise_ind = Some(exercise_ind);
                         }
                     }
                     self.set_status(exercise_ind, success)?;
-                    progress_visualizer.update(&progresses)?;
                 }
             }
         }
