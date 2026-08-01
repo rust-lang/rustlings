@@ -118,7 +118,7 @@ fn check_info_file_exercises(info_file: &InfoFile) -> Result<HashSet<PathBuf>> {
             );
         }
 
-        let contains_tests = file_buf.contains("#[test]\n");
+        let contains_tests = file_buf.contains("#[test]");
         if exercise_info.test {
             if !contains_tests {
                 bail!(
