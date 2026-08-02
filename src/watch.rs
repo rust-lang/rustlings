@@ -150,7 +150,7 @@ pub fn watch(
     app_state: &mut AppState,
     notify_exercise_names: Option<&'static [&'static [u8]]>,
 ) -> Result<()> {
-    // TODO: Use cfg_select! after bumping MSRV to at least 1.95
+    // TODO: Use cfg_select! after MSRV 1.95
     #[cfg(not(windows))]
     {
         let stdin_fd = rustix::stdio::stdin();

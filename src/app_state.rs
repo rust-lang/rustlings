@@ -437,7 +437,6 @@ impl AppState {
             // Drop this sender to detect when the last thread is done.
             drop(progress_sender);
 
-            // TODO: Timeout
             while let Ok((exercise_ind, progress)) = progress_receiver.recv() {
                 let name = self.exercises[exercise_ind].name;
                 match progress {
