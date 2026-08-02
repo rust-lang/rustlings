@@ -37,7 +37,7 @@ pub fn init() -> Result<()> {
         .stderr(Stdio::null())
         .output()
         .context(
-            "Failed to run the command `cargo locate-project …`\n\
+            "Failed to run `cargo locate-project …`\n\
              Did you already install Rust?\n\
              Try running `cargo --version` to diagnose the problem.",
         )?;
@@ -49,7 +49,7 @@ pub fn init() -> Result<()> {
         .stdout(Stdio::null())
         .stderr(Stdio::null())
         .status()
-        .context("Failed to run the command `cargo clippy --version`")?
+        .context("Failed to run `cargo clippy --version`")?
         .success()
     {
         bail!(

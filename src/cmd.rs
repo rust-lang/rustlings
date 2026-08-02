@@ -3,47 +3,73 @@ use serde::Deserialize;
 use std::{
     io::{Read, pipe},
     path::PathBuf,
-    process::{Command, Stdio},
+    process::{Child, Command, Stdio},
+    thread,
+    time::Duration,
 };
+use wait_timeout::ChildExt;
+
+const TIMEOUT_SECS: u64 = 30;
 
 /// Run a command with a description for a possible error and append the merged stdout and stderr.
 /// The boolean in the returned `Result` is true if the command's exit status is success.
 fn run_cmd(mut cmd: Command, description: &str, output: Option<&mut Vec<u8>>) -> Result<bool> {
     let spawn = |mut cmd: Command| {
-        // NOTE: The closure drops `cmd` which prevents a pipe deadlock.
+        // The closure drops `cmd` which prevents a pipe deadlock.
         cmd.stdin(Stdio::null())
             .spawn()
-            .with_context(|| format!("Failed to run the command `{description}`"))
+            .with_context(|| format!("Failed to run `{description}`"))
+    };
+    let wait = |handle: &mut Child| {
+        handle
+            .wait_timeout(Duration::from_secs(TIMEOUT_SECS))
+            .with_context(|| format!("Failed to wait on `{description}` to exit"))
     };
 
     let mut handle = if let Some(output) = output {
-        let (mut reader, writer) = pipe().with_context(|| {
-            format!("Failed to create a pipe to run the command `{description}``")
-        })?;
+        let (mut reader, writer) =
+            pipe().with_context(|| format!("Failed to create a pipe to run `{description}``"))?;
 
-        let writer_clone = writer.try_clone().with_context(|| {
-            format!("Failed to clone the pipe writer for the command `{description}`")
-        })?;
+        let writer_clone = writer
+            .try_clone()
+            .with_context(|| format!("Failed to clone the pipe writer for `{description}`"))?;
 
         cmd.stdout(writer_clone).stderr(writer);
-        let handle = spawn(cmd)?;
+        let mut handle = spawn(cmd)?;
 
-        reader
-            .read_to_end(output)
-            .with_context(|| format!("Failed to read the output of the command `{description}`"))?;
+        let thread_handle = thread::Builder::new()
+            .spawn(move || {
+                let mut out = Vec::with_capacity(128);
+                reader.read_to_end(&mut out).map(|_| out)
+            })
+            .context("Failed to spawn a thread to collect a command's output")?;
 
-        output.push(b'\n');
+        if let Some(status) = wait(&mut handle)? {
+            let out = thread_handle
+                .join()
+                .unwrap()
+                .with_context(|| format!("Failed to read the output of `{description}`"))?;
+            output.extend_from_slice(&out);
+            output.push(b'\n');
+            return Ok(status.success());
+        }
 
         handle
     } else {
         cmd.stdout(Stdio::null()).stderr(Stdio::null());
-        spawn(cmd)?
+        let mut handle = spawn(cmd)?;
+
+        if let Some(status) = wait(&mut handle)? {
+            return Ok(status.success());
+        }
+
+        handle
     };
 
     handle
-        .wait()
-        .with_context(|| format!("Failed to wait on the command `{description}` to exit"))
-        .map(|status| status.success())
+        .kill()
+        .with_context(|| format!("Failed to kill `{description}` after timeout"))?;
+    bail!("`{description}` timed out after {TIMEOUT_SECS} seconds");
 }
 
 // Parses parts of the output of `cargo metadata`.
@@ -71,13 +97,12 @@ impl CmdRunner {
             .context(CARGO_METADATA_ERR)?;
 
         if !metadata_output.status.success() {
-            bail!("The command `cargo metadata …` failed. Are you in the `rustlings/` directory?");
+            bail!("`cargo metadata …` failed. Are you in the `rustlings/` directory?");
         }
 
-        let metadata: CargoMetadata = serde_json::de::from_slice(&metadata_output.stdout)
-            .context(
-                "Failed to read the field `target_directory` from the output of the command `cargo metadata …`",
-            )?;
+        let metadata: CargoMetadata = serde_json::de::from_slice(&metadata_output.stdout).context(
+            "Failed to read the field `target_directory` from the output of `cargo metadata …`",
+        )?;
 
         Ok(Self {
             target_dir: metadata.target_directory,
@@ -116,7 +141,7 @@ impl CmdRunner {
         bin_path.push("debug");
         bin_path.push(bin_name);
 
-        run_cmd(Command::new(&bin_path), &bin_path.to_string_lossy(), output)
+        run_cmd(Command::new(&bin_path), bin_name, output)
     }
 }
 
@@ -140,7 +165,7 @@ impl CargoSubcommand<'_> {
     }
 }
 
-const CARGO_METADATA_ERR: &str = "Failed to run the command `cargo metadata …`
+const CARGO_METADATA_ERR: &str = "Failed to run `cargo metadata …`
 Did you already install Rust?
 Try running `cargo --version` to diagnose the problem.";
 
