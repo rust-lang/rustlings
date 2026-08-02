@@ -43,7 +43,6 @@ enum WatchEvent {
     Input(InputEvent),
     FileChange { exercise_ind: usize },
     TerminalResize { width: u16 },
-    CheckAll,
     NotifyErr(notify::Error),
     TerminalEventErr(io::Error),
 }
@@ -97,7 +96,20 @@ fn run_watch(
         match event {
             WatchEvent::Input(InputEvent::Next) => match watch_state.next_exercise(&mut stdout)? {
                 ExercisesProgress::AllDone => break,
-                ExercisesProgress::NewPending => watch_state.run_current_exercise(&mut stdout)?,
+                ExercisesProgress::NewPending => {
+                    watch_state.run_current_exercise(&mut stdout)?;
+                    if watch_state.done() {
+                        // An exercise is done although it was not marked as such.
+                        // Trigger check all to fix the state file.
+                        match watch_state.check_all_exercises(&mut stdout)? {
+                            ExercisesProgress::AllDone => break,
+                            ExercisesProgress::NewPending => {
+                                watch_state.run_current_exercise(&mut stdout)?;
+                            }
+                            ExercisesProgress::CurrentPending => watch_state.render(&mut stdout)?,
+                        }
+                    }
+                }
                 ExercisesProgress::CurrentPending => (),
             },
             WatchEvent::Input(InputEvent::Run) => watch_state.run_current_exercise(&mut stdout)?,
@@ -114,11 +126,6 @@ fn run_watch(
             WatchEvent::TerminalResize { width } => {
                 watch_state.update_term_width(width, &mut stdout)?;
             }
-            WatchEvent::CheckAll => match watch_state.check_all_exercises(&mut stdout)? {
-                ExercisesProgress::AllDone => break,
-                ExercisesProgress::NewPending => watch_state.run_current_exercise(&mut stdout)?,
-                ExercisesProgress::CurrentPending => watch_state.render(&mut stdout)?,
-            },
             WatchEvent::NotifyErr(e) => return Err(Error::from(e).context(NOTIFY_ERR)),
             WatchEvent::TerminalEventErr(e) => {
                 return Err(Error::from(e).context("Terminal event listener failed"));

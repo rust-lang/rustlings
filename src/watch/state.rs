@@ -24,7 +24,6 @@ const HEADING_ATTRIBUTES: Attributes = Attributes::none()
     .with(Attribute::Bold)
     .with(Attribute::Underlined);
 
-#[derive(PartialEq, Eq)]
 enum DoneStatus {
     DoneWithSolution(String),
     DoneWithoutSolution,
@@ -93,19 +92,19 @@ impl<'a> WatchState<'a> {
             .current_exercise()
             .run_exercise(Some(&mut self.output), self.app_state.cmd_runner())?;
         self.output.push(b'\n');
-        if success {
-            self.done_status =
-                if let Some(solution_path) = self.app_state.current_solution_path()? {
-                    DoneStatus::DoneWithSolution(solution_path)
-                } else {
-                    DoneStatus::DoneWithoutSolution
-                };
+
+        self.done_status = if success {
+            if let Some(solution_path) = self.app_state.current_solution_path()? {
+                DoneStatus::DoneWithSolution(solution_path)
+            } else {
+                DoneStatus::DoneWithoutSolution
+            }
         } else {
             self.app_state
                 .set_pending(self.app_state.current_exercise_ind())?;
 
-            self.done_status = DoneStatus::Pending;
-        }
+            DoneStatus::Pending
+        };
 
         self.app_state.join_editor_handle(editor_handle)?;
         self.render(stdout)?;
@@ -164,18 +163,24 @@ impl<'a> WatchState<'a> {
         self.run_current_exercise(stdout)
     }
 
+    pub fn done(&self) -> bool {
+        match self.done_status {
+            DoneStatus::DoneWithSolution(_) | DoneStatus::DoneWithoutSolution => true,
+            DoneStatus::Pending => false,
+        }
+    }
+
     /// Move on to the next exercise if the current one is done.
     pub fn next_exercise(&mut self, stdout: &mut StdoutLock) -> Result<ExercisesProgress> {
-        match self.done_status {
-            DoneStatus::DoneWithSolution(_) | DoneStatus::DoneWithoutSolution => (),
-            DoneStatus::Pending => return Ok(ExercisesProgress::CurrentPending),
+        if self.done() {
+            return self.app_state.done_current_exercise::<true>(stdout);
         }
 
-        self.app_state.done_current_exercise::<true>(stdout)
+        Ok(ExercisesProgress::CurrentPending)
     }
 
     fn show_prompt(&self, stdout: &mut StdoutLock) -> io::Result<()> {
-        if self.done_status != DoneStatus::Pending {
+        if self.done() {
             stdout.queue(SetAttribute(Attribute::Bold))?;
             stdout.write_all(b"n")?;
             stdout.queue(ResetColor)?;
@@ -233,7 +238,7 @@ impl<'a> WatchState<'a> {
             stdout.write_all(b"\n\n")?;
         }
 
-        if self.done_status != DoneStatus::Pending {
+        if self.done() {
             stdout
                 .queue(SetAttribute(Attribute::Bold))?
                 .queue(SetForegroundColor(Color::Green))?;
