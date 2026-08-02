@@ -202,7 +202,6 @@ impl<'a> WatchState<'a> {
         }
 
         show_key(b'l', b":list / ")?;
-        show_key(b'c', b":check all / ")?;
         show_key(b'x', b":reset / ")?;
         show_key(b'q', b":quit ? ")?;
 
