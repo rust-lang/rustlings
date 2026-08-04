@@ -19,6 +19,12 @@ struct ExerciseFiles {
     dir_ind: usize,
 }
 
+// Input files that may be read by exercises.
+pub struct InputFile {
+    pub name: &'static str,
+    pub content: &'static str,
+}
+
 fn create_dir_if_not_exists(path: &str) -> Result<()> {
     if let Err(e) = create_dir(path)
         && e.kind() != io::ErrorKind::AlreadyExists
@@ -58,6 +64,7 @@ pub struct EmbeddedFiles {
     pub info_file: &'static str,
     exercise_files: &'static [ExerciseFiles],
     pub exercise_dirs: &'static [ExerciseDir],
+    pub input_files: &'static [InputFile],
 }
 
 impl EmbeddedFiles {
