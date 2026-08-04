@@ -1222,3 +1222,12 @@ the functions "tim", "carl" and "nick".
 
 An async task can wait for another one to complete by "awaiting" it. Add
 ".await" after the three "task_name" variables in the "block_on" call."""
+
+[[input_files]]
+name = "scores_class_a.txt"
+
+[[input_files]]
+name = "scores_class_b.txt"
+
+[[input_files]]
+name = "scores_class_c.txt"

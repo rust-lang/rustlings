@@ -4,39 +4,35 @@
 // together, they can finish the job much faster.
 //
 // Let's simulate this using asynchronous programming. Each person is
-// represented as an asynchronous task, which can be executed concurrently (i.e.
-// they can be doing the calculations at the same time).
+// represented as an asynchronous task, which can be executed concurrently.
 
-fn main() {
-    // Async tasks need to be executed by a "runtime", which is not provided by
-    // Rust's standard library. Here, we use the mainstream runtime `tokio`.
-    let rt = tokio::runtime::Builder::new_current_thread()
-        .build()
-        .unwrap();
+// Async tasks need to be executed by a "runtime", which is not provided by
+// Rust's standard library. Here, we use the mainstream runtime `tokio`.
+// The macro `tokio::main` wraps the entire main function in a runtime.
+#[tokio::main]
+async fn main() {
+    let mean_score_a = tokio::spawn(calculate_mean_score("input_files/scores_class_a.txt"));
+    let mean_score_b = tokio::spawn(calculate_mean_score("input_files/scores_class_b.txt"));
+    let mean_score_c = tokio::spawn(calculate_mean_score("input_files/scores_class_c.txt"));
 
-    let scores_class_a = &[83, 77, 92];
-    let scores_class_b = &[84, 88, 96];
-    let scores_class_c = &[71, 83, 76];
-
-    let alice = rt.spawn(calculate_mean_score(scores_class_a));
-    let bob = rt.spawn(calculate_mean_score(scores_class_b));
-    let catherine = rt.spawn(calculate_mean_score(scores_class_c));
-
-    // Block the runtime on a task that awaits all three calculations.
-    let [mean_score_a, mean_score_b, mean_score_c]: [usize; _] = rt.block_on(async {
-        [
-            alice.await.unwrap(),
-            bob.await.unwrap(),
-            catherine.await.unwrap(),
-        ]
-    });
-
-    assert_eq!(mean_score_a, 84);
-    assert_eq!(mean_score_b, 89);
-    assert_eq!(mean_score_c, 76);
+    assert_eq!(mean_score_a.await.unwrap(), 84); // alice
+    assert_eq!(mean_score_b.await.unwrap(), 89); // bob
+    assert_eq!(mean_score_c.await.unwrap(), 76); // catherine
 }
 
-async fn calculate_mean_score(score_list: &[usize]) -> usize {
-    let score_sum: usize = score_list.iter().sum();
-    score_sum / score_list.len()
+async fn calculate_mean_score(scores_file: &str) -> usize {
+    // Read the file asynchronously
+    let file = tokio::fs::read_to_string(scores_file).await.unwrap();
+
+    // Initialize the sum and the number of scores
+    let mut sum = 0;
+    let mut n = 0;
+    for line in file.lines() {
+        // Parse every line as a score
+        let score = line.parse::<usize>().unwrap();
+        sum += score;
+        n += 1;
+    }
+
+    sum / n
 }

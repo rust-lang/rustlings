@@ -9,17 +9,22 @@ struct ExerciseInfo<'a> {
 }
 
 #[derive(Deserialize)]
+struct InputFileInfo<'a> {
+    name: &'a str,
+}
+
+#[derive(Deserialize)]
 struct InfoFile<'a> {
     #[serde(borrow)]
     exercises: Vec<ExerciseInfo<'a>>,
+    input_files: Vec<InputFileInfo<'a>>,
 }
 
 #[proc_macro]
 pub fn include_files(_: TokenStream) -> TokenStream {
     let info_file = include_str!("../info.toml");
-    let exercises = toml::de::from_str::<InfoFile>(info_file)
-        .expect("Failed to parse `info.toml`")
-        .exercises;
+    let info = toml::de::from_str::<InfoFile>(info_file).expect("Failed to parse `info.toml`");
+    let exercises = info.exercises;
 
     let exercise_files = exercises
         .iter()
@@ -46,11 +51,18 @@ pub fn include_files(_: TokenStream) -> TokenStream {
         .iter()
         .map(|dir| format!("../exercises/{dir}/README.md"));
 
+    let input_file_names = info.input_files.iter().map(|f| f.name);
+    let input_file_paths = info
+        .input_files
+        .iter()
+        .map(|f| format!("../input_files/{}", f.name));
+
     quote! {
         EmbeddedFiles {
             info_file: #info_file,
             exercise_files: &[#(ExerciseFiles { exercise: include_bytes!(#exercise_files), solution: include_bytes!(#solution_files), dir_ind: #dir_inds }),*],
-            exercise_dirs: &[#(ExerciseDir { name: #dirs, readme: include_bytes!(#readmes) }),*]
+            exercise_dirs: &[#(ExerciseDir { name: #dirs, readme: include_bytes!(#readmes) }),*],
+            input_files: &[#(InputFile { name: #input_file_names, content: include_str!(#input_file_paths) }),*],
         }
     }
     .into()
