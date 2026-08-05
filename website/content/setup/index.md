@@ -2,8 +2,6 @@
 title = "Setup"
 +++
 
-<!-- toc -->
-
 ## Installing Rust
 
 Before installing Rustlings, you must have the **latest version of Rust** installed.
@@ -25,13 +23,13 @@ The following command will download and compile Rustlings:
 cargo install rustlings
 ```
 
-{% details(summary="If the installation fails…") %}
+{% <details summary="If the installation fails…"> %}
 
 - Make sure you have the latest Rust version by running `rustup update`
 - Try adding the `--locked` flag: `cargo install rustlings --locked`
 - Otherwise, please [report the issue](https://github.com/rust-lang/rustlings/issues/new)
 
-{% end %}
+{% </details> %}
 
 ## Initialization
 
@@ -41,7 +39,7 @@ After installing Rustlings, run the following command to initialize the `rustlin
 rustlings init
 ```
 
-{% details(summary="If the command <code>rustlings</code> can't be found…") %}
+{% <details summary="If the command <code>rustlings</code> can't be found…"> %}
 
 You are probably using Linux and installed Rust using your package manager.
 
@@ -51,7 +49,7 @@ Sadly, package managers often don't add `~/.cargo/bin` to your `PATH` environmen
 - Either add `~/.cargo/bin` manually to `PATH`
 - Or uninstall Rust from the package manager and [install it using the official way with `rustup`](https://www.rust-lang.org/tools/install)
 
-{% end %}
+{% </details> %}
 
 Now, go into the newly initialized directory and launch Rustlings for further instructions on getting started with the exercises:
 
