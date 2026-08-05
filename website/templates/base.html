@@ -6,25 +6,25 @@
 
         {%- set timestamp = now(timestamp=true) -%}
 
-        {%- if page.title -%}
+        {%- if page?.title -%}
             {% set_global title = page.title %}
-        {%- elif section.title -%}
+        {%- elif section?.title -%}
             {% set_global title = section.title %}
         {%- else -%}
             {% set_global title = config.title %}
         {%- endif -%}
 
-        {%- if page.description -%}
+        {%- if page?.description -%}
             {% set_global description = page.description %}
-        {%- elif section.description -%}
+        {%- elif section?.description -%}
             {% set_global description = section.description %}
         {%- else -%}
             {% set_global description = config.description %}
         {%- endif -%}
 
-        {%- if page.permalink -%}
+        {%- if page?.permalink -%}
             {% set_global permalink = page.permalink %}
-        {%- elif section.permalink -%}
+        {%- elif section?.permalink -%}
             {% set_global permalink = section.permalink %}
         {%- endif %}
 
@@ -59,7 +59,7 @@
 
             <nav class="flex flex-col gap-x-6 items-center font-bold sm:flex-row">
                 {% for menu_item in config.extra.menu_items %}
-                    {%- if menu_item.url is starting_with("@") -%}
+                    {%- if menu_item.url is starting_with(pat="@") -%}
                         {% set_global menu_item_url = get_url(path=menu_item.url) %}
                     {%- else -%}
                         {% set_global menu_item_url = menu_item.url %}

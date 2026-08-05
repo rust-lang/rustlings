@@ -2,8 +2,6 @@
 title = "Usage"
 +++
 
-<!-- toc -->
-
 ## Doing exercises
 
 The exercises are sorted by topic and can be found in the subdirectory `exercises/<topic>`.
@@ -23,13 +21,13 @@ After the [initialization](@/setup/index.md#initialization), Rustlings can be la
 This will start the _watch mode_ which walks you through the exercises in a predefined order (what we think is best for newcomers).
 It will rerun the current exercise automatically every time you change the exercise's file in the `exercises/` directory.
 
-{% details(summary="If detecting file changes in the <code>exercises/</code> directory fails…") %}
+{% <details summary="If detecting file changes in the <code>exercises/</code> directory fails…"> %}
 
 You can add the **`--manual-run`** flag (`rustlings --manual-run`) to manually rerun the current exercise by entering `r` in the watch mode.
 
 Please [report the issue](https://github.com/rust-lang/rustlings/issues/new) with some information about your operating system and whether you run Rustlings in a container or a virtual machine (e.g. WSL).
 
-{% end %}
+{% </details> %}
 
 ## Exercise List
 
