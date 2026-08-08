@@ -27,7 +27,7 @@ fn count_for(map: &HashMap<String, Progress>, value: Progress) -> usize {
 // of a `for` loop.
 fn count_iterator(map: &HashMap<String, Progress>, value: Progress) -> usize {
     // `map` is a hash map with `String` keys and `Progress` values.
-    // map = { "variables1": Complete, "from_str": None, … }
+    // map = { "variables1": Complete, "conversions3": None, … }
 }
 
 fn count_collection_for(collection: &[HashMap<String, Progress>], value: Progress) -> usize {
@@ -46,7 +46,7 @@ fn count_collection_for(collection: &[HashMap<String, Progress>], value: Progres
 // iterator instead of a `for` loop.
 fn count_collection_iterator(collection: &[HashMap<String, Progress>], value: Progress) -> usize {
     // `collection` is a slice of hash maps.
-    // collection = [{ "variables1": Complete, "from_str": None, … },
+    // collection = [{ "variables1": Complete, "conversions3": None, … },
     //               { "variables2": Complete, … }, … ]
 }
 
@@ -64,10 +64,10 @@ mod tests {
         let mut map = HashMap::new();
         map.insert(String::from("variables1"), Complete);
         map.insert(String::from("functions1"), Complete);
-        map.insert(String::from("hashmap1"), Complete);
-        map.insert(String::from("arc1"), Some);
-        map.insert(String::from("as_ref_mut"), None);
-        map.insert(String::from("from_str"), None);
+        map.insert(String::from("hashmaps1"), Complete);
+        map.insert(String::from("smart_pointers3"), Some);
+        map.insert(String::from("conversions5"), None);
+        map.insert(String::from("conversions3"), None);
 
         map
     }
@@ -81,8 +81,8 @@ mod tests {
         other.insert(String::from("variables2"), Complete);
         other.insert(String::from("functions2"), Complete);
         other.insert(String::from("if1"), Complete);
-        other.insert(String::from("from_into"), None);
-        other.insert(String::from("try_from_into"), None);
+        other.insert(String::from("conversions2"), None);
+        other.insert(String::from("conversions4"), None);
 
         vec![map, other]
     }

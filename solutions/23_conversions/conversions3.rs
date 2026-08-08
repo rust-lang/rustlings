@@ -1,8 +1,7 @@
-// This is similar to the previous `from_into` exercise. But this time, we'll
-// implement `FromStr` and return errors instead of falling back to a default
-// value. Additionally, upon implementing `FromStr`, you can use the `parse`
-// method on strings to generate an object of the implementor type. You can read
-// more about it in the documentation:
+// In this exercise, we'll implement `FromStr` and return errors instead of
+// falling back to a default value. Upon implementing `FromStr`, you can use the
+// `parse` method on strings to generate an object of the implementor type.
+// You can read more about it in the documentation:
 // https://doc.rust-lang.org/std/str/trait.FromStr.html
 
 use std::num::ParseIntError;
