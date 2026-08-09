@@ -144,15 +144,6 @@ pub fn init() -> Result<()> {
             .with_context(|| format!("Failed to create the file {solution_path}"))?;
     }
 
-    // init input files
-    create_dir("input_files").context("Failed to create the directory `input_files`")?;
-    for input_file in EMBEDDED_FILES.input_files {
-        fs::write(
-            format!("input_files/{}", input_file.name),
-            input_file.content,
-        )?;
-    }
-
     let current_cargo_toml = include_str!("../dev-Cargo.toml");
     // Skip the first line (comment).
     let newline_ind = current_cargo_toml
