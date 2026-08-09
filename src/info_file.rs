@@ -17,6 +17,9 @@ pub struct ExerciseInfo<'a> {
     /// Deny all Clippy warnings.
     #[serde(default)]
     pub strict_clippy: bool,
+    // Files that are read by the exercise.
+    #[serde(default)]
+    pub input_files: Vec<&'a str>,
     /// The exercise's hint to be shown to the user on request.
     pub hint: String,
     /// The exercise is already solved. Ignore it when checking that all exercises are unsolved.
