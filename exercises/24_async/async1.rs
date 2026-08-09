@@ -11,7 +11,6 @@
 // The macro `tokio::main` wraps the entire main function in a runtime.
 #[tokio::main]
 async fn main() {
-    // TODO: Fix the compiler errors by making the spawned function async.
     let mean_score_a = tokio::spawn(calculate_mean_score("input_files/scores_class_a.txt"));
     let mean_score_b = tokio::spawn(calculate_mean_score("input_files/scores_class_b.txt"));
     let mean_score_c = tokio::spawn(calculate_mean_score("input_files/scores_class_c.txt"));
