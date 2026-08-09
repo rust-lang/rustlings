@@ -6,18 +6,14 @@ use serde::Deserialize;
 struct ExerciseInfo<'a> {
     name: &'a str,
     dir: &'a str,
-}
-
-#[derive(Deserialize)]
-struct InputFileInfo<'a> {
-    name: &'a str,
+    #[serde(default)]
+    input_files: Vec<&'a str>,
 }
 
 #[derive(Deserialize)]
 struct InfoFile<'a> {
     #[serde(borrow)]
     exercises: Vec<ExerciseInfo<'a>>,
-    input_files: Vec<InputFileInfo<'a>>,
 }
 
 #[proc_macro]
@@ -47,22 +43,34 @@ pub fn include_files(_: TokenStream) -> TokenStream {
         *dir_ind = dirs.len() - 1;
     }
 
+    let input_files = exercises.iter().map(|exercise| {
+        let names = exercise.input_files.iter();
+        let paths = exercise
+            .input_files
+            .iter()
+            .map(|f| format!("../exercises/{}/{}", exercise.dir, f));
+        quote! {
+            &[#(InputFile {
+                name: #names,
+                content: include_str!(#paths),
+            }),*]
+        }
+    });
+
     let readmes = dirs
         .iter()
         .map(|dir| format!("../exercises/{dir}/README.md"));
 
-    let input_file_names = info.input_files.iter().map(|f| f.name);
-    let input_file_paths = info
-        .input_files
-        .iter()
-        .map(|f| format!("../input_files/{}", f.name));
-
     quote! {
         EmbeddedFiles {
             info_file: #info_file,
-            exercise_files: &[#(ExerciseFiles { exercise: include_bytes!(#exercise_files), solution: include_bytes!(#solution_files), dir_ind: #dir_inds }),*],
+            exercise_files: &[#(ExerciseFiles {
+                exercise: include_bytes!(#exercise_files),
+                solution: include_bytes!(#solution_files),
+                dir_ind: #dir_inds,
+                input_files: #input_files,
+            }),*],
             exercise_dirs: &[#(ExerciseDir { name: #dirs, readme: include_bytes!(#readmes) }),*],
-            input_files: &[#(InputFile { name: #input_file_names, content: include_str!(#input_file_paths) }),*],
         }
     }
     .into()

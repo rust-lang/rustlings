@@ -17,6 +17,8 @@ struct ExerciseFiles {
     solution: &'static [u8],
     // Index of the related `ExerciseDir` in `EmbeddedFiles::exercise_dirs`.
     dir_ind: usize,
+    // Files that are read by the exercise.
+    input_files: &'static [InputFile],
 }
 
 // Input files that may be read by exercises.
@@ -64,7 +66,6 @@ pub struct EmbeddedFiles {
     pub info_file: &'static str,
     exercise_files: &'static [ExerciseFiles],
     pub exercise_dirs: &'static [ExerciseDir],
-    pub input_files: &'static [InputFile],
 }
 
 impl EmbeddedFiles {
@@ -97,6 +98,12 @@ impl EmbeddedFiles {
 
             fs::write(&exercise_path, exercise_files.exercise)
                 .with_context(|| format!("Failed to write the exercise file {exercise_path}"))?;
+
+            for InputFile { name, content } in exercise_files.input_files {
+                let path = format!("{prefix}/{dir_name}/{name}", dir_name = dir.name);
+                fs::write(&path, content)
+                    .with_context(|| format!("Failed to write the input file {path}"))?;
+            }
         }
 
         Ok(())
