@@ -2,7 +2,10 @@ use anyhow::{Context, Error, Result, bail};
 use serde::Deserialize;
 use std::{fs, io::ErrorKind};
 
-use crate::{embedded::EMBEDDED_FILES, exercise::RunnableExercise};
+use crate::{
+    embedded::{EMBEDDED_FILES, InputFile},
+    exercise::RunnableExercise,
+};
 
 /// Deserialized from the `info.toml` file.
 #[derive(Deserialize)]
@@ -71,6 +74,11 @@ impl RunnableExercise for ExerciseInfo<'_> {
 
     fn test(&self) -> bool {
         self.test
+    }
+
+    fn embedded_input_files(&self) -> &[InputFile] {
+        // We don't have the input files embedded for communtiy exercises.
+        &[]
     }
 }
 

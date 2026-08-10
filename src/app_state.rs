@@ -81,9 +81,11 @@ impl AppState {
             })?;
 
         let dir_canonical_path = term::canonicalize("exercises");
+        let official_exercises = !Path::new("info.toml").exists();
         let mut exercises = exercise_infos
             .into_iter()
-            .map(|exercise_info| {
+            .enumerate()
+            .map(|(i, exercise_info)| {
                 let canonical_path = dir_canonical_path.as_deref().map(|dir_canonical_path| {
                     let mut canonical_path;
                     if let Some(dir) = exercise_info.dir {
@@ -105,10 +107,16 @@ impl AppState {
                     canonical_path.push_str(".rs");
                     canonical_path
                 });
+                let embedded_input_files = if official_exercises {
+                    EMBEDDED_FILES.exercise_files[i].input_files
+                } else {
+                    &[]
+                };
 
                 Exercise {
                     name: exercise_info.name,
                     dir: exercise_info.dir,
+                    embedded_input_files,
                     // LEAKING: For `Editor::open`. The app state is used until the end of the program.
                     path: exercise_info.path().leak(),
                     canonical_path,
@@ -173,7 +181,7 @@ impl AppState {
             final_message,
             state_file,
             file_buf,
-            official_exercises: !Path::new("info.toml").exists(),
+            official_exercises,
             cmd_runner,
             // VS Code has its own file link handling
             emit_file_links: !vs_code_term,
@@ -597,6 +605,7 @@ mod tests {
         Exercise {
             name: "0",
             dir: None,
+            embedded_input_files: &[],
             path: "exercises/0.rs",
             canonical_path: None,
             test: false,
