@@ -36,6 +36,7 @@ pub fn solution_link_line(
 // Compilation must be done before calling this method.
 fn run_bin(
     bin_name: &str,
+    cwd: &str,
     mut output: Option<&mut Vec<u8>>,
     cmd_runner: &CmdRunner,
 ) -> Result<bool> {
@@ -46,7 +47,7 @@ fn run_bin(
         output.push(b'\n');
     }
 
-    let success = cmd_runner.run_debug_bin(bin_name, output.as_deref_mut())?;
+    let success = cmd_runner.run_debug_bin(bin_name, cwd, output.as_deref_mut())?;
 
     if let Some(output) = output
         && !success
@@ -123,6 +124,14 @@ pub trait RunnableExercise {
             output.clear();
         }
 
+        let cwd_buf;
+        let cwd = if let Some(dir) = self.dir() {
+            cwd_buf = format!("exercises/{dir}");
+            cwd_buf.as_str()
+        } else {
+            "exercises"
+        };
+
         if self.test() {
             let output_is_some = output.is_some();
             let mut test_cmd = cmd_runner.cargo("test", bin_name, output.as_deref_mut());
@@ -131,7 +140,7 @@ pub trait RunnableExercise {
             }
             let test_success = test_cmd.run("cargo test …")?;
             if !test_success {
-                run_bin(bin_name, output, cmd_runner)?;
+                run_bin(bin_name, cwd, output, cmd_runner)?;
                 return Ok(false);
             }
 
@@ -151,7 +160,7 @@ pub trait RunnableExercise {
         }
 
         let clippy_success = clippy_cmd.run("cargo clippy …")?;
-        let run_success = run_bin(bin_name, output, cmd_runner)?;
+        let run_success = run_bin(bin_name, cwd, output, cmd_runner)?;
 
         Ok(clippy_success && run_success)
     }

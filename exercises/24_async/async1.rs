@@ -6,18 +6,14 @@
 // Let's simulate this using asynchronous programming. Each person is
 // represented as an asynchronous task, which can be executed concurrently.
 
-const SCORES_CLASS_A: &str = "exercises/24_async/scores_class_a.txt";
-const SCORES_CLASS_B: &str = "exercises/24_async/scores_class_b.txt";
-const SCORES_CLASS_C: &str = "exercises/24_async/scores_class_c.txt";
-
 // Async tasks need to be executed by a "runtime", which is not provided by
 // Rust's standard library. Here, we use the mainstream runtime `tokio`.
 // The macro `tokio::main` wraps the entire main function in a runtime.
 #[tokio::main]
 async fn main() {
-    let mean_score_a = tokio::spawn(calculate_mean_score(SCORES_CLASS_A));
-    let mean_score_b = tokio::spawn(calculate_mean_score(SCORES_CLASS_B));
-    let mean_score_c = tokio::spawn(calculate_mean_score(SCORES_CLASS_C));
+    let mean_score_a = tokio::spawn(calculate_mean_score("scores_class_a.txt"));
+    let mean_score_b = tokio::spawn(calculate_mean_score("scores_class_b.txt"));
+    let mean_score_c = tokio::spawn(calculate_mean_score("scores_class_c.txt"));
 
     // TODO: Await the spawned tasks to check their results.
     assert_eq!(mean_score_a, 84); // alice
