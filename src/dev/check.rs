@@ -134,9 +134,10 @@ fn check_info_file_exercises(info_file: &InfoFile) -> Result<HashSet<PathBuf>> {
         file_buf.clear();
 
         let path = PathBuf::from(path);
+        let parent = path.parent().unwrap();
 
         for input_file in &exercise_info.input_files {
-            paths.insert(path.parent().unwrap().join(input_file));
+            paths.insert(parent.join(input_file));
         }
 
         paths.insert(path);
