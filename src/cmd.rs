@@ -13,7 +13,12 @@ const TIMEOUT_SECS: u64 = 30;
 
 /// Run a command with a description for a possible error and append the merged stdout and stderr.
 /// The boolean in the returned `Result` is true if the command's exit status is success.
-fn run_cmd(mut cmd: Command, description: &str, output: Option<&mut Vec<u8>>) -> Result<bool> {
+fn run_cmd(
+    mut cmd: Command,
+    description: &str,
+    cwd: Option<&str>,
+    output: Option<&mut Vec<u8>>,
+) -> Result<bool> {
     let spawn = |mut cmd: Command| {
         // The closure drops `cmd` which prevents a pipe deadlock.
         cmd.stdin(Stdio::null())
@@ -25,6 +30,9 @@ fn run_cmd(mut cmd: Command, description: &str, output: Option<&mut Vec<u8>>) ->
             .wait_timeout(Duration::from_secs(TIMEOUT_SECS))
             .with_context(|| format!("Failed to wait on `{description}` to exit"))
     };
+    if let Some(cwd) = cwd {
+        cmd.current_dir(cwd);
+    }
 
     let mut handle = if let Some(output) = output {
         let (mut reader, writer) =
@@ -133,7 +141,12 @@ impl CmdRunner {
     }
 
     /// The boolean in the returned `Result` is true if the command's exit status is success.
-    pub fn run_debug_bin(&self, bin_name: &str, output: Option<&mut Vec<u8>>) -> Result<bool> {
+    pub fn run_debug_bin(
+        &self,
+        bin_name: &str,
+        cwd: &str,
+        output: Option<&mut Vec<u8>>,
+    ) -> Result<bool> {
         // 7 = "/debug/".len()
         let mut bin_path =
             PathBuf::with_capacity(self.target_dir.as_os_str().len() + 7 + bin_name.len());
@@ -141,7 +154,7 @@ impl CmdRunner {
         bin_path.push("debug");
         bin_path.push(bin_name);
 
-        run_cmd(Command::new(&bin_path), bin_name, output)
+        run_cmd(Command::new(&bin_path), bin_name, Some(cwd), output)
     }
 }
 
@@ -161,7 +174,7 @@ impl CargoSubcommand<'_> {
 
     /// The boolean in the returned `Result` is true if the command's exit status is success.
     pub fn run(self, description: &str) -> Result<bool> {
-        run_cmd(self.cmd, description, self.output)
+        run_cmd(self.cmd, description, None, self.output)
     }
 }
 
@@ -179,7 +192,7 @@ mod tests {
         cmd.arg("Hello");
 
         let mut output = Vec::with_capacity(8);
-        run_cmd(cmd, "echo …", Some(&mut output)).unwrap();
+        run_cmd(cmd, "echo …", None, Some(&mut output)).unwrap();
 
         assert_eq!(output, b"Hello\n\n");
     }
