@@ -1,4 +1,4 @@
-use anyhow::Result;
+use anyhow::{Context, Result};
 use crossterm::{
     QueueableCommand,
     style::{Attribute, Color, ResetColor, SetAttribute, SetForegroundColor},
@@ -7,6 +7,7 @@ use std::io::{self, StdoutLock, Write};
 
 use crate::{
     cmd::CmdRunner,
+    embedded::InputFile,
     term::{self, CountedWrite, file_path, terminal_file_link, write_ansi},
 };
 
@@ -69,6 +70,7 @@ fn run_bin(
 pub struct Exercise {
     pub name: &'static str,
     pub dir: Option<&'static str>,
+    pub embedded_input_files: &'static [InputFile],
     /// Path of the exercise file starting with the `exercises/` directory.
     pub path: &'static str,
     pub canonical_path: Option<String>,
@@ -99,6 +101,7 @@ pub trait RunnableExercise {
     fn dir(&self) -> Option<&str>;
     fn strict_clippy(&self) -> bool;
     fn test(&self) -> bool;
+    fn embedded_input_files(&self) -> &[InputFile];
 
     // Compile, check and run the exercise or its solution (depending on `bin_name´).
     // The output is written to the `output` buffer after clearing it.
@@ -110,6 +113,19 @@ pub trait RunnableExercise {
     ) -> Result<bool> {
         if let Some(output) = output.as_deref_mut() {
             output.clear();
+        }
+
+        // Input files are already written to disk during `rustlings init`.
+        // We repeat it here to ensure an exercise doesn't fail because the
+        // input files were deleted or modified in the meantime. Note that
+        // `self.embedded_input_files()` is empty for community exercises.
+        for input_file in self.embedded_input_files() {
+            let name = input_file.name;
+            let path = match self.dir() {
+                Some(dir) => format!("exercises/{dir}/{name}"),
+                None => format!("exercises/{name}"),
+            };
+            std::fs::write(path, input_file.content).context("failed to write input file")?;
         }
 
         let build_success = cmd_runner
@@ -223,5 +239,9 @@ impl RunnableExercise for Exercise {
 
     fn test(&self) -> bool {
         self.test
+    }
+
+    fn embedded_input_files(&self) -> &[InputFile] {
+        self.embedded_input_files
     }
 }

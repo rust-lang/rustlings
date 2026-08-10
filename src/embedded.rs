@@ -10,7 +10,7 @@ use crate::info_file::ExerciseInfo;
 pub static EMBEDDED_FILES: EmbeddedFiles = rustlings_macros::include_files!();
 
 // Files related to one exercise.
-struct ExerciseFiles {
+pub struct ExerciseFiles {
     // The content of the exercise file.
     exercise: &'static [u8],
     // The content of the solution file.
@@ -18,7 +18,7 @@ struct ExerciseFiles {
     // Index of the related `ExerciseDir` in `EmbeddedFiles::exercise_dirs`.
     dir_ind: usize,
     // Files that are read by the exercise.
-    input_files: &'static [InputFile],
+    pub input_files: &'static [InputFile],
 }
 
 // Input files that may be read by exercises.
@@ -64,7 +64,7 @@ impl ExerciseDir {
 pub struct EmbeddedFiles {
     /// The content of the `info.toml` file.
     pub info_file: &'static str,
-    exercise_files: &'static [ExerciseFiles],
+    pub exercise_files: &'static [ExerciseFiles],
     pub exercise_dirs: &'static [ExerciseDir],
 }
 
