@@ -2,6 +2,18 @@
 
 First off, thanks for taking the time to contribute! ❤️
 
+## LLM Usage Policy
+
+Planning to use an LLM to contribute to Rustlings?
+Please follow the rules:
+
+- ✅ Allowed: Personal use. For example: research and help during debugging.
+- ⚠️ Disclosure required: Code contributions that are fully or partially LLM-generated.
+  Maintainers may be less inclined to review such contributions.
+- ❌ Banned: Generating comments, issues or PR descriptions. We want to talk to you, not your LLM.
+
+For more information, refer to the [LLM Usage Policy](https://forge.rust-lang.org/policies/llm-usage.html) of `rust-lang/rust`.
+
 ## Quick Reference
 
 I want to …
