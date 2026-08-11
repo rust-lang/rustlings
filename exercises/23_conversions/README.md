@@ -11,6 +11,11 @@ The traits are the following:
 - `TryFrom` and `TryInto` covered in [`conversions4`](conversions4.rs)
 - `AsRef` and `AsMut` covered in [`conversions5`](conversions5.rs)
 
+`AsRef` and `AsMut` are useful when a function only needs to borrow a value in
+another form. For example, a function accepting `T: AsRef<str>` can work with
+both a string slice and an owned `String` without requiring separate
+implementations for each type.
+
 Furthermore, the `std::str` module offers a trait called [`FromStr`](https://doc.rust-lang.org/std/str/trait.FromStr.html) which helps with converting strings into target types via the `parse` method on strings. If properly implemented for a given type `Person`, then `let p: Person = "Mark,20".parse().unwrap()` should both compile and run without panicking.
 
 These should be the main ways ***within the standard library*** to convert data into your desired types.
