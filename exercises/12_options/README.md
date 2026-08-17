@@ -12,6 +12,28 @@ Option types are very common in Rust code, as they have a number of uses:
 - Nullable pointers
 - Swapping things out of difficult situations
 
+## Conditional pattern matching
+
+`if let` runs a block once when a value matches a pattern:
+
+```rust
+if let PATTERN = EXPRESSION {
+    // The pattern matched.
+}
+```
+
+`while let` repeats a block for as long as the value matches a pattern:
+
+```rust
+while let PATTERN = EXPRESSION {
+    // The pattern matched. Try the expression again after this iteration.
+}
+```
+
+The left side of `=` is a pattern, while the right side is the expression whose
+result is matched. These constructs are useful when only one pattern matters.
+Patterns can also be nested to match nested types such as `Option<Option<T>>`.
+
 ## Further Information
 
 - [Option Enum Format](https://doc.rust-lang.org/book/ch10-01-syntax.html#in-enum-definitions)

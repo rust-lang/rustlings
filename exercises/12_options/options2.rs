@@ -5,18 +5,39 @@ fn main() {
 #[cfg(test)]
 mod tests {
     #[test]
-    fn simple_option() {
-        let target = "rustlings";
-        let optional_target = Some(target);
+    fn if_let() {
+        let text = "learning rust with rustlings";
+        let optional_index = text.find("rustlings");
+        let mut found_index = None;
+        let placeholder: Option<usize> = None;
+        assert_eq!(optional_index, Some(19));
 
-        // TODO: Make this an if-let statement whose value is `Some`.
-        word = optional_target {
-            assert_eq!(word, target);
+        // TODO: Replace `placeholder` with the optional value defined above.
+        if let Some(index) = placeholder {
+            found_index = Some(index);
         }
+
+        assert_eq!(found_index, Some(19));
     }
 
     #[test]
-    fn layered_option() {
+    fn while_let() {
+        let mut numbers = vec![1, 2];
+        numbers.push(3);
+        let mut sum = 0;
+        let placeholder: Option<i32> = None;
+
+        // TODO: Replace `placeholder` with an expression that removes and
+        // returns the last element of `numbers`.
+        while let Some(number) = placeholder {
+            sum += number;
+        }
+
+        assert_eq!(sum, 6);
+    }
+
+    #[test]
+    fn nested_options() {
         let range = 10;
         let mut optional_integers: Vec<Option<i8>> = vec![None];
 
@@ -26,11 +47,9 @@ mod tests {
 
         let mut cursor = range;
 
-        // TODO: Make this a while-let statement. Remember that `Vec::pop()`
-        // adds another layer of `Option`. You can do nested pattern matching
-        // in if-let and while-let statements.
-        integer = optional_integers.pop() {
-            assert_eq!(integer, cursor);
+        // TODO: Add another `Some` to the pattern so that the loop stops when
+        // it encounters the `None` stored in the vector.
+        while let Some(_) = optional_integers.pop() {
             cursor -= 1;
         }
 

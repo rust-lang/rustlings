@@ -5,18 +5,36 @@ fn main() {
 #[cfg(test)]
 mod tests {
     #[test]
-    fn simple_option() {
-        let target = "rustlings";
-        let optional_target = Some(target);
+    fn if_let() {
+        let text = "learning rust with rustlings";
+        let optional_index = text.find("rustlings");
+        let mut found_index = None;
+        assert_eq!(optional_index, Some(19));
 
-        // if-let
-        if let Some(word) = optional_target {
-            assert_eq!(word, target);
+        // Run the block only when `optional_index` contains an index.
+        if let Some(index) = optional_index {
+            found_index = Some(index);
         }
+
+        assert_eq!(found_index, Some(19));
     }
 
     #[test]
-    fn layered_option() {
+    fn while_let() {
+        let mut numbers = vec![1, 2];
+        numbers.push(3);
+        let mut sum = 0;
+
+        // `pop` returns `Some(number)` until the vector is empty.
+        while let Some(number) = numbers.pop() {
+            sum += number;
+        }
+
+        assert_eq!(sum, 6);
+    }
+
+    #[test]
+    fn nested_options() {
         let range = 10;
         let mut optional_integers: Vec<Option<i8>> = vec![None];
 
@@ -26,9 +44,9 @@ mod tests {
 
         let mut cursor = range;
 
-        // while-let with nested pattern matching
-        while let Some(Some(integer)) = optional_integers.pop() {
-            assert_eq!(integer, cursor);
+        // The outer `Some` matches `pop`, and the inner one matches the value
+        // stored in the vector. The loop stops on either layer of `None`.
+        while let Some(Some(_)) = optional_integers.pop() {
             cursor -= 1;
         }
 

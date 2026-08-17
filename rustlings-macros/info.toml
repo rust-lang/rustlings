@@ -604,16 +604,23 @@ it doesn't panic in your face later?"""
 name = "options2"
 dir = "12_options"
 hint = """
-Check out:
+`if let PATTERN = EXPRESSION` runs a block once if the expression matches the
+pattern. `while let PATTERN = EXPRESSION` repeats the block for as long as it
+matches.
+
+The first two statements already contain the complete `if let` and `while let`
+syntax. Replace each `placeholder` with the `Option`-producing expression
+described in its TODO comment.
+
+For the last TODO, remember that popping from a `Vec<Option<i8>>` returns an
+`Option<Option<i8>>`: one `Option` comes from `pop`, and the other is stored in
+the vector. Match both layers so the loop stops on either `None`.
+
+More information:
 
 - https://doc.rust-lang.org/rust-by-example/flow_control/if_let.html
 - https://doc.rust-lang.org/rust-by-example/flow_control/while_let.html
-
-Remember that `Option`s can be nested in if-let and while-let statements.
-
-For example: `if let Some(Some(x)) = y`
-
-Also see `Option::flatten`"""
+- https://doc.rust-lang.org/std/option/enum.Option.html#method.flatten"""
 
 [[exercises]]
 name = "options3"
