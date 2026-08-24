@@ -15,7 +15,7 @@ fn main() {
         _ => panic!("No match!"),
     }
 
-    // Solution 2: Matching over a reference (`&Option`) by added `&` before
+    // Solution 2: Matching over a reference (`&Option`) by adding `&` before
     // `optional_point`.
     match &optional_point {
         //^ added
