@@ -55,7 +55,7 @@ mod tests {
             [
                 "HELLO",
                 "all roads lead to rome!",
-                "foobar",
+                "foofoo",
                 "barbarbarbarbarbar",
             ]
         );
