@@ -3,7 +3,6 @@ use crossterm::{
     QueueableCommand,
     style::{Attribute, Color, ResetColor, SetAttribute, SetForegroundColor},
 };
-use serde::Deserialize;
 use std::{
     env::{current_dir, set_current_dir},
     fs::{self, create_dir},
@@ -17,12 +16,6 @@ use crate::{
     info_file::InfoFile, term::press_enter_prompt,
 };
 
-#[derive(Deserialize)]
-struct CargoLocateProject<'a> {
-    #[serde(borrow)]
-    root: &'a str,
-}
-
 pub fn init() -> Result<()> {
     let rustlings_dir = Path::new("rustlings");
     if rustlings_dir.exists() {
@@ -33,6 +26,7 @@ pub fn init() -> Result<()> {
         .arg("locate-project")
         .arg("-q")
         .arg("--workspace")
+        .arg("--message-format=plain")
         .stdin(Stdio::null())
         .stderr(Stdio::null())
         .output()
@@ -66,15 +60,15 @@ pub fn init() -> Result<()> {
             bail!(IN_INITIALIZED_DIR_ERR);
         }
 
-        let workspace_manifest =
-            serde_json::de::from_slice::<CargoLocateProject>(&locate_project_output.stdout)
-                .context(
-                    "Failed to read the field `root` from the output of `cargo locate-project …`",
-                )?
-                .root;
+        let workspace_manifest = {
+            let mut stdout = String::try_from(locate_project_output.stdout)
+                .context("Failed to convert the output of `cargo locate-project …` to a string")?;
+            stdout.truncate(stdout.trim_end().len()); // trim trailing newline
+            stdout
+        };
 
-        let workspace_manifest_content = fs::read_to_string(workspace_manifest)
-            .with_context(|| format!("Failed to read the file {}", workspace_manifest))?;
+        let workspace_manifest_content = fs::read_to_string(&workspace_manifest)
+            .with_context(|| format!("Failed to read the file {workspace_manifest}"))?;
         if !workspace_manifest_content.contains("[workspace]")
             && !workspace_manifest_content.contains("workspace.")
         {
