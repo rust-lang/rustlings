@@ -20,7 +20,7 @@ use crate::{
 #[derive(Deserialize)]
 struct CargoLocateProject<'a> {
     #[serde(borrow)]
-    root: &'a Path,
+    root: &'a str,
 }
 
 pub fn init() -> Result<()> {
@@ -74,7 +74,7 @@ pub fn init() -> Result<()> {
                 .root;
 
         let workspace_manifest_content = fs::read_to_string(workspace_manifest)
-            .with_context(|| format!("Failed to read the file {}", workspace_manifest.display()))?;
+            .with_context(|| format!("Failed to read the file {}", workspace_manifest))?;
         if !workspace_manifest_content.contains("[workspace]")
             && !workspace_manifest_content.contains("workspace.")
         {
