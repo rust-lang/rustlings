@@ -20,7 +20,7 @@ mod delicious_snacks {
 fn main() {
     println!(
         "favorite snacks: {} and {}",
-        delicious_snacks::fruit,
-        delicious_snacks::veggie,
+        delicious_snacks::FRUIT,
+        delicious_snacks::VEGGIE,
     );
 }
