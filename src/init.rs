@@ -3,7 +3,6 @@ use crossterm::{
     QueueableCommand,
     style::{Attribute, Color, ResetColor, SetAttribute, SetForegroundColor},
 };
-use serde::Deserialize;
 use std::{
     env::{current_dir, set_current_dir},
     fs::{self, create_dir},
@@ -17,22 +16,17 @@ use crate::{
     info_file::InfoFile, term::press_enter_prompt,
 };
 
-#[derive(Deserialize)]
-struct CargoLocateProject<'a> {
-    #[serde(borrow)]
-    root: &'a Path,
-}
-
 pub fn init() -> Result<()> {
     let rustlings_dir = Path::new("rustlings");
     if rustlings_dir.exists() {
         bail!(RUSTLINGS_DIR_ALREADY_EXISTS_ERR);
     }
 
-    let locate_project_output = Command::new("cargo")
+    let mut locate_project_output = Command::new("cargo")
         .arg("locate-project")
         .arg("-q")
         .arg("--workspace")
+        .arg("--message-format=plain")
         .stdin(Stdio::null())
         .stderr(Stdio::null())
         .output()
@@ -66,15 +60,14 @@ pub fn init() -> Result<()> {
             bail!(IN_INITIALIZED_DIR_ERR);
         }
 
-        let workspace_manifest =
-            serde_json::de::from_slice::<CargoLocateProject>(&locate_project_output.stdout)
-                .context(
-                    "Failed to read the field `root` from the output of `cargo locate-project …`",
-                )?
-                .root;
+        // Remove newline
+        locate_project_output.stdout.pop();
 
-        let workspace_manifest_content = fs::read_to_string(workspace_manifest)
-            .with_context(|| format!("Failed to read the file {}", workspace_manifest.display()))?;
+        let workspace_manifest = String::try_from(locate_project_output.stdout)
+            .context("Failed to convert the output of `cargo locate-project …` to a string")?;
+
+        let workspace_manifest_content = fs::read_to_string(&workspace_manifest)
+            .with_context(|| format!("Failed to read the file {workspace_manifest}"))?;
         if !workspace_manifest_content.contains("[workspace]")
             && !workspace_manifest_content.contains("workspace.")
         {
