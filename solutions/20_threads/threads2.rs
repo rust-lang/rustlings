@@ -36,6 +36,12 @@ fn main() {
         handle.join().unwrap();
     }
 
-    println!("Jobs done: {}", status.lock().unwrap().jobs_done);
-    //                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    let jobs_done: u32 = status.lock().unwrap().jobs_done;
+    //                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    println!("Jobs done: {}", jobs_done);
+
+    assert_eq!(
+        jobs_done, 10,
+        "All 10 threads must update the *shared* status"
+    );
 }
