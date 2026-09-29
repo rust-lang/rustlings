@@ -22,7 +22,7 @@ pub fn init() -> Result<()> {
         bail!(RUSTLINGS_DIR_ALREADY_EXISTS_ERR);
     }
 
-    let locate_project_output = Command::new("cargo")
+    let mut locate_project_output = Command::new("cargo")
         .arg("locate-project")
         .arg("-q")
         .arg("--workspace")
@@ -60,12 +60,11 @@ pub fn init() -> Result<()> {
             bail!(IN_INITIALIZED_DIR_ERR);
         }
 
-        let workspace_manifest = {
-            let mut stdout = String::try_from(locate_project_output.stdout)
-                .context("Failed to convert the output of `cargo locate-project …` to a string")?;
-            stdout.truncate(stdout.trim_end().len()); // trim trailing newline
-            stdout
-        };
+        // Remove newline
+        locate_project_output.stdout.pop();
+
+        let workspace_manifest = String::try_from(locate_project_output.stdout)
+            .context("Failed to convert the output of `cargo locate-project …` to a string")?;
 
         let workspace_manifest_content = fs::read_to_string(&workspace_manifest)
             .with_context(|| format!("Failed to read the file {workspace_manifest}"))?;
