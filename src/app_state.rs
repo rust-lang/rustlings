@@ -428,6 +428,8 @@ impl AppState {
 
                             if let Ok(success) = exercise.run_exercise(None, &slf.cmd_runner) {
                                 let progress = if success {
+                                    _ = EMBEDDED_FILES
+                                        .write_solution_to_disk(exercise_ind, exercise.name());
                                     CheckProgress::Done
                                 } else {
                                     CheckProgress::Pending
