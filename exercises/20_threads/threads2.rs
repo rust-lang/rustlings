@@ -30,5 +30,8 @@ fn main() {
     }
 
     // TODO: Print the value of `JobStatus.jobs_done`.
-    println!("Jobs done: {}", todo!());
+    let jobs_done: u32 = todo!();
+    println!("Jobs done: {}", jobs_done);
+
+    assert_eq!(jobs_done, 10, "All 10 threads must update the *shared* status");
 }
