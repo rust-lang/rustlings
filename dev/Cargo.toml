@@ -134,6 +134,8 @@ bin = [
   { name = "lifetimes2_sol", path = "../solutions/16_lifetimes/lifetimes2.rs" },
   { name = "lifetimes3", path = "../exercises/16_lifetimes/lifetimes3.rs" },
   { name = "lifetimes3_sol", path = "../solutions/16_lifetimes/lifetimes3.rs" },
+  { name = "lifetimes4", path = "../exercises/16_lifetimes/lifetimes4.rs" },
+  { name = "lifetimes4_sol", path = "../solutions/16_lifetimes/lifetimes4.rs" },
   { name = "tests1", path = "../exercises/17_tests/tests1.rs" },
   { name = "tests1_sol", path = "../solutions/17_tests/tests1.rs" },
   { name = "tests2", path = "../exercises/17_tests/tests2.rs" },
