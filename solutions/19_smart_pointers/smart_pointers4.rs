@@ -25,7 +25,8 @@ mod tests {
 
     #[test]
     fn reference_mutation() {
-        // Clone occurs because `input` needs to be mutated.
+        // Clone occurs because `input` needs to be mutated (-1 is not
+        // positive).
         let vec = vec![-1, 0, 1];
         let mut input = Cow::from(&vec);
         abs_all(&mut input);
@@ -34,7 +35,8 @@ mod tests {
 
     #[test]
     fn reference_no_mutation() {
-        // No clone occurs because `input` doesn't need to be mutated.
+        // No clone occurs because `input` doesn't need to be mutated (all
+        // numbers are already positive).
         let vec = vec![0, 1, 2];
         let mut input = Cow::from(&vec);
         abs_all(&mut input);
@@ -44,10 +46,9 @@ mod tests {
 
     #[test]
     fn owned_no_mutation() {
-        // We can also pass `vec` without `&` so `Cow` owns it directly. In this
-        // case, no mutation occurs (all numbers are already absolute) and thus
-        // also no clone. But the result is still owned because it was never
-        // borrowed or mutated.
+        // We can also pass `vec` without `&` so `Cow` owns it directly, thus
+        // whether the data is mutated or not, the data doesn't need to be
+        // cloned.
         let vec = vec![0, 1, 2];
         let mut input = Cow::from(vec);
         abs_all(&mut input);
@@ -57,9 +58,9 @@ mod tests {
 
     #[test]
     fn owned_mutation() {
-        // Of course this is also the case if a mutation does occur (not all
-        // numbers are absolute). In this case, the call to `to_mut()` in the
-        // `abs_all` function returns a reference to the same data as before.
+        // When the data needs to be mutated like in this example, the call to
+        // `to_mut()` in the `abs_all` function returns a reference to the
+        // original data.
         let vec = vec![-1, 0, 1];
         let mut input = Cow::from(vec);
         abs_all(&mut input);
