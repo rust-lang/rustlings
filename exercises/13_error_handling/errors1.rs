@@ -32,9 +32,7 @@ mod tests {
     #[test]
     fn explains_why_generating_nametag_text_fails() {
         assert_eq!(
-            generate_nametag_text(String::new())
-                .as_ref()
-                .map_err(|e| e.as_str()),
+            generate_nametag_text(String::new()),
             Err("Empty names aren't allowed"),
         );
     }
