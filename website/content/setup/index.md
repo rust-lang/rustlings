@@ -11,6 +11,9 @@ This will also install _Cargo_, Rust's package/project manager.
 > 🐧 If you are on **Linux**, make sure you have `gcc` installed (_for a linker_).
 >
 > Debian: `sudo apt install gcc`\
+> Arch: `sudo pacman -S gcc`\
+> Gentoo: GCC comes with gentoo by default\
+> OpenSUSE: `sudo zypper install gcc`\
 > Fedora: `sudo dnf install gcc`
 >
 > 🍎 If you are on **MacOS**, make sure you have _Xcode and its developer tools_ installed: `xcode-select --install`
@@ -46,7 +49,7 @@ You are probably using Linux and installed Rust using your package manager.
 Cargo installs binaries to the directory `~/.cargo/bin`.
 Sadly, package managers often don't add `~/.cargo/bin` to your `PATH` environment variable.
 
-- Either add `~/.cargo/bin` manually to `PATH`
+- Either add `~/.cargo/bin` manually to `PATH`, by running `PATH=$PATH:~/.cargo/bin` (and maybe add it to your shell's rc)
 - Or uninstall Rust from the package manager and [install it using the official way with `rustup`](https://www.rust-lang.org/tools/install)
 
 {% </details> %}
