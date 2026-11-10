@@ -434,23 +434,14 @@ dependencies = [
  "clap",
  "crossterm",
  "notify",
+ "quote",
  "rustix",
- "rustlings-macros",
  "serde",
  "serde_json",
  "shlex",
  "tempfile",
  "toml",
  "wait-timeout",
-]
-
-[[package]]
-name = "rustlings-macros"
-version = "6.5.0"
-dependencies = [
- "quote",
- "serde",
- "toml",
 ]
 
 [[package]]

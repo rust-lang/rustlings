@@ -52,7 +52,7 @@ When updating an exercise, check if its solution needs to be updated.
 - Make sure to put in some helpful links, and link to sections of The Book in `exercises/yourTopic/README.md`.
 - In the exercise, add a `// TODO: …` comment where user changes are required.
 - Add a solution at `solutions/yourTopic/yourTopicN.rs` with comments explaining it.
-- Add the [metadata for your exercise](#exercise-metadata) in the `rustlings-macros/info.toml` file.
+- Add the [metadata for your exercise](#exercise-metadata) in the `info.toml` file.
 - [Open a pull request](#pull-requests).
 
 ### Exercise Metadata
