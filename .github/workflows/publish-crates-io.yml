@@ -1,0 +1,33 @@
+name: Publish to crates.io
+on:
+  release:
+    types: [created]
+
+permissions: {}
+
+jobs:
+  publish:
+    name: Publish to crates.io
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # Required for OIDC token exchange
+    environment: publish
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      - name: Install Rust (rustup)
+        run: rustup update stable --no-self-update && rustup default stable
+      - name: Authenticate with crates.io
+        id: auth
+        uses: rust-lang/crates-io-auth-action@c6f97d42243bad5fab37ca0427f495c86d5b1a18  # v1.0.5
+      - name: Publish
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ steps.auth.outputs.token }}
+        # Just `cargo publish` doesn't work, because Cargo fails to build rustlings without
+        # rustlings-macros being already built.
+        # We could use `cargo publish --workspace`, but if it ever failed in the middle, CI
+        # publishing for that version would brick, because this command doesn't work if some of the
+        # workspace crates were already published.
+        # We thus publish both packages manually.
+        run: |
+          cargo publish -p rustlings-macros || true
+          cargo publish -p rustlings || true
