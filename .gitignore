@@ -1,0 +1,19 @@
+# Cargo
+target/
+Cargo.lock
+!/Cargo.lock
+
+# State file
+.rustlings-state.txt
+
+# OS
+.DS_Store
+.direnv/
+
+# Editor
+*.swp
+.idea
+*.iml
+
+# Ignore file for editors like Helix
+.ignore

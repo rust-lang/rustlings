@@ -1,0 +1,89 @@
+[workspace]
+exclude = [
+  "tests/test_exercises",
+  "dev",
+]
+
+[workspace.package]
+version = "6.5.0"
+authors = [
+  "Mo Bitar <mo8it@proton.me>", # https://github.com/mo8it
+  "Liv <mokou@fastmail.com>", # https://github.com/shadows-withal
+  # Alumni
+  "Carol (Nichols || Goulding) <carol.nichols@gmail.com>", # https://github.com/carols10cents
+]
+repository = "https://github.com/rust-lang/rustlings"
+license = "MIT"
+edition = "2024" # On Update: Update the edition of `rustfmt` in `dev check` and `CARGO_TOML` in `dev new`.
+rust-version = "1.88"
+
+[workspace.dependencies]
+serde = { version = "1", features = ["derive"] }
+toml = { version = "1", default-features = false, features = ["std", "parse", "serde"] }
+
+[package]
+name = "rustlings"
+description = "Small exercises to get you used to reading and writing Rust code!"
+version.workspace = true
+authors.workspace = true
+repository.workspace = true
+license.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+keywords = [
+  "exercise",
+  "learning",
+]
+include = [
+  "/src/",
+  "/exercises/",
+  "/solutions/",
+  # A symlink to be able to include `dev/Cargo.toml` although `dev` is excluded.
+  "/dev-Cargo.toml",
+  "/README.md",
+  "/LICENSE",
+]
+
+[dependencies]
+anyhow = "1"
+clap = { version = "4", features = ["derive"] }
+crossterm = { version = "0.29", default-features = false, features = ["windows", "events"] }
+notify = "8"
+rustlings-macros = { path = "rustlings-macros", version = "=6.5.0" }
+serde_json = "1"
+serde.workspace = true
+shlex = "2"
+toml.workspace = true
+wait-timeout = "0.2"
+
+[target.'cfg(not(windows))'.dependencies]
+rustix = { version = "1.0", default-features = false, features = ["std", "stdio", "termios"] }
+
+[dev-dependencies]
+tempfile = "3"
+
+[profile.release]
+panic = "abort"
+
+[profile.dev]
+panic = "abort"
+
+[package.metadata.release]
+pre-release-hook = ["./release-hook.sh"]
+pre-release-commit-message = "Release 🎉"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+unstable_features = "forbid"
+
+[workspace.lints.clippy]
+empty_loop = "forbid"
+disallowed_types = "deny"
+disallowed_methods = "deny"
+infinite_loop = "deny"
+mem_forget = "deny"
+dbg_macro = "warn"
+todo = "warn"
+
+[lints]
+workspace = true

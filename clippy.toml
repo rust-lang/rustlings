@@ -1,0 +1,11 @@
+disallowed-types = [
+  { path = "crossterm::style::Stylize", reason = "inefficient, use `.queue(…)` instead" },
+  { path = "crossterm::style::styled_content::StyledContent", reason = "inefficient, use `.queue(…)` instead" },
+]
+
+disallowed-methods = [
+  { path = "crossterm::style::style", reason = "inefficient, use `.queue(…)` instead" },
+  { path = "std::thread::spawn", replacement = "std::thread::Builder::spawn", reason = "handle the error" },
+  { path = "std::thread::Scope::spawn", replacement = "std::thread::Builder::spawn", reason = "handle the error" },
+  { path = "std::process::exit", replacement = "std::process::ExitCode" },
+]

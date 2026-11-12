@@ -1,0 +1,8 @@
+{% component details(summary: string) %}
+<details>
+    <summary>
+        <strong>{{ summary }}</strong> (<em>click to expand</em>)
+    </summary>
+    <blockquote class="pt-1 mx-0.5 mt-1 rounded-none border-dashed border-x-3 border-b-3">{{ body | markdown }}</blockquote>
+</details>
+{% endcomponent %}

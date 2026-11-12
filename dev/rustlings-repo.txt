@@ -1,0 +1,1 @@
+This file is used to check if the user tries to run Rustlings in the repository (the method before version 6)

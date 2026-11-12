@@ -1,0 +1,60 @@
+use anyhow::Result;
+use crossterm::{
+    QueueableCommand,
+    style::{Color, ResetColor, SetForegroundColor},
+};
+use std::{
+    io::{self, Write},
+    process::ExitCode,
+};
+
+use crate::{
+    app_state::{AppState, ExercisesProgress},
+    exercise::{OUTPUT_CAPACITY, RunnableExercise, solution_link_line},
+};
+
+pub fn run(app_state: &mut AppState) -> Result<ExitCode> {
+    let exercise = app_state.current_exercise();
+    let mut output = Vec::with_capacity(OUTPUT_CAPACITY);
+    let success = exercise.run_exercise(Some(&mut output), app_state.cmd_runner())?;
+
+    let mut stdout = io::stdout().lock();
+    stdout.write_all(&output)?;
+
+    if !success {
+        app_state.set_pending(app_state.current_exercise_ind())?;
+
+        stdout.write_all(b"Ran ")?;
+        app_state
+            .current_exercise()
+            .terminal_file_link(&mut stdout, app_state.emit_file_links())?;
+        stdout.write_all(b" with errors\n")?;
+
+        return Ok(ExitCode::FAILURE);
+    }
+
+    stdout.queue(SetForegroundColor(Color::Green))?;
+    stdout.write_all("✓ Successfully ran ".as_bytes())?;
+    stdout.write_all(exercise.path.as_bytes())?;
+    stdout.queue(ResetColor)?;
+    stdout.write_all(b"\n")?;
+
+    if let Some(solution_path) = app_state.current_solution_path()? {
+        stdout.write_all(b"\n")?;
+        solution_link_line(&mut stdout, &solution_path, app_state.emit_file_links())?;
+        stdout.write_all(b"\n")?;
+    }
+
+    match app_state.done_current_exercise::<false>(&mut stdout)? {
+        ExercisesProgress::NewPending | ExercisesProgress::CurrentPending => {
+            stdout.write_all(b"Next exercise: ")?;
+            app_state
+                .current_exercise()
+                .terminal_file_link(&mut stdout, app_state.emit_file_links())?;
+            stdout.write_all(b"\n")?;
+        }
+        ExercisesProgress::AllDone => (),
+    }
+
+    Ok(ExitCode::SUCCESS)
+}

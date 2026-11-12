@@ -1,0 +1,19 @@
+format_version = 1
+
+[[exercises]]
+name = "compilation_success"
+test = false
+hint = ""
+
+[[exercises]]
+name = "compilation_failure"
+test = false
+hint = ""
+
+[[exercises]]
+name = "test_success"
+hint = ""
+
+[[exercises]]
+name = "test_failure"
+hint = "The answer to everything: 42"
